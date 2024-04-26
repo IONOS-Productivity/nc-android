@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Nextcloud - Android Client
+  ~
+  ~ SPDX-FileCopyrightText: 2021 Andy Scherzinger <info@andy-scherzinger>
+  ~ SPDX-FileCopyrightText: 2018 Tobias Kaminsky <tobias@kaminsky.me>
+  ~ SPDX-FileCopyrightText: 2018 Nextcloud GmbH
+  ~ SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/standard_padding">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/template_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        app:cardElevation="0dp"
+        app:strokeColor="@color/grey_200"
+        app:strokeWidth="2dp">
+
+        <ImageView
+            android:id="@+id/template"
+            android:layout_width="60dp"
+            android:layout_height="84dp"
+            android:layout_margin="@dimen/standard_margin"
+            android:contentDescription="@string/thumbnail"
+            android:src="@drawable/file_doc" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:id="@+id/template_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:ellipsize="middle"
+        android:gravity="center_horizontal"
+        android:paddingTop="@dimen/standard_half_padding"
+        android:textColor="@color/text_color"
+        tools:text="Template" />
+</LinearLayout>
