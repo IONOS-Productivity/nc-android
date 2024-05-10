@@ -88,6 +88,8 @@
     <string name="auth_unknown_host_title">Не могу да пронађем домаћина</string>
     <string name="auth_unsupported_multiaccount">%1$s не подржава вишеструке налоге</string>
     <string name="auth_wrong_connection_title">Не могу да успоставим везу</string>
+    <string name="authenticator_activity_cancel_login">Откажи пријављивање</string>
+    <string name="authenticator_activity_please_complete_login_process">Молимо вас да довршите процес пријаве у интернет прегледачу</string>
     <string name="auto_upload_file_behaviour_kept_in_folder">остављен у оригиналној фасцикли јер је само за читање</string>
     <string name="auto_upload_on_wifi">Отпремај само на бежичним мрежама без ограничења</string>
     <string name="auto_upload_path">/Аутоматска отпремања</string>
@@ -400,6 +402,7 @@
     <string name="file_not_found">Фајл није нађен</string>
     <string name="file_not_synced">Фајл не може да се синхронизује. Приказујем последњу доступну верзију.</string>
     <string name="file_rename">Преименуј</string>
+    <string name="file_upload_worker_same_file_already_exists">Исти фајл већ постојим, није откривен конфликт</string>
     <string name="file_version_restored_error">Грешка при враћању верзије фајла!</string>
     <string name="file_version_restored_successfully">Успешно враћена верзија фајла.</string>
     <string name="filedetails_details">Детаљи</string>
@@ -658,6 +661,7 @@
     <string name="preview_image_description">Преглед слике</string>
     <string name="preview_image_error_no_local_file">Нема локалног фајла за преглед</string>
     <string name="preview_image_error_unknown_format">Не могу да прикажем слику</string>
+    <string name="preview_media_unhandled_http_code_message">Фајл је тренутно закључао други корисник или процес, па не може да се обрише. Молимо вас покушајте касније.</string>
     <string name="preview_sorry">Извините</string>
     <string name="privacy">Приватност</string>
     <string name="public_share_name">Ново име</string>
