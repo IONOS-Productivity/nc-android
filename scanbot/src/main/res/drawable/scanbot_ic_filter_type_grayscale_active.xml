@@ -1,0 +1,27 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+    <path
+        android:fillColor="@color/scanbot_filter_control_active"
+        android:pathData="M24,10A14,14 0,0 0,14.1 33.9,14 14,0 0,0 33.9,14.1 13.908,13.908 0,0 0,24 10m0,-2A16,16 0,1 1,8 24,16 16,0 0,1 24,8Z" />
+    <path
+        android:fillColor="@color/scanbot_filter_control_active"
+        android:pathData="M25.5,39.5L23.5,39.5L23.5,9.5L25.5,9.5Z" />
+    <path
+        android:fillColor="@color/scanbot_filter_control_active"
+        android:pathData="M21.4,38.645L19.5,38.645L19.5,9.5L21.4,9.5Z" />
+    <path
+        android:fillColor="@color/scanbot_filter_control_active"
+        android:pathData="M18.3,37.67L16.5,37.67L16.5,10.38L18.3,10.38Z" />
+    <path
+        android:fillColor="@color/scanbot_filter_control_active"
+        android:pathData="M15.5,35.907L13.8,35.907L13.8,11.726L15.5,11.726Z" />
+    <path
+        android:fillColor="@color/scanbot_filter_control_active"
+        android:pathData="M13,33.215L11.4,33.215L11.4,14.232L13,14.232Z" />
+    <path
+        android:fillColor="@color/scanbot_filter_control_active"
+        android:pathData="M10.8,29.548L9.3,29.548L9.3,18.781L10.8,18.781Z" />
+</vector>

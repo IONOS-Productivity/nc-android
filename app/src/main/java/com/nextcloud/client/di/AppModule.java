@@ -69,7 +69,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import dagger.Module;
 import dagger.Provides;
 
-@Module(includes = {ComponentsModule.class, VariantComponentsModule.class, BuildTypeComponentsModule.class})
+@Module(includes = {AlkModule.class, ComponentsModule.class, VariantComponentsModule.class, BuildTypeComponentsModule.class})
 class AppModule {
 
     @Provides

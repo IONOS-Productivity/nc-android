@@ -1,0 +1,11 @@
+<resources>
+    <style name="ScanbotFilterControlSeekBar" parent="Widget.AppCompat.SeekBar">
+        <item name="android:progressBackgroundTint">@drawable/scanbot_filter_controls_seek_bar</item>
+        <item name="android:progressTint">@drawable/scanbot_filter_controls_seek_bar</item>
+        <item name="android:thumbTint">@drawable/scanbot_filter_controls_seek_bar</item>
+    </style>
+
+    <style name="ScanbotRadioGroupStyle" parent="Theme.AppCompat.DayNight">
+        <item name="colorAccent">@color/scanbot_file_type_text_color_checked</item>
+    </style>
+</resources>

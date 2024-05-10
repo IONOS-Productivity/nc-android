@@ -24,6 +24,8 @@ import com.owncloud.android.MainApp;
 import com.owncloud.android.media.MediaControlView;
 import com.owncloud.android.ui.ThemeableSwitchPreference;
 import com.owncloud.android.ui.whatsnew.ProgressIndicator;
+import com.strato.hidrive.common_ui.di.CommonUiComponent;
+import com.strato.hidrive.scanbot.di.ScanbotComponent;
 
 import javax.inject.Singleton;
 
@@ -44,12 +46,13 @@ import dagger.android.support.AndroidSupportInjectionModule;
     IntegrationsModule.class,
     InAppReviewModule.class,
     ThemeModule.class,
+    ScanbotModule.class,
     DatabaseModule.class,
     DispatcherModule.class,
     VariantModule.class
 })
 @Singleton
-public interface AppComponent {
+public interface AppComponent extends CommonUiComponent {
 
     void inject(MainApp app);
 
@@ -62,6 +65,8 @@ public interface AppComponent {
     void inject(FileDownloadHelper fileDownloadHelper);
 
     void inject(ProgressIndicator progressIndicator);
+
+    ScanbotComponent scanbotComponent();
 
     @Component.Builder
     interface Builder {

@@ -1,0 +1,13 @@
+package com.strato.hidrive.scanbot.util.graphics
+
+import android.graphics.Bitmap
+import android.graphics.Matrix
+
+internal fun Bitmap.transform(matrix: Matrix): Bitmap {
+	return Bitmap.createBitmap(this, 0, 0, width, height, matrix, true)
+}
+
+internal fun Bitmap.rotate(degrees: Float): Bitmap {
+	val matrix = degrees.toRotateMatrix() ?: return this
+	return transform(matrix)
+}

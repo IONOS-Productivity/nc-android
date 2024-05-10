@@ -1,0 +1,66 @@
+buildscript {
+    dependencies {
+        classpath "com.android.tools.build:gradle:$androidPluginVersion"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+android {
+    namespace "com.strato.hidrive.common_ui"
+
+    defaultConfig {
+        compileSdk 34
+        minSdkVersion 21
+        targetSdkVersion 34
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+            consumerProguardFiles "proguard-rules.pro"
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+
+    lint {
+        abortOnError false
+        disable 'MissingTranslation'
+    }
+}
+
+dependencies {
+    api project(':libs:passwordProtectionSdk')
+
+    api "androidx.exifinterface:exifinterface:$androidx_exifinterface_version"
+    api "com.github.clans:fab:$fab_version"
+
+    implementation project(':domain')
+
+    implementation "androidx.appcompat:appcompat:$appCompatVersion"
+    implementation "androidx.constraintlayout:constraintlayout:2.1.4"
+    implementation "androidx.preference:preference:$preference_version"
+
+    implementation "com.phrase.android:ota-sdk:$phrase_sdk"
+
+    implementation "com.google.dagger:dagger:$daggerVersion"
+
+    compileOnly reactivex_rxjava2
+    compileOnly reactivex_rxandroid2
+
+    // testImplementation rootProject.ext.junit
+    // testImplementation rootProject.ext.mockito
+    // testImplementation rootProject.ext.powermock
+}

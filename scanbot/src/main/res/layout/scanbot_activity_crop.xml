@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/llContourContainer"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@color/scanbot_crop_screen_background"
+	android:orientation="vertical">
+
+	<include
+		android:id="@+id/toolbar"
+		layout="@layout/scanbot_view_common_toolbar"
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/navigation_layout_height" />
+
+	<com.strato.hidrive.scanbot.screens.crop.view.CropView
+		android:id="@+id/cropView"
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:layout_weight="1" />
+
+	<FrameLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical">
+
+		<Button
+			android:id="@+id/btnAutoDetectContour"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center_horizontal"
+			android:layout_margin="@dimen/common_normal_padding"
+			android:background="@color/scanbot_crop_screen_button_background"
+			android:textColor="@color/scanbot_crop_screen_button_text_color"
+			android:padding="@dimen/common_normal_padding"
+			android:text="@string/scanbot_detect_document" />
+
+		<Button
+			android:id="@+id/btnResetContour"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center_horizontal"
+			android:layout_margin="@dimen/common_normal_padding"
+			android:background="@color/scanbot_crop_screen_button_background"
+			android:textColor="@color/scanbot_crop_screen_button_text_color"
+			android:padding="@dimen/common_normal_padding"
+			android:text="@string/scanbot_reset_borders" />
+
+	</FrameLayout>
+
+</LinearLayout>

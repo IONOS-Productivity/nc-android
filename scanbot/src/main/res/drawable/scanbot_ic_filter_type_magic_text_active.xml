@@ -1,0 +1,54 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+    <path
+        android:fillColor="@color/scanbot_filter_control_active"
+        android:pathData="M5.29,19.401l-0.053,0.14a1.2,1.2 0,0 1,-0.7 0.7l-0.14,0.053 0.14,0.053a1.2,1.2 0,0 1,0.7 0.7l0.053,0.14 0.053,-0.14a1.2,1.2 0,0 1,0.7 -0.7l0.14,-0.053 -0.14,-0.053a1.2,1.2 0,0 1,-0.7 -0.7l-0.053,-0.14m0,-2.456A0.2,0.2 0,0 1,5.481 17.074l0.8,2.112a0.2,0.2 0,0 0,0.116 0.116l2.112,0.8a0.2,0.2 0,0 1,0 0.374l-2.112,0.8a0.2,0.2 0,0 0,-0.116 0.116L5.481,23.507a0.2,0.2 0,0 1,-0.374 0l-0.8,-2.112A0.2,0.2 0,0 0,4.186 21.281L2.074,20.481a0.2,0.2 0,0 1,0 -0.374l2.112,-0.8a0.2,0.2 0,0 0,0.116 -0.116l0.8,-2.112A0.2,0.2 0,0 1,5.29 16.945Z" />
+    <path
+        android:fillColor="@color/scanbot_filter_control_active"
+        android:pathData="M42,26.82l-0.133,0.351a1.2,1.2 0,0 1,-0.7 0.7L40.82,28l0.351,0.133a1.2,1.2 0,0 1,0.7 0.7L42,29.18l0.133,-0.351a1.2,1.2 0,0 1,0.7 -0.7L43.18,28 42.83,27.867a1.2,1.2 0,0 1,-0.7 -0.7L42,26.82M42,24.364a0.2,0.2 0,0 1,0.187 0.129l0.881,2.323a0.2,0.2 0,0 0,0.116 0.116l2.323,0.881a0.2,0.2 0,0 1,0 0.374l-2.323,0.881a0.2,0.2 0,0 0,-0.116 0.116L42.187,31.507a0.2,0.2 0,0 1,-0.374 0L40.932,29.184a0.2,0.2 0,0 0,-0.116 -0.116L38.493,28.187a0.2,0.2 0,0 1,0 -0.374l2.323,-0.881a0.2,0.2 0,0 0,0.116 -0.116L41.813,24.493A0.2,0.2 0,0 1,42 24.364Z" />
+    <path
+        android:fillColor="@color/scanbot_filter_control_active"
+        android:pathData="M20.29,4.409l-0.053,0.14a1.2,1.2 0,0 1,-0.7 0.7l-0.14,0.053 0.14,0.053a1.2,1.2 0,0 1,0.7 0.7l0.053,0.14 0.053,-0.14a1.2,1.2 0,0 1,0.7 -0.7l0.14,-0.053 -0.14,-0.053a1.2,1.2 0,0 1,-0.7 -0.7l-0.053,-0.14m0,-2.456A0.2,0.2 0,0 1,20.481 2.082l0.8,2.112a0.2,0.2 0,0 0,0.116 0.116l2.112,0.8a0.2,0.2 0,0 1,0 0.374l-2.112,0.8a0.2,0.2 0,0 0,-0.116 0.116L20.481,8.515a0.2,0.2 0,0 1,-0.374 0l-0.8,-2.112A0.2,0.2 0,0 0,19.186 6.289L17.074,5.489a0.2,0.2 0,0 1,0 -0.374l2.112,-0.8a0.2,0.2 0,0 0,0.116 -0.116l0.8,-2.112A0.2,0.2 0,0 1,20.29 1.953Z" />
+    <path
+        android:fillColor="@color/scanbot_filter_control_active"
+        android:pathData="M34.2,10A0.2,0.2 0,0 0,34 10.2L34,13.8A0.2,0.2 0,0 0,34.2 14L37.8,14A0.2,0.2 0,0 0,38 13.8L38,10.2A0.2,0.2 0,0 0,37.8 10L34.2,10m0,-2L37.8,8A2.2,2.2 0,0 1,40 10.2L40,13.8A2.2,2.2 0,0 1,37.8 16L34.2,16A2.2,2.2 0,0 1,32 13.8L32,10.2A2.2,2.2 0,0 1,34.2 8Z" />
+    <path
+        android:fillColor="@color/scanbot_filter_control_active"
+        android:pathData="M34.2,34A0.2,0.2 0,0 0,34 34.2L34,37.8A0.2,0.2 0,0 0,34.2 38L37.8,38A0.2,0.2 0,0 0,38 37.8L38,34.2A0.2,0.2 0,0 0,37.8 34L34.2,34m0,-2L37.8,32A2.2,2.2 0,0 1,40 34.2L40,37.8A2.2,2.2 0,0 1,37.8 40L34.2,40A2.2,2.2 0,0 1,32 37.8L32,34.2A2.2,2.2 0,0 1,34.2 32Z" />
+    <path
+        android:fillColor="@color/scanbot_filter_control_active"
+        android:pathData="M10.2,10A0.2,0.2 0,0 0,10 10.2L10,13.8A0.2,0.2 0,0 0,10.2 14L13.8,14A0.2,0.2 0,0 0,14 13.8L14,10.2A0.2,0.2 0,0 0,13.8 10L10.2,10m0,-2L13.8,8A2.2,2.2 0,0 1,16 10.2L16,13.8A2.2,2.2 0,0 1,13.8 16L10.2,16A2.2,2.2 0,0 1,8 13.8L8,10.2A2.2,2.2 0,0 1,10.2 8Z" />
+    <path
+        android:fillColor="@color/scanbot_filter_control_active"
+        android:pathData="M10.2,34A0.2,0.2 0,0 0,10 34.2L10,37.8A0.2,0.2 0,0 0,10.2 38L13.8,38A0.2,0.2 0,0 0,14 37.8L14,34.2A0.2,0.2 0,0 0,13.8 34L10.2,34m0,-2L13.8,32A2.2,2.2 0,0 1,16 34.2L16,37.8A2.2,2.2 0,0 1,13.8 40L10.2,40A2.2,2.2 0,0 1,8 37.8L8,34.2A2.2,2.2 0,0 1,10.2 32Z" />
+    <path
+        android:fillColor="@color/scanbot_filter_control_active"
+        android:pathData="M13,33.5L11,33.5L11,15.5L13,15.5Z" />
+    <path
+        android:fillColor="@color/scanbot_filter_control_active"
+        android:pathData="M37,33.5L35,33.5L35,15.5L37,15.5Z" />
+    <path
+        android:fillColor="@color/scanbot_filter_control_active"
+        android:pathData="M25,30.5L23,30.5L23,17.5L25,17.5Z" />
+    <path
+        android:fillColor="@color/scanbot_filter_control_active"
+        android:pathData="M29.5,19.5L18.5,19.5L18.5,17.5L29.5,17.5Z" />
+    <path
+        android:fillColor="@color/scanbot_filter_control_active"
+        android:pathData="M26.5,31.5L21.5,31.5L21.5,29.5L26.5,29.5Z" />
+    <path
+        android:fillColor="@color/scanbot_filter_control_active"
+        android:pathData="M30.5,20.5L28.5,20.5L28.5,17.5L30.5,17.5Z" />
+    <path
+        android:fillColor="@color/scanbot_filter_control_active"
+        android:pathData="M19.5,20.5L17.5,20.5L17.5,17.5L19.5,17.5Z" />
+    <path
+        android:fillColor="@color/scanbot_filter_control_active"
+        android:pathData="M32.5,13L15.5,13L15.5,11L32.5,11Z" />
+    <path
+        android:fillColor="@color/scanbot_filter_control_active"
+        android:pathData="M32.5,37L15.5,37L15.5,35L32.5,35Z" />
+</vector>

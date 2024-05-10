@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/rlContent"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+	<include
+		android:id="@+id/toolbar"
+		layout="@layout/scanbot_view_common_toolbar"
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/navigation_layout_height"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
+
+	<androidx.viewpager.widget.ViewPager
+		android:id="@+id/vpPager"
+		android:layout_width="0dp"
+		android:layout_height="0dp"
+		app:layout_constraintBottom_toTopOf="@+id/llBottomNavigation"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+	<TextView
+		android:id="@+id/tvCounter"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_margin="@dimen/common_material_dimen"
+		android:background="@drawable/scanbot_gallery_counter_rounded_background"
+		android:paddingLeft="@dimen/scanbot_gallery_counter_padding_left"
+		android:paddingRight="@dimen/scanbot_gallery_counter_padding_right"
+		android:textColor="@color/scanbot_gallery_screen_counter_text_color"
+		android:textStyle="bold"
+		app:layout_constraintBottom_toTopOf="@+id/llBottomNavigation"
+		app:layout_constraintEnd_toEndOf="@+id/llBottomNavigation"
+		app:layout_constraintStart_toStartOf="@+id/llBottomNavigation"
+		tools:text="1 of 1" />
+
+	<com.github.clans.fab.FloatingActionButton
+		android:id="@+id/fabScanbotAdd"
+		android:layout_width="@dimen/fab_button_diameter"
+		android:layout_height="@dimen/fab_button_diameter"
+		android:layout_margin="@dimen/fab_button_margin"
+		app:fab_colorNormal="@color/fabColorNormal"
+		app:fab_colorPressed="@color/fabColorPressed"
+		android:src="@drawable/fab_add"
+		app:rippleColor="@color/fabColorRipple"
+		app:layout_constraintBottom_toTopOf="@+id/llBottomNavigation"
+		app:layout_constraintEnd_toEndOf="parent" />
+
+	<LinearLayout
+		android:id="@+id/llBottomNavigation"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+		android:background="@color/scanbot_gallery_background"
+		android:orientation="horizontal"
+		android:padding="@dimen/common_material_dimen"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent">
+
+		<ImageView
+			android:id="@+id/ivCrop"
+			android:layout_width="0dp"
+			android:layout_height="@dimen/scanbot_gallery_navigation_item_height"
+			android:layout_margin="@dimen/common_material_dimen"
+			android:layout_weight="1"
+			android:src="@drawable/scanbot_ic_gallery_crop"
+			app:tint="@color/icons_tint_color" />
+
+		<FrameLayout
+			android:layout_width="0dp"
+			android:layout_height="@dimen/scanbot_gallery_navigation_item_height"
+			android:layout_margin="@dimen/common_material_dimen"
+			android:layout_weight="1">
+
+			<ImageView
+				android:id="@+id/ivFilter"
+				android:layout_width="@dimen/scanbot_gallery_navigation_item_height"
+				android:layout_gravity="center"
+				android:layout_height="@dimen/scanbot_gallery_navigation_item_height"
+				android:background="@drawable/scanbot_gallery_filter_type_background"
+				android:src="@drawable/scanbot_ic_filter_type_none"
+				app:tint="@color/icons_tint_color" />
+
+		</FrameLayout>
+
+		<ImageView
+			android:id="@+id/ivRotate"
+			android:layout_width="0dp"
+			android:layout_height="@dimen/scanbot_gallery_navigation_item_height"
+			android:layout_margin="@dimen/common_material_dimen"
+			android:layout_weight="1"
+			android:src="@drawable/scanbot_ic_gallery_rotate"
+			app:tint="@color/icons_tint_color" />
+
+		<ImageView
+			android:id="@+id/ivRearrange"
+			android:layout_width="0dp"
+			android:layout_height="@dimen/scanbot_gallery_navigation_item_height"
+			android:layout_margin="@dimen/common_material_dimen"
+			android:layout_weight="1"
+			android:src="@drawable/scanbot_ic_rearrange"
+			app:tint="@color/icons_tint_color" />
+
+		<ImageView
+			android:id="@+id/ivDelete"
+			android:layout_width="0dp"
+			android:layout_height="@dimen/scanbot_gallery_navigation_item_height"
+			android:layout_margin="@dimen/common_material_dimen"
+			android:layout_weight="1"
+			android:src="@drawable/scanbot_ic_gallery_delete"
+			app:tint="@color/icons_tint_color" />
+
+	</LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

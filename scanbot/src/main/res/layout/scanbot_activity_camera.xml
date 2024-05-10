@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@color/scanbot_camera_screen_background"
+	android:orientation="vertical">
+
+	<FrameLayout
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/scanbot_camera_toolbar_height"
+		android:background="@color/scanbot_camera_toolbar_background">
+
+		<TextView
+			android:id="@+id/tvFlashStatus"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center_vertical|right"
+			android:layout_marginRight="@dimen/common_normal_padding"
+			android:text="@string/scanbot_camera_flash_button"
+			android:textColor="@drawable/scanbot_camera_btn_color_selector"
+			app:drawableLeftCompat="@drawable/scanbot_camera_flash_btn_selector"
+			app:drawableTint="@color/icons_tint_color" />
+
+		<TextView
+			android:id="@+id/tvAutomaticCaptureStatus"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center_vertical|left"
+			android:layout_marginLeft="@dimen/common_normal_padding"
+			android:text="@string/scanbot_camera_automatic_btn"
+			android:textColor="@drawable/scanbot_camera_btn_color_selector" />
+
+	</FrameLayout>
+
+	<FrameLayout
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:layout_weight="1">
+
+		<io.scanbot.sdk.camera.ScanbotCameraView
+			android:id="@+id/scvCameraa"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent" />
+
+		<io.scanbot.sdk.ui.PolygonView
+			android:id="@+id/pvPolygon"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			app:polygonFillColor="@color/scanbot_camera_polygon_fill_color"
+			app:polygonStrokeColor="@color/scanbot_camera_polygon_stroke_color"
+			app:polygonStrokeWidth="@dimen/scanbot_camera_polygon_stroke_widht" />
+
+	</FrameLayout>
+
+	<FrameLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="@color/primary_color">
+
+		<TextView
+			android:id="@+id/tvCancel"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center_vertical|start"
+			android:layout_marginStart="@dimen/common_normal_padding"
+			android:padding="@dimen/common_small_padding"
+			android:text="@string/cancel_btn_title"
+			android:textColor="@color/scanbot_camera_screen_cancel_text_color"
+			android:textSize="@dimen/scanbot_text_size" />
+
+		<ImageView
+			android:id="@+id/ivTakePhoto"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:layout_margin="@dimen/common_small_padding"
+			android:background="@drawable/scanbot_camera_button_selector"
+			android:padding="@dimen/common_normal_padding"
+			android:src="@drawable/ic_photo_camera_orange_24dp"/>
+
+		<TextView
+			android:id="@+id/tvImport"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center_vertical|end"
+			android:layout_marginEnd="@dimen/common_normal_padding"
+			android:padding="@dimen/common_small_padding"
+			android:text="@string/scanbot_camera_import_btn_title"
+			android:textColor="@color/scanbot_camera_screen_cancel_text_color"
+			android:textSize="@dimen/scanbot_text_size" />
+
+	</FrameLayout>
+
+</LinearLayout>

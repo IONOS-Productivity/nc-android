@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+	android:id="@+id/popupElement"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="@dimen/scanbot_filter_popup_height"
+	android:background="@drawable/scanbot_filter_popup_background">
+
+	<TextView
+		android:id="@+id/tvPopupText"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center"
+		android:layout_marginEnd="@dimen/scanbot_filter_popup_margin"
+		android:layout_marginStart="@dimen/scanbot_filter_popup_margin"
+		android:textAlignment="center"
+		android:textColor="@color/scanbot_filter_popup_text_color"/>
+
+</FrameLayout>

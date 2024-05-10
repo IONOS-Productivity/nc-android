@@ -1,0 +1,39 @@
+buildscript {
+    dependencies {
+        classpath "com.android.tools.build:gradle:$androidPluginVersion"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+apply plugin: 'java-library'
+apply plugin: 'kotlin'
+
+
+java {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+}
+
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+}
+
+dependencies {
+    api project(':libs:hidriveSdk')
+    api project(':libs:logger')
+    // HASH
+    implementation 'commons-codec:commons-codec:1.15'
+    api 'org.apache.commons:commons-lang3:3.12.0'
+    // Language extension
+    implementation 'javax.inject:javax.inject:1'
+    implementation 'androidx.annotation:annotation:1.3.0' //1.7.1
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.21'
+    // Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
+
+    // Test
+    // testImplementation rootProject.ext.junit
+    // testImplementation rootProject.ext.mockito
+}

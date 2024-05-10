@@ -109,6 +109,7 @@ android {
 
         buildConfigField 'boolean', 'CI', ciBuild.toString()
         buildConfigField 'boolean', 'RUNTIME_PERF_ANALYSIS', perfAnalysis.toString()
+        buildConfigField "String", "SCANBOT_LICENSE_KEY", "\"${SCANBOT_LICENCE_KEY}\""
 
         javaCompileOptions {
             annotationProcessorOptions {
@@ -325,6 +326,9 @@ dependencies {
     gplayImplementation project(':appscan')
     huaweiImplementation project(':appscan')
     qaImplementation project(':appscan')
+    implementation project(':scanbot')
+    implementation project(':commonUI')
+    implementation project(':domain')
 
     spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.13.0'
     spotbugsPlugins 'com.mebigfatguy.fb-contrib:fb-contrib:7.6.4'
@@ -371,6 +375,9 @@ dependencies {
     if (perfAnalysis) {
         debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.13'
     }
+
+    implementation reactivex_rxjava2
+    implementation reactivex_rxandroid2
 
     // dependencies for local unit tests
     testImplementation 'junit:junit:4.13.2'

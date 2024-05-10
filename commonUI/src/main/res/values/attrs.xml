@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="dialogCheckBoxStyle" format="reference" />
+    <attr name="itemViewCheckBoxStyle" format="reference" />
+
+    <declare-styleable name="StylizedTextView">
+        <attr name="typeface" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="StylizedEditText">
+        <attr name="selectedTextColor" format="color" />
+    </declare-styleable>
+</resources>

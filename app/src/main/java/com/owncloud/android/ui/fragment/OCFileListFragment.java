@@ -45,7 +45,6 @@ import com.nextcloud.client.account.UserAccountManager;
 import com.nextcloud.client.device.DeviceInfo;
 import com.nextcloud.client.di.Injectable;
 import com.nextcloud.client.documentscan.AppScanOptionalFeature;
-import com.nextcloud.client.documentscan.DocumentScanActivity;
 import com.nextcloud.client.editimage.EditImageActivity;
 import com.nextcloud.client.jobs.BackgroundJobManager;
 import com.nextcloud.client.network.ClientFactory;
@@ -110,6 +109,7 @@ import com.owncloud.android.utils.FileStorageUtils;
 import com.owncloud.android.utils.MimeTypeUtil;
 import com.owncloud.android.utils.theme.ThemeUtils;
 import com.owncloud.android.utils.theme.ViewThemeUtils;
+import com.strato.hidrive.scanbot.controller.ScanbotController;
 
 import org.apache.commons.httpclient.HttpStatus;
 import org.greenrobot.eventbus.EventBus;
@@ -207,6 +207,7 @@ public class OCFileListFragment extends ExtendedListFragment implements
     @Inject SyncedFolderProvider syncedFolderProvider;
     @Inject AppScanOptionalFeature appScanOptionalFeature;
 
+    @Inject ScanbotController scanbotController;
     protected FileFragment.ContainerActivity mContainerActivity;
 
     protected OCFile mFile;
@@ -536,8 +537,10 @@ public class OCFileListFragment extends ExtendedListFragment implements
         final OCFile currentFile = getCurrentFile();
         if (fileDisplayActivity != null && currentFile != null && currentFile.isFolder()) {
 
-            Intent intent = new Intent(requireContext(), DocumentScanActivity.class);
-            intent.putExtra(DocumentScanActivity.EXTRA_FOLDER, currentFile.getRemotePath());
+//            Intent intent = new Intent(requireContext(), DocumentScanActivity.class);
+//            intent.putExtra(DocumentScanActivity.EXTRA_FOLDER, currentFile.getRemotePath());
+
+            Intent intent = scanbotController.createIntent(getContext());
             startActivity(intent);
         } else {
             Log.w(TAG, "scanDocUpload: Failed to start doc scanning, fileDisplayActivity=" + fileDisplayActivity +

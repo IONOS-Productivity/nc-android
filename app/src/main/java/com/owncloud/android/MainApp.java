@@ -81,6 +81,10 @@ import com.owncloud.android.utils.PermissionUtil;
 import com.owncloud.android.utils.ReceiversHelper;
 import com.owncloud.android.utils.SecurityUtils;
 import com.owncloud.android.utils.theme.ViewThemeUtils;
+import com.strato.hidrive.common_ui.di.CommonUiComponentProvider;
+import com.strato.hidrive.scanbot.di.ScanbotComponent;
+import com.strato.hidrive.scanbot.di.ScanbotComponentProvider;
+import com.strato.hidrive.scanbot.initializer.ScanbotInitializer;
 
 import org.conscrypt.Conscrypt;
 import org.greenrobot.eventbus.EventBus;
@@ -123,7 +127,8 @@ import static com.owncloud.android.ui.activity.ContactsPreferenceActivity.PREFER
  * Main Application of the project.
  * Contains methods to build the "static" strings. These strings were before constants in different classes.
  */
-public class MainApp extends MultiDexApplication implements HasAndroidInjector {
+public class MainApp extends MultiDexApplication
+    implements HasAndroidInjector, ScanbotComponentProvider, CommonUiComponentProvider {
     public static final OwnCloudVersion OUTDATED_SERVER_VERSION = NextcloudVersion.nextcloud_26;
     public static final OwnCloudVersion MINIMUM_SUPPORTED_SERVER_VERSION = OwnCloudVersion.nextcloud_16;
 
@@ -151,6 +156,9 @@ public class MainApp extends MultiDexApplication implements HasAndroidInjector {
 
     @Inject
     protected OnboardingService onboarding;
+
+    @Inject
+    ScanbotInitializer scanbotInitializer;
 
     @Inject
     ConnectivityService connectivityService;
@@ -192,6 +200,9 @@ public class MainApp extends MultiDexApplication implements HasAndroidInjector {
     private boolean mBound;
 
     private static AppComponent appComponent;
+
+    private ScanbotComponent scanbotComponent;
+
 
     /**
      * Temporary hack
@@ -356,6 +367,7 @@ public class MainApp extends MultiDexApplication implements HasAndroidInjector {
         backgroundJobManager.schedulePeriodicHealthStatus();
 
         registerGlobalPassCodeProtection();
+        scanbotInitializer.initialize();
     }
 
     private final LifecycleEventObserver lifecycleEventObserver = ((lifecycleOwner, event) -> {
@@ -366,6 +378,20 @@ public class MainApp extends MultiDexApplication implements HasAndroidInjector {
             Log_OC.d(TAG, "APP IN BACKGROUND");
         }
     });
+
+    //TODO alk
+    @Override
+    public ScanbotComponent getScanbotComponent() {
+        if (this.scanbotComponent == null) {
+            this.scanbotComponent = appComponent.scanbotComponent();
+        }
+        return this.scanbotComponent;
+    }
+    //TODO alk
+    @Override
+    public AppComponent getComponent() {
+        return appComponent;
+    }
 
     private void registerGlobalPassCodeProtection() {
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {

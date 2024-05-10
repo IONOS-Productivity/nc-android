@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="scanbot_camera_button_active_color">@color/pizazz_dark</color>
+    <color name="scanbot_camera_button_background_idle">@color/white</color>
+    <color name="scanbot_camera_button_background_pressed">@color/transparent_dark10</color>
+    <color name="scanbot_camera_button_color">@color/white</color>
+    <color name="scanbot_camera_polygon_fill_color">@color/transparent_pizazz</color>
+    <color name="scanbot_camera_polygon_stroke_color">@color/transparent_pizazz2</color>
+    <color name="scanbot_camera_screen_background">@color/black</color>
+    <color name="scanbot_camera_screen_cancel_text_color">@color/white</color>
+    <color name="scanbot_camera_toolbar_background">@color/cod_gray_dark</color>
+
+    <color name="scanbot_crop_polygon_edge_color">@color/transparent_pizazz2</color>
+    <color name="scanbot_crop_screen_background">@color/black</color>
+    <color name="scanbot_crop_screen_button_background">@color/mine_shaft2_dark</color>
+    <color name="scanbot_crop_screen_button_text_color">@color/pizazz_dark</color>
+
+    <color name="scanbot_file_type_text_color_checked">@color/pizazz_dark</color>
+    <color name="scanbot_file_type_text_color_unchecked">@color/white</color>
+
+    <color name="scanbot_filter_control_active">@color/sunshade</color>
+    <color name="scanbot_filter_control_background">@color/mine_shaft</color>
+    <color name="scanbot_filter_control_icon_background">@color/scanbot_filter_control_background</color>
+    <color name="scanbot_filter_control_icon_border">@color/scanbot_filter_control_inactive</color>
+    <color name="scanbot_filter_control_inactive">@color/porcelain</color>
+    <color name="scanbot_filter_popup_background_color">@color/mine_shaft_dark</color>
+    <color name="scanbot_filter_popup_stroke_color">@color/grey</color>
+    <color name="scanbot_filter_popup_text_color">@color/white</color>
+
+    <color name="scanbot_gallery_background">@color/mine_shaft_dark</color>
+    <color name="scanbot_gallery_counter_rounded_background">@color/mine_shaft_dark</color>
+    <color name="scanbot_gallery_screen_counter_text_color">@color/white</color>
+
+    <color name="scanbot_rearrange_icon_color">@color/pizazz_dark</color>
+
+    <color name="scanbot_save_divider_color">@color/light_grey</color>
+    <color name="scanbot_save_file_location_label_text_color">@color/grey</color>
+    <color name="scanbot_save_file_name_label_text_color">@color/grey</color>
+    <color name="scanbot_save_file_type_label_text_color">@color/grey</color>
+    <color name="scanbot_save_screen_path_text_color">@color/white</color>
+    <color name="scanbot_save_file_name_text_color">@color/white</color>
+    <color name="scanbot_save_file_name_selected_text_color">@color/black_olive</color>
+
+    <color name="scanbot_toolbar_text_color">@color/white</color>
+</resources>

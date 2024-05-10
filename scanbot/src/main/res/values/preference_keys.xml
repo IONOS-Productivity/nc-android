@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="scanbot_preference_license_key" translatable="false">preference_scanbot_license_key</string>
+</resources>

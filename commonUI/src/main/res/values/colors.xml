@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary_color">@color/pizazz_dark</color>
+    <color name="primary_dark_color">@color/mango_tango</color>
+    <color name="accent_color">@color/lochmara</color>
+    <color name="accent_dark_color">@color/bahama_blue</color>
+    <color name="primary_font_color">@color/transparent_dark11</color>
+    <color name="primary_background_color">@color/alabaster</color>
+    <color name="primary_list_background_color">@color/white</color>
+    <color name="control_activated_color">@color/lochmara</color>
+    <color name="control_list_activated_color">@color/pizazz_dark</color>
+    <color name="mimetype_icon_color">@color/deep_gray</color>
+    <color name="mimetype_encrypted_icon_lock_color">@color/alabaster</color>
+    <color name="mimetype_encrypted_icon_lock_background_color">@color/mine_shaft_dark</color>
+    <color name="mimetype_selected_icon_color">@color/pizazz_dark</color>
+    <color name="mimetype_search_selected_icon_color">@color/lochmara</color>
+
+    <color name="stylized_edit_text_text_color">@color/transparent_emperor</color>
+    <color name="stylized_edit_text_selected_text_color">@color/transparent_emperor</color>
+    <color name="stylized_edit_text_highlight_color">@color/transparent_lochmara</color>
+    <color name="stylized_edit_text_select_handler_color">@color/accent_color</color>
+
+    <color name="app_bar_color">@color/primary_color</color>
+    <color name="app_bar_read_mode_color">@color/primary_color</color>
+
+    <color name="main_screen_container_background">@color/white</color>
+
+    <color name="common_text_color">@color/black</color>
+
+    <color name="dialog_content_text">@color/black</color>
+    <color name="dialog_buttons_color">@color/accent_color</color>
+    <color name="dialog_title_color">@color/common_text_color</color>
+    <color name="activated_control_color">@color/lochmara</color>
+    <color name="deactivated_control_color">@color/tundora</color>
+
+    <color name="download_progressbar_fill_color">@color/grey</color>
+    <color name="download_progressbar_background_color">@color/blue</color>
+
+    <color name="ic_edit_fill_color">@color/black</color>
+    <color name="icons_tint_color">@color/black</color>
+
+    <color name="fabColorRipple">@color/accent_dark_color</color>
+    <color name="fabColorNormal">@color/accent_color</color>
+    <color name="fabColorPressed">@color/accent_dark_color</color>
+
+    <color name="dialog_check_box_normal_color">@color/control_activated_color</color>
+    <color name="dialog_check_box_activated_color">@color/control_activated_color</color>
+    <color name="item_view_check_box_activated_color">@color/control_list_activated_color</color>
+    <color name="item_view_check_box_normal_color">@color/silver2</color>
+
+
+    <color name="preference_item_title_text">@color/tundora</color>
+    <color name="preference_item_subtitle_text">@color/silver_chalice</color>
+    <color name="preference_button_text">@color/tundora</color>
+
+    <color name="system_bar_read_mode_color">@color/primary_dark_color</color>
+
+    <color name="view_preferences_background">@color/white</color>
+    <color name="view_preference_category_background">@color/white</color>
+    <color name="view_preference_category_divider_color">@color/alto</color>
+    <color name="view_preference_item_background">@color/white</color>
+
+    <color name="user_account_button_bg">@color/tundora3</color>
+    <color name="stylized_edit_text_line_color">@color/accent_color</color>
+</resources>
