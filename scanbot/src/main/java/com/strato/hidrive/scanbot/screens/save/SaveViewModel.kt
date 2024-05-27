@@ -9,7 +9,6 @@ import com.strato.hidrive.scanbot.repository.RepositoryFacade
 import com.strato.hidrive.scanbot.screens.base.BaseViewModel
 import com.strato.hidrive.scanbot.screens.save.SaveScreen.*
 import com.strato.hidrive.scanbot.screens.save.SaveScreen.Event.*
-import com.strato.hidrive.scanbot.screens.save.use_case.GetTargetPath
 import com.strato.hidrive.scanbot.screens.save.use_case.ValidateFilesForUpload
 import com.strato.hidrive.scanbot.screens.save.use_case.save.SaveDocument
 import com.strato.hidrive.scanbot.tracking.ScanbotSaveScreenEventTracker

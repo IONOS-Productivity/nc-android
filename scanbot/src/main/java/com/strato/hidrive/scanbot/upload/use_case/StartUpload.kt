@@ -5,7 +5,6 @@ import androidx.core.net.toFile
 import com.strato.hidrive.domain.background.jobs.interfaces.UploadJobListener
 import com.strato.hidrive.domain.entity.RemoteFileInfo
 import com.strato.hidrive.domain.interfaces.actions.null_objects.NullParamAction
-import com.strato.hidrive.domain.manager.entity_cache_cleaner.EntityCacheCleaner
 import com.strato.hidrive.domain.optional.Optional
 import com.strato.hidrive.domain.upload.result.UploadFileResult
 import com.strato.hidrive.domain.utils.kotlin.extension.deleteIfExists
@@ -44,7 +43,7 @@ class StartUpload @Inject constructor(
 		override fun onUploadFileSuccess(localFilePath: String, uploadedFile: RemoteFileInfo) {
 			//TODO alk - clean a cache here
             //thumbnailCacheCleaner.clean(uploadedFile)
-			onResult(UploadFileResult.Success(uploadedFile))
+			//onResult(UploadFileResult.Success(uploadedFile))
 			File(localFilePath).deleteIfExists()
 		}
 

@@ -48,7 +48,7 @@ data class RemoteFileInfo @JvmOverloads constructor(
 	val isTeamfolder: Boolean = false,
 	val membersCount: Int = 0,
 	val mHash: String = "",
-	val imageInfo: ImageInfo? = null,
+	//val imageInfo: ImageInfo? = null,
 	private var decodedName: String? = null,
 	// todo future refactoring: make key immutable
 	var exportedDirectoryKey: Any? = null,
