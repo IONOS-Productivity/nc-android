@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import com.strato.hidrive.common_ui.intent.OpenSettingsAction
 import com.strato.hidrive.common_ui.message.Duration.Seconds
 import com.strato.hidrive.common_ui.message.MessageBuilderFactory
 import com.strato.hidrive.common_ui.message.qualifiers.SnackBarMessage

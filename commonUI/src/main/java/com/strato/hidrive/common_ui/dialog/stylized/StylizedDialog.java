@@ -13,8 +13,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ListAdapter;
 
-//import com.strato.hidrive.common_ui.activity.main.MainNavigationViewContainer;
-import com.strato.hidrive.common_ui.activity.main.MainNavigationViewContainerListener;
 import com.strato.hidrive.common_ui.activity.BasicActivityLifecycleListener;
 import com.strato.hidrive.common_ui.activity.RegisterableActivity;
 import com.strato.hidrive.common_ui.dialog.stylized.localized.LocalizedTextStrategy;
@@ -427,10 +425,4 @@ public class StylizedDialog<V extends View & SavingStateView> {
 		}
 	};
 
-	private final MainNavigationViewContainerListener mainNavigationViewContainerListener = new MainNavigationViewContainerListener() {
-		@Override
-		public void onGoToView() {
-			dismiss();
-		}
-	};
 }
