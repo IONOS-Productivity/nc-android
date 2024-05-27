@@ -13,7 +13,6 @@ include ':commonUI'
 include ':domain'
 include ':libs:logger'
 include ':libs:passwordProtectionSdk'
-include ':libs:hidriveSdk'
 
 
 //includeBuild('../android-common') {
