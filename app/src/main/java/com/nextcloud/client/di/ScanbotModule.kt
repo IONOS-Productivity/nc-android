@@ -3,7 +3,6 @@ package com.nextcloud.client.di
 // import com.strato.hidrive.BuildConfig
 // import com.strato.hidrive.bll.upload.factory.UploadFactory
 import com.owncloud.android.BuildConfig
-import com.strato.hidrive.domain.exception.FatalTryCatchExceptionHandler
 import com.strato.hidrive.domain.exception.LogTryCatchExceptionHandler
 import com.strato.hidrive.domain.exception.TryCatchExceptionHandler
 import com.strato.hidrive.domain.utils.availability.Availability
@@ -15,7 +14,6 @@ import com.strato.hidrive.scanbot.di.qualifiers.ScanbotLicenseKey
 import com.strato.hidrive.scanbot.di.qualifiers.ScanbotLicenseKeyUrl
 import com.strato.hidrive.scanbot.initializer.ScanbotInitializer
 import com.strato.hidrive.scanbot.initializer.ScanbotInitializerImpl
-import com.strato.hidrive.scanbot.license.ScanbotLicenseAvailability
 // import com.strato.hidrive.scanbot.tracking.ScanbotCameraScreenEventTracker
 // import com.strato.hidrive.scanbot.tracking.ScanbotCropScreenEventTracker
 // import com.strato.hidrive.scanbot.tracking.ScanbotFilterScreenEventTracker
@@ -52,12 +50,6 @@ class ScanbotModule {
 	@Scanbot
 	fun provideScanbotFeatureAvailability() = Availability {
         true //BuildConfig.IS_SCANBOT_FEATURE_AVAILABLE
-	}
-
-	@Provides
-	@ScanbotLicense
-	internal fun provideLicenseAvailability(availability: ScanbotLicenseAvailability): Availability {
-		return availability
 	}
 
 	@Provides

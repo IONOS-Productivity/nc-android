@@ -21,7 +21,7 @@ compileKotlin {
 }
 
 dependencies {
-    api project(':libs:hidriveSdk')
+    //api project(':libs:hidriveSdk')
     api project(':libs:logger')
     // HASH
     implementation 'commons-codec:commons-codec:1.15'
