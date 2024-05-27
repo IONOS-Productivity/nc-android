@@ -1,7 +1,5 @@
 package com.strato.hidrive.scanbot.di
 
-import com.strato.hidrive.common_ui.dialog.stylized.overwrite_file_dialog.upload.FilterFavoritesDialogFactory
-import com.strato.hidrive.common_ui.remote_target.UploadTargetPickerLauncher
 import com.strato.hidrive.scanbot.controller.ScanbotController
 import com.strato.hidrive.scanbot.screens.camera.CameraViewModelFactory
 import com.strato.hidrive.scanbot.screens.crop.CropViewModelFactory
