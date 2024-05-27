@@ -9,18 +9,18 @@ import android.view.Menu;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.strato.hidrive.common_ui.utils.ScreenUtils;
-import com.viseven.develop.passwordprotectionsdk.activity.PasswordProtectionActivityObserver;
-import com.viseven.develop.passwordprotectionsdk.activity.PasswordProtectionOwner;
+//import com.viseven.develop.passwordprotectionsdk.activity.PasswordProtectionActivityObserver;
+//import com.viseven.develop.passwordprotectionsdk.activity.PasswordProtectionOwner;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BaseSpyableActivity
 		extends AppCompatActivity
-		implements RegisterableActivity, PasswordProtectionOwner {
+		implements RegisterableActivity/*, PasswordProtectionOwner*/ {
 
 	private final List<ActivityLifecycleListener> lifecycleListeners = new ArrayList<>();
-	private final List<PasswordProtectionActivityObserver> activityObservers = new ArrayList<>();
+//	private final List<PasswordProtectionActivityObserver> activityObservers = new ArrayList<>();
 
 	@Override
 	public void registerActivityLifecycleListener(ActivityLifecycleListener listener) {
@@ -101,9 +101,9 @@ public abstract class BaseSpyableActivity
 		for (int i = 0; i < this.lifecycleListeners.size(); i++) {
 			this.lifecycleListeners.get(i).onActivityResult(requestCode, resultCode, data);
 		}
-		for (PasswordProtectionActivityObserver activityObserver : activityObservers) {
-			activityObserver.onActivityResult(requestCode, resultCode, data);
-		}
+//		for (PasswordProtectionActivityObserver activityObserver : activityObservers) {
+//			activityObserver.onActivityResult(requestCode, resultCode, data);
+//		}
 
 		super.onActivityResult(requestCode, resultCode, data);
 	}
@@ -133,29 +133,29 @@ public abstract class BaseSpyableActivity
 		return false;
 	}
 
-	@Override
-	public void startActivityForResult(Intent intent, int requestCode) {
-		startActivityForResult(intent, requestCode, false);
-	}
+//	@Override
+//	public void startActivityForResult(Intent intent, int requestCode) {
+//		startActivityForResult(intent, requestCode, false);
+//	}
 
-	public final void startActivity(Intent intent, boolean forceSecurityModeAfterFinish) {
-		startActivityForResult(intent, -1, forceSecurityModeAfterFinish);
-	}
+//	public final void startActivity(Intent intent, boolean forceSecurityModeAfterFinish) {
+//		startActivityForResult(intent, -1, forceSecurityModeAfterFinish);
+//	}
 
-	public final void startActivityForResult(Intent intent, int requestCode, boolean forceSecurityModeAfterFinish) {
-		super.startActivityForResult(intent, requestCode);
-		for (PasswordProtectionActivityObserver activityObserver : activityObservers) {
-			activityObserver.startActivityForResult(intent, requestCode, forceSecurityModeAfterFinish);
-		}
-	}
-
-	@Override
-	public void registerActivityObserver(PasswordProtectionActivityObserver activityObserver) {
-		this.activityObservers.add(activityObserver);
-	}
-
-	@Override
-	public void unregisterActivityObserver(PasswordProtectionActivityObserver activityObserver) {
-		this.activityObservers.remove(activityObserver);
-	}
+//	public final void startActivityForResult(Intent intent, int requestCode, boolean forceSecurityModeAfterFinish) {
+//		super.startActivityForResult(intent, requestCode);
+//		for (PasswordProtectionActivityObserver activityObserver : activityObservers) {
+//			activityObserver.startActivityForResult(intent, requestCode, forceSecurityModeAfterFinish);
+//		}
+//	}
+//
+//	@Override
+//	public void registerActivityObserver(PasswordProtectionActivityObserver activityObserver) {
+//		this.activityObservers.add(activityObserver);
+//	}
+//
+//	@Override
+//	public void unregisterActivityObserver(PasswordProtectionActivityObserver activityObserver) {
+//		this.activityObservers.remove(activityObserver);
+//	}
 }
