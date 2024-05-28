@@ -185,6 +185,14 @@ android {
                 versionCode 1
                 versionName "1"
             }
+
+            ionos {
+                applicationId "com.ionos.easystorage"
+                dimension "default"
+                versionCode 1
+                versionName "1.0.0"
+                isDefault = true
+            }
         }
 
 
