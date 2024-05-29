@@ -7,9 +7,3 @@ fun File.deleteIfExists() {
 		delete()
 	}
 }
-
-fun File.makeParentDirsIfNotExists() = parentFile?.let {
-	if (!it.exists()) {
-		it.mkdirs()
-	}
-}

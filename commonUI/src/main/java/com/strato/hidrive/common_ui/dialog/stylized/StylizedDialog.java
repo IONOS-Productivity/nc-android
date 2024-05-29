@@ -13,8 +13,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ListAdapter;
 
-import com.strato.hidrive.common_ui.activity.BasicActivityLifecycleListener;
-import com.strato.hidrive.common_ui.activity.RegisterableActivity;
 import com.strato.hidrive.common_ui.dialog.stylized.localized.LocalizedTextStrategy;
 import com.strato.hidrive.domain.exception.TryCatchExceptionHandler;
 import com.strato.hidrive.domain.optional.Optional;
@@ -324,13 +322,12 @@ public class StylizedDialog<V extends View & SavingStateView> {
 		} else {
 			LoggerUtil.logD(getClass().getSimpleName(), "Can't show override file dialog");
 		}
-		registerActivityLifecycleListener();
-		registerMainNavigationViewContainerListener();
+//		registerMainNavigationViewContainerListener();
 	}
 
 	public final void dismiss() {
 		this.alertDialog.dismiss();
-		unregisterActivityLifecycleListener();
+//		unregisterActivityLifecycleListener();
 		unregisterMainNavigationViewContainerListener();
 	}
 
@@ -362,17 +359,6 @@ public class StylizedDialog<V extends View & SavingStateView> {
 		}
 	}
 
-	private void registerActivityLifecycleListener() {
-		if (this.context instanceof RegisterableActivity) {
-			((RegisterableActivity) this.context).registerActivityLifecycleListener(this.activityLifecycleListener);
-		}
-	}
-
-	private void unregisterActivityLifecycleListener() {
-		if (this.context instanceof RegisterableActivity) {
-			((RegisterableActivity) this.context).unregisterActivityLifecycleListener(this.activityLifecycleListener);
-		}
-	}
 
     //TODO alk
 	private void registerMainNavigationViewContainerListener() {
@@ -410,19 +396,5 @@ public class StylizedDialog<V extends View & SavingStateView> {
 				.build(this.context)
 				.show();
 	}
-
-	private final BasicActivityLifecycleListener activityLifecycleListener = new BasicActivityLifecycleListener() {
-		@Override
-		public void onConfigurationChanged(Configuration newConfig) {
-			super.onConfigurationChanged(newConfig);
-			handleConfigChanges();
-		}
-
-		@Override
-		public void onDestroy() {
-			super.onDestroy();
-			dismiss();
-		}
-	};
 
 }
