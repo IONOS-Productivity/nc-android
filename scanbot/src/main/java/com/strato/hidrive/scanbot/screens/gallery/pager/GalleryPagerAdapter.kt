@@ -5,10 +5,6 @@ import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams
 import android.widget.ImageView
 import androidx.viewpager.widget.PagerAdapter
-import com.strato.hidrive.common_ui.image.loader.ImageLoader
-import com.strato.hidrive.common_ui.image.loader.options.ImageLoaderOptionsBundle
-import com.strato.hidrive.common_ui.image.loader.options.ScaleType
-import com.strato.hidrive.common_ui.image.loader.target.SimpleDrawableTarget
 import com.strato.hidrive.scanbot.entity.Picture
 import com.strato.hidrive.scanbot.repository.RepositoryFacade
 import javax.inject.Inject
