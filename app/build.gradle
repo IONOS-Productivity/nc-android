@@ -334,6 +334,7 @@ dependencies {
     gplayImplementation project(':appscan')
     huaweiImplementation project(':appscan')
     qaImplementation project(':appscan')
+    ionosImplementation project(':appscan')
     implementation project(':scanbot')
     implementation project(':commonUI')
     implementation project(':domain')
