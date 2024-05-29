@@ -40,17 +40,17 @@
 		app:layout_constraintStart_toStartOf="@+id/llBottomNavigation"
 		tools:text="1 of 1" />
 
-	<com.github.clans.fab.FloatingActionButton
-		android:id="@+id/fabScanbotAdd"
-		android:layout_width="@dimen/fab_button_diameter"
-		android:layout_height="@dimen/fab_button_diameter"
-		android:layout_margin="@dimen/fab_button_margin"
-		app:fab_colorNormal="@color/fabColorNormal"
-		app:fab_colorPressed="@color/fabColorPressed"
-		android:src="@drawable/fab_add"
-		app:rippleColor="@color/fabColorRipple"
-		app:layout_constraintBottom_toTopOf="@+id/llBottomNavigation"
-		app:layout_constraintEnd_toEndOf="parent" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabScanbotAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:contentDescription="fab"
+        app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_plus" />
 
 	<LinearLayout
 		android:id="@+id/llBottomNavigation"

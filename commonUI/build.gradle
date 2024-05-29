@@ -44,7 +44,6 @@ android {
 dependencies {
 
     api "androidx.exifinterface:exifinterface:$androidx_exifinterface_version"
-    api "com.github.clans:fab:$fab_version"
 
     implementation project(':domain')
 
