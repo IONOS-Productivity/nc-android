@@ -5,8 +5,8 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import com.strato.hidrive.domain.upload.result.UploadFileResult
-import com.strato.hidrive.domain.upload.target.UploadTarget
-import com.strato.hidrive.domain.upload.target.UploadTargetRepository
+import com.strato.hidrive.domain.upload.targetprovider.UploadTarget
+import com.strato.hidrive.domain.upload.targetprovider.UploadTargetRepository
 import io.reactivex.Observable
 
 abstract class ScanbotController {

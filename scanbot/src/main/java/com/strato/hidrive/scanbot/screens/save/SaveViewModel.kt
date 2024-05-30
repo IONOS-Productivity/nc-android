@@ -1,7 +1,7 @@
 package com.strato.hidrive.scanbot.screens.save
 
 import android.net.Uri
-import com.strato.hidrive.domain.upload.target.UploadTarget
+import com.strato.hidrive.domain.upload.targetprovider.UploadTarget
 import com.strato.hidrive.domain.utils.kotlin.extension.plusAssign
 import com.strato.hidrive.scanbot.controller.ScanbotController
 import com.strato.hidrive.scanbot.provider.DocumentNameProvider
@@ -11,11 +11,9 @@ import com.strato.hidrive.scanbot.screens.save.SaveScreen.*
 import com.strato.hidrive.scanbot.screens.save.SaveScreen.Event.*
 import com.strato.hidrive.scanbot.screens.save.use_case.ValidateFilesForUpload
 import com.strato.hidrive.scanbot.screens.save.use_case.save.SaveDocument
-import com.strato.hidrive.scanbot.tracking.ScanbotSaveScreenEventTracker
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 internal class SaveViewModel @Inject constructor(

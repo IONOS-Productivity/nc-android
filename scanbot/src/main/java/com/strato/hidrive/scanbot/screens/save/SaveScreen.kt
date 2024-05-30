@@ -1,6 +1,6 @@
 package com.strato.hidrive.scanbot.screens.save
 
-import com.strato.hidrive.domain.upload.target.UploadTarget
+import com.strato.hidrive.domain.upload.targetprovider.UploadTarget
 import com.strato.hidrive.scanbot.screens.base.BaseScreen
 
 internal interface SaveScreen {

@@ -1,7 +1,6 @@
 package com.strato.hidrive.scanbot.screens.save.use_case
 
-import com.strato.hidrive.domain.predicate.RemoteFilePathOverwritePredicate
-import com.strato.hidrive.domain.upload.target.UploadTarget
+import com.strato.hidrive.domain.upload.targetprovider.UploadTarget
 import com.strato.hidrive.domain.utils.FileUtils
 import com.strato.hidrive.scanbot.repository.RepositoryFacade
 import com.strato.hidrive.scanbot.screens.save.SaveScreen.FileType
