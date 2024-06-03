@@ -7,7 +7,7 @@ import com.strato.hidrive.common_ui.R;
 import com.ionos.common_ui.di.CommonUiComponent;
 import com.ionos.common_ui.dialog.stylized.StylizedDialog;
 import com.ionos.common_ui.utils.ContextUtils;
-import com.strato.hidrive.domain.exception.TryCatchExceptionHandler;
+import com.ionos.domain.exception.TryCatchExceptionHandler;
 
 import javax.inject.Inject;
 

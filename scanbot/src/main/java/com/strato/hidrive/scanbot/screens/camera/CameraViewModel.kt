@@ -2,10 +2,10 @@ package com.strato.hidrive.scanbot.screens.camera
 
 import android.graphics.Bitmap
 import android.net.Uri
-import com.strato.hidrive.domain.permission.Permission
-import com.strato.hidrive.domain.permission.PermissionsController
-// import com.strato.hidrive.domain.use_case.free_space.GetLocalFreeSpace
-import com.strato.hidrive.domain.utils.kotlin.extension.plusAssign
+import com.ionos.domain.permission.Permission
+import com.ionos.domain.permission.PermissionsController
+// import com.ionos.domain.use_case.free_space.GetLocalFreeSpace
+import com.ionos.domain.utils.kotlin.extension.plusAssign
 import com.strato.hidrive.scanbot.exception.NoCameraPermissionException
 import com.strato.hidrive.scanbot.repository.RepositoryFacade
 import com.strato.hidrive.scanbot.repository.bitmap.BitmapDecoder

@@ -10,8 +10,8 @@ import com.ionos.common_ui.dialog.stylized.localized.StringLocalizedStrategy;
 import com.ionos.common_ui.dialog.stylized.localized.StringResLocalizedStrategy;
 import com.strato.hidrive.common_ui.R;
 import com.ionos.common_ui.dialog.stylized.StylizedDialog;
-import com.strato.hidrive.domain.exception.TryCatchExceptionHandler;
-import com.strato.hidrive.domain.interfaces.actions.Action;
+import com.ionos.domain.exception.TryCatchExceptionHandler;
+import com.ionos.domain.interfaces.actions.Action;
 
 /**
  * Created by Sergey Shandyuk on 12/30/2016.

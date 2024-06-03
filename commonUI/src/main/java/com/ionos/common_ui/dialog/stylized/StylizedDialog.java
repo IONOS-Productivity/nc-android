@@ -17,8 +17,8 @@ import com.ionos.common_ui.dialog.stylized.listeners.OnStylizedDialogButtonClick
 import com.ionos.common_ui.dialog.stylized.listeners.OnStylizedDialogItemClickListener;
 import com.ionos.common_ui.dialog.stylized.localized.LocalizedTextStrategy;
 import com.ionos.common_ui.dialog.stylized.view_factory.StylizedDialogViewFactory;
-import com.strato.hidrive.domain.exception.TryCatchExceptionHandler;
-import com.strato.hidrive.domain.optional.Optional;
+import com.ionos.domain.exception.TryCatchExceptionHandler;
+import com.ionos.domain.optional.Optional;
 import com.strato.hidrive.domain.logger.LoggerUtil;
 
 import java.util.List;

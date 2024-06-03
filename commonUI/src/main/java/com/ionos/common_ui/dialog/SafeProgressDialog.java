@@ -6,7 +6,7 @@ import android.content.Context;
 
 import com.ionos.common_ui.utils.ContextUtils;
 import com.ionos.common_ui.di.CommonUiComponent;
-import com.strato.hidrive.domain.exception.TryCatchExceptionHandler;
+import com.ionos.domain.exception.TryCatchExceptionHandler;
 
 import javax.inject.Inject;
 

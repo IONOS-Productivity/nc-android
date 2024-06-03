@@ -2,8 +2,8 @@ package com.strato.hidrive.scanbot.screens.camera.use_case
 
 import android.content.Context
 import android.net.Uri
-import com.strato.hidrive.domain.exception.NoFreeLocalSpaceException
-import com.strato.hidrive.domain.utils.FileUtils
+import com.ionos.domain.exception.NoFreeLocalSpaceException
+import com.ionos.domain.utils.FileUtils
 import com.strato.hidrive.scanbot.R
 import com.strato.hidrive.scanbot.exception.ImportPictureException
 import com.strato.hidrive.scanbot.exception.NoCameraPermissionException

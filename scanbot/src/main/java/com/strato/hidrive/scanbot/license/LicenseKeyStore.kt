@@ -1,7 +1,7 @@
 package com.strato.hidrive.scanbot.license
 
 import android.content.Context
-import com.strato.hidrive.domain.optional.Optional
+import com.ionos.domain.optional.Optional
 import com.strato.hidrive.scanbot.R
 import javax.inject.Inject
 

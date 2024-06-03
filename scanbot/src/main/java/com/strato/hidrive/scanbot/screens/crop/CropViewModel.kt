@@ -3,7 +3,7 @@ package com.strato.hidrive.scanbot.screens.crop
 import android.graphics.Bitmap
 import android.graphics.Matrix
 import android.graphics.PointF
-import com.strato.hidrive.domain.utils.kotlin.extension.plusAssign
+import com.ionos.domain.utils.kotlin.extension.plusAssign
 import com.strato.hidrive.scanbot.entity.Picture
 import com.strato.hidrive.scanbot.entity.SelectedContour
 import com.strato.hidrive.scanbot.filter.FilterType

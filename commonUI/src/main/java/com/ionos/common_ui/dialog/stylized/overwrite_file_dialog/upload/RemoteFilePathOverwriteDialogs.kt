@@ -3,7 +3,7 @@ package com.ionos.common_ui.dialog.stylized.overwrite_file_dialog.upload
 import android.app.Activity
 import com.ionos.common_ui.dialog.stylized.overwrite_file_dialog.DialogWrapperCreator
 import com.ionos.common_ui.dialog.stylized.overwrite_file_dialog.OverwriteDialogs
-import com.strato.hidrive.domain.interfaces.actions.ParamAction
+import com.ionos.domain.interfaces.actions.ParamAction
 import java.io.File
 
 class RemoteFilePathOverwriteDialogs(

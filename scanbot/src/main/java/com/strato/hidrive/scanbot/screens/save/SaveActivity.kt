@@ -6,8 +6,8 @@ import androidx.core.widget.addTextChangedListener
 import com.ionos.common_ui.dialog.LockProgressDialog
 import com.ionos.common_ui.dialog.stylized.overwrite_file_dialog.OverwriteDialogs
 import com.ionos.common_ui.dialog.stylized.overwrite_file_dialog.upload.RemoteFilePathOverwriteDialogs
-import com.strato.hidrive.domain.exception.NoFreeLocalSpaceException
-import com.strato.hidrive.domain.utils.kotlin.extension.plusAssign
+import com.ionos.domain.exception.NoFreeLocalSpaceException
+import com.ionos.domain.utils.kotlin.extension.plusAssign
 import com.strato.hidrive.scanbot.R
 import com.strato.hidrive.scanbot.databinding.ScanbotActivitySaveBinding
 import com.strato.hidrive.scanbot.di.inject

@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.PopupWindow
 import androidx.annotation.StringRes
-import com.strato.hidrive.domain.interfaces.actions.Action
+import com.ionos.domain.interfaces.actions.Action
 import com.strato.hidrive.scanbot.R
 import com.strato.hidrive.scanbot.databinding.ScanbotFilterPopupBinding
 

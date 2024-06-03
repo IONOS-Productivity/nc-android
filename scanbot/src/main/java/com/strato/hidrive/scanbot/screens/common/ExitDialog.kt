@@ -3,7 +3,7 @@ package com.strato.hidrive.scanbot.screens.common
 import android.content.Context
 import com.ionos.common_ui.dialog.wrapper.SingleMessageDialogWrapper
 import com.ionos.common_ui.utils.ContextUtils
-import com.strato.hidrive.domain.exception.TryCatchExceptionHandler
+import com.ionos.domain.exception.TryCatchExceptionHandler
 import com.strato.hidrive.scanbot.R
 import javax.inject.Inject
 

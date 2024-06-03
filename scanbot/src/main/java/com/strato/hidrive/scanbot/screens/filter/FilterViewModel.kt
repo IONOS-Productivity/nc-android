@@ -1,7 +1,7 @@
 package com.strato.hidrive.scanbot.screens.filter
 
 import android.graphics.Bitmap
-import com.strato.hidrive.domain.utils.kotlin.extension.plusAssign
+import com.ionos.domain.utils.kotlin.extension.plusAssign
 import com.strato.hidrive.scanbot.filter.FilterType
 import com.strato.hidrive.scanbot.filter.color.ColorFilter
 import com.strato.hidrive.scanbot.filter.color.ColorFilterType

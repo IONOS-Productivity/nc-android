@@ -3,7 +3,7 @@ package com.strato.hidrive.scanbot.screens.camera.ui_components
 import android.app.Activity
 import android.view.Gravity
 import android.widget.Toast
-import com.strato.hidrive.domain.utils.kotlin.extension.plusAssign
+import com.ionos.domain.utils.kotlin.extension.plusAssign
 import com.strato.hidrive.scanbot.provider.ContourDetectorParamsProvider
 import com.strato.hidrive.scanbot.screens.camera.use_case.GetUserGuidanceMessage
 import io.reactivex.android.schedulers.AndroidSchedulers

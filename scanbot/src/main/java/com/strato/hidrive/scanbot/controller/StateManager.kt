@@ -3,7 +3,7 @@ package com.strato.hidrive.scanbot.controller
 import android.os.Bundle
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.strato.hidrive.domain.upload.targetprovider.UploadTarget
+import com.ionos.domain.upload.targetprovider.UploadTarget
 import com.strato.hidrive.scanbot.entity.Picture
 import com.strato.hidrive.scanbot.filter.color.ColorFilterType
 import com.strato.hidrive.scanbot.util.gson.RuntimeTypeAdapterFactory

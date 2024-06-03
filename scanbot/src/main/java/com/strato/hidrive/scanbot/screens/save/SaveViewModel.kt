@@ -1,8 +1,8 @@
 package com.strato.hidrive.scanbot.screens.save
 
 import android.net.Uri
-import com.strato.hidrive.domain.upload.targetprovider.UploadTarget
-import com.strato.hidrive.domain.utils.kotlin.extension.plusAssign
+import com.ionos.domain.upload.targetprovider.UploadTarget
+import com.ionos.domain.utils.kotlin.extension.plusAssign
 import com.strato.hidrive.scanbot.controller.ScanbotController
 import com.strato.hidrive.scanbot.provider.DocumentNameProvider
 import com.strato.hidrive.scanbot.repository.RepositoryFacade

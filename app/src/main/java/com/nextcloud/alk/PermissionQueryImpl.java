@@ -2,11 +2,11 @@ package com.nextcloud.alk;
 
 import android.util.Pair;
 
-import com.strato.hidrive.domain.permission.CheckPermissionsResult;
-import com.strato.hidrive.domain.permission.Permission;
-import com.strato.hidrive.domain.permission.PermissionQuery;
-import com.strato.hidrive.domain.permission.PermissionsController;
-import com.strato.hidrive.domain.permission.PermissionsListener;
+import com.ionos.domain.permission.CheckPermissionsResult;
+import com.ionos.domain.permission.Permission;
+import com.ionos.domain.permission.PermissionQuery;
+import com.ionos.domain.permission.PermissionsController;
+import com.ionos.domain.permission.PermissionsListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;

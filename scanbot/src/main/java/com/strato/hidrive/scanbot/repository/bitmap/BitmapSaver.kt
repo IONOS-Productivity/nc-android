@@ -5,7 +5,7 @@ import android.graphics.Bitmap
 import android.system.ErrnoException
 import android.system.OsConstants
 import android.util.Log
-import com.strato.hidrive.domain.exception.NoFreeLocalSpaceException
+import com.ionos.domain.exception.NoFreeLocalSpaceException
 import com.strato.hidrive.scanbot.entity.ImageFormat
 import com.strato.hidrive.scanbot.util.io.SaveErrorOutputStream
 import java.io.File

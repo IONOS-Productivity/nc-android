@@ -5,10 +5,10 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import com.ionos.common_ui.message.Duration.Seconds
-import com.strato.hidrive.domain.upload.result.UploadFileResult
-import com.strato.hidrive.domain.upload.targetprovider.UploadTarget
-import com.strato.hidrive.domain.upload.targetprovider.UploadTargetRepository
-import com.strato.hidrive.domain.upload.targetprovider.UploadTargetRepositoryImpl
+import com.ionos.domain.upload.result.UploadFileResult
+import com.ionos.domain.upload.targetprovider.UploadTarget
+import com.ionos.domain.upload.targetprovider.UploadTargetRepository
+import com.ionos.domain.upload.targetprovider.UploadTargetRepositoryImpl
 import com.strato.hidrive.scanbot.repository.PictureRepository
 import com.strato.hidrive.scanbot.repository.RepositoryFacade
 import com.strato.hidrive.scanbot.screens.camera.CameraActivity

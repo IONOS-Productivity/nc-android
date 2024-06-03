@@ -1,11 +1,11 @@
 package com.strato.hidrive.scanbot.upload
 
 import android.net.Uri
-import com.strato.hidrive.domain.background.jobs.interfaces.UploadJobListener
-import com.strato.hidrive.domain.entity.RemoteFileInfo
-import com.strato.hidrive.domain.interfaces.actions.ParamAction
-import com.strato.hidrive.domain.optional.Function
-import com.strato.hidrive.domain.optional.Optional
+import com.ionos.domain.background.jobs.interfaces.UploadJobListener
+import com.ionos.domain.entity.RemoteFileInfo
+import com.ionos.domain.interfaces.actions.ParamAction
+import com.ionos.domain.optional.Function
+import com.ionos.domain.optional.Optional
 
 interface UploadWithoutCheckForFileExisting {
 

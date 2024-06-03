@@ -3,7 +3,7 @@ package com.ionos.common_ui.dialog.stylized.overwrite_file_dialog;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.strato.hidrive.domain.interfaces.actions.ParamAction;
+import com.ionos.domain.interfaces.actions.ParamAction;
 
 import java.util.List;
 import java.util.Queue;

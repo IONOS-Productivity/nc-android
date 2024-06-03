@@ -2,12 +2,12 @@ package com.strato.hidrive.scanbot.upload.use_case
 
 import android.net.Uri
 import androidx.core.net.toFile
-import com.strato.hidrive.domain.background.jobs.interfaces.UploadJobListener
-import com.strato.hidrive.domain.entity.RemoteFileInfo
-import com.strato.hidrive.domain.interfaces.actions.null_objects.NullParamAction
-import com.strato.hidrive.domain.optional.Optional
-import com.strato.hidrive.domain.upload.result.UploadFileResult
-import com.strato.hidrive.domain.utils.kotlin.extension.deleteIfExists
+import com.ionos.domain.background.jobs.interfaces.UploadJobListener
+import com.ionos.domain.entity.RemoteFileInfo
+import com.ionos.domain.interfaces.actions.null_objects.NullParamAction
+import com.ionos.domain.optional.Optional
+import com.ionos.domain.upload.result.UploadFileResult
+import com.ionos.domain.utils.kotlin.extension.deleteIfExists
 import com.strato.hidrive.scanbot.upload.UploadWithoutCheckForFileExisting
 import java.io.File
 import java.util.Collections

@@ -1,9 +1,9 @@
 package com.strato.hidrive.scanbot.di
 
 import android.content.Context
-import com.strato.hidrive.domain.exception.LogTryCatchExceptionHandler
-import com.strato.hidrive.domain.exception.TryCatchExceptionHandler
-import com.strato.hidrive.domain.utils.availability.Availability
+import com.ionos.domain.exception.LogTryCatchExceptionHandler
+import com.ionos.domain.exception.TryCatchExceptionHandler
+import com.ionos.domain.utils.availability.Availability
 import com.strato.hidrive.scanbot.BuildConfig
 import com.strato.hidrive.scanbot.controller.ScanbotController
 import com.strato.hidrive.scanbot.controller.ScanbotControllerImpl

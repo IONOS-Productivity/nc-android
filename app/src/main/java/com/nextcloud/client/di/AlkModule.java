@@ -3,8 +3,8 @@ package com.nextcloud.client.di;
 import android.content.Context;
 
 import com.nextcloud.alk.PermissionQueryImpl;
-import com.strato.hidrive.domain.permission.PermissionQuery;
-import com.strato.hidrive.domain.permission.PermissionsController;
+import com.ionos.domain.permission.PermissionQuery;
+import com.ionos.domain.permission.PermissionsController;
 
 import javax.inject.Singleton;
 

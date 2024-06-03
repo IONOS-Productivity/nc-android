@@ -1,6 +1,6 @@
 package com.strato.hidrive.scanbot.screens.gallery
 
-import com.strato.hidrive.domain.utils.kotlin.extension.plusAssign
+import com.ionos.domain.utils.kotlin.extension.plusAssign
 import com.strato.hidrive.scanbot.entity.Picture
 import com.strato.hidrive.scanbot.filter.color.ColorFilterType
 import com.strato.hidrive.scanbot.repository.PictureRepository

@@ -4,7 +4,7 @@ import android.content.Context;
 
 import androidx.annotation.StringRes;
 
-import com.strato.hidrive.domain.interfaces.actions.Action;
+import com.ionos.domain.interfaces.actions.Action;
 
 /**
  * User: Dima Muravyov
