@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Base64;
 
-import com.strato.hidrive.domain.logger.LoggerUtil;
+import com.ionos.logger.LoggerUtil;
 import com.strato.hidrive.scanbot.R;
 
 import androidx.preference.PreferenceManager;

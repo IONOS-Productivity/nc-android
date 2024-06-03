@@ -4,7 +4,7 @@ package com.ionos.domain.background.jobs;
 import androidx.annotation.Nullable;
 
 import com.ionos.domain.background.jobs.interfaces.BackgroundJobActivityListener;
-import com.strato.hidrive.domain.logger.LoggerUtil;
+import com.ionos.logger.LoggerUtil;
 
 import io.reactivex.Completable;
 

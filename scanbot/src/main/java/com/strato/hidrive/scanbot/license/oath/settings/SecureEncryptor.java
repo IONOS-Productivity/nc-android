@@ -2,7 +2,7 @@ package com.strato.hidrive.scanbot.license.oath.settings;
 
 import android.util.Base64;
 
-import com.strato.hidrive.domain.logger.LoggerUtil;
+import com.ionos.logger.LoggerUtil;
 import com.strato.hidrive.scanbot.license.oath.security.algorithm.EncryptionAlgorithm;
 
 /**

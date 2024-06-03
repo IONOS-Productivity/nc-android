@@ -1,4 +1,4 @@
-package com.strato.hidrive.domain.logger
+package com.ionos.logger
 
 interface Logger {
 	fun logD(tag: String, message: String)

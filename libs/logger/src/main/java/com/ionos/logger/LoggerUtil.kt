@@ -1,4 +1,4 @@
-package com.strato.hidrive.domain.logger
+package com.ionos.logger
 
 object LoggerUtil {
 	private var logger: Logger? = null

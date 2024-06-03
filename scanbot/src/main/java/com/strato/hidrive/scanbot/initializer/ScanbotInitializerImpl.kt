@@ -1,7 +1,7 @@
 package com.strato.hidrive.scanbot.initializer
 
 import android.app.Application
-import com.strato.hidrive.domain.logger.LoggerUtil
+import com.ionos.logger.LoggerUtil
 import com.strato.hidrive.scanbot.di.qualifiers.ScanbotLicenseKey
 import com.strato.hidrive.scanbot.license.LicenseLoader
 import com.strato.hidrive.scanbot.provider.FileProvider

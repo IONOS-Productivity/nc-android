@@ -2,7 +2,7 @@ package com.strato.hidrive.scanbot.license.oath.settings;
 
 import android.content.SharedPreferences;
 
-import com.strato.hidrive.domain.logger.LoggerUtil;
+import com.ionos.logger.LoggerUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;

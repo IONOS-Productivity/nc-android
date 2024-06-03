@@ -19,7 +19,7 @@ import com.ionos.common_ui.dialog.stylized.localized.LocalizedTextStrategy;
 import com.ionos.common_ui.dialog.stylized.view_factory.StylizedDialogViewFactory;
 import com.ionos.domain.exception.TryCatchExceptionHandler;
 import com.ionos.domain.optional.Optional;
-import com.strato.hidrive.domain.logger.LoggerUtil;
+import com.ionos.logger.LoggerUtil;
 
 import java.util.List;
 

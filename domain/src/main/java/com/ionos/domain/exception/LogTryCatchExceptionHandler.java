@@ -1,6 +1,6 @@
 package com.ionos.domain.exception;
 
-import com.strato.hidrive.domain.logger.LoggerUtil;
+import com.ionos.logger.LoggerUtil;
 
 public class LogTryCatchExceptionHandler extends TryCatchExceptionHandler {
 

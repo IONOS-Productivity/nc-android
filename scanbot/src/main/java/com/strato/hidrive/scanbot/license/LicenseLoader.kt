@@ -1,6 +1,6 @@
 package com.strato.hidrive.scanbot.license
 
-import com.strato.hidrive.domain.logger.LoggerUtil
+import com.ionos.logger.LoggerUtil
 import com.ionos.domain.optional.Optional
 import com.strato.hidrive.scanbot.di.qualifiers.ScanbotLicenseKey
 import com.strato.hidrive.scanbot.license.gateway.LicenseGatewayFactory
