@@ -3,7 +3,7 @@ package com.strato.hidrive.scanbot.initializer
 import android.app.Application
 import com.strato.hidrive.domain.logger.LoggerUtil
 import com.strato.hidrive.scanbot.di.qualifiers.ScanbotLicenseKey
-// import com.strato.hidrive.scanbot.license.LicenseLoader
+import com.strato.hidrive.scanbot.license.LicenseLoader
 import com.strato.hidrive.scanbot.provider.FileProvider
 import com.strato.hidrive.scanbot.provider.SdkProvider
 import io.reactivex.schedulers.Schedulers
@@ -19,7 +19,7 @@ import javax.inject.Singleton
 @Singleton
 class ScanbotInitializerImpl @Inject internal constructor(
 	private val application: Application,
-	// private val licenseLoader: LicenseLoader,
+	private val licenseLoader: LicenseLoader,
 	private val sdkProvider: SdkProvider,
 	private val fileProvider: FileProvider,
 	@ScanbotLicenseKey private val defaultLicenseKey: String,
@@ -28,18 +28,18 @@ class ScanbotInitializerImpl @Inject internal constructor(
 	override fun initialize() {
 		tryToInitSdk(application, defaultLicenseKey)
 
-		// if (isSdkInitRequired()) {
-		// 	val savedKey = licenseLoader.getSavedLicenseKey()
-		// 	if (savedKey.isPresent) {
-		// 		tryToInitSdk(application, savedKey.get())
-		// 	}
-        //
-		// 	if (isSdkInitRequired()) {
-		// 		licenseLoader.load(Schedulers.io()) { loadedKey ->
-		// 			tryToInitSdk(application, loadedKey)
-		// 		}
-		// 	}
-		// }
+		if (isSdkInitRequired()) {
+			val savedKey = licenseLoader.getSavedLicenseKey()
+			if (savedKey.isPresent) {
+				tryToInitSdk(application, savedKey.get())
+			}
+
+			if (isSdkInitRequired()) {
+				licenseLoader.load(Schedulers.io()) { loadedKey ->
+					tryToInitSdk(application, loadedKey)
+				}
+			}
+		}
 	}
 
 	override fun isInitialized(): Boolean = ScanbotSDKInitializer.isInitialized()

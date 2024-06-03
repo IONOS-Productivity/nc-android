@@ -47,8 +47,6 @@ buildscript {
         ciBuild = System.getenv("CI") == "true"
         shotTest = System.getenv("SHOT_TEST") == "true"
 
-        //todo alk - remove
-        SCANBOT_LICENCE_KEY               = "" //set license here
     }
 }
 

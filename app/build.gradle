@@ -109,7 +109,6 @@ android {
 
         buildConfigField 'boolean', 'CI', ciBuild.toString()
         buildConfigField 'boolean', 'RUNTIME_PERF_ANALYSIS', perfAnalysis.toString()
-        buildConfigField "String", "SCANBOT_LICENSE_KEY", "\"${SCANBOT_LICENCE_KEY}\""
 
         javaCompileOptions {
             annotationProcessorOptions {
