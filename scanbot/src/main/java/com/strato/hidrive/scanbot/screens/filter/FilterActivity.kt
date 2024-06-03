@@ -5,8 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.addCallback
-import com.strato.hidrive.common_ui.dialog.LockProgressDialog
-import com.strato.hidrive.common_ui.utils.ContextUtils
+import com.ionos.common_ui.dialog.LockProgressDialog
+import com.ionos.common_ui.utils.ContextUtils
 import com.strato.hidrive.scanbot.R
 import com.strato.hidrive.scanbot.databinding.ScanbotActivityFilterBinding
 import com.strato.hidrive.scanbot.di.inject

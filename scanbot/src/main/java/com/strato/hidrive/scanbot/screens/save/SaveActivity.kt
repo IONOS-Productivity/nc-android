@@ -3,13 +3,10 @@ package com.strato.hidrive.scanbot.screens.save
 import android.os.Bundle
 import androidx.activity.addCallback
 import androidx.core.widget.addTextChangedListener
-import com.strato.hidrive.common_ui.dialog.LockProgressDialog
-import com.strato.hidrive.common_ui.dialog.stylized.overwrite_file_dialog.OverwriteDialogs
-import com.strato.hidrive.common_ui.dialog.stylized.overwrite_file_dialog.upload.FilterFavoritesDialog
-import com.strato.hidrive.common_ui.dialog.stylized.overwrite_file_dialog.upload.FilterFavoritesDialogData
-import com.strato.hidrive.common_ui.dialog.stylized.overwrite_file_dialog.upload.RemoteFilePathOverwriteDialogs
+import com.ionos.common_ui.dialog.LockProgressDialog
+import com.ionos.common_ui.dialog.stylized.overwrite_file_dialog.OverwriteDialogs
+import com.ionos.common_ui.dialog.stylized.overwrite_file_dialog.upload.RemoteFilePathOverwriteDialogs
 import com.strato.hidrive.domain.exception.NoFreeLocalSpaceException
-import com.strato.hidrive.domain.utils.FileUtils
 import com.strato.hidrive.domain.utils.kotlin.extension.plusAssign
 import com.strato.hidrive.scanbot.R
 import com.strato.hidrive.scanbot.databinding.ScanbotActivitySaveBinding

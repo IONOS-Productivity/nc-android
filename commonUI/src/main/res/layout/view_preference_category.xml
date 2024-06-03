@@ -10,7 +10,7 @@
         android:layout_height="1dp"
         android:background="@color/view_preference_category_divider_color"/>
 
-    <com.strato.hidrive.common_ui.stylized.StylizedTextView
+    <com.ionos.common_ui.stylized.StylizedTextView
         android:id="@android:id/title"
         style="@style/PreferenceCategoryTitleStyle"
         android:layout_width="match_parent"

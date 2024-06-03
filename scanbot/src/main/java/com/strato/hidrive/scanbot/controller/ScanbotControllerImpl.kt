@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import com.strato.hidrive.common_ui.message.Duration.Seconds
+import com.ionos.common_ui.message.Duration.Seconds
 import com.strato.hidrive.domain.upload.result.UploadFileResult
 import com.strato.hidrive.domain.upload.targetprovider.UploadTarget
 import com.strato.hidrive.domain.upload.targetprovider.UploadTargetRepository

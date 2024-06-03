@@ -3,8 +3,8 @@ package com.strato.hidrive.scanbot.screens.camera
 import android.os.Bundle
 import android.view.KeyEvent
 import androidx.activity.addCallback
-import com.strato.hidrive.common_ui.dialog.LockProgressDialog
-import com.strato.hidrive.common_ui.dialog.wrapper.NoFreeSpaceMessageDialogWrapper
+import com.ionos.common_ui.dialog.LockProgressDialog
+import com.ionos.common_ui.dialog.wrapper.NoFreeSpaceMessageDialogWrapper
 import com.strato.hidrive.scanbot.R
 import com.strato.hidrive.scanbot.databinding.ScanbotActivityCameraBinding
 import com.strato.hidrive.scanbot.di.inject

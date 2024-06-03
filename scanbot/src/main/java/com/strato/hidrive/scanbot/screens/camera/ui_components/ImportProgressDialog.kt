@@ -3,7 +3,7 @@ package com.strato.hidrive.scanbot.screens.camera.ui_components
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.DialogInterface
-import com.strato.hidrive.common_ui.dialog.SafeProgressDialog
+import com.ionos.common_ui.dialog.SafeProgressDialog
 import com.strato.hidrive.scanbot.R
 
 internal class ImportProgressDialog(

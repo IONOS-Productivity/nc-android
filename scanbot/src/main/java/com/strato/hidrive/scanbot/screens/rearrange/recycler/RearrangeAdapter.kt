@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.strato.hidrive.common_ui.utils.DiffUtilsUpdateCallback
+import com.ionos.common_ui.utils.DiffUtilsUpdateCallback
 import com.strato.hidrive.scanbot.databinding.ScanbotItemRearrangeBinding
 import com.strato.hidrive.scanbot.repository.RepositoryFacade
 import javax.inject.Inject

@@ -27,7 +27,7 @@
         app:tint="@color/scanbot_rearrange_icon_color"
         tools:ignore="ContentDescription" />
 
-    <com.strato.hidrive.common_ui.stylized.StylizedTextView
+    <com.ionos.common_ui.stylized.StylizedTextView
         android:id="@+id/textView3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
