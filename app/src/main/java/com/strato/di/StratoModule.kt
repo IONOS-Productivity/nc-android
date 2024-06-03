@@ -1,7 +1,7 @@
 package com.strato.di
 
 import com.strato.scanbot.LicenseGatewayFactoryImpl
-import com.strato.hidrive.scanbot.license.gateway.LicenseGatewayFactory
+import com.ionos.scanbot.license.gateway.LicenseGatewayFactory
 import dagger.Binds
 import dagger.Module
 

@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import com.ionos.common_ui.dialog.stylized.localized.ArgsLocalizedTextStrategy;
 import com.ionos.common_ui.dialog.stylized.localized.StringLocalizedStrategy;
 import com.ionos.common_ui.dialog.stylized.localized.StringResLocalizedStrategy;
-import com.strato.hidrive.common_ui.R;
+import com.ionos.common_ui.R;
 import com.ionos.common_ui.di.CommonUiComponent;
 import com.ionos.common_ui.dialog.stylized.StylizedDialog;
 import com.ionos.common_ui.dialog.stylized.overwrite_file_dialog.OverwriteCancelListener;

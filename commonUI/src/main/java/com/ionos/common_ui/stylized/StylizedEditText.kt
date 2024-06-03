@@ -5,7 +5,7 @@ import android.text.ParcelableSpan
 import android.text.style.ForegroundColorSpan
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatEditText
-import com.strato.hidrive.common_ui.R
+import com.ionos.common_ui.R
 import kotlin.math.max
 import kotlin.math.min
 

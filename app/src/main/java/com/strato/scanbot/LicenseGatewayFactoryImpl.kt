@@ -1,6 +1,6 @@
 package com.strato.scanbot
 
-import com.strato.hidrive.scanbot.license.gateway.LicenseGatewayFactory
+import com.ionos.scanbot.license.gateway.LicenseGatewayFactory
 import io.reactivex.Single
 import javax.inject.Inject
 

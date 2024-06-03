@@ -6,7 +6,7 @@ import android.util.AttributeSet;
 
 import androidx.appcompat.widget.AppCompatTextView;
 
-import com.strato.hidrive.common_ui.R;
+import com.ionos.common_ui.R;
 import com.ionos.logger.LoggerUtil;
 
 public class StylizedTextView extends AppCompatTextView {

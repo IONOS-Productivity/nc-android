@@ -26,8 +26,8 @@ import com.owncloud.android.ui.ThemeableSwitchPreference;
 import com.owncloud.android.ui.whatsnew.ProgressIndicator;
 import com.strato.di.StratoModule;
 import com.ionos.common_ui.di.CommonUiComponent;
-import com.strato.hidrive.scanbot.di.ScanbotComponent;
-import com.strato.hidrive.scanbot.di.ScanbotModule;
+import com.ionos.scanbot.di.ScanbotComponent;
+import com.ionos.scanbot.di.ScanbotModule;
 
 import javax.inject.Singleton;
 

@@ -10,7 +10,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 android {
-    namespace "com.strato.hidrive.common_ui"
+    namespace "com.ionos.common_ui"
 
     defaultConfig {
         compileSdk 34

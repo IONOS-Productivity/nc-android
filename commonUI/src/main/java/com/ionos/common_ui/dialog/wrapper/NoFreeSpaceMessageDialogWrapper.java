@@ -3,7 +3,7 @@ package com.ionos.common_ui.dialog.wrapper;
 import android.content.Context;
 
 import com.ionos.common_ui.dialog.stylized.localized.StringResLocalizedStrategy;
-import com.strato.hidrive.common_ui.R;
+import com.ionos.common_ui.R;
 import com.ionos.common_ui.di.CommonUiComponent;
 import com.ionos.common_ui.dialog.stylized.StylizedDialog;
 import com.ionos.common_ui.utils.ContextUtils;

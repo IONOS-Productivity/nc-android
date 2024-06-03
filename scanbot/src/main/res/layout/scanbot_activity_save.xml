@@ -91,7 +91,7 @@
 				app:layout_constraintStart_toStartOf="@id/bgContent"
 				app:layout_constraintTop_toBottomOf="@id/divider" />
 
-			<com.strato.hidrive.scanbot.screens.save.view.FileTypeView
+			<com.ionos.scanbot.screens.save.view.FileTypeView
 				android:id="@+id/file_type_view"
 				android:layout_width="0dp"
 				android:layout_height="wrap_content"

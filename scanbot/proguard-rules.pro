@@ -63,4 +63,4 @@
 -keepclassmembers,allowobfuscation class * {
   @com.google.gson.annotations.SerializedName <fields>;
 }
--keep class com.strato.hidrive.scanbot.cleaner.ScanbotTempFilesCleaner { *; }
+-keep class com.ionos.scanbot.cleaner.ScanbotTempFilesCleaner { *; }

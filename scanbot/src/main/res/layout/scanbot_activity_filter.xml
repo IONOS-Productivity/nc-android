@@ -23,7 +23,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
-    <com.strato.hidrive.scanbot.screens.filter.view.FilterControls
+    <com.ionos.scanbot.screens.filter.view.FilterControls
         android:id="@+id/filterControls"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

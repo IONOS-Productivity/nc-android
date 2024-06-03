@@ -12,7 +12,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.ionos.common_ui.dialog.stylized.SavingStateView;
 import com.ionos.common_ui.dialog.stylized.localized.LocalizedTextStrategy;
-import com.strato.hidrive.common_ui.R;
+import com.ionos.common_ui.R;
 
 public class StylizedApplyToAllDialogView extends ConstraintLayout
 		implements SavingStateView {

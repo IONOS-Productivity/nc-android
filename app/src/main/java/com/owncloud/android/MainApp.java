@@ -82,9 +82,9 @@ import com.owncloud.android.utils.ReceiversHelper;
 import com.owncloud.android.utils.SecurityUtils;
 import com.owncloud.android.utils.theme.ViewThemeUtils;
 import com.ionos.common_ui.di.CommonUiComponentProvider;
-import com.strato.hidrive.scanbot.di.ScanbotComponent;
-import com.strato.hidrive.scanbot.di.ScanbotComponentProvider;
-import com.strato.hidrive.scanbot.initializer.ScanbotInitializer;
+import com.ionos.scanbot.di.ScanbotComponent;
+import com.ionos.scanbot.di.ScanbotComponentProvider;
+import com.ionos.scanbot.initializer.ScanbotInitializer;
 
 import org.conscrypt.Conscrypt;
 import org.greenrobot.eventbus.EventBus;
