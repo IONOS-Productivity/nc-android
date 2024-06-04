@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import com.ionos.common_ui.message.Duration.Seconds
 import com.ionos.domain.upload.result.UploadFileResult
 import com.ionos.domain.upload.targetprovider.UploadTarget
 import com.ionos.domain.upload.targetprovider.UploadTargetRepository
@@ -32,7 +31,6 @@ class ScanbotControllerImpl @Inject internal constructor(
 	private val _fileUploaded = PublishSubject.create<UploadFileResult>()
 	private val _fileUploadStarted = PublishSubject.create<Any>()
 	private val stateManager = StateManager()
-	private val importantMessageDuration = Seconds(5)
 
 	private lateinit var _uploadTargetRepository: UploadTargetRepository
 
