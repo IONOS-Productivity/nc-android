@@ -4,7 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import com.ionos.domain.utils.availability.Availability;
+import com.ionos.scanbot.availability.Availability;
 
 public class NetworkUtils {
 

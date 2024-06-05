@@ -3,11 +3,14 @@ package com.ionos.scanbot.di
 import android.content.Context
 import com.ionos.domain.exception.LogTryCatchExceptionHandler
 import com.ionos.domain.exception.TryCatchExceptionHandler
-import com.ionos.domain.utils.availability.Availability
+import com.ionos.scanbot.availability.Availability
 import com.ionos.scanbot.BuildConfig
+import com.ionos.scanbot.availability.ScanbotFeatureAvailability
+import com.ionos.scanbot.availability.ScanbotLicenseAvailability
 import com.ionos.scanbot.controller.ScanbotController
 import com.ionos.scanbot.controller.ScanbotControllerImpl
 import com.ionos.scanbot.di.qualifiers.Scanbot
+import com.ionos.scanbot.di.qualifiers.ScanbotLicense
 import com.ionos.scanbot.di.qualifiers.ScanbotLicenseKey
 import com.ionos.scanbot.di.qualifiers.ScanbotLicenseKeyUrl
 import com.ionos.scanbot.initializer.ScanbotInitializer
@@ -57,12 +60,6 @@ abstract class ScanbotModule {
             return ""//BuildConfig.SCANBOT_LICENSE_KEY_URL
         }
 
-        @Provides
-        @Scanbot
-        fun provideScanbotFeatureAvailability() = Availability {
-            true //BuildConfig.IS_SCANBOT_FEATURE_AVAILABLE
-        }
-
         @Singleton
         @Provides
         fun provideTryCatchExceptionHandler(): TryCatchExceptionHandler {
@@ -72,6 +69,14 @@ abstract class ScanbotModule {
             return  LogTryCatchExceptionHandler()
         }
     }
+
+    @Binds
+    @Scanbot
+    abstract fun bindScanbotFeatureAvailability(availability: ScanbotFeatureAvailability): Availability
+
+    @Binds
+    @ScanbotLicense
+    abstract fun bindLicenseAvailability(availability: ScanbotLicenseAvailability): Availability
 
     @Binds
     abstract fun bindKeyStore(keyStore: PreferencesKeyStore): KeyStore

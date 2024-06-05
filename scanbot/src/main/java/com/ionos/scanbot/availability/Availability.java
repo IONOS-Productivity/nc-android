@@ -1,4 +1,4 @@
-package com.ionos.domain.utils.availability;
+package com.ionos.scanbot.availability;
 
 /**
  * Created by Anton Shevchuk on 01.02.2017.
