@@ -1,4 +1,4 @@
-package com.strato.scanbot
+package com.ionos.scanbot
 
 /**
  * User: Dima Muravyov

@@ -1,9 +1,8 @@
-package com.strato.scanbot
+package com.ionos.scanbot
 
 import android.content.Context
 import androidx.work.WorkerParameters
 import com.ionos.scanbot.di.qualifiers.ScanbotLicenseKeyUrl
-import com.ionos.scanbot.initializer.ScanbotInitializer
 import com.ionos.scanbot.initializer.TryToInitScanbotSdk
 import com.ionos.scanbot.license.LicenseKeyStore
 import com.nextcloud.client.account.UserAccountManager

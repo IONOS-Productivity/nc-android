@@ -24,7 +24,7 @@ import com.owncloud.android.MainApp;
 import com.owncloud.android.media.MediaControlView;
 import com.owncloud.android.ui.ThemeableSwitchPreference;
 import com.owncloud.android.ui.whatsnew.ProgressIndicator;
-import com.strato.di.StratoModule;
+import com.ionos.di.StratoModule;
 import com.ionos.common_ui.di.CommonUiComponent;
 import com.ionos.scanbot.di.ScanbotComponent;
 import com.ionos.scanbot.di.ScanbotModule;

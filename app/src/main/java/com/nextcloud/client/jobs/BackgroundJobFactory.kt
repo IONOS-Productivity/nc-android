@@ -31,8 +31,8 @@ import com.owncloud.android.datamodel.ArbitraryDataProvider
 import com.owncloud.android.datamodel.SyncedFolderProvider
 import com.owncloud.android.datamodel.UploadsStorageManager
 import com.owncloud.android.utils.theme.ViewThemeUtils
-import com.strato.scanbot.ScanbotLicenseDownloadWorker
-import com.strato.scanbot.ScanbotLicenseJobFactory
+import com.ionos.scanbot.ScanbotLicenseDownloadWorker
+import com.ionos.scanbot.ScanbotLicenseJobFactory
 import org.greenrobot.eventbus.EventBus
 import javax.inject.Inject
 import javax.inject.Provider

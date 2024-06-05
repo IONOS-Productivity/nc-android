@@ -1,4 +1,4 @@
-package com.strato.scanbot
+package com.ionos.scanbot
 
 import com.owncloud.android.lib.common.OwnCloudClient
 import com.owncloud.android.lib.common.operations.RemoteOperation

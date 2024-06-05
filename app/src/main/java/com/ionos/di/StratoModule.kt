@@ -1,7 +1,7 @@
-package com.strato.di
+package com.ionos.di
 
 import com.ionos.scanbot.license.LoadScanbotLicense
-import com.strato.scanbot.LoadScanbotLicenseImpl
+import com.ionos.scanbot.LoadScanbotLicenseImpl
 import dagger.Binds
 import dagger.Module
 
