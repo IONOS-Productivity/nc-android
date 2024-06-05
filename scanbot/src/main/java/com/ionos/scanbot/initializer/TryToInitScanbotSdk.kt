@@ -1,0 +1,27 @@
+package com.ionos.scanbot.initializer
+
+import android.app.Application
+import com.ionos.logger.LoggerUtil
+import com.ionos.scanbot.provider.FileProvider
+import io.scanbot.sdk.ScanbotSDKInitializer
+import io.scanbot.sdk.util.log.StubLogger
+import javax.inject.Inject
+
+class TryToInitScanbotSdk @Inject constructor(
+    private val application: Application,
+    private val fileProvider: FileProvider,
+){
+
+    operator fun invoke(licenseKey: String) {
+        try {
+            ScanbotSDKInitializer()
+                .sdkFilesDirectory(application, fileProvider.sdkFilesDirectory)
+                .logger(StubLogger())
+                .license(application, licenseKey)
+                .prepareOCRLanguagesBlobs(true)
+                .initialize(application)
+        } catch (exception: RuntimeException) {
+            LoggerUtil.logE(ScanbotInitializer::class.java.simpleName, exception.toString())
+        }
+    }
+}

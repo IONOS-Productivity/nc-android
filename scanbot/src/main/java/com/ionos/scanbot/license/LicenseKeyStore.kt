@@ -5,7 +5,7 @@ import com.ionos.domain.optional.Optional
 import com.ionos.scanbot.R
 import javax.inject.Inject
 
-internal class LicenseKeyStore @Inject constructor(
+class LicenseKeyStore @Inject constructor(
 	context: Context,
 	private val keyStore: KeyStore,
 ) {

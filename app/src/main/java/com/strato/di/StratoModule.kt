@@ -1,7 +1,7 @@
 package com.strato.di
 
-import com.strato.scanbot.LicenseGatewayFactoryImpl
-import com.ionos.scanbot.license.gateway.LicenseGatewayFactory
+import com.ionos.scanbot.license.LoadScanbotLicense
+import com.strato.scanbot.LoadScanbotLicenseImpl
 import dagger.Binds
 import dagger.Module
 
@@ -9,6 +9,6 @@ import dagger.Module
 abstract class StratoModule {
 
     @Binds
-    abstract fun bindLicenseGatewayFactory(factory: LicenseGatewayFactoryImpl): LicenseGatewayFactory
+    abstract fun bindLoadLicense(loadScanbotLicense: LoadScanbotLicenseImpl): LoadScanbotLicense
 
 }

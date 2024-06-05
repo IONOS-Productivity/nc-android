@@ -22,6 +22,7 @@ android {
 
         // todo by mahera loicense here
         buildConfigField "String", "SCANBOT_LICENSE_KEY", "\"\""
+        buildConfigField "String", "SCANBOT_LICENSE_KEY_URL", "\"https://static.hidrive.com/scanbot/HidriveAndroidScanbotLicense.txt\""
         buildConfigField "Boolean", "IS_SCANBOT_FEATURE_AVAILABLE", "true"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

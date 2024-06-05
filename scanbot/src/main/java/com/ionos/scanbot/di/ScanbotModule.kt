@@ -21,8 +21,6 @@ import com.ionos.scanbot.license.oath.security.algorithm.AesGcmEncryptionAlgorit
 import com.ionos.scanbot.license.oath.security.algorithm.AlgorithmParameterSpecFactoryImpl
 import com.ionos.scanbot.license.oath.security.key.AesGcmKeyRepository
 import com.ionos.scanbot.license.oath.settings.SecureEncryptor
-import com.ionos.scanbot.network.NetworkStateChangeObserver
-import com.ionos.scanbot.network.NetworkStateChangeObserverImpl
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -44,11 +42,6 @@ abstract class ScanbotModule {
         }
 
         @Provides
-        fun provideNetworkStateChangeObserver(context: Context): NetworkStateChangeObserver {
-            return NetworkStateChangeObserverImpl(context)
-        }
-
-        @Provides
         @ScanbotLicenseKey
         fun provideScanbotLicenseKey(): String {
             return BuildConfig.SCANBOT_LICENSE_KEY
@@ -57,7 +50,7 @@ abstract class ScanbotModule {
         @Provides
         @ScanbotLicenseKeyUrl
         fun provideScanbotLicenseKeyUrl(): String {
-            return ""//BuildConfig.SCANBOT_LICENSE_KEY_URL
+            return BuildConfig.SCANBOT_LICENSE_KEY_URL
         }
 
         @Singleton
