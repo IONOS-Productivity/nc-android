@@ -16,6 +16,8 @@ import io.reactivex.subjects.PublishSubject
 import javax.inject.Inject
 import javax.inject.Singleton
 
+//todo alk - probably get rid of scanbot controller
+
 @Singleton
 class ScanbotControllerImpl @Inject internal constructor(
 	private val startUpload: StartUpload,

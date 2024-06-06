@@ -38,6 +38,7 @@ import com.google.android.material.behavior.HideBottomViewOnScrollBehavior;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.ionos.scanbot.screens.camera.CameraActivity;
 import com.nextcloud.android.lib.resources.files.ToggleFileLockRemoteOperation;
 import com.nextcloud.android.lib.richWorkspace.RichWorkspaceDirectEditingRemoteOperation;
 import com.nextcloud.client.account.User;
@@ -540,7 +541,7 @@ public class OCFileListFragment extends ExtendedListFragment implements
 //            Intent intent = new Intent(requireContext(), DocumentScanActivity.class);
 //            intent.putExtra(DocumentScanActivity.EXTRA_FOLDER, currentFile.getRemotePath());
 
-            Intent intent = scanbotController.createIntent(getContext());
+            Intent intent = new Intent(requireContext(), CameraActivity.class);
             startActivity(intent);
         } else {
             Log.w(TAG, "scanDocUpload: Failed to start doc scanning, fileDisplayActivity=" + fileDisplayActivity +

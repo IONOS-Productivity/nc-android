@@ -1,5 +1,8 @@
 package com.ionos.scanbot.screens.camera
 
+import android.Manifest
+import android.app.Activity
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.KeyEvent
 import androidx.activity.addCallback
@@ -15,6 +18,10 @@ import com.ionos.scanbot.screens.camera.image_picker.ImagePickerLauncher
 import com.ionos.scanbot.screens.camera.ui_components.CameraViewController
 import com.ionos.scanbot.screens.camera.ui_components.ImportProgressDialog
 import com.ionos.scanbot.screens.common.use_case.open_screen.OpenScreen
+import com.ionos.scanbot.util.permission.hasPermissionTo
+import com.ionos.scanbot.util.permission.requestPermissionTo
+
+private const val CHECK_PERMISSION_REQUEST_CODE = 99
 
 internal class CameraActivity : BaseActivity<Event, State, ViewModel>() {
 	override val viewModelFactory by inject { cameraViewModelFactory() }
@@ -41,7 +48,28 @@ internal class CameraActivity : BaseActivity<Event, State, ViewModel>() {
 		initOnBackPressedCallback()
 		initClickListeners()
 		viewModel.onCreate()
+        checkCameraPermissions()
 	}
+
+    private fun checkCameraPermissions() {
+        if (!hasPermissionTo(Manifest.permission.CAMERA)) {
+            requestPermissionTo(arrayOf(Manifest.permission.CAMERA), CHECK_PERMISSION_REQUEST_CODE)
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (permissions.contains(Manifest.permission.CAMERA) &&
+            (grantResults.isEmpty() || grantResults[0] == PackageManager.PERMISSION_DENIED)
+        ) {
+            close()
+        }
+    }
+
+    fun close() {
+        setResult(Activity.RESULT_CANCELED)
+        finish()
+    }
 
 	private fun initOnBackPressedCallback() {
 		onBackPressedDispatcher.addCallback(this, true) { viewModel.onBackPressed() }
