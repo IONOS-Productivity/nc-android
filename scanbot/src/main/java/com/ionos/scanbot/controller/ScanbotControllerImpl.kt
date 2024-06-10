@@ -34,7 +34,7 @@ class ScanbotControllerImpl @Inject internal constructor(
 	private val _fileUploadStarted = PublishSubject.create<Any>()
 	private val stateManager = StateManager()
 
-	private lateinit var _uploadTargetRepository: UploadTargetRepository
+	private var _uploadTargetRepository = UploadTargetRepositoryImpl(UploadTarget.RemotePath(""))
 
 	override fun setUpController(scanBotUploadTarget: UploadTarget) {
 		_uploadTargetRepository = UploadTargetRepositoryImpl(scanBotUploadTarget)
@@ -57,18 +57,18 @@ class ScanbotControllerImpl @Inject internal constructor(
 	}
 
 	override fun saveState(state: Bundle) {
-		if (::_uploadTargetRepository.isInitialized) {
+		//if (::_uploadTargetRepository.isInitialized) {
 			stateManager.saveUploadTarget(uploadTargetRepository.uploadTarget, state)
-		}
+		//}
 		if (!pictureRepository.isEmpty()) {
 			stateManager.savePictures(pictureRepository.readAll(), state)
 		}
 	}
 
 	override fun restoreState(state: Bundle) {
-		if (!::_uploadTargetRepository.isInitialized) {
+		//if (!::_uploadTargetRepository.isInitialized) {
 			stateManager.restoreUploadTarget(state) { _uploadTargetRepository = UploadTargetRepositoryImpl(it) }
-		}
+		//}
 		if (pictureRepository.isEmpty()) {
 			stateManager.restorePictures(state) { pictureRepository.create(it) }
 		}

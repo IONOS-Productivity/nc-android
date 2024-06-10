@@ -125,6 +125,7 @@ internal class SaveViewModel @Inject constructor(
 		// 	.subscribeOn(Schedulers.io())
 		// 	.observeOn(AndroidSchedulers.mainThread())
 		// 	.subscribe(::onTargetPathUpdated, ::onError)
+        onTargetPathUpdated("targetPath")
 	}
 
 	private fun saveDocument() {

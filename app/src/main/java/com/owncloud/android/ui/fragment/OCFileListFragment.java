@@ -110,7 +110,6 @@ import com.owncloud.android.utils.FileStorageUtils;
 import com.owncloud.android.utils.MimeTypeUtil;
 import com.owncloud.android.utils.theme.ThemeUtils;
 import com.owncloud.android.utils.theme.ViewThemeUtils;
-import com.ionos.scanbot.controller.ScanbotController;
 
 import org.apache.commons.httpclient.HttpStatus;
 import org.greenrobot.eventbus.EventBus;
@@ -208,7 +207,6 @@ public class OCFileListFragment extends ExtendedListFragment implements
     @Inject SyncedFolderProvider syncedFolderProvider;
     @Inject AppScanOptionalFeature appScanOptionalFeature;
 
-    @Inject ScanbotController scanbotController;
     protected FileFragment.ContainerActivity mContainerActivity;
 
     protected OCFile mFile;
