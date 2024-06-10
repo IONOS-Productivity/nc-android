@@ -36,6 +36,7 @@ import org.lukhnos.nnio.file.Path;
 import org.lukhnos.nnio.file.Paths;
 import org.lukhnos.nnio.file.SimpleFileVisitor;
 import org.lukhnos.nnio.file.attribute.BasicFileAttributes;
+import org.lukhnos.nnio.file.Files;
 
 import java.io.File;
 import java.io.IOException;
@@ -63,7 +64,7 @@ public final class FilesSyncHelper {
         final long enabledTimestampMs = syncedFolder.getEnabledTimestampMs();
 
         try {
-            FileUtil.walkFileTree(path, new SimpleFileVisitor<>() {
+            Files.walkFileTree(path, new SimpleFileVisitor<>() {
                 @Override
                 public FileVisitResult visitFile(Path path, BasicFileAttributes attrs) {
                     File file = path.toFile();
@@ -91,7 +92,7 @@ public final class FilesSyncHelper {
                 @Override
                 public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) {
                     if (syncedFolder.isExcludeHidden() && dir.compareTo(Paths.get(syncedFolder.getLocalPath())) != 0 && dir.toFile().isHidden()) {
-                        return null;
+                        return FileVisitResult.SKIP_SUBTREE;
                     }
                     return FileVisitResult.CONTINUE;
                 }
@@ -145,34 +146,29 @@ public final class FilesSyncHelper {
         }
     }
 
-    public static void insertAllDBEntries(SyncedFolderProvider syncedFolderProvider,
+    public static void insertAllDBEntries(SyncedFolder syncedFolder,
                                           PowerManagementService powerManagementService) {
-        for (SyncedFolder syncedFolder : syncedFolderProvider.getSyncedFolders()) {
-            if (syncedFolder.isEnabled() &&
-                !(syncedFolder.isChargingOnly() &&
-                    !powerManagementService.getBattery().isCharging() &&
-                    !powerManagementService.getBattery().isFull()
-                )
-            ) {
-                insertAllDBEntriesForSyncedFolder(syncedFolder);
-            }
+        if (syncedFolder.isEnabled() &&
+            !(syncedFolder.isChargingOnly() &&
+                !powerManagementService.getBattery().isCharging() &&
+                !powerManagementService.getBattery().isFull()
+            )
+        ) {
+            insertAllDBEntriesForSyncedFolder(syncedFolder);
         }
     }
 
-    public static void insertChangedEntries(SyncedFolderProvider syncedFolderProvider,
+    public static void insertChangedEntries(SyncedFolder syncedFolder,
                                             String[] changedFiles) {
         final ContentResolver contentResolver = MainApp.getAppContext().getContentResolver();
         final FilesystemDataProvider filesystemDataProvider = new FilesystemDataProvider(contentResolver);
         for (String changedFileURI : changedFiles){
             String changedFile = getFileFromURI(changedFileURI);
-            for (SyncedFolder syncedFolder : syncedFolderProvider.getSyncedFolders()) {
-                if (syncedFolder.isEnabled() && syncedFolder.containsFile(changedFile)){
-                    File file = new File(changedFile);
-                    filesystemDataProvider.storeOrUpdateFileValue(changedFile,
-                                                                  file.lastModified(),file.isDirectory(),
-                                                                  syncedFolder);
-                    break;
-                }
+            if (syncedFolder.isEnabled() && syncedFolder.containsFile(changedFile)){
+                File file = new File(changedFile);
+                filesystemDataProvider.storeOrUpdateFileValue(changedFile,
+                                                              file.lastModified(),file.isDirectory(),
+                                                              syncedFolder);
             }
         }
     }
@@ -248,10 +244,10 @@ public final class FilesSyncHelper {
         }
     }
 
-    public static void restartJobsIfNeeded(final UploadsStorageManager uploadsStorageManager,
-                                           final UserAccountManager accountManager,
-                                           final ConnectivityService connectivityService,
-                                           final PowerManagementService powerManagementService) {
+    public static void restartUploadsIfNeeded(final UploadsStorageManager uploadsStorageManager,
+                                              final UserAccountManager accountManager,
+                                              final ConnectivityService connectivityService,
+                                              final PowerManagementService powerManagementService) {
         boolean accountExists;
 
         boolean whileChargingOnly = true;
@@ -315,10 +311,22 @@ public final class FilesSyncHelper {
         }).start();
     }
 
-    public static void scheduleFilesSyncIfNeeded(Context context, BackgroundJobManager jobManager) {
-        jobManager.schedulePeriodicFilesSyncJob();
+    public static void scheduleFilesSyncForAllFoldersIfNeeded(Context context, SyncedFolderProvider syncedFolderProvider, BackgroundJobManager jobManager) {
+        for (SyncedFolder syncedFolder : syncedFolderProvider.getSyncedFolders()) {
+            if (syncedFolder.isEnabled()) {
+                jobManager.schedulePeriodicFilesSyncJob(syncedFolder.getId());
+            }
+        }
         if (context != null) {
             jobManager.scheduleContentObserverJob();
+        }
+    }
+
+    public static void startFilesSyncForAllFolders(SyncedFolderProvider syncedFolderProvider, BackgroundJobManager jobManager, boolean overridePowerSaving, String[] changedFiles) {
+        for (SyncedFolder syncedFolder : syncedFolderProvider.getSyncedFolders()) {
+            if (syncedFolder.isEnabled()) {
+                jobManager.startImmediateFilesSyncJob(syncedFolder.getId(),overridePowerSaving,changedFiles);
+            }
         }
     }
 }

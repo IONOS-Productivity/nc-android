@@ -21,6 +21,7 @@ import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.RestrictionsManager;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -83,6 +84,7 @@ import com.owncloud.android.lib.common.OwnCloudClientManagerFactory;
 import com.owncloud.android.lib.common.OwnCloudCredentials;
 import com.owncloud.android.lib.common.OwnCloudCredentialsFactory;
 import com.owncloud.android.lib.common.UserInfo;
+import com.owncloud.android.lib.common.accounts.AccountUtils;
 import com.owncloud.android.lib.common.accounts.AccountUtils.AccountNotFoundException;
 import com.owncloud.android.lib.common.accounts.AccountUtils.Constants;
 import com.owncloud.android.lib.common.network.CertificateCombinedException;
@@ -111,6 +113,7 @@ import com.owncloud.android.utils.DisplayUtils;
 import com.owncloud.android.utils.ErrorMessageAdapter;
 import com.owncloud.android.utils.PermissionUtil;
 import com.owncloud.android.utils.WebViewUtil;
+import com.owncloud.android.utils.appConfig.AppConfigManager;
 import com.owncloud.android.utils.theme.CapabilityUtils;
 import com.owncloud.android.utils.theme.ViewThemeUtils;
 
@@ -140,6 +143,9 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleEventObserver;
+import androidx.lifecycle.ProcessLifecycleOwner;
 import de.cotech.hw.fido.WebViewFidoBridge;
 import de.cotech.hw.fido.ui.FidoDialogOptions;
 import de.cotech.hw.fido2.WebViewWebauthnBridge;
@@ -318,9 +324,18 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
             mIsFirstAuthAttempt = savedInstanceState.getBoolean(KEY_AUTH_IS_FIRST_ATTEMPT_TAG);
         }
 
-        String webloginUrl = null;
         boolean webViewLoginMethod;
-        if (getIntent().getBooleanExtra(EXTRA_USE_PROVIDER_AS_WEBLOGIN, false)) {
+        String webloginUrl = null;
+
+        if (MainApp.isClientBrandedPlus()) {
+            RestrictionsManager restrictionsManager = (RestrictionsManager) getSystemService(Context.RESTRICTIONS_SERVICE);
+            AppConfigManager appConfigManager = new AppConfigManager(this, restrictionsManager.getApplicationRestrictions());
+            webloginUrl = appConfigManager.getBaseUrl(MainApp.isClientBrandedPlus());
+        }
+
+        if (webloginUrl != null) {
+            webViewLoginMethod = true;
+        } else if (getIntent().getBooleanExtra(EXTRA_USE_PROVIDER_AS_WEBLOGIN, false)) {
             webViewLoginMethod = true;
             webloginUrl = getString(R.string.provider_registration_server);
         } else {
@@ -348,9 +363,17 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
         }
 
         initServerPreFragment(savedInstanceState);
+        ProcessLifecycleOwner.get().getLifecycle().addObserver(lifecycleEventObserver);
 
         // webViewUtil.checkWebViewVersion();
     }
+
+    private final LifecycleEventObserver lifecycleEventObserver = ((lifecycleOwner, event) -> {
+        if (event == Lifecycle.Event.ON_START && token != null) {
+            Log_OC.d(TAG, "Start poolLogin");
+            poolLogin(clientFactory.createPlainClient());
+        }
+    });
 
     private void deleteCookies() {
         try {
@@ -391,7 +414,8 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
             String loginUrl = login;
             runOnUiThread(() -> {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(loginUrl));
-                loginFlowResultLauncher.launch(intent);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
             });
 
             token = jsonObject.getAsJsonObject("poll").get("token").getAsString();
@@ -399,9 +423,6 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
 
         thread.start();
     }
-
-    private final ActivityResultLauncher<Intent> loginFlowResultLauncher = registerForActivityResult(
-        new ActivityResultContracts.StartActivityForResult(), result -> poolLogin(clientFactory.createPlainClient()));
 
     private static String getWebLoginUserAgent() {
         return Build.MANUFACTURER.substring(0, 1).toUpperCase(Locale.getDefault()) +
@@ -816,6 +837,8 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
             mOperationsServiceBinder = null;
         }
 
+        Log_OC.d(TAG, "AuthenticatorActivity onDestroy called");
+
         super.onDestroy();
     }
 
@@ -1027,6 +1050,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
 
         cancelButton.setOnClickListener(v -> {
             loginFlowExecutorService.shutdown();
+            ProcessLifecycleOwner.get().getLifecycle().removeObserver(lifecycleEventObserver);
             recreate();
         });
     }
@@ -1375,7 +1399,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
         // can be anything: email, name, name with whitespaces
         String loginName = webViewUser;
 
-        String accountName = com.owncloud.android.lib.common.accounts.AccountUtils.buildAccountName(uri, loginName);
+        String accountName = AccountUtils.buildAccountName(uri, loginName);
         Account newAccount = new Account(accountName, accountType);
         if (accountManager.exists(newAccount)) {
             // fail - not a new account, but an existing one; disallow
@@ -1480,7 +1504,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
-        if (requestCode == PermissionUtil.PERMISSIONS_CAMERA) {// If request is cancelled, result arrays are empty.
+        if (requestCode == PERMISSIONS_CAMERA) {// If request is cancelled, result arrays are empty.
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // permission was granted
                 startQRScanner();
@@ -1626,7 +1650,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
     private boolean isRedirectedToTheDefaultBrowser = false;
 
     private void poolLogin(PlainClient client) {
-        loginFlowExecutorService.scheduleAtFixedRate(() -> {
+        loginFlowExecutorService.scheduleWithFixedDelay(() -> {
             if (!isLoginProcessCompleted) {
                 performLoginFlowV2(client);
             }
@@ -1682,6 +1706,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
 
         checkOcServer();
         loginFlowExecutorService.shutdown();
+        ProcessLifecycleOwner.get().getLifecycle().removeObserver(lifecycleEventObserver);
     }
 
     /**

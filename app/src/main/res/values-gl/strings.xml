@@ -33,6 +33,7 @@
     <string name="add_to_cloud">Engadir en %1$s</string>
     <string name="advanced_settings">Axustes avanzados</string>
     <string name="allow_resharing">Permitir compartir</string>
+    <string name="app_config_proxy_port_title">Porto do proxy</string>
     <string name="app_widget_description">Amosa un trebello do taboleiro</string>
     <string name="appbar_search_in">Buscar en %s</string>
     <string name="assistant_screen_all_task_type">Todo</string>
@@ -181,13 +182,11 @@
     <string name="could_not_retrieve_url">Non foi posíbel recuperar o URL</string>
     <string name="create">Crear</string>
     <string name="create_dir_fail_msg">Non foi posíbel crear o cartafol</string>
-    <string name="create_new">Crear novo</string>
-    <string name="create_new_document">Crear un documento novo</string>
-    <string name="create_new_folder">Crear un cartafol novo</string>
-    <string name="create_new_presentation">Crear unha presentación nova</string>
-    <string name="create_new_spreadsheet">Crear unha folla de cálculo nova</string>
-    <string name="create_rich_workspace">Engadir información do  cartafol</string>
-    <string name="creates_rich_workspace"> crear a información do cartafol </string>
+    <string name="create_new">Novo</string>
+    <string name="create_new_document">Novo documento</string>
+    <string name="create_new_folder">Novo cartafol</string>
+    <string name="create_new_presentation">Nova presentación</string>
+    <string name="create_new_spreadsheet">Nova folla de cálculo</string>
     <string name="credentials_disabled">Credenciais eliminadas</string>
     <string name="daily_backup">Copia de seguranza diaria</string>
     <string name="data_to_back_up">Datos para facer a copia de seguranza</string>
@@ -408,6 +407,7 @@
     <string name="foreign_files_success">Foron movidos todos os ficheiros</string>
     <string name="forward">Reenviar</string>
     <string name="fourHours">4 horas</string>
+    <string name="grid_file_features_live_photo_content_description">Esta icona indica a dispoñibilidade de Live Photo</string>
     <string name="hidden_file_name_warning">O nome dará lugar a un ficheiro agochado</string>
     <string name="hint_name">Nome</string>
     <string name="hint_note">Nota</string>
@@ -872,7 +872,7 @@
     <string name="uploader_btn_alternative_text">Escoller</string>
     <string name="uploader_btn_upload_text">Enviar</string>
     <string name="uploader_error_message_no_file_to_upload">Os datos recibidos non inclúen un ficheiro correcto.</string>
-    <string name="uploader_error_message_read_permission_not_granted">%1$s non ten permisos para ler o ficheiro recibido</string>
+    <string name="uploader_error_message_read_permission_not_granted">%1$s non ten permiso para ler o ficheiro recibido</string>
     <string name="uploader_error_message_source_file_not_copied">Non foi posíbel copiar o ficheiro nun cartafol temporal. Tente volver envialo.</string>
     <string name="uploader_error_message_source_file_not_found">Non foi atopado o ficheiro seleccionado para enviar. Comprobe se existe o ficheiro.</string>
     <string name="uploader_error_title_file_cannot_be_uploaded">Non é posíbel enviar este ficheiro</string>

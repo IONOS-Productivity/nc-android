@@ -33,6 +33,7 @@
     <string name="add_to_cloud">Dodaj v %1$s</string>
     <string name="advanced_settings">Napredne nastavitve</string>
     <string name="allow_resharing">Dovoli nadaljnje omogočanje souporabe</string>
+    <string name="app_config_proxy_port_title">Vrata posredniškega strežnika</string>
     <string name="app_widget_description">Pokaži en gradnik iz nadzorne plošče</string>
     <string name="appbar_search_in">Poišči v %s</string>
     <string name="assistant_screen_all_task_type">Vse</string>
@@ -178,13 +179,11 @@
     <string name="could_not_retrieve_url">Naslova URL ni mogoče pridobiti</string>
     <string name="create">Ustvari</string>
     <string name="create_dir_fail_msg">Ni mogoče ustvariti mape</string>
-    <string name="create_new">Ustvari novo</string>
-    <string name="create_new_document">Ustvari nov dokument</string>
-    <string name="create_new_folder">Ustvari novo mapo</string>
-    <string name="create_new_presentation">Ustvari novo predstavitev</string>
-    <string name="create_new_spreadsheet">Ustvari novo preglednico</string>
-    <string name="create_rich_workspace">Dodaj podrobnosti mape</string>
-    <string name="creates_rich_workspace">ustvari podrobnosti mape</string>
+    <string name="create_new">Novo</string>
+    <string name="create_new_document">Nov dokument</string>
+    <string name="create_new_folder">Nova mapa</string>
+    <string name="create_new_presentation">Nova predstavitev</string>
+    <string name="create_new_spreadsheet">Nova preglednica</string>
     <string name="credentials_disabled">Poverila so onemogočena</string>
     <string name="daily_backup">Dnevna varnostna kopija</string>
     <string name="data_to_back_up">Podatki za varnostno kopiranje</string>
@@ -699,7 +698,7 @@
     <string name="share_no_password_title">Nastavi geslo</string>
     <string name="share_password_title">Zaščiteno z geslom</string>
     <string name="share_permission_can_edit">Lahko ureja</string>
-    <string name="share_permission_file_drop">Poteg datotek</string>
+    <string name="share_permission_file_drop">Poteg datotek v mapo</string>
     <string name="share_permission_secure_file_drop">Varno pošiljanje daottek</string>
     <string name="share_permission_view_only">Le ogled</string>
     <string name="share_permissions">Dovoljenja souporabe</string>
