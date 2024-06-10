@@ -1,7 +1,7 @@
 /*
  * Nextcloud - Android Client
  *
- * SPDX-FileCopyrightText: 2023 Alper Ozturk <alper_ozturk@proton.me>
+ * SPDX-FileCopyrightText: 2023 Alper Ozturk <alper.ozturk@nextcloud.com>
  * SPDX-FileCopyrightText: 2022 TSI-mc
  * SPDX-FileCopyrightText: 2021 Chris Narkiewicz <hello@ezaquarii.com>
  * SPDX-FileCopyrightText: 2018-2020 Tobias Kaminsky <tobias@kaminsky.me>
@@ -346,7 +346,7 @@ public class FileDataStorageManager {
         File tempEncryptedFolder =  new File(FileStorageUtils.getTemporalEncryptedFolderPath(accountName));
 
         if (!tempEncryptedFolder.exists()) {
-            Log_OC.d(TAG,"tempEncryptedFolder not exists");
+            Log_OC.d(TAG,"tempEncryptedFolder does not exist");
             return;
         }
 

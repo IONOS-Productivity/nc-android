@@ -34,6 +34,7 @@
     <string name="add_to_cloud">Добавить в %1$s</string>
     <string name="advanced_settings">Дополнительные настройки</string>
     <string name="allow_resharing">Разрешить повторную публикацию</string>
+    <string name="app_config_proxy_port_title">Порт прокси</string>
     <string name="app_widget_description">Показывает один виджет с главного экрана.</string>
     <string name="appbar_search_in">Искать в %s</string>
     <string name="assistant_screen_all_task_type">Все</string>
@@ -199,13 +200,11 @@
     <string name="could_not_retrieve_url">Не удалось получить URL</string>
     <string name="create">Создать</string>
     <string name="create_dir_fail_msg">Не удалось создать каталог</string>
-    <string name="create_new">Создать</string>
-    <string name="create_new_document">Создать документ</string>
-    <string name="create_new_folder">Создать папку</string>
-    <string name="create_new_presentation">Создать презентацию</string>
-    <string name="create_new_spreadsheet">Создать таблицу</string>
-    <string name="create_rich_workspace">Добавить информацию о папке</string>
-    <string name="creates_rich_workspace">Создание информации о папке</string>
+    <string name="create_new">Новый</string>
+    <string name="create_new_document">Новый документ</string>
+    <string name="create_new_folder">Новая папка</string>
+    <string name="create_new_presentation">Новая презентация</string>
+    <string name="create_new_spreadsheet">Новая таблица</string>
     <string name="credentials_disabled">Учётная запись отключена</string>
     <string name="daily_backup">Ежедневное резервное копирование</string>
     <string name="data_to_back_up">Данные для резервного копирования</string>
@@ -890,7 +889,6 @@
     <string name="upload_action_cancelled_resume">Продолжить отмененные загрузки</string>
     <string name="upload_action_failed_clear">Убрать неудавшиеся загрузки</string>
     <string name="upload_action_failed_retry">Повторить неудавшиеся загрузки</string>
-    <string name="upload_action_file_not_exist_message">Некоторые файлы не существуют, эти файлы нельзя возобновить</string>
     <string name="upload_action_global_upload_pause">Приостановить все загрузки</string>
     <string name="upload_action_global_upload_resume">Возобновить все загрузки</string>
     <string name="upload_cannot_create_file">Невозможно создать локальный файл</string>

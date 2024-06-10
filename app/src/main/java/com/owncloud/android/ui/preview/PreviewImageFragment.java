@@ -2,7 +2,7 @@
  * Nextcloud - Android Client
  *
  * SPDX-FileCopyrightText: 2020-2024 Andy Scherzinger <info@andy-scherzinger.de>
- * SPDX-FileCopyrightText: 2023 Alper Ozturk <alper_ozturk@proton.me>
+ * SPDX-FileCopyrightText: 2023 Alper Ozturk <alper.ozturk@nextcloud.com>
  * SPDX-FileCopyrightText: 2022 Álvaro Brey <alvaro@alvarobrey.com>
  * SPDX-FileCopyrightText: 2017-2020 Tobias Kaminsky <tobias@kaminsky.me>
  * SPDX-FileCopyrightText: 2019 Chris Narkiewicz <hello@ezaquarii.com>
@@ -81,6 +81,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import pl.droidsonroids.gif.GifDrawable;
 
@@ -127,7 +128,7 @@ public class PreviewImageFragment extends FileFragment implements Injectable {
      * This method hides to client objects the need of doing the construction in two steps.
      *
      * @param imageFile             An {@link OCFile} to preview as an image in the fragment
-     * @param ignoreFirstSavedState Flag to work around an unexpected behaviour of {@link FragmentStatePagerAdapter} ;
+     * @param ignoreFirstSavedState Flag to work around an unexpected behaviour of {@link FragmentStateAdapter} ;
      *                                                           TODO better solution
      */
     public static PreviewImageFragment newInstance(@NonNull OCFile imageFile,
@@ -229,16 +230,41 @@ public class PreviewImageFragment extends FileFragment implements Injectable {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if (savedInstanceState != null) {
-            if (!ignoreFirstSavedState) {
-                OCFile file = BundleExtensionsKt.getParcelableArgument(savedInstanceState, EXTRA_FILE, OCFile.class);
-                setFile(file);
-                binding.image.setScale(Math.min(binding.image.getMaximumScale(), savedInstanceState.getFloat(EXTRA_ZOOM)));
-            } else {
-                ignoreFirstSavedState = false;
-            }
+        if (savedInstanceState == null) {
+            Log_OC.d(TAG, "savedInstanceState is null");
+            return;
+        }
+
+        if (ignoreFirstSavedState) {
+            Log_OC.d(TAG, "Saved state ignored");
+            ignoreFirstSavedState = false;
+            return;
+        }
+
+        OCFile file = BundleExtensionsKt.getParcelableArgument(savedInstanceState, EXTRA_FILE, OCFile.class);
+        if (file == null) {
+            Log_OC.d(TAG, "file cannot be found inside the savedInstanceState");
+            return;
+        }
+
+        setFile(file);
+
+        float maxScale = binding.image.getMaximumScale();
+        float minScale = binding.image.getMinimumScale();
+        float savedScale = savedInstanceState.getFloat(EXTRA_ZOOM);
+
+        if (savedScale < minScale || savedScale > maxScale) {
+            Log_OC.d(TAG, "Saved scale " + savedScale + " is out of bounds, setting to default scale.");
+            savedScale = Math.min(maxScale, Math.max(minScale, savedScale));
+        }
+
+        try {
+            binding.image.setScale(savedScale);
+        } catch (IllegalArgumentException e) {
+            Log_OC.d(TAG, "Error caught at setScale: " + e);
         }
     }
+
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {

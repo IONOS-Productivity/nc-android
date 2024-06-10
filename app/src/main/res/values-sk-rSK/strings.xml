@@ -34,6 +34,9 @@
     <string name="add_to_cloud">Pridaj do %1$s</string>
     <string name="advanced_settings">Rozšírené nastavenia</string>
     <string name="allow_resharing">Povoliť sprístupňovanie ďalej</string>
+    <string name="app_config_base_url_title">Základná URL</string>
+    <string name="app_config_proxy_host_title">Názov proxy servera</string>
+    <string name="app_config_proxy_port_title">Brána proxy</string>
     <string name="app_widget_description">Zobrazí jeden widget z hlavného panela</string>
     <string name="appbar_search_in">Hľadať v %s</string>
     <string name="assistant_screen_all_task_type">Všetko</string>
@@ -201,13 +204,11 @@
     <string name="could_not_retrieve_url">Nepodarilo sa načítať webovú adresu</string>
     <string name="create">Vytvoriť</string>
     <string name="create_dir_fail_msg">Nemožno vytvoriť priečinok</string>
-    <string name="create_new">Vytvoriť nový</string>
-    <string name="create_new_document">Vytvoriť nový dokument</string>
-    <string name="create_new_folder">Vytvoriť nový priečinok</string>
-    <string name="create_new_presentation">Vytvoriť novú prezentáciu</string>
-    <string name="create_new_spreadsheet">Vytvoriť novú tabuľku</string>
-    <string name="create_rich_workspace">Pridať informácie o priečinku</string>
-    <string name="creates_rich_workspace">vytvorí informácie o priečinku</string>
+    <string name="create_new">Nový</string>
+    <string name="create_new_document">Nový dokument</string>
+    <string name="create_new_folder">Nový priečinok</string>
+    <string name="create_new_presentation">Nová prezentácia</string>
+    <string name="create_new_spreadsheet">Nová tabuľka</string>
     <string name="credentials_disabled">Prihlasovacie údaje zakázané</string>
     <string name="daily_backup">Denná záloha</string>
     <string name="data_to_back_up">Dáta pre zálohovanie</string>
@@ -891,7 +892,6 @@
     <string name="upload_action_cancelled_resume">Obnoviť zrušené nahrávania</string>
     <string name="upload_action_failed_clear">Odstrániť zlyhané nahrávania</string>
     <string name="upload_action_failed_retry">Zopakovať zlyhané nahrávania</string>
-    <string name="upload_action_file_not_exist_message">Niektoré súbory neexistujú, tieto súbory nie je možné znova nahrať.</string>
     <string name="upload_action_global_upload_pause">Pozastaviť všetky nahrávania</string>
     <string name="upload_action_global_upload_resume">Obnoviť všetky nahrávania</string>
     <string name="upload_cannot_create_file">Nieje možné vytvoriť lokálny súbor</string>

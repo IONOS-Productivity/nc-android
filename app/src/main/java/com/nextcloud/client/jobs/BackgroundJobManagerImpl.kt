@@ -404,37 +404,55 @@ internal class BackgroundJobManagerImpl(
         workManager.cancelJob(JOB_PERIODIC_CALENDAR_BACKUP, user)
     }
 
-    override fun bothFilesSyncJobsRunning(): Boolean {
-        return workManager.isWorkRunning(JOB_PERIODIC_FILES_SYNC) &&
-            workManager.isWorkRunning(JOB_IMMEDIATE_FILES_SYNC)
+    override fun bothFilesSyncJobsRunning(syncedFolderID: Long): Boolean {
+        return workManager.isWorkRunning(JOB_PERIODIC_FILES_SYNC + "_" + syncedFolderID) &&
+            workManager.isWorkRunning(JOB_IMMEDIATE_FILES_SYNC + "_" + syncedFolderID)
     }
 
-    override fun schedulePeriodicFilesSyncJob() {
+    override fun schedulePeriodicFilesSyncJob(
+        syncedFolderID: Long
+    ) {
+        val arguments = Data.Builder()
+            .putLong(FilesSyncWork.SYNCED_FOLDER_ID, syncedFolderID)
+            .build()
+
         val request = periodicRequestBuilder(
             jobClass = FilesSyncWork::class,
-            jobName = JOB_PERIODIC_FILES_SYNC,
+            jobName = JOB_PERIODIC_FILES_SYNC + "_" + syncedFolderID,
             intervalMins = DEFAULT_PERIODIC_JOB_INTERVAL_MINUTES
-        ).build()
-        workManager.enqueueUniquePeriodicWork(JOB_PERIODIC_FILES_SYNC, ExistingPeriodicWorkPolicy.REPLACE, request)
+        )
+            .setInputData(arguments)
+            .build()
+        workManager.enqueueUniquePeriodicWork(
+            JOB_PERIODIC_FILES_SYNC + "_" + syncedFolderID,
+            ExistingPeriodicWorkPolicy.REPLACE,
+            request
+        )
     }
 
     override fun startImmediateFilesSyncJob(
+        syncedFolderID: Long,
         overridePowerSaving: Boolean,
         changedFiles: Array<String>
     ) {
         val arguments = Data.Builder()
             .putBoolean(FilesSyncWork.OVERRIDE_POWER_SAVING, overridePowerSaving)
             .putStringArray(FilesSyncWork.CHANGED_FILES, changedFiles)
+            .putLong(FilesSyncWork.SYNCED_FOLDER_ID, syncedFolderID)
             .build()
 
         val request = oneTimeRequestBuilder(
             jobClass = FilesSyncWork::class,
-            jobName = JOB_IMMEDIATE_FILES_SYNC
+            jobName = JOB_IMMEDIATE_FILES_SYNC + "_" + syncedFolderID
         )
             .setInputData(arguments)
             .build()
 
-        workManager.enqueueUniqueWork(JOB_IMMEDIATE_FILES_SYNC, ExistingWorkPolicy.APPEND, request)
+        workManager.enqueueUniqueWork(
+            JOB_IMMEDIATE_FILES_SYNC + "_" + syncedFolderID,
+            ExistingWorkPolicy.APPEND,
+            request
+        )
     }
 
     override fun scheduleOfflineSync() {
@@ -538,7 +556,6 @@ internal class BackgroundJobManagerImpl(
         val tag = startFileDownloadJobTag(user, file.fileId)
 
         val data = workDataOf(
-            FileDownloadWorker.WORKER_ID to file.fileId.toInt(),
             FileDownloadWorker.ACCOUNT_NAME to user.accountName,
             FileDownloadWorker.FILE_REMOTE_PATH to file.remotePath,
             FileDownloadWorker.BEHAVIOUR to behaviour,

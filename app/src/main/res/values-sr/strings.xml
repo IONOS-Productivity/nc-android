@@ -34,6 +34,9 @@
     <string name="add_to_cloud">Додај у %1$s</string>
     <string name="advanced_settings">Напредне поставке</string>
     <string name="allow_resharing">Дозволи дељење даље</string>
+    <string name="app_config_base_url_title">Базни URL</string>
+    <string name="app_config_proxy_host_title">Хост име проксија</string>
+    <string name="app_config_proxy_port_title">Прокси порт</string>
     <string name="app_widget_description">Приказује један виџет са контролне табле</string>
     <string name="appbar_search_in">Тражи у %s</string>
     <string name="assistant_screen_all_task_type">Све</string>
@@ -201,13 +204,13 @@
     <string name="could_not_retrieve_url">Не могу да добавим УРЛ</string>
     <string name="create">Направи</string>
     <string name="create_dir_fail_msg">Не могу да направим фасциклу</string>
-    <string name="create_new">Направи нови</string>
-    <string name="create_new_document">Направи нови документ</string>
-    <string name="create_new_folder">Направи нову фасциклу</string>
-    <string name="create_new_presentation">Направи нову презентацију</string>
-    <string name="create_new_spreadsheet">Направи нову табелу</string>
-    <string name="create_rich_workspace">Додај информације о фасцикли</string>
-    <string name="creates_rich_workspace">прави информације о фасцикли</string>
+    <string name="create_new">Нов</string>
+    <string name="create_new_document">Нови документ</string>
+    <string name="create_new_folder">Нова фасцикла</string>
+    <string name="create_new_presentation">Нова презентација</string>
+    <string name="create_new_spreadsheet">Нова табела</string>
+    <string name="create_rich_workspace">Додај опис фолдера</string>
+    <string name="creates_rich_workspace">Додаје опис фолдера</string>
     <string name="credentials_disabled">Акредитиви искључени</string>
     <string name="daily_backup">Дневна резервна копија</string>
     <string name="data_to_back_up">Подаци који се чувају</string>
@@ -879,7 +882,7 @@
     <string name="unlock_file">Откључај фајл</string>
     <string name="unread_comments">Постоје непрочитани коментари</string>
     <string name="unset_encrypted">Искључи шифровање</string>
-    <string name="unset_favorite">Уклони из омиљених</string>
+    <string name="unset_favorite">Избаци из омиљених</string>
     <string name="unshare_link_file_error">Десила се грешка при покушају укидања дељења фајла или фасцикле.</string>
     <string name="unshare_link_file_no_exist">Не могу да укинем дељење. Проверите да ли фајл постоји.</string>
     <string name="unshare_link_forbidden_permissions">да укинете дељење овог фајла</string>
@@ -893,7 +896,7 @@
     <string name="upload_action_cancelled_resume">Настави отказана отпремања</string>
     <string name="upload_action_failed_clear">Избриши неуспела отпремања</string>
     <string name="upload_action_failed_retry">Понови неуспела отпремања</string>
-    <string name="upload_action_file_not_exist_message">Неки фајлови не постоје, неће моћи да се настави отпремање</string>
+    <string name="upload_action_file_not_exist_message">Неки фајлови вишене постоје. Та отпремања неће моћи да се наставе.</string>
     <string name="upload_action_global_upload_pause">Паузирај сва отпремања</string>
     <string name="upload_action_global_upload_resume">Настави сва отпремања</string>
     <string name="upload_cannot_create_file">Не могу да направим локални фајл</string>
@@ -912,11 +915,13 @@
     <string name="upload_list_delete">Избриши</string>
     <string name="upload_list_empty_headline">Нема доступних отпремања</string>
     <string name="upload_list_empty_text_auto_upload">Отпремите нешто или укључите аутоматско отпремање.</string>
+    <string name="upload_list_expand_header">Укљ./Искљ. развијање заглавља</string>
     <string name="upload_list_resolve_conflict">Разреши сукоб</string>
     <string name="upload_local_storage_full">Локално складиште пуно</string>
     <string name="upload_local_storage_not_copied">Фајл није могао да се копира на локално складиште</string>
     <string name="upload_lock_failed">Неуспело закључавање фасцикле</string>
     <string name="upload_manually_cancelled">Корисник је прекинуо отпремање</string>
+    <string name="upload_notification_manager_start_text">%1$d / %2$d - %3$s</string>
     <string name="upload_old_android">Шифровање је могуће само са &gt;= Андроидом 5.0</string>
     <string name="upload_query_move_foreign_files">Недостатак простора  спречава копирање фајлова у фасциклу %1$s. Желите ли да их преместите тамо?</string>
     <string name="upload_quota_exceeded">Прекорачена је квота за складиште</string>
