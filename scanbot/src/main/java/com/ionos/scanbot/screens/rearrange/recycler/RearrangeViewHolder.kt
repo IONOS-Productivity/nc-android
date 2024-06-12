@@ -4,12 +4,14 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.ionos.scanbot.databinding.ScanbotItemRearrangeBinding
 import com.ionos.scanbot.entity.Picture
+import com.ionos.scanbot.image_loader.ImageLoader
+import com.ionos.scanbot.image_loader.ImageLoaderOptions
+import com.ionos.scanbot.image_loader.ScaleType
 import com.ionos.scanbot.repository.RepositoryFacade
 
 internal class RearrangeViewHolder(
 	private val viewBinding: ScanbotItemRearrangeBinding,
-    //TODO alk
-    // private val imageLoader: ImageLoader,
+    private val imageLoader: ImageLoader,
 	private val repositoryFacade: RepositoryFacade,
 ) : RecyclerView.ViewHolder(viewBinding.root) {
 
@@ -19,9 +21,9 @@ internal class RearrangeViewHolder(
 	}
 
 	private fun ImageView.loadPicture(picture: Picture) {
-		// repositoryFacade.readModifiedFile(picture.id)
-			// ?.let(imageLoader::load)
-			// ?.options(ImageLoaderOptionsBundle(ScaleType.CENTER_INSIDE))
-			// ?.into(SimpleDrawableTarget(this))
+		repositoryFacade.readModifiedFile(picture.id)
+			?.let(imageLoader::load)
+			?.options(ImageLoaderOptions(ScaleType.CENTER_INSIDE))
+			?.into(this)
 	}
 }

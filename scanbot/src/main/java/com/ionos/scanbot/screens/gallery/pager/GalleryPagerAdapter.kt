@@ -6,11 +6,14 @@ import android.view.ViewGroup.LayoutParams
 import android.widget.ImageView
 import androidx.viewpager.widget.PagerAdapter
 import com.ionos.scanbot.entity.Picture
+import com.ionos.scanbot.image_loader.ImageLoader
+import com.ionos.scanbot.image_loader.ImageLoaderOptions
+import com.ionos.scanbot.image_loader.ScaleType
 import com.ionos.scanbot.repository.RepositoryFacade
 import javax.inject.Inject
 
 internal class GalleryPagerAdapter @Inject constructor(
-	// private val imageLoader: ImageLoader,
+	private val imageLoader: ImageLoader,
 	private val repositoryFacade: RepositoryFacade,
 ) : PagerAdapter() {
 
@@ -52,11 +55,9 @@ internal class GalleryPagerAdapter @Inject constructor(
 	}
 
 	private fun ImageView.loadPicture(picture: Picture) {
-		//todo alk
-
-        // repositoryFacade.readModifiedFile(picture.id)
-		// 	?.let(imageLoader::load)
-		// 	?.options(ImageLoaderOptionsBundle(ScaleType.CENTER_INSIDE))
-		// 	?.into(SimpleDrawableTarget(this))
+        repositoryFacade.readModifiedFile(picture.id)
+			?.let(imageLoader::load)
+			?.options(ImageLoaderOptions(ScaleType.CENTER_INSIDE))
+			?.into(this)
 	}
 }

@@ -6,12 +6,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.ionos.common_ui.utils.DiffUtilsUpdateCallback
 import com.ionos.scanbot.databinding.ScanbotItemRearrangeBinding
+import com.ionos.scanbot.image_loader.ImageLoader
 import com.ionos.scanbot.repository.RepositoryFacade
 import javax.inject.Inject
 
 internal class RearrangeAdapter @Inject constructor(
-    //TODO alk
-	// private val imageLoader: ImageLoader,
+	private val imageLoader: ImageLoader,
 	private val repositoryFacade: RepositoryFacade,
 ) : RecyclerView.Adapter<RearrangeViewHolder>() {
 
@@ -29,7 +29,7 @@ internal class RearrangeAdapter @Inject constructor(
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RearrangeViewHolder {
 		val inflater = LayoutInflater.from(parent.context)
 		val viewBinding = ScanbotItemRearrangeBinding.inflate(inflater, parent, false)
-		return RearrangeViewHolder(viewBinding, /*imageLoader,*/ repositoryFacade)
+		return RearrangeViewHolder(viewBinding, imageLoader, repositoryFacade)
 	}
 
 	override fun onBindViewHolder(holder: RearrangeViewHolder, position: Int) {
