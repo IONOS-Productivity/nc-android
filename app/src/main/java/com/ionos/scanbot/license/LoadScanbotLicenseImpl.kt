@@ -1,4 +1,4 @@
-package com.ionos.scanbot
+package com.ionos.scanbot.license
 
 import android.content.Context
 import androidx.work.Constraints
@@ -7,7 +7,6 @@ import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequest
 import androidx.work.OutOfQuotaPolicy
 import androidx.work.WorkManager
-import com.ionos.scanbot.license.LoadScanbotLicense
 import javax.inject.Inject
 
 class LoadScanbotLicenseImpl @Inject constructor(

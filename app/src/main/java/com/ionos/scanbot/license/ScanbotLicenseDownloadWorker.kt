@@ -1,10 +1,9 @@
-package com.ionos.scanbot
+package com.ionos.scanbot.license
 
 import android.content.Context
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.ionos.scanbot.initializer.TryToInitScanbotSdk
-import com.ionos.scanbot.license.LicenseKeyStore
 import com.nextcloud.client.account.UserAccountManager
 import com.owncloud.android.lib.common.OwnCloudClientManagerFactory
 

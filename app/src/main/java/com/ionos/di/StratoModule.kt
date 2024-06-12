@@ -1,7 +1,7 @@
 package com.ionos.di
 
 import com.ionos.scanbot.license.LoadScanbotLicense
-import com.ionos.scanbot.LoadScanbotLicenseImpl
+import com.ionos.scanbot.license.LoadScanbotLicenseImpl
 import dagger.Binds
 import dagger.Module
 

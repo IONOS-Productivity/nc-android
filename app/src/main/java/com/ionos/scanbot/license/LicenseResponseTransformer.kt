@@ -1,4 +1,4 @@
-package com.ionos.scanbot
+package com.ionos.scanbot.license
 
 /**
  * User: Dima Muravyov

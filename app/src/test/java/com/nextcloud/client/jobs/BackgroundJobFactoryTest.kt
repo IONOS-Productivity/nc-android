@@ -13,7 +13,7 @@ import android.content.res.Resources
 import android.os.Build
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.work.WorkerParameters
-import com.ionos.scanbot.ScanbotLicenseJobFactory
+import com.ionos.scanbot.license.ScanbotLicenseJobFactory
 import com.nextcloud.client.account.UserAccountManager
 import com.nextcloud.client.core.Clock
 import com.nextcloud.client.device.DeviceInfo
