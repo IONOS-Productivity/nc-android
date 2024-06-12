@@ -9,6 +9,9 @@ package com.nextcloud.client.di;
 
 import android.app.Application;
 
+import com.ionos.common_ui.di.CommonUiComponent;
+import com.ionos.di.StratoModule;
+import com.ionos.scanbot.di.ScanbotComponent;
 import com.nextcloud.appReview.InAppReviewModule;
 import com.nextcloud.client.appinfo.AppInfoModule;
 import com.nextcloud.client.database.DatabaseModule;
@@ -24,10 +27,6 @@ import com.owncloud.android.MainApp;
 import com.owncloud.android.media.MediaControlView;
 import com.owncloud.android.ui.ThemeableSwitchPreference;
 import com.owncloud.android.ui.whatsnew.ProgressIndicator;
-import com.ionos.di.StratoModule;
-import com.ionos.common_ui.di.CommonUiComponent;
-import com.ionos.scanbot.di.ScanbotComponent;
-import com.ionos.scanbot.di.ScanbotModule;
 
 import javax.inject.Singleton;
 
@@ -48,7 +47,6 @@ import dagger.android.support.AndroidSupportInjectionModule;
     IntegrationsModule.class,
     InAppReviewModule.class,
     ThemeModule.class,
-    ScanbotModule.class,
     DatabaseModule.class,
     DispatcherModule.class,
     VariantModule.class,
