@@ -48,7 +48,6 @@
     <string name="scanbot_save_file_name_title">File name:</string>
     <string name="scanbot_save_file_type_title">File type:</string>
     <string name="scanbot_save_path">Save location:</string>
-    <string name="selected">Selected</string>
     <string name="this_item_exists" formatted="false">%s %s already exists. What would you like to do?</string>
     <string name="unknown_exception">An error occurred. Please try again later</string>
 </resources>
