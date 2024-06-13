@@ -45,15 +45,8 @@ class ScanbotControllerImpl @Inject internal constructor(
 			.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
 	}
 
-	override fun scanToDocument(context: Context, uploadTarget: UploadTarget) {
-		//TODO alk - check permissions before proceed
-        // permissionsController.checkPermissions(Permission.ACCESS_CAMERA) { result ->
-		// 	if (result.isMandatoryPermissionsGranted) {
-				startCameraActivity(context, uploadTarget)
-			// } else {
-			// 	showRequirePermissionMessage(context)
-			// }
-		// }
+	override fun scanToDocument(context: Context, path: String) {
+        startCameraActivity(context, UploadTarget.RemotePath(path))
 	}
 
 	override fun saveState(state: Bundle) {

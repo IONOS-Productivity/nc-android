@@ -18,7 +18,7 @@ abstract class ScanbotController {
 
 	abstract fun createIntent(context: Context): Intent
 
-	abstract fun scanToDocument(context: Context, uploadTarget: UploadTarget)
+	abstract fun scanToDocument(context: Context, path: String)
 
 	internal abstract fun saveState(state: Bundle)
 

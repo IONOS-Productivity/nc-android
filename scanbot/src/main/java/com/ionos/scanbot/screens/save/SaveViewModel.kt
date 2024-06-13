@@ -9,6 +9,7 @@ import com.ionos.scanbot.repository.RepositoryFacade
 import com.ionos.scanbot.screens.base.BaseViewModel
 import com.ionos.scanbot.screens.save.SaveScreen.*
 import com.ionos.scanbot.screens.save.SaveScreen.Event.*
+import com.ionos.scanbot.screens.save.use_case.GetTargetPath
 import com.ionos.scanbot.screens.save.use_case.ValidateFilesForUpload
 import com.ionos.scanbot.screens.save.use_case.save.SaveDocument
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -18,8 +19,7 @@ import javax.inject.Inject
 
 internal class SaveViewModel @Inject constructor(
 	private val saveDocument: SaveDocument,
-    // TODO alk
-	// private val getTargetPath: GetTargetPath,
+	private val getTargetPath: GetTargetPath,
 	private val validateFiles: ValidateFilesForUpload,
 	private val scanbotController: ScanbotController,
 	private val repositoryFacade: RepositoryFacade,
@@ -121,11 +121,10 @@ internal class SaveViewModel @Inject constructor(
 	}
 
 	private fun updateTargetPath(uploadTarget: UploadTarget) {
-		// subscriptions += getTargetPath(uploadTarget)
-		// 	.subscribeOn(Schedulers.io())
-		// 	.observeOn(AndroidSchedulers.mainThread())
-		// 	.subscribe(::onTargetPathUpdated, ::onError)
-        onTargetPathUpdated("targetPath")
+		subscriptions += getTargetPath(uploadTarget)
+			.subscribeOn(Schedulers.io())
+			.observeOn(AndroidSchedulers.mainThread())
+			.subscribe(::onTargetPathUpdated, ::onError)
 	}
 
 	private fun saveDocument() {
