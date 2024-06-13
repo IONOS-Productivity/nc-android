@@ -3,34 +3,13 @@
     <color name="app_bar_color">@color/cod_gray_dark</color>
     <color name="app_bar_read_mode_color">@color/cod_gray_dark</color>
 
-    <color name="main_screen_container_background">@color/mine_shaft_dark</color>
-
     <color name="common_text_color">@color/white</color>
 
     <color name="dialog_content_text">@color/white</color>
 
-    <color name="download_progressbar_fill_color">@color/grey</color>
-    <color name="download_progressbar_background_color">@color/blue</color>
-
     <color name="ic_edit_fill_color">@color/white</color>
     <color name="icons_tint_color">@color/white</color>
 
-    <color name="dialog_check_box_normal_color">@color/control_activated_color</color>
-    <color name="dialog_check_box_activated_color">@color/control_activated_color</color>
-    <color name="item_view_check_box_activated_color">@color/control_list_activated_color</color>
-    <color name="item_view_check_box_normal_color">@color/white</color>
-
-    <color name="preference_item_title_text">@color/white</color>
-    <color name="preference_item_subtitle_text">@color/white</color>
-    <color name="preference_button_text">@color/white</color>
-
     <color name="system_bar_read_mode_color">@color/cod_gray_dark</color>
-
-    <color name="view_preferences_background">@color/mine_shaft_dark</color>
-    <color name="view_preference_category_background">@color/mine_shaft_dark</color>
-    <color name="view_preference_category_divider_color">@color/mine_shaft_dark</color>
-    <color name="view_preference_item_background">@color/mine_shaft2_dark</color>
-
-    <color name="user_account_button_bg">@color/tundora3</color>
 
 </resources>
