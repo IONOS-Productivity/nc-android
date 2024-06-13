@@ -78,8 +78,4 @@ class ScanbotControllerImpl @Inject internal constructor(
 		setUpController(uploadTarget)
 		context.startActivity(createIntent(context))
 	}
-
-	private fun showRequirePermissionMessage(context: Context) {
-        //TODO alk show message
-    }
 }

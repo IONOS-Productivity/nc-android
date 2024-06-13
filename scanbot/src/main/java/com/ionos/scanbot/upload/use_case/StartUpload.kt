@@ -15,13 +15,17 @@ import javax.inject.Inject
 
 //TODO alk - make the class internal
 class StartUpload @Inject constructor(
-	//private val upload: UploadWithoutCheckForFileExisting,
+	private val uploader: Uploader,
+    //private val upload: UploadWithoutCheckForFileExisting,
 	// private val thumbnailCacheCleaner: EntityCacheCleaner<RemoteFileInfo>,
-) {
+){
 	private val listeners: MutableSet<UploadJobListener> = Collections.synchronizedSet(hashSetOf())
 
 	operator fun invoke(localUris: List<Uri>, remotePath: String, onResult: (UploadFileResult) -> Unit) {
-		//TODO alk - Implement start of uploading of file here
+        uploader.upload(
+            remotePath,
+            localUris.map { uri -> uri.path.orEmpty() })
+    //TODO alk - Implement start of uploading of file here
         // upload.startUploadWithoutCheckForFileExisting(
 		// 	localUris,
 		// 	remotePath,
