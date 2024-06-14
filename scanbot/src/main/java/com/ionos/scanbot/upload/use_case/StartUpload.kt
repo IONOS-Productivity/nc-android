@@ -8,7 +8,6 @@ import com.ionos.domain.interfaces.actions.null_objects.NullParamAction
 import com.ionos.domain.optional.Optional
 import com.ionos.domain.upload.result.UploadFileResult
 import com.ionos.domain.utils.kotlin.extension.deleteIfExists
-import com.ionos.scanbot.upload.UploadWithoutCheckForFileExisting
 import java.io.File
 import java.util.Collections
 import javax.inject.Inject

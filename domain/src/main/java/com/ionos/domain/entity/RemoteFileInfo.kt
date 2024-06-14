@@ -1,6 +1,5 @@
 package com.ionos.domain.entity
 
-import com.ionos.domain.hash.FileInfoUtil
 import java.io.File
 import java.io.Serializable
 import java.util.*
@@ -93,31 +92,6 @@ data class RemoteFileInfo @JvmOverloads constructor(
 			}
 		}
 	}
-
-
-	// JAVA support
-	fun copyWithContentLength(contentLength: Long) = copy(
-		contentLength = contentLength,
-		mHash = FileInfoUtil.mHash(isDirectory, name, contentLength, lastModified)
-	)
-
-	fun copyWithLastModified(lastModified: Long) = copy(
-		lastModified = lastModified,
-		mHash = FileInfoUtil.mHash(isDirectory, name, contentLength, lastModified)
-	)
-
-	fun copyWithContentLengthAndLastModified(contentLength: Long, lastModified: Long) = copy(
-		contentLength = contentLength,
-		lastModified = lastModified,
-		mHash = FileInfoUtil.mHash(isDirectory, name, contentLength, lastModified)
-	)
-
-	fun copyWithDecodedName(decodedName: String?) = copy(decodedName = decodedName)
-
-	fun copyWithExportedDirKey(exportedDirectoryKey: Any?) =
-		copy(exportedDirectoryKey = exportedDirectoryKey)
-	//end JAVA support
-
 
 	@Deprecated("Should not change data state.")
 	fun setDecodedName(decodedName: String?) {

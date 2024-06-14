@@ -2,11 +2,7 @@ package com.ionos.scanbot.screens.camera
 
 import android.graphics.Bitmap
 import android.net.Uri
-import com.ionos.domain.permission.Permission
-import com.ionos.domain.permission.PermissionsController
-// import com.ionos.domain.use_case.free_space.GetLocalFreeSpace
 import com.ionos.domain.utils.kotlin.extension.plusAssign
-import com.ionos.scanbot.exception.NoCameraPermissionException
 import com.ionos.scanbot.repository.RepositoryFacade
 import com.ionos.scanbot.repository.bitmap.BitmapDecoder
 import com.ionos.scanbot.screens.base.BaseViewModel
@@ -44,12 +40,6 @@ internal class CameraViewModel @Inject constructor(
 	private val importCancellation = PublishSubject.create<Boolean>()
 
 	override fun onCreate() {
-		//TODO alk
-        // permissionsController.checkPermissions(Permission.ACCESS_CAMERA) { result ->
-		// 	if (!result.isMandatoryPermissionsGranted) {
-		// 		onError(NoCameraPermissionException())
-		// 	}
-		// }
 	}
 
 	override fun onCleared() {
