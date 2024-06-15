@@ -47,7 +47,7 @@ dependencies {
     implementation project(':domain')
 
     implementation "androidx.appcompat:appcompat:$appCompatVersion"
-    implementation "androidx.constraintlayout:constraintlayout:2.1.4"
+    implementation "androidx.constraintlayout:constraintlayout:$constraintlayout_version"
     implementation "androidx.preference:preference:$preference_version"
     implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
     implementation "com.google.dagger:dagger:$daggerVersion"
