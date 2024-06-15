@@ -9,9 +9,6 @@ buildscript {
     }
 }
 
-//apply plugin: 'com.android.library'
-//apply plugin: 'kotlin-android'
-
 android {
     namespace 'com.ionos.scanbot'
     compileSdk 34
@@ -71,14 +68,4 @@ dependencies {
 
     implementation "com.google.dagger:dagger:$daggerVersion"
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
-
-
-//    testImplementation rootProject.ext.reactivex_rxjava2
-//    testImplementation rootProject.ext.reactivex_rxandroid2
-//    testImplementation "androidx.arch.core:core-testing:$arch_core"
-//    testImplementation "androidx.lifecycle:lifecycle-runtime-testing:$lifecycle_version"
-//    testImplementation "androidx.lifecycle:lifecycle-reactivestreams-ktx:$lifecycle_version"
-//    testImplementation "com.viseven.develop:reduxCore:$redux_core_version"
-//    testImplementation rootProject.ext.junit
-//    testImplementation rootProject.ext.mockito_kotlin
 }

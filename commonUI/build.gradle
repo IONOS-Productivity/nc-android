@@ -49,15 +49,9 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$appCompatVersion"
     implementation "androidx.constraintlayout:constraintlayout:2.1.4"
     implementation "androidx.preference:preference:$preference_version"
-
-    implementation "com.phrase.android:ota-sdk:$phrase_sdk"
-
+    implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
     implementation "com.google.dagger:dagger:$daggerVersion"
 
     compileOnly reactivex_rxjava2
     compileOnly reactivex_rxandroid2
-
-    // testImplementation rootProject.ext.junit
-    // testImplementation rootProject.ext.mockito
-    // testImplementation rootProject.ext.powermock
 }
