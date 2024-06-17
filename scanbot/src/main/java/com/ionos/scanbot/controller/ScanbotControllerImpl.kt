@@ -4,9 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import com.ionos.domain.upload.result.UploadFileResult
 import com.ionos.domain.upload.targetprovider.UploadTarget
-import com.ionos.domain.upload.targetprovider.UploadTargetRepository
 import com.ionos.domain.upload.targetprovider.UploadTargetRepositoryImpl
 import com.ionos.scanbot.repository.PictureRepository
 import com.ionos.scanbot.repository.RepositoryFacade
@@ -23,14 +21,11 @@ class ScanbotControllerImpl @Inject internal constructor(
 	private val startUpload: StartUpload,
 	private val pictureRepository: PictureRepository,
 	private val repositoryFacade: RepositoryFacade,
-	// private val permissionsController: PermissionsController,
 ) : ScanbotController() {
 
-	override val fileUploaded get() = _fileUploaded
 	override val fileUploadStarted get() = _fileUploadStarted
 	override val uploadTargetRepository get() = _uploadTargetRepository
 
-	private val _fileUploaded = PublishSubject.create<UploadFileResult>()
 	private val _fileUploadStarted = PublishSubject.create<Any>()
 	private val stateManager = StateManager()
 
@@ -69,7 +64,7 @@ class ScanbotControllerImpl @Inject internal constructor(
 
 	override fun onDocumentSaved(localUris: List<Uri>) {
 		val remotePath = uploadTargetRepository.uploadTarget.remotePath
-		startUpload(localUris, remotePath, _fileUploaded::onNext)
+		startUpload(localUris, remotePath)
 		_fileUploadStarted.onNext(Any())
 		repositoryFacade.release()
 	}
