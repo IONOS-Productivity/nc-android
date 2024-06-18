@@ -21,7 +21,7 @@ class TryToInitScanbotSdk @Inject constructor(
                 .prepareOCRLanguagesBlobs(true)
                 .initialize(application)
         } catch (exception: RuntimeException) {
-            LoggerUtil.logE(ScanbotInitializer::class.java.simpleName, exception.toString())
+            LoggerUtil.logE(ScanbotInitializer::class.java.simpleName, exception)
         }
     }
 }

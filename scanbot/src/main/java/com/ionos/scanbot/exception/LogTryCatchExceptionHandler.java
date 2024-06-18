@@ -7,6 +7,6 @@ public class LogTryCatchExceptionHandler extends TryCatchExceptionHandler {
 
 	@Override
 	protected void handleException(Exception e) {
-		LoggerUtil.logE(e.getMessage(), e);
+		LoggerUtil.logE(getClass().getSimpleName(), e);
 	}
 }

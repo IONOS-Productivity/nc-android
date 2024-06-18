@@ -4,6 +4,7 @@ import com.ionos.scanbot.di.qualifiers.ScanbotLicenseKey
 import com.ionos.scanbot.license.LicenseKeyStore
 import com.ionos.scanbot.license.LoadScanbotLicense
 import com.ionos.scanbot.provider.SdkProvider
+import com.ionos.scanbot.util.logger.Logger
 import io.scanbot.sdk.ScanbotSDKInitializer
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -18,10 +19,18 @@ class ScanbotInitializerImpl @Inject internal constructor(
     private val sdkProvider: SdkProvider,
     private val tryToInitScanbotSdk: TryToInitScanbotSdk,
     private val loadScanbotLicense: LoadScanbotLicense,
+    private val loggerImpl: Logger,
 	@ScanbotLicenseKey private val defaultLicenseKey: String,
 ) : ScanbotInitializer {
 
+    companion object{
+        var logger: Logger? = null
+            private set
+    }
+
 	override fun initialize() {
+        logger = loggerImpl
+
         tryToInitScanbotSdk(defaultLicenseKey)
 
 		if (isSdkInitRequired()) {
