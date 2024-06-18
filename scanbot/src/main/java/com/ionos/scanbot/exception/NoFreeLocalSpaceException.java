@@ -1,4 +1,4 @@
-package com.ionos.domain.exception;
+package com.ionos.scanbot.exception;
 
 import java.io.IOException;
 

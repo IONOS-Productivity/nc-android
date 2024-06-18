@@ -1,8 +1,5 @@
-package com.ionos.domain.exception;
+package com.ionos.common_ui.exception;
 
-import com.ionos.domain.interfaces.actions.Action;
-import com.ionos.domain.interfaces.actions.ThrowableAction;
-import com.ionos.domain.interfaces.actions.null_objects.NullAction;
 import com.ionos.domain.interfaces.actions.Action;
 import com.ionos.domain.interfaces.actions.ThrowableAction;
 import com.ionos.domain.interfaces.actions.null_objects.NullAction;

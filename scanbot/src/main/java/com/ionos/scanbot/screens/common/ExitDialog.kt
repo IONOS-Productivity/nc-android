@@ -3,7 +3,7 @@ package com.ionos.scanbot.screens.common
 import android.content.Context
 import com.ionos.common_ui.dialog.wrapper.SingleMessageDialogWrapper
 import com.ionos.common_ui.utils.ContextUtils
-import com.ionos.domain.exception.TryCatchExceptionHandler
+import com.ionos.common_ui.exception.TryCatchExceptionHandler
 import com.ionos.scanbot.R
 import javax.inject.Inject
 

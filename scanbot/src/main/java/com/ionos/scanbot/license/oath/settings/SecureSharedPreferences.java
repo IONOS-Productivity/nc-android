@@ -2,7 +2,7 @@ package com.ionos.scanbot.license.oath.settings;
 
 import android.content.SharedPreferences;
 
-import com.ionos.logger.LoggerUtil;
+import com.ionos.scanbot.util.logger.LoggerUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;

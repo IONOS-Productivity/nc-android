@@ -5,7 +5,7 @@ import android.graphics.Bitmap
 import android.system.ErrnoException
 import android.system.OsConstants
 import android.util.Log
-import com.ionos.domain.exception.NoFreeLocalSpaceException
+import com.ionos.scanbot.exception.NoFreeLocalSpaceException
 import com.ionos.scanbot.entity.ImageFormat
 import com.ionos.scanbot.util.io.SaveErrorOutputStream
 import java.io.File

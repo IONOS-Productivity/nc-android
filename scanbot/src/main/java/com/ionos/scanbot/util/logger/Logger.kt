@@ -1,4 +1,4 @@
-package com.ionos.logger
+package com.ionos.scanbot.util.logger
 
 interface Logger {
 	fun logD(tag: String, message: String)

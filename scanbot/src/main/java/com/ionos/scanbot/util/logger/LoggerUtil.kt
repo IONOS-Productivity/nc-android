@@ -1,4 +1,4 @@
-package com.ionos.logger
+package com.ionos.scanbot.util.logger
 
 object LoggerUtil {
 	private var logger: Logger? = null

@@ -1,6 +1,7 @@
-package com.ionos.domain.exception;
+package com.ionos.scanbot.exception;
 
-import com.ionos.logger.LoggerUtil;
+import com.ionos.common_ui.exception.TryCatchExceptionHandler;
+import com.ionos.scanbot.util.logger.LoggerUtil;
 
 public class LogTryCatchExceptionHandler extends TryCatchExceptionHandler {
 

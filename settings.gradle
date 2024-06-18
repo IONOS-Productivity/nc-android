@@ -11,7 +11,6 @@ include ':appscan'
 include ':scanbot'
 include ':commonUI'
 include ':domain'
-include ':libs:logger'
 
 
 //includeBuild('../android-common') {

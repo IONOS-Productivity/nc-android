@@ -7,7 +7,7 @@ import com.ionos.common_ui.R;
 import com.ionos.common_ui.di.CommonUiComponent;
 import com.ionos.common_ui.dialog.stylized.StylizedDialog;
 import com.ionos.common_ui.utils.ContextUtils;
-import com.ionos.domain.exception.TryCatchExceptionHandler;
+import com.ionos.common_ui.exception.TryCatchExceptionHandler;
 
 import javax.inject.Inject;
 

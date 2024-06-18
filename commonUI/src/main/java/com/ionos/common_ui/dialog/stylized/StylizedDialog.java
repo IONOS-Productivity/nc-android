@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -17,9 +18,8 @@ import com.ionos.common_ui.dialog.stylized.listeners.OnStylizedDialogButtonClick
 import com.ionos.common_ui.dialog.stylized.listeners.OnStylizedDialogItemClickListener;
 import com.ionos.common_ui.dialog.stylized.localized.LocalizedTextStrategy;
 import com.ionos.common_ui.dialog.stylized.view_factory.StylizedDialogViewFactory;
-import com.ionos.domain.exception.TryCatchExceptionHandler;
+import com.ionos.common_ui.exception.TryCatchExceptionHandler;
 import com.ionos.domain.optional.Optional;
-import com.ionos.logger.LoggerUtil;
 
 import java.util.List;
 
@@ -319,7 +319,7 @@ public class StylizedDialog<V extends View & SavingStateView> {
 		if (!alertDialog.isShowing()) {
 			tryCatchExceptionHandler.handle(() -> alertDialog.show());
 		} else {
-			LoggerUtil.logD(getClass().getSimpleName(), "Can't show override file dialog");
+			Log.d(getClass().getSimpleName(), "Can't show override file dialog");
 		}
 //		registerMainNavigationViewContainerListener();
 	}

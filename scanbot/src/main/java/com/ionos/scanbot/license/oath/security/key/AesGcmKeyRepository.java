@@ -4,8 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Base64;
 
-import com.ionos.logger.LoggerUtil;
 import com.ionos.scanbot.R;
+import com.ionos.scanbot.util.logger.LoggerUtil;
 
 import androidx.preference.PreferenceManager;
 

@@ -3,11 +3,11 @@ package com.ionos.common_ui.stylized;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
-
-import androidx.appcompat.widget.AppCompatTextView;
+import android.util.Log;
 
 import com.ionos.common_ui.R;
-import com.ionos.logger.LoggerUtil;
+
+import androidx.appcompat.widget.AppCompatTextView;
 
 public class StylizedTextView extends AppCompatTextView {
 	private static final int NORMAL = 0;
@@ -69,7 +69,7 @@ public class StylizedTextView extends AppCompatTextView {
 			if (attr == R.styleable.StylizedTextView_typeface) {
 				applyTypeface(types.getString(attr));
 			} else {
-				LoggerUtil.logW(getClass().getSimpleName(), "Found unknown style");
+				Log.w(getClass().getSimpleName(), "Found unknown style");
 			}
 		}
 		types.recycle();

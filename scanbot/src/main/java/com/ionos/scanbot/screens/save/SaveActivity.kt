@@ -6,7 +6,7 @@ import androidx.core.widget.addTextChangedListener
 import com.ionos.common_ui.dialog.LockProgressDialog
 import com.ionos.common_ui.dialog.stylized.overwrite_file_dialog.OverwriteDialogs
 import com.ionos.common_ui.dialog.stylized.overwrite_file_dialog.upload.RemoteFilePathOverwriteDialogs
-import com.ionos.domain.exception.NoFreeLocalSpaceException
+import com.ionos.scanbot.exception.NoFreeLocalSpaceException
 import com.ionos.domain.utils.kotlin.extension.plusAssign
 import com.ionos.scanbot.R
 import com.ionos.scanbot.databinding.ScanbotActivitySaveBinding

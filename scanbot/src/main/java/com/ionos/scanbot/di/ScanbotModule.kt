@@ -1,10 +1,9 @@
 package com.ionos.scanbot.di
 
 import android.content.Context
-import com.ionos.domain.exception.LogTryCatchExceptionHandler
-import com.ionos.domain.exception.TryCatchExceptionHandler
-import com.ionos.scanbot.availability.Availability
+import com.ionos.common_ui.exception.TryCatchExceptionHandler
 import com.ionos.scanbot.BuildConfig
+import com.ionos.scanbot.availability.Availability
 import com.ionos.scanbot.availability.ScanbotFeatureAvailability
 import com.ionos.scanbot.availability.ScanbotLicenseAvailability
 import com.ionos.scanbot.controller.ScanbotController
@@ -13,6 +12,7 @@ import com.ionos.scanbot.di.qualifiers.Scanbot
 import com.ionos.scanbot.di.qualifiers.ScanbotLicense
 import com.ionos.scanbot.di.qualifiers.ScanbotLicenseKey
 import com.ionos.scanbot.di.qualifiers.ScanbotLicenseKeyUrl
+import com.ionos.scanbot.exception.LogTryCatchExceptionHandler
 import com.ionos.scanbot.initializer.ScanbotInitializer
 import com.ionos.scanbot.initializer.ScanbotInitializerImpl
 import com.ionos.scanbot.license.KeyStore
@@ -59,7 +59,7 @@ abstract class ScanbotModule {
             // return if (BuildConfig.DEBUG
             // ) FatalTryCatchExceptionHandler()
             // else
-            return  LogTryCatchExceptionHandler()
+            return LogTryCatchExceptionHandler()
         }
     }
 

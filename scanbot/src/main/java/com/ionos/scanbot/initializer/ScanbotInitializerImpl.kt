@@ -1,14 +1,10 @@
 package com.ionos.scanbot.initializer
 
-import android.app.Application
-import com.ionos.logger.LoggerUtil
 import com.ionos.scanbot.di.qualifiers.ScanbotLicenseKey
 import com.ionos.scanbot.license.LicenseKeyStore
 import com.ionos.scanbot.license.LoadScanbotLicense
-import com.ionos.scanbot.provider.FileProvider
 import com.ionos.scanbot.provider.SdkProvider
 import io.scanbot.sdk.ScanbotSDKInitializer
-import io.scanbot.sdk.util.log.StubLogger
 import javax.inject.Inject
 import javax.inject.Singleton
 

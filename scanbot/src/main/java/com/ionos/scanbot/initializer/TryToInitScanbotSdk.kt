@@ -1,8 +1,8 @@
 package com.ionos.scanbot.initializer
 
 import android.app.Application
-import com.ionos.logger.LoggerUtil
 import com.ionos.scanbot.provider.FileProvider
+import com.ionos.scanbot.util.logger.LoggerUtil
 import io.scanbot.sdk.ScanbotSDKInitializer
 import io.scanbot.sdk.util.log.StubLogger
 import javax.inject.Inject

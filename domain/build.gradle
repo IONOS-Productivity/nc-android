@@ -21,7 +21,6 @@ compileKotlin {
 }
 
 dependencies {
-    api project(':libs:logger')
     implementation "androidx.annotation:annotation:$annotation_version"
     implementation reactivex_rxjava2
 }
