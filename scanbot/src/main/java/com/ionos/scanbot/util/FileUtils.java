@@ -1,4 +1,4 @@
-package com.ionos.domain.utils;
+package com.ionos.scanbot.util;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

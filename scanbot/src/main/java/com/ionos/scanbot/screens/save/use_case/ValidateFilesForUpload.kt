@@ -1,7 +1,7 @@
 package com.ionos.scanbot.screens.save.use_case
 
 import com.ionos.domain.upload.targetprovider.UploadTarget
-import com.ionos.domain.utils.FileUtils
+import com.ionos.scanbot.util.FileUtils
 import com.ionos.scanbot.repository.RepositoryFacade
 import com.ionos.scanbot.screens.save.SaveScreen.FileType
 import com.ionos.scanbot.exception.InvalidFileNameException

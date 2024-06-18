@@ -3,7 +3,7 @@ package com.ionos.scanbot.screens.camera.use_case
 import android.content.Context
 import android.net.Uri
 import com.ionos.scanbot.exception.NoFreeLocalSpaceException
-import com.ionos.domain.utils.FileUtils
+import com.ionos.scanbot.util.FileUtils
 import com.ionos.scanbot.R
 import com.ionos.scanbot.exception.ImportPictureException
 import com.ionos.scanbot.exception.NoCameraPermissionException
