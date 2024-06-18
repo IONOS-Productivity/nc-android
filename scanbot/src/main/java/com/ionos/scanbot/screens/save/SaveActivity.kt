@@ -7,7 +7,7 @@ import com.ionos.common_ui.dialog.LockProgressDialog
 import com.ionos.common_ui.dialog.stylized.overwrite_file_dialog.OverwriteDialogs
 import com.ionos.common_ui.dialog.stylized.overwrite_file_dialog.upload.RemoteFilePathOverwriteDialogs
 import com.ionos.scanbot.exception.NoFreeLocalSpaceException
-import com.ionos.domain.utils.kotlin.extension.plusAssign
+import com.ionos.scanbot.util.kotlin.extension.plusAssign
 import com.ionos.scanbot.R
 import com.ionos.scanbot.databinding.ScanbotActivitySaveBinding
 import com.ionos.scanbot.di.inject

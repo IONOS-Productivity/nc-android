@@ -1,7 +1,7 @@
 package com.ionos.scanbot.screens.filter
 
 import android.graphics.Bitmap
-import com.ionos.domain.utils.kotlin.extension.plusAssign
+import com.ionos.scanbot.util.kotlin.extension.plusAssign
 import com.ionos.scanbot.filter.FilterType
 import com.ionos.scanbot.filter.color.ColorFilter
 import com.ionos.scanbot.filter.color.ColorFilterType
@@ -11,7 +11,6 @@ import com.ionos.scanbot.exception.ReadPictureBitmapException
 import com.ionos.scanbot.exception.PictureNotFoundException
 import com.ionos.scanbot.screens.filter.FilterScreen.*
 import com.ionos.scanbot.screens.filter.FilterScreen.Event.*
-import com.ionos.scanbot.tracking.ScanbotFilterScreenEventTracker
 import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers

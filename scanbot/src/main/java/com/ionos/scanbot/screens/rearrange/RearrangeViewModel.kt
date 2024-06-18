@@ -1,13 +1,12 @@
 package com.ionos.scanbot.screens.rearrange
 
-import com.ionos.domain.utils.kotlin.extension.plusAssign
+import com.ionos.scanbot.util.kotlin.extension.plusAssign
 import com.ionos.scanbot.entity.Picture
 import com.ionos.scanbot.repository.PictureRepository
 import com.ionos.scanbot.screens.base.BaseViewModel
 import com.ionos.scanbot.screens.rearrange.RearrangeScreen.*
 import com.ionos.scanbot.screens.rearrange.RearrangeScreen.Event.*
 import com.ionos.scanbot.screens.rearrange.recycler.RearrangeItem
-import com.ionos.scanbot.tracking.ScanbotRearrangeScreenEventTracker
 import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers

@@ -2,7 +2,7 @@ package com.ionos.scanbot.screens.save
 
 import android.net.Uri
 import com.ionos.domain.upload.targetprovider.UploadTarget
-import com.ionos.domain.utils.kotlin.extension.plusAssign
+import com.ionos.scanbot.util.kotlin.extension.plusAssign
 import com.ionos.scanbot.controller.ScanbotController
 import com.ionos.scanbot.provider.DocumentNameProvider
 import com.ionos.scanbot.repository.RepositoryFacade

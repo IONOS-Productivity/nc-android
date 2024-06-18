@@ -1,4 +1,4 @@
-package com.ionos.domain.utils.kotlin.extension
+package com.ionos.scanbot.util.kotlin.extension
 
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
