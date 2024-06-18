@@ -34,10 +34,8 @@ class ScanbotInitializerImpl @Inject internal constructor(
         tryToInitScanbotSdk(defaultLicenseKey)
 
 		if (isSdkInitRequired()) {
-			val savedKey = licenseKeyStore.getLicenseKey()
-			if (savedKey.isPresent) {
-                tryToInitScanbotSdk(savedKey.get())
-			}
+			licenseKeyStore.getLicenseKey()
+                ?.let {  tryToInitScanbotSdk(it) }
 
 			if (isSdkInitRequired()) {
                 loadScanbotLicense()

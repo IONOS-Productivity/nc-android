@@ -1,4 +1,4 @@
-package com.ionos.domain.optional;
+package com.ionos.common_ui.dialog.optional;
 
 import org.jetbrains.annotations.NotNull;
 

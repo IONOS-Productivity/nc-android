@@ -1,4 +1,4 @@
-package com.ionos.domain.utils;
+package com.ionos.common_ui.dialog.optional.utils;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;

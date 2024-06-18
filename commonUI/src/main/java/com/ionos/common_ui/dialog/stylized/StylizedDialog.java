@@ -13,13 +13,13 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ListAdapter;
 
+import com.ionos.common_ui.dialog.optional.Optional;
 import com.ionos.common_ui.dialog.stylized.listeners.NullOnStylizedDialogItemClickListener;
 import com.ionos.common_ui.dialog.stylized.listeners.OnStylizedDialogButtonClickListener;
 import com.ionos.common_ui.dialog.stylized.listeners.OnStylizedDialogItemClickListener;
 import com.ionos.common_ui.dialog.stylized.localized.LocalizedTextStrategy;
 import com.ionos.common_ui.dialog.stylized.view_factory.StylizedDialogViewFactory;
 import com.ionos.common_ui.exception.TryCatchExceptionHandler;
-import com.ionos.domain.optional.Optional;
 
 import java.util.List;
 

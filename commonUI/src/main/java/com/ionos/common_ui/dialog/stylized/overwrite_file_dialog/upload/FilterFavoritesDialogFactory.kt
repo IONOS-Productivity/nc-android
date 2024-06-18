@@ -1,7 +1,7 @@
 package com.ionos.common_ui.dialog.stylized.overwrite_file_dialog.upload
 
 import android.content.Context
-import com.ionos.domain.optional.Function
+import com.ionos.common_ui.dialog.optional.Function
 import io.reactivex.Maybe
 
 data class FilterFavoritesDialogData<T>(

@@ -1,4 +1,4 @@
-package com.ionos.domain.optional;
+package com.ionos.common_ui.dialog.optional;
 /*
  * Copyright (C) 2011 The Guava Authors
  *
@@ -14,12 +14,12 @@ package com.ionos.domain.optional;
  */
 
 
-import androidx.annotation.Nullable;
-
 import java.util.Collections;
 import java.util.Set;
 
-import static com.ionos.domain.utils.Preconditions.checkNotNull;
+import androidx.annotation.Nullable;
+
+import static com.ionos.common_ui.dialog.optional.utils.Preconditions.checkNotNull;
 
 
 /**
