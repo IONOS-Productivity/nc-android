@@ -5,11 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.PopupWindow
 import androidx.annotation.StringRes
-import com.ionos.domain.interfaces.actions.Action
 import com.ionos.scanbot.R
 import com.ionos.scanbot.databinding.ScanbotFilterPopupBinding
 
-internal class FilterPopupWrapper(context: Context, onItemClick: Action) {
+internal class FilterPopupWrapper(context: Context, onItemClick: ()->Unit) {
 	private val popup: PopupWindow
 	private val popupWidth: Int
 	private val popupHeight: Int
@@ -23,10 +22,10 @@ internal class FilterPopupWrapper(context: Context, onItemClick: Action) {
 		configureItem(R.string.scanbot_filter_popup_apply_for_all, onItemClick)
 	}
 
-	private fun configureItem(@StringRes titleRes: Int, onItemClick: Action) {
+	private fun configureItem(@StringRes titleRes: Int, onItemClick: ()->Unit) {
 		binding.tvPopupText.setText(titleRes)
 		binding.tvPopupText.setOnClickListener {
-			onItemClick.execute()
+			onItemClick()
 			popup.dismiss()
 		}
 	}

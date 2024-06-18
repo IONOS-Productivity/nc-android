@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.ionos.common_ui.dialog.stylized.StylizedDialog;
-import com.ionos.domain.interfaces.actions.ParamAction;
+import com.ionos.common_ui.dialog.actions.ParamAction;
 
 import java.util.ArrayList;
 import java.util.List;
