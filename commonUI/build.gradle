@@ -44,8 +44,6 @@ dependencies {
 
     api "androidx.exifinterface:exifinterface:$androidx_exifinterface_version"
 
-    implementation project(':domain')
-
     implementation "androidx.appcompat:appcompat:$appCompatVersion"
     implementation "androidx.constraintlayout:constraintlayout:$constraintlayout_version"
     implementation "androidx.preference:preference:$preference_version"

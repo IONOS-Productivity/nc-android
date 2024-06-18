@@ -330,7 +330,6 @@ dependencies {
     ionosImplementation project(':appscan')
     implementation project(':scanbot')
     implementation project(':commonUI')
-    implementation project(':domain')
 
     spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.13.0'
     spotbugsPlugins 'com.mebigfatguy.fb-contrib:fb-contrib:7.6.4'
