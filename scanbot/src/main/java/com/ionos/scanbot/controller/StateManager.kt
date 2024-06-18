@@ -3,7 +3,7 @@ package com.ionos.scanbot.controller
 import android.os.Bundle
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.ionos.domain.upload.targetprovider.UploadTarget
+import com.ionos.scanbot.upload.target_provider.UploadTarget
 import com.ionos.scanbot.entity.Picture
 import com.ionos.scanbot.filter.color.ColorFilterType
 import com.ionos.scanbot.util.gson.RuntimeTypeAdapterFactory

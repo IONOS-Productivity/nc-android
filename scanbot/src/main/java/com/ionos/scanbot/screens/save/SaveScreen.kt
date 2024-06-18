@@ -1,6 +1,6 @@
 package com.ionos.scanbot.screens.save
 
-import com.ionos.domain.upload.targetprovider.UploadTarget
+import com.ionos.scanbot.upload.target_provider.UploadTarget
 import com.ionos.scanbot.screens.base.BaseScreen
 
 internal interface SaveScreen {

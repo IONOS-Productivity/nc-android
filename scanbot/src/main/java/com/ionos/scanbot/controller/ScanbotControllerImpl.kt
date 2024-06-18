@@ -4,11 +4,11 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import com.ionos.domain.upload.targetprovider.UploadTarget
-import com.ionos.domain.upload.targetprovider.UploadTargetRepositoryImpl
 import com.ionos.scanbot.repository.PictureRepository
 import com.ionos.scanbot.repository.RepositoryFacade
 import com.ionos.scanbot.screens.camera.CameraActivity
+import com.ionos.scanbot.upload.target_provider.UploadTarget
+import com.ionos.scanbot.upload.target_provider.UploadTargetRepositoryImpl
 import com.ionos.scanbot.upload.use_case.StartUpload
 import io.reactivex.subjects.PublishSubject
 import javax.inject.Inject

@@ -4,8 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import com.ionos.domain.upload.targetprovider.UploadTarget
-import com.ionos.domain.upload.targetprovider.UploadTargetRepository
+import com.ionos.scanbot.upload.target_provider.UploadTarget
+import com.ionos.scanbot.upload.target_provider.UploadTargetRepository
 import io.reactivex.Observable
 
 abstract class ScanbotController {

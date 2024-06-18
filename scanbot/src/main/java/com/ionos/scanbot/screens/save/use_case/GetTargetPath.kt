@@ -1,6 +1,6 @@
 package com.ionos.scanbot.screens.save.use_case
 
-import com.ionos.domain.upload.targetprovider.UploadTarget
+import com.ionos.scanbot.upload.target_provider.UploadTarget
 import io.reactivex.Single
 import javax.inject.Inject
 

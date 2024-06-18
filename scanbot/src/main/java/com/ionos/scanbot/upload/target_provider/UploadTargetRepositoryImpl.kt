@@ -1,4 +1,4 @@
-package com.ionos.domain.upload.targetprovider
+package com.ionos.scanbot.upload.target_provider
 
 class UploadTargetRepositoryImpl(initialVue: UploadTarget) : UploadTargetRepository {
 	override var uploadTarget: UploadTarget = initialVue
