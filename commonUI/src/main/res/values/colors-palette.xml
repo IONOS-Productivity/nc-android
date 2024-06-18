@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<color name="white">#FFFFFF</color>
+	<color name="black">#000</color>
+	<color name="transparent_emperor">#D9555555</color>
+	<color name="transparent_lochmara">#8C0077BB</color>
+	<color name="lochmara">#0077BB</color>
+	<color name="mango_tango">#EE7700</color>
+</resources>
