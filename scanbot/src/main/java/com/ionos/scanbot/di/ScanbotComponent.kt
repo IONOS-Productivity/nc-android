@@ -2,14 +2,15 @@ package com.ionos.scanbot.di
 
 import com.ionos.scanbot.controller.ScanbotController
 import com.ionos.scanbot.screens.camera.CameraViewModelFactory
+import com.ionos.scanbot.screens.common.ExitDialog
 import com.ionos.scanbot.screens.crop.CropViewModelFactory
 import com.ionos.scanbot.screens.filter.FilterViewModelFactory
-import com.ionos.scanbot.screens.common.ExitDialog
-import com.ionos.scanbot.screens.gallery.pager.GalleryPagerAdapter
 import com.ionos.scanbot.screens.gallery.GalleryViewModelFactory
-import com.ionos.scanbot.screens.rearrange.recycler.RearrangeAdapter
+import com.ionos.scanbot.screens.gallery.pager.GalleryPagerAdapter
 import com.ionos.scanbot.screens.rearrange.RearrangeViewModelFactory
+import com.ionos.scanbot.screens.rearrange.recycler.RearrangeAdapter
 import com.ionos.scanbot.screens.save.SaveViewModelFactory
+import com.ionos.scanbot.screens.save.SelectDirectoryContract
 import dagger.Subcomponent
 
 @Subcomponent
@@ -35,8 +36,8 @@ abstract class ScanbotComponent {
 
 	internal abstract fun scanbotController(): ScanbotController
 
-    //TODO alk
-	// internal abstract fun uploadTargetPickerLauncher(): UploadTargetPickerLauncher
+    internal abstract fun selectDirectoryContract(): SelectDirectoryContract
 
+    //TODO alk
 	// internal abstract fun filterOverwriteFavoritesDialogFactory(): FilterFavoritesDialogFactory<String>
 }

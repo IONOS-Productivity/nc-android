@@ -7,6 +7,7 @@ import android.os.Bundle
 import com.ionos.scanbot.repository.PictureRepository
 import com.ionos.scanbot.repository.RepositoryFacade
 import com.ionos.scanbot.screens.camera.CameraActivity
+import com.ionos.scanbot.upload.target_provider.ScanbotUploadTarget
 import com.ionos.scanbot.upload.target_provider.UploadTarget
 import com.ionos.scanbot.upload.target_provider.UploadTargetRepositoryImpl
 import com.ionos.scanbot.upload.use_case.StartUpload
@@ -29,7 +30,7 @@ class ScanbotControllerImpl @Inject internal constructor(
 	private val _fileUploadStarted = PublishSubject.create<Any>()
 	private val stateManager = StateManager()
 
-	private var _uploadTargetRepository = UploadTargetRepositoryImpl(UploadTarget.RemotePath(""))
+	private var _uploadTargetRepository = UploadTargetRepositoryImpl(ScanbotUploadTarget(""))
 
 	override fun setUpController(scanBotUploadTarget: UploadTarget) {
 		_uploadTargetRepository = UploadTargetRepositoryImpl(scanBotUploadTarget)
@@ -41,7 +42,7 @@ class ScanbotControllerImpl @Inject internal constructor(
 	}
 
 	override fun scanToDocument(context: Context, path: String) {
-        startCameraActivity(context, UploadTarget.RemotePath(path))
+        startCameraActivity(context, ScanbotUploadTarget(path))
 	}
 
 	override fun saveState(state: Bundle) {
@@ -63,7 +64,7 @@ class ScanbotControllerImpl @Inject internal constructor(
 	}
 
 	override fun onDocumentSaved(localUris: List<Uri>) {
-		val remotePath = uploadTargetRepository.uploadTarget.remotePath
+		val remotePath = uploadTargetRepository.uploadTarget.uploadPath
 		startUpload(localUris, remotePath)
 		_fileUploadStarted.onNext(Any())
 		repositoryFacade.release()

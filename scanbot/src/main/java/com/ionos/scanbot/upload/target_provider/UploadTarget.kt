@@ -6,9 +6,12 @@ import java.io.Serializable
  * User: Dima Muravyov
  * Date: 27.05.2019
  */
-sealed class UploadTarget(val remotePath: String) : Serializable {
+interface UploadTarget: Serializable {
 
-	class RemotePath(remotePath: String) : UploadTarget(remotePath)
+    val uploadPath: String
 
-	class PublicPath(remotePath: String) : UploadTarget(remotePath)
 }
+
+data class ScanbotUploadTarget(
+    override val uploadPath: String,
+): UploadTarget

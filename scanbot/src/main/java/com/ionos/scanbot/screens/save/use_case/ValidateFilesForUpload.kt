@@ -1,12 +1,12 @@
 package com.ionos.scanbot.screens.save.use_case
 
-import com.ionos.scanbot.upload.target_provider.UploadTarget
-import com.ionos.scanbot.util.FileUtils
-import com.ionos.scanbot.repository.RepositoryFacade
-import com.ionos.scanbot.screens.save.SaveScreen.FileType
 import com.ionos.scanbot.exception.InvalidFileNameException
 import com.ionos.scanbot.exception.OverwriteFilesException
+import com.ionos.scanbot.repository.RepositoryFacade
+import com.ionos.scanbot.screens.save.SaveScreen.FileType
 import com.ionos.scanbot.screens.save.use_case.name.GetFileNames
+import com.ionos.scanbot.upload.target_provider.UploadTarget
+import com.ionos.scanbot.util.FileUtils
 import io.reactivex.Completable
 import io.reactivex.Maybe
 import io.reactivex.Single
@@ -36,7 +36,7 @@ internal class ValidateFilesForUpload @Inject constructor(
 			.fromCallable { repositoryFacade.readAll().size }
 			.map { count -> getFileNames(baseFileName, fileType, count) }
 			.flattenAsObservable { fileNames -> fileNames }
-			.map { fileName -> File(uploadTarget.remotePath, fileName).path }
+			.map { fileName -> File(uploadTarget.uploadPath, fileName).path }
 			.flatMapMaybe { remoteFilePath -> overwritePathFilter(remoteFilePath) }
 			.toList()
 			.flatMapCompletable { overwritePaths -> completeIfEmptyOrError(overwritePaths) }

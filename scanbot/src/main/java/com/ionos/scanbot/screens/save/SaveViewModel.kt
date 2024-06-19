@@ -1,17 +1,22 @@
 package com.ionos.scanbot.screens.save
 
 import android.net.Uri
-import com.ionos.scanbot.upload.target_provider.UploadTarget
-import com.ionos.scanbot.util.kotlin.extension.plusAssign
 import com.ionos.scanbot.controller.ScanbotController
 import com.ionos.scanbot.provider.DocumentNameProvider
 import com.ionos.scanbot.repository.RepositoryFacade
 import com.ionos.scanbot.screens.base.BaseViewModel
-import com.ionos.scanbot.screens.save.SaveScreen.*
-import com.ionos.scanbot.screens.save.SaveScreen.Event.*
-import com.ionos.scanbot.screens.save.use_case.GetTargetPath
+import com.ionos.scanbot.screens.save.SaveScreen.Event
+import com.ionos.scanbot.screens.save.SaveScreen.Event.CloseScreenEvent
+import com.ionos.scanbot.screens.save.SaveScreen.Event.HandleErrorEvent
+import com.ionos.scanbot.screens.save.SaveScreen.Event.LaunchUploadTargetPickerEvent
+import com.ionos.scanbot.screens.save.SaveScreen.Event.ShowExitDialogEvent
+import com.ionos.scanbot.screens.save.SaveScreen.FileType
+import com.ionos.scanbot.screens.save.SaveScreen.State
+import com.ionos.scanbot.screens.save.SaveScreen.ViewModel
 import com.ionos.scanbot.screens.save.use_case.ValidateFilesForUpload
 import com.ionos.scanbot.screens.save.use_case.save.SaveDocument
+import com.ionos.scanbot.upload.target_provider.UploadTarget
+import com.ionos.scanbot.util.kotlin.extension.plusAssign
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
@@ -19,7 +24,6 @@ import javax.inject.Inject
 
 internal class SaveViewModel @Inject constructor(
 	private val saveDocument: SaveDocument,
-	private val getTargetPath: GetTargetPath,
 	private val validateFiles: ValidateFilesForUpload,
 	private val scanbotController: ScanbotController,
 	private val repositoryFacade: RepositoryFacade,
@@ -121,10 +125,7 @@ internal class SaveViewModel @Inject constructor(
 	}
 
 	private fun updateTargetPath(uploadTarget: UploadTarget) {
-		subscriptions += getTargetPath(uploadTarget)
-			.subscribeOn(Schedulers.io())
-			.observeOn(AndroidSchedulers.mainThread())
-			.subscribe(::onTargetPathUpdated, ::onError)
+        onTargetPathUpdated(uploadTarget.uploadPath)
 	}
 
 	private fun saveDocument() {

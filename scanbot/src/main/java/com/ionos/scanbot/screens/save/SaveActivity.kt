@@ -2,44 +2,46 @@ package com.ionos.scanbot.screens.save
 
 import android.os.Bundle
 import androidx.activity.addCallback
+import androidx.activity.result.ActivityResultLauncher
 import androidx.core.widget.addTextChangedListener
 import com.ionos.common_ui.dialog.LockProgressDialog
 import com.ionos.common_ui.dialog.stylized.overwrite_file_dialog.OverwriteDialogs
 import com.ionos.common_ui.dialog.stylized.overwrite_file_dialog.upload.RemoteFilePathOverwriteDialogs
-import com.ionos.scanbot.exception.NoFreeLocalSpaceException
-import com.ionos.scanbot.util.kotlin.extension.plusAssign
 import com.ionos.scanbot.R
 import com.ionos.scanbot.databinding.ScanbotActivitySaveBinding
 import com.ionos.scanbot.di.inject
-import com.ionos.scanbot.screens.base.BaseActivity
-import com.ionos.scanbot.screens.save.SaveScreen.*
-import com.ionos.scanbot.screens.save.SaveScreen.Event.*
 import com.ionos.scanbot.exception.InvalidFileNameException
+import com.ionos.scanbot.exception.NoFreeLocalSpaceException
 import com.ionos.scanbot.exception.OverwriteFilesException
 import com.ionos.scanbot.exception.SaveDocumentException
+import com.ionos.scanbot.screens.base.BaseActivity
+import com.ionos.scanbot.screens.save.SaveScreen.Event
+import com.ionos.scanbot.screens.save.SaveScreen.Event.CloseScreenEvent
+import com.ionos.scanbot.screens.save.SaveScreen.Event.HandleErrorEvent
+import com.ionos.scanbot.screens.save.SaveScreen.Event.LaunchUploadTargetPickerEvent
+import com.ionos.scanbot.screens.save.SaveScreen.Event.ShowExitDialogEvent
+import com.ionos.scanbot.screens.save.SaveScreen.State
+import com.ionos.scanbot.screens.save.SaveScreen.ViewModel
+import com.ionos.scanbot.util.kotlin.extension.plusAssign
 import io.reactivex.disposables.CompositeDisposable
 
 internal class SaveActivity : BaseActivity<Event, State, ViewModel>() {
 	override val viewModelFactory: SaveViewModelFactory by inject { saveViewModelFactory() }
 	override val viewBinding by lazy { ScanbotActivitySaveBinding.inflate(layoutInflater) }
 
-    //TODO alk
-	// private val uploadTargetPickerLauncher by inject { uploadTargetPickerLauncher() }
+    private val selectDirectoryContract by inject { selectDirectoryContract() }
 	private val exitDialog by inject { exitDialog() }
 	private val progressDialog by lazy { LockProgressDialog() }
 
-	// private val filterOverwriteFavoritesDialogFactory by inject { filterOverwriteFavoritesDialogFactory() }
-	private val overwriteDialogsDisposable = CompositeDisposable()
+    private val overwriteDialogsDisposable = CompositeDisposable()
+    private lateinit var selectDirectoryLauncher: ActivityResultLauncher<Unit>
+    // private val filterOverwriteFavoritesDialogFactory by inject { filterOverwriteFavoritesDialogFactory() }
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		initOnBackPressedCallback()
 		initViews()
-		// uploadTargetPickerLauncher.init(
-		// 	this,
-		// 	viewModel::onUploadTargetPicked,
-		// 	viewModel::onUploadTargetPickerCanceled,
-		// )
+        registerSelectDirectoryLauncher()
 	}
 
 	override fun onDestroy() {
@@ -76,7 +78,7 @@ internal class SaveActivity : BaseActivity<Event, State, ViewModel>() {
 	}
 
 	override fun Event.handle() = when (this) {
-		is LaunchUploadTargetPickerEvent -> {}//uploadTargetPickerLauncher.launch(initialTarget, fileName)
+		is LaunchUploadTargetPickerEvent -> selectDirectoryLauncher.launch(Unit)
 		is HandleErrorEvent -> error.handle()
 		is ShowExitDialogEvent -> showExitDialog()
 		is CloseScreenEvent -> finish()
@@ -116,4 +118,13 @@ internal class SaveActivity : BaseActivity<Event, State, ViewModel>() {
 	// 	val data = FilterFavoritesDialogData(destinationDirPath, overwritePaths, FileUtils::extractFileName)
 	// 	return filterOverwriteFavoritesDialogFactory.create(data, context)
 	// }
+
+    private fun registerSelectDirectoryLauncher() {
+        selectDirectoryLauncher = registerForActivityResult(selectDirectoryContract) {
+            when (it) {
+                is SelectDirectoryContract.SelectDirectoryResult.Success -> viewModel.onUploadTargetPicked(it.selectedTarget)
+                is SelectDirectoryContract.SelectDirectoryResult.Canceled -> viewModel.onUploadTargetPickerCanceled()
+            }
+        }
+    }
 }

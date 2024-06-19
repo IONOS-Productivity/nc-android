@@ -5,7 +5,9 @@ import com.ionos.scanbot.image_loading.ImageLoaderImpl
 import com.ionos.scanbot.license.LoadScanbotLicense
 import com.ionos.scanbot.license.LoadScanbotLicenseImpl
 import com.ionos.scanbot.logger.ScanbotLogger
+import com.ionos.scanbot.screens.save.SelectDirectoryContract
 import com.ionos.scanbot.upload.ScanbotUploader
+import com.ionos.scanbot.upload.SelectDirectoryContractImpl
 import com.ionos.scanbot.upload.use_case.Uploader
 import com.ionos.scanbot.util.logger.Logger
 import dagger.Binds
@@ -25,4 +27,8 @@ abstract class NCScanbotModule {
 
     @Binds
     abstract fun bindLogger(logger: ScanbotLogger): Logger
+
+    @Binds
+    abstract fun bindSelectDirectoryContract(contract: SelectDirectoryContractImpl): SelectDirectoryContract
+
 }
