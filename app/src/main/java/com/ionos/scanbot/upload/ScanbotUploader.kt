@@ -27,7 +27,7 @@ class ScanbotUploader @Inject constructor(
             UploadFileOperation.CREATED_BY_USER,
             false,
             false,
-            NameCollisionPolicy.ASK_USER
+            NameCollisionPolicy.RENAME
         )
     }
 }
