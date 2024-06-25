@@ -17,8 +17,7 @@ import javax.inject.Inject
  * Created by: Alex Kucherenko
  * Date: 28.11.2017.
  */
-//TODO alk - add internal
- class BitmapSaver @Inject constructor(
+internal class BitmapSaver @Inject constructor(
 	private val context: Context,
 	private val bitmapDecoder: BitmapDecoder,
 ) {

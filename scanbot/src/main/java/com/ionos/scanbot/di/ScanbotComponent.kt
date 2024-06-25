@@ -37,7 +37,4 @@ abstract class ScanbotComponent {
 	internal abstract fun scanbotController(): ScanbotController
 
     internal abstract fun selectDirectoryContract(): SelectDirectoryContract
-
-    //TODO alk
-	// internal abstract fun filterOverwriteFavoritesDialogFactory(): FilterFavoritesDialogFactory<String>
 }

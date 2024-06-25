@@ -18,9 +18,8 @@ import javax.inject.Singleton
  * Date: 24.11.2017.
  */
 
-//TODO alk - make the class internal
 @Singleton
-class PictureRepository @Inject constructor() {
+internal class PictureRepository @Inject constructor() {
 	private val items = OrderedHashMap<String, Picture>()
 
 	fun isEmpty(): Boolean {

@@ -11,8 +11,7 @@ import io.scanbot.sdk.process.TuneOperation
  * Created by: Alex Kucherenko
  * Date: 24.11.2017.
  */
-//TODO alk - add internal
- data class ColorFilter(val colorFilterType: ColorFilterType) : Filter {
+internal data class ColorFilter(val colorFilterType: ColorFilterType) : Filter {
 
 	override fun apply(imageProcessor: ImageProcessor, bitmap: Bitmap): Bitmap? {
 		val brightness = convertValueToMatchFilterTune(colorFilterType.brightness)

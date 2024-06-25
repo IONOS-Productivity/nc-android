@@ -10,8 +10,7 @@ import io.scanbot.sdk.process.ImageProcessor
  * Created by: Alex Kucherenko
  * Date: 23.11.2017.
  */
-//TODO alk - add internal
- data class CropFilter(val contour: SelectedContour) : Filter {
+internal data class CropFilter(val contour: SelectedContour) : Filter {
 
 	override fun apply(imageProcessor: ImageProcessor, bitmap: Bitmap): Bitmap? {
 		return imageProcessor.processBitmap(bitmap, listOf(CropOperation(contour.normalizedPolygon)))

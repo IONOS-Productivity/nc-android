@@ -9,8 +9,7 @@ import com.ionos.scanbot.util.graphics.transform
 import java.io.File
 import javax.inject.Inject
 
-//TODO alk - add internal
- class BitmapDecoder @Inject constructor() {
+internal class BitmapDecoder @Inject constructor() {
 
 	companion object {
 		private const val IMAGE_TARGET_WIDTH = 1080

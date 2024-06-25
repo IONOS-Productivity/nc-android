@@ -3,8 +3,7 @@ package com.ionos.scanbot.filter.color
 import io.scanbot.sdk.process.ImageFilterType
 import java.io.Serializable
 
-//TODO alk - add internal
- sealed class ColorFilterType private constructor(
+internal sealed class ColorFilterType private constructor(
 	open val brightness: Int,
 	open val sharpness: Int,
 	open val contrast: Int,

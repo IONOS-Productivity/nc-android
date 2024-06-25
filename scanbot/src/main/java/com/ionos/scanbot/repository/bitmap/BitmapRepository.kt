@@ -12,8 +12,7 @@ import javax.inject.Inject
  * Date: 23.11.2017.
  */
 
-//TODO alk - make the class internal
- class BitmapRepository @Inject constructor(
+internal class BitmapRepository @Inject constructor(
 	private val bitmapSaver: BitmapSaver,
 	private val fileProvider: FileProvider,
 ) {

@@ -7,8 +7,7 @@ import android.graphics.PointF
  * Date: 23.11.2017.
  */
 
-//TODO alk - make the class internal
- data class SelectedContour(val normalizedPolygon: List<PointF>) {
+internal data class SelectedContour(val normalizedPolygon: List<PointF>) {
 	companion object {
 		val DEFAULT: SelectedContour = SelectedContour(
 			normalizedPolygon = listOf(

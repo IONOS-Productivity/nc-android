@@ -10,9 +10,7 @@ import com.ionos.scanbot.filter.rotate.RotateFilter
  * Date: 23.11.2017.
  */
 
-//TODO alk - make the class internal
-
- data class Picture(
+ internal data class Picture(
 	val id: String,
 	val original: OriginalPicture,
 	val modified: ModifiedPicture,

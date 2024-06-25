@@ -5,10 +5,8 @@ import io.scanbot.sdk.ScanbotSDK
 import javax.inject.Inject
 import javax.inject.Singleton
 
-//TODO alk - make the class internal
-
 @Singleton
- class SdkProvider @Inject constructor(
+internal class SdkProvider @Inject constructor(
 	private val context: Context,
 ) {
 	private val sdk by lazy { ScanbotSDK(context) }
