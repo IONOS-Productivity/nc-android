@@ -9,14 +9,6 @@ internal class StartUpload @Inject constructor(
 	operator fun invoke(localUris: List<Uri>, remotePath: String) {
         uploader.upload(
             remotePath,
-            localUris.map { uri -> uri.path.orEmpty() })
-    //TODO alk - Implement start of uploading of file here
-        // upload.startUploadWithoutCheckForFileExisting(
-		// 	localUris,
-		// 	remotePath,
-		// 	Optional.absent(),
-		// 	{ createListener(it, onResult) },
-		// 	NullParamAction(),
-		// )
+            localUris.mapNotNull { uri -> uri.path })
 	}
 }
