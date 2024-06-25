@@ -17,8 +17,23 @@ android {
         minSdk 21
         targetSdk 34
 
+        final String LICENSE_KEY = "N9iuWgTskVuWLrY7DwGbW4fMvyUrT/" +
+  "WnAq1p25aEIaUcm/s1STMVLAFV/v0J" +
+  "H3sOOpjxmtOrxmHTPfbqLxrKsEzNtT" +
+  "cXTz6xu8Vol6HdytP2RnMihlg58aM3" +
+  "9OLXcTqHoPwhJ0xG8V3oNRZVtqHoly" +
+  "snX0nPNQd8pQnxMI4Nuw3JlIFW1awO" +
+  "Pr5UqH2wls9zDIDluhE1R1cTe6yypC" +
+  "1AXvJG9X9l4WVS1nHwx9rJ9IDqYHkp" +
+  "a2lM7R2N7bf3GqdZRlze5+wIlIU8ml" +
+  "y8+78lK4Xvu6u5Rg2vjNT0BoXVYfiE" +
+  "sOvFyfo2ecBWSnaCNGXcA9SVaU7fLF" +
+  "aXmj/osCWhyg==\\nU2NhbmJvdFNESw" +
+  "pjb20uaW9ub3MuZWFzeXN0b3JhZ2UK" +
+  "MTcyNDI4NDc5OQo1OTAKMw==\\n"
+
         // todo by mahera loicense here
-        buildConfigField "String", "SCANBOT_LICENSE_KEY", "\"\""
+        buildConfigField "String", "SCANBOT_LICENSE_KEY", "\"${LICENSE_KEY}\""
         buildConfigField "String", "SCANBOT_LICENSE_KEY_URL", "\"https://static.hidrive.com/scanbot/HidriveAndroidScanbotLicense.txt\""
         buildConfigField "Boolean", "IS_SCANBOT_FEATURE_AVAILABLE", "true"
 
