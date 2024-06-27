@@ -10,10 +10,10 @@ package com.ionos.scanbot.utils
 import com.ionos.scanbot.util.GetLocalFreeSpace
 import com.owncloud.android.utils.FileStorageUtils
 import io.reactivex.Single
+import java.util.concurrent.Callable
 import javax.inject.Inject
 
 class GetLocalFreeSpaceImpl @Inject constructor() : GetLocalFreeSpace {
     override fun invoke(): Single<Long> =
-        Single.just(FileStorageUtils.getUsableSpace())
-
+        Single.fromCallable { FileStorageUtils.getUsableSpace() }
 }
