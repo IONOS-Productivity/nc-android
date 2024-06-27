@@ -13,6 +13,7 @@ import com.ionos.scanbot.screens.camera.use_case.import_pictures.ImportPictures
 import com.ionos.scanbot.screens.camera.use_case.import_pictures.ImportPicturesState
 import com.ionos.scanbot.screens.camera.use_case.GetCameraScreenErrorMessage
 import com.ionos.scanbot.screens.common.use_case.open_screen.OpenScreenIntent.OpenGalleryScreenIntent
+import com.ionos.scanbot.util.GetLocalFreeSpace
 import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -23,10 +24,9 @@ import javax.inject.Inject
 internal class CameraViewModel @Inject constructor(
 	private val addPictureToRepository: AddPictureToRepository,
 	private val importPictures: ImportPictures,
-	//private val getLocalFreeSpace: GetLocalFreeSpace,
+	private val getLocalFreeSpace: GetLocalFreeSpace,
 	private val bitmapDecoder: BitmapDecoder,
 	private val repositoryFacade: RepositoryFacade,
-	// private val permissionsController: PermissionsController,
 	private val getErrorMessage: GetCameraScreenErrorMessage,
 	// private val eventTracker: ScanbotCameraScreenEventTracker,
 ) : BaseViewModel<Event, State>(State()/*, eventTracker*/),
@@ -109,14 +109,14 @@ internal class CameraViewModel @Inject constructor(
 
 	override fun onTakePictureClicked() {
 		// eventTracker.trackTakePictureClicked()
-		// subscriptions += getLocalFreeSpace()
-		// 	.subscribeOn(Schedulers.computation())
-		// 	.observeOn(AndroidSchedulers.mainThread())
-		// 	.subscribe(::takePictureIfDeviceHasEnoughFreeSpace, ::onError)
+		subscriptions += getLocalFreeSpace()
+			.subscribeOn(Schedulers.computation())
+			.observeOn(AndroidSchedulers.mainThread())
+			.subscribe(::takePictureIfDeviceHasEnoughFreeSpace, ::onError)
 	}
 
 	private fun takePictureIfDeviceHasEnoughFreeSpace(deviceFreeSpace: Long) {
-		if (deviceFreeSpace > MIN_DEVICE_FREE_SPACE) {
+        if (deviceFreeSpace > MIN_DEVICE_FREE_SPACE) {
 			updateState { copy(event = TakePictureEvent) }
 		} else {
 			updateState { copy(event = ShowNoFreeSpaceAlertEvent) }

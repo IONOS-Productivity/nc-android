@@ -9,7 +9,9 @@ import com.ionos.scanbot.screens.save.SelectDirectoryContract
 import com.ionos.scanbot.upload.ScanbotUploader
 import com.ionos.scanbot.upload.SelectDirectoryContractImpl
 import com.ionos.scanbot.upload.use_case.Uploader
+import com.ionos.scanbot.util.GetLocalFreeSpace
 import com.ionos.scanbot.util.logger.Logger
+import com.ionos.scanbot.utils.GetLocalFreeSpaceImpl
 import dagger.Binds
 import dagger.Module
 
@@ -30,5 +32,8 @@ abstract class NCScanbotModule {
 
     @Binds
     abstract fun bindSelectDirectoryContract(contract: SelectDirectoryContractImpl): SelectDirectoryContract
+
+    @Binds
+    abstract fun bindGetLocalFreeSpaceImpl(getLocalFreeSpaceImpl: GetLocalFreeSpaceImpl): GetLocalFreeSpace
 
 }
