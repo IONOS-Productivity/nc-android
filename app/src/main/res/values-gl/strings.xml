@@ -92,6 +92,7 @@
     <string name="auth_unsupported_multiaccount">%1$s non admite contas múltipes</string>
     <string name="auth_wrong_connection_title">Non foi posíbel estabelecer a conexión</string>
     <string name="authenticator_activity_cancel_login">Cancelar o acceso</string>
+    <string name="authenticator_activity_login_error">Houbo un problema ao procesar a súa solicitude de acceso. Ténteo de novo máis tarde.</string>
     <string name="authenticator_activity_please_complete_login_process">Complete o proceso de acceso no seu navegador</string>
     <string name="auto_upload_file_behaviour_kept_in_folder">mantense no cartafol orixinal, xa que é de só lectura</string>
     <string name="auto_upload_on_wifi">Enviar só con wifi sen límite de datos</string>
@@ -99,7 +100,7 @@
     <string name="autoupload_configure">Configurar</string>
     <string name="autoupload_create_new_custom_folder">Crear un cartafol personalizado novo</string>
     <string name="autoupload_custom_folder">Configurar un cartafol personalizado</string>
-    <string name="autoupload_disable_power_save_check">Desactivar a verificación de aforro de enerxía</string>
+    <string name="autoupload_disable_power_save_check">Desactivar a comprobación de aforro de enerxía</string>
     <string name="autoupload_hide_folder">Agochar o cartafol</string>
     <string name="autoupload_worker_foreground_info">Preparando o envío automático</string>
     <string name="avatar">Avatar</string>
@@ -145,7 +146,7 @@
     <string name="common_ok">Aceptar</string>
     <string name="common_pending">Pendente</string>
     <string name="common_remove">Eliminar</string>
-    <string name="common_rename">Renomear</string>
+    <string name="common_rename">Cambiar o nome</string>
     <string name="common_save">Gardar</string>
     <string name="common_send">Enviar</string>
     <string name="common_share">Compartir</string>
@@ -288,7 +289,7 @@
     <string name="ecosystem_apps_notes">Notas de Nextcloud</string>
     <string name="ecosystem_apps_talk">Talk de Nextcloud</string>
     <string name="email_pick_failed">Produciuse un fallo ao escoller o enderezo de correo.</string>
-    <string name="encrypted">Estabelecer como cifrado</string>
+    <string name="encrypted">Definir como cifrado</string>
     <string name="end_to_end_encryption_confirm_button">Configurar o cifrado</string>
     <string name="end_to_end_encryption_decrypting">Descifrando…</string>
     <string name="end_to_end_encryption_dialog_close">Pechar</string>
@@ -353,6 +354,7 @@
     <string name="failed_update_ui">Produciuse un fallo ao actualizar a IU</string>
     <string name="favorite">Engadir a favoritos</string>
     <string name="favorite_icon">Favorito</string>
+    <string name="file_activity_shared_file_cannot_be_updated">Non foi posíbel actualizar o ficheiro compartido</string>
     <string name="file_already_exists">O nome de ficheiro xa existe</string>
     <string name="file_delete">Eliminar</string>
     <string name="file_detail_activity_error">Produciuse un erro ao recuperar actividades para o ficheiro</string>
@@ -405,14 +407,14 @@
     <string name="file_migration_waiting_for_unfinished_sync">Agardando que rematen as sincronizacións…</string>
     <string name="file_not_found">Non se atopou o ficheiro</string>
     <string name="file_not_synced">Non foi posíbel sincronizar o ficheiro. Amosase a última versión dispoñíbel.</string>
-    <string name="file_rename">Renomear</string>
+    <string name="file_rename">Cambiar o nome</string>
     <string name="file_upload_worker_same_file_already_exists">Xa existe o mesmo ficheiro, non se detectou ningún conflito</string>
     <string name="file_version_restored_error">Produciuse un erro ao restaurar a versión do ficheiro</string>
     <string name="file_version_restored_successfully">Versión do ficheiro restaurada satisfactoriamente.</string>
     <string name="filedetails_details">Detalles</string>
     <string name="filedetails_download">Descargar</string>
     <string name="filedetails_export">Exportar</string>
-    <string name="filedetails_renamed_in_upload_msg">O ficheiro foi renomeado a %1$s durante o envío</string>
+    <string name="filedetails_renamed_in_upload_msg">Cambiouselle o nome do ficheiro a %1$s durante o envío</string>
     <string name="filedetails_sync_file">Sincronizar</string>
     <string name="filedisplay_no_file_selected">Non seleccionou ningún ficheiro</string>
     <string name="filename_empty">O nome de ficheiro non pode estar baleiro</string>
@@ -435,7 +437,7 @@
     <string name="forbidden_permissions_create">para crear este ficheiro</string>
     <string name="forbidden_permissions_delete">para eliminar este ficheiro</string>
     <string name="forbidden_permissions_move">para mover este ficheiro</string>
-    <string name="forbidden_permissions_rename">para renomear este ficheiro</string>
+    <string name="forbidden_permissions_rename">para cambiarlle o nome a este ficheiro</string>
     <string name="foreground_service_upload">Enviando ficheiros…</string>
     <string name="foreign_files_fail">Non foi posíbel mover algúns ficheiros</string>
     <string name="foreign_files_local_text">Local: %1$s</string>
@@ -444,6 +446,7 @@
     <string name="foreign_files_success">Foron movidos todos os ficheiros</string>
     <string name="forward">Reenviar</string>
     <string name="fourHours">4 horas</string>
+    <string name="gplay_restriction">Google restrinxiu a descarga de ficheiros APK/AAB.</string>
     <string name="grid_file_features_live_photo_content_description">Esta icona indica a dispoñibilidade de Live Photo</string>
     <string name="hidden_file_name_warning">O nome dará lugar a un ficheiro agochado</string>
     <string name="hint_name">Nome</string>
@@ -589,7 +592,7 @@
     <string name="permission_allow">Permitir</string>
     <string name="permission_deny">Denegar</string>
     <string name="permission_storage_access">Precísanse permisos adicionais para enviar e descargar ficheiros.</string>
-    <string name="picture_set_as_no_app">Non se atopou unha aplicación coa que estabelecer unha imaxe</string>
+    <string name="picture_set_as_no_app">Non se atopou unha aplicación coa que definir unha imaxe</string>
     <string name="pin_home">Fixar na pantalla de Inicio</string>
     <string name="pin_shortcut_label">Aberto %1$s</string>
     <string name="placeholder_fileSize">389 KB</string>
@@ -599,7 +602,7 @@
     <string name="placeholder_timestamp">18/05/2012 12:23 PM</string>
     <string name="player_stop">parar</string>
     <string name="player_toggle">alternar</string>
-    <string name="power_save_check_dialog_message">A desactivación da verificación de aforro de enerxía pode provocar o envío de ficheiros cando estea coa batería baixa.</string>
+    <string name="power_save_check_dialog_message">A desactivación da comprobación de aforro de enerxía pode provocar o envío de ficheiros cando estea coa batería baixa.</string>
     <string name="pref_behaviour_entries_delete_file">eliminado</string>
     <string name="pref_behaviour_entries_keep_file">mantense no cartafol orixinal</string>
     <string name="pref_behaviour_entries_move">movido cara ao cartafol da aplicación</string>
@@ -675,6 +678,7 @@
     <string name="push_notifications_temp_error">Actualmente non están dispoñíbeis as notificacións automáticas.</string>
     <string name="qr_could_not_be_read">Non foi posíbel ler o código QR.</string>
     <string name="receive_external_files_activity_start_sync_folder_is_not_exists_message">Non é posíbel atopar o cartafol, a operación de sincronización foi cancelada</string>
+    <string name="receive_external_files_activity_unable_to_find_file_to_upload">Non é posíbel atopar o ficheiro para enviar</string>
     <string name="recommend_subject">Probe %1$s no seu dispositivo!</string>
     <string name="recommend_text">Quixera convidalo a usar %1$s no seu dispositivo.\nDescargueo aquí: %2$s</string>
     <string name="recommend_urls">%1$s ou %2$s</string>
@@ -691,8 +695,8 @@
     <string name="remove_push_notification">Retirar</string>
     <string name="remove_success_msg">Eliminado</string>
     <string name="rename_dialog_title">Introduza un nome novo</string>
-    <string name="rename_local_fail_msg">Non foi posíbel renomear a copia local, ténteo cun un nome diferente</string>
-    <string name="rename_server_fail_msg">Non foi posíbel renomear, o nome xa está ocupado</string>
+    <string name="rename_local_fail_msg">Non foi posíbel cambiarlle o nome a copia local, ténteo cun un nome diferente</string>
+    <string name="rename_server_fail_msg">Non foi posíbel cambiarlle o nome, o nome xa está ocupado</string>
     <string name="request_account_deletion">Solicitar a eliminación da conta </string>
     <string name="request_account_deletion_button">Solicitat a eliminación</string>
     <string name="request_account_deletion_details">Solicitar a eliminación definitiva da conta polo provedor de servizos</string>
@@ -723,17 +727,17 @@
     <string name="secure_share_not_set_up">A compartición segura non está definida para este usuario</string>
     <string name="secure_share_search">Compartición segura…</string>
     <string name="select_all">Seleccionar todo</string>
-    <string name="select_media_folder">Estabelecer o cartafol multimedia</string>
+    <string name="select_media_folder">Definir o cartafol multimedia</string>
     <string name="select_one_template">Seleccione un modelo</string>
     <string name="select_template">Seleccionar o modelo</string>
     <string name="send">Enviar</string>
     <string name="send_share">Enviar o compartido</string>
     <string name="sendbutton_description">Icona do botón de envío</string>
-    <string name="set_as">Estabelecer como</string>
-    <string name="set_note">Estabelecer a nota</string>
+    <string name="set_as">Definir como</string>
+    <string name="set_note">Definir a nota</string>
     <string name="set_picture_as">Usar a imaxe como</string>
-    <string name="set_status">Estabelecer o estado</string>
-    <string name="set_status_message">Estabelecer a mensaxe de estado</string>
+    <string name="set_status">Definir o estado</string>
+    <string name="set_status_message">Definir a mensaxe de estado</string>
     <string name="setup_e2e">Durante a configuración do cifrado de extremo a extremo, recibirá un mnemotécnico ao chou de 12 palabras, que necesitará para abrir os seus ficheiros noutros dispositivos. Isto só se almacenará neste dispositivo e pódese amosar de novo nesta pantalla. Anóteo nun lugar seguro!</string>
     <string name="share">Compartir</string>
     <string name="share_copy_link">Compartir e copiar a ligazón</string>
@@ -754,8 +758,8 @@
     <string name="share_link_optional_password_title">Escriba un contrasinal opcional</string>
     <string name="share_link_password_title">Introduza un contrasinal</string>
     <string name="share_link_with_label">Compartir ligazón (%1$s)</string>
-    <string name="share_no_expiration_date_label">Estabelecer a data de caducidade</string>
-    <string name="share_no_password_title">Estabelecer o contrasinal</string>
+    <string name="share_no_expiration_date_label">Definir a data de caducidade</string>
+    <string name="share_no_password_title">Definir o contrasinal</string>
     <string name="share_not_allowed_when_file_drop">Non se permite volver compartir durante a entrega segura de ficheiros</string>
     <string name="share_password_title">Protexido con contrasinal</string>
     <string name="share_permission_can_edit">Pode editar</string>
@@ -772,7 +776,7 @@
     <string name="share_via_link_hide_download">Agochar a descarga</string>
     <string name="share_via_link_section_title">Compartir ligazón</string>
     <string name="share_via_link_send_link_label">Enviar ligazón</string>
-    <string name="share_via_link_unset_password">Sen estabelecer</string>
+    <string name="share_via_link_unset_password">Sen definir</string>
     <string name="share_with_title">Compartir con…</string>
     <string name="shared_avatar_desc">Avatar de usuario compartido</string>
     <string name="shared_icon_share">compartir</string>
@@ -884,7 +888,7 @@
     <string name="trashbin_not_emptied">Non foi posíbel eliminar definitivamente o ficheiro!</string>
     <string name="unlock_file">Desbloquear ficheiro</string>
     <string name="unread_comments">Existen comentarios sen ler</string>
-    <string name="unset_encrypted">Estabelecer como NON cifrado</string>
+    <string name="unset_encrypted">Definir como NON cifrado</string>
     <string name="unset_favorite">Retirar dos favoritos</string>
     <string name="unshare_link_file_error">Produciuse un erro ao tentar deixar de compartir este ficheiro ou cartafol.</string>
     <string name="unshare_link_file_no_exist">Non é posíbel deixar de compartir. Comprobe que existe o ficheiro.</string>

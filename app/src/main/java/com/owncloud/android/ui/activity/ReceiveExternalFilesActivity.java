@@ -46,12 +46,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.di.Injectable;
 import com.nextcloud.client.jobs.upload.FileUploadHelper;
 import com.nextcloud.client.jobs.upload.FileUploadWorker;
 import com.nextcloud.client.preferences.AppPreferences;
 import com.nextcloud.utils.extensions.BundleExtensionsKt;
+import com.nextcloud.utils.extensions.FileExtensionsKt;
 import com.nextcloud.utils.extensions.IntentExtensionsKt;
 import com.owncloud.android.MainApp;
 import com.owncloud.android.R;
@@ -103,7 +105,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AlertDialog.Builder;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.view.MenuItemCompat;
@@ -134,6 +135,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
     @Inject AppPreferences preferences;
     @Inject LocalBroadcastManager localBroadcastManager;
     @Inject SyncedFolderProvider syncedFolderProvider;
+
     private AccountManager mAccountManager;
     private Stack<String> mParents = new Stack<>();
     private List<Parcelable> mStreamsToUpload;
@@ -204,7 +206,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
         Account[] accounts = mAccountManager.getAccountsByType(MainApp.getAccountType(this));
         if (accounts.length == 0) {
             Log_OC.i(TAG, "No ownCloud account is available");
-            DialogNoAccount dialog = new DialogNoAccount();
+            DialogNoAccount dialog = new DialogNoAccount(viewThemeUtils);
             dialog.show(getSupportFragmentManager(), null);
         }
 
@@ -264,7 +266,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
-        Log_OC.d(TAG, "onSaveInstanceState() start");
+        FileExtensionsKt.logFileSize(mFile, TAG);
         super.onSaveInstanceState(outState);
         outState.putString(KEY_PARENTS, generatePath(mParents));
         outState.putParcelable(KEY_FILE, mFile);
@@ -307,10 +309,16 @@ public class ReceiveExternalFilesActivity extends FileActivity
     }
 
     public static class DialogNoAccount extends DialogFragment {
+        private final ViewThemeUtils viewThemeUtils;
+
+        public DialogNoAccount(ViewThemeUtils viewThemeUtils) {
+            this.viewThemeUtils = viewThemeUtils;
+        }
+
         @NonNull
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
-            AlertDialog.Builder builder = new Builder(getActivity());
+            final MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireContext());
             builder.setIcon(R.drawable.ic_warning);
             builder.setTitle(R.string.uploader_wrn_no_account_title);
             builder.setMessage(String.format(getString(R.string.uploader_wrn_no_account_text),
@@ -327,7 +335,8 @@ public class ReceiveExternalFilesActivity extends FileActivity
                 startActivityForResult(intent, REQUEST_CODE__SETUP_ACCOUNT);
             });
             builder.setNeutralButton(R.string.uploader_wrn_no_account_quit_btn_text,
-                                     (dialog, which) -> getActivity().finish());
+                                     (dialog, which) -> requireActivity().finish());
+            viewThemeUtils.dialog.colorMaterialAlertDialogBackground(requireContext(), builder);
             return builder.create();
         }
     }
@@ -680,7 +689,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
             }
             Account[] accounts = mAccountManager.getAccountsByType(MainApp.getAuthTokenType());
             if (accounts.length == 0) {
-                DialogNoAccount dialog = new DialogNoAccount();
+                DialogNoAccount dialog = new DialogNoAccount(viewThemeUtils);
                 dialog.show(getSupportFragmentManager(), null);
             } else {
                 // there is no need for checking for is there more then one
@@ -890,6 +899,10 @@ public class ReceiveExternalFilesActivity extends FileActivity
     }
 
     public void uploadFiles() {
+        if (mStreamsToUpload == null) {
+            DisplayUtils.showSnackMessage(this, R.string.receive_external_files_activity_unable_to_find_file_to_upload);
+            return;
+        }
 
         UriUploader uploader = new UriUploader(
             this,

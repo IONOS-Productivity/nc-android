@@ -12,25 +12,34 @@ import android.content.Context
 import android.content.Intent
 import com.nextcloud.client.account.User
 import com.nextcloud.client.account.UserAccountManager
+import com.nextcloud.client.device.BatteryStatus
 import com.nextcloud.client.device.PowerManagementService
 import com.nextcloud.client.jobs.BackgroundJobManager
 import com.nextcloud.client.jobs.upload.FileUploadWorker.Companion.currentUploadFileOperation
+import com.nextcloud.client.network.Connectivity
 import com.nextcloud.client.network.ConnectivityService
 import com.owncloud.android.MainApp
+import com.owncloud.android.datamodel.FileDataStorageManager
 import com.owncloud.android.datamodel.OCFile
 import com.owncloud.android.datamodel.UploadsStorageManager
 import com.owncloud.android.datamodel.UploadsStorageManager.UploadStatus
 import com.owncloud.android.db.OCUpload
 import com.owncloud.android.db.UploadResult
 import com.owncloud.android.files.services.NameCollisionPolicy
+import com.owncloud.android.lib.common.OwnCloudClient
 import com.owncloud.android.lib.common.network.OnDatatransferProgressListener
 import com.owncloud.android.lib.common.operations.RemoteOperationResult
 import com.owncloud.android.lib.common.utils.Log_OC
 import com.owncloud.android.lib.resources.files.ReadFileRemoteOperation
 import com.owncloud.android.lib.resources.files.model.RemoteFile
+import com.owncloud.android.operations.RemoveFileOperation
+import com.owncloud.android.operations.UploadFileOperation
 import com.owncloud.android.utils.FileUtil
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.io.File
-import java.util.Optional
+import java.util.concurrent.Semaphore
 import javax.inject.Inject
 
 @Suppress("TooManyFunctions")
@@ -45,6 +54,9 @@ class FileUploadHelper {
     @Inject
     lateinit var uploadsStorageManager: UploadsStorageManager
 
+    @Inject
+    lateinit var fileStorageManager: FileDataStorageManager
+
     init {
         MainApp.getAppComponent().inject(this)
     }
@@ -55,6 +67,8 @@ class FileUploadHelper {
         val mBoundListeners = HashMap<String, OnDatatransferProgressListener>()
 
         private var instance: FileUploadHelper? = null
+
+        private val retryFailedUploadsSemaphore = Semaphore(1)
 
         fun instance(): FileUploadHelper {
             return instance ?: synchronized(this) {
@@ -73,19 +87,27 @@ class FileUploadHelper {
         accountManager: UserAccountManager,
         powerManagementService: PowerManagementService
     ) {
-        val failedUploads = uploadsStorageManager.failedUploads
-        if (failedUploads == null || failedUploads.isEmpty()) {
-            Log_OC.d(TAG, "Failed uploads are empty or null")
-            return
-        }
+        if (retryFailedUploadsSemaphore.tryAcquire()) {
+            try {
+                val failedUploads = uploadsStorageManager.failedUploads
+                if (failedUploads == null || failedUploads.isEmpty()) {
+                    Log_OC.d(TAG, "Failed uploads are empty or null")
+                    return
+                }
 
-        retryUploads(
-            uploadsStorageManager,
-            connectivityService,
-            accountManager,
-            powerManagementService,
-            failedUploads
-        )
+                retryUploads(
+                    uploadsStorageManager,
+                    connectivityService,
+                    accountManager,
+                    powerManagementService,
+                    failedUploads
+                )
+            } finally {
+                retryFailedUploadsSemaphore.release()
+            }
+        } else {
+            Log_OC.d(TAG, "Skip retryFailedUploads since it is already running")
+        }
     }
 
     fun retryCancelledUploads(
@@ -117,34 +139,48 @@ class FileUploadHelper {
         failedUploads: Array<OCUpload>
     ): Boolean {
         var showNotExistMessage = false
-        val (gotNetwork, _, gotWifi) = connectivityService.connectivity
+        val isOnline = checkConnectivity(connectivityService)
+        val connectivity = connectivityService.connectivity
         val batteryStatus = powerManagementService.battery
-        val charging = batteryStatus.isCharging || batteryStatus.isFull
-        val isPowerSaving = powerManagementService.isPowerSavingEnabled
-        var uploadUser = Optional.empty<User>()
+        val accountNames = accountManager.accounts.filter { account ->
+            accountManager.getUser(account.name).isPresent
+        }.map { account ->
+            account.name
+        }.toHashSet()
 
         for (failedUpload in failedUploads) {
-            val isDeleted = !File(failedUpload.localPath).exists()
-            if (isDeleted) {
-                showNotExistMessage = true
+            if (!accountNames.contains(failedUpload.accountName)) {
+                uploadsStorageManager.removeUpload(failedUpload)
+                continue
+            }
 
-                // 2A. for deleted files, mark as permanently failed
-                if (failedUpload.lastResult != UploadResult.FILE_NOT_FOUND) {
-                    failedUpload.lastResult = UploadResult.FILE_NOT_FOUND
+            val uploadResult =
+                checkUploadConditions(failedUpload, connectivity, batteryStatus, powerManagementService, isOnline)
+
+            if (uploadResult != UploadResult.UPLOADED) {
+                if (failedUpload.lastResult != uploadResult) {
+                    // Setting Upload status else cancelled uploads will behave wrong, when retrying
+                    // Needs to happen first since lastResult wil be overwritten by setter
+                    failedUpload.uploadStatus = UploadStatus.UPLOAD_FAILED
+
+                    failedUpload.lastResult = uploadResult
                     uploadsStorageManager.updateUpload(failedUpload)
                 }
-            } else if (!isPowerSaving && gotNetwork &&
-                canUploadBeRetried(failedUpload, gotWifi, charging) && !connectivityService.isInternetWalled
-            ) {
-                // 2B. for existing local files, try restarting it if possible
-                failedUpload.uploadStatus = UploadStatus.UPLOAD_IN_PROGRESS
-                uploadsStorageManager.updateUpload(failedUpload)
+                if (uploadResult == UploadResult.FILE_NOT_FOUND) {
+                    showNotExistMessage = true
+                }
+                continue
             }
+
+            failedUpload.uploadStatus = UploadStatus.UPLOAD_IN_PROGRESS
+            uploadsStorageManager.updateUpload(failedUpload)
         }
 
-        accountManager.accounts.forEach {
-            val user = accountManager.getUser(it.name)
-            if (user.isPresent) backgroundJobManager.startFilesUploadJob(user.get())
+        accountNames.forEach { accountName ->
+            val user = accountManager.getUser(accountName)
+            if (user.isPresent) {
+                backgroundJobManager.startFilesUploadJob(user.get())
+            }
         }
 
         return showNotExistMessage
@@ -192,10 +228,25 @@ class FileUploadHelper {
     }
 
     fun cancelFileUpload(remotePath: String, accountName: String) {
-        uploadsStorageManager.getUploadByRemotePath(remotePath).run {
-            removeFileUpload(remotePath, accountName)
-            uploadStatus = UploadStatus.UPLOAD_CANCELLED
-            uploadsStorageManager.storeUpload(this)
+        val upload = uploadsStorageManager.getUploadByRemotePath(remotePath)
+        if (upload != null) {
+            cancelFileUploads(listOf(upload), accountName)
+        } else {
+            Log_OC.e(TAG, "Error cancelling current upload because upload does not exist!")
+        }
+    }
+
+    fun cancelFileUploads(uploads: List<OCUpload>, accountName: String) {
+        for (upload in uploads) {
+            upload.uploadStatus = UploadStatus.UPLOAD_CANCELLED
+            uploadsStorageManager.updateUpload(upload)
+        }
+
+        try {
+            val user = accountManager.getUser(accountName).get()
+            cancelAndRestartUploadJob(user)
+        } catch (e: NoSuchElementException) {
+            Log_OC.e(TAG, "Error restarting upload job because user does not exist!")
         }
     }
 
@@ -216,11 +267,50 @@ class FileUploadHelper {
         return upload.uploadStatus == UploadStatus.UPLOAD_IN_PROGRESS
     }
 
-    private fun canUploadBeRetried(upload: OCUpload, gotWifi: Boolean, isCharging: Boolean): Boolean {
-        val file = File(upload.localPath)
-        val needsWifi = upload.isUseWifiOnly
-        val needsCharging = upload.isWhileChargingOnly
-        return file.exists() && (!needsWifi || gotWifi) && (!needsCharging || isCharging)
+    private fun checkConnectivity(connectivityService: ConnectivityService): Boolean {
+        // check that connection isn't walled off and that the server is reachable
+        return connectivityService.getConnectivity().isConnected && !connectivityService.isInternetWalled()
+    }
+
+    /**
+     * Dupe of [UploadFileOperation.checkConditions], needed to check if the upload should even be scheduled
+     * @return [UploadResult.UPLOADED] if the upload should be scheduled, otherwise the reason why it shouldn't
+     */
+    private fun checkUploadConditions(
+        upload: OCUpload,
+        connectivity: Connectivity,
+        battery: BatteryStatus,
+        powerManagementService: PowerManagementService,
+        hasGeneralConnection: Boolean
+    ): UploadResult {
+        var conditions = UploadResult.UPLOADED
+
+        // check that internet is available
+        if (!hasGeneralConnection) {
+            conditions = UploadResult.NETWORK_CONNECTION
+        }
+
+        // check that local file exists; skip the upload otherwise
+        if (!File(upload.localPath).exists()) {
+            conditions = UploadResult.FILE_NOT_FOUND
+        }
+
+        // check that connectivity conditions are met; delay upload otherwise
+        if (upload.isUseWifiOnly && (!connectivity.isWifi || connectivity.isMetered)) {
+            conditions = UploadResult.DELAYED_FOR_WIFI
+        }
+
+        // check if charging conditions are met; delay upload otherwise
+        if (upload.isWhileChargingOnly && !battery.isCharging && !battery.isFull) {
+            conditions = UploadResult.DELAYED_FOR_CHARGING
+        }
+
+        // check that device is not in power save mode; delay upload otherwise
+        if (powerManagementService.isPowerSavingEnabled) {
+            conditions = UploadResult.DELAYED_IN_POWER_SAVE_MODE
+        }
+
+        return conditions
     }
 
     @Suppress("ReturnCount")
@@ -268,6 +358,41 @@ class FileUploadHelper {
         backgroundJobManager.startFilesUploadJob(user)
     }
 
+    /**
+     * Removes any existing file in the same directory that has the same name as the provided new file.
+     *
+     * This function checks the parent directory of the given `newFile` for any file with the same name.
+     * If such a file is found, it is removed using the `RemoveFileOperation`.
+     *
+     * @param duplicatedFile File to be deleted
+     * @param client Needed for executing RemoveFileOperation
+     * @param user Needed for creating client
+     */
+    fun removeDuplicatedFile(duplicatedFile: OCFile, client: OwnCloudClient, user: User, onCompleted: () -> Unit) {
+        val job = CoroutineScope(Dispatchers.IO)
+
+        job.launch {
+            val removeFileOperation = RemoveFileOperation(
+                duplicatedFile,
+                false,
+                user,
+                true,
+                MainApp.getAppContext(),
+                fileStorageManager
+            )
+
+            val result = removeFileOperation.execute(client)
+
+            if (result.isSuccess) {
+                Log_OC.d(TAG, "Replaced file successfully removed")
+
+                launch(Dispatchers.Main) {
+                    onCompleted()
+                }
+            }
+        }
+    }
+
     fun retryUpload(upload: OCUpload, user: User) {
         Log_OC.d(this, "retry upload")
 
@@ -282,17 +407,11 @@ class FileUploadHelper {
         cancelAndRestartUploadJob(accountManager.getUser(accountName).get())
     }
 
-    fun addUploadTransferProgressListener(
-        listener: OnDatatransferProgressListener,
-        targetKey: String
-    ) {
+    fun addUploadTransferProgressListener(listener: OnDatatransferProgressListener, targetKey: String) {
         mBoundListeners[targetKey] = listener
     }
 
-    fun removeUploadTransferProgressListener(
-        listener: OnDatatransferProgressListener,
-        targetKey: String
-    ) {
+    fun removeUploadTransferProgressListener(listener: OnDatatransferProgressListener, targetKey: String) {
         if (mBoundListeners[targetKey] === listener) {
             mBoundListeners.remove(targetKey)
         }
