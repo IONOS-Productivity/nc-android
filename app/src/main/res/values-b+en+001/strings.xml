@@ -92,6 +92,7 @@
     <string name="auth_unsupported_multiaccount">%1$s does not support multiple accounts</string>
     <string name="auth_wrong_connection_title">Could not establish connection</string>
     <string name="authenticator_activity_cancel_login">Cancel Login</string>
+    <string name="authenticator_activity_login_error">There was an issue processing your login request. Please try again later.</string>
     <string name="authenticator_activity_please_complete_login_process">Please complete login process in your browser</string>
     <string name="auto_upload_file_behaviour_kept_in_folder">kept in original folder, as it is readonly</string>
     <string name="auto_upload_on_wifi">Only upload on unmetered Wi-Fi</string>
@@ -321,6 +322,7 @@
     <string name="error_showing_encryption_dialog">Error showing encryption setup dialogue!</string>
     <string name="error_starting_direct_camera_upload">Error starting camera</string>
     <string name="error_starting_doc_scan">Error starting document scan</string>
+    <string name="error_uploading_direct_camera_upload">Failed to upload taken media</string>
     <string name="etm_accounts">Accounts</string>
     <string name="etm_background_execution_count">Times run in 48h</string>
     <string name="etm_background_job_created">Created</string>
@@ -352,6 +354,7 @@
     <string name="failed_update_ui">Failed to update UI</string>
     <string name="favorite">Add to favourites</string>
     <string name="favorite_icon">Favourite</string>
+    <string name="file_activity_shared_file_cannot_be_updated">Shared file cannot be updated</string>
     <string name="file_already_exists">Filename already exists</string>
     <string name="file_delete">Delete</string>
     <string name="file_detail_activity_error">Error retrieving activities for file</string>
@@ -443,6 +446,7 @@
     <string name="foreign_files_success">All files were moved</string>
     <string name="forward">Forward</string>
     <string name="fourHours">4 hours</string>
+    <string name="gplay_restriction">Google restricts the download of APK/AAB files!</string>
     <string name="grid_file_features_live_photo_content_description">This icon indicates availability of live photo</string>
     <string name="hidden_file_name_warning">Name will result in a hidden file</string>
     <string name="hint_name">Name</string>
@@ -673,6 +677,7 @@
     <string name="push_notifications_temp_error">Push notifications currently not available.</string>
     <string name="qr_could_not_be_read">QR code could not be read!</string>
     <string name="receive_external_files_activity_start_sync_folder_is_not_exists_message">Folder cannot be found, sync operation is cancelled</string>
+    <string name="receive_external_files_activity_unable_to_find_file_to_upload">Unable to find file to upload</string>
     <string name="recommend_subject">Try %1$s on your device!</string>
     <string name="recommend_text">I want to invite you to use %1$s on your device.\nDownload here: %2$s</string>
     <string name="recommend_urls">%1$s or %2$s</string>
@@ -903,11 +908,10 @@
     <string name="upload_cannot_create_file">Cannot create local file</string>
     <string name="upload_chooser_title">Upload from…</string>
     <string name="upload_content_from_other_apps">Upload content from other apps</string>
-    <string name="upload_direct_camera_upload">Upload from camera</string>
-    <string name="upload_direct_camera_promt">Do you want to take a photo or video?</string>
     <string name="upload_direct_camera_photo">Photo</string>
+    <string name="upload_direct_camera_promt">Do you want to take a photo or video?</string>
+    <string name="upload_direct_camera_upload">Upload from camera</string>
     <string name="upload_direct_camera_video">Video</string>
-    <string name="error_uploading_direct_camera_upload">Failed to upload taken media</string>
     <string name="upload_file_dialog_filename">Filename</string>
     <string name="upload_file_dialog_filetype">Filetype</string>
     <string name="upload_file_dialog_filetype_googlemap_shortcut">Google Maps shortcut file(%s)</string>

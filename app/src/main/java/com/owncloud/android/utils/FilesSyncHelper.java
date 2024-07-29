@@ -8,7 +8,6 @@
  */
 package com.owncloud.android.utils;
 
-import android.accounts.Account;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
@@ -16,7 +15,6 @@ import android.net.Uri;
 import android.provider.MediaStore;
 
 import com.nextcloud.client.account.UserAccountManager;
-import com.nextcloud.client.device.BatteryStatus;
 import com.nextcloud.client.device.PowerManagementService;
 import com.nextcloud.client.jobs.BackgroundJobManager;
 import com.nextcloud.client.jobs.upload.FileUploadHelper;
@@ -27,8 +25,6 @@ import com.owncloud.android.datamodel.MediaFolderType;
 import com.owncloud.android.datamodel.SyncedFolder;
 import com.owncloud.android.datamodel.SyncedFolderProvider;
 import com.owncloud.android.datamodel.UploadsStorageManager;
-import com.owncloud.android.db.OCUpload;
-import com.owncloud.android.db.UploadResult;
 import com.owncloud.android.lib.common.utils.Log_OC;
 
 import org.lukhnos.nnio.file.FileVisitResult;
@@ -108,7 +104,7 @@ public final class FilesSyncHelper {
         }
     }
 
-    private static void insertAllDBEntriesForSyncedFolder(SyncedFolder syncedFolder) {
+    public static void insertAllDBEntriesForSyncedFolder(SyncedFolder syncedFolder) {
         final Context context = MainApp.getAppContext();
         final ContentResolver contentResolver = context.getContentResolver();
 
@@ -146,25 +142,13 @@ public final class FilesSyncHelper {
         }
     }
 
-    public static void insertAllDBEntries(SyncedFolder syncedFolder,
-                                          PowerManagementService powerManagementService) {
-        if (syncedFolder.isEnabled() &&
-            !(syncedFolder.isChargingOnly() &&
-                !powerManagementService.getBattery().isCharging() &&
-                !powerManagementService.getBattery().isFull()
-            )
-        ) {
-            insertAllDBEntriesForSyncedFolder(syncedFolder);
-        }
-    }
-
     public static void insertChangedEntries(SyncedFolder syncedFolder,
                                             String[] changedFiles) {
         final ContentResolver contentResolver = MainApp.getAppContext().getContentResolver();
         final FilesystemDataProvider filesystemDataProvider = new FilesystemDataProvider(contentResolver);
         for (String changedFileURI : changedFiles){
             String changedFile = getFileFromURI(changedFileURI);
-            if (syncedFolder.isEnabled() && syncedFolder.containsFile(changedFile)){
+            if (syncedFolder.containsTypedFile(changedFile)){
                 File file = new File(changedFile);
                 filesystemDataProvider.storeOrUpdateFileValue(changedFile,
                                                               file.lastModified(),file.isDirectory(),
@@ -248,66 +232,13 @@ public final class FilesSyncHelper {
                                               final UserAccountManager accountManager,
                                               final ConnectivityService connectivityService,
                                               final PowerManagementService powerManagementService) {
-        boolean accountExists;
-
-        boolean whileChargingOnly = true;
-        boolean useWifiOnly = true;
-
-        // Make all in progress downloads failed to restart upload worker
-        uploadsStorageManager.failInProgressUploads(UploadResult.SERVICE_INTERRUPTED);
-
-        OCUpload[] failedUploads = uploadsStorageManager.getFailedUploads();
-
-        for (OCUpload failedUpload : failedUploads) {
-            accountExists = false;
-            if (!failedUpload.isWhileChargingOnly()) {
-                whileChargingOnly = false;
-            }
-            if (!failedUpload.isUseWifiOnly()) {
-                useWifiOnly = false;
-            }
-
-            // check if accounts still exists
-            for (Account account : accountManager.getAccounts()) {
-                if (account.name.equals(failedUpload.getAccountName())) {
-                    accountExists = true;
-                    break;
-                }
-            }
-
-            if (!accountExists) {
-                uploadsStorageManager.removeUpload(failedUpload);
-            }
-        }
-
-        failedUploads = uploadsStorageManager.getFailedUploads();
-        if (failedUploads.length == 0) {
-            //nothing to do
-            return;
-        }
-
-        if (whileChargingOnly) {
-            final BatteryStatus batteryStatus = powerManagementService.getBattery();
-            final boolean charging = batteryStatus.isCharging() || batteryStatus.isFull();
-            if (!charging) {
-                //all uploads requires charging
-                return;
-            }
-        }
-
-        if (useWifiOnly && !connectivityService.getConnectivity().isWifi()) {
-            //all uploads requires wifi
-            return;
-        }
-
+        
         new Thread(() -> {
-            if (connectivityService.getConnectivity().isConnected()) {
-                FileUploadHelper.Companion.instance().retryFailedUploads(
-                    uploadsStorageManager,
-                    connectivityService,
-                    accountManager,
-                    powerManagementService);
-            }
+            FileUploadHelper.Companion.instance().retryFailedUploads(
+                uploadsStorageManager,
+                connectivityService,
+                accountManager,
+                powerManagementService);
         }).start();
     }
 

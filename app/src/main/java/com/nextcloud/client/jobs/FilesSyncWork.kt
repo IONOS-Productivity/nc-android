@@ -182,7 +182,7 @@ class FilesSyncWork(
         } else {
             // Check every file in synced folder for changes and update
             // filesystemDataProvider database (potentially needs a long time)
-            FilesSyncHelper.insertAllDBEntries(syncedFolder, powerManagementService)
+            FilesSyncHelper.insertAllDBEntriesForSyncedFolder(syncedFolder)
         }
     }
 
@@ -250,7 +250,8 @@ class FilesSyncWork(
             localPaths,
             remotePaths,
             uploadAction!!,
-            true, // create parent folder if not existent
+            // create parent folder if not existent
+            true,
             UploadFileOperation.CREATED_AS_INSTANT_PICTURE,
             needsWifi,
             needsCharging,
