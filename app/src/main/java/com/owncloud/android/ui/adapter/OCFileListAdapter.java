@@ -705,7 +705,7 @@ public class OCFileListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             return false;
         }
 
-        return !TextUtils.isEmpty(currentDirectory.getRichWorkspace().trim());
+        return false; //Hide header in IONOS // !TextUtils.isEmpty(currentDirectory.getRichWorkspace().trim());
     }
 
     /**
