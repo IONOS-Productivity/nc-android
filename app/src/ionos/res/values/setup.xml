@@ -14,6 +14,9 @@
     <string name="image_cache_provider_authority">com.ionos.easystorage.providers.imageCache</string>
     <string name="default_display_name_for_root_folder">IONOS Easy Storage</string>
 
+    <!-- Determine is participate enabled -->
+    <bool name="participate_enabled">false</bool>
+
     <!-- Flags to enable/disable some features -->
     <bool name="is_branded_client">true</bool>
 
