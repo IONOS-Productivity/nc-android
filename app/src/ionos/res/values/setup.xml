@@ -13,7 +13,10 @@
     <string name="file_provider_authority">com.ionos.easystorage.files</string>
     <string name="image_cache_provider_authority">com.ionos.easystorage.providers.imageCache</string>
     <string name="default_display_name_for_root_folder">IONOS Easy Storage</string>
-    
+
+    <!-- Flags to enable/disable some features -->
+    <bool name="is_branded_client">true</bool>
+
     <bool name="logger_enabled">true</bool>
 
     <!--Destination mail for sending log files -->
