@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary_color">@color/pizazz_dark</color>
-    <color name="primary_dark_color">@color/mango_tango</color>
+    <color name="primary_color">@color/royal_blue</color>
+    <color name="primary_dark_color">@color/midnight_blue</color>
     <color name="accent_color">@color/lochmara</color>
 
     <color name="stylized_edit_text_text_color">@color/transparent_emperor</color>

@@ -42,7 +42,6 @@
 	<color name="cod_gray">#1e1e1e</color>
 	<color name="deep_gray">#555555</color>
 	<color name="curious_blue">#22a7d6</color>
-	<color name="royal_blue">#4381E7</color>
 	<color name="mystic">#d9e3e9</color>
 	<color name="tundora">#4B4B4B</color>
 	<color name="mine_shaft">#383838</color>
@@ -78,11 +77,9 @@
 	<color name="cod_gray6">#1d1d1d</color>
 	<color name="lochmara">#0077BB</color>
 	<color name="mercury">#E6E6E6</color>
-	<color name="mango_tango">#EE7700</color>
 	<color name="bahama_blue">#00659F</color>
 	<color name="alabaster">#F7F7F7</color>
 	<color name="dusty_gray3">#959595</color>
-	<color name="pizazz">#FF8900</color>
 	<color name="silver3">#cccccc</color>
 	<color name="alto3">#d0d0d0</color>
 	<color name="tamarillo">#9F1915</color>
