@@ -12,8 +12,8 @@
 
     <color name="scanbot_crop_polygon_edge_color">@color/primary_color</color>
     <color name="scanbot_crop_screen_background">@color/black</color>
-    <color name="scanbot_crop_screen_button_background">@color/white</color>
-    <color name="scanbot_crop_screen_button_text_color">@color/black</color>
+    <color name="scanbot_crop_screen_button_background">@color/midnight_blue2</color>
+    <color name="scanbot_crop_screen_button_text_color">@color/white</color>
 
     <color name="scanbot_file_type_text_color_checked">@color/lochmara</color>
     <color name="scanbot_file_type_text_color_unchecked">@color/black</color>
