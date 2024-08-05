@@ -10,7 +10,7 @@
     <color name="scanbot_camera_screen_cancel_text_color">@color/white</color>
     <color name="scanbot_camera_toolbar_background">@color/cod_gray_dark</color>
 
-    <color name="scanbot_crop_polygon_edge_color">@color/transparent_pizazz2</color>
+    <color name="scanbot_crop_polygon_edge_color">@color/primary_color</color>
     <color name="scanbot_crop_screen_background">@color/black</color>
     <color name="scanbot_crop_screen_button_background">@color/mine_shaft2_dark</color>
     <color name="scanbot_crop_screen_button_text_color">@color/pizazz_dark</color>
