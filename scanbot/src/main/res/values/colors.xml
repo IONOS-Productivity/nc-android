@@ -3,7 +3,7 @@
     <color name="scanbot_camera_button_active_color">@color/pizazz_dark</color>
     <color name="scanbot_camera_button_background_idle">@color/white</color>
     <color name="scanbot_camera_button_background_pressed">@color/transparent_dark10</color>
-    <color name="scanbot_camera_button_color">@color/dove_gray</color>
+    <color name="scanbot_camera_button_color">@color/navy</color>
     <color name="scanbot_camera_polygon_fill_color">@color/transparent_pizazz</color>
     <color name="scanbot_camera_polygon_stroke_color">@color/transparent_pizazz2</color>
     <color name="scanbot_camera_screen_background">@color/black</color>
