@@ -108,21 +108,21 @@
 	<color name="dark_slate_gray">#1e545d</color>
 	<color name="thistle">#efb3d1</color>
 	<color name="brown_chocolate">#5c183b</color>
-	<color name="light_blue">#b2d6ea</color>
 	<color name="indigo">#1c4065</color>
-	<color name="bright_gray">#ececec</color>
-	<color name="bright_gray2">#EEEEEE</color>
-	<color name="philippine_silver">#b2b2b2</color>
-	<color name="granite_gray">#656565</color>
-	<color name="gray_11">#b9b9b9</color>
-	<color name="anti_flash_white">#f3f3f3</color>
-	<color name="transparent_white5">#7FFFFFFF</color>
-	<color name="spanish_gray">#999999</color>
-	<color name="magic_blue">#54C1FF</color>
-	<color name="soft_blue">#CCE4F1</color>
-	<color name="cuba_green">#398377</color>
-	<color name="tufts_blue">#3B9CDA</color>
+    <color name="bright_gray">#ececec</color>
+    <color name="bright_gray2">#EEEEEE</color>
+    <color name="philippine_silver">#b2b2b2</color>
+    <color name="granite_gray">#656565</color>
+    <color name="gray_11">#b9b9b9</color>
+    <color name="anti_flash_white">#f3f3f3</color>
+    <color name="transparent_white5">#7FFFFFFF</color>
+    <color name="spanish_gray">#999999</color>
+    <color name="magic_blue">#54C1FF</color>
+    <color name="soft_blue">#CCE4F1</color>
+    <color name="cuba_green">#398377</color>
+    <color name="tufts_blue">#3B9CDA</color>
 
-	<color name="ghost_white">#F4F7FA</color>
+    <color name="light_blue">#a0c8e8</color>
+    <color name="ghost_white">#F4F7FA</color>
 
 </resources>
