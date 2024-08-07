@@ -42,4 +42,6 @@
     <color name="scanbot_save_file_name_selected_text_color">@color/black</color>
 
     <color name="scanbot_toolbar_text_color">@color/white</color>
+
+    <color name="scanbot_ic_edit_fill_color">@color/navy</color>
 </resources>

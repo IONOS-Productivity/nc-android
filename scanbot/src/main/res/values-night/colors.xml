@@ -15,7 +15,7 @@
     <color name="scanbot_crop_screen_button_background">@color/mine_shaft2_dark</color>
     <color name="scanbot_crop_screen_button_text_color">@color/pizazz_dark</color>
 
-    <color name="scanbot_file_type_text_color_checked">@color/pizazz_dark</color>
+    <color name="scanbot_file_type_text_color_checked">@color/curious_blue</color>
     <color name="scanbot_file_type_text_color_unchecked">@color/white</color>
 
     <color name="scanbot_filter_control_active">@color/sunshade</color>
@@ -42,4 +42,6 @@
     <color name="scanbot_save_file_name_selected_text_color">@color/black_olive</color>
 
     <color name="scanbot_toolbar_text_color">@color/white</color>
+
+    <color name="scanbot_ic_edit_fill_color">@color/white</color>
 </resources>

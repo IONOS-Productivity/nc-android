@@ -7,7 +7,6 @@
 
     <color name="dialog_content_text">@color/white</color>
 
-    <color name="ic_edit_fill_color">@color/white</color>
     <color name="icons_tint_color">@color/white</color>
 
     <color name="system_bar_read_mode_color">@color/cod_gray_dark</color>
