@@ -44,4 +44,6 @@
     <color name="scanbot_toolbar_text_color">@color/white</color>
 
     <color name="scanbot_ic_edit_fill_color">@color/white</color>
+
+    <color name="scanbot_window_background">@color/midnight_blue2</color>
 </resources>

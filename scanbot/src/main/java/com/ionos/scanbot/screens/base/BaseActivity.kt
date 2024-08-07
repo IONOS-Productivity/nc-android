@@ -27,6 +27,7 @@ internal abstract class BaseActivity<E : Event, S : State<E>, VM : ViewModel<E, 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.statusBarColor = ContextCompat.getColor(context, R.color.system_bar_read_mode_color)
+        window.decorView.setBackgroundColor(ContextCompat.getColor(context, R.color.scanbot_window_background))
         setContentView(viewBinding.root)
         viewModel.state.observe(this) { it.renderInternal() }
     }
