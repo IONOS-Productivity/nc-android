@@ -50,7 +50,6 @@
 	<color name="indian_red">#ec5a58</color>
 	<color name="persian_red">#D1312F</color>
 	<color name="dove_gray">#656565</color>
-	<color name="dodger_blue">#1A72FF</color>
 	<color name="kangaroo">#ccccbf</color>
 	<color name="silver">#BBBBBB</color>
 	<color name="tundora2">#4e4e4e</color>
@@ -105,7 +104,6 @@
 	<color name="black_olive">#3B3B3B</color>
 
 	<color name="diamond">#b7eef8</color>
-	<color name="dark_slate_gray">#1e545d</color>
 	<color name="thistle">#efb3d1</color>
 	<color name="brown_chocolate">#5c183b</color>
 	<color name="indigo">#1c4065</color>
@@ -124,5 +122,7 @@
 
     <color name="light_blue">#a0c8e8</color>
     <color name="ghost_white">#F4F7FA</color>
+    <color name="dodger_blue">#1474C4</color>
+    <color name="dark_slate_gray">#1d2d42</color>
 
 </resources>
