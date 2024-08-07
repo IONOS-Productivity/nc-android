@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="app_bar_color">@color/cod_gray_dark</color>
-    <color name="app_bar_read_mode_color">@color/cod_gray_dark</color>
+    <color name="app_bar_color">@color/navy</color>
+    <color name="app_bar_read_mode_color">@color/navy</color>
 
     <color name="common_text_color">@color/white</color>
 
