@@ -16,7 +16,6 @@
 
     <color name="dialog_content_text">@color/black</color>
 
-    <color name="ic_edit_fill_color">@color/black</color>
     <color name="icons_tint_color">@color/black</color>
 
 
