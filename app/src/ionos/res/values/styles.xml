@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Nextcloud - Android Client
+  ~
+  ~ SPDX-FileCopyrightText: 2022 Álvaro Brey  <alvaro@alvarobrey.com>
+  ~ SPDX-FileCopyrightText: 2016-2022 Andy Scherzinger <info@andy-scherzinger.de>
+  ~ SPDX-FileCopyrightText: 2020 Joris Bodin <joris.bodin@infomaniak.com>
+  ~ SPDX-FileCopyrightText: 2017-2020 Tobias Kaminsky <tobias@kaminsky.me>
+  ~ SPDX-FileCopyrightText: 2019 Chris Narkiewicz <hello@ezaquarii.com>
+  ~ SPDX-FileCopyrightText: 2015 ownCloud Inc.
+  ~ SPDX-FileCopyrightText: 2012 Bartosz Przybylski
+  ~ SPDX-License-Identifier: GPL-2.0-only AND (AGPL-3.0-or-later OR GPL-2.0-only)
+-->
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="Theme.ownCloud.noActionBar.Login" parent="Theme.ownCloud.noActionBar.LoginBase" />
+
+    <!-- Launch screen -->
+    <style name="Theme.ownCloud.Launcher">
+        <item name="android:statusBarColor">@color/primary</item>
+        <item name="android:navigationBarColor">@color/primary</item>
+        <item name="android:windowBackground">@color/primary</item>
+        <item name="android:textColorHint">@color/secondary_text_color</item>
+    </style>
+
+    <!-- Splash screen style attributes: https://developer.android.com/develop/ui/views/launch/splash-screen#set-theme -->
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <!-- Set the splash screen background color -->
+        <item name="windowSplashScreenBackground">@color/primary</item>
+
+        <!-- Set the splash screen animated icon  -->
+        <!-- Setting a transparent icon because of branding reason, showing icon is not accepted -->
+        <item name="windowSplashScreenAnimatedIcon">@android:color/transparent</item>
+
+        <!-- Set the theme of the Activity that directly follows your splash screen. -->
+        <!-- Required -->
+        <item name="postSplashScreenTheme">@style/Theme.ownCloud.Launcher</item>
+    </style>
+
+</resources>
