@@ -31,7 +31,7 @@
     <color name="scanbot_gallery_counter_rounded_background">@color/mine_shaft_dark</color>
     <color name="scanbot_gallery_screen_counter_text_color">@color/white</color>
 
-    <color name="scanbot_rearrange_icon_color">@color/dark_slate_gray</color>
+    <color name="scanbot_rearrange_icon_color">@color/curious_blue</color>
 
     <color name="scanbot_save_divider_color">@color/light_grey</color>
     <color name="scanbot_save_file_location_label_text_color">@color/grey</color>
