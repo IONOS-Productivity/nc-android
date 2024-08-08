@@ -1,11 +1,10 @@
 package com.ionos.scanbot.screens.camera.ui_components
 
 import android.app.Activity
-import android.view.Gravity
-import android.widget.Toast
 import com.ionos.scanbot.util.kotlin.extension.plusAssign
 import com.ionos.scanbot.provider.ContourDetectorParamsProvider
-import com.ionos.scanbot.screens.camera.use_case.GetUserGuidanceMessage
+import com.ionos.scanbot.screens.camera.use_case.GetUserGuidanceStatus
+import com.ionos.scanbot.screens.camera.use_case.UserGuidanceStatus
 import com.ionos.scanbot.views.UserGuidance
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -34,10 +33,9 @@ internal class CameraViewController(
 
 	private val autoSnappingController = DocumentAutoSnappingController(cameraView, contourDetectorFrameHandler)
 
-	private val getUserGuidanceMessage = GetUserGuidanceMessage(activity)
-	private val userGuidanceMessages: PublishSubject<String> = PublishSubject.create()
+	private val getUserGuidanceStatus = GetUserGuidanceStatus(activity)
+	private val userGuidanceStatuses: PublishSubject<UserGuidanceStatus> = PublishSubject.create()
 	private val userGuidanceDisposable = CompositeDisposable()
-	private var userGuidanceToast: Toast? = null
 
 	private var isOnPause = true
 
@@ -135,7 +133,7 @@ internal class CameraViewController(
 
 	private fun subscribeToUserGuidanceMessages() {
 		contourDetectorFrameHandler.addResultHandler(userGuidanceListener)
-		userGuidanceDisposable += userGuidanceMessages
+		userGuidanceDisposable += userGuidanceStatuses
 			.sample(SHOW_GUIDANCE_PERIOD, TimeUnit.SECONDS)
 			.observeOn(AndroidSchedulers.mainThread())
 			.doOnNext { userGuidance.hide() }
@@ -148,17 +146,20 @@ internal class CameraViewController(
 		userGuidanceDisposable.clear()
 	}
 
-	private fun showUserGuidanceToast(message: String) {
-        userGuidance.setText(message)
+	private fun showUserGuidanceToast(status: UserGuidanceStatus) {
+        userGuidance.setText(status.text)
+        status.icon?.let {
+            userGuidance.setIcon(it)
+        }
         userGuidance.show()
 	}
 
 	private val userGuidanceListener = ContourDetectorFrameHandler.ResultHandler { result ->
 		if (result is FrameHandlerResult.Success) {
 			val status = result.value.detectionStatus
-			getUserGuidanceMessage(status)?.let { message ->
-				userGuidanceMessages.onNext(message)
-			}
+			getUserGuidanceStatus(status).let{
+                userGuidanceStatuses.onNext(it)
+            }
 		}
 		false
 	}
