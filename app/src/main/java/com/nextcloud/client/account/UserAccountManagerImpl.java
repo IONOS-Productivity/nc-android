@@ -399,6 +399,10 @@ public class UserAccountManagerImpl implements UserAccountManager {
     public void startAccountCreation(final Activity activity) {
         Intent intent = new Intent(context, AuthenticatorActivity.class);
 
+        // region <IONOS Customization - Added to skip server input step>
+        intent.putExtra(AuthenticatorActivity.EXTRA_USE_PROVIDER_AS_WEBLOGIN, true);
+        // endregion
+
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }

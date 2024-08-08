@@ -273,7 +273,9 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewThemeUtils = viewThemeUtilsFactory.withPrimaryAsBackground();
-        viewThemeUtils.platform.themeStatusBar(this, ColorRole.PRIMARY);
+        // region <IONOS Customization>
+        //viewThemeUtils.platform.themeStatusBar(this, ColorRole.PRIMARY);
+        // endregion
 
         // WebViewUtil webViewUtil = new WebViewUtil(this);
 
