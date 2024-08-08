@@ -50,6 +50,14 @@
 			app:polygonStrokeColor="@color/scanbot_camera_polygon_stroke_color"
 			app:polygonStrokeWidth="@dimen/scanbot_camera_polygon_stroke_widht" />
 
+        <com.ionos.scanbot.views.UserGuidance
+            android:id="@+id/userGuidance"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="@dimen/common_normal_padding">
+        </com.ionos.scanbot.views.UserGuidance>
+
 	</FrameLayout>
 
 	<FrameLayout

@@ -46,4 +46,5 @@
     <color name="scanbot_ic_edit_fill_color">@color/navy</color>
 
     <color name="scanbot_window_background">@color/ghost_white</color>
+    <color name="user_guidance_text_color">@color/navy</color>
 </resources>

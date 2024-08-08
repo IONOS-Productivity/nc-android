@@ -40,6 +40,7 @@ internal class CameraActivity : BaseActivity<Event, State, ViewModel>() {
 			viewBinding.scvCameraa,
 			viewBinding.pvPolygon,
 			viewModel::onPictureReceived,
+            viewBinding.userGuidance,
 		)
 	}
 
