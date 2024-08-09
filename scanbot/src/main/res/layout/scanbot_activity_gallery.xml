@@ -49,10 +49,14 @@
         android:layout_marginEnd="@dimen/scanbot_gallery_fab_margin"
         android:layout_marginBottom="@dimen/scanbot_gallery_fab_margin"
         android:contentDescription="fab"
+        app:maxImageSize="@dimen/scanbot_gallery_fab_icon_size"
+        app:tint="@color/white"
+        app:shapeAppearanceOverlay="@style/FabButtonBackgroundShape"
+        android:backgroundTint="@color/scanbot_gallery_fab_color"
         app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
         app:layout_constraintBottom_toTopOf="@+id/llBottomNavigation"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/scanbot_ic_plus" />
+        app:srcCompat="@drawable/scanbot_ic_add_fab"/>
 
 	<LinearLayout
 		android:id="@+id/llBottomNavigation"

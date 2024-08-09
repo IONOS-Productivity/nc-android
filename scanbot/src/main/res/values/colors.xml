@@ -33,6 +33,7 @@
     <color name="scanbot_gallery_screen_counter_background_color">@color/deep_koamaru</color>
     <color name="scanbot_gallery_bottom_navigation_icon_color">@color/navy</color>
     <color name="scanbot_gallery_bottom_navigation_color">@color/white</color>
+    <color name="scanbot_gallery_fab_color">@color/dodger_blue</color>
 
 
     <color name="scanbot_rearrange_icon_color">@color/dodger_blue</color>

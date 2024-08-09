@@ -17,4 +17,9 @@
         <item name="android:tint">@color/scanbot_gallery_bottom_navigation_icon_color</item>
     </style>
 
+    <style name="FabButtonBackgroundShape" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+    </style>
+
 </resources>
