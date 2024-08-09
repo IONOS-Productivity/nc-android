@@ -777,6 +777,7 @@ public class SettingsActivity extends PreferenceActivity
 
         prefStoragePath = (ListPreference) findPreference(AppPreferencesImpl.STORAGE_PATH);
         if (prefStoragePath != null) {
+            preferenceCategoryGeneral.removePreference(prefStoragePath); // Workaround to hide prefStoragePath in IONOS
             StoragePoint[] storageOptions = DataStorageProvider.getInstance().getAvailableStoragePoints();
             String[] entries = new String[storageOptions.length];
             String[] values = new String[storageOptions.length];
