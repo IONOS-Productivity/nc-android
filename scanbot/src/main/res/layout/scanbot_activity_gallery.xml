@@ -20,6 +20,7 @@
 		android:id="@+id/vpPager"
 		android:layout_width="0dp"
 		android:layout_height="0dp"
+        android:background="@color/scanbot_gallery_background"
 		app:layout_constraintBottom_toTopOf="@+id/llBottomNavigation"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
@@ -31,6 +32,7 @@
 		android:layout_height="wrap_content"
 		android:layout_margin="@dimen/common_material_dimen"
 		android:background="@drawable/scanbot_gallery_counter_rounded_background"
+        android:backgroundTint="@color/scanbot_gallery_screen_counter_background_color"
 		android:paddingLeft="@dimen/scanbot_gallery_counter_padding_left"
 		android:paddingRight="@dimen/scanbot_gallery_counter_padding_right"
 		android:textColor="@color/scanbot_gallery_screen_counter_text_color"
@@ -44,8 +46,8 @@
         android:id="@+id/fabScanbotAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="@dimen/scanbot_gallery_fab_margin"
+        android:layout_marginBottom="@dimen/scanbot_gallery_fab_margin"
         android:contentDescription="fab"
         app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
         app:layout_constraintBottom_toTopOf="@+id/llBottomNavigation"
@@ -57,65 +59,38 @@
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
 		android:layout_alignParentBottom="true"
-		android:background="@color/scanbot_gallery_background"
+		android:background="@color/scanbot_gallery_bottom_navigation_color"
 		android:orientation="horizontal"
 		android:padding="@dimen/common_material_dimen"
+        android:elevation="@dimen/scanbot_gallery_bottom_navigation_elevation"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent">
 
 		<ImageView
 			android:id="@+id/ivCrop"
-			android:layout_width="0dp"
-			android:layout_height="@dimen/scanbot_gallery_navigation_item_height"
-			android:layout_margin="@dimen/common_material_dimen"
-			android:layout_weight="1"
-			android:src="@drawable/scanbot_ic_gallery_crop"
-			app:tint="@color/icons_tint_color" />
+            style="@style/BottomNavigationImageView"
+			android:src="@drawable/scanbot_ic_crop" />
 
-		<FrameLayout
-			android:layout_width="0dp"
-			android:layout_height="@dimen/scanbot_gallery_navigation_item_height"
-			android:layout_margin="@dimen/common_material_dimen"
-			android:layout_weight="1">
-
-			<ImageView
-				android:id="@+id/ivFilter"
-				android:layout_width="@dimen/scanbot_gallery_navigation_item_height"
-				android:layout_gravity="center"
-				android:layout_height="@dimen/scanbot_gallery_navigation_item_height"
-				android:background="@drawable/scanbot_gallery_filter_type_background"
-				android:src="@drawable/scanbot_ic_filter_type_none"
-				app:tint="@color/icons_tint_color" />
-
-		</FrameLayout>
+        <ImageView
+            android:id="@+id/ivFilter"
+            style="@style/BottomNavigationImageView"
+            android:src="@drawable/scanbot_ic_filter" />
 
 		<ImageView
 			android:id="@+id/ivRotate"
-			android:layout_width="0dp"
-			android:layout_height="@dimen/scanbot_gallery_navigation_item_height"
-			android:layout_margin="@dimen/common_material_dimen"
-			android:layout_weight="1"
-			android:src="@drawable/scanbot_ic_gallery_rotate"
-			app:tint="@color/icons_tint_color" />
+            style="@style/BottomNavigationImageView"
+			android:src="@drawable/scanbot_ic_rotate" />
 
 		<ImageView
 			android:id="@+id/ivRearrange"
-			android:layout_width="0dp"
-			android:layout_height="@dimen/scanbot_gallery_navigation_item_height"
-			android:layout_margin="@dimen/common_material_dimen"
-			android:layout_weight="1"
-			android:src="@drawable/scanbot_ic_rearrange"
-			app:tint="@color/icons_tint_color" />
+            style="@style/BottomNavigationImageView"
+			android:src="@drawable/scanbot_ic_rearrange" />
 
 		<ImageView
 			android:id="@+id/ivDelete"
-			android:layout_width="0dp"
-			android:layout_height="@dimen/scanbot_gallery_navigation_item_height"
-			android:layout_margin="@dimen/common_material_dimen"
-			android:layout_weight="1"
-			android:src="@drawable/scanbot_ic_gallery_delete"
-			app:tint="@color/icons_tint_color" />
+            style="@style/BottomNavigationImageView"
+			android:src="@drawable/scanbot_ic_delete" />
 
 	</LinearLayout>
 

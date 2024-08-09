@@ -27,9 +27,13 @@
     <color name="scanbot_filter_popup_stroke_color">@color/grey</color>
     <color name="scanbot_filter_popup_text_color">@color/black</color>
 
-    <color name="scanbot_gallery_background">@color/light_grey</color>
+    <color name="scanbot_gallery_background">@color/white</color>
     <color name="scanbot_gallery_counter_rounded_background">@color/grey</color>
     <color name="scanbot_gallery_screen_counter_text_color">@color/white</color>
+    <color name="scanbot_gallery_screen_counter_background_color">@color/deep_koamaru</color>
+    <color name="scanbot_gallery_bottom_navigation_icon_color">@color/navy</color>
+    <color name="scanbot_gallery_bottom_navigation_color">@color/white</color>
+
 
     <color name="scanbot_rearrange_icon_color">@color/dodger_blue</color>
 

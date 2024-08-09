@@ -63,12 +63,11 @@
         app:layout_constraintStart_toEndOf="@+id/control_filter_4"
         app:layout_constraintTop_toTopOf="@id/control_filter_1" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/control_filter_6"
         android:layout_width="@dimen/scanbot_filter_icon_size"
         android:layout_height="@dimen/scanbot_filter_icon_size"
-        android:background="@drawable/scanbot_filter_type_controller_selector"
-        android:src="@drawable/scanbot_ic_filter_type_none_selector"
+        android:src="@drawable/scanbot_ic_no_filter"
         app:layout_constraintBottom_toBottomOf="@id/control_filter_1"
         app:layout_constraintEnd_toEndOf="@id/control_progress_1"
         app:layout_constraintTop_toTopOf="@id/control_filter_1" />
