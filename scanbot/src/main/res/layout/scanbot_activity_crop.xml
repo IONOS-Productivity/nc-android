@@ -23,7 +23,7 @@
 		android:layout_height="wrap_content"
 		android:orientation="vertical">
 
-		<Button
+		<TextView
 			android:id="@+id/btnAutoDetectContour"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
 			android:padding="@dimen/common_normal_padding"
 			android:text="@string/scanbot_detect_document" />
 
-		<Button
+		<TextView
 			android:id="@+id/btnResetContour"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
