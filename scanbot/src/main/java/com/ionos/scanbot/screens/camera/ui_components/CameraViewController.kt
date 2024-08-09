@@ -5,7 +5,7 @@ import com.ionos.scanbot.util.kotlin.extension.plusAssign
 import com.ionos.scanbot.provider.ContourDetectorParamsProvider
 import com.ionos.scanbot.screens.camera.use_case.GetUserGuidanceStatus
 import com.ionos.scanbot.screens.camera.use_case.UserGuidanceStatus
-import com.ionos.scanbot.views.UserGuidance
+import com.ionos.scanbot.screens.camera.ui_components.UserGuidanceView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.PublishSubject
@@ -21,7 +21,7 @@ internal class CameraViewController(
 	private val cameraView: ScanbotCameraView,
 	private val polygonView: PolygonView,
 	private val onPictureReceived: ((ByteArray, Int) -> Unit),
-    private val userGuidance: UserGuidance,
+    private val userGuidanceView: UserGuidanceView,
 ) {
 	companion object {
 		private const val SHOW_GUIDANCE_PERIOD = 3L
@@ -136,8 +136,8 @@ internal class CameraViewController(
 		userGuidanceDisposable += userGuidanceStatuses
 			.sample(SHOW_GUIDANCE_PERIOD, TimeUnit.SECONDS)
 			.observeOn(AndroidSchedulers.mainThread())
-			.doOnNext { userGuidance.hide() }
-			.doOnDispose { userGuidance.hide() }
+			.doOnNext { userGuidanceView.hide() }
+			.doOnDispose { userGuidanceView.hide() }
 			.subscribe(::showUserGuidanceToast)
 	}
 
@@ -147,11 +147,11 @@ internal class CameraViewController(
 	}
 
 	private fun showUserGuidanceToast(status: UserGuidanceStatus) {
-        userGuidance.setText(status.text)
+        userGuidanceView.setText(status.text)
         status.icon?.let {
-            userGuidance.setIcon(it)
+            userGuidanceView.setIcon(it)
         }
-        userGuidance.show()
+        userGuidanceView.show()
 	}
 
 	private val userGuidanceListener = ContourDetectorFrameHandler.ResultHandler { result ->

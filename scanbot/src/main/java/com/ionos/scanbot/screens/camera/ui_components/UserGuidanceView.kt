@@ -1,4 +1,4 @@
-package com.ionos.scanbot.views
+package com.ionos.scanbot.screens.camera.ui_components
 
 import android.content.Context
 import android.graphics.drawable.Drawable
@@ -13,7 +13,7 @@ import com.ionos.scanbot.R
 
 private const val DEFAULT_DISPLAY_TIME = 2500L
 
-class UserGuidance @JvmOverloads constructor(
+class UserGuidanceView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
