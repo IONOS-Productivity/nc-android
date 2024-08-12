@@ -9,17 +9,11 @@
     <color name="stylized_edit_text_highlight_color">@color/transparent_lochmara</color>
     <color name="stylized_edit_text_select_handler_color">@color/accent_color</color>
 
-    <color name="app_bar_color">@color/primary_color</color>
-    <color name="app_bar_read_mode_color">@color/primary_color</color>
-
     <color name="common_text_color">@color/black</color>
 
     <color name="dialog_content_text">@color/black</color>
 
     <color name="icons_tint_color">@color/black</color>
-
-
-    <color name="system_bar_read_mode_color">@color/primary_dark_color</color>
 
     <color name="stylized_edit_text_line_color">@color/accent_color</color>
 </resources>

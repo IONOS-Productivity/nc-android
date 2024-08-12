@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="app_bar_color">@color/primary_color</color>
+    <color name="app_bar_read_mode_color">@color/primary_color</color>
+    <color name="system_bar_read_mode_color">@color/primary_dark_color</color>
+
     <color name="scanbot_camera_button_active_color">@color/pizazz_dark</color>
     <color name="scanbot_camera_button_background_idle">@color/white</color>
     <color name="scanbot_camera_button_background_pressed">@color/light_blue</color>
@@ -18,11 +22,14 @@
     <color name="scanbot_file_type_text_color_checked">@color/lochmara</color>
     <color name="scanbot_file_type_text_color_unchecked">@color/black</color>
 
-    <color name="scanbot_filter_control_active">@color/sunshade</color>
+    <color name="scanbot_filter_control_active">@color/scanbot_light</color>
     <color name="scanbot_filter_control_background">@color/white</color>
     <color name="scanbot_filter_control_icon_background">@color/scanbot_filter_control_background</color>
     <color name="scanbot_filter_control_icon_border">@color/scanbot_filter_control_inactive</color>
-    <color name="scanbot_filter_control_inactive">@color/dove_gray</color>
+    <color name="scanbot_filter_control_inactive">@color/scanbot_dark</color>
+    <color name="scanbot_filter_control_seek_bar_thumb_active">@color/scanbot_seek_bar_thumb</color>
+    <color name="scanbot_filter_control_seek_bar_progress_active">@color/scanbot_seek_bar_progress</color>
+    <color name="scanbot_filter_control_seek_bar_progress_background_active">@color/scanbot_seek_bar_progress</color>
     <color name="scanbot_filter_popup_background_color">@color/white</color>
     <color name="scanbot_filter_popup_stroke_color">@color/grey</color>
     <color name="scanbot_filter_popup_text_color">@color/black</color>
@@ -47,4 +54,10 @@
 
     <color name="scanbot_window_background">@color/ghost_white</color>
     <color name="user_guidance_text_color">@color/navy</color>
+
+    <color name="scanbot_light">#095BB1</color>
+    <color name="scanbot_dark">#001B41</color>
+    <color name="scanbot_seek_bar_thumb">#0B2A63</color>
+    <color name="scanbot_seek_bar_progress">#1474C4</color>
+
 </resources>
