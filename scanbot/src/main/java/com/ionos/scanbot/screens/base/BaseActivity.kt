@@ -1,6 +1,7 @@
 package com.ionos.scanbot.screens.base
 
 import android.content.Context
+import android.content.res.Configuration
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -9,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
+import com.ionos.common_ui.utils.ScreenUtils
 import com.ionos.scanbot.R
 import com.ionos.scanbot.controller.ScanbotController
 import com.ionos.scanbot.di.inject
@@ -23,6 +25,11 @@ internal abstract class BaseActivity<E : Event, S : State<E>, VM : ViewModel<E, 
     protected val context: Context get() = this
     protected val viewModel: VM by viewModels { viewModelFactory }
     protected val scanbotController: ScanbotController by inject { scanbotController() }
+
+    override fun attachBaseContext(newBase: Context) {
+        ScreenUtils.applyDefaultFontScale(newBase)
+        super.attachBaseContext(newBase)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +52,11 @@ internal abstract class BaseActivity<E : Event, S : State<E>, VM : ViewModel<E, 
     override fun onSaveInstanceState(outState: Bundle) {
         scanbotController.saveState(outState)
         super.onSaveInstanceState(outState)
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        ScreenUtils.applyDefaultFontScale(newConfig)
+        super.onConfigurationChanged(newConfig)
     }
 
     final override fun onSupportNavigateUp(): Boolean {
