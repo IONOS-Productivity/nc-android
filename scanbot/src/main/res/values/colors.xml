@@ -44,7 +44,7 @@
 
     <color name="scanbot_rearrange_icon_color">@color/dodger_blue</color>
 
-    <color name="scanbot_save_divider_color">@color/light_grey</color>
+    <color name="scanbot_save_divider_color">@color/dark_grey</color>
     <color name="scanbot_save_file_location_label_text_color">@color/grey</color>
     <color name="scanbot_save_file_name_label_text_color">@color/grey</color>
     <color name="scanbot_save_file_type_label_text_color">@color/grey</color>
