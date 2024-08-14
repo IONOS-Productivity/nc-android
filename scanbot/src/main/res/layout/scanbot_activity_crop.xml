@@ -29,9 +29,13 @@
 			android:layout_height="wrap_content"
 			android:layout_gravity="center_horizontal"
 			android:layout_margin="@dimen/common_normal_padding"
-			android:background="@color/scanbot_crop_screen_button_background"
+			android:background="@drawable/scanbot_crop_button_selector"
 			android:textColor="@color/scanbot_crop_screen_button_text_color"
-			android:padding="@dimen/common_normal_padding"
+            android:textSize="@dimen/common_large_font_size"
+            android:paddingStart="@dimen/common_large_padding"
+            android:paddingEnd="@dimen/common_large_padding"
+            android:textStyle="bold"
+            android:padding="@dimen/common_normal_padding"
 			android:text="@string/scanbot_detect_document" />
 
 		<TextView
@@ -40,9 +44,13 @@
 			android:layout_height="wrap_content"
 			android:layout_gravity="center_horizontal"
 			android:layout_margin="@dimen/common_normal_padding"
-			android:background="@color/scanbot_crop_screen_button_background"
+            android:background="@drawable/scanbot_crop_button_selector"
 			android:textColor="@color/scanbot_crop_screen_button_text_color"
 			android:padding="@dimen/common_normal_padding"
+            android:paddingStart="@dimen/common_large_padding"
+            android:paddingEnd="@dimen/common_large_padding"
+            android:textSize="@dimen/common_large_font_size"
+            android:textStyle="bold"
 			android:text="@string/scanbot_reset_borders" />
 
 	</FrameLayout>
