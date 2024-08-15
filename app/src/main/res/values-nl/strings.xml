@@ -197,6 +197,7 @@
     <string name="create_new_folder">Nieuwe map</string>
     <string name="create_new_presentation">Nieuwe presentatie</string>
     <string name="create_new_spreadsheet">Nieuw werkblad</string>
+    <string name="create_rich_workspace">Mapomschrijving toevoegen</string>
     <string name="credentials_disabled">Inloggegevens uitgeschakeld</string>
     <string name="daily_backup">Dagelijkse back-up</string>
     <string name="data_to_back_up">Te back-uppen data</string>
@@ -626,6 +627,7 @@
     <string name="preview_image_description">Voorvertoning van afbeelding</string>
     <string name="preview_image_error_no_local_file">Er is geen lokaal bestand om te bekijken</string>
     <string name="preview_image_error_unknown_format">Kan afbeelding niet tonen</string>
+    <string name="preview_image_file_is_not_exist">Bestand bestaat niet</string>
     <string name="preview_sorry">Sorry</string>
     <string name="privacy">Privacy</string>
     <string name="public_share_name">Nieuwe naam</string>
