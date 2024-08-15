@@ -24,7 +24,7 @@ internal class GetUserGuidanceStatus(private val context: Context) {
     private fun DetectionStatus.icon() : Int? = when (this) {
         OK -> R.drawable.scanbot_ic_dont_move
         OK_BUT_TOO_SMALL -> R.drawable.scanbot_ic_zoom_in
-        OK_BUT_BAD_ANGLES -> R.drawable.scanbot_ic_bad_angles
+        OK_BUT_BAD_ANGLES -> R.drawable.scanbot_ic_alert
         ERROR_NOTHING_DETECTED -> R.drawable.scanbot_ic_no_file
         ERROR_TOO_NOISY -> R.drawable.scanbot_ic_too_noisy
         ERROR_TOO_DARK -> R.drawable.scanbot_ic_poor_light

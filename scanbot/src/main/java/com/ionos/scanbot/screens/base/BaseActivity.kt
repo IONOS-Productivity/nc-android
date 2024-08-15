@@ -69,7 +69,7 @@ internal abstract class BaseActivity<E : Event, S : State<E>, VM : ViewModel<E, 
         showMessage(message)
     }
 
-    protected fun showMessage(message: String) {
+    protected open fun showMessage(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 

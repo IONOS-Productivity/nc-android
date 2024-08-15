@@ -152,4 +152,10 @@ internal class CameraActivity : BaseActivity<Event, State, ViewModel>() {
 			super.onKeyDown(keyCode, event)
 		}
 	}
+
+    override fun showMessage(message: String) {
+        viewBinding.userGuidance.setText(message)
+        viewBinding.userGuidance.setIcon(R.drawable.scanbot_ic_alert)
+        viewBinding.userGuidance.show()
+    }
 }
