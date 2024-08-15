@@ -118,7 +118,6 @@ internal class SaveViewModel @Inject constructor(
 
 	override fun onOverwriteDialogsResult(overwritePaths: List<String>, allowOverwritePaths: List<String>) {
 		if (allowOverwritePaths.containsAll(overwritePaths)) {
-			updateState { copy(processing = true) }
 			saveDocument()
 		}
 	}
@@ -128,6 +127,8 @@ internal class SaveViewModel @Inject constructor(
 	}
 
 	private fun saveDocument() {
+        updateState { copy(processing = true) }
+
 		subscriptions += saveDocument(state().baseFileName, state().fileType)
 			.subscribeOn(Schedulers.io())
 			.observeOn(AndroidSchedulers.mainThread())
