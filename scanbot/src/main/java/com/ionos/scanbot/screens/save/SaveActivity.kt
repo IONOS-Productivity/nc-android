@@ -86,7 +86,7 @@ internal class SaveActivity : BaseActivity<Event, State, ViewModel>() {
 
 	private fun Throwable.handle() = when (this) {
 		is SaveDocumentException -> showSaveDocumentErrorMessage(cause)
-		is InvalidFileNameException -> showMessage(R.string.incorrect_file_name)
+		is InvalidFileNameException -> showMessage(R.string.scanbot_save_invalid_file_name)
 		is OverwriteFilesException -> showOverwriteDialogs(overwritePaths)
 		else -> showMessage(R.string.unknown_exception)
 	}
