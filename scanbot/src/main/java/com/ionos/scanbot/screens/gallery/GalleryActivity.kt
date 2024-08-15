@@ -12,8 +12,16 @@ import com.ionos.scanbot.di.inject
 import com.ionos.scanbot.screens.base.BaseActivity
 import com.ionos.scanbot.screens.common.ExitDialog
 import com.ionos.scanbot.screens.common.use_case.open_screen.OpenScreen
-import com.ionos.scanbot.screens.gallery.GalleryScreen.*
-import com.ionos.scanbot.screens.gallery.GalleryScreen.Event.*
+import com.ionos.scanbot.screens.gallery.GalleryScreen.ColorFilterIcon
+import com.ionos.scanbot.screens.gallery.GalleryScreen.Event
+import com.ionos.scanbot.screens.gallery.GalleryScreen.Event.DisplayPicturesEvent
+import com.ionos.scanbot.screens.gallery.GalleryScreen.Event.OpenScreenEvent
+import com.ionos.scanbot.screens.gallery.GalleryScreen.Event.PerformExitEvent
+import com.ionos.scanbot.screens.gallery.GalleryScreen.Event.ShowErrorMessageEvent
+import com.ionos.scanbot.screens.gallery.GalleryScreen.Event.ShowExitDialogEvent
+import com.ionos.scanbot.screens.gallery.GalleryScreen.PageInfo
+import com.ionos.scanbot.screens.gallery.GalleryScreen.State
+import com.ionos.scanbot.screens.gallery.GalleryScreen.ViewModel
 import com.ionos.scanbot.screens.gallery.pager.GalleryPagerAdapter
 import com.ionos.scanbot.util.widget.addOnPageSelectedListener
 
@@ -64,11 +72,11 @@ internal class GalleryActivity : BaseActivity<Event, State, ViewModel>() {
 		toolbar.ivBack.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
 		toolbar.tvSave.setOnClickListener { viewModel.onSaveButtonClicked() }
 		fabScanbotAdd.setOnClickListener { viewModel.onAddButtonClicked() }
-		ivCrop.setOnClickListener { viewModel.onCropButtonClicked() }
-		ivFilter.setOnClickListener { viewModel.onFilterButtonClicked() }
-		ivRotate.setOnClickListener { viewModel.onRotateButtonClicked() }
-		ivRearrange.setOnClickListener { viewModel.onRearrangeButtonClicked() }
-		ivDelete.setOnClickListener { viewModel.onDeleteButtonClicked() }
+		niCrop.setOnClickListener { viewModel.onCropButtonClicked() }
+		niFilter.setOnClickListener { viewModel.onFilterButtonClicked() }
+		niRotate.setOnClickListener { viewModel.onRotateButtonClicked() }
+		niRearrange.setOnClickListener { viewModel.onRearrangeButtonClicked() }
+		niDelete.setOnClickListener { viewModel.onDeleteButtonClicked() }
 	}
 
 	override fun State.render() {
@@ -94,8 +102,8 @@ internal class GalleryActivity : BaseActivity<Event, State, ViewModel>() {
 	}
 
 	private fun renderFilterIcon(filterIcon: ColorFilterIcon) = with(viewBinding) {
-		ivFilter.setImageResource(filterIcon.imageRes)
-		ivFilter.setBackgroundResource(filterIcon.backgroundRes)
+		niFilter.setImageResource(filterIcon.imageRes)
+		niFilter.setBackgroundResource(filterIcon.backgroundRes)
 	}
 
 	private fun renderProgress(display: Boolean) = if (display) {

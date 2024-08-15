@@ -14,4 +14,8 @@
         <attr name="text" format="string" />
         <attr name="icon" format="reference" />
     </declare-styleable>
+    <declare-styleable name="BottomNavigationItem">
+        <attr name="itemIcon" format="reference"/>
+        <attr name="label" format="string"/>
+    </declare-styleable>
 </resources>

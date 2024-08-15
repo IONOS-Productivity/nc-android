@@ -71,30 +71,35 @@
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent">
 
-		<ImageView
-			android:id="@+id/ivCrop"
-            style="@style/BottomNavigationImageView"
-			android:src="@drawable/scanbot_ic_crop" />
+        <com.ionos.scanbot.screens.gallery.GalleryBottomNavigationItem
+            android:id="@+id/niCrop"
+            style="@style/BottomNavigationItem"
+            app:label="@string/scanbot_gallery_bottom_navigation_item_crop"
+            app:itemIcon="@drawable/scanbot_ic_crop" />
 
-        <ImageView
-            android:id="@+id/ivFilter"
-            style="@style/BottomNavigationImageView"
-            android:src="@drawable/scanbot_ic_filter" />
+        <com.ionos.scanbot.screens.gallery.GalleryBottomNavigationItem
+            android:id="@+id/niFilter"
+            style="@style/BottomNavigationItem"
+            app:label="@string/scanbot_gallery_bottom_navigation_item_filter"
+            app:itemIcon="@drawable/scanbot_ic_filter" />
 
-		<ImageView
-			android:id="@+id/ivRotate"
-            style="@style/BottomNavigationImageView"
-			android:src="@drawable/scanbot_ic_rotate" />
+        <com.ionos.scanbot.screens.gallery.GalleryBottomNavigationItem
+            android:id="@+id/niRotate"
+            style="@style/BottomNavigationItem"
+            app:label="@string/scanbot_gallery_bottom_navigation_item_rotate"
+            app:itemIcon="@drawable/scanbot_ic_rotate" />
 
-		<ImageView
-			android:id="@+id/ivRearrange"
-            style="@style/BottomNavigationImageView"
-			android:src="@drawable/scanbot_ic_rearrange" />
+        <com.ionos.scanbot.screens.gallery.GalleryBottomNavigationItem
+            android:id="@+id/niRearrange"
+            style="@style/BottomNavigationItem"
+            app:label="@string/scanbot_gallery_bottom_navigation_item_rearrange"
+            app:itemIcon="@drawable/scanbot_ic_rearrange" />
 
-		<ImageView
-			android:id="@+id/ivDelete"
-            style="@style/BottomNavigationImageView"
-			android:src="@drawable/scanbot_ic_delete" />
+        <com.ionos.scanbot.screens.gallery.GalleryBottomNavigationItem
+            android:id="@+id/niDelete"
+            style="@style/BottomNavigationItem"
+            app:label="@string/scanbot_gallery_bottom_navigation_item_delete"
+            app:itemIcon="@drawable/scanbot_ic_delete" />
 
 	</LinearLayout>
 
