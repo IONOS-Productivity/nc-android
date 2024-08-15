@@ -604,6 +604,7 @@ GNU yleinen lisenssi, versio 2</string>
     <string name="preview_image_description">Kuvan esikatselu</string>
     <string name="preview_image_error_no_local_file">Paikallista tiedostoa ei ole esikatselua varten</string>
     <string name="preview_image_error_unknown_format">Kuvan näyttäminen ei onnistunut</string>
+    <string name="preview_image_file_is_not_exist">Tiedostoa ei ole olemassa</string>
     <string name="preview_sorry">Anteeksi</string>
     <string name="privacy">Yksityisyys</string>
     <string name="public_share_name">Uusi nimi</string>
@@ -841,6 +842,7 @@ GNU yleinen lisenssi, versio 2</string>
     <string name="upload_local_storage_full">Paikallinen tallennustila täynnä</string>
     <string name="upload_local_storage_not_copied">Tiedostoa ei voitu kopioida paikalliseen tallennustilaan</string>
     <string name="upload_lock_failed">Kansion lukitseminen epäonnistui</string>
+    <string name="upload_manually_cancelled">Käyttäjä peruutti latauksen</string>
     <string name="upload_old_android">Salaus on mahdollista vain kun &gt;= Android 5.0</string>
     <string name="upload_query_move_foreign_files">Riittämätön tila estää tiedostojen kopioinnin %1$s kansioon. Haluatko sen sijaan siirtää ne sinne?</string>
     <string name="upload_scan_doc_upload">Skannaa asiakirja kameralla</string>

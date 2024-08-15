@@ -1,6 +1,7 @@
 package com.ionos.scanbot.screens.base
 
 import android.content.Context
+import android.content.res.Configuration
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -9,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
+import com.ionos.common_ui.utils.ScreenUtils
 import com.ionos.scanbot.R
 import com.ionos.scanbot.controller.ScanbotController
 import com.ionos.scanbot.di.inject
@@ -24,9 +26,15 @@ internal abstract class BaseActivity<E : Event, S : State<E>, VM : ViewModel<E, 
     protected val viewModel: VM by viewModels { viewModelFactory }
     protected val scanbotController: ScanbotController by inject { scanbotController() }
 
+    override fun attachBaseContext(newBase: Context) {
+        ScreenUtils.applyDefaultFontScale(newBase)
+        super.attachBaseContext(newBase)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        window.statusBarColor = ContextCompat.getColor(context, R.color.system_bar_read_mode_color)
+        window.statusBarColor = ContextCompat.getColor(context, R.color.scanbot_status_bar_color)
+        window.decorView.setBackgroundColor(ContextCompat.getColor(context, R.color.scanbot_window_background))
         setContentView(viewBinding.root)
         viewModel.state.observe(this) { it.renderInternal() }
     }
@@ -46,6 +54,11 @@ internal abstract class BaseActivity<E : Event, S : State<E>, VM : ViewModel<E, 
         super.onSaveInstanceState(outState)
     }
 
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        ScreenUtils.applyDefaultFontScale(newConfig)
+        super.onConfigurationChanged(newConfig)
+    }
+
     final override fun onSupportNavigateUp(): Boolean {
         onBackPressedDispatcher.onBackPressed()
         return true
@@ -56,7 +69,7 @@ internal abstract class BaseActivity<E : Event, S : State<E>, VM : ViewModel<E, 
         showMessage(message)
     }
 
-    protected fun showMessage(message: String) {
+    protected open fun showMessage(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 

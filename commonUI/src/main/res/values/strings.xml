@@ -47,7 +47,15 @@
     <string name="scanbot_reset_borders">Reset borders</string>
     <string name="scanbot_save_file_name_title">File name:</string>
     <string name="scanbot_save_file_type_title">File type:</string>
+    <string name="scanbot_save_invalid_file_name">Invalid file name</string>
     <string name="scanbot_save_path">Save location:</string>
+    
+    <string name="scanbot_gallery_bottom_navigation_item_crop">Crop</string>
+    <string name="scanbot_gallery_bottom_navigation_item_filter">Filter</string>
+    <string name="scanbot_gallery_bottom_navigation_item_rotate">Rotate</string>
+    <string name="scanbot_gallery_bottom_navigation_item_rearrange">Rearrange</string>
+    <string name="scanbot_gallery_bottom_navigation_item_delete">Delete</string>
+
     <string name="this_item_exists" formatted="false">%s %s already exists. What would you like to do?</string>
     <string name="unknown_exception">An error occurred. Please try again later</string>
 </resources>

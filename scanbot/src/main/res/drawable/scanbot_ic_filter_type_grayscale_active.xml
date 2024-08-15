@@ -1,27 +1,9 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="24dp"
-    android:height="24dp"
-    android:viewportWidth="48"
-    android:viewportHeight="48">
+    android:width="84dp"
+    android:height="84dp"
+    android:viewportWidth="84"
+    android:viewportHeight="84">
     <path
         android:fillColor="@color/scanbot_filter_control_active"
-        android:pathData="M24,10A14,14 0,0 0,14.1 33.9,14 14,0 0,0 33.9,14.1 13.908,13.908 0,0 0,24 10m0,-2A16,16 0,1 1,8 24,16 16,0 0,1 24,8Z" />
-    <path
-        android:fillColor="@color/scanbot_filter_control_active"
-        android:pathData="M25.5,39.5L23.5,39.5L23.5,9.5L25.5,9.5Z" />
-    <path
-        android:fillColor="@color/scanbot_filter_control_active"
-        android:pathData="M21.4,38.645L19.5,38.645L19.5,9.5L21.4,9.5Z" />
-    <path
-        android:fillColor="@color/scanbot_filter_control_active"
-        android:pathData="M18.3,37.67L16.5,37.67L16.5,10.38L18.3,10.38Z" />
-    <path
-        android:fillColor="@color/scanbot_filter_control_active"
-        android:pathData="M15.5,35.907L13.8,35.907L13.8,11.726L15.5,11.726Z" />
-    <path
-        android:fillColor="@color/scanbot_filter_control_active"
-        android:pathData="M13,33.215L11.4,33.215L11.4,14.232L13,14.232Z" />
-    <path
-        android:fillColor="@color/scanbot_filter_control_active"
-        android:pathData="M10.8,29.548L9.3,29.548L9.3,18.781L10.8,18.781Z" />
+        android:pathData="M30,45C30,36.375 35.25,28.969 42.75,25.688C39.938,23.719 36.563,22.5 33,22.5C23.813,22.5 16.5,29.906 16.5,39C16.5,48.094 23.719,55.406 32.813,55.5C30.938,52.406 30,48.844 30,45ZM33,60C21.375,60 12,50.625 12,39C12,27.469 21.375,18 33,18C38.813,18 44.063,20.438 47.906,24.281C48.844,24.094 49.875,24 51,24C62.531,24 72,33.469 72,45C72,56.625 62.531,66 51,66C45.094,66 39.844,63.656 36,59.813C35.063,60 34.031,60 33,60ZM51,61.5C60.094,61.5 67.5,54.188 67.5,45C67.5,36 60.188,28.688 51.188,28.5C52.969,31.594 54,35.25 54,39C54,47.719 48.75,55.125 41.25,58.313C43.969,60.375 47.344,61.5 51,61.5Z" />
 </vector>

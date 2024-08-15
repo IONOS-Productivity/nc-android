@@ -13,7 +13,7 @@ import com.ionos.scanbot.screens.save.SaveScreen.Event.ShowExitDialogEvent
 import com.ionos.scanbot.screens.save.SaveScreen.FileType
 import com.ionos.scanbot.screens.save.SaveScreen.State
 import com.ionos.scanbot.screens.save.SaveScreen.ViewModel
-import com.ionos.scanbot.screens.save.use_case.ValidateFilesForUpload
+import com.ionos.scanbot.screens.save.use_case.ValidateFilesForUploadSynchronous
 import com.ionos.scanbot.screens.save.use_case.save.SaveDocument
 import com.ionos.scanbot.upload.target_provider.UploadTarget
 import com.ionos.scanbot.util.kotlin.extension.plusAssign
@@ -24,7 +24,7 @@ import javax.inject.Inject
 
 internal class SaveViewModel @Inject constructor(
 	private val saveDocument: SaveDocument,
-	private val validateFiles: ValidateFilesForUpload,
+	private val validateFiles: ValidateFilesForUploadSynchronous,
 	private val scanbotController: ScanbotController,
 	private val repositoryFacade: RepositoryFacade,
 	// private val eventTracker: ScanbotSaveScreenEventTracker,
@@ -109,17 +109,15 @@ internal class SaveViewModel @Inject constructor(
 	override fun onSaveClicked() {
 		// eventTracker.trackSaveClicked()
 
-		updateState { copy(processing = true) }
-
-		subscriptions += validateFiles(state().baseFileName)
-			.subscribeOn(Schedulers.io())
-			.observeOn(AndroidSchedulers.mainThread())
-			.subscribe(::saveDocument, ::onError)
+        runCatching {
+            validateFiles(state().baseFileName)
+        }
+            .onSuccess{ saveDocument() }
+            .onFailure(::onError)
 	}
 
 	override fun onOverwriteDialogsResult(overwritePaths: List<String>, allowOverwritePaths: List<String>) {
 		if (allowOverwritePaths.containsAll(overwritePaths)) {
-			updateState { copy(processing = true) }
 			saveDocument()
 		}
 	}
@@ -129,6 +127,8 @@ internal class SaveViewModel @Inject constructor(
 	}
 
 	private fun saveDocument() {
+        updateState { copy(processing = true) }
+
 		subscriptions += saveDocument(state().baseFileName, state().fileType)
 			.subscribeOn(Schedulers.io())
 			.observeOn(AndroidSchedulers.mainThread())

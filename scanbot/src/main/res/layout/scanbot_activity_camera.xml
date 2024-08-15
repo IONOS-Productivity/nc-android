@@ -19,8 +19,7 @@
 			android:layout_marginRight="@dimen/common_normal_padding"
 			android:text="@string/scanbot_camera_flash_button"
 			android:textColor="@drawable/scanbot_camera_btn_color_selector"
-			app:drawableLeftCompat="@drawable/scanbot_camera_flash_btn_selector"
-			app:drawableTint="@color/icons_tint_color" />
+			app:drawableLeftCompat="@drawable/scanbot_camera_flash_btn_selector" />
 
 		<TextView
 			android:id="@+id/tvAutomaticCaptureStatus"
@@ -51,6 +50,14 @@
 			app:polygonStrokeColor="@color/scanbot_camera_polygon_stroke_color"
 			app:polygonStrokeWidth="@dimen/scanbot_camera_polygon_stroke_widht" />
 
+        <com.ionos.scanbot.screens.camera.ui_components.UserGuidanceView
+            android:id="@+id/userGuidance"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="@dimen/common_normal_padding">
+        </com.ionos.scanbot.screens.camera.ui_components.UserGuidanceView>
+
 	</FrameLayout>
 
 	<FrameLayout
@@ -74,10 +81,10 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_gravity="center"
-			android:layout_margin="@dimen/common_small_padding"
+			android:layout_margin="@dimen/common_small2_padding"
 			android:background="@drawable/scanbot_camera_button_selector"
-			android:padding="@dimen/common_normal_padding"
-			android:src="@drawable/ic_photo_camera_orange_24dp"/>
+			android:padding="@dimen/common_small_padding"
+			android:src="@drawable/ic_photo_camera"/>
 
 		<TextView
 			android:id="@+id/tvImport"

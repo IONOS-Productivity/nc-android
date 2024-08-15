@@ -1,11 +1,11 @@
 package com.ionos.scanbot.screens.camera.ui_components
 
 import android.app.Activity
-import android.view.Gravity
-import android.widget.Toast
 import com.ionos.scanbot.util.kotlin.extension.plusAssign
 import com.ionos.scanbot.provider.ContourDetectorParamsProvider
-import com.ionos.scanbot.screens.camera.use_case.GetUserGuidanceMessage
+import com.ionos.scanbot.screens.camera.use_case.GetUserGuidanceStatus
+import com.ionos.scanbot.screens.camera.use_case.UserGuidanceStatus
+import com.ionos.scanbot.screens.camera.ui_components.UserGuidanceView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.PublishSubject
@@ -21,6 +21,7 @@ internal class CameraViewController(
 	private val cameraView: ScanbotCameraView,
 	private val polygonView: PolygonView,
 	private val onPictureReceived: ((ByteArray, Int) -> Unit),
+    private val userGuidanceView: UserGuidanceView,
 ) {
 	companion object {
 		private const val SHOW_GUIDANCE_PERIOD = 3L
@@ -32,10 +33,9 @@ internal class CameraViewController(
 
 	private val autoSnappingController = DocumentAutoSnappingController(cameraView, contourDetectorFrameHandler)
 
-	private val getUserGuidanceMessage = GetUserGuidanceMessage(activity)
-	private val userGuidanceMessages: PublishSubject<String> = PublishSubject.create()
+	private val getUserGuidanceStatus = GetUserGuidanceStatus(activity)
+	private val userGuidanceStatuses: PublishSubject<UserGuidanceStatus> = PublishSubject.create()
 	private val userGuidanceDisposable = CompositeDisposable()
-	private var userGuidanceToast: Toast? = null
 
 	private var isOnPause = true
 
@@ -133,11 +133,11 @@ internal class CameraViewController(
 
 	private fun subscribeToUserGuidanceMessages() {
 		contourDetectorFrameHandler.addResultHandler(userGuidanceListener)
-		userGuidanceDisposable += userGuidanceMessages
+		userGuidanceDisposable += userGuidanceStatuses
 			.sample(SHOW_GUIDANCE_PERIOD, TimeUnit.SECONDS)
 			.observeOn(AndroidSchedulers.mainThread())
-			.doOnNext { userGuidanceToast?.cancel() }
-			.doOnDispose { userGuidanceToast?.cancel() }
+			.doOnNext { userGuidanceView.hide() }
+			.doOnDispose { userGuidanceView.hide() }
 			.subscribe(::showUserGuidanceToast)
 	}
 
@@ -146,20 +146,20 @@ internal class CameraViewController(
 		userGuidanceDisposable.clear()
 	}
 
-	private fun showUserGuidanceToast(message: String) {
-		Toast.makeText(activity, message, Toast.LENGTH_SHORT).apply {
-			userGuidanceToast = this
-			setGravity(Gravity.CENTER, 0, 0)
-			show()
-		}
+	private fun showUserGuidanceToast(status: UserGuidanceStatus) {
+        userGuidanceView.setText(status.text)
+        status.icon?.let {
+            userGuidanceView.setIcon(it)
+        }
+        userGuidanceView.show()
 	}
 
 	private val userGuidanceListener = ContourDetectorFrameHandler.ResultHandler { result ->
 		if (result is FrameHandlerResult.Success) {
 			val status = result.value.detectionStatus
-			getUserGuidanceMessage(status)?.let { message ->
-				userGuidanceMessages.onNext(message)
-			}
+			getUserGuidanceStatus(status).let{
+                userGuidanceStatuses.onNext(it)
+            }
 		}
 		false
 	}
