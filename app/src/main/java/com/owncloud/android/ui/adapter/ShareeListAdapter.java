@@ -201,12 +201,14 @@ public class ShareeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         shares = links;
         shares.addAll(users);
 
-        // add internal share link at end
-        if (!encrypted) {
-            final OCShare ocShare = new OCShare();
-            ocShare.setShareType(ShareType.INTERNAL);
-            shares.add(ocShare);
-        }
+        // Start: Hide internal share link in IONOS //
+//        // add internal share link at end
+//        if (!encrypted) {
+//            final OCShare ocShare = new OCShare();
+//            ocShare.setShareType(ShareType.INTERNAL);
+//            shares.add(ocShare);
+//        }
+        // End: Hide internal share link in IONOS //
     }
 
     public List<OCShare> getShares() {
