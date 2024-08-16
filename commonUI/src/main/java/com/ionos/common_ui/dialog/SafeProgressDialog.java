@@ -10,6 +10,8 @@ import com.ionos.common_ui.exception.TryCatchExceptionHandler;
 
 import javax.inject.Inject;
 
+import androidx.annotation.StyleRes;
+
 public final class SafeProgressDialog extends ProgressDialog {
 
 	@Inject
@@ -19,6 +21,11 @@ public final class SafeProgressDialog extends ProgressDialog {
 		super(context);
 		CommonUiComponent.from(context).inject(this);
 	}
+
+    public SafeProgressDialog(Context context, @StyleRes int theme) {
+        super(context, theme);
+        CommonUiComponent.from(context).inject(this);
+    }
 
 	@Override
 	public void show() {

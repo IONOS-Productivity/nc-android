@@ -19,7 +19,7 @@ internal class CropActivity : BaseActivity<Event, State, ViewModel>() {
 	override val viewBinding by lazy { ScanbotActivityCropBinding.inflate(layoutInflater) }
 
 	private val viewModelFactoryAssistant by inject { cropViewModelFactoryAssistant() }
-	private val progressDialog = LockProgressDialog()
+    private val progressDialog = LockProgressDialog(R.style.ScanbotDialogStyle)
 
 	companion object {
 		private const val IMAGE_ID = "IMAGE_ID"

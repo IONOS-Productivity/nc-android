@@ -10,7 +10,7 @@ internal class ImportProgressDialog(
 	context: Context,
 	private val onCancelClick: () -> Unit,
 ) {
-	private val safeProgressDialog = SafeProgressDialog(context)
+	private val safeProgressDialog = SafeProgressDialog(context, R.style.ScanbotDialogStyle)
 
 	init {
 		safeProgressDialog.init()

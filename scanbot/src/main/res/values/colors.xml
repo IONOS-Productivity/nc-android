@@ -3,6 +3,12 @@
     <color name="scanbot_app_bar_color">@color/primary_color</color>
     <color name="scanbot_status_bar_color">@color/primary_dark_color</color>
 
+    <color name="scanbot_dialog_background_color">@color/ghost_white</color>
+    <color name="scanbot_dialog_progress_color">@color/congress_blue</color>
+    <color name="scanbot_dialog_progress_background_color">@color/dodger_blue</color>
+    <color name="scanbot_dialog_text_color">@color/congress_blue</color>
+    <color name="scanbot_dialog_negative_button_text_color">@color/congress_blue</color>
+
     <color name="scanbot_camera_button_active_color">@color/pizazz_dark</color>
     <color name="scanbot_camera_button_background_idle">@color/white</color>
     <color name="scanbot_camera_button_background_pressed">@color/light_blue</color>
