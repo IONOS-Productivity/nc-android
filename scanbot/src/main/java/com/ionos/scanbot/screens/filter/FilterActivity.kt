@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.addCallback
 import com.ionos.common_ui.dialog.LockProgressDialog
-import com.ionos.common_ui.utils.ContextUtils
 import com.ionos.scanbot.R
 import com.ionos.scanbot.databinding.ScanbotActivityFilterBinding
 import com.ionos.scanbot.di.inject
@@ -15,7 +14,6 @@ import com.ionos.scanbot.screens.base.BaseActivity
 import com.ionos.scanbot.exception.CreateIntentException
 import com.ionos.scanbot.screens.filter.FilterScreen.*
 import com.ionos.scanbot.screens.filter.FilterScreen.Event.*
-import com.ionos.scanbot.screens.filter.popup.FilterPopupWrapper
 import com.ionos.scanbot.screens.filter.use_case.GetColorFilterName
 
 internal class FilterActivity : BaseActivity<Event, State, ViewModel>() {
@@ -37,7 +35,6 @@ internal class FilterActivity : BaseActivity<Event, State, ViewModel>() {
 	override val viewBinding by lazy { ScanbotActivityFilterBinding.inflate(layoutInflater) }
 
 	private val viewModelFactoryAssistant by inject { filterViewModelFactoryAssistant() }
-	private val popup by lazy { FilterPopupWrapper(this, viewModel::onApplyForAllClicked) }
 	private val progressDialog = LockProgressDialog()
 
 	private val getColorFilterName by lazy { GetColorFilterName(this) }
@@ -46,13 +43,9 @@ internal class FilterActivity : BaseActivity<Event, State, ViewModel>() {
 		super.onCreate(savedInstanceState)
 		initOnBackPressedCallback()
 		initListeners()
-		viewBinding.toolbar.ivMore.visibility = View.VISIBLE
-	}
-
-	override fun onDestroy() {
-		popup.dismiss()
-		super.onDestroy()
-	}
+		viewBinding.tvApplyToAll.visibility = View.VISIBLE
+        viewBinding.tvApplyToAll.setOnClickListener { viewModel.onApplyForAllClicked() }
+    }
 
 	private fun getInitialState(): State {
 		val pictureId = intent?.getStringExtra(PICTURE_ID)
@@ -72,12 +65,11 @@ internal class FilterActivity : BaseActivity<Event, State, ViewModel>() {
 		filterControls.setListener(viewModel)
 		toolbar.ivBack.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
 		toolbar.tvSave.setOnClickListener { viewModel.onSaveClicked() }
-		toolbar.ivMore.setOnClickListener { viewModel.onMoreClicked() }
 	}
 
 	override fun State.render() = with(viewBinding) {
 		toolbar.tvTitle.text = getColorFilterName(filterType)
-		toolbar.ivMore.visibility = if (showMoreMenu) View.VISIBLE else View.GONE
+		viewBinding.tvApplyToAll.visibility = if (showApplyToAll) View.VISIBLE else View.GONE
 		filterControls.setFilterType(filterType)
 		imageView.setImageBitmap(image)
 		renderProcessing(processing)
@@ -92,13 +84,5 @@ internal class FilterActivity : BaseActivity<Event, State, ViewModel>() {
 	override fun Event.handle() = when (this) {
 		is CloseScreenEvent -> finish()
 		is ShowErrorEvent -> showMessage(R.string.fail)
-		is ShowPopupEvent -> showPopup()
-	}
-
-	private fun showPopup() {
-		popup.dismiss()
-		if (!ContextUtils.isActivityFinishing(this)) {
-			popup.showAsDropDown(viewBinding.toolbar.ivMore)
-		}
 	}
 }

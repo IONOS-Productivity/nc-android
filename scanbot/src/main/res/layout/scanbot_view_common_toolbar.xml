@@ -48,17 +48,6 @@
 			android:textSize="@dimen/scanbot_text_size"
 			android:textStyle="bold"/>
 
-		<ImageView
-			android:id="@+id/ivMore"
-			android:layout_width="wrap_content"
-			android:layout_height="match_parent"
-			android:paddingTop="@dimen/common_normal_padding"
-			android:paddingEnd="@dimen/common_normal_padding"
-			android:paddingBottom="@dimen/common_normal_padding"
-			android:visibility="gone"
-			app:srcCompat="@drawable/ic_more_vert_white_24dp"
-			app:tint="@color/scanbot_toolbar_text_color" />
-
 	</LinearLayout>
 
 </androidx.appcompat.widget.Toolbar>
