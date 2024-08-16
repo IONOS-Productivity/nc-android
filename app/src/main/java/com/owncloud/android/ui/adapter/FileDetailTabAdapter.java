@@ -11,7 +11,6 @@ import com.nextcloud.ui.ImageDetailFragment;
 import com.owncloud.android.datamodel.OCFile;
 import com.owncloud.android.ui.fragment.FileDetailActivitiesFragment;
 import com.owncloud.android.ui.fragment.FileDetailSharingFragment;
-import com.owncloud.android.utils.MimeTypeUtil;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -55,34 +54,42 @@ public class FileDetailTabAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        return switch (position) {
-            default -> {
-                fileDetailActivitiesFragment = FileDetailActivitiesFragment.newInstance(file, user);
-                yield fileDetailActivitiesFragment;
-            }
-            case 1 -> {
-                fileDetailSharingFragment = FileDetailSharingFragment.newInstance(file, user);
-                yield fileDetailSharingFragment;
-            }
-            case 2 -> {
-                imageDetailFragment = ImageDetailFragment.newInstance(file, user);
-                yield imageDetailFragment;
-            }
-        };
+        // Start: Hide tabs in IONOS //
+//        return switch (position) {
+//            default -> {
+//                fileDetailActivitiesFragment = FileDetailActivitiesFragment.newInstance(file, user);
+//                yield fileDetailActivitiesFragment;
+//            }
+//            case 1 -> {
+//                fileDetailSharingFragment = FileDetailSharingFragment.newInstance(file, user);
+//                yield fileDetailSharingFragment;
+//            }
+//            case 2 -> {
+//                imageDetailFragment = ImageDetailFragment.newInstance(file, user);
+//                yield imageDetailFragment;
+//            }
+//        };
+        fileDetailSharingFragment = FileDetailSharingFragment.newInstance(file, user);
+        return fileDetailSharingFragment;
+        // End: Hide tabs in IONOS //
     }
 
     @Override
     public int getItemCount() {
-        if (showSharingTab) {
-            if (MimeTypeUtil.isImage(file)) {
-                return 3;
-            }
-            return 2;
-        } else {
-            if (MimeTypeUtil.isImage(file)) {
-                return 2;
-            }
-            return 1;
-        }
+        // Start: Hide tabs in IONOS //
+//        if (showSharingTab) {
+//            if (MimeTypeUtil.isImage(file)) {
+//                return 3;
+//            }
+//            return 2;
+//        } else {
+//            if (MimeTypeUtil.isImage(file)) {
+//                return 2;
+//            }
+//            return 1;
+//        }
+        if (showSharingTab) return 1;
+        else return 0;
+        // End: Hide tabs in IONOS //
     }
 }
