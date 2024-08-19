@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.addCallback
-import com.ionos.common_ui.dialog.LockProgressDialog
 import com.ionos.scanbot.R
 import com.ionos.scanbot.databinding.ScanbotActivityFilterBinding
 import com.ionos.scanbot.di.inject
@@ -15,6 +14,7 @@ import com.ionos.scanbot.exception.CreateIntentException
 import com.ionos.scanbot.screens.filter.FilterScreen.*
 import com.ionos.scanbot.screens.filter.FilterScreen.Event.*
 import com.ionos.scanbot.screens.filter.use_case.GetColorFilterName
+import com.ionos.scanbot.util.DialogUtils
 
 internal class FilterActivity : BaseActivity<Event, State, ViewModel>() {
 
@@ -35,7 +35,7 @@ internal class FilterActivity : BaseActivity<Event, State, ViewModel>() {
 	override val viewBinding by lazy { ScanbotActivityFilterBinding.inflate(layoutInflater) }
 
 	private val viewModelFactoryAssistant by inject { filterViewModelFactoryAssistant() }
-	private val progressDialog = LockProgressDialog()
+	private val progressDialog = DialogUtils.createStylizedLockProgressDialog()
 
 	private val getColorFilterName by lazy { GetColorFilterName(this) }
 

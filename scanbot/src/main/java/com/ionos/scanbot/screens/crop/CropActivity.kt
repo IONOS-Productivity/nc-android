@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.addCallback
-import com.ionos.common_ui.dialog.LockProgressDialog
 import com.ionos.scanbot.R
 import com.ionos.scanbot.databinding.ScanbotActivityCropBinding
 import com.ionos.scanbot.di.inject
@@ -13,13 +12,14 @@ import com.ionos.scanbot.screens.base.BaseActivity
 import com.ionos.scanbot.exception.CreateIntentException
 import com.ionos.scanbot.screens.crop.CropScreen.*
 import com.ionos.scanbot.screens.crop.CropScreen.Event.*
+import com.ionos.scanbot.util.DialogUtils
 
 internal class CropActivity : BaseActivity<Event, State, ViewModel>() {
 	override val viewModelFactory by lazy { viewModelFactoryAssistant.create(getImageId()) }
 	override val viewBinding by lazy { ScanbotActivityCropBinding.inflate(layoutInflater) }
 
 	private val viewModelFactoryAssistant by inject { cropViewModelFactoryAssistant() }
-    private val progressDialog = LockProgressDialog(R.style.ScanbotDialogStyle)
+    private val progressDialog = DialogUtils.createStylizedLockProgressDialog()
 
 	companion object {
 		private const val IMAGE_ID = "IMAGE_ID"

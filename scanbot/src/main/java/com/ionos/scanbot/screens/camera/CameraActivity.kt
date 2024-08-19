@@ -6,7 +6,6 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.KeyEvent
 import androidx.activity.addCallback
-import com.ionos.common_ui.dialog.LockProgressDialog
 import com.ionos.common_ui.dialog.wrapper.NoFreeSpaceMessageDialogWrapper
 import com.ionos.scanbot.R
 import com.ionos.scanbot.databinding.ScanbotActivityCameraBinding
@@ -18,6 +17,7 @@ import com.ionos.scanbot.screens.camera.image_picker.ImagePickerLauncher
 import com.ionos.scanbot.screens.camera.ui_components.CameraViewController
 import com.ionos.scanbot.screens.camera.ui_components.ImportProgressDialog
 import com.ionos.scanbot.screens.common.use_case.open_screen.OpenScreen
+import com.ionos.scanbot.util.DialogUtils
 import com.ionos.scanbot.util.permission.hasPermissionTo
 import com.ionos.scanbot.util.permission.requestPermissionTo
 
@@ -29,7 +29,7 @@ internal class CameraActivity : BaseActivity<Event, State, ViewModel>() {
 
 	private val imagePickerLauncher = ImagePickerLauncher(this) { viewModel.onPicturesUrisReceived(it) }
 	private val importProgressDialog by lazy { ImportProgressDialog(this, viewModel::onCancelImportClicked) }
-	private val decodingProgressDialog = LockProgressDialog()
+	private val decodingProgressDialog = DialogUtils.createStylizedLockProgressDialog()
 	private val noFreeSpaceDialog by lazy { NoFreeSpaceMessageDialogWrapper(this) }
 	private val openScreen = OpenScreen(this)
 	private val exitDialog by inject { exitDialog() }

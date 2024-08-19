@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.addCallback
-import com.ionos.common_ui.dialog.LockProgressDialog
 import com.ionos.scanbot.R
 import com.ionos.scanbot.databinding.ScanbotActivityGalleryBinding
 import com.ionos.scanbot.di.inject
@@ -23,6 +22,7 @@ import com.ionos.scanbot.screens.gallery.GalleryScreen.PageInfo
 import com.ionos.scanbot.screens.gallery.GalleryScreen.State
 import com.ionos.scanbot.screens.gallery.GalleryScreen.ViewModel
 import com.ionos.scanbot.screens.gallery.pager.GalleryPagerAdapter
+import com.ionos.scanbot.util.DialogUtils
 import com.ionos.scanbot.util.widget.addOnPageSelectedListener
 
 internal class GalleryActivity : BaseActivity<Event, State, ViewModel>() {
@@ -44,7 +44,7 @@ internal class GalleryActivity : BaseActivity<Event, State, ViewModel>() {
 	private val viewModelFactoryAssistant by inject { galleryViewModelFactoryAssistant() }
 	private val viewPagerAdapter: GalleryPagerAdapter by inject { galleryPagerAdapter() }
 	private val exitDialog: ExitDialog by inject { exitDialog() }
-	private val progressDialog = LockProgressDialog()
+	private val progressDialog = DialogUtils.createStylizedLockProgressDialog()
 	private val openScreen = OpenScreen(this)
 
 	private fun getPictureId(): String? {

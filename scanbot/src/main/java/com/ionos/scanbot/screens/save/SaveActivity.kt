@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.addCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.core.widget.addTextChangedListener
-import com.ionos.common_ui.dialog.LockProgressDialog
 import com.ionos.common_ui.dialog.stylized.overwrite_file_dialog.OverwriteDialogs
 import com.ionos.common_ui.dialog.stylized.overwrite_file_dialog.upload.RemoteFilePathOverwriteDialogs
 import com.ionos.scanbot.R
@@ -22,6 +21,7 @@ import com.ionos.scanbot.screens.save.SaveScreen.Event.LaunchUploadTargetPickerE
 import com.ionos.scanbot.screens.save.SaveScreen.Event.ShowExitDialogEvent
 import com.ionos.scanbot.screens.save.SaveScreen.State
 import com.ionos.scanbot.screens.save.SaveScreen.ViewModel
+import com.ionos.scanbot.util.DialogUtils
 import com.ionos.scanbot.util.kotlin.extension.plusAssign
 import io.reactivex.disposables.CompositeDisposable
 
@@ -31,7 +31,7 @@ internal class SaveActivity : BaseActivity<Event, State, ViewModel>() {
 
     private val selectDirectoryContract by inject { selectDirectoryContract() }
 	private val exitDialog by inject { exitDialog() }
-	private val progressDialog by lazy { LockProgressDialog() }
+	private val progressDialog by lazy { DialogUtils.createStylizedLockProgressDialog() }
 
     private val overwriteDialogsDisposable = CompositeDisposable()
     private lateinit var selectDirectoryLauncher: ActivityResultLauncher<Unit>
