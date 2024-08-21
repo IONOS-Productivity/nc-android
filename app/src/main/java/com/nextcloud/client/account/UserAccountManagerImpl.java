@@ -19,6 +19,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
+import com.nextcloud.authorization_method.AuthorizationMethodActivity;
 import com.nextcloud.common.NextcloudClient;
 import com.nextcloud.utils.extensions.AccountExtensionsKt;
 import com.owncloud.android.MainApp;
@@ -396,13 +397,9 @@ public class UserAccountManagerImpl implements UserAccountManager {
     }
 
     @Override
+    // <IONOS Customization - Added to skip server input step>
     public void startAccountCreation(final Activity activity) {
-        Intent intent = new Intent(context, AuthenticatorActivity.class);
-
-        // region <IONOS Customization - Added to skip server input step>
-        intent.putExtra(AuthenticatorActivity.EXTRA_USE_PROVIDER_AS_WEBLOGIN, true);
-        // endregion
-
+        Intent intent = AuthorizationMethodActivity.createInstance(context);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Authorization Screen -->
+    <item name="authorization_guideline_top" type="dimen">0.2</item>
+    <item name="authorization_guideline_center" type="dimen">0.4</item>
+    <item name="authorization_guideline_bottom" type="dimen">0.8</item>
+
+</resources>

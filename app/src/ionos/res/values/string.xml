@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Authorization Screen -->
+    <string name="authorization_method_greeting">Welcome to the cloud storage</string>
+    <string name="authorization_method_login_button">Log In</string>
+    <string name="authorization_method_description">You need to login over browser</string>
+    <string name="authorization_screen_cancel_button">Cancel</string>
+    <string name="authorization_screen_retry_button">Retry</string>
+
+</resources>

@@ -43,7 +43,6 @@ import android.webkit.CookieSyncManager;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
@@ -132,6 +131,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.ActionBar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
@@ -1055,15 +1055,21 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
     }
 
     // region LoginInfoView
+    // <IONOS Customization - Method changed due to Authorization Screen redesign>
     private void initLoginInfoView() {
-        LinearLayout loginFlowLayout = accountSetupWebviewBinding.loginFlowV2.getRoot();
-        MaterialButton cancelButton = accountSetupWebviewBinding.loginFlowV2.cancelButton;
-        loginFlowLayout.setVisibility(View.VISIBLE);
+        MaterialButton cancelButton = accountSetupWebviewBinding.loginFlowV2.bCancel;
+        MaterialButton retryButton = accountSetupWebviewBinding.loginFlowV2.bRetry;
 
-        cancelButton.setOnClickListener(v -> {
+        retryButton.setOnClickListener(v -> {
             loginFlowExecutorService.shutdown();
             ProcessLifecycleOwner.get().getLifecycle().removeObserver(lifecycleEventObserver);
             recreate();
+        });
+
+        cancelButton.setOnClickListener(v->{
+            loginFlowExecutorService.shutdown();
+            ProcessLifecycleOwner.get().getLifecycle().removeObserver(lifecycleEventObserver);
+            finish();
         });
     }
     // endregion
