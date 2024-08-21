@@ -3,11 +3,24 @@ package com.ionos.common_ui.dialog;
 import android.app.Activity;
 import android.app.ProgressDialog;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
+import androidx.annotation.StyleRes;
 
 public class LockProgressDialog {
 
-	private ProgressDialog dialog;
+    private ProgressDialog dialog;
+    @Nullable
+    @StyleRes
+    private final Integer themeRes;
+
+    public LockProgressDialog() {
+        this(null);
+    }
+
+    public LockProgressDialog(@Nullable @StyleRes Integer themeRes) {
+        this.themeRes = themeRes;
+    }
 
 	public void start(Activity activity, @StringRes int messageRes) {
 		showProgressDialog(activity, activity.getString(messageRes));
@@ -23,7 +36,9 @@ public class LockProgressDialog {
 		}
 
 		if (!activity.isFinishing() && !activity.isDestroyed()) {
-			this.dialog = new SafeProgressDialog(activity);
+            this.dialog = this.themeRes != null
+                ? new SafeProgressDialog(activity, this.themeRes)
+                : new SafeProgressDialog(activity);
 			this.dialog.setTitle("");
 			this.dialog.setMessage(message);
 			this.dialog.setIndeterminate(true);

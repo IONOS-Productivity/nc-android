@@ -11,7 +11,7 @@ internal interface FilterScreen {
 		val pictureId: String,
 		val filterType: ColorFilterType,
 		val image: Bitmap? = null,
-		val showMoreMenu: Boolean = false,
+		val showApplyToAll: Boolean = false,
 		val processing: Boolean = false,
 		override val event: Event? = null,
 	) : BaseScreen.State<Event>
@@ -19,7 +19,6 @@ internal interface FilterScreen {
 	sealed interface Event : BaseScreen.Event {
 		object CloseScreenEvent : Event
 		data class ShowErrorEvent(val throwable: Throwable) : Event
-		object ShowPopupEvent : Event
 	}
 
 	interface ViewModel : BaseScreen.ViewModel<Event, State>, FilterControlsListener {
@@ -27,8 +26,6 @@ internal interface FilterScreen {
 		fun onBackPressed()
 
 		fun onSaveClicked()
-
-		fun onMoreClicked()
 
 		fun onApplyForAllClicked()
 	}

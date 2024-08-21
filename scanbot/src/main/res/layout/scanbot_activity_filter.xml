@@ -29,9 +29,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:elevation="@dimen/common_material_dimen"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tvApplyToAll"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tvApplyToAll"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:paddingStart="@dimen/common_large_padding"
+        android:paddingEnd="@dimen/common_large_padding"
+        android:textColor="@color/common_text_color"
+        android:background="@drawable/scanbot_filter_apply_btn_bg"
+        android:gravity="center"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="@dimen/common_normal_padding"
+        android:text="@string/scanbot_filter_popup_apply_for_all"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

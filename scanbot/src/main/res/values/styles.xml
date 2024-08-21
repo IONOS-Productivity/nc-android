@@ -20,4 +20,16 @@
         <item name="cornerSize">8dp</item>
     </style>
 
+    <style name="ScanbotDialogStyle" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowBackground">@color/scanbot_dialog_background_color</item>
+        <item name="colorAccent">@color/scanbot_dialog_progress_color</item>
+        <item name="android:textColor">@color/scanbot_dialog_text_color</item>
+        <item name="android:textColorSecondary">@color/scanbot_dialog_progress_background_color</item>
+        <item name="android:buttonBarNegativeButtonStyle">@style/ScanbotDialogNegativeButtonStyle</item>
+    </style>
+
+    <style name="ScanbotDialogNegativeButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/scanbot_dialog_negative_button_text_color</item>
+    </style>
+
 </resources>

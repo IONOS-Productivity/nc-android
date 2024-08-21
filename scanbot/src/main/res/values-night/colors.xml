@@ -3,6 +3,12 @@
     <color name="scanbot_app_bar_color">@color/navy</color>
     <color name="scanbot_status_bar_color">@color/black</color>
 
+    <color name="scanbot_dialog_background_color">@color/navy</color>
+    <color name="scanbot_dialog_progress_color">@color/curious_blue</color>
+    <color name="scanbot_dialog_progress_background_color">@color/light_blue</color>
+    <color name="scanbot_dialog_text_color">@color/curious_blue</color>
+    <color name="scanbot_dialog_negative_button_text_color">@color/curious_blue</color>
+
     <color name="scanbot_camera_button_active_color">@color/pizazz_dark</color>
     <color name="scanbot_camera_button_background_idle">@color/white</color>
     <color name="scanbot_camera_button_background_pressed">@color/transparent_dark10</color>
@@ -11,7 +17,7 @@
     <color name="scanbot_camera_polygon_stroke_color">@color/transparent_pizazz2</color>
     <color name="scanbot_camera_screen_background">@color/black</color>
     <color name="scanbot_camera_screen_cancel_text_color">@color/white</color>
-    <color name="scanbot_camera_toolbar_background">@color/cod_gray_dark</color>
+    <color name="scanbot_camera_toolbar_background">@color/navy</color>
 
     <color name="scanbot_crop_polygon_edge_color">@color/primary_color</color>
     <color name="scanbot_crop_screen_background">@color/black</color>

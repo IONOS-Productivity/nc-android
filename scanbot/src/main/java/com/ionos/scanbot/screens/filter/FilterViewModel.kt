@@ -33,7 +33,7 @@ internal class FilterViewModel(
 	}
 
 	private fun onSuccessfulInit(image: Bitmap) {
-		updateState { copy(image = image, showMoreMenu = shouldShowMoreButton()) }
+		updateState { copy(image = image, showApplyToAll = shouldShowApplyToAllButton()) }
 	}
 
 	override fun onEventHandled() {
@@ -54,11 +54,6 @@ internal class FilterViewModel(
 			.subscribeOn(Schedulers.io())
 			.observeOn(AndroidSchedulers.mainThread())
 			.subscribe(::onFilterApplied, ::onApplyFilterError)
-	}
-
-	override fun onMoreClicked() {
-		// eventTracker.trackMoreClicked()
-		updateState { copy(event = ShowPopupEvent) }
 	}
 
 	override fun onApplyForAllClicked() {
@@ -159,5 +154,5 @@ internal class FilterViewModel(
 		}
 	}
 
-	private fun shouldShowMoreButton(): Boolean = repositoryFacade.readAll().size > 1
+	private fun shouldShowApplyToAllButton(): Boolean = repositoryFacade.readAll().size > 1
 }
