@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="file_actions_icon_color">#FFFFFF</color>
+    <color name="file_actions_text_color">#FFFFFF</color>
+    <color name="file_actions_item_background_color">#33FFFFFF</color>
+</resources>

@@ -11,26 +11,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/menu_upload_files"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/bottom_sheet_item_height"
+    android:layout_height="@dimen/file_actions_item_height"
+    android:layout_marginStart="@dimen/file_actions_item_horizontal_margin"
+    android:layout_marginEnd="@dimen/file_actions_item_horizontal_margin"
     android:clickable="true"
-    android:background="?android:attr/selectableItemBackground"
+    android:background="@drawable/file_actions_item_background"
     android:gravity="center_vertical"
-    android:paddingLeft="@dimen/standard_padding"
+    android:paddingLeft="@dimen/file_actions_item_horizontal_padding"
     android:focusable="true"
     android:orientation="horizontal"
-    android:paddingTop="@dimen/standard_half_padding"
-    android:paddingRight="@dimen/standard_padding"
-    android:paddingBottom="@dimen/standard_half_padding"
+    android:paddingRight="@dimen/file_actions_item_horizontal_padding"
     tools:ignore="UseCompoundDrawables">
 
 
     <ImageView
         android:id="@+id/icon"
-        android:layout_width="@dimen/iconized_single_line_item_icon_size"
-        android:layout_height="@dimen/iconized_single_line_item_icon_size"
+        android:layout_width="@dimen/file_actions_icon_width"
+        android:layout_height="@dimen/file_actions_icon_height"
         android:contentDescription="@null"
-        app:tint="@color/primary"
-        tools:src="@drawable/ic_delete" />
+        tools:src="@drawable/ic_file_action_remove_file" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -43,9 +42,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/bottom_sheet_text_start_margin"
-            android:textColor="@color/text_color"
-            android:textSize="@dimen/bottom_sheet_text_size"
+            android:layout_marginStart="@dimen/file_actions_text_start_margin"
+            android:textColor="@color/file_actions_text_color"
+            android:textSize="@dimen/two_line_primary_text_size"
+            android:textStyle="bold"
             tools:text="Delete file" />
 
         <TextView
@@ -53,9 +53,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/bottom_sheet_text_start_margin"
+            android:layout_marginStart="@dimen/file_actions_text_start_margin"
             android:textColor="@color/secondary_text_color"
-            android:textSize="@dimen/bottom_sheet_text_size"
+            android:textSize="@dimen/two_line_secondary_text_size"
             android:visibility="gone"
             tools:text="Some additional action info"
             tools:visibility="visible" />
