@@ -99,6 +99,7 @@ class BackgroundJobFactory @Inject constructor(
                 GeneratePdfFromImagesWork::class -> createPDFGenerateWork(context, workerParameters)
                 HealthStatusWork::class -> createHealthStatusWork(context, workerParameters)
                 TestJob::class -> createTestJob(context, workerParameters)
+                InternalTwoWaySyncWork::class -> createInternalTwoWaySyncWork(context, workerParameters)
                 else -> null // caller falls back to default factory
             }
         }
@@ -279,6 +280,16 @@ class BackgroundJobFactory @Inject constructor(
             context,
             params,
             backgroundJobManager.get()
+        )
+    }
+
+    private fun createInternalTwoWaySyncWork(context: Context, params: WorkerParameters): InternalTwoWaySyncWork {
+        return InternalTwoWaySyncWork(
+            context,
+            params,
+            accountManager,
+            powerManagementService,
+            connectivityService
         )
     }
 }

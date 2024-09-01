@@ -382,6 +382,7 @@ public class MainApp
             backgroundJobManager.scheduleMediaFoldersDetectionJob();
             backgroundJobManager.startMediaFoldersDetectionJob();
             backgroundJobManager.schedulePeriodicHealthStatus();
+            backgroundJobManager.scheduleInternal2WaySync();
         }
 
         registerGlobalPassCodeProtection();
@@ -808,6 +809,10 @@ public class MainApp
     public static String getUserAgent() {
         // Mozilla/5.0 (Android) Nextcloud-android/2.1.0
         return getUserAgent(R.string.nextcloud_user_agent);
+    }
+
+    public static void showMessage(int messageId) {
+        ContextExtensionsKt.showToast(getAppContext(), messageId);
     }
 
     // user agent
