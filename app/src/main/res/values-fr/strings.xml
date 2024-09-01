@@ -363,11 +363,12 @@
     <string name="file_keep">Conserver</string>
     <string name="file_list_empty">Déposez du contenu ou synchronisez vos appareils.</string>
     <string name="file_list_empty_favorite_headline">Aucun favori</string>
-    <string name="file_list_empty_favorites_filter_list">Les fichiers et dossiers ajoutés à vos favoris seront affichés ici.</string>
+    <string name="file_list_empty_favorites_filter_list">Les fichiers et dossiers que vous marquez comme favoris apparaîtront ici.</string>
     <string name="file_list_empty_gallery">Aucune vidéo ou image n\'a été trouvée</string>
     <string name="file_list_empty_headline">Aucun fichier</string>
     <string name="file_list_empty_headline_search">Aucun résultat dans ce dossier</string>
     <string name="file_list_empty_headline_server_search">Aucun résultat</string>
+    <string name="file_list_empty_local_search">Aucun fichier ou dossier ne correspond à votre recherche</string>
     <string name="file_list_empty_moving">Il n\'y a rien ici. Vous pouvez ajouter un dossier.</string>
     <string name="file_list_empty_on_device">Les fichiers/dossiers téléchargés apparaîtront ici.</string>
     <string name="file_list_empty_recently_modified">Aucun fichier modifié n\'a été trouvé dans les 7 derniers jours</string>
@@ -623,6 +624,7 @@
     <string name="prefs_category_dev">Dév</string>
     <string name="prefs_category_general">Général</string>
     <string name="prefs_category_more">Plus</string>
+    <string name="prefs_category_sync">Synchroniser</string>
     <string name="prefs_daily_backup_summary">Sauvegarde quotidienne de votre agenda et des contacts</string>
     <string name="prefs_daily_contact_backup_summary">Sauvegarde quotidienne de vos contacts</string>
     <string name="prefs_davx5_setup_error">Erreur inattendue lors de la configuration de DAVx5 (anciennement connu sous le nom de DAVdroid)</string>
@@ -847,6 +849,7 @@
     <string name="subtitle_photos_videos">Photos et vidéos</string>
     <string name="subtitle_videos_only">Vidéos uniquement</string>
     <string name="suggest">Suggérer</string>
+    <string name="sync">Synchroniser</string>
     <string name="sync_conflicts_in_favourites_ticker">Des conflits ont été trouvés</string>
     <string name="sync_current_folder_was_removed">Le dossier %1$s n\'existe plus</string>
     <string name="sync_fail_content">Impossible de synchroniser %1$s</string>
@@ -909,7 +912,7 @@
     <string name="upload_action_cancelled_resume">Poursuivre les téléversements annulés</string>
     <string name="upload_action_failed_clear">Effacer les téléversements échoués</string>
     <string name="upload_action_failed_retry">Réessayer les téléversements qui ont échoué</string>
-    <string name="upload_action_file_not_exist_message">Certains fichiers n\'existent plus. Ces téléchargements ne peuvent pas être repris.</string>
+    <string name="upload_action_file_not_exist_message">Certains fichiers n\'existent plus. Ces téléversements ne peuvent pas être repris.</string>
     <string name="upload_action_global_upload_pause">Suspendre tous les téléversements</string>
     <string name="upload_action_global_upload_resume">Poursuivre tous les téléversements</string>
     <string name="upload_cannot_create_file">Impossible de créer le fichier local</string>

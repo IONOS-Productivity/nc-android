@@ -54,6 +54,7 @@ import com.owncloud.android.ui.activity.FileActivity;
 import com.owncloud.android.ui.activity.FileDisplayActivity;
 import com.owncloud.android.ui.activity.FilePickerActivity;
 import com.owncloud.android.ui.activity.FolderPickerActivity;
+import com.owncloud.android.ui.activity.InternalTwoWaySyncActivity;
 import com.owncloud.android.ui.activity.ManageAccountsActivity;
 import com.owncloud.android.ui.activity.ManageSpaceActivity;
 import com.owncloud.android.ui.activity.NotificationsActivity;
@@ -86,7 +87,7 @@ import com.owncloud.android.ui.dialog.RenameFileDialogFragment;
 import com.owncloud.android.ui.dialog.RenamePublicShareDialogFragment;
 import com.owncloud.android.ui.dialog.SendFilesDialog;
 import com.owncloud.android.ui.dialog.SendShareDialog;
-import com.owncloud.android.ui.dialog.SetupEncryptionDialogFragment;
+import com.owncloud.android.ui.dialog.setupEncryption.SetupEncryptionDialogFragment;
 import com.owncloud.android.ui.dialog.SharePasswordDialogFragment;
 import com.owncloud.android.ui.dialog.SortingOrderDialogFragment;
 import com.owncloud.android.ui.dialog.SslUntrustedCertDialog;
@@ -476,4 +477,7 @@ abstract class ComponentsModule {
 
     @ContributesAndroidInjector
     abstract TestJob testJob();
+    
+    @ContributesAndroidInjector
+    abstract InternalTwoWaySyncActivity internalTwoWaySyncActivity();
 }

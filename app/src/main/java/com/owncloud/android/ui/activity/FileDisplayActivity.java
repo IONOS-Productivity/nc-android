@@ -35,6 +35,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.Parcelable;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -97,6 +98,7 @@ import com.owncloud.android.ui.asynctasks.CheckAvailableSpaceTask;
 import com.owncloud.android.ui.asynctasks.FetchRemoteFileTask;
 import com.owncloud.android.ui.asynctasks.GetRemoteFileTask;
 import com.owncloud.android.ui.dialog.SendShareDialog;
+import com.owncloud.android.ui.dialog.setupEncryption.SetupEncryptionDialogFragment;
 import com.owncloud.android.ui.dialog.SortingOrderDialogFragment;
 import com.owncloud.android.ui.dialog.StoragePermissionDialogFragment;
 import com.owncloud.android.ui.events.SearchEvent;
@@ -156,6 +158,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import kotlin.Unit;
 
 import static com.owncloud.android.datamodel.OCFile.PATH_SEPARATOR;
+import static com.owncloud.android.ui.dialog.setupEncryption.SetupEncryptionDialogFragment.SETUP_ENCRYPTION_DIALOG_TAG;
 import static com.owncloud.android.utils.PermissionUtil.PERMISSION_CHOICE_DIALOG_TAG;
 
 /**
@@ -521,7 +524,8 @@ public class FileDisplayActivity extends FileActivity
         } else if (RESTART.equals(intent.getAction())) {
             finish();
             startActivity(intent);
-        } else // Verify the action and get the query
+        } else {
+            // Verify the action and get the query
             if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
                 setIntent(intent);
 
@@ -563,7 +567,10 @@ public class FileDisplayActivity extends FileActivity
 
                 setLeftFragment(new GroupfolderListFragment());
                 getSupportFragmentManager().executePendingTransactions();
+            } else {
+                handleOpenFileViaIntent(intent);
             }
+        }
     }
 
     private void onOpenFileIntent(Intent intent) {
@@ -1168,7 +1175,12 @@ public class FileDisplayActivity extends FileActivity
             setDrawerMenuItemChecked(R.id.nav_on_device);
             setupToolbar();
         } else {
-            setDrawerMenuItemChecked(R.id.nav_all_files);
+            int lastMenuItem = getCheckedMenuItem();
+            if (lastMenuItem == Menu.NONE) {
+                lastMenuItem = R.id.nav_all_files;
+            }
+
+            setDrawerMenuItemChecked(lastMenuItem);
             setupHomeSearchToolbarWithSortAndListButtons();
         }
     }
@@ -2340,7 +2352,6 @@ public class FileDisplayActivity extends FileActivity
     @Override
     protected void onRestart() {
         super.onRestart();
-
         checkForNewDevVersionNecessary(getApplicationContext());
     }
 
