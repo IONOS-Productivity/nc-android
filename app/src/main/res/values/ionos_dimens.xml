@@ -4,6 +4,8 @@
     <dimen name="ionos_dialog_secondary_text_size">12sp</dimen>
     <dimen name="ionos_dialog_title_text_size">24sp</dimen>
 
+    <dimen name="ionos_bottom_sheet_drag_handle_height">60dp</dimen>
+
     <dimen name="file_actions_header_bottom_margin">24dp</dimen>
     <dimen name="file_actions_list_bottom_margin">24dp</dimen>
     <dimen name="file_actions_item_height">48dp</dimen>

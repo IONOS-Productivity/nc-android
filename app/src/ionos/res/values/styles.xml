@@ -42,4 +42,16 @@
         <item name="postSplashScreenTheme">@style/Theme.ownCloud.Launcher</item>
     </style>
 
+    <style name="ThemeOverlay.App.BottomSheetDialog" parent="@style/ThemeOverlay.Material3.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/App.BottomSheetDialog</item>
+        <item name="bottomSheetDragHandleStyle">@style/App.BottomSheet.DragHandle</item>
+    </style>
+
+    <style name="App.BottomSheet.DragHandle" parent="Widget.Material3.BottomSheet.DragHandle">
+        <item name="android:minHeight">@dimen/ionos_bottom_sheet_drag_handle_height</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="srcCompat">@drawable/ionos_bottom_sheet_drag_handle</item>
+        <item name="tint">@color/ionos_bottom_sheet_drag_handle_color</item>
+    </style>
+
 </resources>
