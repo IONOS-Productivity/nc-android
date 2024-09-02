@@ -58,8 +58,8 @@
                 android:layout_marginStart="@dimen/standard_margin"
                 android:ellipsize="middle"
                 android:lines="1"
-                android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
-                android:textColor="@color/file_actions_text_color"
+                android:textColor="@color/ionos_default_text_color"
+                android:textSize="@dimen/ionos_dialog_title_text_size"
                 android:textStyle="bold"
                 tools:text="Test file name which is very very very very very long.pdf" />
 

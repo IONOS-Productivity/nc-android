@@ -15,7 +15,7 @@
     android:layout_marginStart="@dimen/file_actions_item_horizontal_margin"
     android:layout_marginEnd="@dimen/file_actions_item_horizontal_margin"
     android:clickable="true"
-    android:background="@drawable/file_actions_item_background"
+    android:background="@drawable/ionos_dialog_item_background"
     android:gravity="center_vertical"
     android:paddingLeft="@dimen/file_actions_item_horizontal_padding"
     android:focusable="true"
@@ -43,8 +43,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="@dimen/file_actions_text_start_margin"
-            android:textColor="@color/file_actions_text_color"
-            android:textSize="@dimen/two_line_primary_text_size"
+            android:textColor="@color/ionos_default_text_color"
+            android:textSize="@dimen/ionos_dialog_default_text_size"
             android:textStyle="bold"
             tools:text="Delete file" />
 
@@ -54,8 +54,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="@dimen/file_actions_text_start_margin"
-            android:textColor="@color/secondary_text_color"
-            android:textSize="@dimen/two_line_secondary_text_size"
+            android:textColor="@color/ionos_secondary_text_color"
+            android:textSize="@dimen/ionos_dialog_secondary_text_size"
             android:visibility="gone"
             tools:text="Some additional action info"
             tools:visibility="visible" />
