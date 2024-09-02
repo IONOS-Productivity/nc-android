@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="ionos_default_icon_color">#F4F7FA</color>
-    <color name="ionos_default_text_color">#F4F7FA</color>
-    <color name="ionos_secondary_text_color">#DBE2E8</color>
-
-    <color name="ionos_dialog_pressed_item_color">#33F4F7FA</color>
+    <color name="file_actions_icon_color">#FFFFFF</color>
+    <color name="file_actions_text_color">#FFFFFF</color>
+    <color name="file_actions_item_background_color">#33FFFFFF</color>
 </resources>
