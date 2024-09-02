@@ -147,11 +147,8 @@ class FileActionsBottomSheet : BottomSheetDialogFragment(), Injectable {
 
     private fun setMultipleFilesThumbnail() {
         context?.let {
-            // Start: Set thumbnail drawable without tint in IONOS
-            // val drawable = viewThemeUtils.platform.tintDrawable(it, R.drawable.file_multiple, ColorRole.PRIMARY)
-            // binding.thumbnailLayout.thumbnail.setImageDrawable(drawable)
-            binding.thumbnailLayout.thumbnail.setImageResource(R.drawable.file_multiple)
-            // End: Set thumbnail drawable without tint in IONOS
+            val drawable = viewThemeUtils.platform.tintDrawable(it, R.drawable.file_multiple, ColorRole.PRIMARY)
+            binding.thumbnailLayout.thumbnail.setImageDrawable(drawable)
         }
     }
 
@@ -281,15 +278,12 @@ class FileActionsBottomSheet : BottomSheetDialogFragment(), Injectable {
                 }
                 text.setText(action.title)
                 if (action.icon != null) {
-                    // Start: Set icon drawable without tint in IONOS
-                    // val drawable =
-                    //     viewThemeUtils.platform.tintDrawable(
-                    //         requireContext(),
-                    //         AppCompatResources.getDrawable(requireContext(), action.icon)!!
-                    //     )
-                    // icon.setImageDrawable(drawable)
-                    icon.setImageResource(action.icon)
-                    // End: Set icon drawable without tint in IONOS
+                    val drawable =
+                        viewThemeUtils.platform.tintDrawable(
+                            requireContext(),
+                            AppCompatResources.getDrawable(requireContext(), action.icon)!!
+                        )
+                    icon.setImageDrawable(drawable)
                 }
             }
         return itemBinding.root

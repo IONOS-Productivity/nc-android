@@ -39,7 +39,7 @@
             android:id="@+id/bottom_sheet_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/file_actions_header_bottom_margin"
+            android:layout_marginBottom="@dimen/standard_margin"
             android:gravity="center"
             android:orientation="horizontal"
             android:visibility="visible">
@@ -55,12 +55,10 @@
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/standard_margin"
+                android:layout_marginStart="24dp"
                 android:ellipsize="middle"
                 android:lines="1"
                 android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
-                android:textColor="@color/file_actions_text_color"
-                android:textStyle="bold"
                 tools:text="Test file name which is very very very very very long.pdf" />
 
         </LinearLayout>
@@ -73,7 +71,6 @@
                 android:id="@+id/file_actions_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/file_actions_list_bottom_margin"
                 android:orientation="vertical" />
 
         </androidx.core.widget.NestedScrollView>
