@@ -5,6 +5,4 @@
     <color name="ionos_secondary_text_color">#465A75</color>
 
     <color name="ionos_dialog_pressed_item_color">#DBEDF8</color>
-
-    <color name="ionos_bottom_sheet_drag_handle_color">#718095</color>
 </resources>
