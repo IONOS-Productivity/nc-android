@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="ionos_default_icon_color">#001B41</color>
-    <color name="ionos_default_text_color">#001B41</color>
-    <color name="ionos_secondary_text_color">#465A75</color>
+    <color name="ionos_default_icon_color">@color/navy</color>
+    <color name="ionos_default_text_color">@color/navy</color>
+    <color name="ionos_secondary_text_color">@color/dusk</color>
 
-    <color name="dialog_pressed_item_color">#DBEDF8</color>
+    <color name="dialog_pressed_item_color">@color/lavender_mist</color>
 
-    <color name="bottom_sheet_drag_handle_color">#718095</color>
+    <color name="bottom_sheet_drag_handle_color">@color/slate_grey</color>
 </resources>
