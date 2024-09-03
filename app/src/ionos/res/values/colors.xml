@@ -7,4 +7,8 @@
     <color name="dialog_pressed_item_color">@color/lavender_mist</color>
 
     <color name="bottom_sheet_drag_handle_color">@color/slate_grey</color>
+
+    <color name="sorting_dialog_cancel_button_color_idle">@color/madison</color>
+    <color name="sorting_dialog_cancel_button_color_pressed">@color/dodger_blue</color>
+    <color name="sorting_dialog_cancel_button_text_color">@color/white</color>
 </resources>
