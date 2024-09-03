@@ -22,7 +22,7 @@
 
     <!-- Flags to enable/disable some features -->
     <bool name="is_branded_client">true</bool>
-
+    <bool name="show_external_links">false</bool>
     <bool name="logger_enabled">true</bool>
 
     <!--Destination mail for sending log files -->
