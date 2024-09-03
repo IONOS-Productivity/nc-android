@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="ionos_default_icon_color">@color/white_lilac</color>
-    <color name="ionos_default_text_color">@color/white_lilac</color>
+    <color name="ionos_default_icon_color">@color/ghost_white</color>
+    <color name="ionos_default_text_color">@color/ghost_white</color>
     <color name="ionos_secondary_text_color">@color/link_water</color>
 
-    <color name="dialog_pressed_item_color">@color/transparent_white_lilac</color>
+    <color name="dialog_pressed_item_color">@color/transparent_ghost_white</color>
 
     <color name="bottom_sheet_drag_handle_color">@color/slate_grey</color>
 </resources>
