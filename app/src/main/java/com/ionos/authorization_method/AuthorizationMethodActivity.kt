@@ -5,7 +5,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-package com.nextcloud.authorization_method
+package com.ionos.authorization_method
 
 import android.content.Context
 import android.content.Intent

@@ -19,7 +19,8 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
-import com.nextcloud.authorization_method.AuthorizationMethodActivity;
+import com.ionos.annotation.IonosCustomization;
+import com.ionos.authorization_method.AuthorizationMethodActivity;
 import com.nextcloud.common.NextcloudClient;
 import com.nextcloud.utils.extensions.AccountExtensionsKt;
 import com.owncloud.android.MainApp;
@@ -397,7 +398,7 @@ public class UserAccountManagerImpl implements UserAccountManager {
     }
 
     @Override
-    // <IONOS Customization - Added to skip server input step>
+    @IonosCustomization
     public void startAccountCreation(final Activity activity) {
         Intent intent = AuthorizationMethodActivity.createInstance(context);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

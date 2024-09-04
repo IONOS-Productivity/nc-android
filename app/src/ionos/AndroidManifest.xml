@@ -9,11 +9,6 @@
 
     <application>
 
-        <activity
-            android:theme="@style/Theme.ownCloud.noActionBar.Login"
-            android:name="com.nextcloud.authorization_method.AuthorizationMethodActivity"
-            android:exported="false" />
-
     </application>
 
 </manifest>

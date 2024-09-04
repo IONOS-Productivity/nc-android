@@ -33,7 +33,6 @@
         app:layout_constraintTop_toBottomOf="@id/current_account"
         tools:visibility="visible">
 
-        <!--Hidden in IONOS-->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/set_status"
             style="@style/Nextcloud.Material.TextButton"
@@ -51,7 +50,8 @@
             app:icon="@drawable/ic_edit"
             app:iconGravity="start"
             app:iconPadding="22dp"
-            app:iconTint="@color/fontAppbar" />
+            app:iconTint="@color/fontAppbar"
+            app:ionosCustomization="" />
     </LinearLayout>
 
     <View

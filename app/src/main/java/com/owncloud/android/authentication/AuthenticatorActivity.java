@@ -52,6 +52,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.ionos.annotation.IonosCustomization;
 import com.nextcloud.android.common.ui.color.ColorUtil;
 import com.nextcloud.android.common.ui.theme.utils.ColorRole;
 import com.nextcloud.client.account.User;
@@ -269,12 +270,10 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
      * IMPORTANT ENTRY POINT 1: activity is shown to the user
      */
     @Override
+    @IonosCustomization
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewThemeUtils = viewThemeUtilsFactory.withPrimaryAsBackground();
-        // region <IONOS Customization>
-        //viewThemeUtils.platform.themeStatusBar(this, ColorRole.PRIMARY);
-        // endregion
 
         // WebViewUtil webViewUtil = new WebViewUtil(this);
 
@@ -365,23 +364,19 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
 
         // webViewUtil.checkWebViewVersion();
 
-        // region <IONOS Customization>
         initCancelButton();
-        // endregion
     }
 
-    // region LoginInfoView
-    // <IONOS Customization - Method changed due to Authorization Screen redesign>
-    private void initCancelButton(){
-        MaterialButton cancelButton = accountSetupWebviewBinding.loginFlowV2.bCancel;
+    @IonosCustomization
+    private void initCancelButton() {
+        MaterialButton cancelButton = accountSetupWebviewBinding.loginFlowV2.cancelButton;
 
-        cancelButton.setOnClickListener(v->{
+        cancelButton.setOnClickListener(v -> {
             loginFlowExecutorService.shutdown();
             ProcessLifecycleOwner.get().getLifecycle().removeObserver(lifecycleEventObserver);
             finish();
         });
     }
-    // endregion
 
     private final LifecycleEventObserver lifecycleEventObserver = ((lifecycleOwner, event) -> {
         if (event == Lifecycle.Event.ON_START && token != null) {
@@ -935,17 +930,9 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
      * Tests the credentials entered by the user performing a check of existence on the root folder of the ownCloud
      * server.
      */
+    @IonosCustomization
     private void checkBasicAuthorization(@Nullable String webViewUsername, @Nullable String webViewPassword) {
-        // region LoginInfoView
-        // <IONOS Customization - Method changed due to Authorization Screen redesign>
-        /*// be gentle with the user
-        IndeterminateProgressDialog dialog = IndeterminateProgressDialog.newInstance(R.string.auth_trying_to_login,
-                                                                                     true);
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.add(dialog, WAIT_DIALOG_TAG);
-        ft.commitAllowingStateLoss();*/
         accountSetupWebviewBinding.loginFlowV2.tvAuthorizationDescription.setText(R.string.auth_trying_to_login);
-        // endregion
 
         // validate credentials accessing the root folder
         OwnCloudCredentials credentials = OwnCloudCredentialsFactory.newBasicCredentials(webViewUsername,
@@ -1079,7 +1066,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
     }
 
     // region LoginInfoView
-    // <IONOS Customization - Method changed due to Authorization Screen redesign>
+    @IonosCustomization
     private void initLoginInfoView() {
         MaterialButton retryButton = accountSetupWebviewBinding.loginFlowV2.bRetry;
 

@@ -57,7 +57,7 @@
         app:layout_constraintGuide_percent="@dimen/authorization_guideline_bottom" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/bCancel"
+        android:id="@+id/cancel_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -94,7 +94,7 @@
         app:backgroundTint="@color/white"
         app:cornerRadius="@dimen/button_corner_radius"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/bCancel"
+        app:layout_constraintStart_toEndOf="@id/cancel_button"
         app:layout_constraintTop_toBottomOf="@id/glBottomLine"
         app:strokeColor="@color/white" />
 
