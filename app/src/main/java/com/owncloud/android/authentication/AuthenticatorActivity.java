@@ -131,7 +131,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.ActionBar;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
@@ -365,7 +364,24 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
         ProcessLifecycleOwner.get().getLifecycle().addObserver(lifecycleEventObserver);
 
         // webViewUtil.checkWebViewVersion();
+
+        // region <IONOS Customization>
+        initCancelButton();
+        // endregion
     }
+
+    // region LoginInfoView
+    // <IONOS Customization - Method changed due to Authorization Screen redesign>
+    private void initCancelButton(){
+        MaterialButton cancelButton = accountSetupWebviewBinding.loginFlowV2.bCancel;
+
+        cancelButton.setOnClickListener(v->{
+            loginFlowExecutorService.shutdown();
+            ProcessLifecycleOwner.get().getLifecycle().removeObserver(lifecycleEventObserver);
+            finish();
+        });
+    }
+    // endregion
 
     private final LifecycleEventObserver lifecycleEventObserver = ((lifecycleOwner, event) -> {
         if (event == Lifecycle.Event.ON_START && token != null) {
@@ -1061,19 +1077,12 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
     // region LoginInfoView
     // <IONOS Customization - Method changed due to Authorization Screen redesign>
     private void initLoginInfoView() {
-        MaterialButton cancelButton = accountSetupWebviewBinding.loginFlowV2.bCancel;
         MaterialButton retryButton = accountSetupWebviewBinding.loginFlowV2.bRetry;
 
         retryButton.setOnClickListener(v -> {
             loginFlowExecutorService.shutdown();
             ProcessLifecycleOwner.get().getLifecycle().removeObserver(lifecycleEventObserver);
             recreate();
-        });
-
-        cancelButton.setOnClickListener(v->{
-            loginFlowExecutorService.shutdown();
-            ProcessLifecycleOwner.get().getLifecycle().removeObserver(lifecycleEventObserver);
-            finish();
         });
     }
     // endregion
