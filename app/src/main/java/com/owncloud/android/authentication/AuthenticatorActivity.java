@@ -936,12 +936,16 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
      * server.
      */
     private void checkBasicAuthorization(@Nullable String webViewUsername, @Nullable String webViewPassword) {
-        // be gentle with the user
+        // region LoginInfoView
+        // <IONOS Customization - Method changed due to Authorization Screen redesign>
+        /*// be gentle with the user
         IndeterminateProgressDialog dialog = IndeterminateProgressDialog.newInstance(R.string.auth_trying_to_login,
                                                                                      true);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(dialog, WAIT_DIALOG_TAG);
-        ft.commitAllowingStateLoss();
+        ft.commitAllowingStateLoss();*/
+        accountSetupWebviewBinding.loginFlowV2.tvAuthorizationDescription.setText(R.string.auth_trying_to_login);
+        // endregion
 
         // validate credentials accessing the root folder
         OwnCloudCredentials credentials = OwnCloudCredentialsFactory.newBasicCredentials(webViewUsername,
