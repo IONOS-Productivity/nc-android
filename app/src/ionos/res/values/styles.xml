@@ -42,4 +42,54 @@
         <item name="postSplashScreenTheme">@style/Theme.ownCloud.Launcher</item>
     </style>
 
+    <style name="SettingsCategoryTitleStyle">
+        <item name="android:textSize">@dimen/settings_screen_title_text_size</item>
+        <item name="android:textColor">@color/settings_screen_category_text_color</item>
+        <item name="android:gravity">top</item>
+        <item name="android:paddingTop">@dimen/settings_screen_items_vertical_padding</item>
+    </style>
+
+    <style name="SettingsTitleStyle">
+        <item name="android:textSize">@dimen/settings_screen_title_text_size</item>
+        <item name="android:textColor">@color/settings_screen_title_text_color</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="SettingsSubtitleStyle">
+        <item name="android:textSize">@dimen/settings_screen_description_text_size</item>
+        <item name="android:textColor">@color/settings_screen_description_text_color</item>
+    </style>
+
+    <style name="SettingsRootViewStyle">
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:minHeight">?android:attr/listPreferredItemHeight</item>
+        <item name="android:paddingLeft">@dimen/settings_screen_items_horizontal_padding</item>
+        <item name="android:paddingRight">@dimen/settings_screen_items_horizontal_padding</item>
+    </style>
+
+    <style name="SettingsMaterialSwitchStyle" parent="Widget.Material3.CompoundButton.MaterialSwitch">
+        <item name="materialThemeOverlay">@style/SettingsMaterialSwitchThemeOverlayStyle</item>
+
+        <!-- unchecked, track stroke and thumb color -->
+        <item name="colorOutline">@color/settings_screen_switcher_outline_color</item>
+
+        <!-- unchecked, track background color -->
+        <item name="colorSurfaceContainerHighest">@color/settings_screen_switcher_surface_container_highest_color</item>
+
+        <!-- checked, magnified thumb color -->
+        <item name="colorPrimaryContainer">@color/settings_screen_switcher_primary_container_color</item>
+
+        <!-- unchecked, pressed thumb color -->
+        <item name="thumbTint">@null</item>
+    </style>
+
+    <style name="SettingsMaterialSwitchThemeOverlayStyle">
+        <!-- checked, track background color -->
+        <item name="colorPrimary">@color/settings_screen_switcher_primary_color</item>
+
+        <!-- checked, pressed thumb ripple color -->
+        <item name="colorAccent">@color/settings_screen_switcher_accent_color</item>
+    </style>
+
 </resources>
