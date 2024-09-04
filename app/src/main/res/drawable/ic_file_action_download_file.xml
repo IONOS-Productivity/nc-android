@@ -1,13 +1,3 @@
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="16dp"
-    android:height="16dp"
-    android:viewportWidth="16"
-    android:viewportHeight="16">
-  <group>
-    <clip-path
-        android:pathData="M0,0h16v16h-16z"/>
-    <path
-        android:pathData="M8.75,0.75V9.219L11.719,6.25C12,5.938 12.469,5.938 12.781,6.25C13.063,6.531 13.063,7 12.781,7.281L8.5,11.531C8.219,11.844 7.75,11.844 7.469,11.531L3.219,7.281C2.906,7 2.906,6.531 3.219,6.25C3.5,5.938 3.969,5.938 4.281,6.25L7.25,9.219V0.75C7.25,0.344 7.563,0 8,0C8.406,0 8.75,0.344 8.75,0.75ZM4,9.5L5.5,11H2C1.719,11 1.5,11.25 1.5,11.5V14C1.5,14.281 1.719,14.5 2,14.5H14C14.25,14.5 14.5,14.281 14.5,14V11.5C14.5,11.25 14.25,11 14,11H10.469L11.969,9.5H14C15.094,9.5 16,10.406 16,11.5V14C16,15.125 15.094,16 14,16H2C0.875,16 0,15.125 0,14V11.5C0,10.406 0.875,9.5 2,9.5H4ZM13.5,12.75C13.5,13.188 13.156,13.5 12.75,13.5C12.313,13.5 12,13.188 12,12.75C12,12.344 12.313,12 12.75,12C13.156,12 13.5,12.344 13.5,12.75Z"
-        android:fillColor="@color/file_actions_icon_color"/>
-  </group>
-</vector>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/ic_cloud_download" />
+</selector>

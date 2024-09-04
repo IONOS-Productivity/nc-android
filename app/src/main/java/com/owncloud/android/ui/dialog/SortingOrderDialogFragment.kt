@@ -63,11 +63,15 @@ class SortingOrderDialogFragment : DialogFragment(), Injectable {
             view.tag = sortOrder
             view.let {
                 it.setOnClickListener(OnSortOrderClickListener())
-                viewThemeUtils?.material?.colorMaterialButtonPrimaryBorderless(it)
+                // Start: Disable material button styling in IONOS
+                // viewThemeUtils?.material?.colorMaterialButtonPrimaryBorderless(it)
+                // End: Disable material button styling in IONOS
             }
         }
 
-        viewThemeUtils?.material?.colorMaterialButtonPrimaryTonal(binding.cancel)
+        // Start: Disable material button styling in IONOS
+        // viewThemeUtils?.material?.colorMaterialButtonPrimaryTonal(binding.cancel)
+        // End: Disable material button styling in IONOS
         binding.cancel.setOnClickListener { dismiss() }
     }
 

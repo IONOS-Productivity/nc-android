@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="ionos_default_icon_color">@color/ghost_white</color>
+    <color name="ionos_default_text_color">@color/ghost_white</color>
+    <color name="ionos_secondary_text_color">@color/link_water</color>
+
+    <color name="dialog_pressed_item_color">@color/transparent_ghost_white</color>
+
+    <color name="bottom_sheet_drag_handle_color">@color/slate_grey</color>
+
+    <color name="sorting_dialog_cancel_button_color_idle">@color/madison</color>
+    <color name="sorting_dialog_cancel_button_color_pressed">@color/dodger_blue</color>
+    <color name="sorting_dialog_cancel_button_text_color">@color/white</color>
+</resources>

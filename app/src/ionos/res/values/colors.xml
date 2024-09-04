@@ -1,11 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-  ~ Nextcloud - Android Client
-  ~
-  ~ SPDX-FileCopyrightText: 2024 Your Name <your@email.com>
-  ~ SPDX-License-Identifier: AGPL-3.0-or-later
-  -->
-
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="ionos_default_icon_color">@color/navy</color>
+    <color name="ionos_default_text_color">@color/navy</color>
+    <color name="ionos_secondary_text_color">@color/dusk</color>
+
+    <color name="dialog_pressed_item_color">@color/lavender_mist</color>
+
+    <color name="bottom_sheet_drag_handle_color">@color/slate_grey</color>
+
+    <color name="sorting_dialog_cancel_button_color_idle">@color/madison</color>
+    <color name="sorting_dialog_cancel_button_color_pressed">@color/dodger_blue</color>
+    <color name="sorting_dialog_cancel_button_text_color">@color/white</color>
+
     <color name="settings_screen_category_text_color">@color/dodger_blue</color>
     <color name="settings_screen_title_text_color">@color/deep_koamaru</color>
     <color name="settings_screen_description_text_color">@color/gull_grayapprox</color>

@@ -1,9 +1,3 @@
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="16dp"
-    android:height="16dp"
-    android:viewportWidth="16"
-    android:viewportHeight="16">
-  <path
-      android:pathData="M12,7C11.188,7 10.438,6.688 9.906,6.188L6.969,7.656C6.969,7.75 7,7.875 7,8C7,8.156 6.969,8.25 6.969,8.375L9.906,9.844C10.438,9.344 11.188,9 12,9C13.656,9 15,10.344 15,12C15,13.656 13.656,15 12,15C10.344,15 9,13.656 9,12C9,11.875 9,11.75 9,11.656L6.063,10.188C5.531,10.688 4.781,11 4,11C2.344,11 1,9.656 1,8C1,6.344 2.344,5 4,5C4.781,5 5.531,5.344 6.063,5.844L9,4.375C9,4.25 9,4.125 9,4C9,2.344 10.344,1 12,1C13.656,1 15,2.344 15,4C15,5.656 13.656,7 12,7Z"
-      android:fillColor="@color/file_actions_icon_color"/>
-</vector>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/ic_share" />
+</selector>

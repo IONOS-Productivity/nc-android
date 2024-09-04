@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="bottom_sheet_drag_handle_height">60dp</dimen>
+
+    <dimen name="dialog_default_text_size">16sp</dimen>
+    <dimen name="dialog_secondary_text_size">12sp</dimen>
+    <dimen name="dialog_title_text_size">24sp</dimen>
+
+    <dimen name="file_actions_header_bottom_margin">24dp</dimen>
+    <dimen name="file_actions_list_bottom_margin">24dp</dimen>
+    <dimen name="file_actions_item_height">48dp</dimen>
+    <dimen name="file_actions_item_horizontal_margin">12dp</dimen>
+    <dimen name="file_actions_item_horizontal_padding">10dp</dimen>
+    <dimen name="file_actions_icon_width">16dp</dimen>
+    <dimen name="file_actions_icon_height">16dp</dimen>
+    <dimen name="file_actions_text_start_margin">10dp</dimen>
+
+    <dimen name="sorting_dialog_header_margin">24dp</dimen>
+    <dimen name="sorting_dialog_item_horizontal_margin">12dp</dimen>
+    <dimen name="sorting_dialog_item_bottom_margin">12dp</dimen>
+    <dimen name="sorting_dialog_item_drawable_padding">8dp</dimen>
+    <dimen name="sorting_dialog_cancel_button_height">48dp</dimen>
+    <dimen name="sorting_dialog_cancel_button_end_margin">12dp</dimen>
+    <dimen name="sorting_dialog_cancel_button_bottom_margin">12dp</dimen>
+    <dimen name="sorting_dialog_cancel_button_horizontal_padding">24dp</dimen>
+    <dimen name="sorting_dialog_cancel_button_text_size">14sp</dimen>
+</resources>
