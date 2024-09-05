@@ -14,6 +14,7 @@ import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 
+import com.ionos.annotation.IonosCustomization;
 import com.nextcloud.client.account.Server;
 import com.nextcloud.client.account.UserAccountManager;
 import com.nextcloud.common.PlainClient;
@@ -71,6 +72,7 @@ class ConnectivityServiceImpl implements ConnectivityService {
     }
 
     @Override
+    @IonosCustomization("Cache result only after actual check")
     public boolean isInternetWalled() {
         final Boolean cachedValue = walledCheckCache.getValue();
         if (cachedValue != null) {
@@ -98,12 +100,12 @@ class ConnectivityServiceImpl implements ConnectivityService {
                         Log_OC.w(TAG, "isInternetWalled(): Failed to GET " + CONNECTIVITY_CHECK_ROUTE + "," +
                             " assuming connectivity is impaired");
                     }
+                    walledCheckCache.setValue(result);
                 }
             } else {
                 result = !c.isConnected();
             }
 
-            walledCheckCache.setValue(result);
             return result;
         }
     }
