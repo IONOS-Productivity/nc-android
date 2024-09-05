@@ -4,7 +4,6 @@ import com.ionos.scanbot.upload.use_case.Uploader
 import com.nextcloud.client.account.CurrentAccountProvider
 import com.nextcloud.client.jobs.upload.FileUploadHelper
 import com.nextcloud.client.jobs.upload.FileUploadWorker
-import com.owncloud.android.datamodel.OCFile
 import com.owncloud.android.files.services.NameCollisionPolicy
 import com.owncloud.android.operations.UploadFileOperation
 import java.io.File
@@ -15,7 +14,7 @@ class ScanbotUploader @Inject constructor(
 ): Uploader {
     override fun upload(uploadFolder: String, pageList: List<String>) {
         val uploadPaths = pageList.map {
-            uploadFolder + OCFile.PATH_SEPARATOR + File(it).name
+            File(uploadFolder, File(it).name).path
         }.toTypedArray()
 
         FileUploadHelper.instance().uploadNewFiles(
