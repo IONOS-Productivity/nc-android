@@ -39,6 +39,7 @@ import android.view.ViewGroup;
 import android.webkit.URLUtil;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.ionos.annotation.IonosCustomization;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.account.UserAccountManager;
 import com.nextcloud.client.di.Injectable;
@@ -790,13 +791,14 @@ public class SettingsActivity extends PreferenceActivity
         }
     }
 
+    @IonosCustomization("Workaround to hide prefStoragePath")
     private void setupGeneralCategory() {
         final PreferenceCategory preferenceCategoryGeneral = (PreferenceCategory) findPreference("general");
         viewThemeUtils.files.themePreferenceCategory(preferenceCategoryGeneral);
 
         prefStoragePath = (ListPreference) findPreference(AppPreferencesImpl.STORAGE_PATH);
         if (prefStoragePath != null) {
-            preferenceCategoryGeneral.removePreference(prefStoragePath); // Workaround to hide prefStoragePath in IONOS
+            preferenceCategoryGeneral.removePreference(prefStoragePath);
             StoragePoint[] storageOptions = DataStorageProvider.getInstance().getAvailableStoragePoints();
             String[] entries = new String[storageOptions.length];
             String[] values = new String[storageOptions.length];
