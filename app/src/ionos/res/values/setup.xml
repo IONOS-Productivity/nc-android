@@ -14,6 +14,9 @@
     <string name="document_provider_authority">com.ionos.easystorage.documents</string>
     <string name="file_provider_authority">com.ionos.easystorage.files</string>
     <string name="image_cache_provider_authority">com.ionos.easystorage.providers.imageCache</string>
+    <string name="db_file">ionos.db</string>
+    <string name="db_name">ionos</string>
+    <string name="data_folder">ionos</string>
     <string name="default_display_name_for_root_folder">IONOS Easy Storage</string>
 
     <!-- URLs and flags related -->
