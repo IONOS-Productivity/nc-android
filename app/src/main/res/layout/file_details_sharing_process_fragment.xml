@@ -273,13 +273,13 @@
         android:id="@+id/share_process_btn_cancel"
         style="@style/Widget.Material3.Button.OutlinedButton"
         android:layout_width="@dimen/button_width"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="@dimen/standard_margin"
         android:layout_marginEnd="@dimen/standard_half_margin"
-        android:layout_marginBottom="@dimen/standard_margin"
         android:text="@string/common_cancel"
         app:cornerRadius="@dimen/button_corner_radius"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:ionosCustomization="Adjust the height to match the height of the Next button"
+        app:layout_constraintBottom_toBottomOf="@+id/share_process_btn_next"
         app:layout_constraintEnd_toStartOf="@+id/share_process_btn_next"
         app:layout_constraintTop_toTopOf="@+id/share_process_btn_next" />
 
@@ -290,9 +290,12 @@
         android:layout_marginStart="@dimen/standard_half_margin"
         android:layout_marginEnd="@dimen/standard_margin"
         android:layout_marginBottom="@dimen/standard_margin"
+        android:ellipsize="end"
+        android:maxLines="2"
         android:text="@string/common_next"
         android:theme="@style/Widget.Material3.Button.IconButton.Filled"
         app:cornerRadius="@dimen/button_corner_radius"
+        app:ionosCustomization="Limit max lines number to 2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
