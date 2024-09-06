@@ -9,7 +9,6 @@
     <color name="scanbot_dialog_text_color">@color/congress_blue</color>
     <color name="scanbot_dialog_negative_button_text_color">@color/congress_blue</color>
 
-    <color name="scanbot_camera_button_active_color">@color/pizazz_dark</color>
     <color name="scanbot_camera_button_background_idle">@color/white</color>
     <color name="scanbot_camera_button_background_pressed">@color/light_blue</color>
     <color name="scanbot_camera_button_color">@color/navy</color>
