@@ -3,21 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/menu_upload_files"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/file_actions_item_height"
-    android:layout_marginStart="@dimen/file_actions_item_horizontal_margin"
-    android:layout_marginEnd="@dimen/file_actions_item_horizontal_margin"
+    android:layout_height="@dimen/bottom_sheet_default_item_height"
+    android:layout_marginStart="@dimen/bottom_sheet_default_item_horizontal_margin"
+    android:layout_marginEnd="@dimen/bottom_sheet_default_item_horizontal_margin"
     android:clickable="true"
     android:background="@drawable/dialog_item_background"
     android:gravity="center_vertical"
-    android:paddingLeft="@dimen/file_actions_item_horizontal_padding"
+    android:paddingLeft="@dimen/bottom_sheet_default_item_horizontal_padding"
     android:focusable="true"
     android:orientation="horizontal"
-    android:paddingRight="@dimen/file_actions_item_horizontal_padding">
+    android:paddingRight="@dimen/bottom_sheet_default_item_horizontal_padding">
 
     <ImageView
         android:id="@+id/icon"
-        android:layout_width="@dimen/file_actions_icon_width"
-        android:layout_height="@dimen/file_actions_icon_height"
+        android:layout_width="@dimen/bottom_sheet_default_icon_width"
+        android:layout_height="@dimen/bottom_sheet_default_icon_height"
         android:contentDescription="@null"
         tools:src="@drawable/ic_file_action_remove_file" />
 
@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/file_actions_text_start_margin"
+            android:layout_marginHorizontal="@dimen/bottom_sheet_default_text_horizontal_margin"
             android:textColor="@color/ionos_default_text_color"
             android:textSize="@dimen/dialog_default_text_size"
             android:textStyle="bold"
@@ -43,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/file_actions_text_start_margin"
+            android:layout_marginHorizontal="@dimen/bottom_sheet_default_text_horizontal_margin"
             android:textColor="@color/ionos_secondary_text_color"
             android:textSize="@dimen/dialog_secondary_text_size"
             android:visibility="gone"
