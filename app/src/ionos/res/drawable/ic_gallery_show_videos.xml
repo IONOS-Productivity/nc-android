@@ -1,0 +1,9 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="18dp"
+    android:height="12dp"
+    android:viewportWidth="18"
+    android:viewportHeight="12">
+  <path
+      android:pathData="M0,2C0,0.906 0.875,0 2,0H10C11.094,0 12,0.906 12,2V10C12,11.125 11.094,12 10,12H2C0.875,12 0,11.125 0,10V2ZM17.469,1.125C17.781,1.313 18,1.656 18,2V10C18,10.375 17.781,10.719 17.469,10.906C17.125,11.063 16.75,11.063 16.438,10.844L13.438,8.844L13,8.563V8V4V3.469L13.438,3.188L16.438,1.188C16.75,0.969 17.125,0.969 17.469,1.125Z"
+      android:fillColor="@color/ionos_default_icon_color"/>
+</vector>
