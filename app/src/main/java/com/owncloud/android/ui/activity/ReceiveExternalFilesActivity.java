@@ -47,6 +47,7 @@ import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.ionos.annotation.IonosCustomization;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.di.Injectable;
 import com.nextcloud.client.jobs.upload.FileUploadHelper;
@@ -287,9 +288,10 @@ public class ReceiveExternalFilesActivity extends FileActivity
     }
 
     @Override
+    @IonosCustomization
     public void onSortingOrderChosen(FileSortOrder newSortOrder) {
         preferences.setSortOrder(mFile, newSortOrder);
-        sortButton.setText(DisplayUtils.getSortOrderStringId(newSortOrder));
+        sortButton.setIconResource(DisplayUtils.getSortOrderIconRes(newSortOrder));
         populateDirectoryList();
     }
 
@@ -727,6 +729,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
         }
     }
 
+    @IonosCustomization
     private void populateDirectoryList() {
         setupEmptyList();
         setupToolbar();
@@ -782,7 +785,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
 
             sortButton = binding.toolbarLayout.sortButton;
             FileSortOrder sortOrder = preferences.getSortOrderByFolder(mFile);
-            sortButton.setText(DisplayUtils.getSortOrderStringId(sortOrder));
+            sortButton.setIconResource(DisplayUtils.getSortOrderIconRes(sortOrder));
             sortButton.setOnClickListener(l -> openSortingOrderDialogFragment(getSupportFragmentManager(), sortOrder));
         }
     }

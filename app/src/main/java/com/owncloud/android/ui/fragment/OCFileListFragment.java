@@ -40,6 +40,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.ionos.annotation.IonosCustomization;
 import com.ionos.scanbot.controller.ScanbotController;
 import com.nextcloud.android.lib.resources.files.ToggleFileLockRemoteOperation;
 import com.nextcloud.android.lib.richWorkspace.RichWorkspaceDirectEditingRemoteOperation;
@@ -1456,6 +1457,7 @@ public class OCFileListFragment extends ExtendedListFragment implements
         mAdapter.notifyItemChanged(file);
     }
 
+    @IonosCustomization
     private void updateLayout() {
         // decide grid vs list view
         if (isGridViewPreferred(mFile)) {
@@ -1465,7 +1467,7 @@ public class OCFileListFragment extends ExtendedListFragment implements
         }
 
         if (mSortButton != null) {
-            mSortButton.setText(DisplayUtils.getSortOrderStringId(preferences.getSortOrderByFolder(mFile)));
+            mSortButton.setIconResource(DisplayUtils.getSortOrderIconRes(preferences.getSortOrderByFolder(mFile)));
         }
         if (mSwitchGridViewButton != null) {
             setGridSwitchButton();
@@ -1490,8 +1492,9 @@ public class OCFileListFragment extends ExtendedListFragment implements
         }
     }
 
+    @IonosCustomization
     public void sortFiles(FileSortOrder sortOrder) {
-        mSortButton.setText(DisplayUtils.getSortOrderStringId(sortOrder));
+        mSortButton.setIconResource(DisplayUtils.getSortOrderIconRes(sortOrder));
         mAdapter.setSortOrder(mFile, sortOrder);
     }
 

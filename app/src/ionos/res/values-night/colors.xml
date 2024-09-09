@@ -11,4 +11,8 @@
     <color name="sorting_dialog_cancel_button_color_idle">@color/madison</color>
     <color name="sorting_dialog_cancel_button_color_pressed">@color/dodger_blue</color>
     <color name="sorting_dialog_cancel_button_text_color">@color/white</color>
+
+    <color name="search_bar_background_color">@color/white_smoke</color>
+    <color name="search_bar_icon_color">@color/dusk</color>
+    <color name="search_bar_text_color">@color/dusk</color>
 </resources>

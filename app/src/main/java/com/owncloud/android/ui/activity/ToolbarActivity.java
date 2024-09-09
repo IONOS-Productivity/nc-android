@@ -30,6 +30,7 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textview.MaterialTextView;
+import com.ionos.annotation.IonosCustomization;
 import com.nextcloud.client.di.Injectable;
 import com.owncloud.android.R;
 import com.owncloud.android.datamodel.FileDataStorageManager;
@@ -155,12 +156,14 @@ public abstract class ToolbarActivity extends BaseActivity implements Injectable
         }
     }
 
+    @IonosCustomization
     private void showHomeSearchToolbar(String title, boolean isRoot) {
         showHomeSearchToolbar(isHomeSearchToolbarShow && isRoot);
-        mSearchText.setText(getString(R.string.appbar_search_in, title));
+        mSearchText.setText(getString(R.string.actionbar_search, title));
     }
 
     @SuppressLint("PrivateResource")
+    @IonosCustomization
     private void showHomeSearchToolbar(boolean isShow) {
         viewThemeUtils.material.themeToolbar(mToolbar);
         if (isShow) {
@@ -169,8 +172,6 @@ public abstract class ToolbarActivity extends BaseActivity implements Injectable
                                                                                 R.animator.appbar_elevation_off));
             mDefaultToolbar.setVisibility(View.GONE);
             mHomeSearchToolbar.setVisibility(View.VISIBLE);
-            viewThemeUtils.material.themeCardView(mHomeSearchToolbar);
-            viewThemeUtils.material.themeSearchBarText(mSearchText);
         } else {
             mAppBar.setStateListAnimator(AnimatorInflater.loadStateListAnimator(mAppBar.getContext(),
                                                                                 R.animator.appbar_elevation_on));
