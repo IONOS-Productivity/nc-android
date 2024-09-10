@@ -794,7 +794,7 @@ public abstract class DrawerActivity extends ToolbarActivity
                 DisplayUtils.bytesToHumanReadable(totalSpace)));
         }
 
-        mQuotaProgressBar.setProgress(50);
+        mQuotaProgressBar.setProgress(relative);
 
         if (relative < RELATIVE_THRESHOLD_WARNING) {
             viewThemeUtils.material.colorProgressBar(mQuotaProgressBar);
