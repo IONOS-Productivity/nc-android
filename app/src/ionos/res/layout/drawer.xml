@@ -31,13 +31,22 @@
             android:layout_gravity="bottom"
             android:clickable="false"
             android:orientation="vertical"
-            android:background="@color/appbar"
+            android:background="@color/ionos_navigation_bar_background"
             android:paddingLeft="@dimen/drawer_content_horizontal_padding"
             android:paddingTop="@dimen/standard_half_padding"
             android:paddingRight="@dimen/drawer_content_horizontal_padding"
             android:paddingBottom="@dimen/standard_padding"
             android:visibility="gone"
             tools:visibility="visible">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_cloud"
+                android:layout_marginBottom="@dimen/common_small_padding"
+                android:text="@string/ionos_side_menu_storage_used"
+                android:textStyle="bold"
+                android:drawablePadding="@dimen/common_small2_padding" />
 
             <TextView
                 android:id="@+id/drawer_quota_link"
@@ -52,18 +61,21 @@
                 android:indeterminate="false"
                 android:indeterminateOnly="false"
                 android:text="@string/drawer_quota"
-                app:trackCornerRadius="5dp"
-                app:trackThickness="5dp"
+                app:trackCornerRadius="13dp"
+                app:trackThickness="8dp"
+                app:trackColor="@color/white"
+                app:trackStopIndicatorSize="0dp"
+                app:indicatorTrackGapSize = "0dp"
                 tools:progress="50" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/drawer_quota_percentage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/common_small_padding"
                 android:drawablePadding="@dimen/alternate_half_padding"
-                android:fontFamily="sans-serif-medium"
                 android:text="@string/drawer_quota"
-                android:textColor="@color/drawer_text_color" />
+                android:textColor="@color/ionos_default_text_color" />
 
         </LinearLayout>
 

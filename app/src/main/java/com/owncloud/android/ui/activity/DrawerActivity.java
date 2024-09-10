@@ -782,6 +782,7 @@ public abstract class DrawerActivity extends ToolbarActivity
      * @param relative   the percentage of space already used
      * @param quotaValue {@link GetUserInfoRemoteOperation#SPACE_UNLIMITED} or other to determinate state
      */
+    @IonosCustomization
     private void setQuotaInformation(long usedSpace, long totalSpace, int relative, long quotaValue) {
         if (GetUserInfoRemoteOperation.SPACE_UNLIMITED == quotaValue) {
             mQuotaTextPercentage.setText(String.format(
@@ -797,10 +798,9 @@ public abstract class DrawerActivity extends ToolbarActivity
         mQuotaProgressBar.setProgress(relative);
 
         if (relative < RELATIVE_THRESHOLD_WARNING) {
-            viewThemeUtils.material.colorProgressBar(mQuotaProgressBar);
+            mQuotaProgressBar.setIndicatorColor(getResources().getColor(R.color.sidemenu_progress_bar_color, getTheme()));
         } else {
-            viewThemeUtils.material.colorProgressBar(mQuotaProgressBar,
-                                                     getResources().getColor(R.color.infolevel_warning, getTheme()));
+            mQuotaProgressBar.setIndicatorColor(getResources().getColor(R.color.sidemenu_warn_progress_bar_color, getTheme()));
         }
 
         updateQuotaLink();
