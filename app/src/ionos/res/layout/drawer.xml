@@ -16,7 +16,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:layout_weight="1"
-        android:background="@color/appbar"
+        android:background="@color/ionos_navigation_bar_background"
         android:fitsSystemWindows="true"
         android:theme="@style/NavigationView_ItemTextAppearance"
         app:headerLayout="@layout/drawer_header"

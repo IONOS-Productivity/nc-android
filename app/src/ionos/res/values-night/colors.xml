@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="appbar">@color/midnight_blue2</color>
+    <color name="ionos_navigation_bar_background">@color/midnight_blue2</color>
     <color name="ionos_default_icon_color">@color/ghost_white</color>
     <color name="ionos_default_text_color">@color/ghost_white</color>
     <color name="ionos_secondary_text_color">@color/link_water</color>
