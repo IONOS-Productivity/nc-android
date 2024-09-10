@@ -8,6 +8,7 @@
 <resources>
     <!-- App name  and other strings-->
     <string name="app_name">IONOS Easy Storage</string>
+    <string name="account_type">com.ionos.easystorage</string>
     <string name="authority">com.ionos.easystorage.provider</string>    <!-- better if was the app package with ".provider" appended ; it identifies the provider -->
     <string name="users_and_groups_search_authority">com.ionos.easystorage.providers.UsersAndGroupsSearchProvider</string>
     <string name="users_and_groups_share_with">com.ionos.easystorage.providers.UsersAndGroupsSearchProvider.action.SHARE_WITH</string>
