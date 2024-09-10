@@ -22,6 +22,7 @@ import android.widget.ProgressBar;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.ionos.annotation.IonosCustomization;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.account.UserAccountManager;
 import com.nextcloud.client.di.Injectable;
@@ -294,71 +295,16 @@ public class FileDetailFragment extends FileFragment implements OnClickListener,
             .show(fragmentManager, "actions");
     }
 
-    // Start: Hide tabs in IONOS //
+    @IonosCustomization("Hide tabs in IONOS")
     private void setupViewPager() {
         binding.tabLayout.setVisibility(View.GONE);
-
-//        binding.tabLayout.removeAllTabs();
-//
-//        binding.tabLayout.addTab(binding.tabLayout.newTab().setText(R.string.drawer_item_activities).setIcon(R.drawable.ic_activity));
-//
-//
-//        if (showSharingTab()) {
-//            binding.tabLayout.addTab(binding.tabLayout.newTab().setText(R.string.share_dialog_title).setIcon(R.drawable.shared_via_users));
-//        }
-//
-//        if (MimeTypeUtil.isImage(getFile())) {
-//            binding.tabLayout.addTab(binding.tabLayout.newTab().setText(R.string.filedetails_details).setIcon(R.drawable.image_32dp));
-//        }
-//
-//        viewThemeUtils.material.themeTabLayout(binding.tabLayout);
 
         final FileDetailTabAdapter adapter = new FileDetailTabAdapter(requireActivity(),
                                                                       getFile(),
                                                                       user,
                                                                       showSharingTab());
         binding.pager.setAdapter(adapter);
-
-//        binding.pager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-//            @Override
-//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//                final FileDetailActivitiesFragment fragment = getFileDetailActivitiesFragment();
-//                if (activeTab == 0 && fragment != null) {
-//                    fragment.markCommentsAsRead();
-//                }
-//                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
-//            }
-//        });
-//        binding.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-//            @Override
-//            public void onTabSelected(TabLayout.Tab tab) {
-//                binding.pager.setCurrentItem(tab.getPosition());
-//                if (tab.getPosition() == 0) {
-//                    final FileDetailActivitiesFragment fragment = getFileDetailActivitiesFragment();
-//                    if (fragment != null) {
-//                        fragment.markCommentsAsRead();
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onTabUnselected(TabLayout.Tab tab) {
-//                // unused at the moment
-//            }
-//
-//            @Override
-//            public void onTabReselected(TabLayout.Tab tab) {
-//                // unused at the moment
-//            }
-//        });
-//
-//        binding.tabLayout.post(() -> {
-//            TabLayout.Tab tab1 = binding.tabLayout.getTabAt(activeTab);
-//            if (tab1 == null) return;
-//            tab1.select();
-//        });
     }
-    // End: Hide tabs in IONOS //
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
