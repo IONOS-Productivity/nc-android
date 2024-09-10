@@ -49,6 +49,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
+import com.ionos.annotation.IonosCustomization;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.di.Injectable;
 import com.nextcloud.client.files.DeepLinkConstants;
@@ -793,7 +794,7 @@ public abstract class DrawerActivity extends ToolbarActivity
                 DisplayUtils.bytesToHumanReadable(totalSpace)));
         }
 
-        mQuotaProgressBar.setProgress(relative);
+        mQuotaProgressBar.setProgress(50);
 
         if (relative < RELATIVE_THRESHOLD_WARNING) {
             viewThemeUtils.material.colorProgressBar(mQuotaProgressBar);
@@ -881,9 +882,9 @@ public abstract class DrawerActivity extends ToolbarActivity
      *
      * @param menuItemId the menu item to be highlighted
      */
+    @IonosCustomization("Removed server styles for the drawer")
     protected void setDrawerMenuItemChecked(int menuItemId) {
         if (mNavigationView != null && mNavigationView.getMenu().findItem(menuItemId) != null) {
-            viewThemeUtils.platform.colorNavigationView(mNavigationView);
             mCheckedMenuItem = menuItemId;
             mNavigationView.getMenu().findItem(menuItemId).setChecked(true);
         } else {

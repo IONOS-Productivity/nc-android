@@ -8,7 +8,8 @@
 	<color name="lochmara">#0077BB</color>
 	<color name="madison">#0B2A63</color>
 	<color name="midnight_blue">#003d8f</color>
-	<color name="navy">#001B41</color>
+    <color name="dark_blue">#02102B</color>
+    <color name="navy">#001B41</color>
 	<color name="royal_blue">#095BB1</color>
     <color name="dusk">#465A75</color>
     <color name="lavender_mist">#DBEDF8</color>
