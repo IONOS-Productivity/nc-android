@@ -22,6 +22,7 @@
         app:headerLayout="@layout/drawer_header"
         app:itemTextColor="@color/ionos_default_text_color"
         app:itemShapeFillColor="@color/drawer_item_shape_color"
+        app:drawerLayoutCornerSize="0dp"
         app:menu="@menu/partial_drawer_entries">
 
         <LinearLayout
