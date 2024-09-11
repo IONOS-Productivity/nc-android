@@ -10,6 +10,7 @@ package com.owncloud.android.utils;
 import android.content.res.Resources;
 import android.view.Menu;
 
+import com.ionos.annotation.IonosCustomization;
 import com.nextcloud.client.account.User;
 import com.owncloud.android.MainApp;
 import com.owncloud.android.R;
@@ -76,6 +77,16 @@ public final class DrawerMenuUtil {
             menu.findItem(R.id.nav_all_files).setTitle(resources.getString(R.string.drawer_item_home));
             menu.findItem(R.id.nav_all_files).setIcon(R.drawable.ic_home);
         }
+    }
+
+    @IonosCustomization
+    public static void removePersonalFiles(Menu menu) {
+        removeMenuItem(menu, R.id.nav_personal_files);
+    }
+
+    @IonosCustomization
+    public static void removeNotifications(Menu menu) {
+        removeMenuItem(menu, R.id.nav_notifications);
     }
 
     private static void removeMenuItem(Menu menu, int... menuIds) {

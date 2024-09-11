@@ -480,6 +480,8 @@ public abstract class DrawerActivity extends ToolbarActivity
         DrawerMenuUtil.removeMenuItem(menu, R.id.nav_community, !getResources().getBoolean(R.bool.participate_enabled));
         DrawerMenuUtil.removeMenuItem(menu, R.id.nav_shared, !getResources().getBoolean(R.bool.shared_enabled));
         DrawerMenuUtil.removeMenuItem(menu, R.id.nav_logout, !getResources().getBoolean(R.bool.show_drawer_logout));
+        DrawerMenuUtil.removePersonalFiles(menu);
+        DrawerMenuUtil.removeNotifications(menu);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
