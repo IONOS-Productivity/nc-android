@@ -23,6 +23,12 @@
     <color name="settings_screen_switcher_primary_color">@color/dodger_blue</color>
     <color name="settings_screen_switcher_accent_color">@color/dodger_blue</color>
 
+    <color name="settings_screen_filled_material_button_back_color">@color/madison</color>
+    <color name="settings_screen_filled_material_button_text_color">@color/white</color>
+    <color name="settings_screen_outline_material_button_back_color">@color/transparent</color>
+    <color name="settings_screen_outline_material_button_color">@color/madison</color>
+    <color name="settings_screen_outline_material_button_text_color">@color/madison</color>
+
     <color name="search_bar_background_color">@color/ghost_white</color>
     <color name="search_bar_icon_color">@color/dusk</color>
     <color name="search_bar_text_color">@color/dusk</color>
