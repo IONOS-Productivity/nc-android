@@ -21,6 +21,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.ListPreference;
@@ -855,8 +856,9 @@ public class SettingsActivity extends PreferenceActivity
         });
     }
 
+    @IonosCustomization
     private void setListBackground() {
-        getListView().setBackgroundColor(ContextCompat.getColor(this, R.color.bg_default));
+        getListView().setBackgroundColor(ContextCompat.getColor(this, R.color.settings_screen_background));
     }
 
     private String getAppVersion() {
@@ -877,11 +879,12 @@ public class SettingsActivity extends PreferenceActivity
         return super.onOptionsItemSelected(item);
     }
 
+    @IonosCustomization
     private void setupActionBar() {
         ActionBar actionBar = getDelegate().getSupportActionBar();
 
+        viewThemeUtils.platform.colorStatusBar(this, ContextCompat.getColor(this,R.color.settings_screen_background));
         if (actionBar != null) {
-            viewThemeUtils.platform.themeStatusBar(this);
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowTitleEnabled(true);
             if (this.getResources() != null) {
@@ -892,6 +895,7 @@ public class SettingsActivity extends PreferenceActivity
                                                                                    R.drawable.ic_arrow_back,
                                                                                    null));
             }
+            actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this, R.color.settings_screen_background)));
         }
     }
 

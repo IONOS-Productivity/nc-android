@@ -17,7 +17,7 @@
     <color name="settings_screen_title_text_color">@color/deep_koamaru</color>
     <color name="settings_screen_description_text_color">@color/gull_grayapprox</color>
 
-    <color name="settings_screen_switcher_outline_color">@color/white</color>
+    <color name="settings_screen_switcher_outline_color">@color/geyser</color>
     <color name="settings_screen_switcher_surface_container_highest_color">@color/geyser</color>
     <color name="settings_screen_switcher_primary_container_color">@color/white</color>
     <color name="settings_screen_switcher_primary_color">@color/dodger_blue</color>
@@ -28,6 +28,8 @@
     <color name="settings_screen_outline_material_button_back_color">@color/transparent</color>
     <color name="settings_screen_outline_material_button_color">@color/madison</color>
     <color name="settings_screen_outline_material_button_text_color">@color/madison</color>
+
+    <color name="settings_screen_background">@color/bg_default</color>
 
     <color name="search_bar_background_color">@color/ghost_white</color>
     <color name="search_bar_icon_color">@color/dusk</color>

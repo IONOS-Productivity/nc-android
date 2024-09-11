@@ -114,12 +114,18 @@
     <style name="SettingsBackupMaterialButtonFilledStyle" parent="Widget.Material3.Button.IconButton.Filled">
         <item name="colorContainer">@color/settings_screen_filled_material_button_back_color</item>
         <item name="textColor">@color/settings_screen_filled_material_button_text_color</item>
+        <item name="colorOnContainer">@color/settings_screen_filled_material_button_text_color</item>
     </style>
 
     <style name="SettingsBackupMaterialButtonOutlinedStyle" parent="Widget.Material3.Button.OutlinedButton">
         <item name="colorContainer">@color/settings_screen_outline_material_button_back_color</item>
         <item name="colorOutline">@color/settings_screen_outline_material_button_color</item>
         <item name="colorPrimary">@color/settings_screen_outline_material_button_text_color</item>
+    </style>
+
+    <style name="PreferenceTheme" parent="FallbackThemingTheme">
+        <item name="android:colorBackground">@color/settings_screen_background</item>
+        <item name="android:listDivider">@null</item>
     </style>
 
 </resources>
