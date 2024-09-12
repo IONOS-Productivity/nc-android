@@ -31,6 +31,8 @@
     <color name="settings_screen_outline_material_button_color">@color/madison</color>
     <color name="settings_screen_outline_material_button_text_color">@color/madison</color>
 
+    <color name="settings_screen_background">@color/bg_default</color>
+
     <color name="search_bar_background_color">@color/ghost_white</color>
     <color name="search_bar_icon_color">@color/dusk</color>
     <color name="search_bar_text_color">@color/dusk</color>

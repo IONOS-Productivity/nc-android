@@ -37,5 +37,5 @@
     <color name="appbar">#1E1E1E</color>
     <color name="fontAppbar">@android:color/white</color>
 
-    <color name="settings_screen_background">@color/midnight_blue2</color>
+    <color name="settings_screen_background">@color/bg_default</color>
 </resources>
