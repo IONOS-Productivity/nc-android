@@ -10,15 +10,14 @@
 package com.owncloud.android.ui;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
 
+import com.ionos.annotation.IonosCustomization;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.account.UserAccountManager;
-import com.owncloud.android.utils.BitmapUtils;
 
 import java.util.Locale;
 
@@ -28,7 +27,10 @@ import androidx.annotation.VisibleForTesting;
 /**
  * A Drawable object that draws text (1 character) on top of a circular/filled background.
  */
+@IonosCustomization("Custom colors and text style")
 public class TextDrawable extends Drawable {
+    private static final int BACKGROUND_COLOR = 0xFF465A75;
+    private static final int TEXT_COLOR = 0xFFF4F7FA;
     /**
      * the text to be rendered.
      */
@@ -55,23 +57,23 @@ public class TextDrawable extends Drawable {
      * Create a TextDrawable with the given radius.
      *
      * @param text   the text to be rendered
-     * @param color  color
      * @param radius circle radius
      */
-    public TextDrawable(String text, BitmapUtils.Color color, float radius) {
+    public TextDrawable(String text, float radius) {
         this.radius = radius;
         this.text = text;
 
         background = new Paint();
         background.setStyle(Paint.Style.FILL);
         background.setAntiAlias(true);
-        background.setColor(Color.argb(color.a, color.r, color.g, color.b));
+        background.setColor(BACKGROUND_COLOR);
 
         textPaint = new Paint();
-        textPaint.setColor(Color.WHITE);
+        textPaint.setColor(TEXT_COLOR);
         textPaint.setTextSize(radius);
         textPaint.setAntiAlias(true);
         textPaint.setTextAlign(Paint.Align.CENTER);
+        textPaint.setFakeBoldText(true);
 
         setBounds(0, 0, (int) radius * 2, (int) radius * 2);
     }
@@ -113,8 +115,7 @@ public class TextDrawable extends Drawable {
      */
     @NonNull
     public static TextDrawable createNamedAvatar(String name, float radiusInDp) {
-        BitmapUtils.Color color = BitmapUtils.usernameToColor(name);
-        return new TextDrawable(extractCharsFromDisplayName(name), color, radiusInDp);
+        return new TextDrawable(extractCharsFromDisplayName(name), radiusInDp);
     }
 
     @VisibleForTesting
