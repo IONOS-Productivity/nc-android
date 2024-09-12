@@ -24,4 +24,6 @@
     <dimen name="sorting_dialog_cancel_button_bottom_margin">12dp</dimen>
     <dimen name="sorting_dialog_cancel_button_horizontal_padding">24dp</dimen>
     <dimen name="sorting_dialog_cancel_button_text_size">14sp</dimen>
+
+    <dimen name="nav_drawer_menu_avatar_radius">16dp</dimen>
 </resources>

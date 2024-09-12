@@ -200,6 +200,7 @@
                     style="@style/Widget.AppTheme.Button.IconButton"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
+                    android:padding="8dp"
                     app:cornerRadius="@dimen/button_corner_radius"
                     app:iconSize="32dp"
                     app:layout_constraintBottom_toBottomOf="parent"
