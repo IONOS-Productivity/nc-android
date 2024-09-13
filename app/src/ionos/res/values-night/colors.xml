@@ -29,4 +29,8 @@
     <color name="search_bar_background_color">@color/white_smoke</color>
     <color name="search_bar_icon_color">@color/dusk</color>
     <color name="search_bar_text_color">@color/dusk</color>
+
+    <color name="snackbar_background_color">@color/ghost_white</color>
+    <color name="snackbar_text_color">@color/navy</color>
+    <color name="snackbar_action_button_text_color">@color/royal_blue</color>
 </resources>
