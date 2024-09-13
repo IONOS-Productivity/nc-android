@@ -33,4 +33,7 @@
     <color name="snackbar_background_color">@color/ghost_white</color>
     <color name="snackbar_text_color">@color/navy</color>
     <color name="snackbar_action_button_text_color">@color/royal_blue</color>
+
+    <color name="avatar_background_color">@color/dusk</color>
+    <color name="avatar_text_color">@color/ghost_white</color>
 </resources>

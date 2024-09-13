@@ -40,4 +40,7 @@
     <color name="snackbar_background_color">@color/midnight_blue2</color>
     <color name="snackbar_text_color">@color/ghost_white</color>
     <color name="snackbar_action_button_text_color">@color/cornflower</color>
+
+    <color name="avatar_background_color">@color/dusk</color>
+    <color name="avatar_text_color">@color/ghost_white</color>
 </resources>

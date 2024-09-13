@@ -10,6 +10,7 @@ package com.owncloud.android.ui.fragment
 import android.graphics.BitmapFactory
 import androidx.test.espresso.intent.rule.IntentsTestRule
 import androidx.test.internal.runner.junit4.statement.UiThreadStatement.runOnUiThread
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.test.TestActivity
 import com.owncloud.android.AbstractIT
 import com.owncloud.android.R
@@ -52,6 +53,7 @@ class AvatarIT : AbstractIT() {
 
     @Test
     @ScreenshotTest
+    @IonosCustomization
     fun showAvatarsWithStatus() {
         val avatarRadius = targetContext.resources.getDimension(R.dimen.list_item_avatar_icon_radius)
         val width = DisplayUtils.convertDpToPixel(2 * avatarRadius, targetContext)
@@ -60,7 +62,7 @@ class AvatarIT : AbstractIT() {
 
         val paulette = BitmapFactory.decodeFile(getFile("paulette.jpg").absolutePath)
         val christine = BitmapFactory.decodeFile(getFile("christine.jpg").absolutePath)
-        val textBitmap = BitmapUtils.drawableToBitmap(TextDrawable.createNamedAvatar("Admin", avatarRadius))
+        val textBitmap = BitmapUtils.drawableToBitmap(TextDrawable.createNamedAvatar(targetContext, "Admin", avatarRadius))
 
         sut.addFragment(fragment)
 

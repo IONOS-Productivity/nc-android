@@ -17,6 +17,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import androidx.fragment.app.Fragment
+import com.ionos.annotation.IonosCustomization
 import com.owncloud.android.R
 import com.owncloud.android.ui.TextDrawable
 
@@ -33,10 +34,11 @@ internal class AvatarTestFragment : Fragment() {
         return view
     }
 
+    @IonosCustomization
     fun addAvatar(name: String, avatarRadius: Float, width: Int, targetContext: Context) {
         val margin = PADDING
         val imageView = ImageView(targetContext)
-        imageView.setImageDrawable(TextDrawable.createNamedAvatar(name, avatarRadius))
+        imageView.setImageDrawable(TextDrawable.createNamedAvatar(targetContext, name, avatarRadius))
 
         val layoutParams: RelativeLayout.LayoutParams = RelativeLayout.LayoutParams(width, width)
         layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT)

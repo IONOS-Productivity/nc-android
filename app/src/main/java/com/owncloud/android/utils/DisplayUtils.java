@@ -478,6 +478,7 @@ public final class DisplayUtils {
      * @param resources    reference for density information
      * @param callContext  which context is called to set the generated avatar
      */
+    @IonosCustomization
     public static void setAvatar(@NonNull User user,
                                  @NonNull String userId,
                                  String displayName,
@@ -504,7 +505,7 @@ public final class DisplayUtils {
         // if no one exists, show colored icon with initial char
         if (avatar == null) {
             try {
-                avatar = TextDrawable.createAvatarByUserId(displayName, avatarRadius);
+                avatar = TextDrawable.createAvatarByUserId(context, displayName, avatarRadius);
             } catch (Exception e) {
                 Log_OC.e(TAG, "Error calculating RGB value for active account icon.", e);
                 avatar = ResourcesCompat.getDrawable(resources,

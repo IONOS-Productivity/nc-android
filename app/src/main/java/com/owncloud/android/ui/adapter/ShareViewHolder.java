@@ -18,6 +18,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.ionos.annotation.IonosCustomization;
 import com.nextcloud.client.account.User;
 import com.owncloud.android.R;
 import com.owncloud.android.databinding.FileDetailsShareShareItemBinding;
@@ -121,9 +122,10 @@ class ShareViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
+    @IonosCustomization
     private void setImage(ImageView avatar, String name, @DrawableRes int fallback) {
         try {
-            avatar.setImageDrawable(TextDrawable.createNamedAvatar(name, avatarRadiusDimension));
+            avatar.setImageDrawable(TextDrawable.createNamedAvatar(avatar.getContext(), name, avatarRadiusDimension));
         } catch (StringIndexOutOfBoundsException e) {
             avatar.setImageResource(fallback);
         }

@@ -27,6 +27,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.ionos.annotation.IonosCustomization;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.account.UserAccountManager;
 import com.owncloud.android.R;
@@ -376,6 +377,7 @@ public class UsersAndGroupsSearchProvider extends ContentProvider {
     @Nullable
     @Override
     @SuppressFBWarnings("IOI_USE_OF_FILE_STREAM_CONSTRUCTORS") // TODO remove with API26
+    @IonosCustomization
     public ParcelFileDescriptor openFile(@NonNull Uri uri, @NonNull String mode) throws FileNotFoundException {
         ArbitraryDataProvider arbitraryDataProvider = new ArbitraryDataProviderImpl(getContext());
 
@@ -398,7 +400,7 @@ public class UsersAndGroupsSearchProvider extends ContentProvider {
 
         if (avatarBitmap == null) {
             float avatarRadius = getContext().getResources().getDimension(R.dimen.list_item_avatar_icon_radius);
-            avatarBitmap = BitmapUtils.drawableToBitmap(TextDrawable.createNamedAvatar(displayName, avatarRadius));
+            avatarBitmap = BitmapUtils.drawableToBitmap(TextDrawable.createNamedAvatar(getContext(), displayName, avatarRadius));
         }
 
         Bitmap avatar = BitmapUtils.createAvatarWithStatus(avatarBitmap, status, icon, getContext());
