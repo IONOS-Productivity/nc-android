@@ -7,6 +7,7 @@
     <dimen name="dialog_title_text_size">24sp</dimen>
 
     <dimen name="bottom_sheet_default_header_bottom_margin">24dp</dimen>
+    <dimen name="bottom_sheet_default_header_horizontal_margin">24dp</dimen>
     <dimen name="bottom_sheet_default_list_bottom_margin">24dp</dimen>
     <dimen name="bottom_sheet_default_item_height">48dp</dimen>
     <dimen name="bottom_sheet_default_item_horizontal_margin">12dp</dimen>

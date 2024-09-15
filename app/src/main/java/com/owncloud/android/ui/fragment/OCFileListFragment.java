@@ -481,6 +481,7 @@ public class OCFileListFragment extends ExtendedListFragment implements
     /**
      * register listener on FAB.
      */
+    @IonosCustomization("Show simple FAB menu bottom sheet")
     public void registerFabListener() {
         FileActivity activity = (FileActivity) getActivity();
 
@@ -488,15 +489,12 @@ public class OCFileListFragment extends ExtendedListFragment implements
             // is not available in FolderPickerActivity
             viewThemeUtils.material.themeFAB(mFabMain);
             mFabMain.setOnClickListener(v -> {
-                final OCFileListBottomSheetDialog dialog =
-                    new OCFileListBottomSheetDialog(activity,
+                final SimpleOCFileListBottomSheetDialog dialog =
+                    new SimpleOCFileListBottomSheetDialog(activity,
                                                     this,
                                                     deviceInfo,
-                                                    accountManager.getUser(),
-                                                    getCurrentFile(),
                                                     themeUtils,
                                                     viewThemeUtils,
-                                                    editorUtils,
                                                     appScanOptionalFeature);
 
                 dialog.getBehavior().setState(BottomSheetBehavior.STATE_EXPANDED);
