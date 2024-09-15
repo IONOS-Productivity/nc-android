@@ -21,7 +21,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.ListPreference;
@@ -887,15 +886,8 @@ public class SettingsActivity extends PreferenceActivity
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowTitleEnabled(true);
-            if (this.getResources() != null) {
-                viewThemeUtils.androidx.themeActionBar(this,
-                                                       actionBar,
-                                                       getString(R.string.actionbar_settings),
-                                                       ResourcesCompat.getDrawable(this.getResources(),
-                                                                                   R.drawable.ic_arrow_back,
-                                                                                   null));
-            }
-            actionBar.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this, R.color.settings_screen_background)));
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+            actionBar.setTitle(R.string.actionbar_settings);
         }
     }
 
