@@ -126,6 +126,36 @@
     <style name="PreferenceTheme" parent="FallbackThemingTheme">
         <item name="android:colorBackground">@color/settings_screen_background</item>
         <item name="android:listDivider">@null</item>
+        <item name="actionBarStyle">@style/PreferenceTheme.ActionBar</item>
+    </style>
+
+    <style name="PreferenceTheme.ActionBar" parent="@style/Widget.Material3.ActionBar.Solid">
+        <item name="background">@color/ionos_toolbar_color</item>
+        <item name="titleTextStyle">@style/PreferenceTheme.ActionBar.TitleTextStyle</item>
+    </style>
+
+    <style name="PreferenceTheme.ActionBar.TitleTextStyle" parent="TextAppearance.Material3.ActionBar.Title">
+        <item name="android:textColor">@color/ionos_default_text_color</item>-->
+    </style>
+
+    <style name="Theme.ToolbarTheme" parent="@style/ThemeOverlay.Material3.Dark.ActionBar">
+        <item name="android:editTextColor">@color/ionos_default_text_color</item>
+        <item name="android:textColor">@color/ionos_default_text_color</item>
+        <item name="android:textColorHint">@color/ionos_toolbar_hint_color</item>
+        <item name="actionOverflowButtonStyle">@style/OverflowButtonStyle</item>
+        <item name="actionOverflowMenuStyle">@style/OverflowMenuStyle</item>
+        <item name="colorControlNormal">@color/ionos_default_icon_color</item>
+        <item name="iconTint">@color/ionos_default_icon_color</item>
+        <item name="titleTextColor">@color/ionos_default_text_color</item>
+        <item name="subtitleTextColor">@color/ionos_default_text_color</item>
+    </style>
+
+    <style name="OverflowButtonStyle" parent="Widget.AppCompat.ActionButton.Overflow">
+        <item name="android:src">@drawable/ic_dots_vertical</item>
+    </style>
+
+    <style name="ToolbarSpinner" parent="Widget.AppCompat.Spinner">
+        <item name="colorControlNormal">@color/ionos_default_icon_color</item>
     </style>
 
     <style name="Widget.App.Snackbar" parent="Widget.MaterialComponents.Snackbar">

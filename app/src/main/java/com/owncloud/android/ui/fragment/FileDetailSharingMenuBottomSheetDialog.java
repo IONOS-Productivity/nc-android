@@ -42,19 +42,13 @@ public class FileDetailSharingMenuBottomSheetDialog extends BottomSheetDialog {
     }
 
     @Override
-    @IonosCustomization("Remove custom window LayoutParams")
+    @IonosCustomization("Remove custom window LayoutParams. Disable icon tinting")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = FileDetailsSharingMenuBottomSheetFragmentBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         viewThemeUtils.platform.themeDialog(binding.getRoot());
-
-        viewThemeUtils.platform.colorImageView(binding.menuIconAddAnotherLink);
-        viewThemeUtils.platform.colorImageView(binding.menuIconAdvancedPermissions);
-        viewThemeUtils.platform.colorImageView(binding.menuIconSendLink);
-        viewThemeUtils.platform.colorImageView(binding.menuIconUnshare);
-        viewThemeUtils.platform.colorImageView(binding.menuIconSendNewEmail);
 
         updateUI();
 

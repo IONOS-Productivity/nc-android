@@ -45,4 +45,7 @@
 
     <color name="avatar_background_color">@color/dusk</color>
     <color name="avatar_text_color">@color/ghost_white</color>
+
+    <color name="ionos_toolbar_color">@color/white</color>
+    <color name="ionos_toolbar_hint_color">@color/dusk</color>
 </resources>

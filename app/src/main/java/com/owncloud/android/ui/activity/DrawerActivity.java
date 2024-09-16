@@ -118,6 +118,7 @@ import javax.inject.Inject;
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.GravityCompat;
@@ -240,6 +241,7 @@ public abstract class DrawerActivity extends ToolbarActivity
     /**
      * initializes and sets up the drawer toggle.
      */
+    @IonosCustomization
     private void setupDrawerToggle() {
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
 
@@ -269,11 +271,9 @@ public abstract class DrawerActivity extends ToolbarActivity
         mDrawerLayout.addDrawerListener(mDrawerToggle);
         mDrawerToggle.setDrawerIndicatorEnabled(true);
         mDrawerToggle.setDrawerSlideAnimationEnabled(true);
-        Drawable backArrow = ResourcesCompat.getDrawable(getResources(),
-                                                         R.drawable.ic_arrow_back,
-                                                         null);
-
-        viewThemeUtils.platform.tintToolbarArrowDrawable(this, mDrawerToggle, backArrow);
+        Drawable drawerIndicator = AppCompatResources.getDrawable(this, R.drawable.ic_menu);
+        mDrawerToggle.setDrawerArrowDrawable(new SingleStateDrawerArrowDrawable(this, drawerIndicator));
+        mDrawerToggle.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
     }
 
     /**

@@ -73,6 +73,7 @@ public abstract class ToolbarActivity extends BaseActivity implements Injectable
      * Toolbar setup that must be called in implementer's {@link #onCreate} after {@link #setContentView} if they want
      * to use the toolbar.
      */
+    @IonosCustomization
     private void setupToolbar(boolean isHomeSearchToolbarShow, boolean showSortListButtonGroup) {
         mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
@@ -99,8 +100,6 @@ public abstract class ToolbarActivity extends BaseActivity implements Injectable
 
         mToolbarSpinner = findViewById(R.id.toolbar_spinner);
 
-        viewThemeUtils.material.themeToolbar(mToolbar);
-        viewThemeUtils.material.colorToolbarOverflowIcon(mToolbar);
         viewThemeUtils.platform.themeStatusBar(this);
         viewThemeUtils.material.colorMaterialTextButton(mSwitchAccountButton);
     }
@@ -165,16 +164,11 @@ public abstract class ToolbarActivity extends BaseActivity implements Injectable
     @SuppressLint("PrivateResource")
     @IonosCustomization
     private void showHomeSearchToolbar(boolean isShow) {
-        viewThemeUtils.material.themeToolbar(mToolbar);
         if (isShow) {
             viewThemeUtils.platform.resetStatusBar(this);
-            mAppBar.setStateListAnimator(AnimatorInflater.loadStateListAnimator(mAppBar.getContext(),
-                                                                                R.animator.appbar_elevation_off));
             mDefaultToolbar.setVisibility(View.GONE);
             mHomeSearchToolbar.setVisibility(View.VISIBLE);
         } else {
-            mAppBar.setStateListAnimator(AnimatorInflater.loadStateListAnimator(mAppBar.getContext(),
-                                                                                R.animator.appbar_elevation_on));
             viewThemeUtils.platform.themeStatusBar(this);
             mDefaultToolbar.setVisibility(View.VISIBLE);
             mHomeSearchToolbar.setVisibility(View.GONE);
@@ -285,11 +279,11 @@ public abstract class ToolbarActivity extends BaseActivity implements Injectable
         return mPreviewImageContainer;
     }
 
+    @IonosCustomization
     public void updateToolbarSubtitle(@NonNull String subtitle) {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setSubtitle(subtitle);
-            viewThemeUtils.androidx.themeActionBarSubtitle(this, actionBar);
         }
     }
 

@@ -5,7 +5,7 @@
     android:id="@+id/appbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/bg_default">
+    android:background="@color/ionos_toolbar_color">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="80dp"
-            android:background="@color/bg_default"
+            android:background="@color/ionos_toolbar_color"
             android:paddingTop="@dimen/standard_eight_padding"
             android:visibility="gone"
             tools:visibility="visible">
@@ -92,7 +92,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@color/appbar"
+                android:background="@color/ionos_toolbar_color"
                 android:theme="@style/Theme.ToolbarTheme"
                 tools:visibility="gone">
 
@@ -101,8 +101,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:visibility="gone"
-                    app:backgroundTint="@color/fontAppbar"
-                    app:popupTheme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+                    style="@style/ToolbarSpinner" />
             </com.google.android.material.appbar.MaterialToolbar>
 
         </RelativeLayout>
