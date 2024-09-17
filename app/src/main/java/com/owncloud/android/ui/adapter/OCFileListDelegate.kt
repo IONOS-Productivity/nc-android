@@ -16,6 +16,7 @@ import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.elyeproj.loaderviewlibrary.LoaderImageView
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.android.common.ui.theme.utils.ColorRole
 import com.nextcloud.client.account.User
 import com.nextcloud.client.jobs.download.FileDownloadHelper
@@ -313,11 +314,10 @@ class OCFileListDelegate(
         }
     }
 
+    @IonosCustomization
     private fun setCheckBoxImage(file: OCFile, gridViewHolder: ListGridImageViewHolder) {
         if (isCheckedFile(file)) {
-            gridViewHolder.checkbox.setImageDrawable(
-                viewThemeUtils.platform.tintDrawable(context, R.drawable.ic_checkbox_marked, ColorRole.PRIMARY)
-            )
+            gridViewHolder.checkbox.setImageResource(R.drawable.ic_checkbox_marked)
         } else {
             gridViewHolder.checkbox.setImageResource(R.drawable.ic_checkbox_blank_outline)
         }
@@ -365,6 +365,7 @@ class OCFileListDelegate(
         }
     }
 
+    @IonosCustomization
     private fun showShareIcon(gridViewHolder: ListGridImageViewHolder, file: OCFile) {
         val sharedIconView = gridViewHolder.shared
         if (gridViewHolder is OCFileListItemViewHolder || file.unreadCommentsCount == 0) {
@@ -374,14 +375,14 @@ class OCFileListDelegate(
                     sharedIconView.visibility = View.GONE
                 } else {
                     sharedIconView.visibility = View.VISIBLE
-                    sharedIconView.setImageResource(R.drawable.shared_via_users)
+                    sharedIconView.setImageResource(R.drawable.ic_filelist_shared_via_users)
                     sharedIconView.contentDescription = context.getString(R.string.shared_icon_shared)
                 }
             } else if (file.isSharedViaLink) {
-                sharedIconView.setImageResource(R.drawable.shared_via_link)
+                sharedIconView.setImageResource(R.drawable.ic_filelist_shared_via_link)
                 sharedIconView.contentDescription = context.getString(R.string.shared_icon_shared_via_link)
             } else {
-                sharedIconView.setImageResource(R.drawable.ic_unshared)
+                sharedIconView.setImageResource(R.drawable.ic_filelist_unshared)
                 sharedIconView.contentDescription = context.getString(R.string.shared_icon_share)
             }
             sharedIconView.setOnClickListener { ocFileListFragmentInterface.onShareIconClick(file) }

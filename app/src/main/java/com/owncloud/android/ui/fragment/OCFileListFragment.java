@@ -309,6 +309,7 @@ public class OCFileListFragment extends ExtendedListFragment implements
      * {@inheritDoc}
      */
     @Override
+    @IonosCustomization
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log_OC.i(TAG, "onCreateView() start");
         View v = super.onCreateView(inflater, container, savedInstanceState);
@@ -331,11 +332,6 @@ public class OCFileListFragment extends ExtendedListFragment implements
         }
 
         mFabMain = requireActivity().findViewById(R.id.fab_main);
-
-        if (mFabMain != null) {
-            // is not available in FolderPickerActivity
-            viewThemeUtils.material.themeFAB(mFabMain);
-        }
 
         Log_OC.i(TAG, "onCreateView() end");
         return v;
@@ -487,7 +483,6 @@ public class OCFileListFragment extends ExtendedListFragment implements
 
         if (mFabMain != null) {
             // is not available in FolderPickerActivity
-            viewThemeUtils.material.themeFAB(mFabMain);
             mFabMain.setOnClickListener(v -> {
                 final SimpleOCFileListBottomSheetDialog dialog =
                     new SimpleOCFileListBottomSheetDialog(activity,
@@ -2051,6 +2046,7 @@ public class OCFileListFragment extends ExtendedListFragment implements
      *
      * @param visible Desired visibility for the FAB.
      */
+    @IonosCustomization
     public void setFabVisible(final boolean visible) {
         if (mFabMain == null) {
             // is not available in FolderPickerActivity
@@ -2061,7 +2057,6 @@ public class OCFileListFragment extends ExtendedListFragment implements
             getActivity().runOnUiThread(() -> {
                 if (visible) {
                     mFabMain.show();
-                    viewThemeUtils.material.themeFAB(mFabMain);
                 } else {
                     mFabMain.hide();
                 }
@@ -2101,6 +2096,7 @@ public class OCFileListFragment extends ExtendedListFragment implements
      *
      * @param enabled Desired visibility for the FAB.
      */
+    @IonosCustomization
     public void setFabEnabled(final boolean enabled) {
         if (mFabMain == null) {
             // is not available in FolderPickerActivity
@@ -2111,10 +2107,8 @@ public class OCFileListFragment extends ExtendedListFragment implements
             getActivity().runOnUiThread(() -> {
                 if (enabled) {
                     mFabMain.setEnabled(true);
-                    viewThemeUtils.material.themeFAB(mFabMain);
                 } else {
                     mFabMain.setEnabled(false);
-                    viewThemeUtils.material.themeFAB(mFabMain);
                 }
             });
         }
