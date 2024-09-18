@@ -14,6 +14,7 @@
     <color name="ionos_default_button_bg_color">@color/madison</color>
     <color name="ionos_default_pressed_button_bg_color">@color/dodger_blue</color>
     <color name="ionos_default_disabled_button_bg_color">@color/gull_grayapprox</color>
+
     <color name="ionos_filled_button_default_text_color">@color/white</color>
     <color name="ionos_filled_button_pressed_text_color">@color/white</color>
     <color name="ionos_filled_button_disabled_text_color">@color/geyser</color>
