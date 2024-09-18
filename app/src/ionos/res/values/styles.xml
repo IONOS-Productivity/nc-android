@@ -44,16 +44,26 @@
 
     <style name="Theme.ownCloud.Dialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
         <item name="materialAlertDialogTitleTextStyle">@style/MaterialAlertDialog.App.Title.Text</item>
-        <item name="buttonBarPositiveButtonStyle">@style/Widget.App.Button</item>
+        <item name="buttonBarPositiveButtonStyle">@style/Widget.App.Button.Positive</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Widget.App.Button.Negative</item>
     </style>
 
     <style name="MaterialAlertDialog.App.Title.Text" parent="MaterialAlertDialog.Material3.Title.Text">
         <item name="android:textColor">@color/text_color</item>
     </style>
 
-    <style name="Widget.App.Button" parent="Widget.Material3.Button.IconButton.Filled">
+    <style name="Widget.App.Button.Positive" parent="Widget.Material3.Button.IconButton.Filled">
         <item name="android:textColor">@color/filled_button_text_color</item>
         <item name="android:backgroundTint">@color/filled_button_bg_color</item>
+        <item name="android:paddingRight">@dimen/button_text_padding</item>
+        <item name="android:paddingLeft">@dimen/button_text_padding</item>
+    </style>
+
+    <style name="Widget.App.Button.Negative" parent="Widget.Material3.Button.IconButton.Outlined">
+        <item name="android:textColor">@color/outlined_button_text_color</item>
+        <item name="android:backgroundTint">@color/outlined_button_bg_color</item>
+        <item name="strokeColor">@color/outlined_button_stroke_color</item>
+        <item name="strokeWidth">2dp</item>
         <item name="android:paddingRight">@dimen/button_text_padding</item>
         <item name="android:paddingLeft">@dimen/button_text_padding</item>
     </style>

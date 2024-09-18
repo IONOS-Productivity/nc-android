@@ -68,7 +68,7 @@ class CreateFolderDialogFragment : DialogFragment(), DialogInterface.OnClickList
         bindButton()
     }
 
-    @IonosCustomization("colorMaterialButtonPrimaryTonal")
+    @IonosCustomization("colorMaterialButtonPrimaryTonal, colorMaterialButtonPrimaryBorderless")
     private fun bindButton() {
         val dialog = dialog
 
@@ -76,11 +76,6 @@ class CreateFolderDialogFragment : DialogFragment(), DialogInterface.OnClickList
             positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE) as? MaterialButton
             positiveButton?.let {
                 it.isEnabled = false
-            }
-
-            val negativeButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE) as? MaterialButton
-            negativeButton?.let {
-                viewThemeUtils.material.colorMaterialButtonPrimaryBorderless(it)
             }
         }
     }
