@@ -12,9 +12,9 @@
     <color name="sidemenu_progress_bar_color">@color/dodger_blue</color>
     <color name="sidemenu_warn_progress_bar_color">@color/orange</color>
 
-    <color name="ionos_default_button_color">@color/dodger_blue</color>
-    <color name="ionos_default_pressed_button_color">@color/royal_blue</color>
-    <color name="ionos_default_disabled_button_color">@color/dark_slate_grey</color>
+    <color name="ionos_default_button_bg_color">@color/dodger_blue</color>
+    <color name="ionos_default_pressed_button_bg_color">@color/royal_blue</color>
+    <color name="ionos_default_disabled_button_bg_color">@color/dark_slate_grey</color>
 
     <color name="dialog_pressed_item_color">@color/transparent_ghost_white</color>
 
