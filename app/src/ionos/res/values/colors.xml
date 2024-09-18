@@ -36,6 +36,13 @@
 
     <color name="settings_screen_background">@color/bg_default</color>
 
+    <color name="settings_screen_dialog_background_color">@color/bg_default</color>
+    <color name="settings_screen_dialog_title_text_color">@color/settings_screen_category_text_color</color>
+    <color name="settings_screen_dialog_item_text_color">@color/settings_screen_title_text_color</color>
+    <color name="settings_screen_dialog_radiobutton_unchecked_color">@color/geyser</color>
+    <color name="settings_screen_dialog_radiobutton_checked_color">@color/dodger_blue</color>
+    <color name="settings_screen_dialog_cancel_button_text_color">@color/madison</color>
+
     <color name="search_bar_background_color">@color/ghost_white</color>
     <color name="search_bar_icon_color">@color/dusk</color>
     <color name="search_bar_text_color">@color/dusk</color>

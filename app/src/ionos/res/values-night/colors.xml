@@ -27,7 +27,7 @@
     <color name="settings_screen_outline_material_button_color">@color/ghost_white</color>
     <color name="settings_screen_outline_material_button_text_color">@color/ghost_white</color>
 
-    <color name="settings_screen_background">@color/midnight_blue2</color>
+    <color name="settings_screen_dialog_cancel_button_text_color">@color/ghost_white</color>
 
     <color name="search_bar_background_color">@color/white_smoke</color>
     <color name="search_bar_icon_color">@color/dusk</color>
