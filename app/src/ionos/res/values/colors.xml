@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="text_color">@color/ionos_default_text_color</color>
+    <color name="secondary_text_color">@color/dusk</color>
     <color name="bg_default">@color/white</color>
 
     <color name="ionos_navigation_bar_background">@color/ghost_white</color>
@@ -41,6 +42,13 @@
 
     <color name="settings_screen_background">@color/bg_default</color>
 
+    <color name="settings_screen_dialog_background_color">@color/bg_default</color>
+    <color name="settings_screen_dialog_title_text_color">@color/settings_screen_category_text_color</color>
+    <color name="settings_screen_dialog_item_text_color">@color/settings_screen_title_text_color</color>
+    <color name="settings_screen_dialog_radiobutton_unchecked_color">@color/geyser</color>
+    <color name="settings_screen_dialog_radiobutton_checked_color">@color/dodger_blue</color>
+    <color name="settings_screen_dialog_cancel_button_text_color">@color/madison</color>
+
     <color name="search_bar_background_color">@color/ghost_white</color>
     <color name="search_bar_icon_color">@color/dusk</color>
     <color name="search_bar_text_color">@color/dusk</color>
@@ -54,4 +62,16 @@
 
     <color name="ionos_toolbar_color">@color/white</color>
     <color name="ionos_toolbar_hint_color">@color/dusk</color>
+
+    <color name="fab_icon_color">@color/white</color>
+    <color name="fab_background_color">@color/dodger_blue</color>
+    <color name="fab_pressed_background_color">@color/royal_blue</color>
+    <color name="fab_disabled_background_color">@color/gull_grayapprox</color>
+
+    <color name="filelist_file_icon_color">@color/dodger_blue</color>
+    <color name="filelist_default_action_icon_color">@color/dodger_blue</color>
+    <color name="filelist_shared_icon_color">@color/dodger_blue</color>
+    <color name="filelist_text_color">@color/navy</color>
+    <color name="filelist_secondary_text_color">@color/dusk</color>
+    <color name="filelist_pressed_action_icon_background_color">@color/lavender_mist</color>
 </resources>
