@@ -19,6 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="80dp"
+            android:layout_marginBottom="12dp"
             android:background="@color/ionos_toolbar_color"
             android:paddingTop="@dimen/standard_eight_padding"
             android:visibility="gone"

@@ -73,6 +73,7 @@ public class PreviewTextStringFragment extends PreviewTextFragment {
     }
 
     @Override
+    @IonosCustomization
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
@@ -86,7 +87,6 @@ public class PreviewTextStringFragment extends PreviewTextFragment {
         fabMain.setOnClickListener(v -> edit());
 
         fabMain.setImageResource(R.drawable.ic_edit);
-        viewThemeUtils.material.themeFAB(fabMain);
 
         return view;
     }

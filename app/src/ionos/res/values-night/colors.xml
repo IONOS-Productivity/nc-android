@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="text_color">@color/ionos_default_text_color</color>
+    <color name="secondary_text_color">@color/metallic_silver</color>
     <color name="bg_default">@color/midnight_blue2</color>
 
     <color name="ionos_navigation_bar_background">@color/midnight_blue2</color>
@@ -42,4 +43,16 @@
 
     <color name="ionos_toolbar_color">@color/midnight_blue2</color>
     <color name="ionos_toolbar_hint_color">@color/dusk</color>
+
+    <color name="fab_icon_color">@color/white</color>
+    <color name="fab_background_color">@color/dodger_blue</color>
+    <color name="fab_pressed_background_color">@color/royal_blue</color>
+    <color name="fab_disabled_background_color">@color/gull_grayapprox</color>
+
+    <color name="filelist_file_icon_color">@color/dodger_blue</color>
+    <color name="filelist_default_action_icon_color">@color/metallic_silver</color>
+    <color name="filelist_shared_icon_color">@color/dodger_blue</color>
+    <color name="filelist_text_color">@color/geyser</color>
+    <color name="filelist_secondary_text_color">@color/metallic_silver</color>
+    <color name="filelist_pressed_action_icon_background_color">@color/dusk</color>
 </resources>
