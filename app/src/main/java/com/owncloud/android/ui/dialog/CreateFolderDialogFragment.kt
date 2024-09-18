@@ -22,6 +22,7 @@ import androidx.fragment.app.DialogFragment
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.common.collect.Sets
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.account.CurrentAccountProvider
 import com.nextcloud.client.di.Injectable
 import com.nextcloud.utils.extensions.getParcelableArgument
@@ -67,6 +68,7 @@ class CreateFolderDialogFragment : DialogFragment(), DialogInterface.OnClickList
         bindButton()
     }
 
+    @IonosCustomization("colorMaterialButtonPrimaryTonal")
     private fun bindButton() {
         val dialog = dialog
 
@@ -74,7 +76,6 @@ class CreateFolderDialogFragment : DialogFragment(), DialogInterface.OnClickList
             positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE) as? MaterialButton
             positiveButton?.let {
                 it.isEnabled = false
-                viewThemeUtils.material.colorMaterialButtonPrimaryTonal(it)
             }
 
             val negativeButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE) as? MaterialButton
