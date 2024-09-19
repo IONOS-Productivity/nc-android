@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@android:id/background">
+        <shape android:shape="rectangle">
+            <size android:height="@dimen/player_full_screen_audio_player_progress_height"/>
+            <corners
+                android:radius="@dimen/player_full_screen_audio_player_progress_radius"/>
+            <solid android:color="@color/player_full_screen_audio_player_progress_background"/>
+        </shape>
+    </item>
+    <item
+        android:id="@android:id/progress">
+        <clip>
+            <shape android:shape="rectangle">
+                <size android:height="@dimen/player_full_screen_audio_player_progress_height"/>
+                <corners
+                    android:radius="@dimen/player_full_screen_audio_player_progress_radius"/>
+                <solid android:color="@color/player_accent_color"/>
+            </shape>
+        </clip>
+    </item>
+</layer-list>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="player_full_screen_audio_player_track_name_margin_bottom">5dp</dimen>
+    <dimen name="player_full_screen_audio_player_album_photo_margin_top">-10dp</dimen>
+    <dimen name="player_full_screen_audio_player_album_cover_width">150dp</dimen>
+    <dimen name="player_video_fragment_padding_top">30dp</dimen>
+    <dimen name="player_video_fragment_file_details_view_margin_bottom">150dp</dimen>
+    <dimen name="player_full_screen_audio_player_progress_panel_margin_bottom">10dp</dimen>
+    <dimen name="player_full_screen_audio_player_bottom_bar_margin_bottom">10dp</dimen>
+    <dimen name="player_full_screen_audio_player_top_bar_height">56dp</dimen>
+
+</resources>

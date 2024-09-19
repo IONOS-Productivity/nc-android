@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:background="@color/transparent"
+              android:gravity="center"
+              android:orientation="vertical">
+
+    <com.strato.hidrive.stylized_view.StylizedTextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/player_file_text_detail_view_title_margin_bottom"
+        android:alpha="@dimen/player_account_view_alpha"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textColor="@color/player_full_screen_audio_detail_view_title_text_color"
+        android:textSize="@dimen/player_file_text_detail_view_title_text_size"/>
+
+    <com.strato.hidrive.stylized_view.StylizedTextView
+        android:id="@+id/tvSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:alpha="@dimen/player_account_view_alpha"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textColor="@color/player_full_screen_audio_detail_view_subtitle_text_color"
+        android:textSize="@dimen/player_file_text_detail_view_subtitle_text_size"/>
+
+</LinearLayout>

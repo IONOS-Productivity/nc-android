@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<color name="white">#FFFFFF</color>
+	<color name="black">#000</color>
+	<color name="transparent_dark9">#1A000000</color>
+	<color name="mine_shaft_dark">#222222</color>
+	<color name="transparent_dark">#21000000</color>
+	<color name="silver3">#cccccc</color>
+	<color name="boulder">#777777</color>
+	<color name="cod_gray5">#111111</color>
+	<color name="dusty_gray2">#979797</color>
+	<color name="gray">#888888</color>
+	<color name="alto">#DDDDDD</color>
+	<color name="bahama_blue">#00659F</color>
+	<color name="lochmara">#0077BB</color>
+	<color name="cod_gray_dark">#171717</color>
+	<color name="mine_shaft2_dark">#333333</color>
+	<color name="azure_radiance_dark">#0A84FF</color>
+
+</resources>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="player_file_text_detail_view_title_margin_bottom">7dp</dimen>
+    <item name="player_account_view_alpha" type="dimen">0.54</item>
+    <dimen name="player_file_text_detail_view_title_text_size">16sp</dimen>
+    <dimen name="player_file_text_detail_view_subtitle_text_size">14sp</dimen>
+    <dimen name="player_full_screen_audio_player_track_name_margin_bottom">32dp</dimen>
+    <dimen name="player_full_screen_audio_player_album_photo_margin_top">64dp</dimen>
+    <dimen name="player_full_screen_audio_player_album_cover_width">350dp</dimen>
+    <dimen name="player_chromecast_casting_device_padding_top">90dp</dimen>
+    <dimen name="player_full_screen_audio_player_time_text_view_font_size">15sp</dimen>
+    <dimen name="player_full_screen_audio_player_time_text_view_large_width">60dp</dimen>
+    <dimen name="player_full_screen_audio_player_progress_height">2dp</dimen>
+    <dimen name="player_full_screen_audio_player_progress_radius">4dp</dimen>
+    <dimen name="player_full_screen_audio_player_progress_thumb_size">10dp</dimen>
+    <dimen name="player_full_screen_audio_player_button_margin_right">32dp</dimen>
+    <dimen name="player_full_screen_audio_player_small_button_size">24dp</dimen>
+    <dimen name="player_full_screen_audio_player_small_button_bottom_top_margin">24dp</dimen>
+    <dimen name="player_full_screen_audio_player_big_button_size">36dp</dimen>
+    <dimen name="player_full_screen_audio_player_big_button_bottom_top_margin">18dp</dimen>
+    <dimen name="player_full_screen_audio_player_progress_panel_padding">8dp</dimen>
+    <dimen name="player_full_screen_audio_player_progressbar_height">20dp</dimen>
+    <dimen name="player_full_screen_audio_player_pause_btn_padding">10dp</dimen>
+    <dimen name="player_full_screen_audio_player_time_text_view_small_width">40dp</dimen>
+    <dimen name="player_full_screen_audio_player_progress_panel_margin_bottom">32dp</dimen>
+    <dimen name="player_full_screen_audio_player_bottom_bar_margin_bottom">48dp</dimen>
+    <dimen name="player_audio_player_context_action_bar_item_width">35dp</dimen>
+    <dimen name="player_audio_player_context_action_bar_item_left_right_margin">5dp</dimen>
+    <dimen name="player_popup_corner_radius">2dp</dimen>
+    <dimen name="player_more_popup_width">288dp</dimen>
+    <dimen name="player_cab_more_elevation_padding">4dp</dimen>
+    <dimen name="player_full_screen_audio_player_nav_bar_text_view_size">21sp</dimen>
+    <dimen name="player_full_screen_audio_player_back_button_margin">40dp</dimen>
+    <dimen name="player_full_screen_audio_player_top_bar_height">56dp</dimen>
+    <dimen name="player_header_left_padding">16dp</dimen>
+    <dimen name="player_padding_normal">16dp</dimen>
+
+</resources>

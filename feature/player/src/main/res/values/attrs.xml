@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="FileTextDetailView">
+        <attr name="title_text_color" format="color"/>
+        <attr name="subtitle_text_color" format="color"/>
+        <attr name="subtitle_visible" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="PlayerControlView">
+        <attr name="type" format="enum">
+            <enum name="video" value="0"/>
+            <enum name="audio" value="1"/>
+        </attr>
+    </declare-styleable>
+
+</resources>

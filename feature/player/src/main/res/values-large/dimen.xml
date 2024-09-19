@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="player_full_screen_audio_player_track_name_margin_bottom">48dp</dimen>
+    <dimen name="player_full_screen_audio_player_album_photo_margin_top">96dp</dimen>
+    <dimen name="player_full_screen_audio_player_button_margin_right">80dp</dimen>
+    <dimen name="player_full_screen_audio_player_progress_panel_margin_bottom">48dp</dimen>
+    <dimen name="player_full_screen_audio_player_bottom_bar_margin_bottom">72dp</dimen>
+    <dimen name="player_audio_player_context_action_bar_item_width">48dp</dimen>
+    <dimen name="player_audio_player_context_action_bar_item_left_right_margin">0dp</dimen>
+    <dimen name="player_full_screen_audio_player_top_bar_height">64dp</dimen>
+    <dimen name="player_header_left_padding">27dp</dimen>
+
+</resources>

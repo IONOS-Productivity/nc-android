@@ -1,0 +1,70 @@
+buildscript {
+    dependencies {
+        classpath "com.android.tools.build:gradle:$androidPluginVersion"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+android {
+    namespace 'com.strato.hidrive.player'
+
+    defaultConfig {
+        compileSdk 34
+        minSdkVersion 24
+        targetSdkVersion 34
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            consumerProguardFiles "proguard-rules.pro"
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+
+}
+
+dependencies {
+    api project(':libs:playerCore')
+    implementation project(':libs:exif_info')
+    implementation project(':libs:context_action_bar')
+    implementation project(':libs:stylizedView')
+
+    implementation "androidx.core:core-ktx:$androidx_core"
+    implementation "androidx.appcompat:appcompat:$app_compat"
+    implementation "com.google.android.material:material:$material"
+
+    implementation "io.reactivex.rxjava2:rxandroid:$rx_android"
+    implementation "io.reactivex.rxjava2:rxjava:$rx_java"
+
+    implementation "com.google.dagger:dagger:$daggerVersion"
+    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+
+    api "androidx.media3:media3-cast:$media3Version"
+    implementation("com.google.android.gms:play-services-cast:$playServicesCastVersion") {
+        exclude group: 'androidx.versionedparcelable'
+        exclude group: 'javax.inject'
+    }
+    implementation("com.google.android.gms:play-services-cast-framework:$playServicesCastVersion") {
+        exclude group: 'javax.inject'
+    }
+    implementation "com.annimon:stream:$annimon_stream"
+
+    testImplementation "junit:junit:$junit"
+    testImplementation "org.robolectric:robolectric:$roboelectric"
+}
