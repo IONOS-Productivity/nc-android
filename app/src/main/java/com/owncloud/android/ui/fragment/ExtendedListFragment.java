@@ -106,7 +106,6 @@ public class ExtendedListFragment extends Fragment implements
     @Inject UserAccountManager accountManager;
     @Inject ViewThemeUtils viewThemeUtils;
 
-    private ScaleGestureDetector mScaleGestureDetector;
     protected SwipeRefreshLayout mRefreshListLayout;
     protected MaterialButton mSortButton;
     protected MaterialButton mSwitchGridViewButton;
@@ -318,6 +317,7 @@ public class ExtendedListFragment extends Fragment implements
     }
 
     @Override
+    @IonosCustomization
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log_OC.d(TAG, "onCreateView");
 
@@ -334,18 +334,6 @@ public class ExtendedListFragment extends Fragment implements
 
         mScale = preferences.getGridColumns();
         setGridViewColumns(1f);
-
-        mScaleGestureDetector = new ScaleGestureDetector(MainApp.getAppContext(), new ScaleListener());
-
-        getRecyclerView().setOnTouchListener((view, motionEvent) -> {
-            mScaleGestureDetector.onTouchEvent(motionEvent);
-
-            if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                view.performClick();
-            }
-
-            return false;
-        });
 
         // Pull-down to refresh layout
         mRefreshListLayout = binding.swipeContainingList;
@@ -681,18 +669,11 @@ public class ExtendedListFragment extends Fragment implements
     }
 
     @Override
+    @IonosCustomization
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            maxColumnSize = 10;
-        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            maxColumnSize = 5;
-        }
-
-        if (isGridEnabled() && getColumnsCount() > maxColumnSize) {
-            ((GridLayoutManager) getRecyclerView().getLayoutManager()).setSpanCount(maxColumnSize);
-        }
+        mScale = preferences.getGridColumns();
+        setGridViewColumns(1f);
     }
 
     protected void setGridSwitchButton() {

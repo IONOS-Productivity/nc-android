@@ -195,6 +195,7 @@ class OCFileListDelegate(
         }
     }
 
+    @IonosCustomization
     fun bindGridViewHolder(
         gridViewHolder: ListGridImageViewHolder,
         file: OCFile,
@@ -204,7 +205,7 @@ class OCFileListDelegate(
         // thumbnail
         gridViewHolder.imageFileName?.text = file.fileName
         gridViewHolder.thumbnail.tag = file.fileId
-        DisplayUtils.setThumbnail(
+        OCFileListThumbnailLoader(
             file,
             gridViewHolder.thumbnail,
             user,
@@ -215,8 +216,9 @@ class OCFileListDelegate(
             gridViewHolder.shimmerThumbnail,
             preferences,
             viewThemeUtils,
-            syncFolderProvider
-        )
+            syncFolderProvider,
+            gridViewHolder.fileIcon,
+        ).load()
 
         // item layout + click listeners
         bindGridItemLayout(file, gridViewHolder)
@@ -382,7 +384,11 @@ class OCFileListDelegate(
                 sharedIconView.setImageResource(R.drawable.ic_filelist_shared_via_link)
                 sharedIconView.contentDescription = context.getString(R.string.shared_icon_shared_via_link)
             } else {
-                sharedIconView.setImageResource(R.drawable.ic_filelist_unshared)
+                if (gridViewHolder is OCFileListGridItemViewHolder) {
+                    sharedIconView.setImageResource(R.drawable.ic_filelist_unshared_grid_mode)
+                } else {
+                    sharedIconView.setImageResource(R.drawable.ic_filelist_unshared)
+                }
                 sharedIconView.contentDescription = context.getString(R.string.shared_icon_share)
             }
             sharedIconView.setOnClickListener { ocFileListFragmentInterface.onShareIconClick(file) }

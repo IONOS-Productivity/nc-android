@@ -87,4 +87,11 @@
     <color name="filelist_text_color">@color/navy</color>
     <color name="filelist_secondary_text_color">@color/dusk</color>
     <color name="filelist_pressed_action_icon_background_color">@color/lavender_mist</color>
+
+    <color name="grid_mode_more_button_background_color">@color/white</color>
+    <color name="grid_mode_more_button_pressed_background_color">@color/lavender_mist</color>
+    <color name="grid_mode_more_button_icon_color">@color/dodger_blue</color>
+    <color name="grid_mode_default_feature_icon_color">@color/dodger_blue</color>
+    <color name="grid_mode_feature_layout_background_color">@color/geyser</color>
+    <color name="grid_mode_item_outline_color">@color/geyser</color>
 </resources>
