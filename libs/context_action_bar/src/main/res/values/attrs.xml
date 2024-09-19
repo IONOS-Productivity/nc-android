@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ContextActionBar">
+        <attr name="cab_more_icon" format="integer"/>
+        <attr name="cab_top_item_selector" format="integer"/>
+        <attr name="cab_item_selector" format="integer"/>
+        <attr name="cab_bottom_item_selector" format="integer"/>
+        <attr name="cab_top_bottom_item_selector" format="integer"/>
+        <attr name="cab_more_font_color" format="color"/>
+        <attr name="cab_more_divider" format="reference"/>
+        <attr name="cab_more_width" format="dimension"/>
+        <attr name="cab_more_elevation_padding" format="dimension"/>
+    </declare-styleable>
+</resources>

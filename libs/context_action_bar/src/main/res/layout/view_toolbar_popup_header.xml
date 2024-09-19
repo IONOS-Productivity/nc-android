@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			  android:id="@+id/llHeader"
+			  android:layout_width="match_parent"
+			  android:layout_height="wrap_content"
+			  android:background="@color/contextbar_view_toolbar_popup_background"
+			  android:orientation="vertical"
+			  android:visibility="gone">
+
+	<com.strato.hidrive.stylized_view.CustomFontButton
+		android:id="@+id/tvTitle"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="left"
+		style="@style/MoreMenuItem"
+		android:ellipsize="start"
+		android:paddingTop="24dp"
+		android:background="@color/contextbar_view_toolbar_popup_title_background"
+		android:textSize="@dimen/contextbar_exif_info_text_size"
+		android:gravity="left"
+		android:textColor="@color/contextbar_popup_header_text_color"
+		android:singleLine="true"
+		android:visibility="gone"/>
+
+	<com.strato.hidrive.stylized_view.CustomFontButton
+		android:id="@+id/tvDescription"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="left"
+		style="@style/MoreMenuItem"
+		android:background="@color/contextbar_view_toolbar_popup_description_background"
+		android:ellipsize="start"
+		android:paddingBottom="12dp"
+		android:gravity="left"
+		android:textColor="@color/contextbar_popup_header_text_color"
+		android:singleLine="true"
+		android:visibility="gone"/>
+
+	<View
+		android:id="@+id/separator"
+		android:layout_width="fill_parent"
+		android:layout_height="1dp"
+		android:visibility="gone"/>
+</LinearLayout>

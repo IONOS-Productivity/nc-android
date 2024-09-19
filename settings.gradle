@@ -11,6 +11,8 @@ include ':appscan'
 include ':libs:stylizedView'
 include ':libs:playerCore'
 include ':libs:exif_info'
+include ':libs:context_action_bar'
+
 
 //includeBuild('../android-common') {
 //    dependencySubstitution {

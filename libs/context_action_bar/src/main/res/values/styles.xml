@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="NavigationBarIconStyle">
+        <item name="android:layout_width">@dimen/contextbar_navigation_bar_button_width</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:paddingTop">@dimen/contextbar_navigation_bar_padding_top</item>
+        <item name="android:paddingBottom">@dimen/contextbar_navigation_bar_padding_bottom</item>
+        <item name="android:layout_marginLeft">@dimen/contextbar_navigation_bar_context_button_left_right_margin</item>
+        <item name="android:layout_marginRight">@dimen/contextbar_navigation_bar_context_button_left_right_margin</item>
+        <item name="android:background">@color/transparent</item>
+        <item name="android:scaleType">fitCenter</item>
+    </style>
+
+    <style name="MoreMenuItem">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/contextbar_more_popup_element_height</item>
+        <item name="android:paddingLeft">@dimen/contextbar_more_menu_item_padding_left</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="NavigationBarMoreIconStyle" parent="NavigationBarIconStyle">
+        <!-- stub style, for customization in child projects -->
+    </style>
+
+</resources>
