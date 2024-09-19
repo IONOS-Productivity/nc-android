@@ -340,6 +340,7 @@ dependencies {
 
     implementation 'org.conscrypt:conscrypt-android:2.5.3'
 
+    implementation project(':feature:player')
     implementation "androidx.media3:media3-ui:$androidxMediaVersion"
     implementation "androidx.media3:media3-exoplayer:$androidxMediaVersion"
     implementation "androidx.media3:media3-datasource-okhttp:$androidxMediaVersion"
@@ -374,6 +375,9 @@ dependencies {
     if (perfAnalysis) {
         debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.14'
     }
+
+    implementation reactivex_rxjava2
+    implementation reactivex_rxandroid2
 
     // dependencies for local unit tests
     testImplementation 'junit:junit:4.13.2'
