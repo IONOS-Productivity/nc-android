@@ -1,0 +1,44 @@
+buildscript {
+    dependencies {
+        classpath "com.android.tools.build:gradle:$androidPluginVersion"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+
+android {
+    namespace 'com.strato.hidrive.stylized_view'
+
+    defaultConfig {
+        compileSdk 34
+        minSdkVersion 24
+        targetSdkVersion 34
+    }
+
+    buildTypes {
+        release {
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            consumerProguardFiles 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+    lint {
+        abortOnError false
+    }
+}
+
+dependencies {
+    implementation "androidx.core:core-ktx:$androidx_core"
+    implementation "androidx.appcompat:appcompat:$app_compat"
+    implementation "com.google.android.material:material:$material"
+    testImplementation "junit:junit:$junit"
+}

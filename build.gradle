@@ -9,6 +9,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later OR GPL-2.0-only
  */
 buildscript {
+    apply from: 'ionos_dependencies.gradle'
     ext {
         androidLibraryVersion ="a4d86ef9d1"
         androidPluginVersion = '8.5.2'

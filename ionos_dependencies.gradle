@@ -1,0 +1,8 @@
+buildscript {
+    ext {
+        androidx_core = '1.13.1'
+        app_compat = '1.7.0'
+        material = '1.12.0'
+        junit = '4.13.2'
+    }
+}
