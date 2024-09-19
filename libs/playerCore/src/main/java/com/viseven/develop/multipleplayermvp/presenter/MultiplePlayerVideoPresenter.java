@@ -1,0 +1,121 @@
+package com.viseven.develop.multipleplayermvp.presenter;
+
+import com.viseven.develop.multipleplayer.interfaces.MultiplePlaybackState;
+import com.viseven.develop.multipleplayermvp.interfaces.MultiplePlayer;
+import com.viseven.develop.multipleplayermvp.null_object.NullMultiplePlayerVideoView;
+import com.viseven.develop.player.interfaces.ParamAction;
+import com.viseven.develop.player.interfaces.PlaybackState;
+import com.viseven.develop.player.interfaces.VideoViewSetter;
+
+import java.util.List;
+
+/**
+ * User: zuzik
+ * Date: 6/4/16
+ */
+public class MultiplePlayerVideoPresenter<SourceInfo, Mode> implements MultiplePlayer.VideoPresenter<SourceInfo> {
+
+	private final MultiplePlayer.Model<SourceInfo, Mode> model;
+	private final SourceInfo sourceInfo;
+	private MultiplePlayer.VideoView<SourceInfo> view = NullMultiplePlayerVideoView.getInstance();
+	private boolean appeared;
+
+	public MultiplePlayerVideoPresenter(
+			MultiplePlayer.Model<SourceInfo, Mode> model,
+			SourceInfo sourceInfo) {
+		this.model = model;
+		this.sourceInfo = sourceInfo;
+	}
+
+	@Override
+	public void setView(MultiplePlayer.VideoView<SourceInfo> view) {
+		this.view = view != null ? view : NullMultiplePlayerVideoView.<SourceInfo>getInstance();
+	}
+
+	@Override
+	public void onCreate() {
+		updateView();
+	}
+
+	@Override
+	public void onDestroy() {
+		this.view = NullMultiplePlayerVideoView.getInstance();
+	}
+
+	@Override
+	public void onAppear() {
+		this.appeared = true;
+		updateView();
+		this.model.addListener(this.listener);
+	}
+
+	@Override
+	public void onDisappear() {
+		this.model.removeListener(this.listener);
+		this.appeared = false;
+		updateView();
+	}
+
+	@Override
+	public void onVideoViewCreated() {
+		updateView();
+	}
+
+	@Override
+	public void onVideoViewDestroyed() {
+		updateView();
+	}
+
+	private void updateView() {
+		if (isCurrentSourceInfo()) {
+			if (this.appeared) {
+				this.view.setVideoViewAvailable();
+				this.model.videoViewSetter(new ParamAction<VideoViewSetter>() {
+					@Override
+					public void execute(VideoViewSetter value) {
+						MultiplePlayerVideoPresenter.this.view.setVideoView(value, sourceInfo);
+					}
+				});
+			} else {
+				this.view.setVideoViewUnavailable();
+				this.model.videoViewSetter(new ParamAction<VideoViewSetter>() {
+					@Override
+					public void execute(VideoViewSetter value) {
+						MultiplePlayerVideoPresenter.this.view.clearVideoView(value);
+					}
+				});
+			}
+		} else {
+			this.view.setVideoViewUnavailable();
+		}
+	}
+
+	private boolean isCurrentSourceInfo() {
+		if (this.model.getState().isPresent()) {
+			MultiplePlaybackState<SourceInfo, Mode> modelState = this.model.getState().get();
+			if (modelState.getCurrentPlaybackState().isPresent()) {
+				PlaybackState<SourceInfo> playbackState = modelState.getCurrentPlaybackState().get();
+				if (this.sourceInfo.equals(playbackState.sourceInfo)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	private final MultiplePlayer.Model.Listener<SourceInfo, Mode> listener = new MultiplePlayer.Model.Listener<SourceInfo, Mode>() {
+		@Override
+		public void onUpdate(MultiplePlaybackState<SourceInfo, Mode> state) {
+			updateView();
+		}
+
+		@Override
+		public void onError(Throwable error) {
+		}
+
+		@Override
+		public void onSourceInfosChanged(List<SourceInfo> originalSourceInfos, List<SourceInfo> currentSourceInfos) {
+
+		}
+	};
+}

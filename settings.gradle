@@ -9,6 +9,7 @@ rootProject.name = 'Nextcloud'
 include ':app'
 include ':appscan'
 include ':libs:stylizedView'
+include ':libs:playerCore'
 
 //includeBuild('../android-common') {
 //    dependencySubstitution {
