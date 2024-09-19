@@ -86,7 +86,6 @@ import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.ContextCompat;
-import androidx.core.content.res.ResourcesCompat;
 
 /**
  * An Activity that allows the user to change the application's settings.
@@ -882,8 +881,8 @@ public class SettingsActivity extends PreferenceActivity
     private void setupActionBar() {
         ActionBar actionBar = getDelegate().getSupportActionBar();
 
-        viewThemeUtils.platform.colorStatusBar(this, ContextCompat.getColor(this,R.color.settings_screen_background));
         if (actionBar != null) {
+            viewThemeUtils.ionos.themeSystemBars(this);
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowTitleEnabled(true);
             actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back);

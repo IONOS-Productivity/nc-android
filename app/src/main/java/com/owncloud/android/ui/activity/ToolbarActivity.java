@@ -13,7 +13,6 @@
  */
 package com.owncloud.android.ui.activity;
 
-import android.animation.AnimatorInflater;
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -100,7 +99,7 @@ public abstract class ToolbarActivity extends BaseActivity implements Injectable
 
         mToolbarSpinner = findViewById(R.id.toolbar_spinner);
 
-        viewThemeUtils.platform.themeStatusBar(this);
+        viewThemeUtils.ionos.themeSystemBars(this);
         viewThemeUtils.material.colorMaterialTextButton(mSwitchAccountButton);
     }
 
@@ -165,11 +164,11 @@ public abstract class ToolbarActivity extends BaseActivity implements Injectable
     @IonosCustomization
     private void showHomeSearchToolbar(boolean isShow) {
         if (isShow) {
-            viewThemeUtils.platform.resetStatusBar(this);
+            viewThemeUtils.ionos.resetSystemBars(this);
             mDefaultToolbar.setVisibility(View.GONE);
             mHomeSearchToolbar.setVisibility(View.VISIBLE);
         } else {
-            viewThemeUtils.platform.themeStatusBar(this);
+            viewThemeUtils.ionos.themeSystemBars(this);
             mDefaultToolbar.setVisibility(View.VISIBLE);
             mHomeSearchToolbar.setVisibility(View.GONE);
         }

@@ -90,4 +90,6 @@
 
     <color name="filelist_file_icon_color">@color/primary</color>
     <color name="filelist_default_action_icon_color">@color/black</color>
+
+    <color name="system_bars_color">@color/bg_default</color>
 </resources>
