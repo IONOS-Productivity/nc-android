@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="exif_info_header_image_height">232dp</dimen>
+    <dimen name="exif_info_toolbar_height">76dp</dimen>
+    <dimen name="exif_info_panel_width">352dp</dimen>
+    <dimen name="exif_info_panel_margin_left">-64dp</dimen>
+    <dimen name="exif_info_text_size">20sp</dimen>
+    <dimen name="exif_info_file_type_icon_size">24dp</dimen>
+    <dimen name="exif_info_title_container_margin_bottom">20dp</dimen>
+    <dimen name="exif_info_item_margin_top">32dp</dimen>
+    <dimen name="exif_info_items_icon_margin_left">24dp</dimen>
+    <item name="exif_info_items_icon_alpha" type="dimen">0.54</item>
+    <item name="exif_info_items_title_alpha" type="dimen">0.87</item>
+    <dimen name="exif_info_items_title_margin_left">40dp</dimen>
+    <dimen name="exif_info_items_title_text_size">14sp</dimen>
+    <dimen name="exif_info_items_container_padding_bottom">32dp</dimen>
+    <dimen name="exif_info_title_container_margin_left">16dp</dimen>
+    <dimen name="exif_info_file_name_margin_left">32dp</dimen>
+    <dimen name="exif_info_close_btn_margin_left">16dp</dimen>
+    <dimen name="exif_info_close_btn_margin_top">16dp</dimen>
+    <dimen name="exif_info_detail_info_mimetype_icon_size">120dp</dimen>
+
+</resources>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@color/exif_info_component_background">
+
+    <FrameLayout
+        android:id="@+id/header_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/exif_info_header_image_height"
+        android:foreground="@color/exif_info_header_image_foreground_color">
+
+        <ImageView
+            android:id="@+id/header_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </FrameLayout>
+
+    <com.strato.hidrive.views.exif_info.observable_scroll.ObservableScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        android:scrollbars="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/items_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/exif_info_header_image_height"
+                android:background="@color/exif_info_component_items_background"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/exif_info_items_container_padding_bottom"/>
+        </LinearLayout>
+    </com.strato.hidrive.views.exif_info.observable_scroll.ObservableScrollView>
+
+    <View
+        android:id="@+id/overlay_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/exif_info_header_image_height"
+        android:alpha="0"
+        android:background="#000"
+        android:orientation="vertical"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/exif_info_header_image_height"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/title_container"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/exif_info_toolbar_height"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/exif_info_title_container_margin_bottom"
+            android:layout_marginLeft="@dimen/exif_info_title_container_margin_left"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/file_type_icon"
+                android:layout_width="@dimen/exif_info_file_type_icon_size"
+                android:layout_height="@dimen/exif_info_file_type_icon_size"
+                android:layout_gravity="bottom"/>
+
+            <com.strato.hidrive.stylized_view.StylizedTextView
+                android:id="@+id/file_name_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="@dimen/exif_info_file_name_margin_left"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:textColor="@color/exif_info_component_file_name_text_color"
+                android:textSize="@dimen/exif_info_text_size"
+                app:typeface="medium"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/close_panel_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/exif_info_close_btn_margin_left"
+        android:layout_marginTop="@dimen/exif_info_close_btn_margin_top"
+        android:src="@drawable/ic_exif_info_close_white_24dp"/>
+
+</FrameLayout>

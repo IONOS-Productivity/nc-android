@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ExifInfoView">
+        <attr name="panel_width" format="dimension"/>
+        <attr name="panel_toolbar_height" format="dimension"/>
+        <attr name="panel_header_image_height" format="dimension"/>
+    </declare-styleable>
+</resources>

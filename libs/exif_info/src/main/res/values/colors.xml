@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="exif_info_item_text_color">@color/black</color>
+    <color name="exif_info_component_background">@color/white</color>
+    <color name="exif_info_component_items_background">@color/white</color>
+    <color name="exif_info_component_file_name_text_color">@color/white</color>
+    <color name="exif_info_header_image_foreground_color">@color/transparent_dark9</color>
+    <color name="exif_info_icons_tint_color">@color/black</color>
+
+</resources>

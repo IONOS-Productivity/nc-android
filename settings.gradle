@@ -10,6 +10,7 @@ include ':app'
 include ':appscan'
 include ':libs:stylizedView'
 include ':libs:playerCore'
+include ':libs:exif_info'
 
 //includeBuild('../android-common') {
 //    dependencySubstitution {
