@@ -46,12 +46,12 @@ repositories {
 }
 
 dependencies {
-    api "androidx.media3:media3-common:$media3Version"
-    api "androidx.media3:media3-session:$media3Version"
-    api "androidx.media3:media3-exoplayer:$media3Version"
+    api "androidx.media3:media3-common:$androidxMediaVersion"
+    api "androidx.media3:media3-session:$androidxMediaVersion"
+    api "androidx.media3:media3-exoplayer:$androidxMediaVersion"
 
     implementation "androidx.annotation:annotation:$androidx_annotation"
-    implementation "androidx.appcompat:appcompat:$app_compat"
+    implementation "androidx.appcompat:appcompat:$appCompatVersion"
     implementation "javax.inject:javax.inject:$javax_inject"
     implementation "com.annimon:stream:$annimon_stream"
     compileOnly "org.checkerframework:checker-qual:$qual"

@@ -39,7 +39,7 @@ dependencies {
     implementation "androidx.exifinterface:exifinterface:$androidx_exifinterface_version"
     implementation "io.reactivex.rxjava2:rxandroid:$rx_android"
     implementation "androidx.core:core-ktx:$androidx_core"
-    implementation "androidx.appcompat:appcompat:$app_compat"
+    implementation "androidx.appcompat:appcompat:$appCompatVersion"
     implementation "com.google.android.material:material:$material"
     testImplementation "junit:junit:$junit"
 }

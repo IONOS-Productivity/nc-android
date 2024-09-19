@@ -39,7 +39,7 @@ dependencies {
 
     implementation "javax.inject:javax.inject:$javax_inject"
     implementation "androidx.core:core-ktx:$androidx_core"
-    implementation "androidx.appcompat:appcompat:$app_compat"
+    implementation "androidx.appcompat:appcompat:$appCompatVersion"
     implementation "com.google.android.material:material:$material"
     testImplementation "junit:junit:$junit"
 }
