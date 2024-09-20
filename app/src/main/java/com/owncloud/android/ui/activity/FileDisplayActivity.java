@@ -35,7 +35,6 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.Parcelable;
-import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -47,6 +46,10 @@ import android.view.WindowManager;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
+import com.ionos.annotation.IonosCustomization;
+import com.ionos.player.activity.OpenFileConfig;
+import com.ionos.player.activity.StartBuiltInMediaPlayerFactory;
+import com.ionos.player.activity.contract.MediaPlayerResultContract;
 import com.nextcloud.appReview.InAppReviewHelper;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.appinfo.AppInfo;
@@ -98,7 +101,6 @@ import com.owncloud.android.ui.asynctasks.CheckAvailableSpaceTask;
 import com.owncloud.android.ui.asynctasks.FetchRemoteFileTask;
 import com.owncloud.android.ui.asynctasks.GetRemoteFileTask;
 import com.owncloud.android.ui.dialog.SendShareDialog;
-import com.owncloud.android.ui.dialog.setupEncryption.SetupEncryptionDialogFragment;
 import com.owncloud.android.ui.dialog.SortingOrderDialogFragment;
 import com.owncloud.android.ui.dialog.StoragePermissionDialogFragment;
 import com.owncloud.android.ui.events.SearchEvent;
@@ -145,20 +147,24 @@ import java.util.Optional;
 
 import javax.inject.Inject;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SearchView;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.disposables.Disposables;
 import kotlin.Unit;
 
 import static com.owncloud.android.datamodel.OCFile.PATH_SEPARATOR;
-import static com.owncloud.android.ui.dialog.setupEncryption.SetupEncryptionDialogFragment.SETUP_ENCRYPTION_DIALOG_TAG;
 import static com.owncloud.android.utils.PermissionUtil.PERMISSION_CHOICE_DIALOG_TAG;
 
 /**
@@ -243,6 +249,16 @@ public class FileDisplayActivity extends FileActivity
 
     @Inject FastScrollUtils fastScrollUtils;
     @Inject AsyncRunner asyncRunner;
+    @IonosCustomization
+    @Inject StartBuiltInMediaPlayerFactory startBuiltInMediaPlayerFactory;
+    @IonosCustomization
+    private Disposable playerLauncherDisposable = Disposables.disposed();
+    @IonosCustomization
+    private ActivityResultLauncher<MediaPlayerResultContract.Input> mediaPlayerLauncher =
+        registerForActivityResult(
+            new MediaPlayerResultContract(),
+            this::currentFileChanged
+        );
 
     public static Intent openFileIntent(Context context, User user, OCFile file) {
         final Intent intent = new Intent(context, PreviewImageActivity.class);
@@ -874,7 +890,7 @@ public class FileDisplayActivity extends FileActivity
                     if (hasEnoughSpaceAvailable) {
                         File file = new File(filesToUpload[0]);
                         File renamedFile;
-                        if(requestCode == REQUEST_CODE__UPLOAD_FROM_CAMERA) {
+                        if (requestCode == REQUEST_CODE__UPLOAD_FROM_CAMERA) {
                             renamedFile = new File(file.getParent() + PATH_SEPARATOR + FileOperationsHelper.getCapturedImageName());
                         } else {
                             renamedFile = new File(file.getParent() + PATH_SEPARATOR + FileOperationsHelper.getCapturedVideoName());
@@ -2071,13 +2087,28 @@ public class FileDisplayActivity extends FileActivity
         }
     }
 
+    @IonosCustomization("Launch of custom player")
     private void startMediaActivity(OCFile file, long startPlaybackPosition, boolean autoplay, Optional<User> user) {
-        Intent previewMediaIntent = new Intent(this, PreviewMediaActivity.class);
-        previewMediaIntent.putExtra(PreviewMediaActivity.EXTRA_FILE, file);
-        previewMediaIntent.putExtra(PreviewMediaActivity.EXTRA_USER, user.get());
-        previewMediaIntent.putExtra(PreviewMediaActivity.EXTRA_START_POSITION, startPlaybackPosition);
-        previewMediaIntent.putExtra(PreviewMediaActivity.EXTRA_AUTOPLAY, autoplay);
-        startActivity(previewMediaIntent);
+        playerLauncherDisposable.dispose();
+
+        playerLauncherDisposable =
+            startBuiltInMediaPlayerFactory
+                .create(
+                    new OpenFileConfig(
+                        file
+                    ),
+                    ActivityOptionsCompat.makeBasic(),
+                    mediaPlayerLauncher
+                )
+                .invoke()
+                .subscribe(
+                    () -> {},
+                    t -> {}
+                );
+    }
+
+    @IonosCustomization
+    private void currentFileChanged(@Nullable OCFile file) {
     }
 
     public void configureToolbarForPreview(OCFile file) {

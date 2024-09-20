@@ -6,6 +6,6 @@ import javax.inject.Inject
 
 class FileInfoToDisplayNameTransformationImpl @Inject constructor(): FileInfoToDisplayNameTransformation {
     override fun transform(from: PlayerFileInfo): String {
-        TODO("Not yet implemented")
+        return from.id
     }
 }

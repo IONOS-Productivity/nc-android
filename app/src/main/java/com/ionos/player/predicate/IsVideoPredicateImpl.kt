@@ -1,6 +1,6 @@
 package com.ionos.player.predicate
 
-import com.ionos.player.transformation.player_file_info.PlayerFileInfoToOCFileTransformation
+import com.ionos.player.transformation.oc_file.PlayerFileInfoToOCFileTransformation
 import com.owncloud.android.utils.MimeTypeUtil
 import com.strato.hidrive.player.domain.PlayerFileInfo
 import com.strato.hidrive.player.predicate.IsVideoPredicate

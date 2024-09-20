@@ -7,6 +7,6 @@ import javax.inject.Inject
 
 class FileInfoToUriTransformationImpl @Inject constructor(): FileInfoToUriTransformation {
     override fun transform(from: PlayerFileInfo): Uri {
-        TODO("Not yet implemented")
+        return Uri.parse("")
     }
 }

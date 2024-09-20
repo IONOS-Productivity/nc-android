@@ -1,4 +1,4 @@
-package com.ionos.player.transformation.player_file_info
+package com.ionos.player.transformation.oc_file
 
 import com.ionos.player.cache.PlayerSourceInfoCache
 import com.owncloud.android.datamodel.OCFile

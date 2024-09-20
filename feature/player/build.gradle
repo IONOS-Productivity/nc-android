@@ -63,7 +63,7 @@ dependencies {
     implementation("com.google.android.gms:play-services-cast-framework:$playServicesCastVersion") {
         exclude group: 'javax.inject'
     }
-    implementation "com.annimon:stream:$annimon_stream"
+    api "com.annimon:stream:$annimon_stream"
 
     testImplementation "junit:junit:$junit"
     testImplementation "org.robolectric:robolectric:$roboelectric"

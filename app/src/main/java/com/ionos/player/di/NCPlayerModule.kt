@@ -2,6 +2,7 @@ package com.ionos.player.di
 
 import androidx.media3.common.util.UnstableApi
 import com.ionos.player.NCMultiplePlaybackSettings
+import com.ionos.player.activity.IonosPlayerActivity
 import com.ionos.player.cab.PlayerCABStrategyProviderImpl
 import com.ionos.player.cache.InMemoryPlayerSourceInfoCache
 import com.ionos.player.cache.PlayerPathProviderImpl
@@ -50,6 +51,7 @@ import com.viseven.develop.player.interfaces.PlayerExceptionMessageProvider
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
+import dagger.android.ContributesAndroidInjector
 import java.util.Optional
 import javax.inject.Named
 import javax.inject.Singleton
@@ -191,4 +193,7 @@ abstract class NCPlayerModule {
     abstract fun bindPlayerSourceInfoCache(
         cache: InMemoryPlayerSourceInfoCache
     ): PlayerSourceInfoCache
+
+    @ContributesAndroidInjector
+    abstract fun logsActivity(): IonosPlayerActivity
 }
