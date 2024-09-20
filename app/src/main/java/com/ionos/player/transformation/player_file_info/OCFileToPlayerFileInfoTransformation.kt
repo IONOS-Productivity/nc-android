@@ -1,0 +1,22 @@
+package com.ionos.player.transformation.player_file_info
+
+import com.ionos.player.cache.PlayerSourceInfoCache
+import com.owncloud.android.datamodel.OCFile
+import com.strato.hidrive.player.domain.PlayerFileInfo
+import com.strato.hidrive.player.transformation.PlayerTransformation
+import javax.inject.Inject
+
+class OCFileToPlayerFileInfoTransformation @Inject constructor(
+    private val cache: PlayerSourceInfoCache,
+) : PlayerTransformation<OCFile, PlayerFileInfo> {
+
+    override fun transform(from: OCFile): PlayerFileInfo {
+        return PlayerFileInfo(
+            from.remotePath,
+            from.fileLength,
+            null
+        )
+            .also { cache[it] = from }
+    }
+
+}

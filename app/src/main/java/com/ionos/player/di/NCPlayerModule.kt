@@ -3,7 +3,9 @@ package com.ionos.player.di
 import androidx.media3.common.util.UnstableApi
 import com.ionos.player.NCMultiplePlaybackSettings
 import com.ionos.player.cab.PlayerCABStrategyProviderImpl
+import com.ionos.player.cache.InMemoryPlayerSourceInfoCache
 import com.ionos.player.cache.PlayerPathProviderImpl
+import com.ionos.player.cache.PlayerSourceInfoCache
 import com.ionos.player.image_loading.PlayerImageLoaderImpl
 import com.ionos.player.message.NCPlayerExceptionMessageProvider
 import com.ionos.player.message.PlayerMessageBuilderFactoryImpl
@@ -91,7 +93,6 @@ abstract class NCPlayerModule {
     }
 
     @Binds
-    @Singleton
     abstract fun bindFileInfoToIntentTransformation(
         transformation: FileInfoToIntentTransformationImpl,
     ): FileInfoToIntentTransformation
@@ -104,25 +105,21 @@ abstract class NCPlayerModule {
     ): MediaItemToDataSourceFactoryTransformation
 
     @Binds
-    @Singleton
     abstract fun bindIsVideoPredicate(
         predicate: IsVideoPredicateImpl
     ): IsVideoPredicate
 
     @Binds
-    @Singleton
     abstract fun bindFileInfoToMimetypeTransformation(
         transformation: FileInfoToMimetypeTransformationImpl
     ): FileInfoToMimetypeTransformation
 
     @Binds
-    @Singleton
     abstract fun bindFileInfoToStringSizeTransformation(
         transformation: FileInfoToStringSizeTransformationImpl
     ): FileInfoToStringSizeTransformation
 
     @Binds
-    @Singleton
     abstract fun bindFileInfoToUriTransformation(
         transformation: FileInfoToUriTransformationImpl
     ): FileInfoToUriTransformation
@@ -135,7 +132,6 @@ abstract class NCPlayerModule {
 
     @UnstableApi
     @Binds
-    @Singleton
     abstract fun bindFileInfoToCacheKeyTransformation(
         transformation: FileInfoToCacheKeyTransformationImpl
     ): FileInfoToCacheKeyTransformation
@@ -190,4 +186,9 @@ abstract class NCPlayerModule {
         provider: NCPlayerExceptionMessageProvider,
     ): PlayerExceptionMessageProvider
 
+    @Singleton
+    @Binds
+    abstract fun bindPlayerSourceInfoCache(
+        cache: InMemoryPlayerSourceInfoCache
+    ): PlayerSourceInfoCache
 }
