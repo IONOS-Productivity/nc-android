@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/toolbar_frame"
+        android:background="@color/ionos_toolbar_color"
         app:layout_scrollFlags="scroll|enterAlways">
 
         <!-- sorting/layout bar -->
