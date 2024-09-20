@@ -5,7 +5,7 @@
     <color name="bg_default">@color/white</color>
     <color name="appbar">@color/ionos_toolbar_color</color>
 
-    <color name="system_bars_color">@color/ghost_white</color>
+    <color name="system_bars_color">@color/white</color>
     <color name="bottom_sheet_nav_bar_color">@color/white</color>
 
     <color name="ionos_navigation_bar_background">@color/ghost_white</color>
