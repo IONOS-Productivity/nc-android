@@ -1,6 +1,7 @@
 package com.ionos.player.transformation
 
 import com.ionos.player.transformation.oc_file.PlayerFileInfoToOCFileTransformation
+import com.owncloud.android.utils.MimeTypeUtil
 import com.strato.hidrive.player.domain.PlayerFileInfo
 import com.strato.hidrive.player.transformation.PlayerFileInfoToExifInfoProviderTransformation
 import com.strato.hidrive.views.exif_info.ExifInfoFile
@@ -20,7 +21,7 @@ class PlayerFileInfoToExifInfoProviderTransformationImpl @Inject constructor(
                 ocFile.fileName,
                 ocFile.fileLength,
                 ocFile.modificationTimestamp,
-                0
+                MimeTypeUtil.getFileTypeIconId(ocFile.mimeType, ocFile.fileName),
             ),
             { Single.error(NotImplementedError("ExifInfoLoadMetadata not implemented")) },
             { _, _, _ -> Completable.error(NotImplementedError("Exif load image not implemented")) }

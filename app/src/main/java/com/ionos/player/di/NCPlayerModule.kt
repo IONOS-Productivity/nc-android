@@ -64,7 +64,7 @@ abstract class NCPlayerModule {
     companion object {
         @Named(PLAYER_CACHE_SIZE_QUALIFIER)
         @Provides
-        fun providePlayerCacheSize() = 300 * 1024 * 1024
+        fun providePlayerCacheSize(): Long = 300 * 1024 * 1024
 
         @Provides
         @Singleton

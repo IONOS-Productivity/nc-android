@@ -9,14 +9,18 @@ import com.ionos.player.tracking.VideoPlayerEventTrackerImpl
 import com.nextcloud.client.di.Injectable
 import com.owncloud.android.datamodel.OCFile
 import com.owncloud.android.ui.activity.BaseActivity
+import com.strato.hidrive.player.domain.PlayerFileInfo
 import com.strato.hidrive.player.util.SystemVersion
 import com.strato.hidrive.player.views.AudioPlayerView
 import com.strato.hidrive.player.views.VideoPlayerView
+import com.strato.hidrive.player.views.player.fragment.SurfaceInvalidator
+import com.strato.hidrive.player.views.player.view.PlayerCompatible
+import com.strato.hidrive.player.views.player.view.PlayerView
 import com.strato.hidrive.player.views.player.view.PlayerViewContainer
 import com.strato.hidrive.stylized_view.StylizedTextView
 import javax.inject.Inject
 
-class IonosPlayerActivity : BaseActivity(), PlayerViewContainer, Injectable {
+class IonosPlayerActivity : BaseActivity(), PlayerViewContainer, PlayerCompatible, Injectable {
 
     private enum class PlayerType {
         AUDIO,
@@ -55,16 +59,21 @@ class IonosPlayerActivity : BaseActivity(), PlayerViewContainer, Injectable {
     @Inject
     lateinit var videoPlayerEventTracker: VideoPlayerEventTrackerImpl
 
+    private val surfaceInvalidator = SurfaceInvalidator()
+    private lateinit var playerView: PlayerView
+    private var isPlayerViewStarted = false
+    private var currentFileInfo: PlayerFileInfo? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         StylizedTextView.initialize(PlayerCustomFonts())
 
-        when(getPlayerType()){
+        playerView = when(getPlayerType()){
             PlayerType.AUDIO -> AudioPlayerView(this, audioPlayerEventTracker)
             PlayerType.VIDEO -> VideoPlayerView(this, videoPlayerEventTracker)
         }
-            .let(this::setContentView)
+        setContentView(playerView)
     }
 
     @Suppress("Deprecation")
@@ -76,8 +85,35 @@ class IonosPlayerActivity : BaseActivity(), PlayerViewContainer, Injectable {
         return type ?: throw IllegalStateException("Player type was not defined")
     }
 
+    override fun onStart() {
+        super.onStart()
+        if (!this.isPlayerViewStarted) {
+            playerView.onStart()
+            playerView.setCurrentFileListener{ currentFileInfo = it}
+            this.isPlayerViewStarted = true
+        }
+    }
+
+    override fun onStop() {
+        playerView.setCurrentFileListener(null)
+        playerView.onStop()
+        this.isPlayerViewStarted = false
+        super.onStop()
+    }
+
+    // todo by mahera: try to replace with launchers
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        playerView.onStart()
+        this.isPlayerViewStarted = true
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
     override fun onPlayerViewClose() {
         finish()
+    }
+
+    override fun getSurfaceInvalidator(): SurfaceInvalidator {
+        return surfaceInvalidator
     }
 
 }

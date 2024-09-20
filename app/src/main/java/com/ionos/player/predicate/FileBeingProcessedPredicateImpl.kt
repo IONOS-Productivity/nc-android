@@ -6,6 +6,6 @@ import javax.inject.Inject
 
 class FileBeingProcessedPredicateImpl @Inject constructor(): FileBeingProcessedPredicate {
     override fun satisfied(value: PlayerFileInfo): Boolean {
-        TODO("Not yet implemented")
+        return false
     }
 }
