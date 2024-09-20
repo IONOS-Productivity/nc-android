@@ -609,6 +609,7 @@ public final class ThumbnailsCacheManager {
             return thumbnail;
         }
 
+        @IonosCustomization
         protected void onPostExecute(Bitmap bitmap) {
             if (bitmap != null && mImageViewReference != null) {
                 final ImageView imageView = mImageViewReference.get();
@@ -624,11 +625,7 @@ public final class ThumbnailsCacheManager {
                         tagId = String.valueOf(((TrashbinFile) mFile).getRemoteId());
                     }
                     if (String.valueOf(imageView.getTag()).equals(tagId)) {
-                        if (gridViewEnabled) {
-                            BitmapUtils.setRoundedBitmapForGridMode(bitmap, imageView);
-                        } else {
-                            BitmapUtils.setRoundedBitmap(bitmap, imageView);
-                        }
+                        imageView.setImageBitmap(bitmap);
                     }
                 }
 

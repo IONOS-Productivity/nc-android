@@ -136,7 +136,6 @@ class FilesSpecificViewThemeUtils @Inject constructor(
     @JvmOverloads
     @IonosCustomization
     fun themeActionBar(context: Context, actionBar: ActionBar, title: String, isMenu: Boolean = false) {
-        println("!!! setTitle: $title")
         val icon = getHomeAsUpIcon(isMenu)
         actionBar.setHomeAsUpIndicator(icon)
         actionBar.title = title
