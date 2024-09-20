@@ -3,6 +3,7 @@
     <color name="text_color">@color/ionos_default_text_color</color>
     <color name="secondary_text_color">@color/metallic_silver</color>
     <color name="bg_default">@color/midnight_blue2</color>
+    <color name="appbar">@color/ionos_toolbar_color</color>
 
     <color name="system_bars_color">@color/midnight_blue2</color>
     <color name="bottom_sheet_nav_bar_color">@color/shark</color>
