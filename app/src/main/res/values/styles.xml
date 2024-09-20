@@ -32,6 +32,8 @@
         <item name="android:navigationBarColor">@color/bg_default</item>
         <item name="textInputStyle">@style/Widget.App.TextInputLayout</item>
         <item name="dialogCornerRadius">@dimen/dialogBorderRadius</item>
+
+        <item name="actionModeCloseDrawable" app:ionosCustomization="">@drawable/ic_arrow_back</item>
     </style>
 
     <style name="Theme.ownCloud" parent="BaseTheme.ownCloud" />
@@ -54,6 +56,8 @@
         <item name="snackbarStyle" app:ionosCustomization="">@style/Widget.App.Snackbar</item>
         <item name="snackbarButtonStyle" app:ionosCustomization="">@style/Widget.App.SnackbarButton</item>
         <item name="snackbarTextViewStyle" app:ionosCustomization="">@style/Widget.App.SnackbarTextView</item>
+
+        <item name="actionModeCloseDrawable" app:ionosCustomization="">@drawable/ic_arrow_back</item>
     </style>
 
     <style name="FallbackThemingTheme" parent="FallbackThemingThemeBase" />

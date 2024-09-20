@@ -233,4 +233,8 @@
 
     </style>
 
+    <style name="App.ActionModeTitleText" parent="TextAppearance.Material3.ActionBar.Title">
+        <item name="android:textColor">@color/text_color</item>
+    </style>
+
 </resources>

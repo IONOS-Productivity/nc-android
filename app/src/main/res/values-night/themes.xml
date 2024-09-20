@@ -28,5 +28,7 @@
         <item name="snackbarStyle" app:ionosCustomization="">@style/Widget.App.Snackbar</item>
         <item name="snackbarButtonStyle" app:ionosCustomization="">@style/Widget.App.SnackbarButton</item>
         <item name="snackbarTextViewStyle" app:ionosCustomization="">@style/Widget.App.SnackbarTextView</item>
+
+        <item name="actionModeCloseDrawable" app:ionosCustomization="">@drawable/ic_arrow_back</item>
     </style>
 </resources>

@@ -4,6 +4,8 @@
     <color name="secondary_text_color">@color/metallic_silver</color>
     <color name="bg_default">@color/midnight_blue2</color>
     <color name="appbar">@color/ionos_toolbar_color</color>
+    <color name="action_mode_background">@color/navy</color>
+    <color name="selected_item_background">@color/navy</color>
 
     <color name="system_bars_color">@color/midnight_blue2</color>
     <color name="bottom_sheet_nav_bar_color">@color/shark</color>
@@ -84,4 +86,5 @@
     <color name="grid_mode_default_feature_icon_color">@color/dodger_blue</color>
     <color name="grid_mode_feature_layout_background_color">@color/geyser</color>
     <color name="grid_mode_item_outline_color">@color/dusk</color>
+    <color name="grid_mode_selected_item_outline_color">@color/dodger_blue</color>
 </resources>

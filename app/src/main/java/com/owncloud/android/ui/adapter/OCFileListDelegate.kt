@@ -268,8 +268,9 @@ class OCFileListDelegate(
         }
     }
 
+    @IonosCustomization
     private fun bindGridItemLayout(file: OCFile, gridViewHolder: ListGridImageViewHolder) {
-        setItemLayoutBackgroundColor(file, gridViewHolder)
+        setItemLayoutBackground(file, gridViewHolder)
         setCheckBoxImage(file, gridViewHolder)
         setItemLayoutOnClickListeners(file, gridViewHolder)
 
@@ -290,6 +291,26 @@ class OCFileListDelegate(
                     )
                 }
             }
+        }
+    }
+
+    @IonosCustomization
+    private fun setItemLayoutBackground(file: OCFile, gridViewHolder: ListGridImageViewHolder) {
+        val isSelected = file.fileId == highlightedItem?.fileId || isCheckedFile(file)
+        if (gridViewHolder is OCFileListGridItemViewHolder) {
+            val itemLayoutBackgroundResId = if (isSelected) {
+                R.drawable.grid_mode_selected_item_background
+            } else {
+                R.drawable.grid_mode_item_background
+            }
+            gridViewHolder.itemLayout.setBackgroundResource(itemLayoutBackgroundResId)
+        } else {
+            val itemLayoutBackgroundColor = if (isSelected) {
+                ContextCompat.getColor(context, R.color.selected_item_background)
+            } else {
+                ContextCompat.getColor(context, R.color.bg_default)
+            }
+            gridViewHolder.itemLayout.setBackgroundColor(itemLayoutBackgroundColor)
         }
     }
 

@@ -5,14 +5,9 @@
     android:id="@+id/ListItemLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/grid_mode_item_background"
     android:gravity="center"
     android:orientation="vertical">
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="@dimen/grid_mode_item_outline_margin"
-        android:background="@drawable/grid_mode_item_outline" />
 
     <com.owncloud.android.ui.RoundedCornersConstraintLayout
         android:layout_width="match_parent"

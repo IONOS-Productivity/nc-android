@@ -755,6 +755,7 @@ public class OCFileListFragment extends ExtendedListFragment implements
          * Load menu and customize UI when action mode is started.
          */
         @Override
+        @IonosCustomization
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
             mActiveActionMode = mode;
             // Determine if actionMode is "new" or not (already affected by item-selection)
@@ -763,8 +764,6 @@ public class OCFileListFragment extends ExtendedListFragment implements
             // fake menu to be able to use bottom sheet instead
             MenuInflater inflater = getActivity().getMenuInflater();
             inflater.inflate(R.menu.custom_menu_placeholder, menu);
-            final MenuItem item = menu.findItem(R.id.custom_menu_placeholder_item);
-            item.setIcon(viewThemeUtils.platform.colorDrawable(item.getIcon(), ContextCompat.getColor(requireContext(), R.color.white)));
             mode.invalidate();
 
             //set actionMode color
