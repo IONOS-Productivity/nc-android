@@ -6,6 +6,6 @@ import javax.inject.Inject
 
 class FileInfoToCacheKeyTransformationImpl @Inject constructor(): FileInfoToCacheKeyTransformation {
     override fun transform(from: PlayerFileInfo): String {
-        TODO("Not yet implemented")
+        return from.toString()
     }
 }

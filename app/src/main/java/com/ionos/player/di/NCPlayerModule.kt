@@ -47,6 +47,8 @@ import com.strato.hidrive.player.transformation.MediaItemToDataSourceFactoryTran
 import com.strato.hidrive.player.transformation.PlayerFileInfoToExifInfoProviderTransformation
 import com.strato.hidrive.player.util.PlayerLocaleProvider
 import com.strato.hidrive.player.views.PlayerCABStrategyProvider
+import com.strato.hidrive.views.contextbar.toolbar.views.ToolbarItemViewFactory
+import com.strato.hidrive.views.contextbar.toolbar.views.ToolbarItemViewFactoryImpl
 import com.viseven.develop.player.interfaces.PlayerExceptionMessageProvider
 import dagger.Binds
 import dagger.Module
@@ -91,6 +93,12 @@ abstract class NCPlayerModule {
         fun providePlayerChromecastModel(
         ): Optional<PlayerChromecastModel> {
             return Optional.empty()
+        }
+
+        @Provides
+        @Singleton
+        fun provideToolbarItemViewFactory(): ToolbarItemViewFactory{
+            return ToolbarItemViewFactoryImpl()
         }
     }
 
@@ -187,6 +195,8 @@ abstract class NCPlayerModule {
     abstract fun bindPlayerExceptionMessageProvider(
         provider: NCPlayerExceptionMessageProvider,
     ): PlayerExceptionMessageProvider
+
+
 
     @Singleton
     @Binds

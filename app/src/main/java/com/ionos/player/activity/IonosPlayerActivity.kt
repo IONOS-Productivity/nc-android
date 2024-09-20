@@ -3,13 +3,20 @@ package com.ionos.player.activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.FrameLayout
+import com.ionos.player.font.PlayerCustomFonts
+import com.ionos.player.tracking.AudioPlayerEventTrackerImpl
+import com.ionos.player.tracking.VideoPlayerEventTrackerImpl
 import com.nextcloud.client.di.Injectable
 import com.owncloud.android.datamodel.OCFile
 import com.owncloud.android.ui.activity.BaseActivity
 import com.strato.hidrive.player.util.SystemVersion
+import com.strato.hidrive.player.views.AudioPlayerView
+import com.strato.hidrive.player.views.VideoPlayerView
+import com.strato.hidrive.player.views.player.view.PlayerViewContainer
+import com.strato.hidrive.stylized_view.StylizedTextView
+import javax.inject.Inject
 
-class IonosPlayerActivity : BaseActivity(), Injectable {
+class IonosPlayerActivity : BaseActivity(), PlayerViewContainer, Injectable {
 
     private enum class PlayerType {
         AUDIO,
@@ -34,6 +41,7 @@ class IonosPlayerActivity : BaseActivity(), Injectable {
                 }
         }
 
+        @Suppress("Deprecation")
         fun parseResultIntent(result: Intent?): OCFile? {
             return if (SystemVersion.greaterOrEqualToTiramisu())
                 result?.getParcelableExtra(RESULT_LAST_FILE_INFO, OCFile::class.java)
@@ -42,12 +50,34 @@ class IonosPlayerActivity : BaseActivity(), Injectable {
 
     }
 
+    @Inject
+    lateinit var audioPlayerEventTracker: AudioPlayerEventTrackerImpl
+    @Inject
+    lateinit var videoPlayerEventTracker: VideoPlayerEventTrackerImpl
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(FrameLayout(baseContext))
+        StylizedTextView.initialize(PlayerCustomFonts())
+
+        when(getPlayerType()){
+            PlayerType.AUDIO -> AudioPlayerView(this, audioPlayerEventTracker)
+            PlayerType.VIDEO -> VideoPlayerView(this, videoPlayerEventTracker)
+        }
+            .let(this::setContentView)
     }
 
+    @Suppress("Deprecation")
+    private fun getPlayerType(): PlayerType {
+        val type =
+            if (SystemVersion.greaterOrEqualToTiramisu()) intent.getSerializableExtra(PLAYER_TYPE, PlayerType::class.java)
+            else  intent.getSerializableExtra(PLAYER_TYPE) as PlayerType?
 
+        return type ?: throw IllegalStateException("Player type was not defined")
+    }
+
+    override fun onPlayerViewClose() {
+        finish()
+    }
 
 }

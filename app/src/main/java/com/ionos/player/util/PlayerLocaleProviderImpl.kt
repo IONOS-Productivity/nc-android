@@ -6,6 +6,6 @@ import javax.inject.Inject
 
 class PlayerLocaleProviderImpl @Inject constructor(): PlayerLocaleProvider {
     override fun getDefault(): Locale {
-        TODO("Not yet implemented")
+        return Locale.getDefault()
     }
 }
