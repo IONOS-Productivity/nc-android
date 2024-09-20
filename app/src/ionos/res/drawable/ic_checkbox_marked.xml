@@ -7,10 +7,10 @@
         android:translateX="-8"
         android:translateY="-8">
         <path
-            android:fillColor="#1474C4"
+            android:fillColor="@color/dodger_blue"
             android:pathData="M13,11L27,11A2,2 0,0 1,29 13L29,27A2,2 0,0 1,27 29L13,29A2,2 0,0 1,11 27L11,13A2,2 0,0 1,13 11z" />
         <path
-            android:fillColor="#ffffff"
+            android:fillColor="@color/white"
             android:pathData="M25.016,16.984C25.32,17.266 25.32,17.758 25.016,18.039L19.016,24.039C18.734,24.344 18.242,24.344 17.961,24.039L14.961,21.039C14.656,20.758 14.656,20.266 14.961,19.984C15.242,19.68 15.734,19.68 16.016,19.984L18.5,22.445L23.961,16.984C24.242,16.68 24.734,16.68 25.016,16.984Z" />
     </group>
 </vector>
