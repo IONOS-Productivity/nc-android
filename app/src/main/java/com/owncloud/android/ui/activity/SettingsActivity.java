@@ -856,9 +856,8 @@ public class SettingsActivity extends PreferenceActivity
         });
     }
 
-    @IonosCustomization
     private void setListBackground() {
-        getListView().setBackgroundColor(ContextCompat.getColor(this, R.color.settings_screen_background));
+        getListView().setBackgroundColor(ContextCompat.getColor(this, R.color.bg_default));
     }
 
     private String getAppVersion() {
