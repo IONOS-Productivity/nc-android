@@ -142,11 +142,13 @@ public class SettingsActivity extends PreferenceActivity
 
     @SuppressWarnings("deprecation")
     @Override
+    @IonosCustomization("Delegate fix")
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
         getDelegate().installViewFactory();
         getDelegate().onCreate(savedInstanceState);
+
+        super.onCreate(savedInstanceState);
+
         addPreferencesFromResource(R.xml.preferences);
 
         setupActionBar();
