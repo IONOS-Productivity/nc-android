@@ -15,14 +15,18 @@ import com.nextcloud.android.common.ui.theme.utils.AndroidViewThemeUtils
 import com.owncloud.android.R
 
 @IonosCustomization
-class IonosViewThemeUtils(private val platform: AndroidViewThemeUtils) {
+class IonosViewThemeUtils(private val platformUtil: AndroidViewThemeUtils) {
+    @JvmField
+    val platform = Platform()
 
-    fun themeSystemBars(activity: Activity) {
-        platform.colorStatusBar(activity, activity.getSystemBarsColor())
-    }
+    inner class Platform {
+        fun themeSystemBars(activity: Activity) {
+            platformUtil.colorStatusBar(activity, activity.getSystemBarsColor())
+        }
 
-    fun resetSystemBars(activity: Activity) {
-        platform.colorStatusBar(activity, activity.getSystemBarsColor())
+        fun resetSystemBars(activity: Activity) {
+            platformUtil.colorStatusBar(activity, activity.getSystemBarsColor())
+        }
     }
 
     @ColorInt

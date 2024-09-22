@@ -883,7 +883,7 @@ public class SettingsActivity extends PreferenceActivity
         ActionBar actionBar = getDelegate().getSupportActionBar();
 
         if (actionBar != null) {
-            viewThemeUtils.ionos.themeSystemBars(this);
+            viewThemeUtils.ionos.platform.themeSystemBars(this);
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowTitleEnabled(true);
             actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back);

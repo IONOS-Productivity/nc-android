@@ -778,7 +778,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
 
             btnChooseFolder.setEnabled(mFile.canWrite());
 
-            viewThemeUtils.ionos.themeSystemBars(this);
+            viewThemeUtils.ionos.platform.themeSystemBars(this);
 
             viewThemeUtils.material.colorMaterialButtonPrimaryOutlined(binding.uploaderCancel);
             binding.uploaderCancel.setOnClickListener(this);

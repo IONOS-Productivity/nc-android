@@ -258,7 +258,7 @@ class PreviewMediaActivity :
             viewThemeUtils.files.themeActionBar(this, it)
         }
 
-        viewThemeUtils.ionos.themeSystemBars(
+        viewThemeUtils.ionos.platform.themeSystemBars(
             this
         )
     }
