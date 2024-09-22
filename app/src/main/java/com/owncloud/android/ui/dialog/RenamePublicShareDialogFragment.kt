@@ -49,11 +49,11 @@ class RenamePublicShareDialogFragment : DialogFragment(), DialogInterface.OnClic
         val negativeButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE) as? MaterialButton
 
         positiveButton?.let {
-            viewThemeUtils.material.colorMaterialButtonPrimaryTonal(positiveButton)
+            viewThemeUtils.ionos.material.colorMaterialButtonPrimaryTonal(positiveButton)
         }
 
         negativeButton?.let {
-            viewThemeUtils.material.colorMaterialButtonPrimaryBorderless(negativeButton)
+            viewThemeUtils.ionos.material.colorMaterialButtonPrimaryBorderless(negativeButton)
         }
     }
 

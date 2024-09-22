@@ -92,12 +92,12 @@ class ChooseTemplateDialogFragment : DialogFragment(), View.OnClickListener, Tem
 
         val negativeButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE) as? MaterialButton
         negativeButton?.let {
-            viewThemeUtils.material.colorMaterialButtonPrimaryBorderless(negativeButton)
+            viewThemeUtils.ionos.material.colorMaterialButtonPrimaryBorderless(negativeButton)
         }
 
         val positiveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE) as? MaterialButton
         positiveButton?.let {
-            viewThemeUtils.material.colorMaterialButtonPrimaryTonal(positiveButton)
+            viewThemeUtils.ionos.material.colorMaterialButtonPrimaryTonal(positiveButton)
             positiveButton.setOnClickListener(this)
             positiveButton.isEnabled = false
             positiveButton.isClickable = false

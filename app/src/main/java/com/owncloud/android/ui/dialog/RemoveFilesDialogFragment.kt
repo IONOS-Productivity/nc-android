@@ -37,17 +37,17 @@ class RemoveFilesDialogFragment : ConfirmationDialogFragment(), ConfirmationDial
 
         val positiveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE) as? MaterialButton
         positiveButton?.let {
-            viewThemeUtils?.material?.colorMaterialButtonPrimaryTonal(positiveButton)
+            viewThemeUtils?.ionos?.material?.colorMaterialButtonPrimaryTonal(positiveButton)
         }
 
         val negativeButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE) as? MaterialButton
         negativeButton?.let {
-            viewThemeUtils?.material?.colorMaterialButtonPrimaryBorderless(negativeButton)
+            viewThemeUtils?.ionos?.material?.colorMaterialButtonPrimaryBorderless(negativeButton)
         }
 
         val neutralButton = alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL) as? MaterialButton
         neutralButton?.let {
-            viewThemeUtils?.material?.colorMaterialButtonPrimaryBorderless(neutralButton)
+            viewThemeUtils?.ionos?.material?.colorMaterialButtonPrimaryBorderless(neutralButton)
         }
     }
 

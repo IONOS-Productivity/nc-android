@@ -49,13 +49,13 @@ class StoragePermissionDialogFragment : DialogFragment(), Injectable {
             val alertDialog = it as AlertDialog
 
             val positiveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE) as MaterialButton
-            viewThemeUtils.material.colorMaterialButtonPrimaryTonal(positiveButton)
+            viewThemeUtils.ionos.material.colorMaterialButtonPrimaryTonal(positiveButton)
 
             val negativeButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE) as MaterialButton
-            viewThemeUtils.material.colorMaterialButtonPrimaryBorderless(negativeButton)
+            viewThemeUtils.ionos.material.colorMaterialButtonPrimaryBorderless(negativeButton)
 
             val neutralButton = alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL) as MaterialButton
-            viewThemeUtils.material.colorMaterialButtonPrimaryBorderless(neutralButton)
+            viewThemeUtils.ionos.material.colorMaterialButtonPrimaryBorderless(neutralButton)
         }
     }
 

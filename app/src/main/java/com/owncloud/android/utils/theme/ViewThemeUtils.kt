@@ -41,7 +41,7 @@ class ViewThemeUtils @Inject constructor(
 
     @JvmField
     @IonosCustomization
-    val ionos = IonosViewThemeUtils(platform)
+    val ionos = IonosViewThemeUtils(platform, material)
 
     class Factory @Inject constructor(
         private val schemesProvider: MaterialSchemesProvider,

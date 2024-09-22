@@ -83,12 +83,12 @@ class SetupEncryptionDialogFragment : DialogFragment(), Injectable {
         if (alertDialog != null) {
             positiveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE) as? MaterialButton?
             positiveButton?.let {
-                viewThemeUtils.material.colorMaterialButtonPrimaryTonal(it)
+                viewThemeUtils.ionos.material.colorMaterialButtonPrimaryTonal(it)
             }
 
             negativeButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE) as? MaterialButton?
             negativeButton?.let {
-                viewThemeUtils.material.colorMaterialButtonPrimaryBorderless(it)
+                viewThemeUtils.ionos.material.colorMaterialButtonPrimaryBorderless(it)
             }
         }
     }

@@ -38,17 +38,17 @@ open class ConfirmationDialogFragment : DialogFragment(), Injectable {
         if (alertDialog != null) {
             val positiveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE) as MaterialButton?
             if (positiveButton != null) {
-                viewThemeUtils?.material?.colorMaterialButtonPrimaryTonal(positiveButton)
+                viewThemeUtils?.ionos?.material?.colorMaterialButtonPrimaryTonal(positiveButton)
             }
 
             val negativeButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE) as MaterialButton?
             if (negativeButton != null) {
-                viewThemeUtils?.material?.colorMaterialButtonPrimaryBorderless(negativeButton)
+                viewThemeUtils?.ionos?.material?.colorMaterialButtonPrimaryBorderless(negativeButton)
             }
 
             val neutralButton = alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL) as MaterialButton?
             if (neutralButton != null) {
-                viewThemeUtils?.material?.colorMaterialButtonPrimaryBorderless(neutralButton)
+                viewThemeUtils?.ionos?.material?.colorMaterialButtonPrimaryBorderless(neutralButton)
             }
         }
     }

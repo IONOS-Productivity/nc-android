@@ -99,14 +99,14 @@ class ChooseRichDocumentsTemplateDialogFragment :
         alertDialog?.let {
             positiveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE) as? MaterialButton
             positiveButton?.let {
-                viewThemeUtils.material.colorMaterialButtonPrimaryTonal(it)
+                viewThemeUtils.ionos.material.colorMaterialButtonPrimaryTonal(it)
                 it.setOnClickListener(this)
                 it.isEnabled = false
             }
 
             val negativeButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE) as? MaterialButton
             negativeButton?.let {
-                viewThemeUtils.material.colorMaterialButtonPrimaryBorderless(negativeButton)
+                viewThemeUtils.ionos.material.colorMaterialButtonPrimaryBorderless(negativeButton)
             }
         }
 

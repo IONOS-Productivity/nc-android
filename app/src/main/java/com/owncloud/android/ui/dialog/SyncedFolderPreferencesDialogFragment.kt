@@ -155,9 +155,9 @@ class SyncedFolderPreferencesDialogFragment : DialogFragment(), Injectable {
             binding.settingInstantUploadExcludeHiddenCheckbox
         )
 
-        viewThemeUtils?.material?.colorMaterialButtonPrimaryTonal(binding.btnPositive)
-        viewThemeUtils?.material?.colorMaterialButtonPrimaryBorderless(binding.btnNegative)
-        viewThemeUtils?.material?.colorMaterialButtonPrimaryBorderless(binding.btnNeutral)
+        viewThemeUtils?.ionos?.material?.colorMaterialButtonPrimaryTonal(binding.btnPositive)
+        viewThemeUtils?.ionos?.material?.colorMaterialButtonPrimaryBorderless(binding.btnNegative)
+        viewThemeUtils?.ionos?.material?.colorMaterialButtonPrimaryBorderless(binding.btnNeutral)
     }
 
     private fun setButtonOrder(binding: SyncedFoldersSettingsLayoutBinding) {

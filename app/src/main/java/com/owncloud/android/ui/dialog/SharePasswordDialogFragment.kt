@@ -61,7 +61,7 @@ class SharePasswordDialogFragment : DialogFragment(), Injectable {
         if (alertDialog != null) {
             val positiveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE) as MaterialButton?
             if (positiveButton != null) {
-                viewThemeUtils?.material?.colorMaterialButtonPrimaryTonal(positiveButton)
+                viewThemeUtils?.ionos?.material?.colorMaterialButtonPrimaryTonal(positiveButton)
                 positiveButton.setOnClickListener {
                     val sharePassword = binding?.sharePassword?.text
 
@@ -84,7 +84,7 @@ class SharePasswordDialogFragment : DialogFragment(), Injectable {
 
             val negativeButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE) as MaterialButton?
             if (negativeButton != null) {
-                viewThemeUtils?.material?.colorMaterialButtonPrimaryBorderless(negativeButton)
+                viewThemeUtils?.ionos?.material?.colorMaterialButtonPrimaryBorderless(negativeButton)
             }
 
             val neutralButton = alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL) as MaterialButton?
