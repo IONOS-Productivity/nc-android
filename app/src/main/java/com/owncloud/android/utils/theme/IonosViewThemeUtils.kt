@@ -12,6 +12,7 @@ import android.content.Context
 import android.view.View
 import androidx.annotation.ColorInt
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.snackbar.Snackbar
 import com.ionos.annotation.IonosCustomization
 import com.nextcloud.android.common.ui.theme.utils.AndroidViewThemeUtils
 import com.nextcloud.android.common.ui.theme.utils.ColorRole
@@ -62,5 +63,6 @@ class IonosViewThemeUtils(
     inner class Material {
         fun colorMaterialButtonPrimaryTonal(button: MaterialButton) {}
         fun colorMaterialButtonPrimaryBorderless(button: MaterialButton) {}
+        fun themeSnackbar(snackbar: Snackbar) {}
     }
 }
