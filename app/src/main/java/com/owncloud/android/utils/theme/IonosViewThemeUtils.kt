@@ -40,6 +40,8 @@ class IonosViewThemeUtils(
     inner class Material {
         fun colorMaterialButtonPrimaryTonal(button: MaterialButton){}
         fun colorMaterialButtonPrimaryBorderless(button: MaterialButton){}
+        fun colorMaterialButtonPrimaryFilled(folderPickerBtnCancel: MaterialButton) {}
+        fun colorMaterialButtonText(folderPickerBtnCancel: MaterialButton) {}
     }
 
     @ColorInt
