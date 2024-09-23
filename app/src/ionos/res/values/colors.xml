@@ -101,4 +101,6 @@
     <color name="grid_mode_feature_layout_background_color">@color/geyser</color>
     <color name="grid_mode_item_outline_color">@color/geyser</color>
     <color name="grid_mode_selected_item_outline_color">@color/dodger_blue</color>
+
+    <color name="synced_folders_item_title_color">@color/ionos_default_text_color</color>
 </resources>

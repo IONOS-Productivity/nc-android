@@ -42,7 +42,7 @@
             android:layout_gravity="start|center_vertical"
             android:ellipsize="middle"
             android:text="@string/placeholder_filename"
-            android:textColor="?android:textColorPrimary"
+            android:textColor="@color/synced_folders_item_title_color"
             android:textStyle="bold" />
 
     </LinearLayout>
