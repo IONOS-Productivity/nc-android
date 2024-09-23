@@ -7,9 +7,6 @@
     <color name="action_mode_background">@color/navy</color>
     <color name="selected_item_background">@color/navy</color>
 
-    <color name="system_bars_color">@color/midnight_blue2</color>
-    <color name="bottom_sheet_nav_bar_color">@color/shark</color>
-
     <color name="ionos_navigation_bar_background">@color/midnight_blue2</color>
     <color name="ionos_default_icon_color">@color/ghost_white</color>
     <color name="ionos_default_text_color">@color/ghost_white</color>

@@ -48,7 +48,7 @@ public class FileDetailSharingMenuBottomSheetDialog extends BottomSheetDialog {
         binding = FileDetailsSharingMenuBottomSheetFragmentBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        viewThemeUtils.platform.themeDialog(binding.getRoot());
+        viewThemeUtils.ionos.platform.themeDialog(binding.getRoot());
 
         updateUI();
 

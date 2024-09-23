@@ -235,7 +235,7 @@
         <item name="android:navigationBarColor">@color/black</item>
         <item name="toolbarStyle">@style/Theme.ownCloud.Overlay.ActionBar</item>
         <item name="actionOverflowButtonStyle">@style/ToolbarStyle.Overflow</item>
-        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.App.BottomSheetDialog</item>
+        <item name="bottomSheetDialogTheme">@style/Generic.ThemeOverlay.App.BottomSheetDialog</item>
     </style>
 
     <style name="Theme.ownCloud.OverlayGrey" parent="Theme.ownCloud.OverlayBase">
@@ -446,12 +446,22 @@
 
 
     <style name="ThemeOverlay.App.BottomSheetDialog" parent="@style/ThemeOverlay.Material3.BottomSheetDialog">
-        <item name="bottomSheetStyle">@style/App.BottomSheetDialog</item>
+        <item name="bottomSheetStyle">@style/Generic.App.BottomSheetDialog</item>
     </style>
+
+    <style
+        name="Generic.ThemeOverlay.App.BottomSheetDialog"
+        parent="ThemeOverlay.App.BottomSheetDialog"
+        app:ionosCustomization="Empty style for further customization in Ionos" />
 
     <style name="App.BottomSheetDialog" parent="Widget.Material3.BottomSheet.Modal">
         <item name="backgroundTint">@color/bg_default</item>
     </style>
+
+    <style
+        name="Generic.App.BottomSheetDialog"
+        parent="App.BottomSheetDialog"
+        app:ionosCustomization="Empty style for further customization in Ionos" />
 
     <style name="App.ActionMode" parent="@style/Widget.Material3.ActionMode">
         <item name="background">@color/action_mode_background</item>

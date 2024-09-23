@@ -44,7 +44,7 @@ class GalleryFragmentBottomSheetDialog(
 
     @IonosCustomization
     private fun setupLayout() {
-        viewThemeUtils.platform.colorViewBackground(binding.bottomSheet, ColorRole.SURFACE)
+        viewThemeUtils.ionos.platform.colorViewBackground(binding.bottomSheet, ColorRole.SURFACE)
 
         when (currentMediaState) {
             MediaState.MEDIA_STATE_PHOTOS_ONLY -> {

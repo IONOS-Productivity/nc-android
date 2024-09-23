@@ -7,8 +7,10 @@
     <color name="action_mode_background">@color/ghost_white</color>
     <color name="selected_item_background">@color/white_smoke</color>
 
-    <color name="system_bars_color">@color/white</color>
-    <color name="bottom_sheet_nav_bar_color">@color/white</color>
+    <color name="system_bars_color">@color/bg_default</color>
+    <color name="bottom_sheet_nav_bar_color">@color/bg_default</color>
+
+    <color name="ionos_bottom_sheet_background_color">@color/bg_default</color>
 
     <color name="ionos_navigation_bar_background">@color/ghost_white</color>
     <color name="ionos_default_icon_color">@color/navy</color>

@@ -23,7 +23,7 @@
         <item name="windowNoTitle">true</item>
         <item name="textInputStyle">@style/Widget.App.TextInputLayout</item>
         <item name="popupMenuStyle">@style/Nextcloud.Widget.PopupMenu</item>
-        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.App.BottomSheetDialog</item>
+        <item name="bottomSheetDialogTheme">@style/Generic.ThemeOverlay.App.BottomSheetDialog</item>
         <item name="actionModeStyle">@style/App.ActionMode</item>
 
         <item name="snackbarStyle" app:ionosCustomization="">@style/Widget.App.Snackbar</item>

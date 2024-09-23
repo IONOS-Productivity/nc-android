@@ -48,7 +48,7 @@ public class SimpleOCFileListBottomSheetDialog extends BottomSheetDialog impleme
         binding = SimpleFileListActionsBottomSheetFragmentBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        viewThemeUtils.platform.colorViewBackground(binding.getRoot(), ColorRole.SURFACE);
+        viewThemeUtils.ionos.platform.colorViewBackground(binding.getRoot(), ColorRole.SURFACE);
 
         binding.addToCloud.setText(getContext().getResources().getString(R.string.add_to_cloud,
                                                                          themeUtils.getDefaultDisplayNameForRootFolder(getContext())));
