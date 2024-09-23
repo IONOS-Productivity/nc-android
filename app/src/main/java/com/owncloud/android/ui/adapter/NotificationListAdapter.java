@@ -35,6 +35,7 @@ import com.bumptech.glide.load.model.StreamEncoder;
 import com.bumptech.glide.load.resource.file.FileToStreamDecoder;
 import com.caverock.androidsvg.SVG;
 import com.google.android.material.button.MaterialButton;
+import com.ionos.annotation.IonosCustomization;
 import com.nextcloud.android.common.ui.theme.utils.ColorRole;
 import com.nextcloud.common.NextcloudClient;
 import com.owncloud.android.R;
@@ -158,6 +159,7 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
                                                                                   notificationsActivity).execute());
     }
 
+    @IonosCustomization()
     public void setButtons(NotificationViewHolder holder, Notification notification) {
         // add action buttons
         holder.binding.buttons.removeAllViews();
@@ -268,7 +270,7 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
                     button.setBackgroundColor(ResourcesCompat.getColor(resources,
                                                                        android.R.color.transparent,
                                                                        null));
-//                    viewThemeUtils.material.colorMaterialButtonPrimaryBorderless(button);
+                    viewThemeUtils.ionos.material.colorMaterialButtonPrimaryBorderless(button);
                 }
 
                 button.setAllCaps(false);

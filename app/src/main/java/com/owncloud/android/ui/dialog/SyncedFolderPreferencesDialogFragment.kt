@@ -20,6 +20,7 @@ import android.widget.AdapterView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.di.Injectable
 import com.nextcloud.client.preferences.SubFolderRule
 import com.nextcloud.utils.extensions.getParcelableArgument
@@ -144,6 +145,7 @@ class SyncedFolderPreferencesDialogFragment : DialogFragment(), Injectable {
         }
     }
 
+    @IonosCustomization()
     private fun applyUserColor(binding: SyncedFoldersSettingsLayoutBinding) {
         viewThemeUtils?.androidx?.colorSwitchCompat(binding.syncEnabled)
 

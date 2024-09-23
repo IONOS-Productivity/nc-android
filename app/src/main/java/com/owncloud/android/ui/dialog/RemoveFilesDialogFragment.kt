@@ -16,6 +16,7 @@ import android.os.Bundle
 import android.view.ActionMode
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.button.MaterialButton
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.di.Injectable
 import com.owncloud.android.R
 import com.owncloud.android.datamodel.OCFile
@@ -30,6 +31,7 @@ class RemoveFilesDialogFragment : ConfirmationDialogFragment(), ConfirmationDial
     private var mTargetFiles: Collection<OCFile>? = null
     private var actionMode: ActionMode? = null
 
+    @IonosCustomization()
     override fun onStart() {
         super.onStart()
 

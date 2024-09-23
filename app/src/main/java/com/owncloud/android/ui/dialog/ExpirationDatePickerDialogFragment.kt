@@ -21,6 +21,7 @@ import android.text.format.DateUtils
 import android.widget.DatePicker
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.button.MaterialButton
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.di.Injectable
 import com.owncloud.android.R
 import com.owncloud.android.utils.theme.ViewThemeUtils
@@ -42,6 +43,7 @@ class ExpirationDatePickerDialogFragment : DialogFragment(), OnDateSetListener, 
         this.onExpiryDateListener = onExpiryDateListener
     }
 
+    @IonosCustomization()
     override fun onStart() {
         super.onStart()
 

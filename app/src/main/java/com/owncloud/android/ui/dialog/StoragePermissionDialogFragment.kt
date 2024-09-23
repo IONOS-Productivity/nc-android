@@ -17,6 +17,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.di.Injectable
 import com.owncloud.android.R
 import com.owncloud.android.utils.theme.ViewThemeUtils
@@ -43,6 +44,7 @@ class StoragePermissionDialogFragment : DialogFragment(), Injectable {
         }
     }
 
+    @IonosCustomization()
     override fun onStart() {
         super.onStart()
         dialog?.let {

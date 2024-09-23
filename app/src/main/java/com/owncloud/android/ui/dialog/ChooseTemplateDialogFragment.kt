@@ -24,6 +24,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.android.lib.resources.directediting.DirectEditingCreateFileRemoteOperation
 import com.nextcloud.android.lib.resources.directediting.DirectEditingObtainListOfTemplatesRemoteOperation
 import com.nextcloud.client.account.CurrentAccountProvider
@@ -86,6 +87,7 @@ class ChooseTemplateDialogFragment : DialogFragment(), View.OnClickListener, Tem
     private var _binding: ChooseTemplateBinding? = null
     val binding get() = _binding!!
 
+    @IonosCustomization()
     override fun onStart() {
         super.onStart()
         val alertDialog = dialog as AlertDialog

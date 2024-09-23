@@ -16,6 +16,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.di.Injectable
 import com.nextcloud.utils.extensions.getParcelableArgument
 import com.owncloud.android.R
@@ -40,6 +41,7 @@ class RenamePublicShareDialogFragment : DialogFragment(), DialogInterface.OnClic
     private lateinit var binding: EditBoxDialogBinding
     private var publicShare: OCShare? = null
 
+    @IonosCustomization()
     override fun onStart() {
         super.onStart()
 
