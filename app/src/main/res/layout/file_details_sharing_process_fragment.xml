@@ -302,6 +302,7 @@
         android:maxLines="2"
         android:text="@string/common_next"
         android:theme="@style/SharingDetails.IconButton.Filled"
+        android:textColor="@color/filled_button_text_color"
         app:cornerRadius="@dimen/button_corner_radius"
         app:ionosCustomization="Limit max lines number to 2"
         app:layout_constraintBottom_toBottomOf="parent"
