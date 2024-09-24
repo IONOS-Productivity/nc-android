@@ -72,7 +72,7 @@ class RenamePublicShareDialogFragment : DialogFragment(), DialogInterface.OnClic
         binding = EditBoxDialogBinding.inflate(inflater, null, false)
         val view: View = binding.root
 
-        viewThemeUtils.material.colorTextInputLayout(binding.userInputContainer)
+        viewThemeUtils.ionos.material.colorTextInputLayout(binding.userInputContainer)
         binding.userInput.setText(publicShare?.label)
 
         val builder = MaterialAlertDialogBuilder(view.context)

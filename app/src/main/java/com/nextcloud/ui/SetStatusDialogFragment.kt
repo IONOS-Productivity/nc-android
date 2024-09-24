@@ -201,7 +201,7 @@ class SetStatusDialogFragment :
 
         viewThemeUtils.ionos.material.colorMaterialButtonPrimaryBorderless(binding.clearStatus)
         viewThemeUtils.ionos.material.colorMaterialButtonPrimaryTonal(binding.setStatus)
-        viewThemeUtils.material.colorTextInputLayout(binding.customStatusInputContainer)
+        viewThemeUtils.ionos.material.colorTextInputLayout(binding.customStatusInputContainer)
 
         viewThemeUtils.ionos.platform.themeDialog(binding.root)
     }

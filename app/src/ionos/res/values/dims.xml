@@ -33,4 +33,9 @@
     <dimen name="grid_mode_icon_size">32dp</dimen>
     <dimen name="grid_mode_item_outline_margin">4dp</dimen>
     <dimen name="grid_mode_item_margin">5dp</dimen>
+
+    <dimen name="text_input_box_stroke_width">1dp</dimen>
+    <dimen name="text_input_box_corner_radius">8dp</dimen>
+    <dimen name="text_input_text_size">14sp</dimen>
+    <dimen name="text_input_padding">16dp</dimen>
 </resources>

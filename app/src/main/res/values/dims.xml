@@ -9,7 +9,7 @@
   ~ SPDX-FileCopyrightText: 2014 ownCloud Inc.
   ~ SPDX-License-Identifier: GPL-2.0-only AND (AGPL-3.0-or-later OR GPL-2.0-only)
 -->
-<resources>
+<resources xmlns:app="http://schemas.android.com/apk/res-auto">
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="nav_drawer_header_height">164dp</dimen>
     <dimen name="nav_drawer_menu_avatar_radius">12sp</dimen>
@@ -156,4 +156,9 @@
     <dimen name="adaptive_icon_size">108dp</dimen>
     <dimen name="adaptive_icon_padding">18dp</dimen>
     <dimen name="tag_height">18dp</dimen>
+
+    <dimen name="text_input_box_stroke_width" app:ionosCustomization="">1dp</dimen>
+    <dimen name="text_input_box_corner_radius" app:ionosCustomization="">8dp</dimen>
+    <dimen name="text_input_text_size" app:ionosCustomization="">14sp</dimen>
+    <dimen name="text_input_padding" app:ionosCustomization="">16dp</dimen>
 </resources>

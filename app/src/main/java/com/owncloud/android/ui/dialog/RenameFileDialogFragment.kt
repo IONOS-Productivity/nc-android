@@ -79,7 +79,7 @@ class RenameFileDialogFragment : DialogFragment(), DialogInterface.OnClickListen
 
         val currentName = mTargetFile?.fileName
         binding.userInput.setText(currentName)
-        viewThemeUtils.material.colorTextInputLayout(binding.userInputContainer)
+        viewThemeUtils.ionos.material.colorTextInputLayout(binding.userInputContainer)
         val extensionStart = if (mTargetFile?.isFolder == true) -1 else currentName?.lastIndexOf('.')
         val selectionEnd = if ((extensionStart ?: -1) >= 0) extensionStart else currentName?.length
         if (selectionEnd != null) {

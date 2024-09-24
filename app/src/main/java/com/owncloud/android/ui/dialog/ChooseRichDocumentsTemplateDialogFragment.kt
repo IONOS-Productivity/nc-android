@@ -127,13 +127,14 @@ class ChooseRichDocumentsTemplateDialogFragment :
     }
 
     @Suppress("DEPRECATION")
+    @IonosCustomization
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val arguments = arguments ?: throw IllegalArgumentException("Arguments may not be null")
         val activity = activity ?: throw IllegalArgumentException("Activity may not be null")
 
         initClient()
         initFilenames(arguments)
-        viewThemeUtils.material.colorTextInputLayout(binding.filenameContainer)
+        viewThemeUtils.ionos.material.colorTextInputLayout(binding.filenameContainer)
 
         val type = Type.valueOf(arguments.getString(ARG_TYPE) ?: "")
         FetchTemplateTask(this, client).execute(type)

@@ -117,7 +117,7 @@ class SetupEncryptionDialogFragment : DialogFragment(), Injectable {
         binding = SetupEncryptionDialogBinding.inflate(inflater, null, false)
 
         // Setup layout
-        viewThemeUtils.material.colorTextInputLayout(binding.encryptionPasswordInputContainer)
+        viewThemeUtils.ionos.material.colorTextInputLayout(binding.encryptionPasswordInputContainer)
 
         val builder = buildMaterialAlertDialog(binding.root)
         viewThemeUtils.ionos.dialog.colorMaterialAlertDialogBackground(requireContext(), builder)
@@ -497,6 +497,7 @@ class SetupEncryptionDialogFragment : DialogFragment(), Injectable {
     }
 
     @VisibleForTesting
+    @IonosCustomization
     fun showMnemonicInfo() {
         if (dialog == null) {
             Log_OC.e(TAG, "Dialog is null cannot proceed further.")
@@ -504,7 +505,7 @@ class SetupEncryptionDialogFragment : DialogFragment(), Injectable {
         }
         requireDialog().setTitle(R.string.end_to_end_encryption_passphrase_title)
         binding.encryptionStatus.setText(R.string.end_to_end_encryption_keywords_description)
-        viewThemeUtils.material.colorTextInputLayout(binding.encryptionPasswordInputContainer)
+        viewThemeUtils.ionos.material.colorTextInputLayout(binding.encryptionPasswordInputContainer)
         binding.encryptionPassphrase.text = generateMnemonicString(true)
         binding.encryptionPassphrase.visibility = View.VISIBLE
 

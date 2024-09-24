@@ -385,6 +385,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
 
         @NonNull
         @Override
+        @IonosCustomization
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             mFilenameBase = new ArrayList<>();
             mFilenameSuffix = new ArrayList<>();
@@ -460,7 +461,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
 
             setFilename(binding.userInput, selectPos);
             binding.userInput.requestFocus();
-            viewThemeUtils.material.colorTextInputLayout(binding.userInputContainer);
+            viewThemeUtils.ionos.material.colorTextInputLayout(binding.userInputContainer);
 
             setupSpinner(adapter, selectPos, binding.userInput, binding.fileType);
             if (adapter.getCount() == SINGLE_SPINNER_ENTRY) {

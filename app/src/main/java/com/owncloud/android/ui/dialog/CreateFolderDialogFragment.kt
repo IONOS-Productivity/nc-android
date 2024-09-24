@@ -95,7 +95,7 @@ class CreateFolderDialogFragment : DialogFragment(), DialogInterface.OnClickList
         binding = EditBoxDialogBinding.inflate(inflater, null, false)
 
         binding.userInput.setText(R.string.empty)
-        viewThemeUtils.material.colorTextInputLayout(binding.userInputContainer)
+        viewThemeUtils.ionos.material.colorTextInputLayout(binding.userInputContainer)
 
         val parentFolder = requireArguments().getParcelableArgument(ARG_PARENT_FOLDER, OCFile::class.java)
 

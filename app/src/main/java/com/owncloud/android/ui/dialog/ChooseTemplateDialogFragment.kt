@@ -133,7 +133,7 @@ class ChooseTemplateDialogFragment : DialogFragment(), View.OnClickListener, Tem
         val inflater = requireActivity().layoutInflater
         _binding = ChooseTemplateBinding.inflate(inflater, null, false)
 
-        viewThemeUtils.material.colorTextInputLayout(
+        viewThemeUtils.ionos.material.colorTextInputLayout(
             binding.filenameContainer
         )
 
