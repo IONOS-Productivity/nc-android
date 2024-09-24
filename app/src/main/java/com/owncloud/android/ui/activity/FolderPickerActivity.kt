@@ -443,23 +443,23 @@ open class FolderPickerActivity :
 
     private fun initControls() {
         if (this is FilePickerActivity) {
-            viewThemeUtils.material.colorMaterialButtonPrimaryFilled(filesPickerBinding.folderPickerBtnCancel)
+            viewThemeUtils.ionos.material.colorMaterialButtonPrimaryFilled(filesPickerBinding.folderPickerBtnCancel)
             filesPickerBinding.folderPickerBtnCancel.setOnClickListener { finish() }
         } else {
-            viewThemeUtils.material.colorMaterialButtonText(folderPickerBinding.folderPickerBtnCancel)
+            viewThemeUtils.ionos.material.colorMaterialButtonText(folderPickerBinding.folderPickerBtnCancel)
             folderPickerBinding.folderPickerBtnCancel.setOnClickListener { finish() }
 
-            viewThemeUtils.material.colorMaterialButtonPrimaryTonal(folderPickerBinding.folderPickerBtnChoose)
+            viewThemeUtils.ionos.material.colorMaterialButtonPrimaryTonal(folderPickerBinding.folderPickerBtnChoose)
             folderPickerBinding.folderPickerBtnChoose.setOnClickListener { processOperation(null) }
 
-            viewThemeUtils.material.colorMaterialButtonPrimaryFilled(folderPickerBinding.folderPickerBtnCopy)
+            viewThemeUtils.ionos.material.colorMaterialButtonPrimaryFilled(folderPickerBinding.folderPickerBtnCopy)
             folderPickerBinding.folderPickerBtnCopy.setOnClickListener {
                 processOperation(
                     OperationsService.ACTION_COPY_FILE
                 )
             }
 
-            viewThemeUtils.material.colorMaterialButtonPrimaryTonal(folderPickerBinding.folderPickerBtnMove)
+            viewThemeUtils.ionos.material.colorMaterialButtonPrimaryTonal(folderPickerBinding.folderPickerBtnMove)
             folderPickerBinding.folderPickerBtnMove.setOnClickListener {
                 processOperation(
                     OperationsService.ACTION_MOVE_FILE

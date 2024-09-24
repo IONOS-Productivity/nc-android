@@ -92,4 +92,5 @@
     <color name="filelist_default_action_icon_color">@color/black</color>
 
     <color name="system_bars_color">@color/bg_default</color>
+    <color name="synced_folders_item_title_color">?android:textColorPrimary</color>
 </resources>

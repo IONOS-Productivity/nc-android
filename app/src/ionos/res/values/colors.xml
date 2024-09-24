@@ -55,12 +55,6 @@
     <color name="settings_screen_switcher_primary_color">@color/dodger_blue</color>
     <color name="settings_screen_switcher_accent_color">@color/dodger_blue</color>
 
-    <color name="settings_screen_filled_material_button_back_color">@color/madison</color>
-    <color name="settings_screen_filled_material_button_text_color">@color/white</color>
-    <color name="settings_screen_outline_material_button_back_color">@color/transparent</color>
-    <color name="settings_screen_outline_material_button_color">@color/madison</color>
-    <color name="settings_screen_outline_material_button_text_color">@color/madison</color>
-
     <color name="settings_screen_background">@color/bg_default</color>
 
     <color name="settings_screen_dialog_background_color">@color/bg_default</color>
@@ -103,4 +97,6 @@
     <color name="grid_mode_feature_layout_background_color">@color/geyser</color>
     <color name="grid_mode_item_outline_color">@color/geyser</color>
     <color name="grid_mode_selected_item_outline_color">@color/dodger_blue</color>
+
+    <color name="synced_folders_item_title_color">@color/ionos_default_text_color</color>
 </resources>

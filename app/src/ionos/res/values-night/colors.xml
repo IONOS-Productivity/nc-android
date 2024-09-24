@@ -44,11 +44,6 @@
     <color name="settings_screen_title_text_color">@color/gull_grayapprox</color>
     <color name="settings_screen_description_text_color">@color/white_smoke</color>
 
-    <color name="settings_screen_filled_material_button_back_color">@color/dodger_blue</color>
-    <color name="settings_screen_filled_material_button_text_color">@color/ghost_white</color>
-    <color name="settings_screen_outline_material_button_color">@color/ghost_white</color>
-    <color name="settings_screen_outline_material_button_text_color">@color/ghost_white</color>
-
     <color name="settings_screen_dialog_cancel_button_text_color">@color/ghost_white</color>
 
     <color name="search_bar_background_color">@color/white_smoke</color>
@@ -84,4 +79,6 @@
     <color name="grid_mode_feature_layout_background_color">@color/geyser</color>
     <color name="grid_mode_item_outline_color">@color/dusk</color>
     <color name="grid_mode_selected_item_outline_color">@color/dodger_blue</color>
+
+    <color name="synced_folders_item_title_color">@color/ionos_default_text_color</color>
 </resources>
