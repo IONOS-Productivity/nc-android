@@ -495,4 +495,10 @@
     <style name="FilesFolderPicker.IconButton.Filled" parent="Widget.Material3.Button.IconButton.Filled">
     </style>
 
+    <style name="SharingDetails.IconButton.Filled" parent="Widget.Material3.Button.IconButton.Filled">
+    </style>
+
+    <style name="SharingDetails.Button.OutlinedButton" parent="Widget.Material3.Button.OutlinedButton">
+    </style>
+
 </resources>

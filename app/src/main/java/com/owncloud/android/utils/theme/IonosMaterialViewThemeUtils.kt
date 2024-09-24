@@ -9,9 +9,11 @@ class IonosMaterialViewThemeUtils {
 
     fun colorMaterialButtonPrimaryBorderless(button: MaterialButton) {}
 
-    fun colorMaterialButtonPrimaryFilled(folderPickerBtnCancel: MaterialButton) {}
+    fun colorMaterialButtonPrimaryFilled(button: MaterialButton) {}
 
-    fun colorMaterialButtonText(folderPickerBtnCancel: MaterialButton) {}
+    fun colorMaterialButtonText(button: MaterialButton) {}
 
     fun themeSnackbar(snackbar: Snackbar) {}
+
+    fun colorMaterialButtonPrimaryOutlined(button: MaterialButton) {}
 }
