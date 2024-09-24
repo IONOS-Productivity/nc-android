@@ -202,8 +202,8 @@ class FileDetailsSharingProcessFragment :
         viewThemeUtils.material.colorTextInputLayout(binding.shareProcessChangeNameContainer)
         viewThemeUtils.material.colorTextInputLayout(binding.noteContainer)
 
-        viewThemeUtils.material.colorMaterialButtonPrimaryFilled(binding.shareProcessBtnNext)
-        viewThemeUtils.material.colorMaterialButtonPrimaryOutlined(binding.shareProcessBtnCancel)
+        viewThemeUtils.ionos.material.colorMaterialButtonPrimaryFilled(binding.shareProcessBtnNext)
+        viewThemeUtils.ionos.material.colorMaterialButtonPrimaryOutlined(binding.shareProcessBtnCancel)
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {

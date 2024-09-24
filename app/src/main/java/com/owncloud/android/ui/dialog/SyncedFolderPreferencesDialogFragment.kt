@@ -86,6 +86,7 @@ class SyncedFolderPreferencesDialogFragment : DialogFragment(), Injectable {
         nameCollisionPolicyItemStrings = resources.getTextArray(R.array.pref_name_collision_policy_entries)
     }
 
+    @IonosCustomization
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         Log_OC.d(TAG, "onCreateView, savedInstanceState is $savedInstanceState")
         binding = SyncedFoldersSettingsLayoutBinding.inflate(requireActivity().layoutInflater, null, false)
@@ -96,7 +97,7 @@ class SyncedFolderPreferencesDialogFragment : DialogFragment(), Injectable {
         val builder = MaterialAlertDialogBuilder(requireContext())
         builder.setView(binding!!.getRoot())
 
-        viewThemeUtils?.dialog?.colorMaterialAlertDialogBackground(requireContext(), builder)
+        viewThemeUtils?.ionos?.dialog?.colorMaterialAlertDialogBackground(requireContext(), builder)
 
         return builder.create()
     }
@@ -401,6 +402,7 @@ class SyncedFolderPreferencesDialogFragment : DialogFragment(), Injectable {
         binding.settingInstantNameCollisionPolicyContainer.setOnClickListener { showNameCollisionPolicyDialog() }
     }
 
+    @IonosCustomization
     private fun showBehaviourDialog() {
         val builder = MaterialAlertDialogBuilder(requireActivity())
 
@@ -418,12 +420,13 @@ class SyncedFolderPreferencesDialogFragment : DialogFragment(), Injectable {
         }
 
         behaviourDialogShown = true
-        viewThemeUtils?.dialog?.colorMaterialAlertDialogBackground(requireActivity(), builder)
+        viewThemeUtils?.ionos?.dialog?.colorMaterialAlertDialogBackground(requireActivity(), builder)
 
         behaviourDialog = builder.create()
         behaviourDialog?.show()
     }
 
+    @IonosCustomization
     private fun showNameCollisionPolicyDialog() {
         syncedFolder?.let {
             val builder = MaterialAlertDialogBuilder(requireActivity())
@@ -437,7 +440,7 @@ class SyncedFolderPreferencesDialogFragment : DialogFragment(), Injectable {
 
             nameCollisionPolicyDialogShown = true
 
-            viewThemeUtils?.dialog?.colorMaterialAlertDialogBackground(requireActivity(), builder)
+            viewThemeUtils?.ionos?.dialog?.colorMaterialAlertDialogBackground(requireActivity(), builder)
             behaviourDialog = builder.create()
             behaviourDialog?.show()
         }

@@ -230,4 +230,18 @@
         <item name="android:textColor">@color/text_color</item>
     </style>
 
+    <style name="FilesFolderPicker.TextButton" parent="Widget.App.Button.Negative">
+    </style>
+
+    <style name="FilesFolderPicker.IconButton.Filled.Tonal" parent="Widget.App.Button.Positive">
+    </style>
+
+    <style name="FilesFolderPicker.IconButton.Filled" parent="Widget.App.Button.Positive">
+    </style>
+
+    <style name="SharingDetails.IconButton.Filled" parent="Widget.App.Button.Positive">
+    </style>
+
+    <style name="SharingDetails.Button.OutlinedButton" parent="Widget.App.Button.Negative">
+    </style>
 </resources>

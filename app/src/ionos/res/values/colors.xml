@@ -6,6 +6,7 @@
     <color name="appbar">@color/ionos_toolbar_color</color>
     <color name="action_mode_background">@color/ghost_white</color>
     <color name="selected_item_background">@color/white_smoke</color>
+    <color name="default_icon_color">@color/ionos_default_icon_color</color>
 
     <color name="system_bars_color">@color/bg_default</color>
     <color name="bottom_sheet_nav_bar_color">@color/bg_default</color>

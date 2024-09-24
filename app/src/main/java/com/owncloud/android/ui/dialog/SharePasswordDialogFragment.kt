@@ -102,6 +102,7 @@ class SharePasswordDialogFragment : DialogFragment(), Injectable {
         keyboardUtils?.showKeyboardForEditText(requireDialog().window, binding!!.sharePassword)
     }
 
+    @IonosCustomization
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         file = requireArguments().getParcelableArgument(ARG_FILE, OCFile::class.java)
         share = requireArguments().getParcelableArgument(ARG_SHARE, OCShare::class.java)
@@ -139,7 +140,7 @@ class SharePasswordDialogFragment : DialogFragment(), Injectable {
             }
             .setTitle(title)
 
-        viewThemeUtils?.dialog?.colorMaterialAlertDialogBackground(requireContext(), builder)
+        viewThemeUtils?.ionos?.dialog?.colorMaterialAlertDialogBackground(requireContext(), builder)
 
         return builder.create()
     }

@@ -94,6 +94,7 @@
     <color name="system_bars_color">@color/bg_default</color>
     <color name="synced_folders_item_title_color">?android:textColorPrimary</color>
 
+    <color name="default_icon_color" app:ionosCustomization="">@color/primary</color>
     <color name="preview_image_background" app:ionosCustomization="">@color/background_color_inverse</color>
     <color name="edit_image_background" app:ionosCustomization="">@color/black</color>
     <color name="edit_image_toolbar_background" app:ionosCustomization="">@color/black</color>

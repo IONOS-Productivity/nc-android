@@ -25,6 +25,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.core.Clock
 import com.nextcloud.client.device.PowerManagementService
 import com.nextcloud.client.di.Injectable
@@ -221,6 +222,7 @@ class SyncedFoldersActivity :
         return true
     }
 
+    @IonosCustomization
     private fun showPowerCheckDialog() {
         val builder = MaterialAlertDialogBuilder(this)
             .setView(R.id.root_layout)
@@ -228,7 +230,7 @@ class SyncedFoldersActivity :
             .setTitle(R.string.autoupload_disable_power_save_check)
             .setMessage(getString(R.string.power_save_check_dialog_message))
 
-        viewThemeUtils.dialog.colorMaterialAlertDialogBackground(this, builder)
+        viewThemeUtils.ionos.dialog.colorMaterialAlertDialogBackground(this, builder)
 
         builder.create().show()
     }

@@ -326,6 +326,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
 
         @NonNull
         @Override
+        @IonosCustomization
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             final MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireContext());
             builder.setIcon(R.drawable.ic_warning);
@@ -345,7 +346,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
             });
             builder.setNeutralButton(R.string.uploader_wrn_no_account_quit_btn_text,
                                      (dialog, which) -> requireActivity().finish());
-            viewThemeUtils.dialog.colorMaterialAlertDialogBackground(requireContext(), builder);
+            viewThemeUtils.ionos.dialog.colorMaterialAlertDialogBackground(requireContext(), builder);
             return builder.create();
         }
     }
