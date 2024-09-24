@@ -32,8 +32,13 @@ class IonosViewThemeUtils(
     val material = Material()
 
     inner class Platform {
+
         fun themeSystemBars(activity: Activity) {
             platformUtil.colorStatusBar(activity, activity.getSystemBarsColor())
+        }
+
+        fun themeSystemBars(activity: Activity, @ColorInt color: Int) {
+            platformUtil.colorStatusBar(activity, color)
         }
 
         fun resetSystemBars(activity: Activity) {
