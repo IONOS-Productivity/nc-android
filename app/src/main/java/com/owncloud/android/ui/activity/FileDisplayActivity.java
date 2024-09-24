@@ -322,6 +322,7 @@ public class FileDisplayActivity extends FileActivity
         }   // else, Fragment already created and retained across configuration change
     }
 
+    @IonosCustomization
     private void checkStoragePath() {
         String newStorage = Environment.getExternalStorageDirectory().getAbsolutePath();
         String storagePath = preferences.getStoragePath(newStorage);
@@ -338,7 +339,7 @@ public class FileDisplayActivity extends FileActivity
                     .setPositiveButton(R.string.dialog_close, (dialog, which) -> dialog.dismiss())
                     .setIcon(R.drawable.ic_settings);
 
-                viewThemeUtils.dialog.colorMaterialAlertDialogBackground(getApplicationContext(), builder);
+                viewThemeUtils.ionos.dialog.colorMaterialAlertDialogBackground(getApplicationContext(), builder);
 
                 builder.create().show();
             } catch (WindowManager.BadTokenException e) {
@@ -2405,6 +2406,7 @@ public class FileDisplayActivity extends FileActivity
         }
     }
 
+    @IonosCustomization
     private void selectUserAndOpenFile(List<User> users, String fileId) {
         final CharSequence[] userNames = new CharSequence[users.size()];
         for (int i = 0; i < userNames.length; i++) {
@@ -2417,7 +2419,7 @@ public class FileDisplayActivity extends FileActivity
             showLoadingDialog(getString(R.string.retrieving_file));
         });
 
-        viewThemeUtils.dialog.colorMaterialAlertDialogBackground(getApplicationContext(), builder);
+        viewThemeUtils.ionos.dialog.colorMaterialAlertDialogBackground(getApplicationContext(), builder);
 
         final AlertDialog dialog = builder.create();
         dismissLoadingDialog();

@@ -49,4 +49,6 @@
 
     <color name="filelist_file_icon_color">@color/primary</color>
     <color name="filelist_default_action_icon_color">@color/white</color>
+
+    <color name="default_icon_color">@color/primary</color>
 </resources>

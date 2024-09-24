@@ -70,6 +70,7 @@ class RenameFileDialogFragment : DialogFragment(), DialogInterface.OnClickListen
         keyboardUtils.showKeyboardForEditText(requireDialog().window, binding.userInput)
     }
 
+    @IonosCustomization
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         mTargetFile = requireArguments().getParcelableArgument(ARG_TARGET_FILE, OCFile::class.java)
 
@@ -97,7 +98,7 @@ class RenameFileDialogFragment : DialogFragment(), DialogInterface.OnClickListen
 
         val builder = buildMaterialAlertDialog(binding.root)
 
-        viewThemeUtils.dialog.colorMaterialAlertDialogBackground(binding.userInputContainer.context, builder)
+        viewThemeUtils.ionos.dialog.colorMaterialAlertDialogBackground(binding.userInputContainer.context, builder)
 
         return builder.create()
     }

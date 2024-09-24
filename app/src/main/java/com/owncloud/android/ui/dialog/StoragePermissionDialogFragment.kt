@@ -61,6 +61,7 @@ class StoragePermissionDialogFragment : DialogFragment(), Injectable {
         }
     }
 
+    @IonosCustomization
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val title = when {
             permissionRequired -> R.string.file_management_permission
@@ -88,7 +89,7 @@ class StoragePermissionDialogFragment : DialogFragment(), Injectable {
                 dismiss()
             }
 
-        viewThemeUtils.dialog.colorMaterialAlertDialogBackground(requireContext(), dialogBuilder)
+        viewThemeUtils.ionos.dialog.colorMaterialAlertDialogBackground(requireContext(), dialogBuilder)
 
         return dialogBuilder.create()
     }

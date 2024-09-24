@@ -534,6 +534,7 @@ public class OCFileListFragment extends ExtendedListFragment implements
         showDirectCameraUploadAlertDialog(fileDisplayActivity);
     }
 
+    @IonosCustomization
     private void showDirectCameraUploadAlertDialog(FileDisplayActivity fileDisplayActivity) {
         final MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(fileDisplayActivity)
             .setTitle(R.string.upload_direct_camera_promt)
@@ -541,7 +542,7 @@ public class OCFileListFragment extends ExtendedListFragment implements
             .setPositiveButton(R.string.upload_direct_camera_video, (dialog, which) -> fileDisplayActivity.getFileOperationsHelper().uploadFromCamera(fileDisplayActivity, FileDisplayActivity.REQUEST_CODE__UPLOAD_FROM_VIDEO_CAMERA, true))
             .setNegativeButton(R.string.upload_direct_camera_photo, (dialog, which) -> fileDisplayActivity.getFileOperationsHelper().uploadFromCamera(fileDisplayActivity, FileDisplayActivity.REQUEST_CODE__UPLOAD_FROM_CAMERA, false));
 
-        viewThemeUtils.dialog.colorMaterialAlertDialogBackground(fileDisplayActivity, builder);
+        viewThemeUtils.ionos.dialog.colorMaterialAlertDialogBackground(fileDisplayActivity, builder);
 
         builder.create();
         builder.show();

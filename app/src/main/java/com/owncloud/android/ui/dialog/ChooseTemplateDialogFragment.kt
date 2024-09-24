@@ -114,6 +114,7 @@ class ChooseTemplateDialogFragment : DialogFragment(), View.OnClickListener, Tem
         keyboardUtils.showKeyboardForEditText(dialog?.window, binding.filename)
     }
 
+    @IonosCustomization
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val arguments = arguments ?: throw IllegalArgumentException("Arguments may not be null")
         val activity = activity ?: throw IllegalArgumentException("Activity may not be null")
@@ -164,7 +165,7 @@ class ChooseTemplateDialogFragment : DialogFragment(), View.OnClickListener, Tem
             .setNegativeButton(R.string.common_cancel, null)
             .setTitle(title)
 
-        viewThemeUtils.dialog.colorMaterialAlertDialogBackground(binding.list.context, builder)
+        viewThemeUtils.ionos.dialog.colorMaterialAlertDialogBackground(binding.list.context, builder)
 
         return builder.create()
     }

@@ -189,6 +189,7 @@ class ChooseRichDocumentsTemplateDialogFragment :
         })
     }
 
+    @IonosCustomization
     private fun getDialogBuilder(activity: Activity, titleTextId: Int): MaterialAlertDialogBuilder {
         val builder = MaterialAlertDialogBuilder(activity)
             .setView(binding.root)
@@ -196,7 +197,7 @@ class ChooseRichDocumentsTemplateDialogFragment :
             .setNegativeButton(R.string.common_cancel, null)
             .setTitle(titleTextId)
 
-        viewThemeUtils.dialog.colorMaterialAlertDialogBackground(activity, builder)
+        viewThemeUtils.ionos.dialog.colorMaterialAlertDialogBackground(activity, builder)
 
         return builder
     }

@@ -122,6 +122,7 @@ class ConflictsResolveDialog : DialogFragment(), Injectable {
         outState.putParcelable(KEY_USER, user)
     }
 
+    @IonosCustomization
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding = ConflictResolveDialogBinding.inflate(requireActivity().layoutInflater)
 
@@ -147,7 +148,7 @@ class ConflictsResolveDialog : DialogFragment(), Injectable {
         setupUI()
         setOnClickListeners()
 
-        viewThemeUtils.dialog.colorMaterialAlertDialogBackground(binding.existingFileContainer.context, builder)
+        viewThemeUtils.ionos.dialog.colorMaterialAlertDialogBackground(binding.existingFileContainer.context, builder)
 
         return builder.create()
     }
