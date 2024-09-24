@@ -87,6 +87,7 @@ class CreateFolderDialogFragment : DialogFragment(), DialogInterface.OnClickList
     }
 
     @Suppress("EmptyFunctionBlock")
+    @IonosCustomization
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         mParentFolder = arguments?.getParcelableArgument(ARG_PARENT_FOLDER, OCFile::class.java)
 
@@ -113,7 +114,7 @@ class CreateFolderDialogFragment : DialogFragment(), DialogInterface.OnClickList
         })
 
         val builder = buildMaterialAlertDialog(binding.root)
-        viewThemeUtils.dialog.colorMaterialAlertDialogBackground(binding.userInputContainer.context, builder)
+        viewThemeUtils.ionos.dialog.colorMaterialAlertDialogBackground(binding.userInputContainer.context, builder)
         return builder.create()
     }
 

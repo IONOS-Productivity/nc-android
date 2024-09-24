@@ -22,4 +22,7 @@ class IonosViewThemeUtils(
 
     @JvmField
     val material = IonosMaterialViewThemeUtils()
+
+    @JvmField
+    val dialog = IonosDialogViewThemeUtils()
 }

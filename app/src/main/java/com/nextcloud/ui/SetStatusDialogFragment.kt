@@ -125,12 +125,13 @@ class SetStatusDialogFragment :
     }
 
     @SuppressLint("InflateParams")
+    @IonosCustomization
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding = DialogSetStatusBinding.inflate(layoutInflater)
 
         val builder = MaterialAlertDialogBuilder(requireContext()).setView(binding.root)
 
-        viewThemeUtils.dialog.colorMaterialAlertDialogBackground(binding.statusView.context, builder)
+        viewThemeUtils.ionos.dialog.colorMaterialAlertDialogBackground(binding.statusView.context, builder)
 
         return builder.create()
     }
@@ -202,7 +203,7 @@ class SetStatusDialogFragment :
         viewThemeUtils.ionos.material.colorMaterialButtonPrimaryTonal(binding.setStatus)
         viewThemeUtils.material.colorTextInputLayout(binding.customStatusInputContainer)
 
-        viewThemeUtils.platform.themeDialog(binding.root)
+        viewThemeUtils.ionos.platform.themeDialog(binding.root)
     }
 
     private fun updateCurrentStatusViews(it: Status) {

@@ -93,4 +93,6 @@
 
     <color name="system_bars_color">@color/bg_default</color>
     <color name="synced_folders_item_title_color">?android:textColorPrimary</color>
+
+    <color name="default_icon_color">@color/primary</color>
 </resources>

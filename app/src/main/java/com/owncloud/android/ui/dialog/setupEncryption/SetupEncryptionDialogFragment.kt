@@ -100,6 +100,7 @@ class SetupEncryptionDialogFragment : DialogFragment(), Injectable {
         task?.execute()
     }
 
+    @IonosCustomization
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         checkNotNull(arguments) { "Arguments may not be null" }
 
@@ -119,7 +120,7 @@ class SetupEncryptionDialogFragment : DialogFragment(), Injectable {
         viewThemeUtils.material.colorTextInputLayout(binding.encryptionPasswordInputContainer)
 
         val builder = buildMaterialAlertDialog(binding.root)
-        viewThemeUtils.dialog.colorMaterialAlertDialogBackground(requireContext(), builder)
+        viewThemeUtils.ionos.dialog.colorMaterialAlertDialogBackground(requireContext(), builder)
         return builder.create().apply {
             setCanceledOnTouchOutside(false)
             setOnShowListener { dialog1: DialogInterface ->

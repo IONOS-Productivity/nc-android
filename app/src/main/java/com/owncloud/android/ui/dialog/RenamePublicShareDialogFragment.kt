@@ -64,6 +64,7 @@ class RenamePublicShareDialogFragment : DialogFragment(), DialogInterface.OnClic
         keyboardUtils.showKeyboardForEditText(requireDialog().window, binding.userInput)
     }
 
+    @IonosCustomization
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         publicShare = requireArguments().getParcelableArgument(ARG_PUBLIC_SHARE, OCShare::class.java)
 
@@ -80,7 +81,7 @@ class RenamePublicShareDialogFragment : DialogFragment(), DialogInterface.OnClic
             .setNegativeButton(R.string.common_cancel, this)
             .setTitle(R.string.public_share_name)
 
-        viewThemeUtils.dialog.colorMaterialAlertDialogBackground(binding.userInput.context, builder)
+        viewThemeUtils.ionos.dialog.colorMaterialAlertDialogBackground(binding.userInput.context, builder)
 
         return builder.create()
     }
