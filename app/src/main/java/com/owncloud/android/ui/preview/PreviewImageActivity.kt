@@ -21,6 +21,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.account.User
 import com.nextcloud.client.di.Injectable
 import com.nextcloud.client.editimage.EditImageActivity
@@ -52,6 +53,7 @@ import com.owncloud.android.ui.fragment.OCFileListFragment
 import com.owncloud.android.ui.preview.model.PreviewImageActivityState
 import com.owncloud.android.utils.DisplayUtils
 import com.owncloud.android.utils.MimeTypeUtil
+import android.graphics.drawable.ColorDrawable
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
 import java.io.Serializable
 import javax.inject.Inject
@@ -81,6 +83,7 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
 
     private var actionBar: ActionBar? = null
 
+    @IonosCustomization
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -103,8 +106,10 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
         val chosenFile = intent.getParcelableArgument(EXTRA_FILE, OCFile::class.java)
         updateActionBarTitleAndHomeButton(chosenFile)
 
+        viewThemeUtils.ionos.platform.themeSystemBars(this, getColor(R.color.preview_image_background))
         if (actionBar != null) {
             viewThemeUtils.files.setWhiteBackButton(this, actionBar!!)
+            actionBar?.setBackgroundDrawable(ColorDrawable(getColor(R.color.preview_image_background)))
             actionBar?.setDisplayHomeAsUpEnabled(true)
         }
 

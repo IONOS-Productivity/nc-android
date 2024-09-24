@@ -82,4 +82,9 @@
     <color name="grid_mode_selected_item_outline_color">@color/dodger_blue</color>
 
     <color name="synced_folders_item_title_color">@color/ionos_default_text_color</color>
+
+    <color name="preview_image_background">@color/bg_default</color>
+    <color name="edit_image_background">@color/bg_default</color>
+    <color name="edit_image_toolbar_background">@color/transparent</color>
+    <color name="edit_image_controls_background">@color/appbar</color>
 </resources>
