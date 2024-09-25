@@ -155,7 +155,6 @@
         <item name="actionBarStyle">@style/PreferenceTheme.ActionBar</item>
 
         <item name="android:alertDialogTheme">@style/PreferenceAlertDialogTheme</item>
-        <item name="android:textColorAlertDialogListItem">@color/settings_screen_dialog_item_text_color</item>
     </style>
 
     <style name="PreferenceTheme.ActionBar" parent="@style/Widget.Material3.ActionBar.Solid">
@@ -211,11 +210,11 @@
     <style name="PreferenceAlertDialogTheme" parent="FallbackTheming.Dialog">
 
         <!-- Dialog background -->
-        <item name="android:windowBackground">@color/settings_screen_dialog_background_color</item>
-        <!--<item name="android:background">@color/dialog_background</item>-->
+        <item name="android:windowBackground">@drawable/settings_screen_dialog_background</item>
 
-        <!-- Dialog title text color -->
+        <!-- Dialog title and item text color -->
         <item name="android:textColor">@color/settings_screen_dialog_title_text_color</item>
+        <item name="android:textColorAlertDialogListItem">@color/settings_screen_dialog_item_text_color</item>
 
         <!-- RadioButton unchecked color -->
         <item name="colorControlNormal">@color/settings_screen_dialog_radiobutton_unchecked_color</item>
@@ -223,11 +222,9 @@
         <!-- RadioButton checked color -->
         <item name="colorControlActivated">@color/settings_screen_dialog_radiobutton_checked_color</item>
 
-        <!-- Cancel button text color -->
-        <item name="colorPrimary">@color/settings_screen_dialog_cancel_button_text_color</item>
-
-        <!-- Ripple effect color on item click/selection -->
-        <!--<item name="colorControlHighlight">@color/app_control_highlight</item>-->
+        <!-- Button styles -->
+        <item name="android:buttonBarPositiveButtonStyle">@style/Widget.App.Button.Positive</item>
+        <item name="android:buttonBarNegativeButtonStyle">@style/Widget.App.Button.Negative</item>
 
     </style>
 

@@ -3,6 +3,7 @@ package com.owncloud.android.utils.theme
 import android.app.Activity
 import android.content.Context
 import android.view.View
+import android.widget.Button
 import androidx.annotation.ColorInt
 import com.nextcloud.android.common.ui.theme.utils.AndroidViewThemeUtils
 import com.nextcloud.android.common.ui.theme.utils.ColorRole
@@ -31,6 +32,8 @@ class IonosAndroidViewThemeUtils(
     fun themeDialog(view: View) {
         colorViewBackground(view)
     }
+
+    fun colorTextButtons(vararg buttons: Button) {}
 
     @ColorInt
     private fun ColorRole.getColor(context: Context): Int = when (this) {

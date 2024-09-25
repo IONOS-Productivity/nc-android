@@ -515,7 +515,7 @@ class SetupEncryptionDialogFragment : DialogFragment(), Injectable {
 
         positiveButton?.let { positiveButton ->
             negativeButton?.let { negativeButton ->
-                viewThemeUtils.platform.colorTextButtons(positiveButton, negativeButton)
+                viewThemeUtils.ionos.platform.colorTextButtons(positiveButton, negativeButton)
             }
         }
 
@@ -523,6 +523,7 @@ class SetupEncryptionDialogFragment : DialogFragment(), Injectable {
     }
 
     @VisibleForTesting
+    @IonosCustomization
     fun errorSavingKeys() {
         if (dialog == null) {
             Log_OC.e(TAG, "Dialog is null cannot proceed further.")
@@ -537,7 +538,7 @@ class SetupEncryptionDialogFragment : DialogFragment(), Injectable {
         positiveButton?.setText(R.string.end_to_end_encryption_dialog_close)
         positiveButton?.visibility = View.VISIBLE
         positiveButton?.let {
-            viewThemeUtils.platform.colorTextButtons(it)
+            viewThemeUtils.ionos.platform.colorTextButtons(it)
         }
     }
 
