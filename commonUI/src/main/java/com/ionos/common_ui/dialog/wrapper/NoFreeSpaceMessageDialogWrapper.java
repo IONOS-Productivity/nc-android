@@ -31,7 +31,6 @@ public class NoFreeSpaceMessageDialogWrapper {
 				.setTitle(new StringResLocalizedStrategy(context, R.string.no_enough_free_device_space_title))
 				.setMessage(new StringResLocalizedStrategy(context, R.string.scanbot_no_enough_free_device_space_message))
 				.setPositiveButton(new StringResLocalizedStrategy(context, R.string.ok_btn_title), StylizedDialog::dismiss)
-				.setButtonsTextColor(R.color.stylized_edit_text_line_color)
 //				.setTypeface(this.customFonts.getMainRegularFont())
 				.build(context);
 	}

@@ -8,7 +8,6 @@ import androidx.annotation.StringRes;
 import com.ionos.common_ui.dialog.stylized.localized.LocalizedTextStrategy;
 import com.ionos.common_ui.dialog.stylized.localized.StringLocalizedStrategy;
 import com.ionos.common_ui.dialog.stylized.localized.StringResLocalizedStrategy;
-import com.ionos.common_ui.R;
 import com.ionos.common_ui.dialog.stylized.StylizedDialog;
 import com.ionos.common_ui.exception.TryCatchExceptionHandler;
 import com.ionos.common_ui.dialog.actions.Action;
@@ -37,7 +36,7 @@ public class SingleMessageDialogWrapper {
 				new StringResLocalizedStrategy(context, cancelBtnTitle),
 				onPositiveClick,
 				onNegativeClick,
-				R.color.accent_color);
+				0);
 	}
 
 	public SingleMessageDialogWrapper(Context context,
@@ -50,7 +49,7 @@ public class SingleMessageDialogWrapper {
 									  final Action onNegativeClick) {
 		this(
 				context, tryCatchExceptionHandler, title, message,
-				okBtnTitle, cancelBtnTitle, onPositiveClick, onNegativeClick, R.color.accent_color
+				okBtnTitle, cancelBtnTitle, onPositiveClick, onNegativeClick, 0
 		);
 	}
 	public SingleMessageDialogWrapper(Context context,

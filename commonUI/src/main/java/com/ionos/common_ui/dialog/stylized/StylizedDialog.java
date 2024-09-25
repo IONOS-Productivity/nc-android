@@ -13,6 +13,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ListAdapter;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.ionos.common_ui.dialog.optional.Optional;
 import com.ionos.common_ui.dialog.stylized.listeners.NullOnStylizedDialogItemClickListener;
 import com.ionos.common_ui.dialog.stylized.listeners.OnStylizedDialogButtonClickListener;
@@ -132,7 +133,11 @@ public class StylizedDialog<V extends View & SavingStateView> {
 		}
 
 		public Builder setButtonsTextColor(@ColorRes int buttonsTextColor) {
-			StylizedDialog.this.buttonsTextColorRes = Optional.of(buttonsTextColor);
+            if (buttonsTextColor != 0) {
+                StylizedDialog.this.buttonsTextColorRes = Optional.of(buttonsTextColor);
+            } else {
+                StylizedDialog.this.buttonsTextColorRes = Optional.absent();
+            }
 			return this;
 		}
 
@@ -175,7 +180,7 @@ public class StylizedDialog<V extends View & SavingStateView> {
 
 		@NonNull
 		private AlertDialog createDialog() {
-			AlertDialog.Builder builder = new AlertDialog.Builder(StylizedDialog.this.context);
+			AlertDialog.Builder builder = new MaterialAlertDialogBuilder(StylizedDialog.this.context);
 			builder.setCancelable(StylizedDialog.this.cancelable);
 			setTitleToBuilder(builder);
 			setMessageToBuilder(builder);
