@@ -8,11 +8,10 @@
 package com.ionos.scanbot.util
 
 import com.ionos.common_ui.dialog.LockProgressDialog
-import com.ionos.scanbot.R
 
 class DialogUtils {
 
     companion object {
-        fun createStylizedLockProgressDialog() = LockProgressDialog(R.style.ScanbotDialogStyle)
+        fun createStylizedLockProgressDialog() = LockProgressDialog()
     }
 }
