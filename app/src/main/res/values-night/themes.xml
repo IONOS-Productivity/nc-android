@@ -30,5 +30,8 @@
         <item name="snackbarTextViewStyle" app:ionosCustomization="">@style/Widget.App.SnackbarTextView</item>
 
         <item name="actionModeCloseDrawable" app:ionosCustomization="">@drawable/ic_arrow_back</item>
+
+        <item name="android:textColor" app:ionosCustomization="">@color/text_color</item>
+        <item name="android:textColorSecondary" app:ionosCustomization="">@color/secondary_text_color</item>
     </style>
 </resources>
