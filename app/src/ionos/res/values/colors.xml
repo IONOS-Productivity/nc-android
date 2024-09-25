@@ -106,7 +106,7 @@
     <color name="text_input_error_color">@color/slate_grey</color>
     <color name="text_input_hint_text_color">@color/slate_grey</color>
     <color name="text_input_focused_hint_text_color">@color/navy</color>
-    <color name="text_input_highlight_color">@color/dodger_blue</color>
+    <color name="text_input_highlight_color">@color/lavender_mist</color>
 
     <color name="e2e_border_solid_color">@color/lavender_mist</color>
     <color name="e2e_border_stroke_color">@color/dodger_blue</color>
