@@ -23,12 +23,13 @@
         android:layout_height="wrap_content"
         android:drawablePadding="@dimen/standard_half_padding"
         app:drawableStartCompat="@drawable/ic_information_outline"
+        android:drawableTint="@color/filelist_info_icon_color"
         android:gravity="center"
         android:paddingEnd="@dimen/standard_half_margin"
         android:paddingLeft="@dimen/standard_half_padding"
         android:paddingRight="@dimen/standard_half_padding"
         android:paddingStart="@dimen/standard_half_margin"
-        android:textColor="@color/standard_grey"
+        android:textColor="@color/filelist_info_text_color"
         tools:text="@string/offline_mode" />
 
 </LinearLayout>
