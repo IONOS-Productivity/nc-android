@@ -1,5 +1,6 @@
 package com.ionos.scanbot.di
 
+import com.ionos.common_ui.exception.TryCatchExceptionHandler
 import com.ionos.scanbot.controller.ScanbotController
 import com.ionos.scanbot.screens.camera.CameraViewModelFactory
 import com.ionos.scanbot.screens.common.ExitDialog
@@ -37,4 +38,6 @@ abstract class ScanbotComponent {
 	internal abstract fun scanbotController(): ScanbotController
 
     internal abstract fun selectDirectoryContract(): SelectDirectoryContract
+
+    internal abstract fun tryCatchExceptionHandler(): TryCatchExceptionHandler
 }
