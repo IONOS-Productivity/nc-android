@@ -113,4 +113,12 @@
 
     <color name="e2e_border_solid_color">@color/lavender_mist</color>
     <color name="e2e_border_stroke_color">@color/dodger_blue</color>
+
+    <!-- Files list 'Server not available' view -->
+    <color name="filelist_icon_background">@color/ghost_white</color>
+    <color name="filelist_info_text_color">@color/dusk</color>
+    <color name="filelist_info_icon_color">@color/dusk</color>
+
+
+    <color name="exoplayer_controls_color">@color/ghost_white</color>
 </resources>

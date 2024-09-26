@@ -13,4 +13,17 @@
     <dimen name="settings_screen_title_text_size">16sp</dimen>
     <dimen name="settings_screen_description_text_size">14sp</dimen>
 
+    <!-- Media preview Screen -->
+    <dimen name="exo_center_controls_padding">40dp</dimen>
+    <dimen name="exo_rewind_buttons_size">44dp</dimen>
+    <dimen name="exo_play_pause_button_size">52dp</dimen>
+    <dimen name="exo_play_pause_margin_horizontal">32dp</dimen>
+    <dimen name="exo_bottom_bar_height">96dp</dimen>
+    <dimen name="exo_time_margin_bottom">22dp</dimen>
+    <dimen name="exo_time_divider_size">6dp</dimen>
+    <dimen name="exo_progress_bar_height">24dp</dimen>
+    <dimen name="exo_scrubber_size">24dp</dimen>
+
+
+
 </resources>
