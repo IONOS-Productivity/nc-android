@@ -15,14 +15,12 @@
     android:gravity="center"
     tools:context=".ui.preview.PreviewMediaActivity">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/material_toolbar"
+    <androidx.media3.ui.PlayerView
+        android:id="@+id/exoplayer_view"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:elevation="@dimen/standard_quarter_margin"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        app:show_buffering="always" />
 
     <ImageView
         android:id="@+id/image_preview"
@@ -33,14 +31,6 @@
         android:contentDescription="@string/preview_image_description"
         android:src="@drawable/logo" />
 
-
-    <androidx.media3.ui.PlayerView
-        android:id="@+id/exoplayer_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        app:show_buffering="always" />
-
     <com.owncloud.android.media.MediaControlView
         android:id="@+id/media_controller"
         android:layout_width="match_parent"
@@ -49,19 +39,15 @@
         android:layout_margin="@dimen/standard_margin"
         android:visibility="gone" />
 
-    <FrameLayout
-        android:id="@+id/progress"
-        android:background="@color/color_dark_transparent"
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/material_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <com.google.android.material.progressindicator.CircularProgressIndicator
-            android:layout_width="wrap_content"
-            android:layout_gravity="center"
-            android:layout_height="wrap_content"
-            android:indeterminate="true" />
-
-    </FrameLayout>
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/ionos_toolbar_color"
+        android:theme="@style/Theme.ToolbarTheme"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -69,7 +55,25 @@
 
         <include
             android:id="@+id/empty_view"
-            layout="@layout/empty_list" />
+            layout="@layout/empty_list_media" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/progress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/material_toolbar"
+        android:layout_alignParentBottom="true"
+        android:background="@color/color_dark_transparent">
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            app:indicatorColor="@color/exoplayer_controls_color"
+            app:trackColor="@color/exoplayer_controls_color" />
+
     </FrameLayout>
 
 </RelativeLayout>

@@ -12,7 +12,9 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <!-- 0dp dimensions are used to prevent this view from influencing the size of
          the parent view if it uses "wrap_content". It is expanded to occupy the
@@ -28,7 +30,7 @@
     <FrameLayout
         android:id="@id/exo_bottom_bar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/exo_styled_bottom_bar_height"
+        android:layout_height="@dimen/exo_bottom_bar_height"
         android:layout_gravity="bottom"
         android:layout_marginTop="@dimen/exo_styled_bottom_bar_margin_top"
         android:background="@color/exo_bottom_bar_background"
@@ -38,7 +40,8 @@
             android:id="@id/exo_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|start"
+            android:layout_gravity="bottom|start"
+            android:layout_marginBottom="@dimen/exo_time_margin_bottom"
             android:layoutDirection="ltr"
             android:paddingStart="@dimen/exo_styled_bottom_bar_time_padding"
             android:paddingLeft="@dimen/exo_styled_bottom_bar_time_padding"
@@ -47,13 +50,23 @@
 
             <TextView
                 android:id="@id/exo_position"
-                style="@style/ExoStyledControls.TimeText.Position" />
+                style="@style/ExoStyledControls.TimeText.Position"
+                android:layout_gravity="center"
+                android:layout_marginStart="8dp"
+                android:textColor="@color/exoplayer_controls_color" />
 
-            <TextView style="@style/ExoStyledControls.TimeText.Separator" />
+            <ImageView
+                android:layout_width="@dimen/exo_time_divider_size"
+                android:layout_height="@dimen/exo_time_divider_size"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="4dp"
+                android:layout_marginTop="1dp"
+                android:src="@drawable/exo_divider" />
 
             <TextView
                 android:id="@id/exo_duration"
-                style="@style/ExoStyledControls.TimeText.Duration" />
+                style="@style/ExoStyledControls.TimeText.Duration"
+                android:layout_gravity="center" />
 
         </LinearLayout>
 
@@ -61,7 +74,8 @@
             android:id="@id/exo_basic_controls"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|end"
+            android:layout_gravity="bottom|end"
+            android:layout_marginBottom="8dp"
             android:layoutDirection="ltr">
 
             <ImageButton
@@ -82,7 +96,11 @@
 
             <ImageButton
                 android:id="@id/exo_settings"
-                style="@style/ExoStyledControls.Button.Bottom.Settings" />
+                style="@style/ExoStyledControls.Button.Bottom.Settings"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginEnd="16dp"
+                android:padding="0dp" />
 
             <ImageButton
                 android:id="@id/exo_fullscreen"
@@ -117,12 +135,17 @@
 
     </FrameLayout>
 
-    <View
-        android:id="@id/exo_progress_placeholder"
+    <androidx.media3.ui.DefaultTimeBar
+        android:id="@id/exo_progress"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/exo_styled_progress_layout_height"
+        android:layout_height="@dimen/exo_progress_bar_height"
         android:layout_gravity="bottom"
-        android:layout_marginBottom="@dimen/exo_styled_progress_margin_bottom" />
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginBottom="64dp"
+        app:played_color="@color/exoplayer_controls_color"
+        app:scrubber_color="@color/exoplayer_controls_color"
+        app:scrubber_dragged_size="@dimen/exo_scrubber_size"
+        app:scrubber_enabled_size="@dimen/exo_scrubber_size" />
 
     <LinearLayout
         android:id="@id/exo_minimal_controls"
@@ -149,23 +172,38 @@
         android:clipToPadding="false"
         android:gravity="center"
         android:layoutDirection="ltr"
-        android:padding="@dimen/exo_styled_controls_padding">
+        android:padding="@dimen/exo_center_controls_padding">
 
         <ImageButton
             android:id="@id/exo_prev"
-            style="@style/ExoStyledControls.Button.Center.Previous" />
+            style="@style/ExoStyledControls.Button.Center.Previous"
+            android:visibility="gone" />
 
-        <include layout="@layout/exo_player_control_rewind_button" />
+        <ImageButton
+            android:id="@+id/exo_rew"
+            tools:src="@drawable/exo_styled_controls_simple_rewind"
+            style="@style/ExoStyledControls.Button.Center"
+            android:layout_width="@dimen/exo_rewind_buttons_size"
+            android:layout_height="@dimen/exo_rewind_buttons_size" />
 
         <ImageButton
             android:id="@id/exo_play_pause"
-            style="@style/ExoStyledControls.Button.Center.PlayPause" />
+            style="@style/ExoStyledControls.Button.Center.PlayPause"
+            android:layout_width="@dimen/exo_play_pause_button_size"
+            android:layout_height="@dimen/exo_play_pause_button_size"
+            android:layout_marginHorizontal="@dimen/exo_play_pause_margin_horizontal" />
 
-        <include layout="@layout/exo_player_control_ffwd_button" />
+        <ImageButton
+            android:id="@+id/exo_ffwd"
+            style="@style/ExoStyledControls.Button.Center"
+            tools:src="@drawable/exo_styled_controls_simple_fastforward"
+            android:layout_width="@dimen/exo_rewind_buttons_size"
+            android:layout_height="@dimen/exo_rewind_buttons_size" />
 
         <ImageButton
             android:id="@id/exo_next"
-            style="@style/ExoStyledControls.Button.Center.Next" />
+            style="@style/ExoStyledControls.Button.Center.Next"
+            android:visibility="gone" />
 
     </LinearLayout>
 
