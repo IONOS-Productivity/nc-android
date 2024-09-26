@@ -10,6 +10,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_login_view"
     android:orientation="vertical">
 
     <LinearLayout
@@ -54,7 +55,6 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/login"
-                android:theme="@style/Button.Login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -63,6 +63,9 @@
                 android:textStyle="bold"
                 android:text="@string/login"
                 android:padding="@dimen/standard_padding"
+                android:textColor="@color/black"
+                android:theme="@style/Widget.Material3.Button.OutlinedButton"
+                app:backgroundTint="@color/white"
                 app:cornerRadius="@dimen/button_corner_radius" />
 
             <com.google.android.material.button.MaterialButton
@@ -75,6 +78,7 @@
                 android:maxWidth="500dp"
                 android:minWidth="300dp"
                 android:textStyle="bold"
+                android:visibility="gone"
                 android:padding="@dimen/standard_padding"
                 android:text="@string/signup_with_provider"
                 app:cornerRadius="@dimen/button_corner_radius" />
@@ -88,7 +92,22 @@
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:gravity="center_horizontal"
+            android:visibility="gone"
             android:text="@string/host_your_own_server"/>
+
+        <TextView
+            android:id="@+id/tvOr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="76dp"
+            android:text="@string/authorization_method_description"
+            android:textColor="@color/white"
+            android:textSize="@dimen/splash_text_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bLoginEasyStorage" />
+
     </LinearLayout>
 
 </LinearLayout>
