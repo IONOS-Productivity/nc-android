@@ -50,6 +50,7 @@
             android:layout_gravity="center_vertical"
             android:padding="12dp"
             android:layout_marginEnd="@dimen/standard_quarter_margin"
+            app:tint="@color/ionos_default_icon_color"
             android:src="@drawable/ic_contact_book" />
 
     </LinearLayout>

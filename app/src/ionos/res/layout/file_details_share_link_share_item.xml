@@ -72,6 +72,7 @@
         android:paddingEnd="@dimen/standard_padding"
         android:paddingBottom="@dimen/standard_quarter_margin"
         android:scaleType="fitCenter"
+        app:tint="@color/ionos_default_icon_color"
         android:src="@drawable/ic_content_copy" />
 
     <ImageView
@@ -81,6 +82,7 @@
         android:contentDescription="@string/overflow_menu"
         android:paddingStart="@dimen/standard_padding"
         android:paddingEnd="@dimen/standard_padding"
+        app:tint="@color/ionos_default_icon_color"
         android:src="@drawable/ic_dots_vertical" />
 
 </LinearLayout>

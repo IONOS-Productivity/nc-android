@@ -120,7 +120,7 @@
             app:cornerRadius="24dp"
             app:icon="@drawable/ic_dots_vertical"
             app:iconSize="24dp"
-            app:iconTint="@color/grey_600" />
+            app:iconTint="@color/ionos_default_icon_color" />
     </LinearLayout>
 
     <LinearLayout
@@ -165,7 +165,7 @@
             android:contentDescription="@string/common_cancel"
             app:cornerRadius="24dp"
             app:icon="@drawable/ic_cancel"
-            app:iconTint="@color/grey_600"
+            app:iconTint="@color/ionos_default_icon_color"
             android:layout_marginTop="@dimen/standard_eighth_margin"/>
 
     </LinearLayout>
