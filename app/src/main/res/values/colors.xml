@@ -108,4 +108,7 @@
     <color name="text_input_hint_text_color" app:ionosCustomization="">@color/disabled_text</color>
     <color name="text_input_focused_hint_text_color" app:ionosCustomization="">@color/primary</color>
     <color name="text_input_highlight_color" app:ionosCustomization="">@color/primary</color>
+
+    <color name="navigation_bar_background_color" app:ionosCustomization="">@color/primary</color>
+
 </resources>
