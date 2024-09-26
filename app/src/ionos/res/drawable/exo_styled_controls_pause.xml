@@ -1,0 +1,11 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+    <group android:translateX="-2">
+    <path
+      android:pathData="M26,48C17.375,48 9.5,43.5 5.188,36C0.875,28.594 0.875,19.5 5.188,12C9.5,4.594 17.375,0 26,0C34.531,0 42.406,4.594 46.719,12C51.031,19.5 51.031,28.594 46.719,36C42.406,43.5 34.531,48 26,48ZM23,18C23,16.406 21.594,15 20,15C18.313,15 17,16.406 17,18V30C17,31.688 18.313,33 20,33C21.594,33 23,31.688 23,30V18ZM35,18C35,16.406 33.594,15 32,15C30.313,15 29,16.406 29,18V30C29,31.688 30.313,33 32,33C33.594,33 35,31.688 35,30V18Z"
+      android:fillColor="@color/exoplayer_controls_color"/>
+    </group>
+</vector>

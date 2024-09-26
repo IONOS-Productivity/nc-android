@@ -28,7 +28,7 @@
 
     <dimen name="nav_drawer_menu_avatar_radius">16dp</dimen>
 
-    <dimen name="button_text_padding">18dp</dimen>
+    <dimen name="button_text_padding">16dp</dimen>
 
     <dimen name="grid_mode_icon_size">32dp</dimen>
     <dimen name="grid_mode_item_outline_margin">4dp</dimen>

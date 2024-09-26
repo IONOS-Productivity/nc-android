@@ -48,6 +48,7 @@
         <item name="materialAlertDialogBodyTextStyle">@style/MaterialAlertDialog.App.Body.Text</item>
         <item name="buttonBarPositiveButtonStyle">@style/Widget.App.Button.Positive</item>
         <item name="buttonBarNegativeButtonStyle">@style/Widget.App.Button.Negative</item>
+        <item name="buttonBarNeutralButtonStyle">@style/Widget.App.Button.Neutral</item>
     </style>
 
     <style name="MaterialAlertDialogStyle" parent="MaterialAlertDialog.Material3">
@@ -76,6 +77,12 @@
         <item name="strokeWidth">2dp</item>
         <item name="android:paddingRight">@dimen/button_text_padding</item>
         <item name="android:paddingLeft">@dimen/button_text_padding</item>
+    </style>
+
+    <style name="Widget.App.Button.Neutral" parent="Widget.Material3.Button.TextButton">
+        <item name="android:textColor">@color/text_button_text_color</item>
+        <item name="android:paddingRight">0dp</item>
+        <item name="android:paddingLeft">0dp</item>
     </style>
 
     <style name="Generic.ThemeOverlay.App.BottomSheetDialog" parent="ThemeOverlay.App.BottomSheetDialog">
@@ -250,5 +257,9 @@
     </style>
 
     <style name="SharingDetails.Button.OutlinedButton" parent="Widget.App.Button.Negative">
+    </style>
+
+    <style name="Theme.ownCloud.Media" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:textColor">@color/exoplayer_controls_color</item>
     </style>
 </resources>
