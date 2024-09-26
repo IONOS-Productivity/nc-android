@@ -13,6 +13,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
+    android:background="@color/black"
     tools:context=".ui.preview.PreviewMediaActivity">
 
     <androidx.media3.ui.PlayerView
@@ -29,12 +30,12 @@
         android:layout_gravity="center"
         android:layout_margin="@dimen/standard_margin"
         android:contentDescription="@string/preview_image_description"
-        android:src="@drawable/logo" />
+        tools:src="@drawable/logo" />
 
     <com.owncloud.android.media.MediaControlView
         android:id="@+id/media_controller"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
         android:layout_margin="@dimen/standard_margin"
         android:visibility="gone" />
