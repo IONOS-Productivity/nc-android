@@ -498,4 +498,9 @@
     <style name="Theme.Dialog.Button.OutlinedButton" parent="Widget.Material3.Button.OutlinedButton">
     </style>
 
+    <style name="Theme.ownCloud.LoadingDialog" parent="Theme.ownCloud.Dialog">
+        <item name="android:windowMinWidthMajor">0%</item>
+        <item name="android:windowMinWidthMinor">0%</item>
+    </style>
+
 </resources>
