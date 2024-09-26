@@ -279,7 +279,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/share_process_btn_cancel"
-        style="@style/SharingDetails.Button.OutlinedButton"
+        style="@style/Theme.Dialog.Button.OutlinedButton"
         android:layout_width="@dimen/button_width"
         android:layout_height="0dp"
         android:layout_marginStart="@dimen/standard_margin"
@@ -301,7 +301,7 @@
         android:ellipsize="end"
         android:maxLines="2"
         android:text="@string/common_next"
-        android:theme="@style/SharingDetails.IconButton.Filled"
+        android:theme="@style/Theme.Dialog.IconButton.Filled"
         android:textColor="@color/filled_button_text_color"
         app:cornerRadius="@dimen/button_corner_radius"
         app:ionosCustomization="Limit max lines number to 2"

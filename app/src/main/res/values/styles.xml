@@ -486,19 +486,16 @@
         <item name="postSplashScreenTheme">@style/Theme.ownCloud.Launcher</item>
     </style>
 
-    <style name="FilesFolderPicker.TextButton" parent="Widget.Material3.Button.TextButton">
+    <style name="Theme.Dialog.TextButton" parent="Widget.Material3.Button.TextButton">
     </style>
 
-    <style name="FilesFolderPicker.IconButton.Filled.Tonal" parent="Widget.Material3.Button.IconButton.Filled.Tonal">
+    <style name="Theme.Dialog.IconButton.Filled.Tonal" parent="Widget.Material3.Button.IconButton.Filled.Tonal">
     </style>
 
-    <style name="FilesFolderPicker.IconButton.Filled" parent="Widget.Material3.Button.IconButton.Filled">
+    <style name="Theme.Dialog.IconButton.Filled" parent="Widget.Material3.Button.IconButton.Filled">
     </style>
 
-    <style name="SharingDetails.IconButton.Filled" parent="Widget.Material3.Button.IconButton.Filled">
-    </style>
-
-    <style name="SharingDetails.Button.OutlinedButton" parent="Widget.Material3.Button.OutlinedButton">
+    <style name="Theme.Dialog.Button.OutlinedButton" parent="Widget.Material3.Button.OutlinedButton">
     </style>
 
 </resources>
