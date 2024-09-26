@@ -51,6 +51,7 @@ import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.DefaultTimeBar
 import androidx.media3.ui.PlayerView
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.account.User
 import com.nextcloud.client.account.UserAccountManager
 import com.nextcloud.client.di.Injectable
@@ -275,6 +276,7 @@ class PreviewMediaActivity :
         binding.emptyView.emptyListView.visibility = View.VISIBLE
     }
 
+    @IonosCustomization("ui bugfix")
     private fun setVideoErrorMessage(headline: String, @StringRes message: Int) {
         binding.emptyView.run {
             emptyListViewHeadline.text = headline
@@ -282,8 +284,7 @@ class PreviewMediaActivity :
             emptyListIcon.setImageResource(R.drawable.file_movie)
             emptyListViewText.visibility = View.VISIBLE
             emptyListIcon.visibility = View.VISIBLE
-
-            hideProgressLayout()
+            binding.progress.visibility = View.GONE
         }
     }
 
