@@ -32,6 +32,9 @@
     <color name="ionos_outlined_button_default_text_color">@color/ghost_white</color>
     <color name="ionos_outlined_button_pressed_text_color">@color/madison</color>
     <color name="ionos_outlined_button_disabled_text_color">@color/dusk</color>
+    <color name="ionos_text_button_default_text_color">@color/curious_blue</color>
+    <color name="ionos_text_button_pressed_text_color">@color/cornflower</color>
+    <color name="ionos_text_button_disabled_text_color">@color/dusk</color>
 
     <color name="dialog_pressed_item_color">@color/transparent_ghost_white</color>
 

@@ -37,6 +37,9 @@
     <color name="ionos_outlined_button_default_text_color">@color/madison</color>
     <color name="ionos_outlined_button_pressed_text_color">@color/white</color>
     <color name="ionos_outlined_button_disabled_text_color">@color/gull_grayapprox</color>
+    <color name="ionos_text_button_default_text_color">@color/dodger_blue</color>
+    <color name="ionos_text_button_pressed_text_color">@color/royal_blue</color>
+    <color name="ionos_text_button_disabled_text_color">@color/gull_grayapprox</color>
 
     <color name="dialog_pressed_item_color">@color/lavender_mist</color>
 
