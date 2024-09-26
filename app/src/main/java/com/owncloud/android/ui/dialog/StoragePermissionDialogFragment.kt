@@ -73,7 +73,7 @@ class StoragePermissionDialogFragment : DialogFragment(), Injectable {
         }
         val message = getString(explanationResource, getString(R.string.app_name))
 
-        val dialogBuilder = MaterialAlertDialogBuilder(requireContext())
+        val dialogBuilder = MaterialAlertDialogBuilder(requireContext(), R.style.Theme_ownCloud_Dialog)
             .setTitle(title)
             .setMessage(message)
             .setPositiveButton(R.string.storage_permission_full_access) { _, _ ->
