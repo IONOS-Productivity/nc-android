@@ -14,6 +14,8 @@ package com.owncloud.android.ui.activity;
 
 import android.accounts.AuthenticatorException;
 import android.accounts.OperationCanceledException;
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -102,6 +104,7 @@ import com.owncloud.android.utils.svg.SVGorImage;
 import com.owncloud.android.utils.svg.SvgOrImageBitmapTranscoder;
 import com.owncloud.android.utils.svg.SvgOrImageDecoder;
 import com.owncloud.android.utils.theme.CapabilityUtils;
+import com.owncloud.android.utils.theme.ViewThemeUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -118,6 +121,7 @@ import javax.inject.Inject;
 
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
@@ -244,7 +248,7 @@ public abstract class DrawerActivity extends ToolbarActivity
      */
     @IonosCustomization
     private void setupDrawerToggle() {
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
+        mDrawerToggle = new AnimatedDrawerListener(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close, viewThemeUtils) {
 
             /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {
@@ -275,6 +279,67 @@ public abstract class DrawerActivity extends ToolbarActivity
         Drawable drawerIndicator = AppCompatResources.getDrawable(this, R.drawable.ic_menu);
         mDrawerToggle.setDrawerArrowDrawable(new SingleStateDrawerArrowDrawable(this, drawerIndicator));
         mDrawerToggle.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+    }
+
+    @IonosCustomization
+    private class AnimatedDrawerListener extends ActionBarDrawerToggle {
+        private static final float CHANGE_GAIN = 0.1f;
+
+        private final Activity activity;
+        private final ViewThemeUtils viewThemeUtils;
+        private final ValueAnimator valueAnimator;
+
+        AnimatedDrawerListener(Activity activity,
+                               DrawerLayout drawerLayout,
+                               @StringRes int openDrawerContentDescRes,
+                               @StringRes int closeDrawerContentDescRes,
+                               ViewThemeUtils viewThemeUtils
+                              ) {
+            super(activity, drawerLayout, openDrawerContentDescRes, closeDrawerContentDescRes);
+
+            this.activity = activity;
+            this.viewThemeUtils = viewThemeUtils;
+            this.valueAnimator = createValueAnimator();
+        }
+
+        private ValueAnimator createValueAnimator() {
+            int colorFrom = this.activity.getResources().getColor(R.color.bg_default);
+            int colorTo = getOpenedDrawerColor();
+            return ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
+        }
+
+        @Override
+        public void onDrawerSlide(View drawerView, float slideOffset) {
+            super.onDrawerSlide(drawerView, slideOffset);
+
+            if (shouldUpdateSystemBarColor(slideOffset)) {
+                this.valueAnimator.setCurrentFraction(slideOffset);
+                this.viewThemeUtils.ionos.platform.themeSystemBars(this.activity, (int) this.valueAnimator.getAnimatedValue());
+            }
+        }
+
+        @Override
+        public void onDrawerOpened(View drawerView) {
+            super.onDrawerOpened(drawerView);
+
+            this.viewThemeUtils.ionos.platform.themeSystemBars(this.activity, getOpenedDrawerColor());
+        }
+
+        @Override
+        public void onDrawerClosed(View drawerView) {
+            super.onDrawerClosed(drawerView);
+
+            this.viewThemeUtils.ionos.platform.themeSystemBars(this.activity);
+        }
+
+        private boolean shouldUpdateSystemBarColor(float slideOffset) {
+            float delta = Math.abs(slideOffset - this.valueAnimator.getAnimatedFraction());
+            return delta > CHANGE_GAIN;
+        }
+
+        private int getOpenedDrawerColor() {
+            return getResources().getColor(R.color.drawer_header_background);
+        }
     }
 
     /**
