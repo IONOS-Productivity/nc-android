@@ -19,7 +19,6 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.viewpager2.widget.ViewPager2
-import com.ionos.annotation.IonosCustomization
 import com.nextcloud.android.common.ui.theme.utils.ColorRole
 import com.nextcloud.client.account.UserAccountManager
 import com.nextcloud.client.appinfo.AppInfo
@@ -67,7 +66,6 @@ class FirstRunActivity : BaseActivity(), Injectable {
     private lateinit var binding: FirstRunActivityBinding
     private var defaultViewThemeUtils: ViewThemeUtils? = null
 
-    @IonosCustomization
     override fun onCreate(savedInstanceState: Bundle?) {
         enableAccountHandling = false
 
@@ -83,14 +81,16 @@ class FirstRunActivity : BaseActivity(), Injectable {
 
         registerActivityResult()
         setupLoginButton()
+        setupSignupButton(isProviderOrOwnInstallationVisible)
+        setupHostOwnServerTextView(isProviderOrOwnInstallationVisible)
         deleteAccountAtFirstLaunch()
         setupFeaturesViewAdapter()
         handleOnBackPressed()
     }
 
-    @IonosCustomization
     private fun applyDefaultTheme() {
         defaultViewThemeUtils = viewThemeUtilsFactory?.withPrimaryAsBackground()
+        defaultViewThemeUtils?.platform?.themeStatusBar(this, ColorRole.PRIMARY)
     }
 
     private fun registerActivityResult() {
@@ -116,11 +116,11 @@ class FirstRunActivity : BaseActivity(), Injectable {
             }
     }
 
-    @IonosCustomization
     private fun setupLoginButton() {
+        defaultViewThemeUtils?.material?.colorMaterialButtonFilledOnPrimary(binding.login)
         binding.login.setOnClickListener {
             if (intent.getBooleanExtra(EXTRA_ALLOW_CLOSE, false)) {
-                val authenticatorActivityIntent = getAuthenticatorActivityIntent(true)
+                val authenticatorActivityIntent = getAuthenticatorActivityIntent(false)
                 activityResult?.launch(authenticatorActivityIntent)
             } else {
                 finish()
