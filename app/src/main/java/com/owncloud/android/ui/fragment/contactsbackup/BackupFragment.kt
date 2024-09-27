@@ -486,6 +486,7 @@ class BackupFragment : FileFragment(), OnDateSetListener, Injectable {
         }
     }
 
+    @IonosCustomization
     private fun openDate(savedDate: Calendar?) {
         val contactsPreferenceActivity = activity as ContactsPreferenceActivity?
         if (contactsPreferenceActivity == null) {
@@ -522,10 +523,6 @@ class BackupFragment : FileFragment(), OnDateSetListener, Injectable {
                 show()
             }
 
-            viewThemeUtils.platform.colorTextButtons(
-                datePickerDialog!!.getButton(DatePickerDialog.BUTTON_NEGATIVE),
-                datePickerDialog!!.getButton(DatePickerDialog.BUTTON_POSITIVE)
-            )
         } else {
             DisplayUtils.showSnackMessage(
                 requireView().findViewById<View>(R.id.contacts_linear_layout),
