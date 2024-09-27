@@ -50,6 +50,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.ionos.annotation.IonosCustomization;
+import com.ionos.authorization_method.AuthorizationMethodActivity;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.di.Injectable;
 import com.nextcloud.client.files.DeepLinkConstants;
@@ -599,13 +600,13 @@ public abstract class DrawerActivity extends ToolbarActivity
         startActivityForResult(manageAccountsIntent, ACTION_MANAGE_ACCOUNTS);
     }
 
+    @IonosCustomization
     public void openAddAccount() {
         boolean isProviderOrOwnInstallationVisible = getResources()
             .getBoolean(R.bool.show_provider_or_own_installation);
 
         if (isProviderOrOwnInstallationVisible) {
-            Intent firstRunIntent = new Intent(getApplicationContext(), FirstRunActivity.class);
-            firstRunIntent.putExtra(FirstRunActivity.EXTRA_ALLOW_CLOSE, true);
+            Intent firstRunIntent = AuthorizationMethodActivity.createInstance(getApplicationContext());
             startActivity(firstRunIntent);
         } else {
             startAccountCreation();
