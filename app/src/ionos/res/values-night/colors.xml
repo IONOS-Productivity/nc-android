@@ -8,6 +8,12 @@
     <color name="selected_item_background">@color/navy</color>
     <color name="default_icon_color">@color/ionos_default_icon_color</color>
 
+    <color name="ionos_drawer_background">@color/dark_slate_grey</color>
+    <color name="drawer_header_background">@color/dark_slate_grey</color>
+    <color name="ionos_drawer_item_background">@color/dark_slate_grey</color>
+    <color name="ionos_drawer_item_background_checked">@color/deep_koamaru</color>
+    <color name="ionos_drawer_quota_background">@color/jungle_mist</color>
+
     <color name="ionos_navigation_bar_background">@color/midnight_blue2</color>
     <color name="ionos_default_icon_color">@color/ghost_white</color>
     <color name="ionos_default_text_color">@color/ghost_white</color>

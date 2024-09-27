@@ -110,5 +110,6 @@
     <color name="text_input_highlight_color" app:ionosCustomization="">@color/primary</color>
 
     <color name="navigation_bar_background_color" app:ionosCustomization="">@color/primary</color>
+    <color name="drawer_header_background" app:ionosCustomization="">@color/primary</color>
 
 </resources>
