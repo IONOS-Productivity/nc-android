@@ -119,7 +119,8 @@
                 android:layout_marginStart="@dimen/standard_half_margin"
                 android:minHeight="@dimen/minimum_size_for_touchable_area"
                 android:text="@string/contacts_backup_button"
-                android:theme="@style/SettingsBackupMaterialButtonFilledStyle" />
+                android:theme="@style/SettingsBackupMaterialButtonFilledStyle"
+                android:textColor="@color/filled_button_text_color"/>
 
         </LinearLayout>
 
