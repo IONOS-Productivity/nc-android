@@ -24,6 +24,7 @@ buildscript {
         classpath "org.jacoco:org.jacoco.core:$jacoco_version"
         classpath "org.jacoco:org.jacoco.report:$jacoco_version"
         classpath "org.jacoco:org.jacoco.agent:$jacoco_version"
+        classpath 'com.google.gms:google-services:4.4.2'
     }
 }
 
@@ -43,6 +44,7 @@ apply plugin: 'pmd'
 apply from: "$rootProject.projectDir/jacoco.gradle"
 apply plugin: 'com.github.spotbugs'
 apply plugin: 'io.gitlab.arturbosch.detekt'
+apply plugin: 'com.google.gms.google-services'
 
 // needed to make renovate run without shot, as shot requires Android SDK
 // https://github.com/pedrovgs/Shot/issues/300
@@ -441,6 +443,8 @@ dependencies {
 
     // splash screen dependency ref: https://developer.android.com/develop/ui/views/launch/splash-screen/migrate
     implementation 'androidx.core:core-splashscreen:1.0.1'
+
+    ionosImplementation "com.google.firebase:firebase-analytics:22.1.0"
 }
 
 configurations.configureEach {
