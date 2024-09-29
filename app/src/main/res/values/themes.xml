@@ -22,7 +22,7 @@
         <item name="windowActionModeOverlay">true</item>
         <item name="windowNoTitle">true</item>
         <item name="textInputStyle">@style/Widget.App.TextInputLayout</item>
-        <item name="popupMenuStyle">@style/Nextcloud.Widget.PopupMenu</item>
+        <item name="popupMenuStyle">@style/Generic.Nextcloud.Widget.PopupMenu</item>
         <item name="bottomSheetDialogTheme">@style/Generic.ThemeOverlay.App.BottomSheetDialog</item>
         <item name="actionModeStyle">@style/App.ActionMode</item>
 
@@ -34,6 +34,10 @@
 
         <item name="android:textColor" app:ionosCustomization="">@color/text_color</item>
         <item name="android:textColorSecondary" app:ionosCustomization="">@color/secondary_text_color</item>
+
+        <!-- Popup background color -->
+        <!--<item name="popupMenuBackground" app:ionosCustomization="">@drawable/m3_popupmenu_background_overlay</item>-->
+        <item name="colorSurfaceContainer" app:ionosCustomization="">@color/popup_background_color</item>
     </style>
 
     <style name="Theme.ownCloud.Toolbar.AppWidgetContainerParent" parent="@android:style/Theme.DeviceDefault">

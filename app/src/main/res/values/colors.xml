@@ -112,4 +112,6 @@
     <color name="navigation_bar_background_color" app:ionosCustomization="">@color/primary</color>
     <color name="drawer_header_background" app:ionosCustomization="">@color/primary</color>
 
+    <color name="popup_background_color" app:ionosCustomization="">@color/bg_default</color>
+
 </resources>

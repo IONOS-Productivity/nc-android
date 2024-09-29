@@ -183,7 +183,7 @@
         <item name="android:textColor">@color/ionos_default_text_color</item>
         <item name="android:textColorHint">@color/ionos_toolbar_hint_color</item>
         <item name="actionOverflowButtonStyle">@style/OverflowButtonStyle</item>
-        <item name="actionOverflowMenuStyle">@style/OverflowMenuStyle</item>
+        <item name="actionOverflowMenuStyle">@style/Generic.OverflowMenuStyle</item>
         <item name="colorControlNormal">@color/ionos_default_icon_color</item>
         <item name="iconTint">@color/ionos_default_icon_color</item>
         <item name="titleTextColor">@color/ionos_default_text_color</item>
@@ -259,4 +259,13 @@
     <style name="Theme.ownCloud.Media" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:textColor">@color/exoplayer_controls_color</item>
     </style>
+
+    <style name="Generic.Nextcloud.Widget.PopupMenu" parent="Nextcloud.Widget.PopupMenu">
+        <item name="popupMenuBackground">@color/popup_background_color</item>
+    </style>
+
+    <style name="Generic.OverflowMenuStyle" parent="OverflowMenuStyle">
+        <item name="android:popupBackground">@color/popup_background_color</item>
+    </style>
+
 </resources>
