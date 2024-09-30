@@ -805,6 +805,8 @@ class SyncedFoldersActivity :
         item.setExcludeHidden(excludeHidden)
     }
 
+    @IonosCustomization("StackOverflow fix")
+    private var externalStoragePermissionRequestCount = 0
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         when (requestCode) {
             PermissionUtil.PERMISSIONS_EXTERNAL_STORAGE -> {
@@ -812,8 +814,7 @@ class SyncedFoldersActivity :
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // permission was granted
                     load(getItemsDisplayedPerFolder(), true)
-                } else {
-                    // permission denied --> request again
+                } else if (externalStoragePermissionRequestCount++ == 0) {
                     PermissionUtil.requestExternalStoragePermission(this, viewThemeUtils, true)
                 }
             }
