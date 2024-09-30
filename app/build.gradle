@@ -44,7 +44,6 @@ apply plugin: 'pmd'
 apply from: "$rootProject.projectDir/jacoco.gradle"
 apply plugin: 'com.github.spotbugs'
 apply plugin: 'io.gitlab.arturbosch.detekt'
-apply plugin: 'com.google.gms.google-services'
 
 // needed to make renovate run without shot, as shot requires Android SDK
 // https://github.com/pedrovgs/Shot/issues/300
@@ -53,6 +52,9 @@ if (shotTest) {
 }
 apply plugin: 'com.google.devtools.ksp'
 
+if (getGradle().getStartParameter().getTaskRequests().toString().contains("Ionos")){
+    apply plugin: 'com.google.gms.google-services'
+}
 
 println "Gradle uses Java ${Jvm.current()}"
 
