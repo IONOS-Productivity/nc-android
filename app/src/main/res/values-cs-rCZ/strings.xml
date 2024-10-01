@@ -33,6 +33,7 @@
     <string name="add_to_cloud">Přidat k %1$s</string>
     <string name="advanced_settings">Pokročilá nastavení</string>
     <string name="allow_resharing">Povolit sdílet dál dalším</string>
+    <string name="app_config_base_url_title">Základní URL</string>
     <string name="app_config_proxy_port_title">Port proxy</string>
     <string name="app_widget_description">Zobrazuje jeden ovládací prvek z nástěnky</string>
     <string name="appbar_search_in">Hledat v %s</string>
@@ -198,6 +199,7 @@
     <string name="create_dir_fail_msg">Nepodařilo se vytvořit složku</string>
     <string name="create_new">Nové</string>
     <string name="create_new_document">Nový dokument</string>
+    <string name="create_new_folder">Nová složka</string>
     <string name="create_new_presentation">Nová prezentace</string>
     <string name="create_new_spreadsheet">Nová tabulka</string>
     <string name="create_rich_workspace">Přidat popis složky</string>
@@ -680,6 +682,7 @@
     <string name="restore_button_description">Obnovit smazaný soubor</string>
     <string name="restore_selected">Obnovit označené</string>
     <string name="retrieving_file">Získávání souboru…</string>
+    <string name="retry">Zkusit znovu</string>
     <string name="richdocuments_failed_to_load_document">Dokument se nepodařilo načíst!</string>
     <string name="scanQR_description">Přihlášení prostřednictvím QR kódu</string>
     <string name="scan_page">Naskenovat stránku</string>
@@ -851,6 +854,7 @@
     <string name="trashbin_file_remove">Nevratně smazat</string>
     <string name="trashbin_loading_failed">Načítání obsahu koše se nezdařilo!</string>
     <string name="trashbin_not_emptied">Soubory se nepodařilo natrvalo smazat!</string>
+    <string name="unexpected_error_occurred">Došlo k neočekávané chybě</string>
     <string name="unlock_file">Odemknout soubor</string>
     <string name="unread_comments">Existuje nepřečtený komentář</string>
     <string name="unset_encrypted">Zrušit šifrování</string>

@@ -180,8 +180,10 @@
     <string name="confirmation_remove_local">Local seulement</string>
     <string name="conflict_dialog_error">Erreur lors de la création de la boîte de dialogue de conflit !</string>
     <string name="conflict_file_headline">Fichier %1$s en conflit</string>
+    <string name="conflict_folder_headline">Conflit de dossiers</string>
     <string name="conflict_local_file">fichier local</string>
     <string name="conflict_message_description">Si vous sélectionnez les deux versions, le fichier local aura un numéro ajouté à son nom.</string>
+    <string name="conflict_message_description_for_folder">Si vous sélectionnez les deux versions, le dossier local portera un numéro ajouté à son nom.</string>
     <string name="conflict_server_file">Fichier serveur</string>
     <string name="contact_backup_title">Sauvegarde des contacts</string>
     <string name="contact_no_permission">La permission d\'accès à vos contacts est requise</string>
@@ -406,6 +408,8 @@
     <string name="file_migration_updating_index">Mise à jour de l\'index…</string>
     <string name="file_migration_use_data_folder">Conserver le dossier actuel</string>
     <string name="file_migration_waiting_for_unfinished_sync">En attente de la synchronisation complète…</string>
+    <string name="file_name_validator_error_reserved_names">%s est un nom interdit</string>
+    <string name="file_name_validator_rename_before_move_or_copy">%s. Veuillez renommer le fichier avant de le déplacer ou de le copier</string>
     <string name="file_not_found">Fichier non trouvé</string>
     <string name="file_not_synced">Le fichier ne peut pas être synchronisé. Affichage de la dernière version disponible. </string>
     <string name="file_rename">Renommer</string>
@@ -429,6 +433,7 @@
     <string name="folder_already_exists">Le dossier existe déjà</string>
     <string name="folder_confirm_create">Créer</string>
     <string name="folder_list_empty_headline">Aucun dossier</string>
+    <string name="folder_name_empty">Le nom du dossier ne peut être vide</string>
     <string name="folder_picker_choose_button_text">Choisir</string>
     <string name="folder_picker_choose_caption_text">Sélectionner le dossier cible</string>
     <string name="folder_picker_copy_button_text">Copier</string>
@@ -475,6 +480,8 @@
     <string name="instant_upload_existing">Téléverser aussi les fichiers existants</string>
     <string name="instant_upload_on_charging">Téléverser uniquement lors de la recharge</string>
     <string name="instant_upload_path">/InstantUpload</string>
+    <string name="internal_two_way_sync">Synchronisation interne bidirectionnelle</string>
+    <string name="internal_two_way_sync_not_yet">Pas encore, bientôt synchronisé</string>
     <string name="invalid_url">URL invalide</string>
     <string name="invisible">Invisible</string>
     <string name="label_empty">Le libellé ne peut pas être vide</string>
@@ -559,6 +566,8 @@
     <string name="note_could_not_sent">Impossible d\'envoyer la note</string>
     <string name="note_icon_hint">Icône de note</string>
     <string name="notification_action_failed">Échec lors de l\'exécution de l\'action.</string>
+    <string name="notification_channel_background_operations_description">Afficher des notifications pour interagir avec le résultat des opérations en arrière-plan</string>
+    <string name="notification_channel_background_operations_name">Opérations en arrière-plan</string>
     <string name="notification_channel_download_description">Afficher la progression de téléchargement</string>
     <string name="notification_channel_download_name_short">Téléchargements</string>
     <string name="notification_channel_file_sync_description">Afficher les résultats et la progression de synchronisation du fichier</string>
@@ -574,7 +583,13 @@
     <string name="notification_icon">Icône de notification</string>
     <string name="notifications_no_results_headline">Aucune notification</string>
     <string name="notifications_no_results_message">Veuillez revenir plus tard.</string>
+    <string name="oc_file_list_adapter_offline_operation_description_text">Opération en attente</string>
     <string name="offline_mode">Aucune connexion Internet</string>
+    <string name="offline_operations_worker_notification_conflict_text">Dossier en conflit : %s</string>
+    <string name="offline_operations_worker_notification_delete_offline_folder">Supprimer le dossier hors ligne</string>
+    <string name="offline_operations_worker_notification_error_text">L\'opération hors ligne ne peut être achevée. %s</string>
+    <string name="offline_operations_worker_notification_manager_ticker">Opérations hors ligne</string>
+    <string name="offline_operations_worker_notification_start_text">Démarrage des opérations hors ligne</string>
     <string name="oneHour">1 heure</string>
     <string name="online">En ligne</string>
     <string name="online_status">Statut en ligne</string>
@@ -665,6 +680,7 @@
     <string name="prefs_synced_folders_local_path_title">Dossier local</string>
     <string name="prefs_synced_folders_remote_path_title">Dossier distant</string>
     <string name="prefs_theme_title">Thème</string>
+    <string name="prefs_two_way_sync_summary">Gestion les dossiers internes pour une synchronisation bidirectionnelle</string>
     <string name="prefs_value_theme_dark">Sombre</string>
     <string name="prefs_value_theme_light">Clair</string>
     <string name="prefs_value_theme_system">Selon le système</string>
@@ -713,6 +729,7 @@
     <string name="restore_button_description">Restaurer le fichier supprimé</string>
     <string name="restore_selected">Restaurer la sélection</string>
     <string name="retrieving_file">Téléchargement en cours…</string>
+    <string name="retry">Réessayer</string>
     <string name="richdocuments_failed_to_load_document">Impossible de charger le document !</string>
     <string name="scanQR_description">Connexion par code QR</string>
     <string name="scan_page">Scanner la page</string>
@@ -892,6 +909,7 @@
     <string name="trashbin_file_remove">Supprimer définitivement</string>
     <string name="trashbin_loading_failed">Le chargement de la corbeille a échoué !</string>
     <string name="trashbin_not_emptied">Des fichiers n\'ont pas pu être supprimés de manière définitive !</string>
+    <string name="unexpected_error_occurred">Une erreur est survenue</string>
     <string name="unified_search_fragment_calendar_event_not_found">Événement introuvable; vous pouvez toujours synchroniser pour mettre à jour. Redirection au web…</string>
     <string name="unified_search_fragment_contact_not_found">Contact introuvable, vous pouvez toujours synchroniser pour mettre à jour. Redirection au web...</string>
     <string name="unified_search_fragment_permission_needed">Des permissions sont requises pour ouvrir le résultat de recherche, autrement ceci redirigera au web…</string>
