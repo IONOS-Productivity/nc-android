@@ -14,7 +14,6 @@ import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 
-import com.ionos.annotation.IonosCustomization;
 import com.nextcloud.client.account.Server;
 import com.nextcloud.client.account.UserAccountManager;
 import com.nextcloud.common.PlainClient;
@@ -72,40 +71,34 @@ class ConnectivityServiceImpl implements ConnectivityService {
     }
 
     @Override
-    @IonosCustomization("Cache result only after actual check")
     public boolean isInternetWalled() {
         final Boolean cachedValue = walledCheckCache.getValue();
         if (cachedValue != null) {
             return cachedValue;
         } else {
+            Server server = accountManager.getUser().getServer();
+            String baseServerAddress = server.getUri().toString();
+
             boolean result;
             Connectivity c = getConnectivity();
-            if (c.isConnected() && c.isWifi() && !c.isMetered()) {
+            if (c.isConnected() && c.isWifi() && !c.isMetered() && !baseServerAddress.isEmpty()) {
+                GetMethod get = requestBuilder.invoke(baseServerAddress + CONNECTIVITY_CHECK_ROUTE);
+                PlainClient client = clientFactory.createPlainClient();
 
-                Server server = accountManager.getUser().getServer();
-                String baseServerAddress = server.getUri().toString();
-                if (baseServerAddress.isEmpty()) {
-                    result = true;
-                } else {
+                int status = get.execute(client);
 
-                    GetMethod get = requestBuilder.invoke(baseServerAddress + CONNECTIVITY_CHECK_ROUTE);
-                    PlainClient client = clientFactory.createPlainClient();
-
-                    int status = get.execute(client);
-
-                    // Content-Length is not available when using chunked transfer encoding, so check for -1 as well
-                    result = !(status == HttpStatus.SC_NO_CONTENT && get.getResponseContentLength() <= 0);
-                    get.releaseConnection();
-                    if (result) {
-                        Log_OC.w(TAG, "isInternetWalled(): Failed to GET " + CONNECTIVITY_CHECK_ROUTE + "," +
-                            " assuming connectivity is impaired");
-                    }
-                    walledCheckCache.setValue(result);
+                // Content-Length is not available when using chunked transfer encoding, so check for -1 as well
+                result = !(status == HttpStatus.SC_NO_CONTENT && get.getResponseContentLength() <= 0);
+                get.releaseConnection();
+                if (result) {
+                    Log_OC.w(TAG, "isInternetWalled(): Failed to GET " + CONNECTIVITY_CHECK_ROUTE + "," +
+                        " assuming connectivity is impaired");
                 }
             } else {
                 result = !c.isConnected();
             }
 
+            walledCheckCache.setValue(result);
             return result;
         }
     }
