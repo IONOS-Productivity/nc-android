@@ -138,7 +138,7 @@ class RenameFileDialogFragment : DialogFragment(), DialogInterface.OnClickListen
             var newFileName = ""
 
             if (binding.userInput.text != null) {
-                newFileName = binding.userInput.text.toString().trim { it <= ' ' }
+                newFileName = binding.userInput.text.toString()
             }
 
             val errorMessage = checkFileName(newFileName, oCCapability, requireContext(), null)
@@ -163,7 +163,7 @@ class RenameFileDialogFragment : DialogFragment(), DialogInterface.OnClickListen
     override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
         var newFileName = ""
         if (binding.userInput.text != null) {
-            newFileName = binding.userInput.text.toString().trim { it <= ' ' }
+            newFileName = binding.userInput.text.toString()
         }
 
         val errorMessage = checkFileName(newFileName, oCCapability, requireContext(), fileNames)

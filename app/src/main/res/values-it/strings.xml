@@ -34,6 +34,7 @@
     <string name="add_to_cloud">Aggiungi a %1$s</string>
     <string name="advanced_settings">Impostazioni avanzate</string>
     <string name="allow_resharing">Consenti la ri-condivisione</string>
+    <string name="app_config_base_url_title">URL di base</string>
     <string name="app_config_proxy_port_title">Porta proxy</string>
     <string name="app_widget_description">Mostra un widget dal cruscotto</string>
     <string name="appbar_search_in">Cerca in %s</string>
@@ -679,6 +680,7 @@
     <string name="restore_button_description">Ripristina file eliminato</string>
     <string name="restore_selected">Ripristina selezionato</string>
     <string name="retrieving_file">Recupero file…</string>
+    <string name="retry">Riprova</string>
     <string name="richdocuments_failed_to_load_document">Caricamento del documento non riuscito!</string>
     <string name="scanQR_description">Accedi tramite codice QR</string>
     <string name="scan_page">Scansiona la pagina</string>
@@ -852,6 +854,7 @@
     <string name="trashbin_file_remove">Elimina permanentemente</string>
     <string name="trashbin_loading_failed">Caricamento cestino non riuscito!</string>
     <string name="trashbin_not_emptied">I file non possono essere scaricati definitivamente!</string>
+    <string name="unexpected_error_occurred">Si è verificato un errore inatteso</string>
     <string name="unlock_file">Sblocca file</string>
     <string name="unread_comments">Sono presenti commenti non letti</string>
     <string name="unset_encrypted">Rimuovi cifratura</string>

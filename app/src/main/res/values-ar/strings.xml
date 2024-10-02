@@ -180,8 +180,10 @@
     <string name="confirmation_remove_local">محلياً فقط</string>
     <string name="conflict_dialog_error">تعذّر إنشاء نافذة حوار حل التعارضات</string>
     <string name="conflict_file_headline">ملف متضارب %1$s </string>
+    <string name="conflict_folder_headline">تعارض مجلد</string>
     <string name="conflict_local_file">ملف محلي</string>
     <string name="conflict_message_description">إذا قمت باختيار كلا الاصدارين, الملف المحلي سيحتوي على رقم ملحق باسم الملف.</string>
+    <string name="conflict_message_description_for_folder">إذا اخترت الاحتفاظ بكلتا النسختين، سيتم إلحاق أرقام تسلسلية في نهاية اسم المجلد المحلي.</string>
     <string name="conflict_server_file">ملف على الخادم</string>
     <string name="contact_backup_title">نسخ احتياطي لجهات الاتصال</string>
     <string name="contact_no_permission">إذن الاتصال بالجهة لازم.</string>
@@ -409,14 +411,14 @@
     <string name="file_migration_updating_index">تحديث الفهرس…</string>
     <string name="file_migration_use_data_folder">استعمل</string>
     <string name="file_migration_waiting_for_unfinished_sync">بإنتظار مزامنة كاملة…</string>
-    <string name="file_name_validator_current_path_is_invalid">اسم المجلد الحالي غير صحيح. قُم رجاءً بتغيير اسم المجلد. إعادة التوجيه إلى المجلد الجذر</string>
-    <string name="file_name_validator_error_contains_reserved_names_or_invalid_characters">مسار المجلد يحتوي على أسماء محجوزة أو حروف غير صالحة</string>
-    <string name="file_name_validator_error_ends_with_space_period">اسم ينتهي بفراغ أو نقطة</string>
-    <string name="file_name_validator_error_forbidden_file_extensions">.%s امتداد ملف غير مسموحٍ به</string>
-    <string name="file_name_validator_error_invalid_character">اسم يحتوي على حروف غير صالحة: %s</string>
+    <string name="file_name_validator_current_path_is_invalid">الاسم الحالي للمجلد غير صالح. رجاءً، أعِد تسمية المجلد. جارٍ إعادة التوجيه لصفحة البداية ...</string>
+    <string name="file_name_validator_error_contains_reserved_names_or_invalid_characters">مسار المجلد يحتوي على أسماء محجوزة للنظام أو حروف غير مقبولة</string>
+    <string name="file_name_validator_error_forbidden_file_extensions">%s هو امتداد غير مسموح به</string>
+    <string name="file_name_validator_error_forbidden_space_character_extensions">أسماء الملفات يجب ألّا تحتوي على أي مسافات في بدايتها أو في نهايتها</string>
+    <string name="file_name_validator_error_invalid_character">يحتوي الاسم على حروف غير مقبولة: %s</string>
     <string name="file_name_validator_error_reserved_names">%s اسم ممنوع</string>
     <string name="file_name_validator_rename_before_move_or_copy">%s. قُم رجاءً بتغيير اسم الملف قبل نقله أو نسخه</string>
-    <string name="file_name_validator_upload_content_error">بعض المحتويات لا يمكن تحميلها بسبب احتوائها على أسماء محجوزة أو حروف غير صالحة</string>
+    <string name="file_name_validator_upload_content_error">بعض المحتوى لا يمكن رفعه لأنه يحتوي إمّا على أسماء محجوزة للنظام أو على حروف غير مقبولة</string>
     <string name="file_not_found">تعذر العثور على الملف</string>
     <string name="file_not_synced">الملف لا يمكن مزامنته. عرض آخر إصدار متوفر.</string>
     <string name="file_rename">إعادة التسمية</string>
@@ -487,6 +489,8 @@
     <string name="instant_upload_existing">ارفع الملفات الموجودة مسبقاً أيضاً</string>
     <string name="instant_upload_on_charging">ارفع وقت الشحن فقط</string>
     <string name="instant_upload_path">/InstantUpload</string>
+    <string name="internal_two_way_sync">مزامنة داخلية في الاتجاهين</string>
+    <string name="internal_two_way_sync_not_yet">ليس بعد. قريباً تتم المزامنة</string>
     <string name="invalid_url">رابط غير صالح</string>
     <string name="invisible">عدم الظهور</string>
     <string name="label_empty">لا يمكن أن تكون التسمية فارغة</string>
@@ -575,6 +579,8 @@
     <string name="note_could_not_sent">لا يمكن إرسال الملاحظة</string>
     <string name="note_icon_hint">أيقونة الملاحظة</string>
     <string name="notification_action_failed">فشل في تنفيذ الإجراء.</string>
+    <string name="notification_channel_background_operations_description">إظهار الإشعارات للتفاعل مع نتائج العمليات في الخلفية</string>
+    <string name="notification_channel_background_operations_name">العمليات في الخلفية</string>
     <string name="notification_channel_download_description">يظهر تقدم التنزيل</string>
     <string name="notification_channel_download_name_short">التنزيلات</string>
     <string name="notification_channel_file_sync_description">يعرض تقدم مزامنة الملف والنتائج</string>
@@ -590,7 +596,13 @@
     <string name="notification_icon">أيقونة الإشعار</string>
     <string name="notifications_no_results_headline">لا توجد هناك إخطارات</string>
     <string name="notifications_no_results_message">يرجى التحقق مرة أخرى في وقت لاحق.</string>
+    <string name="oc_file_list_adapter_offline_operation_description_text">عملية مُعلَّقة</string>
     <string name="offline_mode">ليس هناك اتصال بالأنترنت</string>
+    <string name="offline_operations_worker_notification_conflict_text">مجلد متعارض: %s</string>
+    <string name="offline_operations_worker_notification_delete_offline_folder">حذف مجلد غير متصل</string>
+    <string name="offline_operations_worker_notification_error_text">لا يمكن إكمال العملية دون اتصال. %s</string>
+    <string name="offline_operations_worker_notification_manager_ticker">عمليات دون اتصال بالإنترنت</string>
+    <string name="offline_operations_worker_notification_start_text">البدء في العمليات دون اتصال بالإنترنت</string>
     <string name="oneHour">ساعة واحدة</string>
     <string name="online">متصل</string>
     <string name="online_status">حالات الاتصال</string>
@@ -620,6 +632,7 @@
     <string name="placeholder_timestamp">2012/05/18 12:23 مساء</string>
     <string name="player_stop">إيقاف</string>
     <string name="player_toggle">تبديل</string>
+    <string name="please_select_a_server">من فضلك، حدِّد الخادوم...</string>
     <string name="power_save_check_dialog_message">قد يؤدي تعطيل فحص حفظ الطاقة إلى تحميل الملفات عندما تكون حالة البطارية منخفضة!</string>
     <string name="pref_behaviour_entries_delete_file">خذفت</string>
     <string name="pref_behaviour_entries_keep_file">أبقى في المجلد الأصلي</string>
@@ -681,6 +694,7 @@
     <string name="prefs_synced_folders_local_path_title">مجلد محلي</string>
     <string name="prefs_synced_folders_remote_path_title">مجلد عن بعد</string>
     <string name="prefs_theme_title">المظهر</string>
+    <string name="prefs_two_way_sync_summary">إدارة المجلدات الداخلية للمزامنة في الاتجاهين</string>
     <string name="prefs_value_theme_dark">غامق</string>
     <string name="prefs_value_theme_light">فاتح</string>
     <string name="prefs_value_theme_system">اتبع النظام</string>
@@ -730,6 +744,7 @@
     <string name="restore_button_description">استعادة الملف المحذوف</string>
     <string name="restore_selected">تم اختيار الاستعادة</string>
     <string name="retrieving_file">جارٍ استرداد الملف…</string>
+    <string name="retry">أعِدِ المحاولة</string>
     <string name="richdocuments_failed_to_load_document">فشل تحميل المستند!</string>
     <string name="scanQR_description">تسجيل الدخول عبر رمز QR</string>
     <string name="scan_page">مسح الصفحة</string>
@@ -930,6 +945,7 @@
     <string name="trashbin_file_remove">حذف نهائي</string>
     <string name="trashbin_loading_failed">فشل تحميل سلة المحذوفات</string>
     <string name="trashbin_not_emptied">تعذر حذف الملفات نهائياً!</string>
+    <string name="unexpected_error_occurred">حدث خطأ غير متوقع</string>
     <string name="unified_search_fragment_calendar_event_not_found">لم يمكن العثور على الحدث. يمكنك دائمًا المزامنة للتحديث. جارٍ إعادة التوجيه إلى الويب...</string>
     <string name="unified_search_fragment_contact_not_found">لم يمكن العثور على جهة الاتصال. يمكنك دائمًا المزامنة للتحديث. جارٍ إعادة التوجيه إلى الويب...</string>
     <string name="unified_search_fragment_permission_needed">مطلوب أذونات لفتح نتيجة البحث و إلّا ستتم إعادة توجيهها إلى الويب...</string>
