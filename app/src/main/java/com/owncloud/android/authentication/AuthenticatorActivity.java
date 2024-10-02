@@ -367,12 +367,12 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
             } else {
                 showEnforcedServers();
             }
-            
-            initServerPreFragment(savedInstanceState);
-            ProcessLifecycleOwner.get().getLifecycle().addObserver(lifecycleEventObserver);
-
-            // webViewUtil.checkWebViewVersion();
         }
+
+        initServerPreFragment(savedInstanceState);
+        ProcessLifecycleOwner.get().getLifecycle().addObserver(lifecycleEventObserver);
+
+        // webViewUtil.checkWebViewVersion();
 
         initCancelButton();
     }
