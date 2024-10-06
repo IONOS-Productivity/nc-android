@@ -93,8 +93,10 @@
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
+                android:layout_height="wrap_content"
                 android:background="@color/ionos_toolbar_color"
+                android:minHeight="?attr/actionBarSize"
+                android:paddingBottom="@dimen/standard_half_padding"
                 android:theme="@style/Theme.ToolbarTheme"
                 tools:visibility="gone">
 
