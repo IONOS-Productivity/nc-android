@@ -1,6 +1,4 @@
-package com.ionos.common_ui.dialog.actions.null_objects;
-
-import com.ionos.common_ui.dialog.actions.Action;
+package com.ionos.common_ui.action;
 
 /**
  * User: zuzik

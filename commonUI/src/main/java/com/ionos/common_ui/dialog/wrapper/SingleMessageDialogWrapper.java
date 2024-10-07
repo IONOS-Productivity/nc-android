@@ -10,7 +10,7 @@ import com.ionos.common_ui.dialog.stylized.localized.StringLocalizedStrategy;
 import com.ionos.common_ui.dialog.stylized.localized.StringResLocalizedStrategy;
 import com.ionos.common_ui.dialog.stylized.StylizedDialog;
 import com.ionos.common_ui.exception.TryCatchExceptionHandler;
-import com.ionos.common_ui.dialog.actions.Action;
+import com.ionos.common_ui.action.Action;
 
 /**
  * Created by Sergey Shandyuk on 12/30/2016.

@@ -1,8 +1,8 @@
 package com.ionos.common_ui.exception;
 
-import com.ionos.common_ui.dialog.actions.Action;
-import com.ionos.common_ui.dialog.actions.ThrowableAction;
-import com.ionos.common_ui.dialog.actions.null_objects.NullAction;
+import com.ionos.common_ui.action.Action;
+import com.ionos.common_ui.action.ThrowableAction;
+import com.ionos.common_ui.action.NullAction;
 
 public abstract class TryCatchExceptionHandler {
 
