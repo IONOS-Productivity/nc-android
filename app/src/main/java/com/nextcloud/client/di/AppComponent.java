@@ -9,7 +9,6 @@ package com.nextcloud.client.di;
 
 import android.app.Application;
 
-import com.ionos.common_ui.di.CommonUiComponent;
 import com.ionos.di.StratoModule;
 import com.ionos.scanbot.di.ScanbotComponent;
 import com.nextcloud.appReview.InAppReviewModule;
@@ -53,7 +52,7 @@ import dagger.android.support.AndroidSupportInjectionModule;
     StratoModule.class,
 })
 @Singleton
-public interface AppComponent extends CommonUiComponent {
+public interface AppComponent {
 
     void inject(MainApp app);
 

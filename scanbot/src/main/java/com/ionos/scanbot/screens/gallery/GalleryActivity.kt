@@ -10,6 +10,7 @@ import com.ionos.scanbot.databinding.ScanbotActivityGalleryBinding
 import com.ionos.scanbot.di.inject
 import com.ionos.scanbot.screens.base.BaseActivity
 import com.ionos.scanbot.screens.common.ExitDialog
+import com.ionos.scanbot.screens.common.LockProgressDialog
 import com.ionos.scanbot.screens.common.use_case.open_screen.OpenScreen
 import com.ionos.scanbot.screens.gallery.GalleryScreen.ColorFilterIcon
 import com.ionos.scanbot.screens.gallery.GalleryScreen.Event
@@ -22,7 +23,6 @@ import com.ionos.scanbot.screens.gallery.GalleryScreen.PageInfo
 import com.ionos.scanbot.screens.gallery.GalleryScreen.State
 import com.ionos.scanbot.screens.gallery.GalleryScreen.ViewModel
 import com.ionos.scanbot.screens.gallery.pager.GalleryPagerAdapter
-import com.ionos.scanbot.util.DialogUtils
 import com.ionos.scanbot.util.widget.addOnPageSelectedListener
 
 internal class GalleryActivity : BaseActivity<Event, State, ViewModel>() {
@@ -44,7 +44,7 @@ internal class GalleryActivity : BaseActivity<Event, State, ViewModel>() {
 	private val viewModelFactoryAssistant by inject { galleryViewModelFactoryAssistant() }
 	private val viewPagerAdapter: GalleryPagerAdapter by inject { galleryPagerAdapter() }
 	private val exitDialog: ExitDialog by inject { exitDialog() }
-	private val progressDialog = DialogUtils.createStylizedLockProgressDialog()
+	private val progressDialog by lazy { LockProgressDialog() }
 	private val openScreen = OpenScreen(this)
 
 	private fun getPictureId(): String? {

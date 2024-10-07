@@ -16,7 +16,7 @@
         android:indeterminateOnly="false" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/progress_text"
+        android:id="@+id/progress_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"

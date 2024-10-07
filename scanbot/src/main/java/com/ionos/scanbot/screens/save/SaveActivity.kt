@@ -11,6 +11,7 @@ import com.ionos.scanbot.exception.InvalidFileNameException
 import com.ionos.scanbot.exception.NoFreeLocalSpaceException
 import com.ionos.scanbot.exception.SaveDocumentException
 import com.ionos.scanbot.screens.base.BaseActivity
+import com.ionos.scanbot.screens.common.LockProgressDialog
 import com.ionos.scanbot.screens.save.SaveScreen.Event
 import com.ionos.scanbot.screens.save.SaveScreen.Event.CloseScreenEvent
 import com.ionos.scanbot.screens.save.SaveScreen.Event.HandleErrorEvent
@@ -18,7 +19,6 @@ import com.ionos.scanbot.screens.save.SaveScreen.Event.LaunchUploadTargetPickerE
 import com.ionos.scanbot.screens.save.SaveScreen.Event.ShowExitDialogEvent
 import com.ionos.scanbot.screens.save.SaveScreen.State
 import com.ionos.scanbot.screens.save.SaveScreen.ViewModel
-import com.ionos.scanbot.util.DialogUtils
 import io.reactivex.disposables.CompositeDisposable
 
 internal class SaveActivity : BaseActivity<Event, State, ViewModel>() {
@@ -27,7 +27,7 @@ internal class SaveActivity : BaseActivity<Event, State, ViewModel>() {
 
     private val selectDirectoryContract by inject { selectDirectoryContract() }
 	private val exitDialog by inject { exitDialog() }
-	private val progressDialog by lazy { DialogUtils.createStylizedLockProgressDialog() }
+	private val progressDialog by lazy { LockProgressDialog() }
 
     private val overwriteDialogsDisposable = CompositeDisposable()
     private lateinit var selectDirectoryLauncher: ActivityResultLauncher<Unit>

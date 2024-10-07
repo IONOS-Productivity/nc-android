@@ -11,10 +11,10 @@ import com.ionos.scanbot.di.inject
 import com.ionos.scanbot.filter.color.ColorFilterType
 import com.ionos.scanbot.screens.base.BaseActivity
 import com.ionos.scanbot.exception.CreateIntentException
+import com.ionos.scanbot.screens.common.LockProgressDialog
 import com.ionos.scanbot.screens.filter.FilterScreen.*
 import com.ionos.scanbot.screens.filter.FilterScreen.Event.*
 import com.ionos.scanbot.screens.filter.use_case.GetColorFilterName
-import com.ionos.scanbot.util.DialogUtils
 
 internal class FilterActivity : BaseActivity<Event, State, ViewModel>() {
 
@@ -35,7 +35,7 @@ internal class FilterActivity : BaseActivity<Event, State, ViewModel>() {
 	override val viewBinding by lazy { ScanbotActivityFilterBinding.inflate(layoutInflater) }
 
 	private val viewModelFactoryAssistant by inject { filterViewModelFactoryAssistant() }
-	private val progressDialog = DialogUtils.createStylizedLockProgressDialog()
+	private val progressDialog by lazy { LockProgressDialog() }
 
 	private val getColorFilterName by lazy { GetColorFilterName(this) }
 

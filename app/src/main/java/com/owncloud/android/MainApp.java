@@ -88,7 +88,6 @@ import com.owncloud.android.utils.ReceiversHelper;
 import com.owncloud.android.utils.SecurityUtils;
 import com.owncloud.android.utils.appConfig.AppConfigManager;
 import com.owncloud.android.utils.theme.ViewThemeUtils;
-import com.ionos.common_ui.di.CommonUiComponentProvider;
 import com.ionos.scanbot.di.ScanbotComponent;
 import com.ionos.scanbot.di.ScanbotComponentProvider;
 import com.ionos.scanbot.initializer.ScanbotInitializer;
@@ -134,7 +133,7 @@ import static com.owncloud.android.ui.activity.ContactsPreferenceActivity.PREFER
  * Contains methods to build the "static" strings. These strings were before constants in different classes.
  */
 public class MainApp
-    extends Application implements HasAndroidInjector, ScanbotComponentProvider, CommonUiComponentProvider {
+    extends Application implements HasAndroidInjector, ScanbotComponentProvider {
     public static final OwnCloudVersion OUTDATED_SERVER_VERSION = NextcloudVersion.nextcloud_26;
     public static final OwnCloudVersion MINIMUM_SUPPORTED_SERVER_VERSION = OwnCloudVersion.nextcloud_17;
 
@@ -431,11 +430,6 @@ public class MainApp
             this.scanbotComponent = appComponent.scanbotComponent();
         }
         return this.scanbotComponent;
-    }
-    //TODO alk
-    @Override
-    public AppComponent getComponent() {
-        return appComponent;
     }
 
     private void registerGlobalPassCodeProtection() {
