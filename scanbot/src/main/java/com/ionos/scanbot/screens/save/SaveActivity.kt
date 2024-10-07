@@ -4,14 +4,11 @@ import android.os.Bundle
 import androidx.activity.addCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.core.widget.addTextChangedListener
-import com.ionos.common_ui.dialog.stylized.overwrite_file_dialog.OverwriteDialogs
-import com.ionos.common_ui.dialog.stylized.overwrite_file_dialog.upload.RemoteFilePathOverwriteDialogs
 import com.ionos.scanbot.R
 import com.ionos.scanbot.databinding.ScanbotActivitySaveBinding
 import com.ionos.scanbot.di.inject
 import com.ionos.scanbot.exception.InvalidFileNameException
 import com.ionos.scanbot.exception.NoFreeLocalSpaceException
-import com.ionos.scanbot.exception.OverwriteFilesException
 import com.ionos.scanbot.exception.SaveDocumentException
 import com.ionos.scanbot.screens.base.BaseActivity
 import com.ionos.scanbot.screens.save.SaveScreen.Event
@@ -22,7 +19,6 @@ import com.ionos.scanbot.screens.save.SaveScreen.Event.ShowExitDialogEvent
 import com.ionos.scanbot.screens.save.SaveScreen.State
 import com.ionos.scanbot.screens.save.SaveScreen.ViewModel
 import com.ionos.scanbot.util.DialogUtils
-import com.ionos.scanbot.util.kotlin.extension.plusAssign
 import io.reactivex.disposables.CompositeDisposable
 
 internal class SaveActivity : BaseActivity<Event, State, ViewModel>() {
@@ -35,7 +31,6 @@ internal class SaveActivity : BaseActivity<Event, State, ViewModel>() {
 
     private val overwriteDialogsDisposable = CompositeDisposable()
     private lateinit var selectDirectoryLauncher: ActivityResultLauncher<Unit>
-    // private val filterOverwriteFavoritesDialogFactory by inject { filterOverwriteFavoritesDialogFactory() }
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -87,7 +82,6 @@ internal class SaveActivity : BaseActivity<Event, State, ViewModel>() {
 	private fun Throwable.handle() = when (this) {
 		is SaveDocumentException -> showSaveDocumentErrorMessage(cause)
 		is InvalidFileNameException -> showMessage(R.string.scanbot_save_invalid_file_name)
-		is OverwriteFilesException -> showOverwriteDialogs(overwritePaths)
 		else -> showMessage(R.string.unknown_exception)
 	}
 
@@ -99,25 +93,6 @@ internal class SaveActivity : BaseActivity<Event, State, ViewModel>() {
 		is NoFreeLocalSpaceException -> showMessage(R.string.no_free_space_message)
 		else -> showMessage(R.string.scanbot_creating_document_error_message)
 	}
-
-	private fun showOverwriteDialogs(overwritePaths: List<String>) {
-		overwriteDialogsDisposable.clear()
-		overwriteDialogsDisposable += createOverwriteDialogs(overwritePaths)
-			.filterOverwriteFiles()
-			//.flatMap { createFilterFavoritesDialog(it).filter() }
-			.subscribe { viewModel.onOverwriteDialogsResult(overwritePaths, it) }
-	}
-
-	private fun createOverwriteDialogs(overwritePaths: List<String>): OverwriteDialogs<String> {
-		val onClose: (String) -> Unit = { overwriteDialogsDisposable.clear() }
-		return RemoteFilePathOverwriteDialogs(overwritePaths, this, onClose)
-	}
-
-	// private fun createFilterFavoritesDialog(overwritePaths: List<String>): FilterFavoritesDialog<String> {
-	// 	val destinationDirPath = FileUtils.getParentDirPath(overwritePaths[0])
-	// 	val data = FilterFavoritesDialogData(destinationDirPath, overwritePaths, FileUtils::extractFileName)
-	// 	return filterOverwriteFavoritesDialogFactory.create(data, context)
-	// }
 
     private fun registerSelectDirectoryLauncher() {
         selectDirectoryLauncher = registerForActivityResult(selectDirectoryContract) {
