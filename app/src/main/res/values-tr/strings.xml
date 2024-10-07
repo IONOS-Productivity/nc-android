@@ -56,6 +56,7 @@
     <string name="assistant_screen_task_delete_success_message">Görev silindi</string>
     <string name="assistant_screen_task_list_error_state_message">Görev listesi alınamadı. Lütfen İnternet bağlantınızı denetleyin.</string>
     <string name="assistant_screen_task_more_actions_bottom_sheet_delete_action">Görevi sil</string>
+    <string name="assistant_screen_task_output_empty_text">Görev dosyası henüz hazır değil.</string>
     <string name="assistant_screen_task_types_error_state_message">Görev türleri alınamadı. Lütfen İnternet bağlantınızı denetleyin.</string>
     <string name="assistant_screen_top_bar_title">Yardımcı</string>
     <string name="assistant_screen_unknown_task_status_text">Bilinmiyor</string>
@@ -590,6 +591,7 @@
     <string name="notification_channel_upload_description">Yükleme ilerlemesini görüntüler</string>
     <string name="notification_channel_upload_name_short">Yüklemeler</string>
     <string name="notification_icon">Bildirim simgesi</string>
+    <string name="notification_icon_description">Okunmamış bildirimler var</string>
     <string name="notifications_no_results_headline">Herhangi bir bildirim yok</string>
     <string name="notifications_no_results_message">Lütfen bir süre sonra yeniden bakın.</string>
     <string name="oc_file_list_adapter_offline_operation_description_text">İşlenmeyi bekliyor</string>
