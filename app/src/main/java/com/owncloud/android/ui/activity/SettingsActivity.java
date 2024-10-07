@@ -390,6 +390,7 @@ public class SettingsActivity extends PreferenceActivity
     }
 
 
+    @IonosCustomization
     private void setupRecommendPreference(PreferenceCategory preferenceCategoryMore) {
         boolean recommendEnabled = getResources().getBoolean(R.bool.recommend_enabled);
         Preference pRecommend = findPreference("recommend");
@@ -404,8 +405,13 @@ public class SettingsActivity extends PreferenceActivity
                     String appName = getString(R.string.app_name);
                     String downloadUrlGooglePlayStore = getString(R.string.url_app_download);
                     String downloadUrlFDroid = getString(R.string.fdroid_link);
-                    String downloadUrls = String.format(getString(R.string.recommend_urls),
-                                                        downloadUrlGooglePlayStore, downloadUrlFDroid);
+                    String downloadUrls;
+                    if (URLUtil.isValidUrl(downloadUrlFDroid)) {
+                        downloadUrls = String.format(getString(R.string.recommend_urls),
+                                                     downloadUrlGooglePlayStore, downloadUrlFDroid);
+                    } else {
+                        downloadUrls = downloadUrlGooglePlayStore;
+                    }
 
                     String recommendSubject = String.format(getString(R.string.recommend_subject), appName);
                     String recommendText = String.format(getString(R.string.recommend_text),

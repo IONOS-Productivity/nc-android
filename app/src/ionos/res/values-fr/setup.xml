@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Help, imprint and feedback, and other things -->
+    <string name="url_help">https://wl.hidrive.com/easy/0122</string>
+    <string name="url_imprint">https://wl.hidrive.com/easy/0082</string>
+</resources>

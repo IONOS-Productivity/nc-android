@@ -33,6 +33,20 @@
 
     <!--Destination mail for sending log files -->
     <string name="mail_logger">a.kucherenko@viseven.com</string>
+
+    <!-- Help, imprint and feedback, and other things -->
+    <bool name="help_enabled">true</bool>
+    <bool name="recommend_enabled">true</bool>
+    <bool name="imprint_enabled">true</bool>
+    <bool name="privacy_enabled">true</bool>
+    <bool name="sourcecode_enabled">true</bool>
+    <bool name="license_enabled">true</bool>
+    <string name="url_help">https://wl.hidrive.com/easy/0132</string>
+    <string name="url_app_download">https://wl.hidrive.com/easy/0192</string>
+    <string name="fdroid_link"></string>
+    <string name="url_imprint">https://wl.hidrive.com/easy/0102</string>
+    <string name="privacy_url">https://wl.hidrive.com/easy/0162</string>
+    <string name="sourcecode_url">https://wl.hidrive.com/easy/0182</string>
 </resources>
 
 
