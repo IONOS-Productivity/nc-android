@@ -24,7 +24,7 @@ class UserGuidanceView @JvmOverloads constructor(
     private val handler = Handler(Looper.getMainLooper())
 
     init {
-        LayoutInflater.from(context).inflate(R.layout.user_guidance, this, true)
+        LayoutInflater.from(context).inflate(R.layout.scanbot_user_guidance, this, true)
         iconImageView = findViewById(R.id.icon)
         textView = findViewById(R.id.text)
 

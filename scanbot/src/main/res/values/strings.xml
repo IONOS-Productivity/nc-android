@@ -1,19 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
     <string name="cancel_btn_title">Cancel</string>
-    <string name="copy">Copy</string>
-    <string name="create">Create</string>
     <string name="done">Complete</string>
     <string name="fail">An error occurred. Please try again later.</string>
-    <string name="file">File</string>
     <string name="hold_and_drag_to_rearrange_pages">Hold and drag to rearrange pages</string>
-    <string name="incorrect_file_name">Please enter a filename.</string>
     <string name="no_camera_permissions_granted">Need use camera permissions to be granted to scan code</string>
     <string name="no_enough_free_device_space_title">No enough space</string>
     <string name="no_free_space_message">"The smartphone does not have enough storage space available. "</string>
     <string name="ok_btn_title">OK</string>
-    <string name="override">Overwrite</string>
-    <string name="overwrite_files_apply_to_all">Apply to all</string>
     <string name="save">Save</string>
     <string name="save_as">Save as</string>
     <string name="scanbot_camera_automatic_btn">Automatic</string>
@@ -56,6 +50,5 @@
     <string name="scanbot_gallery_bottom_navigation_item_rearrange">Rearrange</string>
     <string name="scanbot_gallery_bottom_navigation_item_delete">Delete</string>
 
-    <string name="this_item_exists" formatted="false">%s %s already exists. What would you like to do?</string>
     <string name="unknown_exception">An error occurred. Please try again later</string>
 </resources>

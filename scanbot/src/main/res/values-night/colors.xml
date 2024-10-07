@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="common_text_color">@color/white</color>
+
     <color name="scanbot_app_bar_color">@color/navy</color>
     <color name="scanbot_status_bar_color">@color/black</color>
 
