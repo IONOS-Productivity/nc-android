@@ -3,11 +3,8 @@ package com.ionos.common_ui.dialog.stylized;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -18,7 +15,6 @@ import com.ionos.common_ui.dialog.stylized.listeners.NullOnStylizedDialogItemCli
 import com.ionos.common_ui.dialog.stylized.listeners.OnStylizedDialogButtonClickListener;
 import com.ionos.common_ui.dialog.stylized.listeners.OnStylizedDialogItemClickListener;
 import com.ionos.common_ui.dialog.stylized.localized.LocalizedTextStrategy;
-import com.ionos.common_ui.dialog.stylized.view_factory.StylizedDialogViewFactory;
 import com.ionos.common_ui.exception.TryCatchExceptionHandler;
 
 import java.util.List;
@@ -29,7 +25,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 
-public class StylizedDialog<V extends View & SavingStateView> {
+public class StylizedDialog {
 
 	private static final float ACTIVE_BTN_ALPHA = 1f;
 	private static final float INACTIVE_BTN_ALPHA = 0.5f;
@@ -44,9 +40,6 @@ public class StylizedDialog<V extends View & SavingStateView> {
 
 	private Optional<Typeface> typeface = Optional.empty();
 	private Optional<Integer> buttonsTextColorRes = Optional.empty();
-
-	private Optional<StylizedDialogViewFactory<V>> customViewFactory = Optional.empty();
-	private Optional<V> customView = Optional.empty();
 
 	private Optional<? extends List<? extends LocalizedTextStrategy>> customItems = Optional.empty();
 	private Optional<? extends ListAdapter> customListAdapter = Optional.empty();
@@ -69,9 +62,9 @@ public class StylizedDialog<V extends View & SavingStateView> {
 		this.tryCatchExceptionHandler = tryCatchExceptionHandler;
 	}
 
-	public static <V extends View & SavingStateView> StylizedDialog<V>.Builder newBuilder(
+	public static StylizedDialog.Builder newBuilder(
 			TryCatchExceptionHandler tryCatchExceptionHandler) {
-		return new StylizedDialog<V>(tryCatchExceptionHandler).new Builder();
+		return new StylizedDialog(tryCatchExceptionHandler).new Builder();
 	}
 
 	public class Builder {
@@ -146,11 +139,6 @@ public class StylizedDialog<V extends View & SavingStateView> {
 			return this;
 		}
 
-		public Builder setCustomView(@NonNull StylizedDialogViewFactory<V> viewFactory) {
-			StylizedDialog.this.customViewFactory = Optional.of(viewFactory);
-			return this;
-		}
-
 		public Builder setCustomItems(@NonNull List<? extends LocalizedTextStrategy> items) {
 			StylizedDialog.this.customItems = Optional.of(items);
 			return this;
@@ -161,7 +149,7 @@ public class StylizedDialog<V extends View & SavingStateView> {
 			return this;
 		}
 
-		public StylizedDialog<V> build(@NonNull Context context) {
+		public StylizedDialog build(@NonNull Context context) {
 			StylizedDialog.this.context = context;
 			StylizedDialog.this.alertDialog = createDialog();
 			StylizedDialog.this.alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
@@ -185,7 +173,6 @@ public class StylizedDialog<V extends View & SavingStateView> {
 			setTitleToBuilder(builder);
 			setMessageToBuilder(builder);
 			setButtonsToBuilder(builder);
-			setCustomViewToBuilder(builder);
 			setCustomTextItemsToBuilder(builder);
 			setCustomListAdapterToBuilderToBuilder(builder);
 			setOnDismissListenerToBuilder(builder);
@@ -223,13 +210,6 @@ public class StylizedDialog<V extends View & SavingStateView> {
 						StylizedDialog.this.dialogItemClickListener.onClick(StylizedDialog.this, which);
 					}
 				});
-			}
-		}
-
-		private void setCustomViewToBuilder(AlertDialog.Builder builder) {
-			if (StylizedDialog.this.customViewFactory.isPresent()) {
-				StylizedDialog.this.customView = Optional.of(StylizedDialog.this.customViewFactory.get().create());
-				builder.setView(StylizedDialog.this.customView.get());
 			}
 		}
 
@@ -326,13 +306,10 @@ public class StylizedDialog<V extends View & SavingStateView> {
 		} else {
 			Log.d(getClass().getSimpleName(), "Can't show override file dialog");
 		}
-//		registerMainNavigationViewContainerListener();
 	}
 
 	public final void dismiss() {
 		this.alertDialog.dismiss();
-//		unregisterActivityLifecycleListener();
-		unregisterMainNavigationViewContainerListener();
 	}
 
 	public final void setPositiveButtonEnabled(boolean enabled) {
@@ -351,47 +328,10 @@ public class StylizedDialog<V extends View & SavingStateView> {
 		}
 	}
 
-	public boolean hasCustomView(){
-		return this.customView.isPresent();
-	}
-
-	public V getCustomView() {
-		if (this.customView.isPresent()) {
-			return this.customView.get();
-		} else {
-			throw new RuntimeException("Custom view wasn't setted");
-		}
-	}
-
-
-    //TODO alk
-	private void registerMainNavigationViewContainerListener() {
-//		if (this.context instanceof MainNavigationViewContainer) {
-//			((MainNavigationViewContainer) this.context).addMainNavigationViewContainerListener(this.mainNavigationViewContainerListener);
-//		}
-	}
-    //TODO alk
-	private void unregisterMainNavigationViewContainerListener() {
-//		if (this.context instanceof MainNavigationViewContainer) {
-//			((MainNavigationViewContainer) this.context).removeMainNavigationViewContainerListener(this.mainNavigationViewContainerListener);
-//		}
-	}
-
 	private void handleConfigChanges() {
 		if (this.alertDialog != null && this.alertDialog.isShowing()) {
 			this.alertDialog.dismiss();
-
-			if (this.customView.isPresent()) {
-				Bundle savedState = this.customView.get().createSavedState();
-				ViewParent customViewParent = this.customView.get().getParent();
-				if (customViewParent instanceof ViewGroup) {
-					((ViewGroup) customViewParent).removeView(this.customView.get());
-				}
-				recreateBuilderAndShowDialog();
-				this.customView.get().restoreSavedState(savedState);
-			} else {
-				recreateBuilderAndShowDialog();
-			}
+			recreateBuilderAndShowDialog();
 		}
 	}
 
