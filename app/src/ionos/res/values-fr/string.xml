@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Authorization Screen -->
+    <string name="authorization_method_greeting">Bienvenue sur votre cloud</string>
+    <string name="authorization_method_login_button">Connexion</string>
+    <string name="authorization_method_description">Un navigateur s\'ouvre pour le login</string>
+    <string name="authorization_screen_cancel_button">Annuler</string>
+    <string name="authorization_screen_retry_button">Répéter</string>
+
+</resources>
