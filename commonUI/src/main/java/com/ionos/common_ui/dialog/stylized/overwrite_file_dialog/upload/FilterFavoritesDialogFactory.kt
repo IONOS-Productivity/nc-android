@@ -1,8 +1,8 @@
 package com.ionos.common_ui.dialog.stylized.overwrite_file_dialog.upload
 
 import android.content.Context
-import com.ionos.common_ui.dialog.optional.Function
 import io.reactivex.Maybe
+import java.util.function.Function
 
 data class FilterFavoritesDialogData<T>(
 	val destinationDirPath: String,

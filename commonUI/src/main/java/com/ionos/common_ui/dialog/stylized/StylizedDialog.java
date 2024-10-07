@@ -14,7 +14,6 @@ import android.widget.Button;
 import android.widget.ListAdapter;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.ionos.common_ui.dialog.optional.Optional;
 import com.ionos.common_ui.dialog.stylized.listeners.NullOnStylizedDialogItemClickListener;
 import com.ionos.common_ui.dialog.stylized.listeners.OnStylizedDialogButtonClickListener;
 import com.ionos.common_ui.dialog.stylized.listeners.OnStylizedDialogItemClickListener;
@@ -23,6 +22,7 @@ import com.ionos.common_ui.dialog.stylized.view_factory.StylizedDialogViewFactor
 import com.ionos.common_ui.exception.TryCatchExceptionHandler;
 
 import java.util.List;
+import java.util.Optional;
 
 import androidx.annotation.ColorRes;
 import androidx.annotation.NonNull;
@@ -39,23 +39,23 @@ public class StylizedDialog<V extends View & SavingStateView> {
 
 	private final TryCatchExceptionHandler tryCatchExceptionHandler;
 
-	private Optional<LocalizedTextStrategy> title = Optional.absent();
-	private Optional<LocalizedTextStrategy> message = Optional.absent();
+	private Optional<LocalizedTextStrategy> title = Optional.empty();
+	private Optional<LocalizedTextStrategy> message = Optional.empty();
 
-	private Optional<Typeface> typeface = Optional.absent();
-	private Optional<Integer> buttonsTextColorRes = Optional.absent();
+	private Optional<Typeface> typeface = Optional.empty();
+	private Optional<Integer> buttonsTextColorRes = Optional.empty();
 
-	private Optional<StylizedDialogViewFactory<V>> customViewFactory = Optional.absent();
-	private Optional<V> customView = Optional.absent();
+	private Optional<StylizedDialogViewFactory<V>> customViewFactory = Optional.empty();
+	private Optional<V> customView = Optional.empty();
 
-	private Optional<? extends List<? extends LocalizedTextStrategy>> customItems = Optional.absent();
-	private Optional<? extends ListAdapter> customListAdapter = Optional.absent();
+	private Optional<? extends List<? extends LocalizedTextStrategy>> customItems = Optional.empty();
+	private Optional<? extends ListAdapter> customListAdapter = Optional.empty();
 
 	private boolean cancelable = true;
 	private boolean showKeyboard = false;
 
-	private Optional<StylizedDialogButtonInfo> positiveButtonInfo = Optional.absent();
-	private Optional<StylizedDialogButtonInfo> negativeButtonInfo = Optional.absent();
+	private Optional<StylizedDialogButtonInfo> positiveButtonInfo = Optional.empty();
+	private Optional<StylizedDialogButtonInfo> negativeButtonInfo = Optional.empty();
 
 	private OnStylizedDialogItemClickListener dialogItemClickListener = NullOnStylizedDialogItemClickListener.INSTANCE;
 	private DialogInterface.OnDismissListener onDismissListener = dialog -> {
@@ -136,7 +136,7 @@ public class StylizedDialog<V extends View & SavingStateView> {
             if (buttonsTextColor != 0) {
                 StylizedDialog.this.buttonsTextColorRes = Optional.of(buttonsTextColor);
             } else {
-                StylizedDialog.this.buttonsTextColorRes = Optional.absent();
+                StylizedDialog.this.buttonsTextColorRes = Optional.empty();
             }
 			return this;
 		}
