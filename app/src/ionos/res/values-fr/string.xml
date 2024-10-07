@@ -8,4 +8,7 @@
     <string name="authorization_screen_cancel_button">Annuler</string>
     <string name="authorization_screen_retry_button">Répéter</string>
 
+    <!-- Toolbar -->
+    <string name="toolbar_sort_button_text">Filtre</string>
+
 </resources>
