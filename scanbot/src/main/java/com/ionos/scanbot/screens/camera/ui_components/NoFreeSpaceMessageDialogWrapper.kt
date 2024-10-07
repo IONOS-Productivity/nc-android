@@ -1,10 +1,10 @@
 package com.ionos.scanbot.screens.camera.ui_components
 
 import android.content.Context
-import com.ionos.common_ui.R
 import com.ionos.common_ui.dialog.stylized.StylizedDialog
 import com.ionos.common_ui.dialog.stylized.localized.StringResLocalizedStrategy
 import com.ionos.common_ui.utils.ContextUtils
+import com.ionos.scanbot.R
 import com.ionos.scanbot.di.inject
 import kotlin.getValue
 
