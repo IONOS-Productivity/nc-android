@@ -5,7 +5,6 @@
     <color name="accent_color">@color/lochmara</color>
 
     <color name="stylized_edit_text_text_color">@color/transparent_emperor</color>
-    <color name="stylized_edit_text_selected_text_color">@color/transparent_emperor</color>
     <color name="stylized_edit_text_highlight_color">@color/transparent_lochmara</color>
     <color name="stylized_edit_text_select_handler_color">@color/accent_color</color>
 

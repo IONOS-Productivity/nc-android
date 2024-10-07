@@ -47,7 +47,6 @@
     <color name="scanbot_save_file_type_label_text_color">@color/grey</color>
     <color name="scanbot_save_screen_path_text_color">@color/white</color>
     <color name="scanbot_save_file_name_text_color">@color/white</color>
-    <color name="scanbot_save_file_name_selected_text_color">@color/black_olive</color>
 
     <color name="scanbot_toolbar_text_color">@color/white</color>
 
