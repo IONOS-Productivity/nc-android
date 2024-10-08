@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
-    <string name="cancel_btn_title">Cancel</string>
-    <string name="done">Complete</string>
-    <string name="fail">An error occurred. Please try again later.</string>
-    <string name="hold_and_drag_to_rearrange_pages">Hold and drag to rearrange pages</string>
-    <string name="no_camera_permissions_granted">Need use camera permissions to be granted to scan code</string>
-    <string name="no_enough_free_device_space_title">No enough space</string>
-    <string name="no_free_space_message">"The smartphone does not have enough storage space available. "</string>
-    <string name="ok_btn_title">OK</string>
-    <string name="save">Save</string>
-    <string name="save_as">Save as</string>
+    <string name="scanbot_cancel_btn_title">Cancel</string>
+    <string name="scanbot_fail">An error occurred. Please try again later.</string>
+    <string name="scanbot_hold_and_drag_to_rearrange_pages">Hold and drag to rearrange pages</string>
+    <string name="scanbot_no_camera_permissions_granted">Need use camera permissions to be granted to scan code</string>
+    <string name="scanbot_no_enough_free_device_space_title">No enough space</string>
+    <string name="scanbot_no_free_space_message">"The smartphone does not have enough storage space available. "</string>
+    <string name="scanbot_ok_btn_title">OK</string>
+    <string name="scanbot_save">Save</string>
+    <string name="scanbot_save_as">Save as</string>
+    <string name="scanbot_unknown_exception">An error occurred. Please try again later</string>
+
     <string name="scanbot_camera_automatic_btn">Automatic</string>
     <string name="scanbot_camera_detection_result_error_nothing_detected">No Document</string>
     <string name="scanbot_camera_detection_result_error_too_dark">Poor light</string>
@@ -49,6 +50,4 @@
     <string name="scanbot_gallery_bottom_navigation_item_rotate">Rotate</string>
     <string name="scanbot_gallery_bottom_navigation_item_rearrange">Rearrange</string>
     <string name="scanbot_gallery_bottom_navigation_item_delete">Delete</string>
-
-    <string name="unknown_exception">An error occurred. Please try again later</string>
 </resources>

@@ -52,7 +52,7 @@ internal class RearrangeActivity : BaseActivity<Event, State, ViewModel>() {
 
 	override fun Event.handle() = when (this) {
 		is ShowItemsEvent -> adapter.setItems(items)
-		is ShowErrorMessageEvent -> showMessage(R.string.fail)
+		is ShowErrorMessageEvent -> showMessage(R.string.scanbot_fail)
 		is CloseScreenEvent -> finish()
 	}
 }

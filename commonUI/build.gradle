@@ -7,7 +7,6 @@ buildscript {
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
 
 android {
     namespace "com.ionos.common_ui"
@@ -41,16 +40,7 @@ android {
 }
 
 dependencies {
-
     api "androidx.exifinterface:exifinterface:$androidx_exifinterface_version"
-
     implementation "androidx.appcompat:appcompat:$appCompatVersion"
-    implementation "androidx.constraintlayout:constraintlayout:$constraintlayout_version"
-    implementation "androidx.preference:preference:$preference_version"
     implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
-    implementation "com.google.dagger:dagger:$daggerVersion"
-    implementation "com.google.android.material:material:$material_version"
-
-    compileOnly reactivex_rxjava2
-    compileOnly reactivex_rxandroid2
 }

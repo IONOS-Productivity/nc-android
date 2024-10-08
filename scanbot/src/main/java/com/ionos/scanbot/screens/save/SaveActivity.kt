@@ -49,7 +49,7 @@ internal class SaveActivity : BaseActivity<Event, State, ViewModel>() {
 	}
 
 	private fun initViews() = with(viewBinding) {
-		toolbar.tvTitle.text = getString(R.string.save_as)
+		toolbar.tvTitle.text = getString(R.string.scanbot_save_as)
 		toolbar.ivBack.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
 		toolbar.tvSave.setOnClickListener { viewModel.onSaveClicked() }
 		tvName.addTextChangedListener { viewModel.onFileNameChanged(it?.toString() ?: "") }
@@ -82,7 +82,7 @@ internal class SaveActivity : BaseActivity<Event, State, ViewModel>() {
 	private fun Throwable.handle() = when (this) {
 		is SaveDocumentException -> showSaveDocumentErrorMessage(cause)
 		is InvalidFileNameException -> showMessage(R.string.scanbot_save_invalid_file_name)
-		else -> showMessage(R.string.unknown_exception)
+		else -> showMessage(R.string.scanbot_unknown_exception)
 	}
 
 	private fun showExitDialog() {
@@ -90,7 +90,7 @@ internal class SaveActivity : BaseActivity<Event, State, ViewModel>() {
 	}
 
 	private fun showSaveDocumentErrorMessage(cause: Throwable?) = when (cause) {
-		is NoFreeLocalSpaceException -> showMessage(R.string.no_free_space_message)
+		is NoFreeLocalSpaceException -> showMessage(R.string.scanbot_no_free_space_message)
 		else -> showMessage(R.string.scanbot_creating_document_error_message)
 	}
 

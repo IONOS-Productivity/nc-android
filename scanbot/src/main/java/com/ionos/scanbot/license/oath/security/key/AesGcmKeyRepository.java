@@ -47,27 +47,27 @@ public class AesGcmKeyRepository {
 	}
 
 	private String getAesGsmKey() {
-		return preference.getString(getString(R.string.preference_aes_gsm_key), "");
+		return preference.getString(getString(R.string.scanbot_preference_aes_gsm_key), "");
 	}
 
 	private void setAesGsmKey(String value) {
-		preference.edit().putString(getString(R.string.preference_aes_gsm_key), value).apply();
+		preference.edit().putString(getString(R.string.scanbot_preference_aes_gsm_key), value).apply();
 	}
 
 	private boolean hasAesGsmKey() {
-		return preference.contains(getString(R.string.preference_aes_gsm_key));
+		return preference.contains(getString(R.string.scanbot_preference_aes_gsm_key));
 	}
 
 	private String getAesGsmInitializationVector() {
-		return preference.getString(getString(R.string.preference_aes_gsm_initialization_vector), "");
+		return preference.getString(getString(R.string.scanbot_preference_aes_gsm_initialization_vector), "");
 	}
 
 	private void setAesGsmInitializationVector(String value) {
-		preference.edit().putString(getString(R.string.preference_aes_gsm_initialization_vector), value).apply();
+		preference.edit().putString(getString(R.string.scanbot_preference_aes_gsm_initialization_vector), value).apply();
 	}
 
 	private boolean hasAesGsmInitializationVector() {
-		return preference.contains(getString(R.string.preference_aes_gsm_initialization_vector));
+		return preference.contains(getString(R.string.scanbot_preference_aes_gsm_initialization_vector));
 	}
 
 	private String getString(int resId) {

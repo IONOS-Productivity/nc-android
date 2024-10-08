@@ -27,6 +27,7 @@
     <dimen name="sorting_dialog_cancel_button_text_size">14sp</dimen>
 
     <dimen name="nav_drawer_menu_avatar_radius">16dp</dimen>
+    <dimen name="nav_drawer_used_storage_drawable_padding">12dp</dimen>
 
     <dimen name="button_text_padding">16dp</dimen>
 

@@ -44,10 +44,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_cloud"
-                android:layout_marginBottom="@dimen/common_small_padding"
+                android:layout_marginBottom="@dimen/standard_half_padding"
                 android:text="@string/ionos_side_menu_storage_used"
                 android:textStyle="bold"
-                android:drawablePadding="@dimen/common_small2_padding" />
+                android:drawablePadding="@dimen/nav_drawer_used_storage_drawable_padding" />
 
             <TextView
                 android:id="@+id/drawer_quota_link"
@@ -73,7 +73,7 @@
                 android:id="@+id/drawer_quota_percentage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/common_small_padding"
+                android:layout_marginTop="@dimen/standard_half_padding"
                 android:drawablePadding="@dimen/alternate_half_padding"
                 android:text="@string/drawer_quota"
                 android:textColor="@color/ionos_default_text_color" />

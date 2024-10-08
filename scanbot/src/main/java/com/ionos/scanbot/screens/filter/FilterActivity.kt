@@ -83,6 +83,6 @@ internal class FilterActivity : BaseActivity<Event, State, ViewModel>() {
 
 	override fun Event.handle() = when (this) {
 		is CloseScreenEvent -> finish()
-		is ShowErrorEvent -> showMessage(R.string.fail)
+		is ShowErrorEvent -> showMessage(R.string.scanbot_fail)
 	}
 }

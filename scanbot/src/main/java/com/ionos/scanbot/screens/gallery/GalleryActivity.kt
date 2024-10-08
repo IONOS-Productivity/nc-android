@@ -116,7 +116,7 @@ internal class GalleryActivity : BaseActivity<Event, State, ViewModel>() {
 		is DisplayPicturesEvent -> viewPagerAdapter.setPictures(pictures)
 		is OpenScreenEvent -> openScreen(intent)
 		is PerformExitEvent -> finish()
-		is ShowErrorMessageEvent -> showMessage(R.string.fail)
+		is ShowErrorMessageEvent -> showMessage(R.string.scanbot_fail)
 		is ShowExitDialogEvent -> showExitDialog()
 	}
 

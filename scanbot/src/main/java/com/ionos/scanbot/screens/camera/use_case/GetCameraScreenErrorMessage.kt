@@ -13,12 +13,12 @@ internal class GetCameraScreenErrorMessage @Inject constructor(private val conte
 
 	operator fun invoke(error: Throwable): String = when (error) {
 		is ImportPictureException -> context.getImportPictureErrorMessage(error)
-		is NoCameraPermissionException -> context.getString(R.string.no_camera_permissions_granted)
-		else -> context.getString(R.string.fail)
+		is NoCameraPermissionException -> context.getString(R.string.scanbot_no_camera_permissions_granted)
+		else -> context.getString(R.string.scanbot_fail)
 	}
 
 	private fun Context.getImportPictureErrorMessage(error: ImportPictureException) = when {
-		error.cause is NoFreeLocalSpaceException -> getString(R.string.no_free_space_message)
+		error.cause is NoFreeLocalSpaceException -> getString(R.string.scanbot_no_free_space_message)
 		else -> getFailedImageMessage(error.pictureUri)
 	}
 

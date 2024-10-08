@@ -23,11 +23,11 @@ internal class ExitDialog @Inject constructor(
         return MaterialAlertDialogBuilder(context)
             .setTitle(R.string.scanbot_exit_confirmation_title)
             .setMessage(R.string.scanbot_exit_confirmation_message)
-            .setPositiveButton(R.string.ok_btn_title) { dialog, _ ->
+            .setPositiveButton(R.string.scanbot_ok_btn_title) { dialog, _ ->
                 dialog.dismiss()
                 onConfirmed()
             }
-            .setNegativeButton(R.string.cancel_btn_title) { dialog, _ ->
+            .setNegativeButton(R.string.scanbot_cancel_btn_title) { dialog, _ ->
                 dialog.dismiss()
                 onDenied()
             }

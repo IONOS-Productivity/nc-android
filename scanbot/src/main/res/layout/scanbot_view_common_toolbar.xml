@@ -4,7 +4,7 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:id="@+id/searchToolbar"
 	android:layout_width="match_parent"
-	android:layout_height="@dimen/navigation_layout_height"
+	android:layout_height="@dimen/scanbot_navigation_layout_height"
 	android:background="@color/scanbot_app_bar_color">
 
 	<LinearLayout
@@ -27,8 +27,8 @@
 			android:background="@color/transparent"
 			android:gravity="center"
 			android:lines="1"
-			android:padding="@dimen/common_normal_padding"
-			android:paddingRight="@dimen/ti_item_padding_right"
+			android:padding="@dimen/scanbot_padding_normal"
+			android:paddingRight="@dimen/scanbot_padding_micro"
 			android:textColor="@color/scanbot_toolbar_text_color"
 			android:textSize="@dimen/scanbot_text_size"
 			android:textStyle="bold"
@@ -41,9 +41,9 @@
 			android:background="@color/transparent"
 			android:gravity="center_vertical"
 			android:lines="1"
-			android:padding="@dimen/common_normal_padding"
-			android:paddingRight="@dimen/ti_item_padding_right"
-			android:text="@string/save"
+			android:padding="@dimen/scanbot_padding_normal"
+			android:paddingRight="@dimen/scanbot_padding_micro"
+			android:text="@string/scanbot_save"
 			android:textColor="@color/scanbot_toolbar_text_color"
 			android:textSize="@dimen/scanbot_text_size"
 			android:textStyle="bold"/>

@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<color name="dark_grey">#333333</color>
-	<color name="grey">#999999</color>
-	<color name="alto">#dcdcdc</color>
-    <color name="porcelain">#EBEEEF</color>
-    <color name="mine_shaft_dark">#222222</color>
-    <color name="transparent_dark">#0D000000</color>
-	<color name="transparent_pizazz">#55FF8800</color>
-	<color name="transparent_pizazz2">#ccFF8800</color>
-    <color name="light_blue">#a0c8e8</color>
-    <color name="curious_blue">#3196D6</color>
+	<color name="scanbot_dark_grey">#333333</color>
+	<color name="scanbot_grey">#999999</color>
+	<color name="scanbot_alto">#dcdcdc</color>
+    <color name="scanbot_porcelain">#EBEEEF</color>
+    <color name="scanbot_mine_shaft_dark">#222222</color>
+    <color name="scanbot_transparent_dark">#0D000000</color>
+	<color name="scanbot_transparent_pizazz">#55FF8800</color>
+	<color name="scanbot_transparent_pizazz2">#ccFF8800</color>
+    <color name="scanbot_light_blue">#a0c8e8</color>
+    <color name="scanbot_transparent_emperor">#D9555555</color>
+    <color name="scanbot_transparent_lochmara">#8C0077BB</color>
+    <color name="scanbot_lochmara">#0077BB</color>
+    <color name="scanbot_midnight_blue">#003d8f</color>
 </resources>

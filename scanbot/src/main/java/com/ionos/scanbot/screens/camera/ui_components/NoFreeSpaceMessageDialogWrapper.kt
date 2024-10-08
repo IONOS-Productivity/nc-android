@@ -12,9 +12,9 @@ class NoFreeSpaceMessageDialogWrapper(context: Context) {
 
     private val dialog by lazy {
         MaterialAlertDialogBuilder(context)
-            .setTitle(R.string.no_enough_free_device_space_title)
+            .setTitle(R.string.scanbot_no_enough_free_device_space_title)
             .setMessage(R.string.scanbot_no_enough_free_device_space_message)
-            .setPositiveButton(R.string.ok_btn_title) { dialog, _ -> dialog.dismiss() }
+            .setPositiveButton(R.string.scanbot_ok_btn_title) { dialog, _ -> dialog.dismiss() }
             .create()
     }
 

@@ -48,7 +48,7 @@ internal class ImportProgressDialog(
         return MaterialAlertDialogBuilder(context)
             .setTitle(R.string.scanbot_processing_title)
             .setView(viewBinding.root)
-            .setNegativeButton(R.string.cancel_btn_title) { it, _ ->
+            .setNegativeButton(R.string.scanbot_cancel_btn_title) { it, _ ->
                 it.dismiss()
                 onCancelClick()
             }

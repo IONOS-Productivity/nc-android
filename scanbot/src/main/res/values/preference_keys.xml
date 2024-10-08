@@ -2,6 +2,6 @@
 <resources>
 	<string name="scanbot_preference_license_key" translatable="false">preference_scanbot_license_key</string>
 
-    <string name="preference_aes_gsm_key" translatable="false">preference_aes_gsm_key</string>
-    <string name="preference_aes_gsm_initialization_vector" translatable="false">preference_aes_gsm_initialization_vector</string>
+    <string name="scanbot_preference_aes_gsm_key" translatable="false">preference_aes_gsm_key</string>
+    <string name="scanbot_preference_aes_gsm_initialization_vector" translatable="false">preference_aes_gsm_initialization_vector</string>
 </resources>

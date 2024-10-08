@@ -75,7 +75,7 @@ internal class CropActivity : BaseActivity<Event, State, ViewModel>() {
 	override fun Event.handle() = when (this) {
 		is DisplayPictureEvent -> viewBinding.cropView.render(bitmap)
 		is DisplayPolygonEvent -> viewBinding.cropView.setPolygon(polygon)
-		is ShowErrorMessageEvent -> showMessage(R.string.fail)
+		is ShowErrorMessageEvent -> showMessage(R.string.scanbot_fail)
 		is CloseScreenEvent -> finish()
 	}
 }

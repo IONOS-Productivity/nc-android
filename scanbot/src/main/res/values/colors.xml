@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary_color">@color/royal_blue</color>
-    <color name="primary_dark_color">@color/midnight_blue</color>
-    <color name="accent_color">@color/lochmara</color>
+    <color name="scanbot_primary_color">@color/royal_blue</color>
+    <color name="scanbot_primary_dark_color">@color/scanbot_midnight_blue</color>
+    <color name="scanbot_accent_color">@color/scanbot_lochmara</color>
 
-    <color name="stylized_edit_text_text_color">@color/transparent_emperor</color>
-    <color name="stylized_edit_text_highlight_color">@color/transparent_lochmara</color>
-    <color name="stylized_edit_text_select_handler_color">@color/accent_color</color>
+    <color name="scanbot_edit_text_text_color">@color/scanbot_transparent_emperor</color>
+    <color name="scanbot_edit_text_highlight_color">@color/scanbot_transparent_lochmara</color>
+    <color name="scanbot_edit_text_select_handler_color">@color/scanbot_accent_color</color>
 
-    <color name="common_text_color">@color/black</color>
+    <color name="scanbot_common_text_color">@color/black</color>
 
-    <color name="scanbot_app_bar_color">@color/primary_color</color>
-    <color name="scanbot_status_bar_color">@color/primary_dark_color</color>
+    <color name="scanbot_app_bar_color">@color/scanbot_primary_color</color>
+    <color name="scanbot_status_bar_color">@color/scanbot_primary_dark_color</color>
 
     <color name="scanbot_camera_button_background_idle">@color/white</color>
-    <color name="scanbot_camera_button_background_pressed">@color/light_blue</color>
+    <color name="scanbot_camera_button_background_pressed">@color/scanbot_light_blue</color>
     <color name="scanbot_camera_button_color">@color/navy</color>
-    <color name="scanbot_camera_polygon_fill_color">@color/transparent_pizazz</color>
-    <color name="scanbot_camera_polygon_stroke_color">@color/transparent_pizazz2</color>
+    <color name="scanbot_camera_polygon_fill_color">@color/scanbot_transparent_pizazz</color>
+    <color name="scanbot_camera_polygon_stroke_color">@color/scanbot_transparent_pizazz2</color>
     <color name="scanbot_camera_screen_background">@color/white</color>
     <color name="scanbot_camera_screen_cancel_text_color">@color/white</color>
     <color name="scanbot_camera_toolbar_background">@color/ghost_white</color>
 
-    <color name="scanbot_crop_polygon_edge_color">@color/primary_color</color>
+    <color name="scanbot_crop_polygon_edge_color">@color/scanbot_primary_color</color>
     <color name="scanbot_crop_screen_background">@color/white</color>
     <color name="scanbot_crop_screen_button_background">@color/madison</color>
     <color name="scanbot_crop_screen_button_text_color">@color/white</color>
 
-    <color name="scanbot_file_type_text_color_checked">@color/lochmara</color>
+    <color name="scanbot_file_type_text_color_checked">@color/scanbot_lochmara</color>
     <color name="scanbot_file_type_text_color_unchecked">@color/black</color>
 
     <color name="scanbot_filter_control_active">@color/curious_blue</color>
@@ -39,11 +39,11 @@
     <color name="scanbot_filter_control_seek_bar_progress_active">@color/dodger_blue</color>
     <color name="scanbot_filter_control_seek_bar_progress_background_active">@color/dodger_blue</color>
     <color name="scanbot_filter_popup_background_color">@color/white</color>
-    <color name="scanbot_filter_popup_stroke_color">@color/grey</color>
+    <color name="scanbot_filter_popup_stroke_color">@color/scanbot_grey</color>
     <color name="scanbot_filter_popup_text_color">@color/black</color>
 
     <color name="scanbot_gallery_background">@color/white</color>
-    <color name="scanbot_gallery_counter_rounded_background">@color/grey</color>
+    <color name="scanbot_gallery_counter_rounded_background">@color/scanbot_grey</color>
     <color name="scanbot_gallery_screen_counter_text_color">@color/white</color>
     <color name="scanbot_gallery_screen_counter_background_color">@color/deep_koamaru</color>
     <color name="scanbot_gallery_bottom_navigation_icon_color">@color/navy</color>
@@ -53,10 +53,10 @@
 
     <color name="scanbot_rearrange_icon_color">@color/dodger_blue</color>
 
-    <color name="scanbot_save_divider_color">@color/dark_grey</color>
-    <color name="scanbot_save_file_location_label_text_color">@color/grey</color>
-    <color name="scanbot_save_file_name_label_text_color">@color/grey</color>
-    <color name="scanbot_save_file_type_label_text_color">@color/grey</color>
+    <color name="scanbot_save_divider_color">@color/scanbot_dark_grey</color>
+    <color name="scanbot_save_file_location_label_text_color">@color/scanbot_grey</color>
+    <color name="scanbot_save_file_name_label_text_color">@color/scanbot_grey</color>
+    <color name="scanbot_save_file_type_label_text_color">@color/scanbot_grey</color>
     <color name="scanbot_save_screen_path_text_color">@color/black</color>
     <color name="scanbot_save_file_name_text_color">@color/black</color>
 
@@ -65,6 +65,6 @@
     <color name="scanbot_ic_edit_fill_color">@color/navy</color>
 
     <color name="scanbot_window_background">@color/ghost_white</color>
-    <color name="user_guidance_text_color">@color/navy</color>
+    <color name="scanbot_user_guidance_text_color">@color/navy</color>
 
 </resources>
