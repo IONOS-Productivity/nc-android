@@ -1,7 +1,8 @@
 package com.ionos.scanbot.screens.common
 
 import android.content.Context
-import com.ionos.common_ui.dialog.wrapper.SingleMessageDialogWrapper
+import androidx.appcompat.app.AlertDialog
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.ionos.common_ui.utils.ContextUtils
 import com.ionos.common_ui.exception.TryCatchExceptionHandler
 import com.ionos.scanbot.R
@@ -13,16 +14,23 @@ internal class ExitDialog @Inject constructor(
 
 	fun show(context: Context, onConfirmed: () -> Unit, onDenied: () -> Unit = {}) {
 		if (!ContextUtils.isActivityFinishing(context)) {
-			SingleMessageDialogWrapper(
-				context,
-				tryCatchExceptionHandler,
-				R.string.scanbot_exit_confirmation_title,
-				R.string.scanbot_exit_confirmation_message,
-				R.string.ok_btn_title,
-				R.string.cancel_btn_title,
-				onConfirmed::invoke,
-				onDenied::invoke,
-			).show()
+			val dialog = createDialog(context, onConfirmed, onDenied)
+            tryCatchExceptionHandler.handle(dialog::show)
 		}
 	}
+
+    private fun createDialog(context: Context, onConfirmed: () -> Unit, onDenied: () -> Unit): AlertDialog {
+        return MaterialAlertDialogBuilder(context)
+            .setTitle(R.string.scanbot_exit_confirmation_title)
+            .setMessage(R.string.scanbot_exit_confirmation_message)
+            .setPositiveButton(R.string.ok_btn_title) { dialog, _ ->
+                dialog.dismiss()
+                onConfirmed()
+            }
+            .setNegativeButton(R.string.cancel_btn_title) { dialog, _ ->
+                dialog.dismiss()
+                onDenied()
+            }
+            .create()
+    }
 }
