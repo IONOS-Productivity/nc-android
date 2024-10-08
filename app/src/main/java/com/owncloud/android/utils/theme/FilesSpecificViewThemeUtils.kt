@@ -120,7 +120,6 @@ class FilesSpecificViewThemeUtils @Inject constructor(
     }
 
     private fun getHomeAsUpIcon(isMenu: Boolean): Int {
-        Throwable().printStackTrace()
         val icon = if (isMenu) {
             R.drawable.ic_menu
         } else {
