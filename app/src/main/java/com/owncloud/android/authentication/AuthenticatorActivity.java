@@ -379,15 +379,13 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
 
     @IonosCustomization
     private void initCancelButton() {
-        if (accountSetupWebviewBinding != null) {
-            MaterialButton cancelButton = accountSetupWebviewBinding.loginFlowV2.cancelButton;
+        MaterialButton cancelButton = accountSetupWebviewBinding.loginFlowV2.cancelButton;
 
-            cancelButton.setOnClickListener(v -> {
-                loginFlowExecutorService.shutdown();
-                ProcessLifecycleOwner.get().getLifecycle().removeObserver(lifecycleEventObserver);
-                finish();
-            });
-        }
+        cancelButton.setOnClickListener(v -> {
+            loginFlowExecutorService.shutdown();
+            ProcessLifecycleOwner.get().getLifecycle().removeObserver(lifecycleEventObserver);
+            finish();
+        });
     }
         
         private void showEnforcedServers() {
