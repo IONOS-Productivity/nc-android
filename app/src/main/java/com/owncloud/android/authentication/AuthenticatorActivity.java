@@ -352,6 +352,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
             setContentView(accountSetupWebviewBinding.getRoot());
             anonymouslyPostLoginRequest(webloginUrl);
             // initWebViewLogin(webloginUrl, false);
+            initCancelButton();
         } else {
             accountSetupBinding = AccountSetupBinding.inflate(getLayoutInflater());
             setContentView(accountSetupBinding.getRoot());
@@ -373,8 +374,6 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
         ProcessLifecycleOwner.get().getLifecycle().addObserver(lifecycleEventObserver);
 
         // webViewUtil.checkWebViewVersion();
-
-        initCancelButton();
     }
 
     @IonosCustomization
