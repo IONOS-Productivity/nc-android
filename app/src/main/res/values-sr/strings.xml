@@ -56,6 +56,7 @@
     <string name="assistant_screen_task_delete_success_message">Задатак је успешно завршен</string>
     <string name="assistant_screen_task_list_error_state_message">Не може да се преузме листа задатака, молимо вас да проверите везу са интернетом.</string>
     <string name="assistant_screen_task_more_actions_bottom_sheet_delete_action">Обриши задатак</string>
+    <string name="assistant_screen_task_output_empty_text">Излаз задатка још увек није спреман.</string>
     <string name="assistant_screen_task_types_error_state_message">Не могу да се преузму типови задатака, молимо вас да проверите везу са интернетом.</string>
     <string name="assistant_screen_top_bar_title">Асистент</string>
     <string name="assistant_screen_unknown_task_status_text">Непознато</string>
@@ -590,6 +591,7 @@
     <string name="notification_channel_upload_description">Приказ напретка отпремања</string>
     <string name="notification_channel_upload_name_short">Отпремања</string>
     <string name="notification_icon">Иконица обавештења</string>
+    <string name="notification_icon_description">Постоје обавештења која нису прочитана</string>
     <string name="notifications_no_results_headline">Нема обавештења</string>
     <string name="notifications_no_results_message">Проверите касније.</string>
     <string name="oc_file_list_adapter_offline_operation_description_text">Операције на чекању</string>
