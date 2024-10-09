@@ -38,9 +38,3 @@ android {
         disable 'MissingTranslation'
     }
 }
-
-dependencies {
-    api "androidx.exifinterface:exifinterface:$androidx_exifinterface_version"
-    implementation "androidx.appcompat:appcompat:$appCompatVersion"
-    implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
-}

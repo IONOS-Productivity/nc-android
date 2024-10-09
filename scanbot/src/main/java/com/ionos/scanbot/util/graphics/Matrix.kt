@@ -15,3 +15,15 @@ internal fun Matrix.mapPoint(point: PointF): PointF = floatArrayOf(point.x, poin
 	mapPoints(it)
 	return PointF(it[0], it[1])
 }
+
+internal fun Matrix.rotate(angle: Float) = apply {
+    setRotate(angle)
+}
+
+internal fun Matrix.flipHorizontal() = apply {
+    postScale(-1f, 1f)
+}
+
+internal fun Matrix.flipVertical() = apply {
+    postScale(1f, -1f)
+}

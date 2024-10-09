@@ -4,7 +4,7 @@ import android.content.Context
 import android.graphics.Matrix
 import android.net.Uri
 import androidx.exifinterface.media.ExifInterface
-import com.ionos.common_ui.utils.getMatrixAccordingToExifOrientation
+import com.ionos.scanbot.util.graphics.getOrientationMatrix
 import javax.inject.Inject
 
 internal class ExtractPictureTransformation @Inject constructor(
@@ -15,5 +15,5 @@ internal class ExtractPictureTransformation @Inject constructor(
 		.contentResolver
 		.openInputStream(data)
 		?.let { ExifInterface(it) }
-		?.let { getMatrixAccordingToExifOrientation(it) }
+		?.getOrientationMatrix()
 }

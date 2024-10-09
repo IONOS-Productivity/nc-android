@@ -2,8 +2,8 @@ package com.ionos.scanbot.screens.camera.ui_components
 
 import android.content.Context
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.ionos.common_ui.utils.ContextUtils
 import com.ionos.scanbot.R
+import com.ionos.scanbot.util.context.isActivityFinishing
 import kotlin.getValue
 
 class NoFreeSpaceMessageDialogWrapper(context: Context) {
@@ -16,8 +16,8 @@ class NoFreeSpaceMessageDialogWrapper(context: Context) {
             .create()
     }
 
-    fun show(context: Context?) {
-        if (!ContextUtils.isActivityFinishing(context)) {
+    fun show(context: Context) {
+        if (!context.isActivityFinishing()) {
             dialog.show()
         }
     }

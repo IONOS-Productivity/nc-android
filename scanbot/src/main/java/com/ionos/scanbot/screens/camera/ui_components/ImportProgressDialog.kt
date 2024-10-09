@@ -5,9 +5,9 @@ import android.content.Context
 import android.view.LayoutInflater
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.ionos.common_ui.utils.ContextUtils
 import com.ionos.scanbot.R
 import com.ionos.scanbot.databinding.ScanbotImportProgressDialogBinding
+import com.ionos.scanbot.util.context.getActivity
 import java.text.NumberFormat
 
 internal class ImportProgressDialog(
@@ -26,7 +26,7 @@ internal class ImportProgressDialog(
 	fun show(progress: Int) {
         updateProgress(progress)
         if (!dialog.isShowing) {
-            val activity = ContextUtils.getActivity(context)
+            val activity = context.getActivity()
             if (activity != null && !activity.isFinishing && !activity.isDestroyed) {
                 dialog.show()
             }
@@ -35,7 +35,7 @@ internal class ImportProgressDialog(
 
 	fun dismiss() {
         if (dialog.isShowing) {
-            val activity = ContextUtils.getActivity(context)
+            val activity = context.getActivity()
             if (activity != null && !activity.isFinishing && !activity.isDestroyed) {
                 dialog.dismiss()
             }

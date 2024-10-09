@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.ionos.common_ui.utils.DiffUtilsUpdateCallback
 import com.ionos.scanbot.databinding.ScanbotItemRearrangeBinding
 import com.ionos.scanbot.image_loader.ImageLoader
 import com.ionos.scanbot.repository.RepositoryFacade
+import com.ionos.scanbot.util.widget.DiffUtilsUpdateCallback
 import javax.inject.Inject
 
 internal class RearrangeAdapter @Inject constructor(

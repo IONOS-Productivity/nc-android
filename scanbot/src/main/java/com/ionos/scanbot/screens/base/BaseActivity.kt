@@ -10,13 +10,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
-import com.ionos.common_ui.utils.ScreenUtils
 import com.ionos.scanbot.R
 import com.ionos.scanbot.controller.ScanbotController
 import com.ionos.scanbot.di.inject
 import com.ionos.scanbot.screens.base.BaseScreen.Event
 import com.ionos.scanbot.screens.base.BaseScreen.State
 import com.ionos.scanbot.screens.base.BaseScreen.ViewModel
+import com.ionos.scanbot.util.config.applyDefaultFontScale
 
 internal abstract class BaseActivity<E : Event, S : State<E>, VM : ViewModel<E, S>> : AppCompatActivity() {
     protected abstract val viewModelFactory: ViewModelProvider.Factory
@@ -27,7 +27,7 @@ internal abstract class BaseActivity<E : Event, S : State<E>, VM : ViewModel<E, 
     protected val scanbotController: ScanbotController by inject { scanbotController() }
 
     override fun attachBaseContext(newBase: Context) {
-        ScreenUtils.applyDefaultFontScale(newBase)
+        newBase.resources.configuration.applyDefaultFontScale()
         super.attachBaseContext(newBase)
     }
 
@@ -55,7 +55,7 @@ internal abstract class BaseActivity<E : Event, S : State<E>, VM : ViewModel<E, 
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
-        ScreenUtils.applyDefaultFontScale(newConfig)
+        newConfig.applyDefaultFontScale()
         super.onConfigurationChanged(newConfig)
     }
 

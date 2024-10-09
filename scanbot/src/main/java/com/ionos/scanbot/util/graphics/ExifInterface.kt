@@ -1,17 +1,11 @@
-package com.ionos.common_ui.utils
+package com.ionos.scanbot.util.graphics
 
 import android.graphics.Matrix
 import androidx.exifinterface.media.ExifInterface
 
-fun getMatrixAccordingToExifOrientation(
-	exifInterface: ExifInterface
-): Matrix? {
+internal fun ExifInterface.getOrientationMatrix(): Matrix? {
 	val matrix = Matrix()
-	val orientation =
-		exifInterface.getAttributeInt(
-			ExifInterface.TAG_ORIENTATION,
-			ExifInterface.ORIENTATION_UNDEFINED
-		)
+	val orientation = getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED)
 
 	return with(matrix) {
 		when (orientation) {
@@ -26,12 +20,3 @@ fun getMatrixAccordingToExifOrientation(
 		}
 	}
 }
-
-private fun Matrix.rotate(angle: Float) =
-	apply { setRotate(angle) }
-
-private fun Matrix.flipHorizontal() =
-	apply { postScale(-1f, 1f) }
-
-private fun Matrix.flipVertical() =
-	apply { postScale(1f, -1f) }

@@ -3,14 +3,14 @@ package com.ionos.scanbot.screens.common
 import android.content.Context
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.ionos.common_ui.utils.ContextUtils
 import com.ionos.scanbot.R
+import com.ionos.scanbot.util.context.isActivityFinishing
 import javax.inject.Inject
 
 internal class ExitDialog @Inject constructor() {
 
 	fun show(context: Context, onConfirmed: () -> Unit, onDenied: () -> Unit = {}) {
-		if (!ContextUtils.isActivityFinishing(context)) {
+		if (!context.isActivityFinishing()) {
 			val dialog = createDialog(context, onConfirmed, onDenied)
             dialog.show()
 		}
