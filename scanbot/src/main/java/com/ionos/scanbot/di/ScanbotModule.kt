@@ -1,7 +1,6 @@
 package com.ionos.scanbot.di
 
 import android.content.Context
-import com.ionos.common_ui.exception.TryCatchExceptionHandler
 import com.ionos.scanbot.BuildConfig
 import com.ionos.scanbot.availability.Availability
 import com.ionos.scanbot.availability.ScanbotFeatureAvailability
@@ -12,7 +11,6 @@ import com.ionos.scanbot.di.qualifiers.Scanbot
 import com.ionos.scanbot.di.qualifiers.ScanbotLicense
 import com.ionos.scanbot.di.qualifiers.ScanbotLicenseKey
 import com.ionos.scanbot.di.qualifiers.ScanbotLicenseKeyUrl
-import com.ionos.scanbot.exception.LogTryCatchExceptionHandler
 import com.ionos.scanbot.initializer.ScanbotInitializer
 import com.ionos.scanbot.initializer.ScanbotInitializerImpl
 import com.ionos.scanbot.license.KeyStore
@@ -51,15 +49,6 @@ abstract class ScanbotModule {
         @ScanbotLicenseKeyUrl
         fun provideScanbotLicenseKeyUrl(): String {
             return BuildConfig.SCANBOT_LICENSE_KEY_URL
-        }
-
-        @Singleton
-        @Provides
-        fun provideTryCatchExceptionHandler(): TryCatchExceptionHandler {
-            // return if (BuildConfig.DEBUG
-            // ) FatalTryCatchExceptionHandler()
-            // else
-            return LogTryCatchExceptionHandler()
         }
     }
 

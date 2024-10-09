@@ -8,7 +8,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.ionos.common_ui.utils.ContextUtils
 import com.ionos.scanbot.R
 import com.ionos.scanbot.databinding.ScanbotImportProgressDialogBinding
-import com.ionos.scanbot.di.inject
 import java.text.NumberFormat
 
 internal class ImportProgressDialog(
@@ -17,7 +16,6 @@ internal class ImportProgressDialog(
 ) {
     private val dialog by lazy { createDialog(context) }
     private val viewBinding by lazy { ScanbotImportProgressDialogBinding.inflate(LayoutInflater.from(context)) }
-    private val tryCatchExceptionHandler by context.inject { tryCatchExceptionHandler() }
 
     private val progressPercentFormat by lazy {
         NumberFormat.getPercentInstance().apply {
@@ -30,7 +28,7 @@ internal class ImportProgressDialog(
         if (!dialog.isShowing) {
             val activity = ContextUtils.getActivity(context)
             if (activity != null && !activity.isFinishing && !activity.isDestroyed) {
-                tryCatchExceptionHandler.handle(dialog::show)
+                dialog.show()
             }
         }
 	}
@@ -39,7 +37,7 @@ internal class ImportProgressDialog(
         if (dialog.isShowing) {
             val activity = ContextUtils.getActivity(context)
             if (activity != null && !activity.isFinishing && !activity.isDestroyed) {
-                tryCatchExceptionHandler.handle(dialog::dismiss)
+                dialog.dismiss()
             }
         }
 	}

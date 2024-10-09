@@ -4,18 +4,15 @@ import android.content.Context
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.ionos.common_ui.utils.ContextUtils
-import com.ionos.common_ui.exception.TryCatchExceptionHandler
 import com.ionos.scanbot.R
 import javax.inject.Inject
 
-internal class ExitDialog @Inject constructor(
-	private val tryCatchExceptionHandler: TryCatchExceptionHandler,
-) {
+internal class ExitDialog @Inject constructor() {
 
 	fun show(context: Context, onConfirmed: () -> Unit, onDenied: () -> Unit = {}) {
 		if (!ContextUtils.isActivityFinishing(context)) {
 			val dialog = createDialog(context, onConfirmed, onDenied)
-            tryCatchExceptionHandler.handle(dialog::show)
+            dialog.show()
 		}
 	}
 
