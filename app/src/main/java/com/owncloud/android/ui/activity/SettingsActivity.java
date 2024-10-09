@@ -187,6 +187,9 @@ public class SettingsActivity extends PreferenceActivity
 
         // workaround for mismatched color when app dark mode and system dark mode don't agree
         setListBackground();
+
+        // workaround to set custom paddings
+        setListPadding();
     }
 
     private void setupDevCategory(PreferenceScreen preferenceScreen) {
@@ -864,6 +867,12 @@ public class SettingsActivity extends PreferenceActivity
 
     private void setListBackground() {
         getListView().setBackgroundColor(ContextCompat.getColor(this, R.color.bg_default));
+    }
+
+    @IonosCustomization
+    private void setListPadding() {
+        int bottom = (int) getResources().getDimension(R.dimen.settings_screen_list_bottom_padding);
+        getListView().setPadding(0, 0, 0, bottom);
     }
 
     private String getAppVersion() {

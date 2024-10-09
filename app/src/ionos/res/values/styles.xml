@@ -100,28 +100,20 @@
 
     <style name="SettingsCategoryTitleStyle">
         <item name="android:textSize">@dimen/settings_screen_title_text_size</item>
-        <item name="android:textColor">@color/settings_screen_category_text_color</item>
-        <item name="android:gravity">top</item>
-        <item name="android:paddingTop">@dimen/settings_screen_items_vertical_padding</item>
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="SettingsTitleStyle">
         <item name="android:textSize">@dimen/settings_screen_title_text_size</item>
-        <item name="android:textColor">@color/settings_screen_title_text_color</item>
+        <item name="android:textColor">@color/text_color</item>
         <item name="android:singleLine">true</item>
         <item name="android:ellipsize">end</item>
     </style>
 
     <style name="SettingsSubtitleStyle">
         <item name="android:textSize">@dimen/settings_screen_description_text_size</item>
-        <item name="android:textColor">@color/settings_screen_description_text_color</item>
-    </style>
-
-    <style name="SettingsRootViewStyle">
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:minHeight">?android:attr/listPreferredItemHeight</item>
-        <item name="android:paddingLeft">@dimen/settings_screen_items_horizontal_padding</item>
-        <item name="android:paddingRight">@dimen/settings_screen_items_horizontal_padding</item>
+        <item name="android:textColor">@color/secondary_text_color</item>
     </style>
 
     <style name="SettingsMaterialSwitchStyle" parent="Widget.Material3.CompoundButton.MaterialSwitch">
@@ -138,6 +130,8 @@
 
         <!-- unchecked, pressed thumb color -->
         <item name="thumbTint">@null</item>
+
+        <item name="android:minHeight">0dp</item>
     </style>
 
     <style name="SettingsMaterialSwitchThemeOverlayStyle">
@@ -150,7 +144,7 @@
 
     <style name="SettingsBackupSwitchStyle" parent="SettingsMaterialSwitchStyle">
         <item name="android:textSize">@dimen/settings_screen_title_text_size</item>
-        <item name="android:textColor">@color/settings_screen_title_text_color</item>
+        <item name="android:textColor">@color/text_color</item>
         <item name="android:singleLine">true</item>
         <item name="android:ellipsize">end</item>
     </style>

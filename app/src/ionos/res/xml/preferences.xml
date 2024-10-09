@@ -11,7 +11,7 @@
     android:key="preference_screen">
     <PreferenceCategory
         android:key="general"
-        android:layout="@layout/settings_preference_group"
+        android:layout="@layout/settings_preference_first_group"
         android:title="@string/prefs_category_general">
         <ListPreference
             android:key="storage_path"

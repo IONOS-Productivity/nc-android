@@ -52,10 +52,6 @@
     <color name="sorting_dialog_cancel_button_color_pressed">@color/dodger_blue</color>
     <color name="sorting_dialog_cancel_button_text_color">@color/white</color>
 
-    <color name="settings_screen_category_text_color">@color/cornflower</color>
-    <color name="settings_screen_title_text_color">@color/gull_grayapprox</color>
-    <color name="settings_screen_description_text_color">@color/white_smoke</color>
-
     <color name="settings_screen_dialog_cancel_button_text_color">@color/ghost_white</color>
 
     <color name="search_bar_background_color">@color/white_smoke</color>

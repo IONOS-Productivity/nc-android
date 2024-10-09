@@ -44,17 +44,9 @@ class FilesSpecificViewThemeUtils @Inject constructor(
     private val androidXViewThemeUtils: AndroidXViewThemeUtils
 ) : ViewThemeUtilsBase(schemes) {
     // not ported to common lib because PreferenceCategory is deprecated
+    @IonosCustomization
     fun themePreferenceCategory(category: PreferenceCategory) {
-        withScheme(category.context) {
-            val text: Spannable = SpannableString(category.title)
-            text.setSpan(
-                ForegroundColorSpan(it.primary),
-                0,
-                text.length,
-                Spannable.SPAN_INCLUSIVE_INCLUSIVE
-            )
-            category.title = text
-        }
+        // Do nothing
     }
 
     fun createAvatar(type: ShareType?, avatar: ImageView, context: Context) {

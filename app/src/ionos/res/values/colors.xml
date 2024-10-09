@@ -58,10 +58,6 @@
     <color name="sorting_dialog_cancel_button_color_pressed">@color/dodger_blue</color>
     <color name="sorting_dialog_cancel_button_text_color">@color/white</color>
 
-    <color name="settings_screen_category_text_color">@color/dodger_blue</color>
-    <color name="settings_screen_title_text_color">@color/deep_koamaru</color>
-    <color name="settings_screen_description_text_color">@color/gull_grayapprox</color>
-
     <color name="settings_screen_switcher_outline_color">@color/geyser</color>
     <color name="settings_screen_switcher_surface_container_highest_color">@color/geyser</color>
     <color name="settings_screen_switcher_primary_container_color">@color/white</color>
