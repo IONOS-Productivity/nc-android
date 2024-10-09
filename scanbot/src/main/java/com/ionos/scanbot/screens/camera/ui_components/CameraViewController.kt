@@ -1,11 +1,10 @@
 package com.ionos.scanbot.screens.camera.ui_components
 
 import android.app.Activity
-import com.ionos.scanbot.util.kotlin.extension.plusAssign
 import com.ionos.scanbot.provider.ContourDetectorParamsProvider
 import com.ionos.scanbot.screens.camera.use_case.GetUserGuidanceStatus
 import com.ionos.scanbot.screens.camera.use_case.UserGuidanceStatus
-import com.ionos.scanbot.screens.camera.ui_components.UserGuidanceView
+import com.ionos.scanbot.util.rx.plusAssign
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.PublishSubject

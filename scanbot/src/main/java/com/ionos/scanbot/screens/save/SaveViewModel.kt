@@ -16,7 +16,7 @@ import com.ionos.scanbot.screens.save.SaveScreen.ViewModel
 import com.ionos.scanbot.screens.save.use_case.ValidateFilesForUploadSynchronous
 import com.ionos.scanbot.screens.save.use_case.save.SaveDocument
 import com.ionos.scanbot.upload.target_provider.UploadTarget
-import com.ionos.scanbot.util.kotlin.extension.plusAssign
+import com.ionos.scanbot.util.rx.plusAssign
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject

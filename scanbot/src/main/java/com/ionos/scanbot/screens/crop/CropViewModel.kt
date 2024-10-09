@@ -3,7 +3,6 @@ package com.ionos.scanbot.screens.crop
 import android.graphics.Bitmap
 import android.graphics.Matrix
 import android.graphics.PointF
-import com.ionos.scanbot.util.kotlin.extension.plusAssign
 import com.ionos.scanbot.entity.Picture
 import com.ionos.scanbot.entity.SelectedContour
 import com.ionos.scanbot.filter.FilterType
@@ -16,6 +15,7 @@ import com.ionos.scanbot.screens.crop.CropScreen.*
 import com.ionos.scanbot.screens.crop.CropScreen.Event.*
 import com.ionos.scanbot.screens.common.use_case.SelectContour
 import com.ionos.scanbot.util.graphics.mapPoints
+import com.ionos.scanbot.util.rx.plusAssign
 import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers

@@ -2,7 +2,6 @@ package com.ionos.scanbot.screens.camera
 
 import android.graphics.Bitmap
 import android.net.Uri
-import com.ionos.scanbot.util.kotlin.extension.plusAssign
 import com.ionos.scanbot.repository.RepositoryFacade
 import com.ionos.scanbot.repository.bitmap.BitmapDecoder
 import com.ionos.scanbot.screens.base.BaseViewModel
@@ -14,6 +13,7 @@ import com.ionos.scanbot.screens.camera.use_case.import_pictures.ImportPicturesS
 import com.ionos.scanbot.screens.camera.use_case.GetCameraScreenErrorMessage
 import com.ionos.scanbot.screens.common.use_case.open_screen.OpenScreenIntent.OpenGalleryScreenIntent
 import com.ionos.scanbot.util.GetLocalFreeSpace
+import com.ionos.scanbot.util.rx.plusAssign
 import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
