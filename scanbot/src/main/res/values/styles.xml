@@ -6,7 +6,7 @@
     </style>
 
     <style name="ScanbotRadioGroupStyle" parent="Theme.AppCompat.DayNight">
-        <item name="colorAccent">@color/scanbot_file_type_text_color_checked</item>
+        <item name="colorAccent">?scanbot_file_type_text_color_checked</item>
     </style>
 
     <style name="ScanbotBottomNavigationItem">
@@ -23,14 +23,14 @@
     <style name="ScanbotEditTextStyle">
         <item name="android:singleLine">true</item>
         <item name="android:textSize">@dimen/scanbot_large_font_size</item>
-        <item name="android:textColor">@color/scanbot_edit_text_text_color</item>
-        <item name="android:textColorHighlight">@color/scanbot_edit_text_highlight_color</item>
+        <item name="android:textColor">?scanbot_edit_text_text_color</item>
+        <item name="android:textColorHighlight">?scanbot_edit_text_highlight_color</item>
         <item name="android:textCursorDrawable">@null</item>
         <item name="android:theme">@style/ScanbotEditTextTheme</item>
     </style>
 
     <style name="ScanbotEditTextTheme">
-        <item name="colorControlActivated">@color/scanbot_edit_text_select_handler_color</item>
+        <item name="colorControlActivated">?scanbot_edit_text_select_handler_color</item>
     </style>
 
 </resources>

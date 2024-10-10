@@ -3,6 +3,7 @@ package com.ionos.scanbot.screens.base
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
+import android.util.TypedValue
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.StringRes
@@ -32,11 +33,25 @@ internal abstract class BaseActivity<E : Event, S : State<E>, VM : ViewModel<E, 
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        applyTheme()
         super.onCreate(savedInstanceState)
-        window.statusBarColor = ContextCompat.getColor(context, R.color.scanbot_status_bar_color)
-        window.decorView.setBackgroundColor(ContextCompat.getColor(context, R.color.scanbot_window_background))
         setContentView(viewBinding.root)
         viewModel.state.observe(this) { it.renderInternal() }
+    }
+
+    private fun applyTheme() {
+        val outValue = TypedValue()
+        if (context.theme.resolveAttribute(R.attr.scanbotTheme, outValue, true)) {
+            setTheme(outValue.resourceId)
+        } else {
+            setTheme(R.style.ScanbotDefaultTheme)
+        }
+        if (theme.resolveAttribute(R.attr.scanbot_status_bar_color, outValue, true)) {
+            window.statusBarColor = ContextCompat.getColor(context, outValue.resourceId)
+        }
+        if (theme.resolveAttribute(R.attr.scanbot_window_background, outValue, true)) {
+            window.decorView.setBackgroundColor(ContextCompat.getColor(context, outValue.resourceId))
+        }
     }
 
     override fun onResume() {

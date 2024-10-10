@@ -5,6 +5,6 @@
     android:viewportWidth="84"
     android:viewportHeight="84">
     <path
-        android:fillColor="@color/scanbot_filter_control_inactive"
+        android:fillColor="?scanbot_filter_control_inactive"
         android:pathData="M66,42C66,28.75 55.25,18 42,18V66C55.25,66 66,55.25 66,42ZM10,42C10,30.625 16,20.125 26,14.375C35.875,8.625 48,8.625 58,14.375C67.875,20.125 74,30.625 74,42C74,53.5 67.875,64 58,69.75C48,75.5 35.875,75.5 26,69.75C16,64 10,53.5 10,42Z" />
 </vector>

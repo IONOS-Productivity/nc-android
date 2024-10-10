@@ -9,7 +9,7 @@
         android:id="@+id/scanbotRearrangeToolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/scanbot_app_bar_color"
+        android:background="?scanbot_app_bar_color"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,7 +24,7 @@
         android:src="@drawable/scanbot_ic_touch"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scanbotRearrangeToolbar"
-        app:tint="@color/scanbot_rearrange_icon_color"
+        app:tint="?scanbot_rearrange_icon_color"
         tools:ignore="ContentDescription" />
 
     <TextView
@@ -35,7 +35,7 @@
         android:layout_marginEnd="@dimen/scanbot_rearrange_margin"
         android:gravity="center"
         android:text="@string/scanbot_hold_and_drag_to_rearrange_pages"
-        android:textColor="@color/scanbot_rearrange_text_color"
+        android:textColor="?scanbot_rearrange_text_color"
         android:textSize="@dimen/scanbot_rearrange_tip_text_size"
         app:layout_constraintBottom_toBottomOf="@+id/imageView3"
         app:layout_constraintEnd_toEndOf="parent"

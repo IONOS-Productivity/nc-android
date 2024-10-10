@@ -5,10 +5,10 @@
     android:viewportHeight="84">
   <path
       android:pathData="M30,45C30,36.375 35.25,28.969 42.75,25.688C39.938,23.719 36.563,22.5 33,22.5C23.813,22.5 16.5,29.906 16.5,39C16.5,48.094 23.719,55.406 32.813,55.5C30.938,52.406 30,48.844 30,45ZM33,60C21.375,60 12,50.625 12,39C12,27.469 21.375,18 33,18C38.813,18 44.063,20.438 47.906,24.281C48.844,24.094 49.875,24 51,24C62.531,24 72,33.469 72,45C72,56.625 62.531,66 51,66C45.094,66 39.844,63.656 36,59.813C35.063,60 34.031,60 33,60ZM51,61.5C60.094,61.5 67.5,54.188 67.5,45C67.5,36 60.188,28.688 51.188,28.5C52.969,31.594 54,35.25 54,39C54,47.719 48.75,55.125 41.25,58.313C43.969,60.375 47.344,61.5 51,61.5Z"
-      android:fillColor="@color/scanbot_default_icon_color"/>
+      android:fillColor="?scanbot_default_icon_color"/>
   <path
       android:pathData="M42,42m-41,0a41,41 0,1 1,82 0a41,41 0,1 1,-82 0"
       android:strokeWidth="2"
       android:fillColor="#00000000"
-      android:strokeColor="@color/scanbot_default_icon_color"/>
+      android:strokeColor="?scanbot_default_icon_color"/>
 </vector>

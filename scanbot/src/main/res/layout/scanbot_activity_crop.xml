@@ -3,7 +3,7 @@
 	android:id="@+id/llContourContainer"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:background="@color/scanbot_crop_screen_background"
+	android:background="?scanbot_crop_screen_background"
 	android:orientation="vertical">
 
 	<include
@@ -30,7 +30,7 @@
 			android:layout_gravity="center_horizontal"
 			android:layout_margin="@dimen/scanbot_padding_normal"
 			android:background="@drawable/scanbot_crop_button_selector"
-			android:textColor="@color/scanbot_crop_screen_button_text_color"
+			android:textColor="?scanbot_crop_screen_button_text_color"
             android:textSize="@dimen/scanbot_large_font_size"
             android:paddingStart="@dimen/scanbot_padding_large"
             android:paddingEnd="@dimen/scanbot_padding_large"
@@ -45,7 +45,7 @@
 			android:layout_gravity="center_horizontal"
 			android:layout_margin="@dimen/scanbot_padding_normal"
             android:background="@drawable/scanbot_crop_button_selector"
-			android:textColor="@color/scanbot_crop_screen_button_text_color"
+			android:textColor="?scanbot_crop_screen_button_text_color"
 			android:padding="@dimen/scanbot_padding_normal"
             android:paddingStart="@dimen/scanbot_padding_large"
             android:paddingEnd="@dimen/scanbot_padding_large"

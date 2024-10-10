@@ -4,7 +4,7 @@
     <item>
         <shape>
             <corners android:radius="@dimen/scanbot_padding_large" />
-            <solid android:color="@color/scanbot_filter_control_icon_border" />
+            <solid android:color="?scanbot_filter_control_icon_border" />
             <size android:height="48dp" />
             <padding
                 android:bottom="4dp"
@@ -13,14 +13,14 @@
                 android:top="4dp" />
             <stroke
                 android:width="2dp"
-                android:color="@color/scanbot_filter_control_icon_background" />
+                android:color="?scanbot_filter_control_icon_background" />
         </shape>
     </item>
     <item>
         <shape>
             <corners android:radius="@dimen/scanbot_padding_large" />
             <size android:height="48dp" />
-            <solid android:color="@color/scanbot_filter_control_icon_background" />
+            <solid android:color="?scanbot_filter_control_icon_background" />
         </shape>
     </item>
 </layer-list>

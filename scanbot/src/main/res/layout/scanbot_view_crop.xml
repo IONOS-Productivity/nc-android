@@ -7,7 +7,7 @@
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		app:cornerImageSrc="@drawable/scanbot_ic_crop_corner_handle"
-		app:edgeColor="@color/scanbot_crop_polygon_edge_color"
+		app:edgeColor="?scanbot_crop_polygon_edge_color"
 		app:edgeImageSrc="@drawable/scanbot_ic_crop_side_handle"
 		app:editPolygonHandleSize="@dimen/scanbot_crop_view_edit_polygon_handle_size"
 		app:magneticLineTreshold="@dimen/scanbot_crop_view_magnetic_line_treshold" />
