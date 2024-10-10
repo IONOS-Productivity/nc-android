@@ -38,6 +38,8 @@
         <!-- Popup background color -->
         <!--<item name="popupMenuBackground" app:ionosCustomization="">@drawable/m3_popupmenu_background_overlay</item>-->
         <item name="colorSurfaceContainer" app:ionosCustomization="">@color/popup_background_color</item>
+
+        <item name="scanbotTheme" app:ionosCustomization="">@style/ScanbotTheme</item>
     </style>
 
     <style name="Theme.ownCloud.Toolbar.AppWidgetContainerParent" parent="@android:style/Theme.DeviceDefault">

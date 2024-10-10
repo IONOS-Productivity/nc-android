@@ -66,8 +66,6 @@ android {
 }
 
 dependencies {
-    implementation project(':commonUI')
-
     api "io.scanbot:sdk-package-2:$scanbot_sdk_version"
     implementation "com.google.android.material:material:$material_version"
 

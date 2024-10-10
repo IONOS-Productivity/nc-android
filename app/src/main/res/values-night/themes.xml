@@ -35,5 +35,7 @@
         <item name="android:textColorSecondary" app:ionosCustomization="">@color/secondary_text_color</item>
 
         <item name="colorSurfaceContainer" app:ionosCustomization="">@color/popup_background_color</item>
+
+        <item name="scanbotTheme" app:ionosCustomization="">@style/ScanbotTheme</item>
     </style>
 </resources>
