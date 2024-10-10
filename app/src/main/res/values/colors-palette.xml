@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<color name="white">#FFFFFF</color>
-	<color name="black">#000000</color>
-    <color name="transparent">#00000000</color>
 	<color name="madison">#0B2A63</color>
     <color name="midnight_blue">#003d8f</color>
     <color name="midnight_blue2">#02102B</color>

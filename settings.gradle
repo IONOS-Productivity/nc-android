@@ -9,7 +9,6 @@ rootProject.name = 'Nextcloud'
 include ':app'
 include ':appscan'
 include ':scanbot'
-include ':commonUI'
 
 
 //includeBuild('../android-common') {
