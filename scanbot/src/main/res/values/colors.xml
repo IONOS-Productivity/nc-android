@@ -38,9 +38,6 @@
     <color name="scanbot_filter_control_seek_bar_thumb_active">@color/madison</color>
     <color name="scanbot_filter_control_seek_bar_progress_active">@color/dodger_blue</color>
     <color name="scanbot_filter_control_seek_bar_progress_background_active">@color/dodger_blue</color>
-    <color name="scanbot_filter_popup_background_color">@color/white</color>
-    <color name="scanbot_filter_popup_stroke_color">@color/scanbot_grey</color>
-    <color name="scanbot_filter_popup_text_color">@color/black</color>
 
     <color name="scanbot_gallery_background">@color/white</color>
     <color name="scanbot_gallery_counter_rounded_background">@color/scanbot_grey</color>

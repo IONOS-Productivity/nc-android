@@ -25,8 +25,6 @@
 	<dimen name="scanbot_filter_control_margin_horizontal">20dp</dimen>
 	<dimen name="scanbot_filter_control_margin_vertical">20dp</dimen>
 	<dimen name="scanbot_filter_icon_size">30dp</dimen>
-	<dimen name="scanbot_filter_popup_height">46dp</dimen>
-	<dimen name="scanbot_filter_popup_margin">10dp</dimen>
 
     <dimen name="scanbot_gallery_counter_padding_left">4dp</dimen>
 	<dimen name="scanbot_gallery_counter_padding_right">4dp</dimen>
