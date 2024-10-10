@@ -60,7 +60,7 @@
 				android:paddingTop="@dimen/scanbot_padding_small"
 				android:paddingEnd="@dimen/scanbot_padding_normal"
 				android:paddingBottom="@dimen/scanbot_padding_small"
-				android:textColor="@color/scanbot_save_file_name_text_color"
+				android:textColor="@color/scanbot_edit_text_text_color"
 				android:textSize="@dimen/scanbot_large_font_size"
 				app:layout_constraintEnd_toEndOf="@id/bgContent"
 				app:layout_constraintStart_toStartOf="@id/bgContent"

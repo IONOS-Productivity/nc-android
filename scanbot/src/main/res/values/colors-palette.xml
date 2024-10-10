@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="scanbot_white">#FFFFFF</color>
+    <color name="scanbot_black">#000000</color>
 	<color name="scanbot_dark_grey">#333333</color>
 	<color name="scanbot_grey">#999999</color>
 	<color name="scanbot_alto">#dcdcdc</color>

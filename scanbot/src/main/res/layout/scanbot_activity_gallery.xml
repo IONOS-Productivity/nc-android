@@ -50,7 +50,7 @@
         android:layout_marginBottom="@dimen/scanbot_gallery_fab_margin"
         android:contentDescription="fab"
         app:maxImageSize="@dimen/scanbot_gallery_fab_icon_size"
-        app:tint="@color/white"
+        app:tint="@color/scanbot_gallery_fab_tint_color"
         app:shapeAppearanceOverlay="@style/ScanbotFabButtonBackgroundShape"
         android:backgroundTint="@color/scanbot_gallery_fab_color"
         app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"

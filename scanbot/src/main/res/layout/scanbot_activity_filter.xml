@@ -28,7 +28,6 @@
         android:id="@+id/filterControls"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
         app:layout_constraintBottom_toTopOf="@id/tvApplyToAll"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -39,7 +38,7 @@
         android:layout_height="48dp"
         android:paddingStart="@dimen/scanbot_padding_large"
         android:paddingEnd="@dimen/scanbot_padding_large"
-        android:textColor="@color/scanbot_common_text_color"
+        android:textColor="@color/scanbot_filter_apply_to_all_text_color"
         android:background="@drawable/scanbot_filter_apply_btn_bg"
         android:gravity="center"
         android:visibility="gone"

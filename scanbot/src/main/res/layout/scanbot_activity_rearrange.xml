@@ -35,7 +35,7 @@
         android:layout_marginEnd="@dimen/scanbot_rearrange_margin"
         android:gravity="center"
         android:text="@string/scanbot_hold_and_drag_to_rearrange_pages"
-        android:textColor="@color/scanbot_common_text_color"
+        android:textColor="@color/scanbot_rearrange_text_color"
         android:textSize="@dimen/scanbot_rearrange_tip_text_size"
         app:layout_constraintBottom_toBottomOf="@+id/imageView3"
         app:layout_constraintEnd_toEndOf="parent"

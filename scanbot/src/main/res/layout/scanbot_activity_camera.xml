@@ -63,7 +63,7 @@
 	<FrameLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:background="@color/scanbot_primary_color">
+		android:background="@color/scanbot_camera_bottom_bar_background">
 
 		<TextView
 			android:id="@+id/tvCancel"
