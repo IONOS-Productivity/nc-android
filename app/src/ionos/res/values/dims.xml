@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="bottom_sheet_drag_handle_height">60dp</dimen>
+    <dimen name="bottom_sheet_drag_handle_height">56dp</dimen>
+    <dimen name="bottom_sheet_drag_handle_icon_width">32dp</dimen>
+    <dimen name="bottom_sheet_drag_handle_icon_height">4dp</dimen>
+    <dimen name="bottom_sheet_drag_handle_icon_radius">80dp</dimen>
 
     <dimen name="dialog_default_text_size">16sp</dimen>
     <dimen name="dialog_secondary_text_size">12sp</dimen>
