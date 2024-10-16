@@ -47,6 +47,7 @@
     <color name="dialog_pressed_item_color">@color/transparent_ghost_white</color>
 
     <color name="bottom_sheet_drag_handle_color">@color/slate_grey</color>
+    <color name="bottom_sheet_window_background_color">@color/half_transparent_cinder</color>
 
     <color name="sorting_dialog_cancel_button_color_idle">@color/madison</color>
     <color name="sorting_dialog_cancel_button_color_pressed">@color/dodger_blue</color>

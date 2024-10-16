@@ -87,8 +87,10 @@
 
     <style name="Generic.ThemeOverlay.App.BottomSheetDialog" parent="ThemeOverlay.App.BottomSheetDialog">
         <item name="bottomSheetDragHandleStyle">@style/App.BottomSheet.DragHandle</item>
-
         <item name="android:navigationBarColor">@color/bottom_sheet_nav_bar_color</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowAnimationStyle">@style/Animation.AppCompat.Dialog</item>
+        <item name="android:windowBackground">@color/bottom_sheet_window_background_color</item>
     </style>
 
     <style name="App.BottomSheet.DragHandle" parent="Widget.Material3.BottomSheet.DragHandle">
