@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="bottom_sheet_corner_radius">8dp</dimen>
     <dimen name="bottom_sheet_drag_handle_height">56dp</dimen>
     <dimen name="bottom_sheet_drag_handle_icon_width">32dp</dimen>
     <dimen name="bottom_sheet_drag_handle_icon_height">4dp</dimen>

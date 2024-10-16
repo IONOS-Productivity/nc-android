@@ -25,22 +25,11 @@ class IonosAndroidViewThemeUtils(
     }
 
     @JvmOverloads
-    fun colorViewBackground(view: View, colorRole: ColorRole = ColorRole.SURFACE) {
-        view.setBackgroundColor(colorRole.getColor(view.context))
-    }
+    fun colorViewBackground(view: View, colorRole: ColorRole = ColorRole.SURFACE) {}
 
-    fun themeDialog(view: View) {
-        colorViewBackground(view)
-    }
+    fun themeDialog(view: View) {}
 
     fun colorTextButtons(vararg buttons: Button) {}
-
-    @ColorInt
-    private fun ColorRole.getColor(context: Context): Int = when (this) {
-        /* ColorRole.SURFACE used for dialog & bottomSheet background, navigation & system bar color */
-        ColorRole.SURFACE -> context.getColor(R.color.ionos_bottom_sheet_background_color)
-        else -> throw IllegalStateException("Not implemented")
-    }
 
     @ColorInt
     private fun Context.getSystemBarsColor(): Int = getColor(R.color.system_bars_color)

@@ -100,7 +100,6 @@
     <color name="edit_image_toolbar_background" app:ionosCustomization="">@color/black</color>
     <color name="edit_image_controls_background" app:ionosCustomization="">@color/grey_900</color>
     <color name="filled_button_text_color" app:ionosCustomization="">@color/primary_button_text_color</color>
-    <color name="ionos_bottom_sheet_background_color" app:ionosCustomization="">@color/transparent</color>
 
     <color name="text_input_border_stroke_color" app:ionosCustomization="">@color/text_color</color>
     <color name="text_input_focused_border_stroke_color" app:ionosCustomization="">@color/primary</color>

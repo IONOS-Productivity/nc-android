@@ -98,6 +98,17 @@
         <item name="tint">@color/bottom_sheet_drag_handle_color</item>
     </style>
 
+    <style name="Generic.App.BottomSheetDialog" parent="App.BottomSheetDialog">
+        <item name="shapeAppearanceOverlay">@style/App.BottomSheet.ShapeAppearanceOverlay</item>
+    </style>
+
+    <style name="App.BottomSheet.ShapeAppearanceOverlay" parent="">
+        <item name="cornerSizeTopLeft">@dimen/bottom_sheet_corner_radius</item>
+        <item name="cornerSizeTopRight">@dimen/bottom_sheet_corner_radius</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+    </style>
+
     <style name="SettingsCategoryTitleStyle">
         <item name="android:textSize">@dimen/settings_screen_title_text_size</item>
         <item name="android:textColor">@color/text_color</item>
