@@ -110,20 +110,15 @@
             android:textStyle="bold"
             app:drawableStartCompat="@drawable/ic_size_asc" />
 
-        <TextView
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/cancel"
+            style="@style/Widget.App.Button.Positive"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/sorting_dialog_cancel_button_height"
+            android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_marginEnd="@dimen/sorting_dialog_cancel_button_end_margin"
             android:layout_marginBottom="@dimen/sorting_dialog_cancel_button_bottom_margin"
-            android:background="@drawable/sorting_dialog_cancel_button_background"
-            android:gravity="center"
-            android:paddingHorizontal="@dimen/sorting_dialog_cancel_button_horizontal_padding"
-            android:text="@string/common_cancel"
-            android:textColor="@color/sorting_dialog_cancel_button_text_color"
-            android:textSize="@dimen/sorting_dialog_cancel_button_text_size"
-            android:textStyle="bold" />
+            android:text="@string/common_cancel" />
 
     </LinearLayout>
 
