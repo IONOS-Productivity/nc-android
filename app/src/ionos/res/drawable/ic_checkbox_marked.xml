@@ -4,11 +4,11 @@
     android:viewportWidth="24"
     android:viewportHeight="24">
     <path
-        android:fillColor="@color/dodger_blue"
+        android:fillColor="@color/checkbox_fill_color"
         android:pathData="M5.474,3.474L18.474,3.474A2,2 0,0 1,20.474 5.474L20.474,18.474A2,2 0,0 1,18.474 20.474L5.474,20.474A2,2 0,0 1,3.474 18.474L3.474,5.474A2,2 0,0 1,5.474 3.474z"
         android:strokeWidth="1"
         android:strokeColor="@color/white" />
     <path
-        android:fillColor="@color/white"
+        android:fillColor="@color/checkbox_stroke_color"
         android:pathData="m16.752,9.143c0.289,0.266 0.289,0.733 0,0.999l-5.684,5.684c-0.266,0.289 -0.733,0.289 -0.999,0L7.226,12.984c-0.289,-0.266 -0.289,-0.733 0,-0.999 0.266,-0.289 0.733,-0.289 0.999,0L10.579,14.317 15.752,9.143c0.266,-0.289 0.733,-0.289 0.999,0z" />
 </vector>
