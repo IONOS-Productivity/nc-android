@@ -32,14 +32,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/tvApplyToAll"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
-        android:paddingStart="@dimen/scanbot_padding_large"
-        android:paddingEnd="@dimen/scanbot_padding_large"
-        android:textColor="?scanbot_filter_apply_to_all_text_color"
-        android:background="@drawable/scanbot_filter_apply_btn_bg"
+        style="?attr/scanbotOutlinedButtonTheme"
         android:gravity="center"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -37,5 +37,6 @@
         <item name="colorSurfaceContainer" app:ionosCustomization="">@color/popup_background_color</item>
 
         <item name="scanbotTheme" app:ionosCustomization="">@style/ScanbotTheme</item>
+        <item name="scanbotOutlinedButtonTheme" app:ionosCustomization="">@style/Theme.Dialog.Button.OutlinedButton</item>
     </style>
 </resources>

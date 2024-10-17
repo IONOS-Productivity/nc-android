@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <attr name="scanbotTheme" format="reference" />
+    <attr name="scanbotOutlinedButtonTheme" format="reference" />
 
     <attr name="scanbot_app_bar_color" format="color" />
     <attr name="scanbot_status_bar_color" format="color" />
