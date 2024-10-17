@@ -23,34 +23,22 @@
 		android:layout_height="wrap_content"
 		android:orientation="vertical">
 
-		<TextView
+        <com.google.android.material.button.MaterialButton
 			android:id="@+id/btnAutoDetectContour"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_gravity="center_horizontal"
 			android:layout_margin="@dimen/scanbot_padding_normal"
-			android:background="@drawable/scanbot_crop_button_selector"
-			android:textColor="?scanbot_crop_screen_button_text_color"
-            android:textSize="@dimen/scanbot_large_font_size"
-            android:paddingStart="@dimen/scanbot_padding_large"
-            android:paddingEnd="@dimen/scanbot_padding_large"
-            android:textStyle="bold"
-            android:padding="@dimen/scanbot_padding_normal"
+            style="?attr/scanbotFilledTonalButtonTheme"
 			android:text="@string/scanbot_detect_document" />
 
-		<TextView
+        <com.google.android.material.button.MaterialButton
 			android:id="@+id/btnResetContour"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_gravity="center_horizontal"
 			android:layout_margin="@dimen/scanbot_padding_normal"
-            android:background="@drawable/scanbot_crop_button_selector"
-			android:textColor="?scanbot_crop_screen_button_text_color"
-			android:padding="@dimen/scanbot_padding_normal"
-            android:paddingStart="@dimen/scanbot_padding_large"
-            android:paddingEnd="@dimen/scanbot_padding_large"
-            android:textSize="@dimen/scanbot_large_font_size"
-            android:textStyle="bold"
+            style="?attr/scanbotFilledTonalButtonTheme"
 			android:text="@string/scanbot_reset_borders" />
 
 	</FrameLayout>

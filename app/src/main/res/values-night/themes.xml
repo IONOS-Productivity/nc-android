@@ -38,5 +38,6 @@
 
         <item name="scanbotTheme" app:ionosCustomization="">@style/ScanbotTheme</item>
         <item name="scanbotOutlinedButtonTheme" app:ionosCustomization="">@style/Theme.Dialog.Button.OutlinedButton</item>
+        <item name="scanbotFilledTonalButtonTheme" app:ionosCustomization="">@style/Theme.Dialog.IconButton.Filled.Tonal</item>
     </style>
 </resources>
