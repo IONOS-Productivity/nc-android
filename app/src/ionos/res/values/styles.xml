@@ -57,10 +57,12 @@
 
     <style name="MaterialAlertDialog.App.Title.Text" parent="MaterialAlertDialog.Material3.Title.Text">
         <item name="android:textColor">@color/text_color</item>
+        <item name="android:textSize">@dimen/dialog_title_text_size</item>
     </style>
 
     <style name="MaterialAlertDialog.App.Body.Text" parent="MaterialAlertDialog.Material3.Body.Text">
         <item name="android:textColor">@color/text_color</item>
+        <item name="android:textSize">@dimen/dialog_default_text_size</item>
     </style>
 
     <style name="Widget.App.Button.Positive" parent="Widget.Material3.Button.IconButton.Filled">
