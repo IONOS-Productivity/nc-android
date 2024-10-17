@@ -102,6 +102,7 @@
 
     <style name="Generic.App.BottomSheetDialog" parent="App.BottomSheetDialog">
         <item name="shapeAppearanceOverlay">@style/App.BottomSheet.ShapeAppearanceOverlay</item>
+        <item name="android:maxWidth">@dimen/huge_value</item>
     </style>
 
     <style name="App.BottomSheet.ShapeAppearanceOverlay" parent="">
