@@ -134,6 +134,7 @@ public final class MimeTypeUtil {
         return drawable;
     }
 
+    @IonosCustomization("Remove custom overlay color for dark mode")
     public static LayerDrawable getFileIcon(Boolean isDarkModeActive, Integer overlayIconId, Context context, ViewThemeUtils viewThemeUtils) {
         Drawable folderDrawable = getDefaultFolderIcon(context, viewThemeUtils);
         assert(folderDrawable != null);
@@ -148,10 +149,6 @@ public final class MimeTypeUtil {
 
         Drawable overlayDrawable = ContextCompat.getDrawable(context, overlayIconId);
         assert(overlayDrawable != null);
-
-        if (isDarkModeActive) {
-            overlayDrawable = drawableUtil.changeColor(overlayDrawable, R.color.dark);
-        }
 
         return drawableUtil.addDrawableAsOverlay(folderDrawable, overlayDrawable);
     }

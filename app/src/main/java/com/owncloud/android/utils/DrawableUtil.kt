@@ -7,10 +7,11 @@
  */
 package com.owncloud.android.utils
 
-import android.graphics.Rect
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.LayerDrawable
+import android.view.Gravity
 import androidx.core.graphics.drawable.DrawableCompat
+import com.ionos.annotation.IonosCustomization
 
 class DrawableUtil {
 
@@ -20,14 +21,11 @@ class DrawableUtil {
         return drawable
     }
 
+    @IonosCustomization
     fun addDrawableAsOverlay(backgroundDrawable: Drawable, overlayDrawable: Drawable): LayerDrawable {
-        val overlayBounds = Rect()
-        val overlayIconSize = backgroundDrawable.intrinsicWidth / 2
-        val topMargin = overlayIconSize.div(2)
-        overlayBounds.set(overlayIconSize, overlayIconSize + topMargin, overlayIconSize, overlayIconSize)
-
-        val layerDrawable = LayerDrawable(arrayOf(backgroundDrawable, overlayDrawable))
-        layerDrawable.setLayerInset(1, overlayBounds.left, overlayBounds.top, overlayBounds.right, overlayBounds.bottom)
-        return layerDrawable
+        return LayerDrawable(arrayOf(backgroundDrawable, overlayDrawable)).apply {
+            setLayerSize(1, overlayDrawable.intrinsicWidth, overlayDrawable.intrinsicHeight)
+            setLayerGravity(1, Gravity.CENTER)
+        }
     }
 }
