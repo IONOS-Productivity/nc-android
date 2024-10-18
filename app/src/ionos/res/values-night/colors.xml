@@ -98,7 +98,7 @@
     <color name="text_input_error_color">@color/slate_grey</color>
     <color name="text_input_hint_text_color">@color/slate_grey</color>
     <color name="text_input_focused_hint_text_color">@color/ghost_white</color>
-    <color name="text_input_highlight_color">@color/curious_blue</color>
+    <color name="text_input_highlight_color">@color/dodger_blue</color>
 
     <color name="e2e_border_solid_color">@color/navy</color>
     <color name="e2e_border_stroke_color">@color/curious_blue</color>
@@ -111,7 +111,7 @@
     <color name="date_picker_accent_color">@color/curious_blue</color>
     <color name="date_picker_text_color_primary_inverse">@color/white</color>
 
-    <color name="refresh_spinner_background">@color/curious_blue</color>
+    <color name="refresh_spinner_background">@color/dodger_blue</color>
 
     <color name="checkbox_fill_color">@color/curious_blue</color>
     <color name="checkbox_stroke_color">@color/white</color>
