@@ -64,12 +64,12 @@ class StoragePermissionDialogFragment : DialogFragment(), Injectable {
     @IonosCustomization
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val title = when {
-            permissionRequired -> R.string.ionos_file_management_permission
-            else -> R.string.ionos_file_management_permission_optional
+            permissionRequired -> R.string.file_management_permission
+            else -> R.string.file_management_permission_optional
         }
         val explanationResource = when {
-            permissionRequired -> R.string.ionos_file_management_permission_text
-            else -> R.string.ionos_file_management_permission_optional_text
+            permissionRequired -> R.string.file_management_permission_text
+            else -> R.string.file_management_permission_optional_text
         }
         val message = getString(explanationResource, getString(R.string.app_name))
 
