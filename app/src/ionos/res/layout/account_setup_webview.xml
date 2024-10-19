@@ -33,5 +33,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="80dp"
-        android:indeterminate="true" />
+        android:indeterminate="true"
+        android:indeterminateDrawable="@drawable/progress_bar_login_indeterminate" />
 </FrameLayout>
