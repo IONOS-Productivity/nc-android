@@ -23,7 +23,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:src="@drawable/ionos_logo"
-        app:layout_constraintDimensionRatio="159:22"
+        app:layout_constraintDimensionRatio="158:19"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/glTopLine"
