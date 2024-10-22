@@ -35,7 +35,9 @@ class InternalTwoWaySyncWork(
         var result = true
 
         if (powerManagementService.isPowerSavingEnabled ||
-            !connectivityService.isConnected || connectivityService.isInternetWalled
+            !connectivityService.isConnected ||
+            connectivityService.isInternetWalled ||
+            !connectivityService.connectivity.isWifi
         ) {
             Log_OC.d(TAG, "Not starting due to constraints!")
             return Result.success()
@@ -50,6 +52,13 @@ class InternalTwoWaySyncWork(
             for (folder in folders) {
                 checkFreeSpace(folder)?.let { checkFreeSpaceResult ->
                     return checkFreeSpaceResult
+                }
+
+                // do not attempt to sync root folder
+                if (folder.remotePath == OCFile.ROOT_PATH) {
+                    folder.internalFolderSyncTimestamp = -1L
+                    fileDataStorageManager.saveFile(folder)
+                    continue
                 }
 
                 Log_OC.d(TAG, "Folder ${folder.remotePath}: started!")
