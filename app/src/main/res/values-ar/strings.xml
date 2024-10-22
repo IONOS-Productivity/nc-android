@@ -31,7 +31,7 @@
     <string name="add_another_public_share_link">إضافة رابط مشاركة آخر</string>
     <string name="add_new_public_share">إضافة رابط مشاركة عام جديد</string>
     <string name="add_new_secure_file_drop">أضف ملف ألاصل </string>
-    <string name="add_to_cloud">أضفه إلى %1$s</string>
+    <string name="add_to_cloud">إضافة إلى %1$s</string>
     <string name="advanced_settings">الإعدادات المتقدمة</string>
     <string name="allow_resharing">السماح بإعادة المشاركة </string>
     <string name="app_config_base_url_title">عنوان URL الأساسي</string>
@@ -92,7 +92,7 @@
     <string name="auth_unknown_host_title">لم يتم العثور على المضيف</string>
     <string name="auth_unsupported_multiaccount">%1$s لا يدعم الحسابات المتعددة </string>
     <string name="auth_wrong_connection_title">لا يمكن إنشاء إتصال</string>
-    <string name="authenticator_activity_cancel_login">إلغاء الدخول</string>
+    <string name="authenticator_activity_cancel_login">إلغاء تسجيل الدخول</string>
     <string name="authenticator_activity_login_error">حدث إشكال عند معالجة طلبك للدخول. يُرجى المحاولة مرةً أخرى.</string>
     <string name="authenticator_activity_please_complete_login_process">رجاءً، قم بإكمال عملية الدخول في مستعرض الوب عندك</string>
     <string name="auto_upload_file_behaviour_kept_in_folder">ترك في مجلد الأصل، بسبب كونه للقرائة فقط</string>
@@ -213,7 +213,7 @@
     <string name="create_new_folder">مجلد جديد</string>
     <string name="create_new_presentation">عرض تقديمي جديد</string>
     <string name="create_new_spreadsheet">جدول بيانات جديد</string>
-    <string name="create_rich_workspace">أضِف وصفاً للمجلد</string>
+    <string name="create_rich_workspace">إضافة وصف للمجلد</string>
     <string name="creates_rich_workspace">إضافة وصف للمجلد</string>
     <string name="credentials_disabled">التصريح غير مفعل</string>
     <string name="daily_backup">النسخ الاحتياطي اليومي</string>
@@ -268,7 +268,7 @@
     <string name="drawer_item_assistant">المُساعِد</string>
     <string name="drawer_item_favorites">المفضلة </string>
     <string name="drawer_item_gallery">الوسائط</string>
-    <string name="drawer_item_groupfolders">المٌجلّدات الجماعية</string>
+    <string name="drawer_item_groupfolders">مجلدات المجموعة</string>
     <string name="drawer_item_home">الرئيسية</string>
     <string name="drawer_item_notifications">الإخطارات</string>
     <string name="drawer_item_on_device">على الجهاز</string>
@@ -332,7 +332,7 @@
     <string name="etm_accounts">الحسابات</string>
     <string name="etm_background_execution_count">أوقات التشغيل خلال 48 ساعة</string>
     <string name="etm_background_job_created">أُنشِئَ</string>
-    <string name="etm_background_job_name">إسم المهمة</string>
+    <string name="etm_background_job_name">اسم المهمة</string>
     <string name="etm_background_job_progress">التقدم</string>
     <string name="etm_background_job_state">الحالة</string>
     <string name="etm_background_job_user">المستخدم</string>
@@ -619,7 +619,7 @@
     <string name="pass_code_enter_pass_code">أدخل رمزك السري من فضلك</string>
     <string name="pass_code_mismatch">الرمزين السريين لا يتطابقان</string>
     <string name="pass_code_reenter_your_pass_code">أعد إدخال رمزك السري</string>
-    <string name="pass_code_remove_your_pass_code">احذف رمز مرورك</string>
+    <string name="pass_code_remove_your_pass_code">احذف رمز المرور الخاص بك</string>
     <string name="pass_code_removed">تمت إزالة الرمز السري</string>
     <string name="pass_code_stored">رمز المرور المخزن</string>
     <string name="pass_code_wrong">رمز المرور غير صحيح</string>
@@ -733,7 +733,7 @@
     <string name="remove_fail_msg">فشلت عملية الحذف</string>
     <string name="remove_local_account">إزالة الحساب المحلي</string>
     <string name="remove_local_account_details">إزِل الحساب من الجهاز و احذُف كل الملفات المحلية</string>
-    <string name="remove_notification_failed">فشل في إزالة الإخطار.</string>
+    <string name="remove_notification_failed">فشل في إزالة الإشعار.</string>
     <string name="remove_push_notification">حذف</string>
     <string name="remove_success_msg">تم حذفه</string>
     <string name="rename_dialog_title">أدخل اسما جديداً</string>
@@ -899,7 +899,7 @@
     <string name="strict_mode">الوضع الآمن : اتصال HTTP  غير مسموح!</string>
     <string name="sub_folder_rule_day">سنة/شهر/يوم</string>
     <string name="sub_folder_rule_month">سنة/شهر</string>
-    <string name="sub_folder_rule_year">السَّنة</string>
+    <string name="sub_folder_rule_year">السنة</string>
     <string name="subject_shared_with_you">تمت مشاركة \"%1$s\" معك</string>
     <string name="subject_user_shared_with_you">%1$s شارك معك \"%2$s\"</string>
     <string name="subtitle_photos_only">الصور فقط</string>
@@ -958,7 +958,7 @@
     <string name="unlock_file">فتح قفل الملف</string>
     <string name="unread_comments">توجد تعليقات غير مقروءة</string>
     <string name="unset_encrypted">لم يتم تحديد التشفير</string>
-    <string name="unset_favorite">إزالة مِن المفضلة</string>
+    <string name="unset_favorite">إزالة من المفضلة</string>
     <string name="unshare_link_file_error">حدث خطأ أثناء محاولة إلغاء مشاركة هذا الملف أو المجلد.</string>
     <string name="unshare_link_file_no_exist">غير قادر على المشاركة. يرجى التحقق من وجود الملف.</string>
     <string name="unshare_link_forbidden_permissions">لإلغاء مشاركة هذا الملف</string>
