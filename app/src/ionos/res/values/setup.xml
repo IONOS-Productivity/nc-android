@@ -18,7 +18,7 @@
     <string name="db_file">ionos.db</string>
     <string name="db_name">ionos</string>
     <string name="data_folder">ionos</string>
-    <string name="default_display_name_for_root_folder">IONOS Easy Storage</string>
+    <string name="default_display_name_for_root_folder">IONOS HiDrive Next</string>
 
     <!-- URLs and flags related -->
     <string name="provider_registration_server">https://easy-qa-1.nextcloud-ionos.com/login/v2</string>
