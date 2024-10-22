@@ -1358,6 +1358,7 @@ public class FileDisplayActivity extends FileActivity
     /**
      * Show a text message on screen view for notifying user if content is loading or folder is empty
      */
+    @IonosCustomization
     private void setBackgroundText() {
         final OCFileListFragment ocFileListFragment = getListOfFilesFragment();
         if (ocFileListFragment != null) {
@@ -1365,7 +1366,7 @@ public class FileDisplayActivity extends FileActivity
                 ocFileListFragment.setEmptyListLoadingMessage();
             } else {
                 if (MainApp.isOnlyOnDevice()) {
-                    ocFileListFragment.setMessageForEmptyList(R.string.file_list_empty_headline, R.string.file_list_empty_on_device, R.drawable.ic_list_empty_folder, true);
+                    ocFileListFragment.setMessageForEmptyList(R.string.file_list_empty_headline, R.string.file_list_empty_on_device, R.drawable.ic_list_empty_folder);
                 } else {
                     ocFileListFragment.setEmptyListMessage(SearchType.NO_SEARCH);
                 }

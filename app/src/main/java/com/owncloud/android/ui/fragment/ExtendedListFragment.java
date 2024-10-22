@@ -591,6 +591,7 @@ public class ExtendedListFragment extends Fragment implements
         });
     }
 
+    @IonosCustomization
     public void setEmptyListMessage(final SearchType searchType) {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
@@ -599,16 +600,15 @@ public class ExtendedListFragment extends Fragment implements
                 if (searchType == SearchType.NO_SEARCH) {
                     setMessageForEmptyList(R.string.file_list_empty_headline,
                                            R.string.file_list_empty,
-                                           R.drawable.ic_list_empty_folder,
-                                           true);
+                                           R.drawable.ic_list_empty_folder);
                 } else if (searchType == SearchType.FILE_SEARCH) {
                     setMessageForEmptyList(R.string.file_list_empty_headline_server_search,
                                            R.string.file_list_empty,
-                                           R.drawable.ic_search_light_grey);
+                                           R.drawable.ic_search);
                 } else if (searchType == SearchType.FAVORITE_SEARCH) {
                     setMessageForEmptyList(R.string.file_list_empty_favorite_headline,
                                            R.string.file_list_empty_favorites_filter_list,
-                                           R.drawable.ic_star_light_yellow);
+                                           R.drawable.favorite);
                 } else if (searchType == SearchType.RECENTLY_MODIFIED_SEARCH) {
                     setMessageForEmptyList(R.string.file_list_empty_headline_server_search,
                                            R.string.file_list_empty_recently_modified,
@@ -616,7 +616,7 @@ public class ExtendedListFragment extends Fragment implements
                 } else if (searchType == SearchType.REGULAR_FILTER) {
                     setMessageForEmptyList(R.string.file_list_empty_headline_search,
                                            R.string.file_list_empty_search,
-                                           R.drawable.ic_search_light_grey);
+                                           R.drawable.ic_search);
                 } else if (searchType == SearchType.SHARED_FILTER) {
                     setMessageForEmptyList(R.string.file_list_empty_shared_headline,
                                            R.string.file_list_empty_shared,
@@ -628,7 +628,7 @@ public class ExtendedListFragment extends Fragment implements
                 } else if (searchType == SearchType.LOCAL_SEARCH) {
                     setMessageForEmptyList(R.string.file_list_empty_headline_server_search,
                                            R.string.file_list_empty_local_search,
-                                           R.drawable.ic_search_light_grey);
+                                           R.drawable.ic_search);
                 }
             }
         });
