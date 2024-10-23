@@ -337,7 +337,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
 
         if (!TextUtils.isEmpty(webloginUrl)) {
             webViewLoginMethod = true;
-        } else if (getIntent().getBooleanExtra(EXTRA_USE_PROVIDER_AS_WEBLOGIN, false)) {
+        } else if (getIntent().getBooleanExtra(EXTRA_USE_PROVIDER_AS_WEBLOGIN, true)) {
             webViewLoginMethod = true;
             webloginUrl = getString(R.string.provider_registration_server);
         } else if (!TextUtils.isEmpty(getResources().getString(R.string.webview_login_url))) {
@@ -834,6 +834,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
      * AndroidManifest.xml file.
      */
     @Override
+    @IonosCustomization
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         Log_OC.d(TAG, "onNewIntent()");
@@ -860,7 +861,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
             }
         }
 
-        if (intent.getBooleanExtra(EXTRA_USE_PROVIDER_AS_WEBLOGIN, false)) {
+        if (intent.getBooleanExtra(EXTRA_USE_PROVIDER_AS_WEBLOGIN, true)) {
             accountSetupWebviewBinding = AccountSetupWebviewBinding.inflate(getLayoutInflater());
             setContentView(accountSetupWebviewBinding.getRoot());
             anonymouslyPostLoginRequest(getString(R.string.provider_registration_server));
