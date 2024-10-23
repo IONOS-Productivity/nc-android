@@ -17,8 +17,8 @@ android {
         minSdk 24
         targetSdk 34
 
-        final String scanbotLicenseKey = project.findProperty('scanbotLicenseKey') ?: ""
-        final String scanbotLicenseKeyUrl = project.findProperty('scanbotLicenseKeyUrl') ?: ""
+        final String scanbotLicenseKey = project.findProperty('ionosHidriveNextScanbotLicenseKey') ?: ""
+        final String scanbotLicenseKeyUrl = project.findProperty('ionosHidriveNextScanbotLicenseKeyUrl') ?: ""
         println('======================== Scanbot parameters ========================')
         println('scanbotLicenseKey: ' + scanbotLicenseKey)
         println('scanbotLicenseKeyUrl: ' + scanbotLicenseKeyUrl)
