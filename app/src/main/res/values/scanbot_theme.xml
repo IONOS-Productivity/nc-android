@@ -3,7 +3,7 @@
     <style name="ScanbotTheme" parent="ScanbotDefaultTheme">
         <item name="scanbot_app_bar_color">@color/royal_blue</item>
         <item name="scanbot_status_bar_color">@color/midnight_blue</item>
-        <item name="scanbot_window_background">@color/ghost_white</item>
+        <item name="scanbot_window_background">@color/bg_default</item>
         <item name="scanbot_default_icon_color">@color/navy</item>
         <item name="scanbot_tip_icon_color">@color/dodger_blue</item>
 

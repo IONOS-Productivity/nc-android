@@ -3,7 +3,6 @@
 	android:id="@+id/llContourContainer"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:background="?scanbot_crop_screen_background"
 	android:orientation="vertical">
 
 	<include

@@ -20,7 +20,6 @@
 		android:id="@+id/vpPager"
 		android:layout_width="0dp"
 		android:layout_height="0dp"
-        android:background="?scanbot_gallery_background"
 		app:layout_constraintBottom_toTopOf="@+id/llBottomNavigation"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
