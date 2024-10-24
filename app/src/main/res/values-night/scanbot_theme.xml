@@ -6,10 +6,11 @@
         <item name="scanbot_tip_icon_color">@color/curious_blue</item>
 
         <item name="scanbot_camera_button_background_pressed">@color/slate_grey</item>
-        <item name="scanbot_camera_button_activated_color">@color/royal_blue</item>
+        <item name="scanbot_camera_toggle_activated_text_color">@color/curious_blue</item>
+        <item name="scanbot_camera_toggle_deactivated_text_color">@color/ghost_white</item>
         <item name="scanbot_camera_button_icon_color">@color/dark_slate_grey</item>
-        <item name="scanbot_camera_flash_color">@color/midnight_blue</item>
-        <item name="scanbot_camera_flash_selected_color">@color/royal_blue</item>
+        <item name="scanbot_camera_flash_color">@color/ghost_white</item>
+        <item name="scanbot_camera_flash_selected_color">@color/curious_blue</item>
         <item name="scanbot_camera_toolbar_background">@color/dark_slate_grey</item>
         <item name="scanbot_camera_bottom_bar_background">@color/dark_slate_grey</item>
         <item name="scanbot_camera_user_guidance_text_color">@color/navy</item>

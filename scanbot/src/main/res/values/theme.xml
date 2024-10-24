@@ -9,8 +9,8 @@
 
         <item name="scanbot_camera_button_background_idle">@color/scanbot_white</item>
         <item name="scanbot_camera_button_background_pressed">@color/scanbot_light_blue</item>
-        <item name="scanbot_camera_button_activated_color">@color/scanbot_lochmara</item>
-        <item name="scanbot_camera_button_deactivated_color">@color/scanbot_congress_blue</item>
+        <item name="scanbot_camera_toggle_activated_text_color">@color/scanbot_lochmara</item>
+        <item name="scanbot_camera_toggle_deactivated_text_color">@color/scanbot_congress_blue</item>
         <item name="scanbot_camera_button_icon_color">@color/scanbot_lochmara</item>
         <item name="scanbot_camera_flash_color">@color/scanbot_congress_blue</item>
         <item name="scanbot_camera_flash_selected_color">@color/scanbot_lochmara</item>

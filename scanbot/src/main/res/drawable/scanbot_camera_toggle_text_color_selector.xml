@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 	<item
-		android:color="?scanbot_camera_button_activated_color"
+		android:color="?attr/scanbot_camera_toggle_activated_text_color"
 		android:state_activated="true"/>
 	<item
-		android:color="?scanbot_camera_button_deactivated_color"
+		android:color="?attr/scanbot_camera_toggle_deactivated_text_color"
 		android:state_activated="false"/>
 	<item
-		android:color="?scanbot_camera_button_deactivated_color"/>
+		android:color="?attr/scanbot_camera_toggle_deactivated_text_color"/>
 </selector>
