@@ -24,6 +24,7 @@ buildscript {
         classpath "org.jacoco:org.jacoco.core:$jacoco_version"
         classpath "org.jacoco:org.jacoco.report:$jacoco_version"
         classpath "org.jacoco:org.jacoco.agent:$jacoco_version"
+        classpath 'com.google.gms:google-services:4.4.2'
     }
 }
 
@@ -51,6 +52,9 @@ if (shotTest) {
 }
 apply plugin: 'com.google.devtools.ksp'
 
+if (getGradle().getStartParameter().getTaskRequests().toString().contains("Ionos")){
+    apply plugin: 'com.google.gms.google-services'
+}
 
 println "Gradle uses Java ${Jvm.current()}"
 
@@ -440,6 +444,8 @@ dependencies {
 
     // splash screen dependency ref: https://developer.android.com/develop/ui/views/launch/splash-screen/migrate
     implementation 'androidx.core:core-splashscreen:1.0.1'
+
+    ionosImplementation "com.google.firebase:firebase-analytics:22.1.0"
 }
 
 configurations.configureEach {
