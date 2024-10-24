@@ -7,6 +7,7 @@
         <item name="scanbot_default_icon_color">@color/navy</item>
         <item name="scanbot_tip_icon_color">@color/dodger_blue</item>
 
+        <item name="scanbot_camera_button_background_pressed">@color/cornflower</item>
         <item name="scanbot_camera_button_activated_color">@color/royal_blue</item>
         <item name="scanbot_camera_button_deactivated_color">@color/navy</item>
         <item name="scanbot_camera_button_icon_color">@color/royal_blue</item>
