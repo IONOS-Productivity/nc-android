@@ -1,0 +1,13 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="16dp"
+    android:height="16dp"
+    android:viewportWidth="16"
+    android:viewportHeight="16">
+    <group
+        android:translateX="1"
+        android:translateY="1">
+        <path
+            android:fillColor="@color/grid_mode_default_feature_icon_color"
+            android:pathData="M11,6C10.188,6 9.438,5.688 8.906,5.188L5.969,6.656C5.969,6.75 6,6.875 6,7C6,7.156 5.969,7.25 5.969,7.375L8.906,8.844C9.438,8.344 10.188,8 11,8C12.656,8 14,9.344 14,11C14,12.656 12.656,14 11,14C9.344,14 8,12.656 8,11C8,10.875 8,10.75 8,10.656L5.063,9.188C4.531,9.688 3.781,10 3,10C1.344,10 0,8.656 0,7C0,5.344 1.344,4 3,4C3.781,4 4.531,4.344 5.063,4.844L8,3.375C8,3.25 8,3.125 8,3C8,1.344 9.344,0 11,0C12.656,0 14,1.344 14,3C14,4.656 12.656,6 11,6Z" />
+    </group>
+</vector>

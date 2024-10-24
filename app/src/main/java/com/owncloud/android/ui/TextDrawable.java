@@ -9,25 +9,28 @@
  */
 package com.owncloud.android.ui;
 
+import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
 
+import com.ionos.annotation.IonosCustomization;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.account.UserAccountManager;
-import com.owncloud.android.utils.BitmapUtils;
+import com.owncloud.android.R;
 
 import java.util.Locale;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 
 /**
  * A Drawable object that draws text (1 character) on top of a circular/filled background.
  */
+@IonosCustomization("Custom colors and text style")
 public class TextDrawable extends Drawable {
     /**
      * the text to be rendered.
@@ -55,23 +58,25 @@ public class TextDrawable extends Drawable {
      * Create a TextDrawable with the given radius.
      *
      * @param text   the text to be rendered
-     * @param color  color
+     * @param backgroundColor circle background color
+     * @param textColor text color
      * @param radius circle radius
      */
-    public TextDrawable(String text, BitmapUtils.Color color, float radius) {
+    public TextDrawable(String text, @ColorInt int backgroundColor, @ColorInt int textColor, float radius) {
         this.radius = radius;
         this.text = text;
 
         background = new Paint();
         background.setStyle(Paint.Style.FILL);
         background.setAntiAlias(true);
-        background.setColor(Color.argb(color.a, color.r, color.g, color.b));
+        background.setColor(backgroundColor);
 
         textPaint = new Paint();
-        textPaint.setColor(Color.WHITE);
+        textPaint.setColor(textColor);
         textPaint.setTextSize(radius);
         textPaint.setAntiAlias(true);
         textPaint.setTextAlign(Paint.Align.CENTER);
+        textPaint.setFakeBoldText(true);
 
         setBounds(0, 0, (int) radius * 2, (int) radius * 2);
     }
@@ -85,9 +90,9 @@ public class TextDrawable extends Drawable {
      * @return the avatar as a TextDrawable
      */
     @NonNull
-    public static TextDrawable createAvatar(User user, float radiusInDp) {
+    public static TextDrawable createAvatar(Context context, User user, float radiusInDp) {
         String username = UserAccountManager.getDisplayName(user);
-        return createNamedAvatar(username, radiusInDp);
+        return createNamedAvatar(context, username, radiusInDp);
     }
 
     /**
@@ -99,8 +104,8 @@ public class TextDrawable extends Drawable {
      * @return the avatar as a TextDrawable
      */
     @NonNull
-    public static TextDrawable createAvatarByUserId(String userId, float radiusInDp) {
-        return createNamedAvatar(userId, radiusInDp);
+    public static TextDrawable createAvatarByUserId(Context context, String userId, float radiusInDp) {
+        return createNamedAvatar(context, userId, radiusInDp);
     }
 
     /**
@@ -112,9 +117,10 @@ public class TextDrawable extends Drawable {
      * @return the avatar as a TextDrawable
      */
     @NonNull
-    public static TextDrawable createNamedAvatar(String name, float radiusInDp) {
-        BitmapUtils.Color color = BitmapUtils.usernameToColor(name);
-        return new TextDrawable(extractCharsFromDisplayName(name), color, radiusInDp);
+    public static TextDrawable createNamedAvatar(Context context, String name, float radiusInDp) {
+        int backgroundColor = context.getColor(R.color.avatar_background_color);
+        int textColor = context.getColor(R.color.avatar_text_color);
+        return new TextDrawable(extractCharsFromDisplayName(name), backgroundColor, textColor, radiusInDp);
     }
 
     @VisibleForTesting

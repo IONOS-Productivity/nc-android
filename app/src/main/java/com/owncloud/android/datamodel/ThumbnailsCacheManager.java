@@ -34,6 +34,7 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.ionos.annotation.IonosCustomization;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.network.ConnectivityService;
 import com.owncloud.android.MainApp;
@@ -608,6 +609,7 @@ public final class ThumbnailsCacheManager {
             return thumbnail;
         }
 
+        @IonosCustomization
         protected void onPostExecute(Bitmap bitmap) {
             if (bitmap != null && mImageViewReference != null) {
                 final ImageView imageView = mImageViewReference.get();
@@ -623,11 +625,7 @@ public final class ThumbnailsCacheManager {
                         tagId = String.valueOf(((TrashbinFile) mFile).getRemoteId());
                     }
                     if (String.valueOf(imageView.getTag()).equals(tagId)) {
-                        if (gridViewEnabled) {
-                            BitmapUtils.setRoundedBitmapForGridMode(bitmap, imageView);
-                        } else {
-                            BitmapUtils.setRoundedBitmap(bitmap, imageView);
-                        }
+                        imageView.setImageBitmap(bitmap);
                     }
                 }
 
@@ -1027,6 +1025,7 @@ public final class ThumbnailsCacheManager {
             return Math.round(r.getDimension(R.dimen.file_avatar_size));
         }
 
+        @IonosCustomization
         private @NonNull
         Drawable doAvatarInBackground() {
             Bitmap avatar;
@@ -1087,7 +1086,7 @@ public final class ThumbnailsCacheManager {
                                                                             ThumbnailsCacheManager.AVATAR_TIMESTAMP,
                                                                             System.currentTimeMillis());
                             } else {
-                                return TextDrawable.createAvatar(user, mAvatarRadius);
+                                return TextDrawable.createAvatar(mContext, user, mAvatarRadius);
                             }
                             break;
 
@@ -1105,7 +1104,7 @@ public final class ThumbnailsCacheManager {
                     }
                 } catch (Exception e) {
                     try {
-                        return TextDrawable.createAvatar(user, mAvatarRadius);
+                        return TextDrawable.createAvatar(mContext, user, mAvatarRadius);
                     } catch (Exception e1) {
                         Log_OC.e(TAG, "Error generating fallback avatar");
                     }
@@ -1118,7 +1117,7 @@ public final class ThumbnailsCacheManager {
 
             if (avatar == null) {
                 try {
-                    return TextDrawable.createAvatarByUserId(displayName, mAvatarRadius);
+                    return TextDrawable.createAvatarByUserId(mContext, displayName, mAvatarRadius);
                 } catch (Exception e1) {
                     return ResourcesCompat.getDrawable(mResources, R.drawable.ic_user, null);
                 }

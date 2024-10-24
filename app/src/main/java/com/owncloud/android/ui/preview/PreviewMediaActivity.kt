@@ -36,8 +36,6 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.annotation.OptIn
 import androidx.annotation.StringRes
-import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
@@ -51,6 +49,7 @@ import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.DefaultTimeBar
 import androidx.media3.ui.PlayerView
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.account.User
 import com.nextcloud.client.account.UserAccountManager
 import com.nextcloud.client.di.Injectable
@@ -258,7 +257,7 @@ class PreviewMediaActivity :
             viewThemeUtils.files.themeActionBar(this, it)
         }
 
-        viewThemeUtils.platform.themeStatusBar(
+        viewThemeUtils.ionos.platform.themeSystemBars(
             this
         )
     }
@@ -275,6 +274,7 @@ class PreviewMediaActivity :
         binding.emptyView.emptyListView.visibility = View.VISIBLE
     }
 
+    @IonosCustomization("ui bugfix")
     private fun setVideoErrorMessage(headline: String, @StringRes message: Int) {
         binding.emptyView.run {
             emptyListViewHeadline.text = headline
@@ -282,8 +282,7 @@ class PreviewMediaActivity :
             emptyListIcon.setImageResource(R.drawable.file_movie)
             emptyListViewText.visibility = View.VISIBLE
             emptyListIcon.visibility = View.VISIBLE
-
-            hideProgressLayout()
+            binding.progress.visibility = View.GONE
         }
     }
 
@@ -312,6 +311,7 @@ class PreviewMediaActivity :
     }
 
     @Suppress("TooGenericExceptionCaught")
+    @IonosCustomization("Fixed nullpointer")
     private fun getThumbnail(storagePath: String?): Bitmap? {
         return try {
             MediaMetadataRetriever().run {
@@ -319,7 +319,7 @@ class PreviewMediaActivity :
                 BitmapFactory.decodeByteArray(embeddedPicture, 0, embeddedPicture?.size ?: 0)
             }
         } catch (t: Throwable) {
-            BitmapUtils.drawableToBitmap(genericThumbnail())
+            genericThumbnail()?.let { BitmapUtils.drawableToBitmap(it) }
         }
     }
 
@@ -333,15 +333,9 @@ class PreviewMediaActivity :
         binding.imagePreview.setImageDrawable(genericThumbnail())
     }
 
+    @IonosCustomization("No generic thumbnail")
     private fun genericThumbnail(): Drawable? {
-        val result = AppCompatResources.getDrawable(this, R.drawable.logo)
-        result?.let {
-            if (!resources.getBoolean(R.bool.is_branded_client)) {
-                DrawableCompat.setTint(it, resources.getColor(R.color.primary, this.theme))
-            }
-        }
-
-        return result
+        return null
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -449,6 +443,7 @@ class PreviewMediaActivity :
     }
 
     @OptIn(markerClass = [UnstableApi::class])
+    @IonosCustomization("Insets for media controller")
     private fun applyWindowInsets() {
         val playerView = binding.exoplayerView
         val exoControls = playerView.findViewById<FrameLayout>(R.id.exo_bottom_bar)
@@ -467,10 +462,14 @@ class PreviewMediaActivity :
             exoControls.updateLayoutParams<ViewGroup.MarginLayoutParams> {
                 bottomMargin = insets.bottom
             }
+            binding.mediaController.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                bottomMargin = insets.bottom
+            }
             exoProgress.updateLayoutParams<ViewGroup.MarginLayoutParams> {
                 bottomMargin = insets.bottom + progressBottomMargin
             }
             exoControls.updatePadding(left = insets.left, right = insets.right)
+            binding.mediaController.updatePadding(left = insets.left, right = insets.right)
             exoProgress.updatePadding(left = insets.left, right = insets.right)
             binding.materialToolbar.updatePadding(left = insets.left, right = insets.right)
             WindowInsetsCompat.CONSUMED

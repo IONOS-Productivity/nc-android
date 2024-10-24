@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Settings Screen -->
+    <dimen name="settings_screen_list_bottom_padding">8dp</dimen>
+
+</resources>

@@ -9,6 +9,8 @@ package com.nextcloud.client.di;
 
 import android.app.Application;
 
+import com.ionos.di.StratoModule;
+import com.ionos.scanbot.di.ScanbotComponent;
 import com.nextcloud.appReview.InAppReviewModule;
 import com.nextcloud.client.appinfo.AppInfoModule;
 import com.nextcloud.client.database.DatabaseModule;
@@ -46,7 +48,8 @@ import dagger.android.support.AndroidSupportInjectionModule;
     ThemeModule.class,
     DatabaseModule.class,
     DispatcherModule.class,
-    VariantModule.class
+    VariantModule.class,
+    StratoModule.class,
 })
 @Singleton
 public interface AppComponent {
@@ -62,6 +65,8 @@ public interface AppComponent {
     void inject(FileDownloadHelper fileDownloadHelper);
 
     void inject(ProgressIndicator progressIndicator);
+
+    ScanbotComponent scanbotComponent();
 
     @Component.Builder
     interface Builder {

@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.account.User
 import com.nextcloud.client.di.Injectable
 import com.nextcloud.utils.extensions.getParcelableArgument
@@ -74,6 +75,7 @@ class ConflictsResolveDialog : DialogFragment(), Injectable {
         }
     }
 
+    @IonosCustomization()
     override fun onStart() {
         super.onStart()
 
@@ -88,10 +90,10 @@ class ConflictsResolveDialog : DialogFragment(), Injectable {
         val negativeButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE) as MaterialButton
 
         positiveButton?.let {
-            viewThemeUtils.material.colorMaterialButtonPrimaryTonal(it)
+            viewThemeUtils.ionos.material.colorMaterialButtonPrimaryTonal(it)
         }
 
-        viewThemeUtils.material.colorMaterialButtonPrimaryBorderless(negativeButton)
+        viewThemeUtils.ionos.material.colorMaterialButtonPrimaryBorderless(negativeButton)
         positiveButton?.isEnabled = false
     }
 
@@ -120,6 +122,7 @@ class ConflictsResolveDialog : DialogFragment(), Injectable {
         outState.putParcelable(KEY_USER, user)
     }
 
+    @IonosCustomization
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding = ConflictResolveDialogBinding.inflate(requireActivity().layoutInflater)
 
@@ -145,7 +148,7 @@ class ConflictsResolveDialog : DialogFragment(), Injectable {
         setupUI()
         setOnClickListeners()
 
-        viewThemeUtils.dialog.colorMaterialAlertDialogBackground(binding.existingFileContainer.context, builder)
+        viewThemeUtils.ionos.dialog.colorMaterialAlertDialogBackground(binding.existingFileContainer.context, builder)
 
         return builder.create()
     }

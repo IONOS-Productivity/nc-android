@@ -1,0 +1,43 @@
+/*
+ * Nextcloud - Android Client
+ *
+ * SPDX-FileCopyrightText: 2024 Your Name <your@email.com>
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
+
+package com.ionos.authorization_method
+
+import android.content.Context
+import android.content.Intent
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.owncloud.android.authentication.AuthenticatorActivity
+import com.owncloud.android.databinding.ViewAuthorizationMethodBinding
+
+class AuthorizationMethodActivity : AppCompatActivity() {
+
+    companion object {
+        @JvmStatic
+        fun createInstance(context: Context) = Intent(context, AuthorizationMethodActivity::class.java)
+    }
+
+    private val viewBinding by lazy { ViewAuthorizationMethodBinding.inflate(layoutInflater) }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(viewBinding.root)
+
+        initListeners()
+    }
+
+    private fun initListeners() {
+        viewBinding.bLoginEasyStorage.setOnClickListener { loginToEasyStorage() }
+    }
+
+    private fun loginToEasyStorage() {
+        val intent = Intent(this, AuthenticatorActivity::class.java).apply {
+            putExtra(AuthenticatorActivity.EXTRA_USE_PROVIDER_AS_WEBLOGIN, true)
+        }
+        startActivity(intent);
+    }
+}

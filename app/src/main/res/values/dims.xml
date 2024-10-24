@@ -9,7 +9,7 @@
   ~ SPDX-FileCopyrightText: 2014 ownCloud Inc.
   ~ SPDX-License-Identifier: GPL-2.0-only AND (AGPL-3.0-or-later OR GPL-2.0-only)
 -->
-<resources>
+<resources xmlns:app="http://schemas.android.com/apk/res-auto">
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="nav_drawer_header_height">164dp</dimen>
     <dimen name="nav_drawer_menu_avatar_radius">12sp</dimen>
@@ -17,7 +17,7 @@
     <dimen name="bottom_sheet_text_start_margin">40dp</dimen>
     <dimen name="bottom_sheet_item_height">56dp</dimen>
     <dimen name="bottom_sheet_menu_item_divider_standard_margin">80dp</dimen>
-    <dimen name="file_icon_size">40dp</dimen>
+    <dimen name="file_icon_size">44dp</dimen>
     <dimen name="live_photo_indicator_margin">100dp</dimen>
     <dimen name="file_icon_size_grid">128dp</dimen>
     <dimen name="file_icon_rounded_corner_radius">8dp</dimen>
@@ -42,7 +42,7 @@
     <dimen name="button_width">140dp</dimen>
     <dimen name="button_extra_width">180dp</dimen>
     <dimen name="standard_eighth_margin">2dp</dimen>
-    <dimen name="min_list_item_size">56dp</dimen>
+    <dimen name="min_list_item_size">64dp</dimen>
     <dimen name="standard_list_item_size">72dp</dimen>
     <dimen name="sharee_list_item_size">56dp</dimen>
     <dimen name="two_line_primary_text_size">16sp</dimen>
@@ -156,4 +156,9 @@
     <dimen name="adaptive_icon_size">108dp</dimen>
     <dimen name="adaptive_icon_padding">18dp</dimen>
     <dimen name="tag_height">18dp</dimen>
+
+    <dimen name="text_input_box_stroke_width" app:ionosCustomization="">1dp</dimen>
+    <dimen name="text_input_box_corner_radius" app:ionosCustomization="">8dp</dimen>
+    <dimen name="text_input_text_size" app:ionosCustomization="">14sp</dimen>
+    <dimen name="text_input_padding" app:ionosCustomization="">16dp</dimen>
 </resources>

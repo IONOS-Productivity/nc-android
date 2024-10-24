@@ -22,6 +22,7 @@ import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.ionos.annotation.IonosCustomization;
 import com.nextcloud.client.account.User;
 import com.owncloud.android.R;
 import com.owncloud.android.lib.common.utils.Log_OC;
@@ -139,6 +140,7 @@ public class AvatarGroupLayout extends RelativeLayout implements DisplayUtils.Av
         setLayoutParams(rememberParam);
     }
 
+    @IonosCustomization
     private void showFederatedShareAvatar(Context context,
                                           String user,
                                           float avatarRadius,
@@ -155,7 +157,7 @@ public class AvatarGroupLayout extends RelativeLayout implements DisplayUtils.Av
 
         Drawable placeholder;
         try {
-            placeholder = TextDrawable.createAvatarByUserId(userId, avatarRadius);
+            placeholder = TextDrawable.createAvatarByUserId(getContext(), userId, avatarRadius);
         } catch (Exception e) {
             Log_OC.e(TAG, "Error calculating RGB value for active account icon.", e);
             placeholder = viewThemeUtils.platform.colorDrawable(ResourcesCompat.getDrawable(resources,

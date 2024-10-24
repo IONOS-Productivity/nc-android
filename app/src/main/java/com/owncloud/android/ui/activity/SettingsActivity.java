@@ -39,6 +39,7 @@ import android.view.ViewGroup;
 import android.webkit.URLUtil;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.ionos.annotation.IonosCustomization;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.account.UserAccountManager;
 import com.nextcloud.client.di.Injectable;
@@ -85,7 +86,6 @@ import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.ContextCompat;
-import androidx.core.content.res.ResourcesCompat;
 
 /**
  * An Activity that allows the user to change the application's settings.
@@ -142,11 +142,13 @@ public class SettingsActivity extends PreferenceActivity
 
     @SuppressWarnings("deprecation")
     @Override
+    @IonosCustomization("Delegate fix")
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
         getDelegate().installViewFactory();
         getDelegate().onCreate(savedInstanceState);
+
+        super.onCreate(savedInstanceState);
+
         addPreferencesFromResource(R.xml.preferences);
 
         setupActionBar();
@@ -185,6 +187,9 @@ public class SettingsActivity extends PreferenceActivity
 
         // workaround for mismatched color when app dark mode and system dark mode don't agree
         setListBackground();
+
+        // workaround to set custom paddings
+        setListPadding();
     }
 
     private void setupDevCategory(PreferenceScreen preferenceScreen) {
@@ -388,6 +393,7 @@ public class SettingsActivity extends PreferenceActivity
     }
 
 
+    @IonosCustomization
     private void setupRecommendPreference(PreferenceCategory preferenceCategoryMore) {
         boolean recommendEnabled = getResources().getBoolean(R.bool.recommend_enabled);
         Preference pRecommend = findPreference("recommend");
@@ -402,8 +408,13 @@ public class SettingsActivity extends PreferenceActivity
                     String appName = getString(R.string.app_name);
                     String downloadUrlGooglePlayStore = getString(R.string.url_app_download);
                     String downloadUrlFDroid = getString(R.string.fdroid_link);
-                    String downloadUrls = String.format(getString(R.string.recommend_urls),
-                                                        downloadUrlGooglePlayStore, downloadUrlFDroid);
+                    String downloadUrls;
+                    if (URLUtil.isValidUrl(downloadUrlFDroid)) {
+                        downloadUrls = String.format(getString(R.string.recommend_urls),
+                                                     downloadUrlGooglePlayStore, downloadUrlFDroid);
+                    } else {
+                        downloadUrls = downloadUrlGooglePlayStore;
+                    }
 
                     String recommendSubject = String.format(getString(R.string.recommend_subject), appName);
                     String recommendText = String.format(getString(R.string.recommend_text),
@@ -790,12 +801,14 @@ public class SettingsActivity extends PreferenceActivity
         }
     }
 
+    @IonosCustomization("Workaround to hide prefStoragePath")
     private void setupGeneralCategory() {
         final PreferenceCategory preferenceCategoryGeneral = (PreferenceCategory) findPreference("general");
         viewThemeUtils.files.themePreferenceCategory(preferenceCategoryGeneral);
 
         prefStoragePath = (ListPreference) findPreference(AppPreferencesImpl.STORAGE_PATH);
         if (prefStoragePath != null) {
+            preferenceCategoryGeneral.removePreference(prefStoragePath);
             StoragePoint[] storageOptions = DataStorageProvider.getInstance().getAvailableStoragePoints();
             String[] entries = new String[storageOptions.length];
             String[] values = new String[storageOptions.length];
@@ -856,6 +869,12 @@ public class SettingsActivity extends PreferenceActivity
         getListView().setBackgroundColor(ContextCompat.getColor(this, R.color.bg_default));
     }
 
+    @IonosCustomization
+    private void setListPadding() {
+        int bottom = (int) getResources().getDimension(R.dimen.settings_screen_list_bottom_padding);
+        getListView().setPadding(0, 0, 0, bottom);
+    }
+
     private String getAppVersion() {
         String temp;
         try {
@@ -874,21 +893,16 @@ public class SettingsActivity extends PreferenceActivity
         return super.onOptionsItemSelected(item);
     }
 
+    @IonosCustomization
     private void setupActionBar() {
         ActionBar actionBar = getDelegate().getSupportActionBar();
 
         if (actionBar != null) {
-            viewThemeUtils.platform.themeStatusBar(this);
+            viewThemeUtils.ionos.platform.themeSystemBars(this);
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowTitleEnabled(true);
-            if (this.getResources() != null) {
-                viewThemeUtils.androidx.themeActionBar(this,
-                                                       actionBar,
-                                                       getString(R.string.actionbar_settings),
-                                                       ResourcesCompat.getDrawable(this.getResources(),
-                                                                                   R.drawable.ic_arrow_back,
-                                                                                   null));
-            }
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+            actionBar.setTitle(R.string.actionbar_settings);
         }
     }
 

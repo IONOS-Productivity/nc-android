@@ -47,6 +47,7 @@ import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.ionos.annotation.IonosCustomization;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.di.Injectable;
 import com.nextcloud.client.jobs.upload.FileUploadHelper;
@@ -287,9 +288,10 @@ public class ReceiveExternalFilesActivity extends FileActivity
     }
 
     @Override
+    @IonosCustomization
     public void onSortingOrderChosen(FileSortOrder newSortOrder) {
         preferences.setSortOrder(mFile, newSortOrder);
-        sortButton.setText(DisplayUtils.getSortOrderStringId(newSortOrder));
+        sortButton.setIconResource(DisplayUtils.getSortOrderIconRes(newSortOrder));
         populateDirectoryList();
     }
 
@@ -324,6 +326,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
 
         @NonNull
         @Override
+        @IonosCustomization
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             final MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireContext());
             builder.setIcon(R.drawable.ic_warning);
@@ -343,7 +346,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
             });
             builder.setNeutralButton(R.string.uploader_wrn_no_account_quit_btn_text,
                                      (dialog, which) -> requireActivity().finish());
-            viewThemeUtils.dialog.colorMaterialAlertDialogBackground(requireContext(), builder);
+            viewThemeUtils.ionos.dialog.colorMaterialAlertDialogBackground(requireContext(), builder);
             return builder.create();
         }
     }
@@ -382,6 +385,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
 
         @NonNull
         @Override
+        @IonosCustomization
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             mFilenameBase = new ArrayList<>();
             mFilenameSuffix = new ArrayList<>();
@@ -457,7 +461,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
 
             setFilename(binding.userInput, selectPos);
             binding.userInput.requestFocus();
-            viewThemeUtils.material.colorTextInputLayout(binding.userInputContainer);
+            viewThemeUtils.ionos.material.colorTextInputLayout(binding.userInputContainer);
 
             setupSpinner(adapter, selectPos, binding.userInput, binding.fileType);
             if (adapter.getCount() == SINGLE_SPINNER_ENTRY) {
@@ -727,6 +731,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
         }
     }
 
+    @IonosCustomization
     private void populateDirectoryList() {
         setupEmptyList();
         setupToolbar();
@@ -775,14 +780,14 @@ public class ReceiveExternalFilesActivity extends FileActivity
 
             btnChooseFolder.setEnabled(mFile.canWrite());
 
-            viewThemeUtils.platform.themeStatusBar(this);
+            viewThemeUtils.ionos.platform.themeSystemBars(this);
 
             viewThemeUtils.material.colorMaterialButtonPrimaryOutlined(binding.uploaderCancel);
             binding.uploaderCancel.setOnClickListener(this);
 
             sortButton = binding.toolbarLayout.sortButton;
             FileSortOrder sortOrder = preferences.getSortOrderByFolder(mFile);
-            sortButton.setText(DisplayUtils.getSortOrderStringId(sortOrder));
+            sortButton.setIconResource(DisplayUtils.getSortOrderIconRes(sortOrder));
             sortButton.setOnClickListener(l -> openSortingOrderDialogFragment(getSupportFragmentManager(), sortOrder));
         }
     }
@@ -1049,6 +1054,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
         return true;
     }
 
+    @IonosCustomization
     private void setupSearchView(Menu menu) {
         final MenuItem searchMenuItem = menu.findItem(R.id.action_search);
 
@@ -1066,8 +1072,6 @@ public class ReceiveExternalFilesActivity extends FileActivity
                 return false;
             }
         });
-
-        viewThemeUtils.androidx.themeToolbarSearchView(searchView);
     }
 
     @Override

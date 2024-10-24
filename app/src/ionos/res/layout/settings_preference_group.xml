@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Nextcloud - Android Client
+  ~
+  ~ SPDX-FileCopyrightText: 2024 Your Name <your@email.com>
+  ~ SPDX-License-Identifier: AGPL-3.0-or-later
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/settings_screen_group_horizontal_padding"
+    android:paddingTop="@dimen/settings_screen_group_top_padding"
+    android:paddingRight="@dimen/settings_screen_group_horizontal_padding"
+    android:paddingBottom="@dimen/settings_screen_group_bottom_padding">
+
+    <TextView
+        android:id="@android:id/title"
+        style="@style/SettingsCategoryTitleStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Settings header" />
+
+</LinearLayout>
