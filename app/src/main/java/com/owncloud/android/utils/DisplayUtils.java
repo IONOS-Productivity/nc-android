@@ -62,6 +62,7 @@ import com.nextcloud.client.account.CurrentAccountProvider;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.network.ClientFactory;
 import com.nextcloud.client.preferences.AppPreferences;
+import com.owncloud.android.BuildConfig;
 import com.owncloud.android.MainApp;
 import com.owncloud.android.R;
 import com.owncloud.android.datamodel.ArbitraryDataProvider;
@@ -491,6 +492,12 @@ public final class DisplayUtils {
             ((View) callContext).setContentDescription(String.valueOf(user.toPlatformAccount().hashCode()));
         }
 
+        if (BuildConfig.FLAVOR.equals("ionos")) {
+            Drawable avatar = ResourcesCompat.getDrawable(resources, R.drawable.account_circle_white, null);
+            listener.avatarGenerated(avatar, callContext);
+            return;
+        }
+
         ArbitraryDataProvider arbitraryDataProvider = new ArbitraryDataProviderImpl(context);
 
         final String accountName = user.getAccountName();
@@ -505,7 +512,7 @@ public final class DisplayUtils {
         // if no one exists, show colored icon with initial char
         if (avatar == null) {
             try {
-                avatar = TextDrawable.createAvatarByUserId(context, displayName, avatarRadius);
+                avatar = TextDrawable.createAvatarByUserId(displayName, avatarRadius);
             } catch (Exception e) {
                 Log_OC.e(TAG, "Error calculating RGB value for active account icon.", e);
                 avatar = ResourcesCompat.getDrawable(resources,
