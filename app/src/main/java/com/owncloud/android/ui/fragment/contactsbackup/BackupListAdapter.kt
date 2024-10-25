@@ -24,7 +24,6 @@ import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter
 import com.afollestad.sectionedrecyclerview.SectionedViewHolder
 import com.bumptech.glide.request.animation.GlideAnimation
 import com.bumptech.glide.request.target.SimpleTarget
-import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.account.UserAccountManager
 import com.nextcloud.client.network.ClientFactory
 import com.owncloud.android.R
@@ -187,7 +186,6 @@ class BackupListAdapter(
         notifyDataSetChanged()
     }
 
-    @IonosCustomization
     fun bindContactViewHolder(holder: ContactItemViewHolder, position: Int) {
         val vCard = contacts[position]
 
@@ -203,7 +201,6 @@ class BackupListAdapter(
             try {
                 holder.binding.icon.setImageDrawable(
                     TextDrawable.createNamedAvatar(
-                        holder.binding.icon.context,
                         holder.binding.name.text.toString(),
                         context.resources.getDimension(R.dimen.list_item_avatar_icon_radius)
                     )

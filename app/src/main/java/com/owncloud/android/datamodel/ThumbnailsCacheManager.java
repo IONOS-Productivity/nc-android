@@ -1025,7 +1025,6 @@ public final class ThumbnailsCacheManager {
             return Math.round(r.getDimension(R.dimen.file_avatar_size));
         }
 
-        @IonosCustomization
         private @NonNull
         Drawable doAvatarInBackground() {
             Bitmap avatar;
@@ -1086,7 +1085,7 @@ public final class ThumbnailsCacheManager {
                                                                             ThumbnailsCacheManager.AVATAR_TIMESTAMP,
                                                                             System.currentTimeMillis());
                             } else {
-                                return TextDrawable.createAvatar(mContext, user, mAvatarRadius);
+                                return TextDrawable.createAvatar(user, mAvatarRadius);
                             }
                             break;
 
@@ -1104,7 +1103,7 @@ public final class ThumbnailsCacheManager {
                     }
                 } catch (Exception e) {
                     try {
-                        return TextDrawable.createAvatar(mContext, user, mAvatarRadius);
+                        return TextDrawable.createAvatar(user, mAvatarRadius);
                     } catch (Exception e1) {
                         Log_OC.e(TAG, "Error generating fallback avatar");
                     }
@@ -1117,7 +1116,7 @@ public final class ThumbnailsCacheManager {
 
             if (avatar == null) {
                 try {
-                    return TextDrawable.createAvatarByUserId(mContext, displayName, mAvatarRadius);
+                    return TextDrawable.createAvatarByUserId(displayName, mAvatarRadius);
                 } catch (Exception e1) {
                     return ResourcesCompat.getDrawable(mResources, R.drawable.ic_user, null);
                 }
