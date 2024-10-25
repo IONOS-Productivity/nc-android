@@ -62,6 +62,7 @@ import com.nextcloud.client.account.CurrentAccountProvider;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.network.ClientFactory;
 import com.nextcloud.client.preferences.AppPreferences;
+import com.owncloud.android.BuildConfig;
 import com.owncloud.android.MainApp;
 import com.owncloud.android.R;
 import com.owncloud.android.datamodel.ArbitraryDataProvider;
@@ -478,6 +479,7 @@ public final class DisplayUtils {
      * @param resources    reference for density information
      * @param callContext  which context is called to set the generated avatar
      */
+    @IonosCustomization
     public static void setAvatar(@NonNull User user,
                                  @NonNull String userId,
                                  String displayName,
@@ -488,6 +490,12 @@ public final class DisplayUtils {
                                  Context context) {
         if (callContext instanceof View) {
             ((View) callContext).setContentDescription(String.valueOf(user.toPlatformAccount().hashCode()));
+        }
+
+        if (BuildConfig.FLAVOR.equals("ionos")) {
+            Drawable avatar = ResourcesCompat.getDrawable(resources, R.drawable.account_circle_white, null);
+            listener.avatarGenerated(avatar, callContext);
+            return;
         }
 
         ArbitraryDataProvider arbitraryDataProvider = new ArbitraryDataProviderImpl(context);
