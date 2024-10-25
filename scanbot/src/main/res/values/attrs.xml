@@ -13,8 +13,8 @@
 
     <attr name="scanbot_camera_button_background_idle" format="color" />
     <attr name="scanbot_camera_button_background_pressed" format="color" />
-    <attr name="scanbot_camera_button_activated_color" format="color" />
-    <attr name="scanbot_camera_button_deactivated_color" format="color" />
+    <attr name="scanbot_camera_toggle_activated_text_color" format="color" />
+    <attr name="scanbot_camera_toggle_deactivated_text_color" format="color" />
     <attr name="scanbot_camera_button_icon_color" format="color" />
     <attr name="scanbot_camera_flash_color" format="color" />
     <attr name="scanbot_camera_flash_selected_color" format="color" />

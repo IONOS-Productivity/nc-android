@@ -35,6 +35,7 @@
     <string name="mail_logger">a.kucherenko@viseven.com</string>
 
     <!-- Help, imprint and feedback, and other things -->
+    <bool name="davdroid_integration_enabled">false</bool>
     <bool name="help_enabled">true</bool>
     <bool name="recommend_enabled">true</bool>
     <bool name="imprint_enabled">true</bool>
