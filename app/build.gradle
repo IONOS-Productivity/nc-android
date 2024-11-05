@@ -190,7 +190,7 @@ android {
             }
 
             ionos {
-                applicationId "com.ionos.easystorage"
+                applicationId "com.ionos.hidrivenext"
                 dimension "default"
                 versionCode 1
                 def nextcloudVersion = defaultConfig.versionName

@@ -8,13 +8,13 @@
 <resources>
     <!-- App name  and other strings-->
     <string name="app_name">IONOS HiDrive Next</string>
-    <string name="account_type">com.ionos.easystorage</string>
-    <string name="authority">com.ionos.easystorage.provider</string>    <!-- better if was the app package with ".provider" appended ; it identifies the provider -->
-    <string name="users_and_groups_search_authority">com.ionos.easystorage.providers.UsersAndGroupsSearchProvider</string>
-    <string name="users_and_groups_share_with">com.ionos.easystorage.providers.UsersAndGroupsSearchProvider.action.SHARE_WITH</string>
-    <string name="document_provider_authority">com.ionos.easystorage.documents</string>
-    <string name="file_provider_authority">com.ionos.easystorage.files</string>
-    <string name="image_cache_provider_authority">com.ionos.easystorage.providers.imageCache</string>
+    <string name="account_type">com.ionos.hidrivenext</string>
+    <string name="authority">com.ionos.hidrivenext.provider</string>    <!-- better if was the app package with ".provider" appended ; it identifies the provider -->
+    <string name="users_and_groups_search_authority">com.ionos.hidrivenext.providers.UsersAndGroupsSearchProvider</string>
+    <string name="users_and_groups_share_with">com.ionos.hidrivenext.providers.UsersAndGroupsSearchProvider.action.SHARE_WITH</string>
+    <string name="document_provider_authority">com.ionos.hidrivenext.documents</string>
+    <string name="file_provider_authority">com.ionos.hidrivenext.files</string>
+    <string name="image_cache_provider_authority">com.ionos.hidrivenext.providers.imageCache</string>
     <string name="db_file">ionos.db</string>
     <string name="db_name">ionos</string>
     <string name="data_folder">ionos</string>
