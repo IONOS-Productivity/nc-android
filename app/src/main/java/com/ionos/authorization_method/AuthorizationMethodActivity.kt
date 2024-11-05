@@ -31,10 +31,10 @@ class AuthorizationMethodActivity : AppCompatActivity() {
     }
 
     private fun initListeners() {
-        viewBinding.bLoginEasyStorage.setOnClickListener { loginToEasyStorage() }
+        viewBinding.bLogin.setOnClickListener { login() }
     }
 
-    private fun loginToEasyStorage() {
+    private fun login() {
         val intent = Intent(this, AuthenticatorActivity::class.java).apply {
             putExtra(AuthenticatorActivity.EXTRA_USE_PROVIDER_AS_WEBLOGIN, true)
         }

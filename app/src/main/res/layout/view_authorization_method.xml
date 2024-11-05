@@ -14,7 +14,7 @@
     tools:theme="@style/Theme.ownCloud.noActionBar.Login">
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/bLoginEasyStorage"
+        android:id="@+id/bLogin"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
