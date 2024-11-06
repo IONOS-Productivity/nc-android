@@ -2,6 +2,10 @@
 <resources>
     <style name="ScanbotTheme" parent="ScanbotDefaultTheme">
         <item name="scanbot_app_bar_color">@color/dark_slate_grey</item>
+        <item name="scanbot_status_bar_color">@color/black</item>
+        <item name="scanbot_light_status_bar">false</item>
+        <item name="scanbot_navigation_bar_color">@color/dark_slate_grey</item>
+        <item name="scanbot_light_navigation_bar">false</item>
         <item name="scanbot_window_background">@color/bg_default</item>
         <item name="scanbot_tip_icon_color">@color/curious_blue</item>
 
