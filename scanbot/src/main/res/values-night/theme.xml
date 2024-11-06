@@ -2,6 +2,9 @@
     <style name="ScanbotDefaultTheme">
         <item name="scanbot_app_bar_color">@color/scanbot_mine_shaft_dark</item>
         <item name="scanbot_status_bar_color">@color/scanbot_black</item>
+        <item name="scanbot_light_status_bar">false</item>
+        <item name="scanbot_navigation_bar_color">@color/scanbot_black</item>
+        <item name="scanbot_light_navigation_bar">false</item>
         <item name="scanbot_toolbar_text_color">@color/scanbot_white</item>
         <item name="scanbot_window_background">@color/scanbot_dark_grey</item>
         <item name="scanbot_default_icon_color">@color/scanbot_white</item>

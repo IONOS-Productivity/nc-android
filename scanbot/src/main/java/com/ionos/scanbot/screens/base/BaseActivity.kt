@@ -8,7 +8,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
+import androidx.core.view.WindowCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.ionos.scanbot.R
@@ -41,16 +41,26 @@ internal abstract class BaseActivity<E : Event, S : State<E>, VM : ViewModel<E, 
 
     private fun applyTheme() {
         val outValue = TypedValue()
+        val insetsController = WindowCompat.getInsetsController(window, window.decorView)
         if (context.theme.resolveAttribute(R.attr.scanbotTheme, outValue, true)) {
             setTheme(outValue.resourceId)
         } else {
             setTheme(R.style.ScanbotDefaultTheme)
         }
         if (theme.resolveAttribute(R.attr.scanbot_status_bar_color, outValue, true)) {
-            window.statusBarColor = ContextCompat.getColor(context, outValue.resourceId)
+            window.statusBarColor = outValue.data
+        }
+        if (theme.resolveAttribute(R.attr.scanbot_light_status_bar, outValue, true)) {
+            insetsController.isAppearanceLightStatusBars = outValue.data != 0
+        }
+        if (theme.resolveAttribute(R.attr.scanbot_navigation_bar_color, outValue, true)) {
+            window.navigationBarColor = outValue.data
+        }
+        if (theme.resolveAttribute(R.attr.scanbot_light_navigation_bar, outValue, true)) {
+            insetsController.isAppearanceLightNavigationBars = outValue.data != 0
         }
         if (theme.resolveAttribute(R.attr.scanbot_window_background, outValue, true)) {
-            window.decorView.setBackgroundColor(ContextCompat.getColor(context, outValue.resourceId))
+            window.decorView.setBackgroundColor(outValue.data)
         }
     }
 

@@ -6,6 +6,9 @@
 
     <attr name="scanbot_app_bar_color" format="color" />
     <attr name="scanbot_status_bar_color" format="color" />
+    <attr name="scanbot_light_status_bar" format="boolean" />
+    <attr name="scanbot_navigation_bar_color" format="color" />
+    <attr name="scanbot_light_navigation_bar" format="boolean" />
     <attr name="scanbot_toolbar_text_color" format="color" />
     <attr name="scanbot_window_background" format="color" />
     <attr name="scanbot_default_icon_color" format="color" />
