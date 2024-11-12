@@ -323,6 +323,10 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
             mIsFirstAuthAttempt = savedInstanceState.getBoolean(KEY_AUTH_IS_FIRST_ATTEMPT_TAG);
         }
 
+        if (directLogin) {
+            return;
+        }
+
         boolean webViewLoginMethod = false;
         String webloginUrl = null;
 
