@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Storage Permissions Dialog -->
+    <string name="ionos_file_management_permission">Autorisations de stockage</string>
+    <string name="ionos_file_management_permission_optional">Autorisations de stockage</string>
+    <string name="ionos_file_management_permission_text">%1$s a besoin d\'une autorisation pour accéder à vos fichiers. Vous pouvez autoriser ou refuser l\'accès.</string>
+    <string name="ionos_file_management_permission_optional_text">%1$s a besoin d\'une autorisation pour accéder à vos fichiers. Vous pouvez autoriser ou refuser l\'accès.</string>
+
+</resources>
