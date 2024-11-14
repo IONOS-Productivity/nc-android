@@ -14,7 +14,4 @@
     <!-- Side menu -->
     <string name="ionos_side_menu_storage_used">Stockage occupé</string>
 
-    <!-- Sharing screen -->
-    <string name="share_search">Nom ou adresse e-mail…</string>
-
 </resources>

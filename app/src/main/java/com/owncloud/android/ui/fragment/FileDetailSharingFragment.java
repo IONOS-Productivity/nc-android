@@ -237,7 +237,7 @@ public class FileDetailSharingFragment extends Fragment implements ShareeListAda
                     }
                 }
             } else {
-                binding.searchView.setQueryHint(getResources().getString(R.string.share_search));
+                binding.searchView.setQueryHint(getResources().getString(R.string.ionos_share_search));
             }
         } else {
             binding.searchView.setQueryHint(getResources().getString(R.string.reshare_not_allowed));

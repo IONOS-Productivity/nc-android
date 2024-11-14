@@ -40,7 +40,7 @@
             android:layout_marginStart="@dimen/zero"
             android:layout_marginEnd="@dimen/standard_quarter_margin"
             android:layout_weight="1"
-            android:hint="@string/share_search"
+            android:hint="@string/ionos_share_search"
             app:searchIcon="@null" />
 
         <androidx.appcompat.widget.AppCompatImageView
