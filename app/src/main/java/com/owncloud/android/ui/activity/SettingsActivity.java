@@ -568,15 +568,11 @@ public class SettingsActivity extends PreferenceActivity
             });
         }
     }
-    
+
+    @IonosCustomization("internal_two_way_sync was hidden")
     private void setupInternalTwoWaySyncPreference(PreferenceCategory preferenceCategorySync) {
         Preference twoWaySync = findPreference("internal_two_way_sync");
-        
-        twoWaySync.setOnPreferenceClickListener(preference -> {
-            Intent intent = new Intent(this, InternalTwoWaySyncActivity.class);
-            startActivity(intent);
-            return true;
-        });
+        preferenceCategorySync.removePreference(twoWaySync);
     }
 
     private void setupBackupPreference() {
