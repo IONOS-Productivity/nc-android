@@ -5,13 +5,23 @@ import android.net.Uri
 import com.ionos.scanbot.repository.RepositoryFacade
 import com.ionos.scanbot.repository.bitmap.BitmapDecoder
 import com.ionos.scanbot.screens.base.BaseViewModel
-import com.ionos.scanbot.screens.camera.CameraScreen.*
-import com.ionos.scanbot.screens.camera.CameraScreen.Event.*
+import com.ionos.scanbot.screens.camera.CameraScreen.Event
+import com.ionos.scanbot.screens.camera.CameraScreen.Event.CloseScreenEvent
+import com.ionos.scanbot.screens.camera.CameraScreen.Event.LaunchImagePickerEvent
+import com.ionos.scanbot.screens.camera.CameraScreen.Event.OpenScreenEvent
+import com.ionos.scanbot.screens.camera.CameraScreen.Event.ShowExitDialogEvent
+import com.ionos.scanbot.screens.camera.CameraScreen.Event.ShowMessageEvent
+import com.ionos.scanbot.screens.camera.CameraScreen.Event.ShowNoFreeSpaceAlertEvent
+import com.ionos.scanbot.screens.camera.CameraScreen.Event.TakePictureEvent
+import com.ionos.scanbot.screens.camera.CameraScreen.Processing
+import com.ionos.scanbot.screens.camera.CameraScreen.State
+import com.ionos.scanbot.screens.camera.CameraScreen.ViewModel
 import com.ionos.scanbot.screens.camera.use_case.AddPictureToRepository
+import com.ionos.scanbot.screens.camera.use_case.GetCameraScreenErrorMessage
 import com.ionos.scanbot.screens.camera.use_case.import_pictures.ImportPictures
 import com.ionos.scanbot.screens.camera.use_case.import_pictures.ImportPicturesState
-import com.ionos.scanbot.screens.camera.use_case.GetCameraScreenErrorMessage
 import com.ionos.scanbot.screens.common.use_case.open_screen.OpenScreenIntent.OpenGalleryScreenIntent
+import com.ionos.scanbot.tracking.ScanbotCameraScreenEventTracker
 import com.ionos.scanbot.util.GetLocalFreeSpace
 import com.ionos.scanbot.util.rx.plusAssign
 import io.reactivex.Completable
@@ -28,8 +38,8 @@ internal class CameraViewModel @Inject constructor(
 	private val bitmapDecoder: BitmapDecoder,
 	private val repositoryFacade: RepositoryFacade,
 	private val getErrorMessage: GetCameraScreenErrorMessage,
-	// private val eventTracker: ScanbotCameraScreenEventTracker,
-) : BaseViewModel<Event, State>(State()/*, eventTracker*/),
+	private val eventTracker: ScanbotCameraScreenEventTracker,
+) : BaseViewModel<Event, State>(State(), eventTracker),
 	ViewModel {
 
 	companion object {
@@ -51,12 +61,12 @@ internal class CameraViewModel @Inject constructor(
 	}
 
 	override fun onCancelClicked() {
-		// eventTracker.trackCancelClicked()
+		eventTracker.trackCancelClicked()
 		closeScreenOrShowConfirmationDialog()
 	}
 
 	override fun onBackPressed() {
-		// eventTracker.trackBackPressed()
+		eventTracker.trackBackPressed()
 		closeScreenOrShowConfirmationDialog()
 	}
 
@@ -69,7 +79,7 @@ internal class CameraViewModel @Inject constructor(
 	}
 
 	override fun onExitConfirmed() {
-		// eventTracker.trackExitConfirmed()
+		eventTracker.trackExitConfirmed()
 		subscriptions += Completable
 			.fromCallable { repositoryFacade.release() }
 			.subscribeOn(Schedulers.io())
@@ -78,7 +88,7 @@ internal class CameraViewModel @Inject constructor(
 	}
 
 	override fun onExitDenied() {
-		// eventTracker.trackExitDenied()
+		eventTracker.trackExitDenied()
 	}
 
 	private fun closeScreen() {
@@ -87,28 +97,28 @@ internal class CameraViewModel @Inject constructor(
 
 	override fun onAutomaticCaptureToggled() {
 		val enabled = !state.value.automaticCaptureEnabled
-		// eventTracker.trackAutomaticCaptureToggled(enabled)
+		eventTracker.trackAutomaticCaptureToggled(enabled)
 		updateState { copy(automaticCaptureEnabled = enabled) }
 	}
 
 	override fun onFlashToggled() {
 		val enabled = !state.value.flashEnabled
-		// eventTracker.trackFlashToggled(enabled)
+		eventTracker.trackFlashToggled(enabled)
 		updateState { copy(flashEnabled = enabled) }
 	}
 
 	override fun onImportClicked() {
-		// eventTracker.trackImportClicked()
+		eventTracker.trackImportClicked()
 		updateState { copy(event = LaunchImagePickerEvent) }
 	}
 
 	override fun onCancelImportClicked() {
-		// eventTracker.trackImportCanceled()
+		eventTracker.trackImportCanceled()
 		importCancellation.onNext(true)
 	}
 
 	override fun onTakePictureClicked() {
-		// eventTracker.trackTakePictureClicked()
+		eventTracker.trackTakePictureClicked()
 		subscriptions += getLocalFreeSpace()
 			.subscribeOn(Schedulers.computation())
 			.observeOn(AndroidSchedulers.mainThread())

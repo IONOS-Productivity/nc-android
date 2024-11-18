@@ -3,9 +3,14 @@ package com.ionos.scanbot.screens.rearrange
 import com.ionos.scanbot.entity.Picture
 import com.ionos.scanbot.repository.PictureRepository
 import com.ionos.scanbot.screens.base.BaseViewModel
-import com.ionos.scanbot.screens.rearrange.RearrangeScreen.*
-import com.ionos.scanbot.screens.rearrange.RearrangeScreen.Event.*
+import com.ionos.scanbot.screens.rearrange.RearrangeScreen.Event
+import com.ionos.scanbot.screens.rearrange.RearrangeScreen.Event.CloseScreenEvent
+import com.ionos.scanbot.screens.rearrange.RearrangeScreen.Event.ShowErrorMessageEvent
+import com.ionos.scanbot.screens.rearrange.RearrangeScreen.Event.ShowItemsEvent
+import com.ionos.scanbot.screens.rearrange.RearrangeScreen.State
+import com.ionos.scanbot.screens.rearrange.RearrangeScreen.ViewModel
 import com.ionos.scanbot.screens.rearrange.recycler.RearrangeItem
+import com.ionos.scanbot.tracking.ScanbotRearrangeScreenEventTracker
 import com.ionos.scanbot.util.rx.plusAssign
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -15,9 +20,8 @@ import javax.inject.Inject
 
 internal class RearrangeViewModel @Inject constructor(
 	private val pictureRepository: PictureRepository,
-    //TODO alk
-    // private val eventTracker: ScanbotRearrangeScreenEventTracker,
-) : BaseViewModel<Event, State>(State(), /*eventTracker*/),
+    private val eventTracker: ScanbotRearrangeScreenEventTracker,
+) : BaseViewModel<Event, State>(State(), eventTracker),
 	ViewModel {
 
 	private var pictures: List<Picture> = emptyList()
@@ -34,12 +38,12 @@ internal class RearrangeViewModel @Inject constructor(
 	}
 
 	override fun onBackPressed() {
-		// eventTracker.trackBackPressed()
+		eventTracker.trackBackPressed()
 		updateState { copy(event = CloseScreenEvent) }
 	}
 
 	override fun onPictureDragged(sourcePosition: Int, targetPosition: Int) {
-		// eventTracker.trackPictureDragged()
+		eventTracker.trackPictureDragged()
 
 		updateState { copy(processing = true) }
 

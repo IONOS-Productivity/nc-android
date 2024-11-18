@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.ionos.scanbot.provider.ContourDetectorProvider
 import com.ionos.scanbot.repository.RepositoryFacade
 import com.ionos.scanbot.screens.common.use_case.SelectContour
-// import com.ionos.scanbot.tracking.ScanbotCropScreenEventTracker
+import com.ionos.scanbot.tracking.ScanbotCropScreenEventTracker
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -15,7 +15,7 @@ internal class CropViewModelFactory @AssistedInject constructor(
 	private val selectContour: SelectContour,
 	private val contourDetectorProvider: ContourDetectorProvider,
 	private val repositoryFacade: RepositoryFacade,
-	// private val eventTracker: ScanbotCropScreenEventTracker,
+	private val eventTracker: ScanbotCropScreenEventTracker,
 ) : ViewModelProvider.Factory {
 
 	override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -27,7 +27,7 @@ internal class CropViewModelFactory @AssistedInject constructor(
 		selectContour,
 		contourDetectorProvider,
 		repositoryFacade,
-		// eventTracker,
+		eventTracker,
 	)
 
 	@AssistedFactory

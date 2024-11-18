@@ -5,15 +5,22 @@ import android.graphics.Matrix
 import android.graphics.PointF
 import com.ionos.scanbot.entity.Picture
 import com.ionos.scanbot.entity.SelectedContour
+import com.ionos.scanbot.exception.PictureNotFoundException
+import com.ionos.scanbot.exception.ReadPictureBitmapException
 import com.ionos.scanbot.filter.FilterType
 import com.ionos.scanbot.provider.ContourDetectorProvider
 import com.ionos.scanbot.repository.RepositoryFacade
 import com.ionos.scanbot.screens.base.BaseViewModel
-import com.ionos.scanbot.exception.ReadPictureBitmapException
-import com.ionos.scanbot.exception.PictureNotFoundException
-import com.ionos.scanbot.screens.crop.CropScreen.*
-import com.ionos.scanbot.screens.crop.CropScreen.Event.*
 import com.ionos.scanbot.screens.common.use_case.SelectContour
+import com.ionos.scanbot.screens.crop.CropScreen.ButtonType
+import com.ionos.scanbot.screens.crop.CropScreen.Event
+import com.ionos.scanbot.screens.crop.CropScreen.Event.CloseScreenEvent
+import com.ionos.scanbot.screens.crop.CropScreen.Event.DisplayPictureEvent
+import com.ionos.scanbot.screens.crop.CropScreen.Event.DisplayPolygonEvent
+import com.ionos.scanbot.screens.crop.CropScreen.Event.ShowErrorMessageEvent
+import com.ionos.scanbot.screens.crop.CropScreen.State
+import com.ionos.scanbot.screens.crop.CropScreen.ViewModel
+import com.ionos.scanbot.tracking.ScanbotCropScreenEventTracker
 import com.ionos.scanbot.util.graphics.mapPoints
 import com.ionos.scanbot.util.rx.plusAssign
 import io.reactivex.Completable
@@ -26,8 +33,8 @@ internal class CropViewModel(
 	private val selectContour: SelectContour,
 	private val contourDetectorProvider: ContourDetectorProvider,
 	private val repositoryFacade: RepositoryFacade,
-	// private val eventTracker: ScanbotCropScreenEventTracker,
-) : BaseViewModel<Event, State>(State(),/* eventTracker*/),
+	private val eventTracker: ScanbotCropScreenEventTracker,
+) : BaseViewModel<Event, State>(State(), eventTracker),
 	ViewModel {
 
 	private val contourDetector by lazy { contourDetectorProvider.get() }
@@ -67,12 +74,12 @@ internal class CropViewModel(
 	}
 
 	override fun onBackPressed() {
-		// eventTracker.trackBackPressed()
+		eventTracker.trackBackPressed()
 		updateState { copy(event = CloseScreenEvent) }
 	}
 
 	override fun onAutoDetectContourClicked() {
-		// eventTracker.trackDetectDocumentClicked()
+		eventTracker.trackDetectDocumentClicked()
 
 		updateState { copy(processing = true) }
 
@@ -89,7 +96,7 @@ internal class CropViewModel(
 	}
 
 	override fun onResetContourClicked() {
-		// eventTracker.trackResetBordersClicked()
+		eventTracker.trackResetBordersClicked()
 
 		updateState { copy(processing = true) }
 
@@ -105,7 +112,7 @@ internal class CropViewModel(
 	}
 
 	override fun onSaveClicked(polygon: List<PointF>) {
-		// eventTracker.trackSaveClicked()
+		eventTracker.trackSaveClicked()
 
 		updateState { copy(processing = true) }
 

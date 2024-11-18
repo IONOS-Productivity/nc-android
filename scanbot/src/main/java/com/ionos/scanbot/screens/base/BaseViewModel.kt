@@ -10,7 +10,7 @@ import io.reactivex.disposables.CompositeDisposable
 
 internal abstract class BaseViewModel<E : Event, S : State<E>>(
 	initialState: S,
-	// private val eventTracker: ScanbotScreenEventTracker,
+	private val eventTracker: ScanbotScreenEventTracker,
 ) : ViewModel(),
 	BaseScreen.ViewModel<E, S> {
 
@@ -20,7 +20,7 @@ internal abstract class BaseViewModel<E : Event, S : State<E>>(
 	protected val subscriptions = CompositeDisposable()
 
 	override fun onResume() {
-		// eventTracker.trackPage()
+		eventTracker.trackPage()
 	}
 
 	override fun onCleared() {

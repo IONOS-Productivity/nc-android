@@ -1,15 +1,19 @@
 package com.ionos.scanbot.screens.filter
 
 import android.graphics.Bitmap
+import com.ionos.scanbot.exception.PictureNotFoundException
+import com.ionos.scanbot.exception.ReadPictureBitmapException
 import com.ionos.scanbot.filter.FilterType
 import com.ionos.scanbot.filter.color.ColorFilter
 import com.ionos.scanbot.filter.color.ColorFilterType
 import com.ionos.scanbot.repository.RepositoryFacade
 import com.ionos.scanbot.screens.base.BaseViewModel
-import com.ionos.scanbot.exception.ReadPictureBitmapException
-import com.ionos.scanbot.exception.PictureNotFoundException
-import com.ionos.scanbot.screens.filter.FilterScreen.*
-import com.ionos.scanbot.screens.filter.FilterScreen.Event.*
+import com.ionos.scanbot.screens.filter.FilterScreen.Event
+import com.ionos.scanbot.screens.filter.FilterScreen.Event.CloseScreenEvent
+import com.ionos.scanbot.screens.filter.FilterScreen.Event.ShowErrorEvent
+import com.ionos.scanbot.screens.filter.FilterScreen.State
+import com.ionos.scanbot.screens.filter.FilterScreen.ViewModel
+import com.ionos.scanbot.tracking.ScanbotFilterScreenEventTracker
 import com.ionos.scanbot.util.rx.plusAssign
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -21,8 +25,8 @@ internal class FilterViewModel(
 	initialState: State,
 	private val repositoryFacade: RepositoryFacade,
 	private val imageProcessor: ImageProcessor,
-	// private val eventTracker: ScanbotFilterScreenEventTracker,
-) : BaseViewModel<Event, State>(initialState, /*eventTracker*/),
+	private val eventTracker: ScanbotFilterScreenEventTracker,
+) : BaseViewModel<Event, State>(initialState, eventTracker),
 	ViewModel {
 
 	init {
@@ -41,12 +45,12 @@ internal class FilterViewModel(
 	}
 
 	override fun onBackPressed() {
-		// eventTracker.trackBackPressed()
+		eventTracker.trackBackPressed()
 		updateState { copy(event = CloseScreenEvent) }
 	}
 
 	override fun onSaveClicked() {
-		// eventTracker.trackSaveClicked()
+		eventTracker.trackSaveClicked()
 
 		updateState { copy(processing = true) }
 
@@ -57,7 +61,7 @@ internal class FilterViewModel(
 	}
 
 	override fun onApplyForAllClicked() {
-		// eventTracker.trackApplyForAllClicked()
+		eventTracker.trackApplyForAllClicked()
 
 		updateState { copy(processing = true) }
 
@@ -68,41 +72,41 @@ internal class FilterViewModel(
 	}
 
 	override fun onFilterTypeChanged(filterType: ColorFilterType) {
-		// when (filterType) {
-		// 	is ColorFilterType.MagicColor -> eventTracker.trackMagicColorFilterApplied()
-		// 	is ColorFilterType.MagicText -> eventTracker.trackMagicTextFilterApplied()
-		// 	is ColorFilterType.Color -> eventTracker.trackColorFilterApplied()
-		// 	is ColorFilterType.Grayscale -> eventTracker.trackGrayscaleFilterApplied()
-		// 	is ColorFilterType.BlackWhite -> eventTracker.trackBlackAndWhiteFilterApplied()
-		// 	is ColorFilterType.None -> eventTracker.trackFilterReset()
-		// }
+		when (filterType) {
+			is ColorFilterType.MagicColor -> eventTracker.trackMagicColorFilterApplied()
+			is ColorFilterType.MagicText -> eventTracker.trackMagicTextFilterApplied()
+			is ColorFilterType.Color -> eventTracker.trackColorFilterApplied()
+			is ColorFilterType.Grayscale -> eventTracker.trackGrayscaleFilterApplied()
+			is ColorFilterType.BlackWhite -> eventTracker.trackBlackAndWhiteFilterApplied()
+			is ColorFilterType.None -> eventTracker.trackFilterReset()
+		}
 		onFilterChanged(filterType)
 	}
 
 	override fun onBrightnessChanged(filterType: ColorFilterType) {
-		// if (filterType.isChanged(brightness = true)) {
-		// 	eventTracker.trackBrightnessChanged()
-		// } else {
-		// 	eventTracker.trackBrightnessReset()
-		// }
+		if (filterType.isChanged(brightness = true)) {
+			eventTracker.trackBrightnessChanged()
+		} else {
+			eventTracker.trackBrightnessReset()
+		}
 		onFilterChanged(filterType)
 	}
 
 	override fun onSharpnessChanged(filterType: ColorFilterType) {
-		// if (filterType.isChanged(sharpness = true)) {
-		// 	eventTracker.trackSharpnessChanged()
-		// } else {
-		// 	eventTracker.trackSharpnessReset()
-		// }
+		if (filterType.isChanged(sharpness = true)) {
+			eventTracker.trackSharpnessChanged()
+		} else {
+			eventTracker.trackSharpnessReset()
+		}
 		onFilterChanged(filterType)
 	}
 
 	override fun onContrastChanged(filterType: ColorFilterType) {
-		// if (filterType.isChanged(contrast = true)) {
-		// 	eventTracker.trackContrastChanged()
-		// } else {
-		// 	eventTracker.trackContrastReset()
-		// }
+		if (filterType.isChanged(contrast = true)) {
+			eventTracker.trackContrastChanged()
+		} else {
+			eventTracker.trackContrastReset()
+		}
 		onFilterChanged(filterType)
 	}
 

@@ -4,10 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.ionos.scanbot.filter.color.ColorFilterType
 import com.ionos.scanbot.provider.DocumentNameProvider
-import com.ionos.scanbot.repository.RepositoryFacade
 import com.ionos.scanbot.repository.PictureRepository
+import com.ionos.scanbot.repository.RepositoryFacade
 import com.ionos.scanbot.screens.gallery.use_case.GetColorFilterIcon
-// import com.ionos.scanbot.tracking.ScanbotGalleryScreenEventTracker
+import com.ionos.scanbot.tracking.ScanbotGalleryScreenEventTracker
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -18,7 +18,7 @@ internal class GalleryViewModelFactory @AssistedInject constructor(
 	private val getColorFilterIcon: GetColorFilterIcon,
 	private val repositoryFacade: RepositoryFacade,
 	private val pictureRepository: PictureRepository,
-	// private val eventTracker: ScanbotGalleryScreenEventTracker,
+	private val eventTracker: ScanbotGalleryScreenEventTracker,
 ) : ViewModelProvider.Factory {
 
 	override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -31,7 +31,7 @@ internal class GalleryViewModelFactory @AssistedInject constructor(
 		getColorFilterIcon,
 		repositoryFacade,
 		pictureRepository,
-		// eventTracker,
+		eventTracker,
 	)
 
 	private fun createInitialState() = GalleryScreen.State(

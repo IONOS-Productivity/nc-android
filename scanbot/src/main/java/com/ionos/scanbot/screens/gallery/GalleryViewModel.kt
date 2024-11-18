@@ -5,10 +5,23 @@ import com.ionos.scanbot.filter.color.ColorFilterType
 import com.ionos.scanbot.repository.PictureRepository
 import com.ionos.scanbot.repository.RepositoryFacade
 import com.ionos.scanbot.screens.base.BaseViewModel
-import com.ionos.scanbot.screens.common.use_case.open_screen.OpenScreenIntent.*
-import com.ionos.scanbot.screens.gallery.GalleryScreen.*
-import com.ionos.scanbot.screens.gallery.GalleryScreen.Event.*
+import com.ionos.scanbot.screens.common.use_case.open_screen.OpenScreenIntent.OpenCameraScreenIntent
+import com.ionos.scanbot.screens.common.use_case.open_screen.OpenScreenIntent.OpenCropScreenIntent
+import com.ionos.scanbot.screens.common.use_case.open_screen.OpenScreenIntent.OpenFilterScreenIntent
+import com.ionos.scanbot.screens.common.use_case.open_screen.OpenScreenIntent.OpenRearrangeScreenIntent
+import com.ionos.scanbot.screens.common.use_case.open_screen.OpenScreenIntent.OpenSaveScreenIntent
+import com.ionos.scanbot.screens.gallery.GalleryScreen.ColorFilterIcon
+import com.ionos.scanbot.screens.gallery.GalleryScreen.Event
+import com.ionos.scanbot.screens.gallery.GalleryScreen.Event.DisplayPicturesEvent
+import com.ionos.scanbot.screens.gallery.GalleryScreen.Event.OpenScreenEvent
+import com.ionos.scanbot.screens.gallery.GalleryScreen.Event.PerformExitEvent
+import com.ionos.scanbot.screens.gallery.GalleryScreen.Event.ShowErrorMessageEvent
+import com.ionos.scanbot.screens.gallery.GalleryScreen.Event.ShowExitDialogEvent
+import com.ionos.scanbot.screens.gallery.GalleryScreen.PageInfo
+import com.ionos.scanbot.screens.gallery.GalleryScreen.State
+import com.ionos.scanbot.screens.gallery.GalleryScreen.ViewModel
 import com.ionos.scanbot.screens.gallery.use_case.GetColorFilterIcon
+import com.ionos.scanbot.tracking.ScanbotGalleryScreenEventTracker
 import com.ionos.scanbot.util.rx.plusAssign
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -21,8 +34,8 @@ internal class GalleryViewModel(
 	private val getColorFilterIcon: GetColorFilterIcon,
 	private val repositoryFacade: RepositoryFacade,
 	private val pictureRepository: PictureRepository,
-	// private val eventTracker: ScanbotGalleryScreenEventTracker,
-) : BaseViewModel<Event, State>(initialState, /*eventTracker*/),
+	private val eventTracker: ScanbotGalleryScreenEventTracker,
+) : BaseViewModel<Event, State>(initialState, eventTracker),
 	ViewModel {
 
 	private var pictures: List<Picture> = emptyList()
@@ -41,9 +54,9 @@ internal class GalleryViewModel(
 
 	override fun onPageSelected(pageIndex: Int) {
 		if (currentPictureIndex < pageIndex) {
-			// eventTracker.trackSwipeNext()
+			eventTracker.trackSwipeNext()
 		} else if (currentPictureIndex > pageIndex) {
-			// eventTracker.trackSwipeBack()
+			eventTracker.trackSwipeBack()
 		}
 		currentPictureIndex = pageIndex
 		val pageInfo = PageInfo(pageIndex, pictures.size)
@@ -52,12 +65,12 @@ internal class GalleryViewModel(
 	}
 
 	override fun onBackPressed() {
-		// eventTracker.trackBackPressed()
+		eventTracker.trackBackPressed()
 		updateState { copy(event = ShowExitDialogEvent) }
 	}
 
 	override fun onExitConfirmed() {
-		// eventTracker.trackExitConfirmed()
+		eventTracker.trackExitConfirmed()
 		subscriptions += Completable
 			.fromCallable { repositoryFacade.release() }
 			.subscribeOn(Schedulers.io())
@@ -66,28 +79,28 @@ internal class GalleryViewModel(
 	}
 
 	override fun onExitDenied() {
-		// eventTracker.trackExitDenied()
+		eventTracker.trackExitDenied()
 	}
 
 	override fun onSaveButtonClicked() {
-		// eventTracker.trackSaveClicked()
+		eventTracker.trackSaveClicked()
 		updateState { copy(event = OpenScreenEvent(OpenSaveScreenIntent(closeCurrent = true))) }
 	}
 
 	override fun onAddButtonClicked() {
-		// eventTracker.trackAddPictureClicked()
+		eventTracker.trackAddPictureClicked()
 		updateState { copy(event = OpenScreenEvent(OpenCameraScreenIntent(closeCurrent = true))) }
 	}
 
 	override fun onCropButtonClicked() {
-		// eventTracker.trackCropClicked()
+		eventTracker.trackCropClicked()
 		val picture = pictures.getOrNull(currentPictureIndex) ?: return
 		val intent = OpenCropScreenIntent(picture.id, closeCurrent = false)
 		updateState { copy(event = OpenScreenEvent(intent)) }
 	}
 
 	override fun onFilterButtonClicked() {
-		// eventTracker.trackFilterClicked()
+		eventTracker.trackFilterClicked()
 		val picture = pictures.getOrNull(currentPictureIndex) ?: return
 		val filterType = picture.original.getColorFilter().colorFilterType
 		val intent = OpenFilterScreenIntent(picture.id, filterType, closeCurrent = false)
@@ -95,7 +108,7 @@ internal class GalleryViewModel(
 	}
 
 	override fun onRotateButtonClicked() {
-		// eventTracker.trackRotateClicked()
+		eventTracker.trackRotateClicked()
 
 		val picture = pictures.getOrNull(currentPictureIndex) ?: return
 		updateState { copy(processing = true) }
@@ -108,12 +121,12 @@ internal class GalleryViewModel(
 	}
 
 	override fun onRearrangeButtonClicked() {
-		// eventTracker.trackRearrangeClicked()
+		eventTracker.trackRearrangeClicked()
 		updateState { copy(event = OpenScreenEvent(OpenRearrangeScreenIntent(closeCurrent = false))) }
 	}
 
 	override fun onDeleteButtonClicked() {
-		// eventTracker.trackDeleteClicked()
+		eventTracker.trackDeleteClicked()
 
 		val picture = pictures.getOrNull(currentPictureIndex) ?: return
 		updateState { copy(processing = true) }

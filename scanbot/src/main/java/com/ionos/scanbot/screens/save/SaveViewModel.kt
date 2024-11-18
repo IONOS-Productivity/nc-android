@@ -15,11 +15,13 @@ import com.ionos.scanbot.screens.save.SaveScreen.State
 import com.ionos.scanbot.screens.save.SaveScreen.ViewModel
 import com.ionos.scanbot.screens.save.use_case.ValidateFilesForUploadSynchronous
 import com.ionos.scanbot.screens.save.use_case.save.SaveDocument
+import com.ionos.scanbot.tracking.ScanbotSaveScreenEventTracker
 import com.ionos.scanbot.upload.target_provider.UploadTarget
 import com.ionos.scanbot.util.rx.plusAssign
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 internal class SaveViewModel @Inject constructor(
@@ -27,9 +29,9 @@ internal class SaveViewModel @Inject constructor(
 	private val validateFiles: ValidateFilesForUploadSynchronous,
 	private val scanbotController: ScanbotController,
 	private val repositoryFacade: RepositoryFacade,
-	// private val eventTracker: ScanbotSaveScreenEventTracker,
+	private val eventTracker: ScanbotSaveScreenEventTracker,
 	documentNameProvider: DocumentNameProvider,
-) : BaseViewModel<Event, State>(State(documentNameProvider.getName()), /*eventTracker*/),
+) : BaseViewModel<Event, State>(State(documentNameProvider.getName()), eventTracker),
 	ViewModel {
 
 	companion object {
@@ -43,9 +45,9 @@ internal class SaveViewModel @Inject constructor(
 		updateState { copy(processing = true) }
 		updateTargetPath(uploadTarget)
 
-		// subscriptions += fileNameChangedSubject
-		// 	.throttleWithTimeout(USER_STOP_TYPING_TIMEOUT, TimeUnit.MILLISECONDS)
-		// 	.subscribe { eventTracker.trackFileNameChanged() }
+		subscriptions += fileNameChangedSubject
+			.throttleWithTimeout(USER_STOP_TYPING_TIMEOUT, TimeUnit.MILLISECONDS)
+			.subscribe { eventTracker.trackFileNameChanged() }
 	}
 
 	override fun onCleared() {
@@ -58,17 +60,17 @@ internal class SaveViewModel @Inject constructor(
 	}
 
 	override fun onBackPressed() {
-		// eventTracker.trackBackPressed()
+		eventTracker.trackBackPressed()
 		updateState { copy(event = ShowExitDialogEvent) }
 	}
 
 	override fun onExitConfirmed() {
-		// eventTracker.trackExitConfirmed()
+		eventTracker.trackExitConfirmed()
 		updateState { copy(event = CloseScreenEvent) }
 	}
 
 	override fun onExitDenied() {
-		// eventTracker.trackExitDenied()
+		eventTracker.trackExitDenied()
 	}
 
 	override fun onFileNameChanged(baseFileName: String) {
@@ -80,34 +82,34 @@ internal class SaveViewModel @Inject constructor(
 
 	override fun onFileTypeChanged(fileType: FileType) {
 		if (state().fileType != fileType) {
-			// when (fileType) {
-			// 	FileType.PDF_OCR -> eventTracker.trackPdfOcrFileTypeSelected()
-			// 	FileType.PDF -> eventTracker.trackPdfFileTypeSelected()
-			// 	FileType.JPG -> eventTracker.trackJpgFileTypeSelected()
-			// 	FileType.PNG -> eventTracker.trackPngFileTypeSelected()
-			// }
+			when (fileType) {
+				FileType.PDF_OCR -> eventTracker.trackPdfOcrFileTypeSelected()
+				FileType.PDF -> eventTracker.trackPdfFileTypeSelected()
+				FileType.JPG -> eventTracker.trackJpgFileTypeSelected()
+				FileType.PNG -> eventTracker.trackPngFileTypeSelected()
+			}
 			updateState { copy(fileType = fileType) }
 		}
 	}
 
 	override fun onSaveLocationPathClicked() {
-		// eventTracker.trackSaveLocationPathClicked()
+		eventTracker.trackSaveLocationPathClicked()
 		updateState { copy(event = LaunchUploadTargetPickerEvent(uploadTarget, state().baseFileName)) }
 	}
 
 	override fun onUploadTargetPicked(uploadTarget: UploadTarget) {
-		// eventTracker.trackSaveLocationPathChanged()
+		eventTracker.trackSaveLocationPathChanged()
 		this.uploadTarget = uploadTarget
 		updateState { copy(processing = true) }
 		updateTargetPath(uploadTarget)
 	}
 
 	override fun onUploadTargetPickerCanceled() {
-		// eventTracker.trackSaveLocationPathChangeCanceled()
+		eventTracker.trackSaveLocationPathChangeCanceled()
 	}
 
 	override fun onSaveClicked() {
-		// eventTracker.trackSaveClicked()
+		eventTracker.trackSaveClicked()
 
         runCatching {
             validateFiles(state().baseFileName)
