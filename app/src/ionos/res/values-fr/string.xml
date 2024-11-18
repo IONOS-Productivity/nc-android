@@ -2,14 +2,14 @@
 <resources>
 
     <!-- Authorization Screen -->
-    <string name="authorization_method_greeting">Bienvenue sur votre cloud</string>
-    <string name="authorization_method_login_button">Connexion</string>
-    <string name="authorization_method_description">Un navigateur s\'ouvre pour le login</string>
-    <string name="authorization_screen_cancel_button">Annuler</string>
-    <string name="authorization_screen_retry_button">Répéter</string>
+    <string name="ionos_authorization_method_greeting">Bienvenue sur votre cloud</string>
+    <string name="ionos_authorization_method_login_button">Connexion</string>
+    <string name="ionos_authorization_method_description">Un navigateur s\'ouvre pour le login</string>
+    <string name="ionos_authorization_screen_cancel_button">Annuler</string>
+    <string name="ionos_authorization_screen_retry_button">Répéter</string>
 
     <!-- Toolbar -->
-    <string name="toolbar_sort_button_text">Filtre</string>
+    <string name="ionos_toolbar_sort_button_text">Filtre</string>
 
     <!-- Side menu -->
     <string name="ionos_side_menu_storage_used">Stockage occupé</string>

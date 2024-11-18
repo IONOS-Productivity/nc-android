@@ -34,7 +34,7 @@
                 android:layout_marginStart="7dp"
                 android:contentDescription="@string/actionbar_sort"
                 android:minWidth="0dp"
-                android:text="@string/toolbar_sort_button_text"
+                android:text="@string/ionos_toolbar_sort_button_text"
                 android:textAlignment="textStart"
                 android:textAllCaps="false"
                 android:textColor="@color/ionos_default_text_color"
