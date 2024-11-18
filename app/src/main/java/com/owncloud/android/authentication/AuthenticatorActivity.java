@@ -66,7 +66,6 @@ import com.nextcloud.client.device.DeviceInfo;
 import com.nextcloud.client.di.Injectable;
 import com.nextcloud.client.network.ClientFactory;
 import com.nextcloud.client.onboarding.FirstRunActivity;
-import com.nextcloud.client.onboarding.OnboardingService;
 import com.nextcloud.client.preferences.AppPreferences;
 import com.nextcloud.common.PlainClient;
 import com.nextcloud.operations.PostMethod;
@@ -249,7 +248,6 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
 
     @Inject UserAccountManager accountManager;
     @Inject AppPreferences preferences;
-    @Inject OnboardingService onboarding;
     @Inject DeviceInfo deviceInfo;
     @Inject PassCodeManager passCodeManager;
     @Inject ViewThemeUtils.Factory viewThemeUtilsFactory;
@@ -285,9 +283,6 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
 
         Uri data = getIntent().getData();
         boolean directLogin = data != null && data.toString().startsWith(getString(R.string.login_data_own_scheme));
-        if (savedInstanceState == null && !directLogin) {
-            onboarding.launchFirstRunIfNeeded(this);
-        }
 
         onlyAdd = getIntent().getBooleanExtra(KEY_ONLY_ADD, false) || checkIfViaSSO(getIntent());
 
