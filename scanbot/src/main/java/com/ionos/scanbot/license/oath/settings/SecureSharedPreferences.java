@@ -33,7 +33,6 @@ public class SecureSharedPreferences implements SharedPreferences {
 
 	@Override
 	public Map<String, ?> getAll() {
-		//TODO: implement logic
 		return new HashMap<String, Object>();
 	}
 

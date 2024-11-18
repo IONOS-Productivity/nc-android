@@ -39,6 +39,7 @@ import android.text.TextUtils;
 import android.view.WindowManager;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.ionos.annotation.IonosCustomization;
 import com.nextcloud.appReview.InAppReviewHelper;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.account.UserAccountManager;
@@ -132,6 +133,7 @@ import static com.owncloud.android.ui.activity.ContactsPreferenceActivity.PREFER
  * Main Application of the project.
  * Contains methods to build the "static" strings. These strings were before constants in different classes.
  */
+@IonosCustomization("ScanbotComponentProvider")
 public class MainApp
     extends Application implements HasAndroidInjector, ScanbotComponentProvider {
     public static final OwnCloudVersion OUTDATED_SERVER_VERSION = NextcloudVersion.nextcloud_26;
@@ -423,7 +425,6 @@ public class MainApp
         }
     };
 
-    //TODO alk
     @Override
     public ScanbotComponent getScanbotComponent() {
         if (this.scanbotComponent == null) {
