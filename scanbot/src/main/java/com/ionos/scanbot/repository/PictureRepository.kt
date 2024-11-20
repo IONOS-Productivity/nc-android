@@ -13,10 +13,6 @@ import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
-/**
- * Created by: Alex Kucherenko
- * Date: 24.11.2017.
- */
 
 @Singleton
 internal class PictureRepository @Inject constructor() {

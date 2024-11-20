@@ -8,10 +8,7 @@ import com.ionos.scanbot.filter.crop.CropFilter
 import com.ionos.scanbot.filter.rotate.RotateFilter
 import io.scanbot.sdk.process.ImageProcessor
 
-/**
- * Created by: Alex Kucherenko
- * Date: 27.11.2017.
- */
+
 internal data class OriginalPicture(
 	val id: String,
 	private val cropFilter: CropFilter,

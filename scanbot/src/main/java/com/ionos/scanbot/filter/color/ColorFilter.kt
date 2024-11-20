@@ -7,10 +7,7 @@ import io.scanbot.sdk.process.ImageFilterTuneType
 import io.scanbot.sdk.process.ImageProcessor
 import io.scanbot.sdk.process.TuneOperation
 
-/**
- * Created by: Alex Kucherenko
- * Date: 24.11.2017.
- */
+
 internal data class ColorFilter(val colorFilterType: ColorFilterType) : Filter {
 
 	override fun apply(imageProcessor: ImageProcessor, bitmap: Bitmap): Bitmap? {

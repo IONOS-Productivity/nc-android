@@ -7,10 +7,6 @@ import java.io.File
 import java.util.*
 import javax.inject.Inject
 
-/**
- * Created by: Alex Kucherenko
- * Date: 23.11.2017.
- */
 
 internal class BitmapRepository @Inject constructor(
 	private val bitmapSaver: BitmapSaver,

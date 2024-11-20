@@ -8,9 +8,7 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
-/**
- * Created by Sergey Shandyuk on 8/16/2018.
- */
+
 public interface EncryptionAlgorithm {
 	byte[] encrypt(String data) throws IllegalBlockSizeException, BadPaddingException, NoSuchPaddingException,
 			NoSuchAlgorithmException, InvalidAlgorithmParameterException, InvalidKeyException;

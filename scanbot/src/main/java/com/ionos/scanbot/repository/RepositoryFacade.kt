@@ -10,10 +10,7 @@ import com.ionos.scanbot.repository.bitmap.BitmapRepository
 import javax.inject.Inject
 import javax.inject.Singleton
 
-/**
- * Created by: Alex Kucherenko
- * Date: 24.11.2017.
- */
+
 @Singleton
 internal class RepositoryFacade @Inject constructor(
 	private val sdkProvider: SdkProvider,

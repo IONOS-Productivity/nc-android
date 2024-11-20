@@ -13,10 +13,7 @@ import java.io.FileOutputStream
 import java.io.IOException
 import javax.inject.Inject
 
-/**
- * Created by: Alex Kucherenko
- * Date: 28.11.2017.
- */
+
 internal class BitmapSaver @Inject constructor(
 	private val context: Context,
 	private val bitmapDecoder: BitmapDecoder,

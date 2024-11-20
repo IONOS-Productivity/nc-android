@@ -13,9 +13,6 @@ import java.util.Set;
 
 import androidx.annotation.Keep;
 
-/**
- * Created by Alex Kucherenko on 02.11.2015.
- */
 
 public class SecureSharedPreferences implements SharedPreferences {
 

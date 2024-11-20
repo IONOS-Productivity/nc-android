@@ -2,9 +2,7 @@ package com.ionos.scanbot.license.oath.security.key;
 
 import java.security.SecureRandom;
 
-/**
- * Created by Sergey Shandyuk on 8/16/2018.
- */
+
 public class AesGcmKeyGenerator {
 
 	public final AesGcmKey generate() {

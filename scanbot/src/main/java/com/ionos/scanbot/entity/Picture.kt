@@ -5,10 +5,6 @@ import com.ionos.scanbot.filter.color.ColorFilterType
 import com.ionos.scanbot.filter.crop.CropFilter
 import com.ionos.scanbot.filter.rotate.RotateFilter
 
-/**
- * Created by: Alex Kucherenko
- * Date: 23.11.2017.
- */
 
  internal data class Picture(
 	val id: String,

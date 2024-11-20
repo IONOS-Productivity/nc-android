@@ -9,9 +9,7 @@ import com.ionos.scanbot.util.logger.LoggerUtil;
 
 import androidx.preference.PreferenceManager;
 
-/**
- * Created by Sergey Shandyuk on 8/16/2018.
- */
+
 public class AesGcmKeyRepository {
 	private final SharedPreferences preference;
 	private final Context context;

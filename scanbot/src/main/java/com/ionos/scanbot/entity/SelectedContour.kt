@@ -2,10 +2,6 @@ package com.ionos.scanbot.entity
 
 import android.graphics.PointF
 
-/**
- * Created by: Alex Kucherenko
- * Date: 23.11.2017.
- */
 
 internal data class SelectedContour(val normalizedPolygon: List<PointF>) {
 	companion object {

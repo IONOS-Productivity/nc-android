@@ -5,9 +5,6 @@ import android.content.SharedPreferences;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Created by y.zozulia on 18.11.2015.
- */
 
 class SecureEditor implements SharedPreferences.Editor {
 

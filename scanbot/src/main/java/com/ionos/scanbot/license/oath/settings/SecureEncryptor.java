@@ -5,10 +5,6 @@ import android.util.Base64;
 import com.ionos.scanbot.license.oath.security.algorithm.EncryptionAlgorithm;
 import com.ionos.scanbot.util.logger.LoggerUtil;
 
-/**
- * Created by y.zozulia on 18.11.2015.
- */
-
 public class SecureEncryptor {
 	private final EncryptionAlgorithm encryptionAlgorithm;
 
