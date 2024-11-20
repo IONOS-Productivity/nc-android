@@ -11,8 +11,8 @@ internal class ExitDialog @Inject constructor() {
 
 	fun show(context: Context, onConfirmed: () -> Unit, onDenied: () -> Unit = {}) {
 		if (!context.isActivityFinishing()) {
-			val dialog = createDialog(context, onConfirmed, onDenied)
-            dialog.show()
+            createDialog(context, onConfirmed, onDenied)
+                .also { it.show() }
 		}
 	}
 

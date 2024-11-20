@@ -131,7 +131,7 @@ internal class SaveViewModel @Inject constructor(
 	private fun saveDocument() {
         updateState { copy(processing = true) }
 
-		subscriptions += saveDocument(state().baseFileName, state().fileType)
+        subscriptions += saveDocument(state().baseFileName, state().fileType)
 			.subscribeOn(Schedulers.io())
 			.observeOn(AndroidSchedulers.mainThread())
 			.subscribe(::onDocumentSaved, ::onError)

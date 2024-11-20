@@ -33,7 +33,7 @@ class ScanbotInitializerImpl @Inject internal constructor(
 
         tryToInitScanbotSdk(defaultLicenseKey)
 
-		if (isSdkInitRequired()) {
+        if (isSdkInitRequired()) {
 			licenseKeyStore.getLicenseKey()
                 ?.let {  tryToInitScanbotSdk(it) }
 

@@ -9,7 +9,7 @@
         android:layout_width="0dp"
         android:layout_height="@dimen/scanbot_gallery_navigation_item_height"
         android:layout_margin="@dimen/scanbot_padding_small"
-        android:tint="?scanbot_gallery_bottom_navigation_icon_color"
+        app:tint="?scanbot_gallery_bottom_navigation_icon_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

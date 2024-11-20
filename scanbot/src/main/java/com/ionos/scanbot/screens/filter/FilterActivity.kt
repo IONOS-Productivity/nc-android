@@ -8,12 +8,15 @@ import androidx.activity.addCallback
 import com.ionos.scanbot.R
 import com.ionos.scanbot.databinding.ScanbotActivityFilterBinding
 import com.ionos.scanbot.di.inject
+import com.ionos.scanbot.exception.CreateIntentException
 import com.ionos.scanbot.filter.color.ColorFilterType
 import com.ionos.scanbot.screens.base.BaseActivity
-import com.ionos.scanbot.exception.CreateIntentException
 import com.ionos.scanbot.screens.common.LockProgressDialog
-import com.ionos.scanbot.screens.filter.FilterScreen.*
-import com.ionos.scanbot.screens.filter.FilterScreen.Event.*
+import com.ionos.scanbot.screens.filter.FilterScreen.Event
+import com.ionos.scanbot.screens.filter.FilterScreen.Event.CloseScreenEvent
+import com.ionos.scanbot.screens.filter.FilterScreen.Event.ShowErrorEvent
+import com.ionos.scanbot.screens.filter.FilterScreen.State
+import com.ionos.scanbot.screens.filter.FilterScreen.ViewModel
 import com.ionos.scanbot.screens.filter.use_case.GetColorFilterName
 
 internal class FilterActivity : BaseActivity<Event, State, ViewModel>() {
@@ -43,8 +46,10 @@ internal class FilterActivity : BaseActivity<Event, State, ViewModel>() {
 		super.onCreate(savedInstanceState)
 		initOnBackPressedCallback()
 		initListeners()
-		viewBinding.tvApplyToAll.visibility = View.VISIBLE
-        viewBinding.tvApplyToAll.setOnClickListener { viewModel.onApplyForAllClicked() }
+        viewBinding.tvApplyToAll.apply {
+            visibility = View.VISIBLE
+            setOnClickListener { viewModel.onApplyForAllClicked() }
+        }
     }
 
 	private fun getInitialState(): State {

@@ -7,6 +7,7 @@
 	<color name="scanbot_alto">#dcdcdc</color>
     <color name="scanbot_porcelain">#EBEEEF</color>
     <color name="scanbot_mine_shaft_dark">#222222</color>
+    <color name="scanbot_transparent">#00FFFFFF</color>
     <color name="scanbot_transparent_dark">#0D000000</color>
 	<color name="scanbot_transparent_pizazz">#55FF8800</color>
 	<color name="scanbot_transparent_pizazz2">#ccFF8800</color>
