@@ -665,16 +665,19 @@ class PreviewMediaActivity :
     }
 
     @Suppress("TooGenericExceptionCaught")
+    @IonosCustomization("Better UX")
     private fun playVideo() {
         setupVideoView()
 
-        if (file.isDown) {
-            playVideoUri(file.storageUri)
-        } else {
-            try {
-                LoadStreamUrl(this, user, clientFactory).execute(file.localId)
-            } catch (e: Exception) {
-                Log_OC.e(TAG, "Loading stream url not possible: $e")
+        if(exoPlayer?.currentMediaItem == null) {
+            if (file.isDown) {
+                playVideoUri(file.storageUri)
+            } else {
+                try {
+                    LoadStreamUrl(this, user, clientFactory).execute(file.localId)
+                } catch (e: Exception) {
+                    Log_OC.e(TAG, "Loading stream url not possible: $e")
+                }
             }
         }
     }
@@ -752,8 +755,12 @@ class PreviewMediaActivity :
         Log_OC.v(TAG, "onResume")
     }
 
+    @IonosCustomization("Stopping audio on latter lifecycle stage")
     override fun onDestroy() {
         Log_OC.v(TAG, "onDestroy")
+
+        stopAudio()
+        mediaPlayerServiceConnection?.unbind()
 
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mediaControlReceiver)
 
@@ -764,6 +771,7 @@ class PreviewMediaActivity :
         }
     }
 
+    @IonosCustomization("Keeping audio/video playing in background")
     override fun onStop() {
         Log_OC.v(TAG, "onStop")
 
@@ -773,9 +781,6 @@ class PreviewMediaActivity :
             }
         }
 
-        exoPlayer?.pause()
-        stopAudio()
-        mediaPlayerServiceConnection?.unbind()
         super.onStop()
     }
 
