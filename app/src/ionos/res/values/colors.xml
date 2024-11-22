@@ -125,4 +125,6 @@
 
     <color name="checkbox_fill_color">@color/dodger_blue</color>
     <color name="checkbox_stroke_color">@color/white</color>
+
+    <color name="preview_image_system_bars_color">@color/semitransparent_black</color>
 </resources>

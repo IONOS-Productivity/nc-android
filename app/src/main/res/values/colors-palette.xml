@@ -23,4 +23,5 @@
     <color name="salem">#0C8A44</color>
     <color name="jungle_mist">#BDCDD7</color>
     <color name="curious_blue">#3196D6</color>
+    <color name="semitransparent_black">#80000000</color>
 </resources>

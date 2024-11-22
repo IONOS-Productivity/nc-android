@@ -238,6 +238,10 @@
         <item name="bottomSheetDialogTheme">@style/Generic.ThemeOverlay.App.BottomSheetDialog</item>
     </style>
 
+    <style name="Theme.ownCloud.PreviewImage" parent="Theme.ownCloud.Overlay">
+        <item name="android:windowFullscreen">false</item>
+    </style>
+
     <style name="Theme.ownCloud.OverlayGrey" parent="Theme.ownCloud.OverlayBase">
         <item name="android:navigationBarColor">@color/grey_400</item>
         <item name="android:background">@color/grey_400</item>
@@ -251,7 +255,6 @@
 
     <!-- ACTION BAR STYLES -->
     <style name="Theme.ownCloud.Overlay.ActionBar" parent="@style/Widget.Material3.Toolbar">
-        <item name="android:background">@color/color_transparent</item>
         <item name="android:windowActionBarOverlay">true</item>
         <!-- Support library compatibility -->
         <item name="background">@color/color_transparent</item>

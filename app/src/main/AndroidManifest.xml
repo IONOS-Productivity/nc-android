@@ -341,7 +341,7 @@
         <activity
             android:name=".ui.preview.PreviewImageActivity"
             android:exported="false"
-            android:theme="@style/Theme.ownCloud.Overlay" />
+            android:theme="@style/Theme.ownCloud.PreviewImage" />
         <activity
             android:name=".ui.preview.PreviewMediaActivity"
             android:configChanges="orientation|screenLayout|screenSize|keyboardHidden"
