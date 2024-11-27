@@ -39,7 +39,9 @@ import android.text.TextUtils;
 import android.view.WindowManager;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.ionos.annotation.IonosCustomization;
+import com.ionos.privacy.PrivacyPreferences;
 import com.nextcloud.appReview.InAppReviewHelper;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.account.UserAccountManager;
@@ -151,6 +153,9 @@ public class MainApp
 
     @Inject
     protected AppPreferences preferences;
+
+    @Inject
+    protected PrivacyPreferences privacyPreferences;
 
     @Inject
     protected DispatchingAndroidInjector<Object> dispatchingAndroidInjector;
@@ -388,6 +393,9 @@ public class MainApp
 
         registerGlobalPassCodeProtection();
         scanbotInitializer.initialize();
+
+        FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        firebaseAnalytics.setAnalyticsCollectionEnabled(privacyPreferences.isAnalyticsEnabled());
     }
 
     private final LifecycleEventObserver lifecycleEventObserver = ((lifecycleOwner, event) -> {

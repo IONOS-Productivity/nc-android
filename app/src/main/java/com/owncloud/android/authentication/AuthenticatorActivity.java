@@ -58,6 +58,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.ionos.annotation.IonosCustomization;
 import com.google.gson.reflect.TypeToken;
+import com.ionos.privacy.DataProtectionActivity;
+import com.ionos.privacy.PrivacyPreferences;
 import com.nextcloud.android.common.ui.color.ColorUtil;
 import com.nextcloud.android.common.ui.theme.utils.ColorRole;
 import com.nextcloud.client.account.User;
@@ -248,6 +250,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
 
     @Inject UserAccountManager accountManager;
     @Inject AppPreferences preferences;
+    @Inject PrivacyPreferences privacyPreferences;
     @Inject DeviceInfo deviceInfo;
     @Inject PassCodeManager passCodeManager;
     @Inject ViewThemeUtils.Factory viewThemeUtilsFactory;
@@ -1396,12 +1399,16 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
         }
     }
 
+    @IonosCustomization
     private void endSuccess() {
         if (onlyAdd) {
             finish();
         } else {
             Intent i = new Intent(this, FileDisplayActivity.class);
             i.setAction(FileDisplayActivity.RESTART);
+            if (!privacyPreferences.isDataProtectionProcessed()) {
+                i = DataProtectionActivity.createIntent(this, i);
+            }
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(i);
         }
