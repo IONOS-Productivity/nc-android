@@ -43,7 +43,7 @@
     <string name="scanbot_filter_popup_apply_for_all">Postuler à tous</string>
     <string name="scanbot_gallery_counter_formatted" formatted="false">%d sur %d</string>
     <string name="scanbot_no_enough_free_device_space_message">L\'espace disponible de l\'appareil est insuffisant pour faire des photos. Veuillez libérer de l\'espace.</string>
-    <string name="scanbot_processing_document_title">Création  du document en cours...</string>
+    <string name="scanbot_processing_document_title">Création du document en cours...</string>
     <string name="scanbot_processing_title">En traitement...</string>
     <string name="scanbot_rearrange_title">Réorganiser pages</string>
     <string name="scanbot_reset_borders">Revenir à l\'original</string>
