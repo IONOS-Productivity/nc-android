@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ IONOS HiDrive Next - Android Client
+  ~
+  ~ SPDX-FileCopyrightText: 2024 STRATO AG.
+  ~ SPDX-License-Identifier: AGPL-3.0-or-later
+  -->
+
+<resources>
+
+    <!-- Storage Permissions Dialog -->
+    <string name="ionos_file_management_permission">Opslag-toestemmingen</string>
+    <string name="ionos_file_management_permission_optional">Opslag-toestemmingen</string>
+    <string name="ionos_file_management_permission_text">%1$s vereist toestemming voor toegang tot je bestanden voor een betere functionaliteit. Je kunt de toegang toestaan of weigeren.</string>
+    <string name="ionos_file_management_permission_optional_text">%1$s vereist toestemming voor toegang tot je bestanden voor een betere functionaliteit. Je kunt de toegang toestaan of weigeren.</string>
+
+    <!-- Sharing screen -->
+    <string name="ionos_share_search">Naam of e-mailadres…</string>
+ </resources>
