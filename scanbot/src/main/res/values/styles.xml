@@ -1,3 +1,10 @@
+<!--
+  ~ IONOS HiDrive Next - Android Client
+  ~
+  ~ SPDX-FileCopyrightText: 2024 STRATO AG.
+  ~ SPDX-License-Identifier: AGPL-3.0-or-later
+  -->
+
 <resources>
     <style name="ScanbotFilterControlSeekBar" parent="Widget.AppCompat.SeekBar">
         <item name="android:progressBackgroundTint">@drawable/scanbot_filter_controls_seek_bar_progress_background</item>

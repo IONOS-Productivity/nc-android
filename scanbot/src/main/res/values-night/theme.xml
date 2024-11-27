@@ -1,3 +1,10 @@
+<!--
+  ~ IONOS HiDrive Next - Android Client
+  ~
+  ~ SPDX-FileCopyrightText: 2024 STRATO AG.
+  ~ SPDX-License-Identifier: AGPL-3.0-or-later
+  -->
+
 <resources>
     <style name="ScanbotDefaultTheme">
         <item name="scanbot_app_bar_color">@color/scanbot_mine_shaft_dark</item>

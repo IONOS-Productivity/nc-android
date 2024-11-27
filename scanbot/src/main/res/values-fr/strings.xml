@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ IONOS HiDrive Next - Android Client
+  ~
+  ~ SPDX-FileCopyrightText: 2024 STRATO AG.
+  ~ SPDX-License-Identifier: AGPL-3.0-or-later
+  -->
+
 <resources>
     <string name="scanbot_cancel_btn_title">Annuler</string>
     <string name="scanbot_fail">Une erreur est survenue, veuillez réessayer plus tard.</string>
