@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Nextcloud - Android Client
+  ~ IONOS HiDrive Next - Android Client
   ~
-  ~ SPDX-FileCopyrightText: 2018-2024 Tobias Kaminsky <tobias@kaminsky.me>
-  ~ SPDX-FileCopyrightText: 2024 Alper Ozturk <alper.ozturk@nextcloud.com>
-  ~ SPDX-FileCopyrightText: 2024 Bhavesh Kumawat <kumawatbhavesh1000@gmail.com>
-  ~ SPDX-FileCopyrightText: 2017 Mario Danic <mario@lovelyhq.com>
-  ~ SPDX-FileCopyrightText: 2016 Andy Scherzinger <info@andy-scherzinger.de>
-  ~ SPDX-License-Identifier: AGPL-3.0-or-later OR GPL-2.0-only
--->
+  ~ SPDX-FileCopyrightText: 2024 STRATO AG.
+  ~ SPDX-License-Identifier: AGPL-3.0-or-later
+  -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <!--
       standard menu

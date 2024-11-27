@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Nextcloud - Android Client
+  ~ IONOS HiDrive Next - Android Client
   ~
-  ~ SPDX-FileCopyrightText: 2019-2024 Nextcloud GmbH and Nextcloud contributors
-  ~ SPDX-License-Identifier: AGPL-3.0-or-later OR GPL-2.0-only
--->
+  ~ SPDX-FileCopyrightText: 2024 STRATO AG.
+  ~ SPDX-License-Identifier: AGPL-3.0-or-later
+  -->
 <resources>
     <!-- App name  and other strings-->
     <string name="app_name">IONOS HiDrive Next</string>

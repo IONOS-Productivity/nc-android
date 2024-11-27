@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ Nextcloud - Android Client
+  ~ IONOS HiDrive Next - Android Client
   ~
-  ~ SPDX-FileCopyrightText: 2017 Tobias Kaminsky <tobias@kaminsky.me>
-  ~ SPDX-FileCopyrightText: 2017 Nextcloud GmbH
-  ~ SPDX-License-Identifier: AGPL-3.0-or-later OR GPL-2.0-only
--->
+  ~ SPDX-FileCopyrightText: 2024 STRATO AG.
+  ~ SPDX-License-Identifier: AGPL-3.0-or-later
+  -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/contacts_linear_layout"
