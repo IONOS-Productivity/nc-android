@@ -10,4 +10,10 @@
     <!-- Sharing screen -->
     <string name="ionos_share_search">Name or email address…</string>
 
+    <!-- Data protection -->
+    <string name="ionos_data_protection_title">Privacy Settings</string>
+    <string name="ionos_data_protection_description">This application uses cookies and similar technologies. By clicking on Agree, you consent to the processing of your data and also to its transfer to third parties. Visit our <annotation type="information_link">Privacy Policy </annotation> for more information, also on data processing by third party providers. Click on <annotation type="reject_link">Reject</annotation> to prevent use of the tool, or change your selection at any time in Settings.</string>
+    <string name="ionos_data_protection_settings_button">Settings</string>
+    <string name="ionos_data_protection_agree_button">Agree</string>
+
 </resources>
