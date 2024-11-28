@@ -2,7 +2,7 @@
  * IONOS HiDrive Next - Android Client
  *
  * SPDX-FileCopyrightText: 2024 STRATO AG.
- * SPDX-License-Identifier: AGPL-3.0-or-later
+ * SPDX-License-Identifier: GPL-2.0
  */
 
 package com.ionos.scanbot.network
