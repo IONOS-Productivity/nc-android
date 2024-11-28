@@ -1,9 +1,11 @@
 <!--
-  ~ IONOS HiDrive Next - Android Client
+  ~ Nextcloud - Android Client
   ~
+  ~ SPDX-FileCopyrightText: 2024 Alper Ozturk <alper.ozturk@nextcloud.com>
+  ~ SPDX-FileCopyrightText: 2024 Nextcloud GmbH
   ~ SPDX-FileCopyrightText: 2024 STRATO AG.
-  ~ SPDX-License-Identifier: GPL-2.0
-  -->
+  ~ SPDX-License-Identifier: AGPL-3.0-or-later OR GPL-2.0-only
+-->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="1dp"
     android:height="1dp"

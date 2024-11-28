@@ -1,8 +1,10 @@
 /*
- * IONOS HiDrive Next - Android Client
+ * Nextcloud - Android Client
  *
+ * SPDX-FileCopyrightText: 2023 Tobias Kaminsky <tobias@kaminsky.me>
+ * SPDX-FileCopyrightText: 2023 Nextcloud GmbH
  * SPDX-FileCopyrightText: 2024 STRATO AG.
- * SPDX-License-Identifier: GPL-2.0
+ * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 package com.nextcloud.android.appReview
 
