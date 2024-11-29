@@ -26,12 +26,10 @@ import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import io.scanbot.sdk.process.ImageProcessor
 
 internal class FilterViewModel(
 	initialState: State,
 	private val repositoryFacade: RepositoryFacade,
-	private val imageProcessor: ImageProcessor,
 	private val eventTracker: ScanbotFilterScreenEventTracker,
 ) : BaseViewModel<Event, State>(initialState, eventTracker),
 	ViewModel {
@@ -147,7 +145,7 @@ internal class FilterViewModel(
 		val filterTypes = setOf(FilterType.CROP, FilterType.ROTATE)
 
 		repositoryFacade.readOriginalBitmapWithFilters(pictureId, filterTypes)
-			?.let { ColorFilter(colorFilterType).apply(imageProcessor, it) }
+			?.let { ColorFilter(colorFilterType).apply(it) }
 			?: throw ReadPictureBitmapException(pictureId)
 	}
 

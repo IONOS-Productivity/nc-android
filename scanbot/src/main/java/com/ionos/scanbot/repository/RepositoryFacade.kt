@@ -24,7 +24,6 @@ internal class RepositoryFacade @Inject constructor(
 	private val bitmapRepository: BitmapRepository,
 	private val pictureRepository: PictureRepository,
 ) {
-	private val imageProcessor by lazy { sdkProvider.get().imageProcessor() }
 
 	fun isEmpty(): Boolean {
 		return pictureRepository.isEmpty()
@@ -52,7 +51,7 @@ internal class RepositoryFacade @Inject constructor(
 	fun readOriginalBitmapWithFilters(id: String, filterTypes: Set<FilterType>): Bitmap? {
 		return pictureRepository.read(id)?.original?.let { originalPicture ->
 			bitmapRepository.read(originalPicture.id)?.let { originalBitmap ->
-				originalPicture.applyFilters(imageProcessor, filterTypes, originalBitmap)
+				originalPicture.applyFilters(filterTypes, originalBitmap)
 			}
 		}
 	}
@@ -72,7 +71,7 @@ internal class RepositoryFacade @Inject constructor(
 	fun update(picture: Picture, originalBitmap: Bitmap) {
 		bitmapRepository.delete(picture.modified.id)
 		val filterTypes = setOf(FilterType.COLOR, FilterType.CROP, FilterType.ROTATE)
-		picture.original.applyFilters(imageProcessor, filterTypes, originalBitmap)
+		picture.original.applyFilters(filterTypes, originalBitmap)
 			?.let { modifiedBitmap -> bitmapRepository.create(modifiedBitmap) }
 			?.let { modifiedPictureId ->
 				pictureRepository.update(

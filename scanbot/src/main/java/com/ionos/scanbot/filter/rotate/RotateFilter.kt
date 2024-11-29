@@ -10,9 +10,7 @@ package com.ionos.scanbot.filter.rotate
 import android.graphics.Bitmap
 import com.ionos.scanbot.filter.Filter
 import com.ionos.scanbot.util.graphics.rotate
-import io.scanbot.sdk.process.ImageProcessor
 
-
- data class RotateFilter(val degrees: Float) : Filter {
-	override fun apply(imageProcessor: ImageProcessor, bitmap: Bitmap) = bitmap.rotate(degrees)
+internal data class RotateFilter(val degrees: Float) : Filter {
+    override fun apply(bitmap: Bitmap) = bitmap.rotate(degrees)
 }
