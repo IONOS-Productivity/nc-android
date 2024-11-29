@@ -7,14 +7,14 @@
     <!-- Data protection -->
     <dimen name="ionos_data_protection_screen_padding">32dp</dimen>
     <dimen name="ionos_data_protection_icon_size">128dp</dimen>
-    <dimen name="ionos_data_protection_title_text_size">36sp</dimen>
+    <dimen name="ionos_data_protection_title_text_size">35sp</dimen>
     <dimen name="ionos_data_protection_title_line_height">49sp</dimen>
     <dimen name="ionos_data_protection_title_top_margin">32dp</dimen>
     <dimen name="ionos_data_protection_description_text_size">18sp</dimen>
     <dimen name="ionos_data_protection_description_line_height">24sp</dimen>
     <dimen name="ionos_data_protection_description_top_margin">24dp</dimen>
     <dimen name="ionos_data_protection_description_bottom_margin">24dp</dimen>
-    <dimen name="ionos_data_protection_text_max_width">475dp</dimen>
+    <dimen name="ionos_data_protection_text_max_width">480dp</dimen>
     <dimen name="ionos_data_protection_agree_button_top_margin">16dp</dimen>
     <dimen name="ionos_data_protection_button_max_width">288dp</dimen>
 
