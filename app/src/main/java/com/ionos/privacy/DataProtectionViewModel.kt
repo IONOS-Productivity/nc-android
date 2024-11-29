@@ -21,6 +21,10 @@ class DataProtectionViewModel @Inject constructor(
         save(isAnalyticsEnabled = true)
     }
 
+    fun onRejectLinkClick() {
+        save(isAnalyticsEnabled = false)
+    }
+
     fun onSettingsButtonClick() {
         _stateFlow.update { it.copy(page = Page.DETAIL) }
     }

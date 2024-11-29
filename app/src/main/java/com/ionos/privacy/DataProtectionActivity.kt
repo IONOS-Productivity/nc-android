@@ -4,18 +4,23 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
 import androidx.activity.SystemBarStyle
 import androidx.activity.addCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.ionos.utils.context.isDarkMode
+import com.ionos.utils.text.convertAnnotatedTextToLinks
 import com.nextcloud.utils.extensions.getParcelableArgument
+import com.owncloud.android.R
 import com.owncloud.android.databinding.ActivityDataProtectionBinding
 import com.owncloud.android.ui.activity.BaseActivity
 import kotlinx.coroutines.flow.launchIn
@@ -40,6 +45,15 @@ class DataProtectionActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        val descriptionText = getText(R.string.ionos_data_protection_description).convertAnnotatedTextToLinks(
+            linkColor = ContextCompat.getColor(this, R.color.curious_blue),
+            linkUnderline = false,
+            linkHandler = ::handleLink,
+        )
+
+        binding.overviewPage.descriptionTextView.text = descriptionText
+        binding.overviewPage.descriptionTextView.movementMethod = LinkMovementMethod.getInstance()
+
         binding.overviewPage.agreeButton.setOnClickListener { viewModel.onAgreeButtonClick() }
         binding.overviewPage.settingsButton.setOnClickListener { viewModel.onSettingsButtonClick() }
         binding.detailPage.backButton.setOnClickListener { viewModel.onDetailPageBackButtonClick() }
@@ -60,6 +74,14 @@ class DataProtectionActivity : BaseActivity() {
             .flowWithLifecycle(lifecycle)
             .onEach(::updateState)
             .launchIn(lifecycleScope)
+    }
+
+    private fun handleLink(type: String) {
+        when (type) {
+            INFORMATION_LINK -> startActivity(Intent(Intent.ACTION_VIEW, getString(R.string.privacy_url).toUri()))
+            REJECT_LINK -> viewModel.onRejectLinkClick()
+            else -> throw IllegalArgumentException("Unknown link type: $type")
+        }
     }
 
     private fun updateState(state: DataProtectionViewModel.State) {
@@ -92,6 +114,8 @@ class DataProtectionActivity : BaseActivity() {
 
     companion object {
         private const val TARGET_SCREEN_INTENT_KEY = "target_screen_intent"
+        private const val INFORMATION_LINK = "information_link"
+        private const val REJECT_LINK = "reject_link"
 
         @JvmStatic
         fun createIntent(context: Context): Intent {
