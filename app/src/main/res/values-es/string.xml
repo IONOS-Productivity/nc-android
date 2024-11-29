@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Data protection -->
+    <string name="ionos_data_protection_title">Configuración de la protección de datos</string>
+    <string name="ionos_data_protection_description">Esta aplicación utiliza cookies y tecnologías similares. Al hacer clic en Aceptar, consientes el procesamiento y la transferencia de tus datos a terceros. Encontrarás más información, incluida la relativa al procesamiento de datos por parte de terceros, en los ajustes y en nuestra <annotation type="information_link">política de privacidad </annotation> Puedes rechazar la utilización de estas herramientas <annotation type="reject_link">reject</annotation> o modificar tu selección en cualquier momento a través de tus ajustes.</string>
+    <string name="ionos_data_protection_settings_button">Ajustes</string>
+    <string name="ionos_data_protection_agree_button">Aceptar</string>
+
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Data protection -->
+    <string name="ionos_data_protection_title">Privacyinstellingen</string>
+    <string name="ionos_data_protection_description">Deze toepassing gebruikt cookies en vergelijkbare technologie. Door akkoord te gaan, accepteer je de verwerking en de overdracht van je gegevens aan derden. <annotation type="information_link">privacybeleid </annotation>. Je kunt het gebruik van de tools op elk moment <annotation type="reject_link">weigeren</annotation> of je keuze aanpassen via je instellingen.</string>
+    <string name="ionos_data_protection_settings_button">Instellingen</string>
+    <string name="ionos_data_protection_agree_button">Akkoord</string>
+
+</resources>
