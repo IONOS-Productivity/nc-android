@@ -22,6 +22,7 @@ import io.scanbot.pdf.model.PageFit
 import io.scanbot.pdf.model.PageSize
 import io.scanbot.pdf.model.PdfAttributes
 import io.scanbot.pdf.model.PdfConfig
+import io.scanbot.pdf.model.ResamplingMethod
 import io.scanbot.sdk.blob.BlobType
 import java.io.File
 import javax.inject.Inject
@@ -47,7 +48,8 @@ internal class SavePdf @Inject constructor(
             pageFit = PageFit.FIT_IN,
             dpi = PdfConfig.DEFAULT_PDF_DPI,
             jpegQuality = PdfConfig.DEFAULT_JPEG_QUALITY,
-            resample = false,
+            // https://en.wikipedia.org/wiki/Image_scaling#Algorithms
+            resamplingMethod = ResamplingMethod.NONE,
         )
     }
 

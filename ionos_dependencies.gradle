@@ -7,7 +7,7 @@
 
 buildscript {
     ext {
-        scanbot_sdk_version = '5.1.1'
+        scanbot_sdk_version = '5.2.3'
         androidx_exifinterface_version = '1.3.6'
         preference_version = '1.2.0'
         coroutines_version = "1.6.4"

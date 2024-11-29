@@ -1,44 +1,7 @@
 -ignorewarnings
 
--keep public class io.scanbot.sdk.ui.** { *; }
-
--keep public class io.scanbot.sap.SapManager { *; }
-
--keeppackagenames io.scanbot.sdk.core.contourdetector.**
--keep public class io.scanbot.sdk.core.contourdetector.**{ *; }
-
 -keeppackagenames com.googlecode.tesseract.android.**
 -keep public class com.googlecode.tesseract.android.**{ *; }
-
--keeppackagenames io.scanbot.payformscanner.**
--keep public class io.scanbot.payformscanner.**{ *; }
-
--keeppackagenames io.scanbot.mrzscanner.**
--keep public class io.scanbot.mrzscanner.**{ *; }
-
--keeppackagenames io.scanbot.dcscanner.**
--keep public class io.scanbot.dcscanner.**{ *; }
-
--keeppackagenames io.scanbot.tiffwriter.**
--keep public class io.scanbot.tiffwriter.**{ *; }
-
--keeppackagenames io.scanbot.chequescanner.**
--keep public class io.scanbot.chequescanner.**{ *; }
-
--keeppackagenames io.scanbot.textorientation.**
--keep public class io.scanbot.textorientation.**{ *; }
-
--keeppackagenames io.scanbot.barcodescanner.**
--keep public class io.scanbot.barcodescanner.**{ *; }
-
--keeppackagenames io.scanbot.hicscanner.**
--keep public class io.scanbot.hicscanner.**{ *; }
-
--keeppackagenames io.scanbot.sdk.process.**
--keep public class io.scanbot.sdk.process.**{ *; }
-
--keeppackagenames io.scanbot.multipleobjectsscanner.**
--keep public class io.scanbot.multipleobjectsscanner.**{ *; }
 
 # Gson
 # Gson uses generic type information stored in a class file when working with fields. Proguard
