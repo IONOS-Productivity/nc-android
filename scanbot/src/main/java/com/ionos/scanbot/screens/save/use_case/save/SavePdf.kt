@@ -86,8 +86,8 @@ internal class SavePdf @Inject constructor(
     }
 
     private fun renderDocument(imageFileUris: List<Uri>): File {
-        val pdfFile = pdfRenderer.renderDocumentFromImages(
-            imageFileUris = imageFileUris,
+        val pdfFile = pdfRenderer.render(
+            imageFileUris = imageFileUris.toTypedArray(),
             sourceFilesEncrypted = false,
             pdfConfig = pdfConfig
         )

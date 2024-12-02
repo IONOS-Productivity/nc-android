@@ -11,7 +11,7 @@ import android.graphics.Bitmap
 import com.ionos.scanbot.entity.SelectedContour
 import io.scanbot.sdk.core.contourdetector.ContourDetector
 import io.scanbot.sdk.core.contourdetector.DetectionResult
-import io.scanbot.sdk.core.contourdetector.DetectionStatus.*
+import io.scanbot.sdk.core.contourdetector.DocumentDetectionStatus.*
 import javax.inject.Inject
 
 internal class SelectContour @Inject constructor() {

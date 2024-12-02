@@ -9,10 +9,10 @@ package com.ionos.scanbot.filter.color
 
 import android.graphics.Bitmap
 import com.ionos.scanbot.filter.Filter
-import io.scanbot.imagefilters.BrightnessFilter
-import io.scanbot.imagefilters.ContrastFilter
-import io.scanbot.imagefilters.LegacyFilter
-import io.scanbot.imagefilters.WhiteBlackPointFilter
+import io.scanbot.sdk.imagefilters.BrightnessFilter
+import io.scanbot.sdk.imagefilters.ContrastFilter
+import io.scanbot.sdk.imagefilters.LegacyFilter
+import io.scanbot.sdk.imagefilters.WhiteBlackPointFilter
 import io.scanbot.sdk.process.ImageProcessor
 
 internal data class ColorFilter(val colorFilterType: ColorFilterType) : Filter {
