@@ -15,10 +15,6 @@ class StubScanbotSaveScreenEventTracker @Inject constructor(
 
     override fun trackBackPressed() = Unit
 
-    override fun trackExitConfirmed() = Unit
-
-    override fun trackExitDenied() = Unit
-
     override fun trackSaveClicked() = Unit
 
     override fun trackFileNameChanged() = Unit

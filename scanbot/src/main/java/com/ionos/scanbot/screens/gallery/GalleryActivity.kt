@@ -7,6 +7,7 @@
 
 package com.ionos.scanbot.screens.gallery
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -19,6 +20,7 @@ import com.ionos.scanbot.screens.base.BaseActivity
 import com.ionos.scanbot.screens.common.ExitDialog
 import com.ionos.scanbot.screens.common.LockProgressDialog
 import com.ionos.scanbot.screens.common.use_case.open_screen.OpenScreen
+import com.ionos.scanbot.screens.common.use_case.open_screen.OpenScreenIntent.*
 import com.ionos.scanbot.screens.gallery.GalleryScreen.ColorFilterIcon
 import com.ionos.scanbot.screens.gallery.GalleryScreen.Event
 import com.ionos.scanbot.screens.gallery.GalleryScreen.Event.DisplayPicturesEvent
@@ -69,6 +71,13 @@ internal class GalleryActivity : BaseActivity<Event, State, ViewModel>() {
 		super.onStart()
 		viewModel.onStart()
 	}
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == OpenSaveScreenIntent.REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            viewModel.onSuccessSaveScreenResult()
+        }
+    }
 
 	private fun initOnBackPressedCallback() {
 		onBackPressedDispatcher.addCallback(this, true) { viewModel.onBackPressed() }

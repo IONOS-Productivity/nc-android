@@ -59,6 +59,10 @@ internal class GalleryViewModel(
 		updateState { copy(event = null) }
 	}
 
+    override fun onSuccessSaveScreenResult() {
+        updateState { copy(event = PerformExitEvent) }
+    }
+
 	override fun onPageSelected(pageIndex: Int) {
 		if (currentPictureIndex < pageIndex) {
 			eventTracker.trackSwipeNext()
@@ -89,10 +93,10 @@ internal class GalleryViewModel(
 		eventTracker.trackExitDenied()
 	}
 
-	override fun onSaveButtonClicked() {
-		eventTracker.trackSaveClicked()
-		updateState { copy(event = OpenScreenEvent(OpenSaveScreenIntent(closeCurrent = true))) }
-	}
+    override fun onSaveButtonClicked() {
+        eventTracker.trackSaveClicked()
+        updateState { copy(event = OpenScreenEvent(OpenSaveScreenIntent(closeCurrent = false))) }
+    }
 
 	override fun onAddButtonClicked() {
 		eventTracker.trackAddPictureClicked()
@@ -143,22 +147,26 @@ internal class GalleryViewModel(
 			.andThen(loadPictures())
 			.subscribeOn(Schedulers.io())
 			.observeOn(AndroidSchedulers.mainThread())
-			.subscribe(::oPicturesLoaded, ::onError)
+            .subscribe(::onPictureDeleted, ::onError)
 	}
 
-	private fun oPicturesLoaded(pictures: List<Picture>) = if (pictures.isNotEmpty()) {
-		this.pictures = pictures
-		this.initialPictureId?.let { currentPictureIndex = pictures.indexOr0(it) }
-		this.initialPictureId = null
+    private fun onPictureDeleted(remainPictures: List<Picture>) = if (remainPictures.isNotEmpty()) {
+        oPicturesLoaded(remainPictures)
+    } else {
+        updateState { copy(processing = false, event = OpenScreenEvent(OpenCameraScreenIntent(closeCurrent = true))) }
+    }
 
-		val pageInfo = PageInfo(currentPictureIndex, pictures.size)
-		val filterIcon = getPictureColorFilterIcon(currentPictureIndex)
-		val event = DisplayPicturesEvent(pictures)
+    private fun oPicturesLoaded(pictures: List<Picture>) {
+        this.pictures = pictures
+        this.initialPictureId?.let { currentPictureIndex = pictures.indexOr0(it) }
+        this.initialPictureId = null
 
-		updateState { copy(pageInfo = pageInfo, filterIcon = filterIcon, processing = false, event = event) }
-	} else {
-		updateState { copy(processing = false, event = OpenScreenEvent(OpenCameraScreenIntent(closeCurrent = true))) }
-	}
+        val pageInfo = PageInfo(currentPictureIndex, pictures.size)
+        val filterIcon = getPictureColorFilterIcon(currentPictureIndex)
+        val event = DisplayPicturesEvent(pictures)
+
+        updateState { copy(pageInfo = pageInfo, filterIcon = filterIcon, processing = false, event = event) }
+    }
 
 	private fun onRepositoryReleased() {
 		updateState { copy(processing = false, event = PerformExitEvent) }

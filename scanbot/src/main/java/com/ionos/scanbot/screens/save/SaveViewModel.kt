@@ -16,7 +16,6 @@ import com.ionos.scanbot.screens.save.SaveScreen.Event
 import com.ionos.scanbot.screens.save.SaveScreen.Event.CloseScreenEvent
 import com.ionos.scanbot.screens.save.SaveScreen.Event.HandleErrorEvent
 import com.ionos.scanbot.screens.save.SaveScreen.Event.LaunchUploadTargetPickerEvent
-import com.ionos.scanbot.screens.save.SaveScreen.Event.ShowExitDialogEvent
 import com.ionos.scanbot.screens.save.SaveScreen.FileType
 import com.ionos.scanbot.screens.save.SaveScreen.State
 import com.ionos.scanbot.screens.save.SaveScreen.ViewModel
@@ -57,28 +56,14 @@ internal class SaveViewModel @Inject constructor(
 			.subscribe { eventTracker.trackFileNameChanged() }
 	}
 
-	override fun onCleared() {
-		super.onCleared()
-		repositoryFacade.release()
-	}
-
 	override fun onEventHandled() {
 		updateState { copy(event = null) }
 	}
 
-	override fun onBackPressed() {
-		eventTracker.trackBackPressed()
-		updateState { copy(event = ShowExitDialogEvent) }
-	}
-
-	override fun onExitConfirmed() {
-		eventTracker.trackExitConfirmed()
-		updateState { copy(event = CloseScreenEvent) }
-	}
-
-	override fun onExitDenied() {
-		eventTracker.trackExitDenied()
-	}
+    override fun onBackPressed() {
+        eventTracker.trackBackPressed()
+        updateState { copy(event = CloseScreenEvent(successResult = false)) }
+    }
 
 	override fun onFileNameChanged(baseFileName: String) {
 		if (state().baseFileName != baseFileName) {
@@ -139,7 +124,8 @@ internal class SaveViewModel @Inject constructor(
         updateState { copy(processing = true) }
 
         subscriptions += saveDocument(state().baseFileName, state().fileType)
-			.subscribeOn(Schedulers.io())
+            .doOnSuccess { repositoryFacade.release() }
+            .subscribeOn(Schedulers.io())
 			.observeOn(AndroidSchedulers.mainThread())
 			.subscribe(::onDocumentSaved, ::onError)
 	}
@@ -150,7 +136,7 @@ internal class SaveViewModel @Inject constructor(
 
 	private fun onDocumentSaved(uris: List<Uri>) {
 		scanbotController.onDocumentSaved(uris)
-		updateState { copy(processing = false, event = CloseScreenEvent) }
+        updateState { copy(processing = false, event = CloseScreenEvent(successResult = true)) }
 	}
 
 	private fun onError(error: Throwable) {

@@ -20,7 +20,7 @@ import com.ionos.scanbot.screens.save.SaveActivity
 internal class OpenScreen(private val activity: Activity) {
 
 	operator fun invoke(intent: OpenScreenIntent) {
-		activity.startActivity(intent.toAndroidIntent())
+        activity.startActivityForResult(intent.toAndroidIntent(), intent.requestCode)
 		if (intent.closeCurrent) {
 			activity.finish()
 		}
