@@ -56,9 +56,9 @@ class DataProtectionActivity : BaseActivity() {
 
         binding.overviewPage.agreeButton.setOnClickListener { viewModel.onAgreeButtonClick() }
         binding.overviewPage.settingsButton.setOnClickListener { viewModel.onSettingsButtonClick() }
-        binding.detailPage.backButton.setOnClickListener { viewModel.onDetailPageBackButtonClick() }
+        binding.detailPage.toolbar.setNavigationOnClickListener { viewModel.onDetailPageBackButtonClick() }
         binding.detailPage.saveButton.setOnClickListener { viewModel.onSaveButtonClick() }
-        binding.detailPage.analyticsSwitch.setOnCheckedChangeListener { _, isChecked ->
+        binding.detailPage.switchers.analyticsSwitch.setOnCheckedChangeListener { _, isChecked ->
             viewModel.onAnalyticsCheckedChange(isChecked)
         }
 
@@ -97,8 +97,8 @@ class DataProtectionActivity : BaseActivity() {
             setSystemBarsAppearance(!isDarkMode())
             detailPageOnBackPressedCallback.isEnabled = true
         }
-        if (binding.detailPage.analyticsSwitch.isChecked != state.isAnalyticsEnabled) {
-            binding.detailPage.analyticsSwitch.isChecked = state.isAnalyticsEnabled
+        if (binding.detailPage.switchers.analyticsSwitch.isChecked != state.isAnalyticsEnabled) {
+            binding.detailPage.switchers.analyticsSwitch.isChecked = state.isAnalyticsEnabled
         }
         if (state.isProcessed) {
             intent.getParcelableArgument(TARGET_SCREEN_INTENT_KEY, Intent::class.java)?.let(::startActivity)

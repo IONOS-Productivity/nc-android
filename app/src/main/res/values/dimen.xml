@@ -17,5 +17,6 @@
     <dimen name="ionos_data_protection_text_max_width">288dp</dimen>
     <dimen name="ionos_data_protection_agree_button_top_margin">16dp</dimen>
     <dimen name="ionos_data_protection_button_max_width">288dp</dimen>
+    <dimen name="ionos_data_protection_switch_vertical_padding">12dp</dimen>
 
 </resources>

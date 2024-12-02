@@ -1,47 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/back_button"
-        style="@style/Theme.Dialog.Button.OutlinedButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_margin="16dp"
-        android:layout_marginBottom="@dimen/standard_margin"
-        android:text="Back" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
-
-    <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/necessary_data_switch"
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:enabled="false"
-        android:text="Necessary data" />
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/Theme.ToolbarTheme"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:navigationIconTint="@color/default_icon_color"
+        app:title="@string/ionos_data_protection_title" />
 
-    <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/analytics_switch"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Analytics" />
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/save_button"
-        style="@style/Theme.Dialog.IconButton.Filled"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center"
-        android:layout_margin="16dp"
-        android:text="Save settings" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/ionos_data_protection_screen_padding">
+
+            <include
+                android:id="@+id/switchers"
+                layout="@layout/settings_privacy_switchers"
+                app:layout_constraintBottom_toTopOf="@id/content_space"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Space
+                android:id="@+id/content_space"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toTopOf="@id/save_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/switchers" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/save_button"
+                style="@style/Theme.Dialog.IconButton.Filled"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ionos_data_protection_agree_button_top_margin"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="@string/ionos_data_protection_settings_save"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/content_space"
+                app:layout_constraintWidth_max="@dimen/ionos_data_protection_button_max_width" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 
 </LinearLayout>
