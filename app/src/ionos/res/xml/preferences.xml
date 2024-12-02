@@ -118,6 +118,10 @@
             android:title="@string/prefs_remove_e2e" />
 
         <Preference
+            android:key="privacy_settings"
+            android:layout="@layout/settings_preference_list_item"
+            android:title="@string/ionos_data_protection_title" />
+        <Preference
             android:key="help"
             android:layout="@layout/settings_preference_list_item"
             android:title="@string/prefs_help" />

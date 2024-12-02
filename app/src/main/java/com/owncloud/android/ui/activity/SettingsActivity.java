@@ -40,6 +40,7 @@ import android.webkit.URLUtil;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.ionos.annotation.IonosCustomization;
+import com.ionos.privacy.PrivacySettingsActivity;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.account.UserAccountManager;
 import com.nextcloud.client.di.Injectable;
@@ -327,6 +328,7 @@ public class SettingsActivity extends PreferenceActivity
         setupInternalTwoWaySyncPreference(preferenceCategorySync);
     }
 
+    @IonosCustomization
     private void setupMoreCategory() {
         final PreferenceCategory preferenceCategoryMore = (PreferenceCategory) findPreference("more");
         viewThemeUtils.files.themePreferenceCategory(preferenceCategoryMore);
@@ -342,6 +344,8 @@ public class SettingsActivity extends PreferenceActivity
         setupE2EMnemonicPreference(preferenceCategoryMore);
 
         removeE2E(preferenceCategoryMore);
+
+        setupPrivacySettingsPreference(preferenceCategoryMore);
 
         setupHelpPreference(preferenceCategoryMore);
 
@@ -539,6 +543,16 @@ public class SettingsActivity extends PreferenceActivity
             })
             .create()
             .show();
+    }
+
+    private void setupPrivacySettingsPreference(PreferenceCategory preferenceCategoryMore) {
+        Preference privacySettings = findPreference("privacy_settings");
+        if (privacySettings != null) {
+            privacySettings.setOnPreferenceClickListener(preference -> {
+                startActivity(PrivacySettingsActivity.createIntent(this));
+                return true;
+            });
+        }
     }
 
     private void setupHelpPreference(PreferenceCategory preferenceCategoryMore) {
