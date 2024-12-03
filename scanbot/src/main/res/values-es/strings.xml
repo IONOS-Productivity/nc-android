@@ -28,6 +28,7 @@
     <string name="scanbot_camera_import_btn_title">Importar</string>
     <string name="scanbot_creating_document_error_message">Error al crear el documento</string>
     <string name="scanbot_detect_document">Detectar documento</string>
+    <string name="scanbot_document_name_format" formatted="false">scan_%1$tY%1$tm%1$td-%1$tH%1$tM%1$tS</string>
     <string name="scanbot_exit_confirmation_message">Se perderá el progreso</string>
     <string name="scanbot_exit_confirmation_title">Escanear documento</string>
     <string name="scanbot_file_import_failed">No se puede importar el archivo %s.</string>
@@ -39,6 +40,7 @@
     <string name="scanbot_filter_magic_text">Texto mágico</string>
     <string name="scanbot_filter_none">Sin filtro</string>
     <string name="scanbot_filter_popup_apply_for_all">Aplicar a todo</string>
+    <string name="scanbot_gallery_counter_formatted" formatted="false">%d de %d</string>
     <string name="scanbot_no_enough_free_device_space_message">No hay suficiente memoria en el dispositivo para hacer la foto. Libera espacio.</string>
     <string name="scanbot_processing_document_title">Procesando documento...</string>
     <string name="scanbot_processing_title">Procesando...</string>
@@ -51,4 +53,6 @@
     <string name="scanbot_gallery_bottom_navigation_item_crop">Recortar</string>
     <string name="scanbot_gallery_bottom_navigation_item_filter">Filtro</string>
     <string name="scanbot_gallery_bottom_navigation_item_rotate">Rotar</string>
+    <string name="scanbot_gallery_bottom_navigation_item_rearrange">Reorganizar</string>
+    <string name="scanbot_gallery_bottom_navigation_item_delete">Borrar</string>
 </resources>

@@ -28,10 +28,12 @@
     <string name="scanbot_camera_import_btn_title">Importieren</string>
     <string name="scanbot_creating_document_error_message">Beim Erstellen des Dokuments ist ein Fehler aufgetreten</string>
     <string name="scanbot_detect_document">Dokument erkennen</string>
+    <string name="scanbot_document_name_format" formatted="false">scan_%1$tY%1$tm%1$td-%1$tH%1$tM%1$tS</string>
     <string name="scanbot_exit_confirmation_message">Der Fortschritt wird verloren gehen</string>
     <string name="scanbot_exit_confirmation_title">Dokument scannen</string>
     <string name="scanbot_file_import_failed">Datei %s kann nicht importiert werden</string>
     <string name="scanbot_filter_applying_for_all">Filter wird auf alle Bilder angewendet</string>
+    <string name="scanbot_gallery_counter_formatted" formatted="false">%d von %d</string>
     <string name="scanbot_filter_black_n_white">Schwarzweiß</string>
     <string name="scanbot_filter_color">Farbe</string>
     <string name="scanbot_filter_grayscale">Graustufen</string>
@@ -51,4 +53,6 @@
     <string name="scanbot_gallery_bottom_navigation_item_crop">Zuschneiden</string>
     <string name="scanbot_gallery_bottom_navigation_item_filter">Filtern</string>
     <string name="scanbot_gallery_bottom_navigation_item_rotate">Drehen</string>
+    <string name="scanbot_gallery_bottom_navigation_item_rearrange">Neu anordnen</string>
+    <string name="scanbot_gallery_bottom_navigation_item_delete">Löschen</string>
 </resources>
