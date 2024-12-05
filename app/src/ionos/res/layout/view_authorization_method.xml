@@ -41,6 +41,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
+        android:gravity="center"
+        android:paddingHorizontal="24dp"
         android:text="@string/ionos_authorization_method_greeting"
         android:textColor="@color/white"
         android:textSize="20sp"
