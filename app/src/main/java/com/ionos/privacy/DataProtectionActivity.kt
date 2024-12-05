@@ -11,7 +11,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
-import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -23,6 +22,7 @@ import com.nextcloud.utils.extensions.getParcelableArgument
 import com.owncloud.android.R
 import com.owncloud.android.databinding.ActivityDataProtectionBinding
 import com.owncloud.android.ui.activity.BaseActivity
+import com.owncloud.android.ui.activity.ExternalSiteWebView
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -78,10 +78,19 @@ class DataProtectionActivity : BaseActivity() {
 
     private fun handleLink(type: String) {
         when (type) {
-            INFORMATION_LINK -> startActivity(Intent(Intent.ACTION_VIEW, getString(R.string.privacy_url).toUri()))
+            INFORMATION_LINK -> openPrivacyPolicyScreen()
             REJECT_LINK -> viewModel.onRejectLinkClick()
             else -> throw IllegalArgumentException("Unknown link type: $type")
         }
+    }
+
+    private fun openPrivacyPolicyScreen() {
+        val externalWebViewIntent = Intent(this, ExternalSiteWebView::class.java)
+        externalWebViewIntent.putExtra(ExternalSiteWebView.EXTRA_TITLE, getString(R.string.privacy))
+        externalWebViewIntent.putExtra(ExternalSiteWebView.EXTRA_URL, getString(R.string.privacy_url))
+        externalWebViewIntent.putExtra(ExternalSiteWebView.EXTRA_SHOW_SIDEBAR, false)
+        externalWebViewIntent.putExtra(ExternalSiteWebView.EXTRA_MENU_ITEM_ID, -1)
+        startActivity(externalWebViewIntent)
     }
 
     private fun updateState(state: DataProtectionViewModel.State) {
