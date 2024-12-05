@@ -139,6 +139,9 @@
         <!-- unchecked, track background color -->
         <item name="colorSurfaceContainerHighest">@color/settings_screen_switcher_surface_container_highest_color</item>
 
+        <!-- unchecked disabled, track background color -->
+        <item name="colorOnSurface">@color/settings_screen_switcher_on_surface_color</item>
+
         <!-- checked, magnified thumb color -->
         <item name="colorPrimaryContainer">@color/settings_screen_switcher_primary_container_color</item>
 
