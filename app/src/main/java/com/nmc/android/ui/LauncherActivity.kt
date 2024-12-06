@@ -19,6 +19,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.ionos.annotation.IonosCustomization
 import com.ionos.privacy.DataProtectionActivity
 import com.ionos.privacy.PrivacyPreferences
+import com.nextcloud.client.account.UserAccountManager
 import com.nextcloud.client.preferences.AppPreferences
 import com.owncloud.android.R
 import com.owncloud.android.databinding.ActivitySplashBinding
@@ -72,7 +73,7 @@ class LauncherActivity : BaseActivity() {
         Handler(Looper.getMainLooper()).postDelayed({
             if (user.isPresent) {
                 val intent = Intent(this, FileDisplayActivity::class.java)
-                if (privacyPreferences.isDataProtectionProcessed()) {
+                if (privacyPreferences.isDataProtectionProcessed(userAccountManager.currentOwnCloudAccount?.name)) {
                     startActivity(intent)
                 } else {
                     startActivity(DataProtectionActivity.createIntent(this, intent))

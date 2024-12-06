@@ -3,6 +3,7 @@ package com.ionos.privacy
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.ionos.analycis.AnalyticsManager
+import com.nextcloud.client.account.UserAccountManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -12,9 +13,10 @@ import javax.inject.Provider
 class DataProtectionViewModel @Inject constructor(
     private val analyticsManager: AnalyticsManager,
     private val privacyPreferences: PrivacyPreferences,
+    private val userAccountManager: UserAccountManager,
 ) : ViewModel() {
 
-    private var _stateFlow = MutableStateFlow(State())
+    private var _stateFlow = MutableStateFlow(createInitialState())
     val stateFlow = _stateFlow.asStateFlow()
 
     fun onAgreeButtonClick() {
@@ -44,7 +46,7 @@ class DataProtectionViewModel @Inject constructor(
     private fun save(isAnalyticsEnabled: Boolean) {
         analyticsManager.setEnabled(isAnalyticsEnabled)
         privacyPreferences.setAnalyticsEnabled(isAnalyticsEnabled)
-        privacyPreferences.setDataProtectionProcessed(true)
+        privacyPreferences.setDataProtectionProcessed(userAccountManager.currentOwnCloudAccount?.name)
         _stateFlow.update { it.copy(isProcessed = true) }
     }
 
@@ -52,6 +54,8 @@ class DataProtectionViewModel @Inject constructor(
         OVERVIEW(0),
         DETAIL(1),
     }
+
+    private fun createInitialState(): State = State(isAnalyticsEnabled = privacyPreferences.isAnalyticsEnabled())
 
     data class State(
         val page: Page = Page.OVERVIEW,

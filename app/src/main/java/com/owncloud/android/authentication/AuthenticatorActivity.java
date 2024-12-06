@@ -1406,7 +1406,10 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
         } else {
             Intent i = new Intent(this, FileDisplayActivity.class);
             i.setAction(FileDisplayActivity.RESTART);
-            if (!privacyPreferences.isDataProtectionProcessed()) {
+            String accountName = accountManager.getCurrentOwnCloudAccount() != null
+                ? accountManager.getCurrentOwnCloudAccount().getName()
+                : null;
+            if (!privacyPreferences.isDataProtectionProcessed(accountName)) {
                 i = DataProtectionActivity.createIntent(this, i);
             }
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
