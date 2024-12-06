@@ -7,6 +7,7 @@
 
 package com.ionos.scanbot.screens.save
 
+import android.app.Activity
 import android.os.Bundle
 import androidx.activity.addCallback
 import androidx.activity.result.ActivityResultLauncher
@@ -23,7 +24,6 @@ import com.ionos.scanbot.screens.save.SaveScreen.Event
 import com.ionos.scanbot.screens.save.SaveScreen.Event.CloseScreenEvent
 import com.ionos.scanbot.screens.save.SaveScreen.Event.HandleErrorEvent
 import com.ionos.scanbot.screens.save.SaveScreen.Event.LaunchUploadTargetPickerEvent
-import com.ionos.scanbot.screens.save.SaveScreen.Event.ShowExitDialogEvent
 import com.ionos.scanbot.screens.save.SaveScreen.State
 import com.ionos.scanbot.screens.save.SaveScreen.ViewModel
 import io.reactivex.disposables.CompositeDisposable
@@ -33,7 +33,6 @@ internal class SaveActivity : BaseActivity<Event, State, ViewModel>() {
 	override val viewBinding by lazy { ScanbotActivitySaveBinding.inflate(layoutInflater) }
 
     private val selectDirectoryContract by inject { selectDirectoryContract() }
-	private val exitDialog by inject { exitDialog() }
 	private val progressDialog by lazy { LockProgressDialog() }
 
     private val overwriteDialogsDisposable = CompositeDisposable()
@@ -82,18 +81,13 @@ internal class SaveActivity : BaseActivity<Event, State, ViewModel>() {
 	override fun Event.handle() = when (this) {
 		is LaunchUploadTargetPickerEvent -> selectDirectoryLauncher.launch(Unit)
 		is HandleErrorEvent -> error.handle()
-		is ShowExitDialogEvent -> showExitDialog()
-		is CloseScreenEvent -> finish()
+        is CloseScreenEvent -> finishWithResult(successResult)
 	}
 
 	private fun Throwable.handle() = when (this) {
 		is SaveDocumentException -> showSaveDocumentErrorMessage(cause)
 		is InvalidFileNameException -> showMessage(R.string.scanbot_save_invalid_file_name)
 		else -> showMessage(R.string.scanbot_unknown_exception)
-	}
-
-	private fun showExitDialog() {
-		exitDialog.show(context, viewModel::onExitConfirmed, viewModel::onExitDenied)
 	}
 
 	private fun showSaveDocumentErrorMessage(cause: Throwable?) = when (cause) {
@@ -108,5 +102,14 @@ internal class SaveActivity : BaseActivity<Event, State, ViewModel>() {
                 is SelectDirectoryContract.SelectDirectoryResult.Canceled -> viewModel.onUploadTargetPickerCanceled()
             }
         }
+    }
+
+    private fun finishWithResult(successResult: Boolean) {
+        if (successResult) {
+            setResult(Activity.RESULT_OK)
+        } else {
+            setResult(Activity.RESULT_CANCELED)
+        }
+        finish()
     }
 }

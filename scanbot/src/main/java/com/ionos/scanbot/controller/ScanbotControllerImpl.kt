@@ -12,7 +12,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import com.ionos.scanbot.repository.PictureRepository
-import com.ionos.scanbot.repository.RepositoryFacade
 import com.ionos.scanbot.screens.camera.CameraActivity
 import com.ionos.scanbot.upload.target_provider.ScanbotUploadTarget
 import com.ionos.scanbot.upload.target_provider.UploadTarget
@@ -27,7 +26,6 @@ import javax.inject.Singleton
 class ScanbotControllerImpl @Inject internal constructor(
 	private val startUpload: StartUpload,
 	private val pictureRepository: PictureRepository,
-	private val repositoryFacade: RepositoryFacade,
 ) : ScanbotController() {
 
 	override val fileUploadStarted get() = _fileUploadStarted
@@ -73,7 +71,6 @@ class ScanbotControllerImpl @Inject internal constructor(
 		val remotePath = uploadTargetRepository.uploadTarget.uploadPath
 		startUpload(localUris, remotePath)
 		_fileUploadStarted.onNext(Any())
-		repositoryFacade.release()
 	}
 
 	private fun startCameraActivity(context: Context, uploadTarget: UploadTarget) {

@@ -44,6 +44,8 @@ internal interface GalleryScreen {
 
 		fun onStart()
 
+        fun onSuccessSaveScreenResult()
+
 		fun onPageSelected(pageIndex: Int)
 
 		fun onBackPressed()

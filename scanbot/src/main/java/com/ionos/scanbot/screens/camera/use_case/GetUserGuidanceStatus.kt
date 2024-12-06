@@ -9,16 +9,16 @@ package com.ionos.scanbot.screens.camera.use_case
 
 import android.content.Context
 import com.ionos.scanbot.R
-import io.scanbot.sdk.core.contourdetector.DetectionStatus
-import io.scanbot.sdk.core.contourdetector.DetectionStatus.*
+import io.scanbot.sdk.core.contourdetector.DocumentDetectionStatus
+import io.scanbot.sdk.core.contourdetector.DocumentDetectionStatus.*
 
 internal class GetUserGuidanceStatus(private val context: Context) {
 
-	operator fun invoke(status: DetectionStatus): UserGuidanceStatus {
+	operator fun invoke(status: DocumentDetectionStatus): UserGuidanceStatus {
         return UserGuidanceStatus(statusText(status), status.icon())
 	}
 
-    private fun statusText(status: DetectionStatus): String? = when (status) {
+    private fun statusText(status: DocumentDetectionStatus): String? = when (status) {
 		OK -> context.getString(R.string.scanbot_camera_detection_result_ok)
 		OK_BUT_TOO_SMALL -> context.getString(R.string.scanbot_camera_detection_result_ok_but_too_small)
 		OK_BUT_BAD_ANGLES -> context.getString(R.string.scanbot_camera_detection_result_ok_but_bad_angles)
@@ -28,7 +28,7 @@ internal class GetUserGuidanceStatus(private val context: Context) {
 		else -> null
 	}
 
-    private fun DetectionStatus.icon() : Int? = when (this) {
+    private fun DocumentDetectionStatus.icon() : Int? = when (this) {
         OK -> R.drawable.scanbot_ic_dont_move
         OK_BUT_TOO_SMALL -> R.drawable.scanbot_ic_zoom_in
         OK_BUT_BAD_ANGLES -> R.drawable.scanbot_ic_alert

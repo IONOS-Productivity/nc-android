@@ -11,10 +11,6 @@ interface ScanbotSaveScreenEventTracker : ScanbotScreenEventTracker {
 
 	fun trackBackPressed()
 
-	fun trackExitConfirmed()
-
-	fun trackExitDenied()
-
 	fun trackSaveClicked()
 
 	fun trackFileNameChanged()

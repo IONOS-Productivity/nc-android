@@ -8,8 +8,6 @@
 package com.ionos.scanbot.filter
 
 import android.graphics.Bitmap
-import io.scanbot.sdk.process.ImageProcessor
-
 
 internal interface Filterable {
 
@@ -19,5 +17,5 @@ internal interface Filterable {
 
 	fun getRotateFilter(): Filter
 
-	fun applyFilters(imageProcessor: ImageProcessor, filterTypes: Set<FilterType>, bitmap: Bitmap): Bitmap?
+	fun applyFilters(filterTypes: Set<FilterType>, bitmap: Bitmap): Bitmap?
 }

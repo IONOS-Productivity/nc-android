@@ -9,7 +9,6 @@ package com.ionos.scanbot.screens.filter
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.ionos.scanbot.provider.SdkProvider
 import com.ionos.scanbot.repository.RepositoryFacade
 import com.ionos.scanbot.screens.filter.FilterScreen.State
 import com.ionos.scanbot.tracking.ScanbotFilterScreenEventTracker
@@ -19,7 +18,6 @@ import dagger.assisted.AssistedInject
 
 internal class FilterViewModelFactory @AssistedInject constructor(
 	@Assisted private val initialState: State,
-	private val sdkProvider: SdkProvider,
 	private val repositoryFacade: RepositoryFacade,
 	private val eventTracker: ScanbotFilterScreenEventTracker,
 ) : ViewModelProvider.Factory {
@@ -31,7 +29,6 @@ internal class FilterViewModelFactory @AssistedInject constructor(
 	private fun create(): FilterViewModel = FilterViewModel(
 		initialState,
 		repositoryFacade,
-		sdkProvider.get().imageProcessor(),
 		eventTracker,
 	)
 

@@ -25,17 +25,12 @@ internal interface SaveScreen {
 	sealed interface Event : BaseScreen.Event {
 		data class LaunchUploadTargetPickerEvent(val initialTarget: UploadTarget, val fileName: String) : Event
 		data class HandleErrorEvent(val error: Throwable) : Event
-		object ShowExitDialogEvent : Event
-		object CloseScreenEvent : Event
+        data class CloseScreenEvent(val successResult: Boolean) : Event
 	}
 
 	interface ViewModel : BaseScreen.ViewModel<Event, State> {
 
 		fun onBackPressed()
-
-		fun onExitConfirmed()
-
-		fun onExitDenied()
 
 		fun onFileNameChanged(baseFileName: String)
 

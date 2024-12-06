@@ -9,35 +9,25 @@ package com.ionos.scanbot.filter.color
 
 import android.graphics.Bitmap
 import com.ionos.scanbot.filter.Filter
-import io.scanbot.sdk.process.FilterOperation
-import io.scanbot.sdk.process.ImageFilterTuneType
+import io.scanbot.sdk.imagefilters.BrightnessFilter
+import io.scanbot.sdk.imagefilters.ContrastFilter
+import io.scanbot.sdk.imagefilters.LegacyFilter
+import io.scanbot.sdk.imagefilters.WhiteBlackPointFilter
 import io.scanbot.sdk.process.ImageProcessor
-import io.scanbot.sdk.process.TuneOperation
-
 
 internal data class ColorFilter(val colorFilterType: ColorFilterType) : Filter {
 
-	override fun apply(imageProcessor: ImageProcessor, bitmap: Bitmap): Bitmap? {
-		val brightness = convertValueToMatchFilterTune(colorFilterType.brightness)
-		val contrast = convertValueToMatchFilterTune(colorFilterType.contrast)
-		val sharpness = convertValueToMatchFilterTune(colorFilterType.sharpness)
+    override fun apply(bitmap: Bitmap): Bitmap? {
+        val brightness = convertValueToMatchFilterTune(colorFilterType.brightness)
+        val contrast = convertValueToMatchFilterTune(colorFilterType.contrast)
+        val sharpness = convertValueToMatchFilterTune(colorFilterType.sharpness)
 
-		val filtersList = listOf(
-			FilterOperation(colorFilterType.scanbotFilter),
-			TuneOperation(ImageFilterTuneType.BRIGHTNESS, brightness),
-			TuneOperation(ImageFilterTuneType.CONTRAST, contrast),
-			TuneOperation(ImageFilterTuneType.COMBINED_WHITE_BLACK_POINT, sharpness),
-		)
+        return ImageProcessor(bitmap).applyFilter(LegacyFilter(colorFilterType.scanbotFilter.code))
+            .applyFilter(BrightnessFilter(brightness)).applyFilter(ContrastFilter(contrast))
+            .applyFilter(WhiteBlackPointFilter(sharpness)).processedBitmap()
+    }
 
-		var processedBitmap: Bitmap? = null
-		filtersList.forEach { filter ->
-			processedBitmap = imageProcessor.processBitmap(processedBitmap ?: bitmap, filter)
-		}
-
-		return processedBitmap
-	}
-
-	private fun convertValueToMatchFilterTune(value: Int): Float {
-		return ((value - 50) * 2).toFloat() / 100
-	}
+    private fun convertValueToMatchFilterTune(value: Int): Double {
+        return ((value - 50) * 2).toDouble() / 100
+    }
 }

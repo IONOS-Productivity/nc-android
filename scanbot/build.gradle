@@ -66,6 +66,7 @@ android {
 
 dependencies {
     api "io.scanbot:sdk-package-2:$scanbot_sdk_version"
+    api "io.scanbot:sdk-common-ocr-assets:$scanbot_sdk_version"
     implementation "com.google.android.material:material:$material_version"
 
     compileOnly reactivex_rxjava2
