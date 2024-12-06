@@ -15,6 +15,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.work.ListenableWorker
 import androidx.work.WorkerFactory
 import androidx.work.WorkerParameters
+import com.ionos.privacy.PrivacyPreferences
 import com.nextcloud.client.account.UserAccountManager
 import com.nextcloud.client.core.Clock
 import com.nextcloud.client.device.DeviceInfo
@@ -64,6 +65,7 @@ class BackgroundJobFactory @Inject constructor(
     private val generatePdfUseCase: GeneratePDFUseCase,
     private val syncedFolderProvider: SyncedFolderProvider,
     private val scanbotLicenseJobFactory: ScanbotLicenseJobFactory,
+    private val privacyPreferences: PrivacyPreferences,
 ) : WorkerFactory() {
 
     @SuppressLint("NewApi")
@@ -224,7 +226,8 @@ class BackgroundJobFactory @Inject constructor(
             clock,
             eventBus,
             preferences,
-            syncedFolderProvider
+            syncedFolderProvider,
+            privacyPreferences,
         )
     }
 

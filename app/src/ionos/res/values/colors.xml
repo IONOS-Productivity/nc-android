@@ -42,9 +42,9 @@
     <color name="ionos_filled_button_pressed_text_color">@color/white</color>
     <color name="ionos_filled_button_disabled_text_color">@color/geyser</color>
 
-    <color name="ionos_outlined_default_button_bg_color">@color/white</color>
+    <color name="ionos_outlined_default_button_bg_color">@color/transparent</color>
     <color name="ionos_outlined_pressed_button_bg_color">@color/navy</color>
-    <color name="ionos_outlined_disabled_button_bg_color">@color/white</color>
+    <color name="ionos_outlined_disabled_button_bg_color">@color/transparent</color>
     <color name="ionos_outlined_default_button_stroke_color">@color/madison</color>
     <color name="ionos_outlined_pressed_button_stroke_color">@color/navy</color>
     <color name="ionos_outlined_disabled_button_stroke_color">@color/gull_grayapprox</color>
@@ -61,6 +61,7 @@
 
     <color name="settings_screen_switcher_outline_color">@color/geyser</color>
     <color name="settings_screen_switcher_surface_container_highest_color">@color/geyser</color>
+    <color name="settings_screen_switcher_on_surface_color">@color/metallic_silver</color>
     <color name="settings_screen_switcher_primary_container_color">@color/white</color>
     <color name="settings_screen_switcher_primary_color">@color/dodger_blue</color>
     <color name="settings_screen_switcher_accent_color">@color/dodger_blue</color>

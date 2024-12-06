@@ -17,7 +17,7 @@
     android:layout_gravity="center"
     android:fillViewport="true"
     android:orientation="vertical"
-    tools:background="@drawable/background_login_view">
+    tools:background="@drawable/background_splash">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

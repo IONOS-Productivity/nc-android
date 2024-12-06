@@ -6,7 +6,7 @@
   ~ SPDX-License-Identifier: GPL-2.0
   -->
 
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <dimen name="bottom_sheet_corner_radius">8dp</dimen>
     <dimen name="bottom_sheet_drag_handle_height">56dp</dimen>
     <dimen name="bottom_sheet_drag_handle_icon_width">32dp</dimen>
@@ -48,4 +48,6 @@
     <dimen name="text_input_padding">16dp</dimen>
 
     <dimen name="huge_value">1000000dp</dimen>
+
+    <dimen name="m3_comp_switch_disabled_track_opacity" tools:override="true">1</dimen>
 </resources>

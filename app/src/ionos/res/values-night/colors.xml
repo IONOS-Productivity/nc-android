@@ -38,9 +38,9 @@
     <color name="ionos_filled_button_pressed_text_color">@color/white</color>
     <color name="ionos_filled_button_disabled_text_color">@color/dusk</color>
 
-    <color name="ionos_outlined_default_button_bg_color">@color/midnight_blue2</color>
+    <color name="ionos_outlined_default_button_bg_color">@color/transparent</color>
     <color name="ionos_outlined_pressed_button_bg_color">@color/ghost_white</color>
-    <color name="ionos_outlined_disabled_button_bg_color">@color/midnight_blue2</color>
+    <color name="ionos_outlined_disabled_button_bg_color">@color/transparent</color>
     <color name="ionos_outlined_default_button_stroke_color">@color/ghost_white</color>
     <color name="ionos_outlined_pressed_button_stroke_color">@color/ghost_white</color>
     <color name="ionos_outlined_disabled_button_stroke_color">@color/dusk</color>

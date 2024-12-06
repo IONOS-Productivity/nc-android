@@ -10,7 +10,7 @@
     <style name="Theme.ownCloud.noActionBar.Login" parent="Theme.ownCloud.noActionBar.LoginBase">
         <item name="android:statusBarColor">@color/black</item>
         <item name="android:navigationBarColor">@color/madison</item>
-        <item name="android:windowBackground">@drawable/background_login_view</item>
+        <item name="android:windowBackground">@drawable/background_splash</item>
     </style>
 
     <!-- Launch screen -->
@@ -132,6 +132,9 @@
 
         <!-- unchecked, track background color -->
         <item name="colorSurfaceContainerHighest">@color/settings_screen_switcher_surface_container_highest_color</item>
+
+        <!-- unchecked disabled, track background color -->
+        <item name="colorOnSurface">@color/settings_screen_switcher_on_surface_color</item>
 
         <!-- checked, magnified thumb color -->
         <item name="colorPrimaryContainer">@color/settings_screen_switcher_primary_container_color</item>
