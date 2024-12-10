@@ -13,6 +13,7 @@
  */
 package com.owncloud.android.ui.activity;
 
+import android.Manifest;
 import android.accounts.Account;
 import android.accounts.AuthenticatorException;
 import android.annotation.SuppressLint;
@@ -35,7 +36,6 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.Parcelable;
-import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -52,6 +52,7 @@ import com.nextcloud.appReview.InAppReviewHelper;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.appinfo.AppInfo;
 import com.nextcloud.client.core.AsyncRunner;
+import com.nextcloud.client.core.Clock;
 import com.nextcloud.client.di.Injectable;
 import com.nextcloud.client.editimage.EditImageActivity;
 import com.nextcloud.client.files.DeepLinkHandler;
@@ -66,16 +67,21 @@ import com.nextcloud.client.preferences.AppPreferences;
 import com.nextcloud.client.utils.IntentUtil;
 import com.nextcloud.model.WorkerState;
 import com.nextcloud.model.WorkerStateLiveData;
+import com.nextcloud.utils.BuildHelper;
 import com.nextcloud.utils.extensions.ActivityExtensionsKt;
 import com.nextcloud.utils.extensions.BundleExtensionsKt;
 import com.nextcloud.utils.extensions.FileExtensionsKt;
 import com.nextcloud.utils.extensions.IntentExtensionsKt;
+import com.nextcloud.utils.fileNameValidator.FileNameValidator;
 import com.nextcloud.utils.view.FastScrollUtils;
+import com.owncloud.android.BuildConfig;
 import com.owncloud.android.MainApp;
 import com.owncloud.android.R;
 import com.owncloud.android.databinding.FilesBinding;
 import com.owncloud.android.datamodel.FileDataStorageManager;
 import com.owncloud.android.datamodel.OCFile;
+import com.owncloud.android.datamodel.SyncedFolder;
+import com.owncloud.android.datamodel.SyncedFolderProvider;
 import com.owncloud.android.datamodel.VirtualFolderType;
 import com.owncloud.android.files.services.NameCollisionPolicy;
 import com.owncloud.android.lib.common.OwnCloudClient;
@@ -99,7 +105,6 @@ import com.owncloud.android.ui.asynctasks.CheckAvailableSpaceTask;
 import com.owncloud.android.ui.asynctasks.FetchRemoteFileTask;
 import com.owncloud.android.ui.asynctasks.GetRemoteFileTask;
 import com.owncloud.android.ui.dialog.SendShareDialog;
-import com.owncloud.android.ui.dialog.setupEncryption.SetupEncryptionDialogFragment;
 import com.owncloud.android.ui.dialog.SortingOrderDialogFragment;
 import com.owncloud.android.ui.dialog.StoragePermissionDialogFragment;
 import com.owncloud.android.ui.events.SearchEvent;
@@ -159,7 +164,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import kotlin.Unit;
 
 import static com.owncloud.android.datamodel.OCFile.PATH_SEPARATOR;
-import static com.owncloud.android.ui.dialog.setupEncryption.SetupEncryptionDialogFragment.SETUP_ENCRYPTION_DIALOG_TAG;
 import static com.owncloud.android.utils.PermissionUtil.PERMISSION_CHOICE_DIALOG_TAG;
 
 /**
@@ -244,6 +248,8 @@ public class FileDisplayActivity extends FileActivity
 
     @Inject FastScrollUtils fastScrollUtils;
     @Inject AsyncRunner asyncRunner;
+    @Inject Clock clock;
+    @Inject SyncedFolderProvider syncedFolderProvider;
 
     public static Intent openFileIntent(Context context, User user, OCFile file) {
         final Intent intent = new Intent(context, PreviewImageActivity.class);
@@ -278,10 +284,54 @@ public class FileDisplayActivity extends FileActivity
         mPlayerConnection = new PlayerServiceConnection(this);
 
         checkStoragePath();
+        checkAutoUploadOnGPlay();
 
         initSyncBroadcastReceiver();
         observeWorkerState();
         registerRefreshFolderEventReceiver();
+    }
+
+    private void checkAutoUploadOnGPlay() {
+        if (!BuildHelper.GPLAY.equals(BuildConfig.FLAVOR)) {
+            return;
+        }
+
+        // only show on Android11+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
+            return;
+        }
+        
+        if (PermissionUtil.checkSelfPermission(this, Manifest.permission.MANAGE_EXTERNAL_STORAGE)) {
+            return;
+        }
+        
+        if (preferences.isAutoUploadGPlayWarningShown()) {
+            return;
+        }
+        
+        boolean showInfoDialog = false;
+        for (SyncedFolder syncedFolder : syncedFolderProvider.getSyncedFolders()) {
+            // move or delete after success
+            if (syncedFolder.getUploadAction() == FileUploadWorker.LOCAL_BEHAVIOUR_MOVE || 
+                syncedFolder.getUploadAction() == FileUploadWorker.LOCAL_BEHAVIOUR_DELETE) {
+                showInfoDialog = true;
+                break;
+            }
+        }
+
+        if (showInfoDialog) {
+            new MaterialAlertDialogBuilder(this, R.style.Theme_ownCloud_Dialog)
+                .setTitle(R.string.auto_upload_gplay)
+                .setMessage(R.string.auto_upload_gplay_desc)
+                .setNegativeButton(R.string.dialog_close, (dialog, which) -> {
+                    dialog.dismiss();
+                })
+                .setIcon(R.drawable.nav_synced_folders)
+                .create()
+                .show();
+        }
+
+        preferences.setAutoUploadGPlayWarningShown(true);
     }
 
     @SuppressWarnings("unchecked")
@@ -934,6 +984,12 @@ public class FileDisplayActivity extends FileActivity
                 case UploadFilesActivity.RESULT_OK_AND_DELETE -> FileUploadWorker.LOCAL_BEHAVIOUR_DELETE;
                 default -> FileUploadWorker.LOCAL_BEHAVIOUR_FORGET;
             };
+
+            boolean isValidFolderPath = FileNameValidator.INSTANCE.checkFolderPath(remotePathBase,getCapabilities(),this);
+            if (!isValidFolderPath) {
+                DisplayUtils.showSnackMessage(this, R.string.file_name_validator_error_contains_reserved_names_or_invalid_characters);
+                return;
+            }
 
             FileUploadHelper.Companion.instance().uploadNewFiles(getUser().orElseThrow(RuntimeException::new),
                                                                  filePaths,

@@ -199,6 +199,7 @@ class SyncedFoldersActivity :
             setTheme(R.style.FallbackThemingTheme)
         }
         binding.emptyList.emptyListViewAction.setOnClickListener { showHiddenItems() }
+        PermissionUtil.requestExternalStoragePermission(this, viewThemeUtils, true)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

@@ -342,6 +342,8 @@ public class MainApp
 
         fixStoragePath();
 
+        checkCancelDownloadJobs();
+
         MainApp.storagePath = preferences.getStoragePath(getApplicationContext().getFilesDir().getAbsolutePath());
 
         OwnCloudClientManagerFactory.setUserAgent(getUserAgent());
@@ -391,7 +393,10 @@ public class MainApp
             backgroundJobManager.scheduleMediaFoldersDetectionJob();
             backgroundJobManager.startMediaFoldersDetectionJob();
             backgroundJobManager.schedulePeriodicHealthStatus();
-            backgroundJobManager.scheduleInternal2WaySync();
+
+            if (preferences.isTwoWaySyncEnabled()) {
+                backgroundJobManager.scheduleInternal2WaySync(preferences.getTwoWaySyncInterval());
+            }
         }
 
         registerGlobalPassCodeProtection();
@@ -614,6 +619,13 @@ public class MainApp
                                        .detectLeakedClosableObjects()
                                        .penaltyLog()
                                        .build());
+        }
+    }
+
+    private void checkCancelDownloadJobs() {
+        if (backgroundJobManager != null && preferences.shouldStopDownloadJobsOnStart()) {
+            backgroundJobManager.cancelAllFilesDownloadJobs();
+            preferences.setStopDownloadJobsOnStart(false);
         }
     }
 
@@ -852,6 +864,8 @@ public class MainApp
             }
         }
     }
+
+    
 
     private static void showAutoUploadAlertDialog(Context context) {
         new MaterialAlertDialogBuilder(context, R.style.Theme_ownCloud_Dialog)

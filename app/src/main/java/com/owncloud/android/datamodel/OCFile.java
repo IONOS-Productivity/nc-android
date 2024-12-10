@@ -20,6 +20,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 
+import com.nextcloud.utils.BuildHelper;
 import com.owncloud.android.BuildConfig;
 import com.owncloud.android.R;
 import com.owncloud.android.lib.common.network.WebdavEntry;
@@ -784,6 +785,10 @@ public class OCFile implements Parcelable, Comparable<OCFile>, ServerFileInterfa
         return this.sharedWithSharee;
     }
 
+    public boolean isRootDirectory() {
+        return ROOT_PATH.equals(decryptedRemotePath);
+    }
+
     public boolean isFavorite() {
         return this.favorite;
     }
@@ -1080,7 +1085,7 @@ public class OCFile implements Parcelable, Comparable<OCFile>, ServerFileInterfa
     }
     
     public boolean isAPKorAAB() {
-        if ("gplay".equals(BuildConfig.FLAVOR)) {
+        if (BuildHelper.GPLAY.equals(BuildConfig.FLAVOR)) {
             return getFileName().endsWith(".apk") || getFileName().endsWith(".aab");
         } else {
             return false;
