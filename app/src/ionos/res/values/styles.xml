@@ -2,7 +2,7 @@
 <!--
   ~ IONOS HiDrive Next - Android Client
   ~
-  ~ SPDX-FileCopyrightText: 2024 STRATO AG.
+  ~ SPDX-FileCopyrightText: 2025 STRATO AG.
   ~ SPDX-License-Identifier: GPL-2.0
   -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
@@ -193,6 +193,7 @@
         <item name="iconTint">@color/ionos_default_icon_color</item>
         <item name="titleTextColor">@color/ionos_default_text_color</item>
         <item name="subtitleTextColor">@color/ionos_default_text_color</item>
+        <item name="searchViewStyle">@style/SearchViewStyle</item>
     </style>
 
     <style name="OverflowButtonStyle" parent="Widget.AppCompat.ActionButton.Overflow">
@@ -286,6 +287,10 @@
 
     <style name="DatePickerStyle">
         <item name="android:datePickerMode">calendar</item>
+    </style>
+
+    <style name="SearchViewStyle" parent="@style/Widget.AppCompat.SearchView.ActionBar">
+        <item name="closeIcon">@drawable/ic_close_search</item>
     </style>
 
 </resources>
