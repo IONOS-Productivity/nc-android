@@ -3,7 +3,7 @@
  *
  * SPDX-FileCopyrightText: 2023 Álvaro Brey <alvaro@alvarobrey.com>
  * SPDX-FileCopyrightText: 2023 Nextcloud GmbH
- * SPDX-FileCopyrightText: 2024 STRATO AG.
+ * SPDX-FileCopyrightText: 2024 STRATO GmbH.
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 package com.nextcloud.client.di

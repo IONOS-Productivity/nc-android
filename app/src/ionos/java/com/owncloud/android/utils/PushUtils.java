@@ -3,7 +3,7 @@
  *
  * SPDX-FileCopyrightText: 2019 Chris Narkiewicz <hello@ezaquarii.com>
  * SPDX-FileCopyrightText: 2017 Mario Danic <mario@lovelyhq.com>
- * SPDX-FileCopyrightText: 2024 STRATO AG.
+ * SPDX-FileCopyrightText: 2024 STRATO GmbH.
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 package com.owncloud.android.utils;
