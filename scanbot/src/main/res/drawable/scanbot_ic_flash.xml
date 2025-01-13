@@ -1,12 +1,20 @@
 <!--
   ~ IONOS HiDrive Next - Android Client
   ~
-  ~ SPDX-FileCopyrightText: 2024 STRATO AG.
+  ~ SPDX-FileCopyrightText: 2025 STRATO AG.
   ~ SPDX-License-Identifier: GPL-2.0
   -->
 
-<vector xmlns:android="http://schemas.android.com/apk/res/android" android:height="24dp" android:viewportHeight="84" android:viewportWidth="84" android:width="24dp">
-      
-    <path android:fillColor="?scanbot_camera_flash_color" android:pathData="M15,42L18.938,9.938C19.219,7.688 21.188,6 23.438,6H47.063C49.172,6 51,7.828 51,9.938C51,10.359 50.859,10.781 50.719,11.203L44.25,28.5H63.797C66.609,28.5 69,30.891 69,33.703C69,34.828 68.578,35.813 68.016,36.656L41.016,76.172C40.172,77.297 38.766,78.141 37.359,78.141H36.938C34.688,78.141 33,76.313 33,74.063C33,73.781 33,73.359 33.141,73.078L39.75,46.5H19.5C16.969,46.5 15,44.531 15,42Z"/>
-    
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="36"
+    android:viewportHeight="36">
+  <group>
+    <clip-path
+        android:pathData="M0,0h36v36h-36z"/>
+    <path
+        android:pathData="M19.501,0C18.435,0 17.415,0.571 16.875,1.549L6.374,20.551C5.792,21.604 5.895,22.902 6.636,23.849C7.213,24.587 8.091,25.002 9,25.002C9.257,25.002 9.517,24.969 9.773,24.9L16.185,23.189L14.545,32.48C14.286,33.947 15.143,35.382 16.558,35.85C16.869,35.953 17.186,36.002 17.499,36.002C18.609,36.002 19.663,35.383 20.183,34.343L29.631,15.445C29.867,15.016 30.002,14.524 30.002,14C30.002,12.364 28.695,11.034 27.067,11.001C27.044,11.001 27.022,11.001 26.999,11.001C26.924,11.001 26.849,11.004 26.774,11.009C26.523,11.028 26.28,11.077 26.05,11.154L20.823,12.764L22.454,3.522C22.709,2.078 21.882,0.661 20.499,0.172C20.17,0.056 19.833,0 19.5,0L19.501,0Z"
+        android:fillColor="?scanbot_camera_flash_color"/>
+  </group>
 </vector>
