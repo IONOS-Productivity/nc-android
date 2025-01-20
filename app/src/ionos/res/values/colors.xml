@@ -95,7 +95,8 @@
 
     <color name="filelist_file_icon_color">@color/dodger_blue</color>
     <color name="filelist_default_action_icon_color">@color/dodger_blue</color>
-    <color name="filelist_shared_icon_color">@color/dodger_blue</color>
+    <color name="filelist_shared_icon_color">@color/ghost_white</color>
+    <color name="filelist_shared_icon_background_color">@color/dodger_blue</color>
     <color name="filelist_text_color">@color/navy</color>
     <color name="filelist_secondary_text_color">@color/dusk</color>
     <color name="filelist_pressed_action_icon_background_color">@color/lavender_mist</color>

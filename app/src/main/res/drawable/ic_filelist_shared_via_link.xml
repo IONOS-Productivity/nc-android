@@ -14,7 +14,7 @@
         android:translateX="-8"
         android:translateY="-8">
         <path
-            android:fillColor="@color/filelist_shared_icon_color"
+            android:fillColor="#1474C4"
             android:pathData="M24,24m-16,0a16,16 0,1 1,32 0a16,16 0,1 1,-32 0" />
         <group
             android:scaleX="0.7"

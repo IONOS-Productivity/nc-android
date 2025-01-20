@@ -92,7 +92,8 @@
             <TextView
                 android:id="@+id/totalTimeText"
                 style="@style/ExoStyledControls.TimeText.Duration"
-                android:layout_gravity="center" />
+                android:layout_gravity="center"
+                android:textColor="@color/gull_grayapprox" />
 
         </LinearLayout>
 
@@ -106,6 +107,7 @@
         android:layout_marginTop="8dp"
         android:layout_weight="1"
         android:progressBackgroundTint="@color/gull_grayapprox"
+        android:progressBackgroundTintMode="src_over"
         android:progressTint="@color/exoplayer_controls_color"
         android:splitTrack="false"
         android:layout_marginHorizontal="6dp"

@@ -13,7 +13,7 @@
     <group>
         <clip-path android:pathData="M0,0h48v48h-48z" />
         <path
-            android:fillColor="@color/filelist_shared_icon_color"
+            android:fillColor="#1474C4"
             android:pathData="M24,24m-24,0a24,24 0,1 1,48 0a24,24 0,1 1,-48 0" />
         <group
             android:translateX="6"
