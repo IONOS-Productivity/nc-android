@@ -19,6 +19,7 @@
     <string name="db_name">ionos</string>
     <string name="data_folder">ionos</string>
     <string name="default_display_name_for_root_folder">IONOS HiDrive Next</string>
+    <string name="nextcloud_user_agent">Mozilla/5.0 (Android) HiDrive Next/%1$s%2$s</string>
     <bool name="show_hidden_files_enabled">false</bool>
 
     <!-- URLs and flags related -->
