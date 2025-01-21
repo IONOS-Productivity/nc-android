@@ -195,8 +195,6 @@ android {
                 applicationId "com.ionos.hidrivenext"
                 dimension "default"
                 versionCode 1
-                def nextcloudVersion = defaultConfig.versionName
-                versionName "1.0.0" + "-" + nextcloudVersion
                 isDefault = true
             }
         }
