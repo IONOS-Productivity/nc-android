@@ -39,7 +39,8 @@
 
         <item name="scanbot_gallery_screen_counter_background_color">@color/deep_koamaru</item>
         <item name="scanbot_gallery_bottom_navigation_color">@color/dark_slate_grey</item>
-        <item name="scanbot_gallery_fab_color">@color/curious_blue</item>
+        <item name="scanbot_gallery_fab_icon_tint">@color/fab_icon_tint</item>
+        <item name="scanbot_gallery_fab_background_tint">@color/fab_background_tint</item>
 
         <item name="scanbot_rearrange_icon_color">@color/curious_blue</item>
     </style>

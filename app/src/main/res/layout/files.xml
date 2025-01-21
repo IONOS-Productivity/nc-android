@@ -60,7 +60,7 @@
             app:backgroundTint="@color/fab_background_tint"
             app:rippleColor="@color/transparent"
             app:shapeAppearanceOverlay="@style/FabButtonBackgroundShape"
-            app:tint="@color/fab_icon_color"
+            app:tint="@color/fab_icon_tint"
             app:ionosCustomization="Custom FAB colors"
             tools:visibility="visible" />
 

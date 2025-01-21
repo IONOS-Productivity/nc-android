@@ -56,8 +56,8 @@
     <attr name="scanbot_gallery_screen_counter_background_color" format="color" />
     <attr name="scanbot_gallery_bottom_navigation_icon_color" format="color" />
     <attr name="scanbot_gallery_bottom_navigation_color" format="color" />
-    <attr name="scanbot_gallery_fab_color" format="color" />
-    <attr name="scanbot_gallery_fab_tint_color" format="color" />
+    <attr name="scanbot_gallery_fab_background_tint" format="color" />
+    <attr name="scanbot_gallery_fab_icon_tint" format="color" />
 
     <attr name="scanbot_rearrange_icon_color" format="color" />
     <attr name="scanbot_rearrange_text_color" format="color" />

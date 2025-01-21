@@ -52,8 +52,8 @@
         <item name="scanbot_gallery_screen_counter_background_color">@color/scanbot_grey</item>
         <item name="scanbot_gallery_bottom_navigation_icon_color">@color/scanbot_white</item>
         <item name="scanbot_gallery_bottom_navigation_color">@color/scanbot_mine_shaft_dark</item>
-        <item name="scanbot_gallery_fab_color">@color/scanbot_lochmara</item>
-        <item name="scanbot_gallery_fab_tint_color">@color/scanbot_white</item>
+        <item name="scanbot_gallery_fab_background_tint">@color/scanbot_lochmara</item>
+        <item name="scanbot_gallery_fab_icon_tint">@color/scanbot_white</item>
 
         <item name="scanbot_rearrange_icon_color">@color/scanbot_lochmara</item>
         <item name="scanbot_rearrange_text_color">@color/scanbot_white</item>

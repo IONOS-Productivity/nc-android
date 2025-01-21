@@ -88,7 +88,7 @@
     <color name="ionos_toolbar_color">@color/white</color>
     <color name="ionos_toolbar_hint_color">@color/dusk</color>
 
-    <color name="fab_icon_color">@color/white</color>
+    <color name="fab_icon_tint">@color/white</color>
     <color name="fab_background_color">@color/dodger_blue</color>
     <color name="fab_pressed_background_color">@color/royal_blue</color>
     <color name="fab_disabled_background_color">@color/gull_grayapprox</color>
