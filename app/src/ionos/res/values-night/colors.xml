@@ -2,7 +2,7 @@
 <!--
   ~ IONOS HiDrive Next - Android Client
   ~
-  ~ SPDX-FileCopyrightText: 2024 STRATO GmbH.
+  ~ SPDX-FileCopyrightText: 2025 STRATO GmbH.
   ~ SPDX-License-Identifier: GPL-2.0
   -->
 
@@ -73,14 +73,15 @@
     <color name="ionos_toolbar_color">@color/midnight_blue2</color>
     <color name="ionos_toolbar_hint_color">@color/dusk</color>
 
-    <color name="fab_icon_color">@color/white</color>
-    <color name="fab_background_color">@color/dodger_blue</color>
-    <color name="fab_pressed_background_color">@color/royal_blue</color>
+    <color name="fab_icon_color">@color/midnight_blue2</color>
+    <color name="fab_background_color">@color/curious_blue</color>
+    <color name="fab_pressed_background_color">@color/dodger_blue</color>
     <color name="fab_disabled_background_color">@color/gull_grayapprox</color>
 
     <color name="filelist_file_icon_color">@color/curious_blue</color>
     <color name="filelist_default_action_icon_color">@color/curious_blue</color>
-    <color name="filelist_shared_icon_color">@color/curious_blue</color>
+    <color name="filelist_shared_icon_color">@color/midnight_blue2</color>
+    <color name="filelist_shared_icon_background_color">@color/curious_blue</color>
     <color name="filelist_text_color">@color/geyser</color>
     <color name="filelist_secondary_text_color">@color/metallic_silver</color>
     <color name="filelist_pressed_action_icon_background_color">@color/dusk</color>

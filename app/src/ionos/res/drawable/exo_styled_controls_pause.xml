@@ -1,18 +1,16 @@
 <!--
   ~ IONOS HiDrive Next - Android Client
   ~
-  ~ SPDX-FileCopyrightText: 2024 STRATO GmbH.
+  ~ SPDX-FileCopyrightText: 2025 STRATO GmbH.
   ~ SPDX-License-Identifier: GPL-2.0
   -->
 
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="48dp"
-    android:height="48dp"
-    android:viewportWidth="48"
-    android:viewportHeight="48">
-    <group android:translateX="-2">
-    <path
-      android:pathData="M26,48C17.375,48 9.5,43.5 5.188,36C0.875,28.594 0.875,19.5 5.188,12C9.5,4.594 17.375,0 26,0C34.531,0 42.406,4.594 46.719,12C51.031,19.5 51.031,28.594 46.719,36C42.406,43.5 34.531,48 26,48ZM23,18C23,16.406 21.594,15 20,15C18.313,15 17,16.406 17,18V30C17,31.688 18.313,33 20,33C21.594,33 23,31.688 23,30V18ZM35,18C35,16.406 33.594,15 32,15C30.313,15 29,16.406 29,18V30C29,31.688 30.313,33 32,33C33.594,33 35,31.688 35,30V18Z"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="36"
+    android:viewportHeight="36">
+  <path
+      android:pathData="M18,1C8.611,1 1,8.611 1,18C1,27.389 8.611,35 18,35C27.389,35 35,27.389 35,18C35,8.611 27.389,1 18,1ZM15,24C15,24.829 14.329,25.5 13.5,25.5C12.671,25.5 12,24.829 12,24V12C12,11.171 12.671,10.5 13.5,10.5C14.329,10.5 15,11.171 15,12V24ZM24,24C24,24.829 23.329,25.5 22.5,25.5C21.671,25.5 21,24.829 21,24V12C21,11.171 21.671,10.5 22.5,10.5C23.329,10.5 24,11.171 24,12V24Z"
       android:fillColor="@color/exoplayer_controls_color"/>
-    </group>
 </vector>

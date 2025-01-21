@@ -5,7 +5,7 @@
   ~ SPDX-FileCopyrightText: 2022 Andy Scherzinger <info@andy-scherzinger.de>
   ~ SPDX-FileCopyrightText: 2021 TSI-mc
   ~ SPDX-FileCopyrightText: 2021 Nextcloud GmbH
-  ~ SPDX-FileCopyrightText: 2024 STRATO GmbH.
+  ~ SPDX-FileCopyrightText: 2025 STRATO GmbH.
   ~ SPDX-License-Identifier: GPL-2.0-only AND (AGPL-3.0-or-later OR GPL-2.0-only)
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -37,7 +37,7 @@
             android:layout_height="@dimen/bottom_sheet_default_icon_height"
             android:layout_gravity="center_vertical"
             android:contentDescription="@null"
-            android:src="@drawable/ic_edit_share"
+            android:src="@drawable/ic_share_settings"
             app:tint="@color/ionos_default_icon_color" />
 
         <TextView

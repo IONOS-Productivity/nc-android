@@ -59,6 +59,7 @@
             app:srcCompat="@drawable/ic_plus"
             app:backgroundTint="@color/fab_background_tint"
             app:rippleColor="@color/transparent"
+            app:shapeAppearanceOverlay="@style/FabButtonBackgroundShape"
             app:tint="@color/fab_icon_color"
             app:ionosCustomization="Custom FAB colors"
             tools:visibility="visible" />

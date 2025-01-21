@@ -4,7 +4,7 @@
   ~ SPDX-FileCopyrightText: 2018 Andy Scherzinger <info@andy-scherzinger.de>
   ~ SPDX-FileCopyrightText: 2015 ownCloud Inc.
   ~ SPDX-FileCopyrightText: 2013 David A. Velasco <dvelasco@solidgear.es>
-  ~ SPDX-FileCopyrightText: 2024 STRATO GmbH.
+  ~ SPDX-FileCopyrightText: 2025 STRATO GmbH.
   ~ SPDX-License-Identifier: GPL-2.0-only AND (AGPL-3.0-or-later OR GPL-2.0-only)
 -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -92,7 +92,8 @@
             <TextView
                 android:id="@+id/totalTimeText"
                 style="@style/ExoStyledControls.TimeText.Duration"
-                android:layout_gravity="center" />
+                android:layout_gravity="center"
+                android:textColor="@color/gull_grayapprox" />
 
         </LinearLayout>
 
@@ -106,6 +107,7 @@
         android:layout_marginTop="8dp"
         android:layout_weight="1"
         android:progressBackgroundTint="@color/gull_grayapprox"
+        android:progressBackgroundTintMode="src_over"
         android:progressTint="@color/exoplayer_controls_color"
         android:splitTrack="false"
         android:layout_marginHorizontal="6dp"

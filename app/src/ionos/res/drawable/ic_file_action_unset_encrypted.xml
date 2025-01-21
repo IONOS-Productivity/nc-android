@@ -1,16 +1,16 @@
 <!--
   ~ IONOS HiDrive Next - Android Client
   ~
-  ~ SPDX-FileCopyrightText: 2024 STRATO GmbH.
+  ~ SPDX-FileCopyrightText: 2025 STRATO GmbH.
   ~ SPDX-License-Identifier: GPL-2.0
   -->
 
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="16dp"
-    android:height="16dp"
-    android:viewportWidth="16"
-    android:viewportHeight="16">
-  <path
-      android:pathData="M10.5,11C9.906,11 9.344,10.938 8.813,10.75L7.781,11.781C7.625,11.938 7.438,12 7.25,12H6V13.25C6,13.688 5.656,14 5.25,14H4V15.25C4,15.688 3.656,16 3.25,16H0.75C0.313,16 0,15.688 0,15.25V12.75C0,12.563 0.063,12.375 0.219,12.219L5.25,7.188C5.063,6.656 5,6.094 5,5.5C5,2.469 7.438,0 10.5,0C13.531,0 16,2.469 16,5.5C16,8.563 13.531,11 10.5,11ZM11.75,3C11.281,3 10.875,3.25 10.656,3.625C10.438,4.031 10.438,4.5 10.656,4.875C10.875,5.281 11.281,5.5 11.75,5.5C12.188,5.5 12.594,5.281 12.813,4.875C13.031,4.5 13.031,4.031 12.813,3.625C12.594,3.25 12.188,3 11.75,3Z"
-      android:fillColor="@color/ionos_default_icon_color"/>
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="36"
+    android:viewportHeight="36">
+    <path
+        android:fillColor="@color/ionos_default_icon_color"
+        android:pathData="M23.5,2C17.71,2 13,6.71 13,12.5C13,13.358 13.108,14.215 13.322,15.057L2.877,25.501C2.311,26.066 2,26.819 2,27.619V30.995C2,32.652 3.348,33.999 5.004,33.999H9.5C10.329,33.999 11,33.328 11,32.499V29.999H14.5C15.329,29.999 16,29.328 16,28.499V24.999H18.5C18.898,24.999 19.279,24.841 19.561,24.56L21.346,22.775C22.055,22.924 22.777,22.999 23.501,22.999C29.291,22.999 34.001,18.289 34.001,12.499C34.001,6.709 29.29,2 23.5,2ZM25,14C23.343,14 22,12.657 22,11C22,9.343 23.343,8 25,8C26.657,8 28,9.343 28,11C28,12.657 26.657,14 25,14Z" />
 </vector>
