@@ -119,6 +119,10 @@
     <string name="battery_optimization_disable">Inhabilita</string>
     <string name="battery_optimization_message">El vostre dispositiu pot tenir l\'optimització de bateria activada. AutoUpload només funciona correctament si hi excluïu aquesta aplicació.</string>
     <string name="battery_optimization_title">Optimització de la bateria</string>
+    <string name="bottom_navigation_menu_assistant_label">Assistent</string>
+    <string name="bottom_navigation_menu_favorites_label">Preferits</string>
+    <string name="bottom_navigation_menu_files_label">Tots els fitxers</string>
+    <string name="bottom_navigation_menu_media_label">Multimèdia</string>
     <string name="brute_force_delay">S\'ha endarrerit perquè s\'han produït massa intents erronis</string>
     <string name="calendar">Calendari</string>
     <string name="calendars">Calendaris</string>
@@ -151,6 +155,7 @@
     <string name="common_loading">S\'està carregant…</string>
     <string name="common_next">Següent</string>
     <string name="common_no">No</string>
+    <string name="common_now">Ara</string>
     <string name="common_ok">D\'acord</string>
     <string name="common_pending">Pendent</string>
     <string name="common_remove">Suprimeix</string>
@@ -674,6 +679,7 @@
     <string name="restore">Restaura el fitxer</string>
     <string name="restore_backup">Restaurar còpia de seguretat</string>
     <string name="restore_button_description">Restaura el fitxer suprimit</string>
+    <string name="restore_item">Restablir</string>
     <string name="restore_selected">Restaurar la sel·lecció</string>
     <string name="retrieving_file">S\'està recuperant el fitxer…</string>
     <string name="retry">Torna-ho a provar</string>

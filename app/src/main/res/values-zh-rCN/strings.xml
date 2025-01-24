@@ -46,6 +46,7 @@
     <string name="app_config_proxy_port_title">代理端口</string>
     <string name="app_widget_description">显示仪表盘中的一个小部件</string>
     <string name="appbar_search_in">在 %s 中搜索</string>
+    <string name="assistant_screen_add_task_alert_dialog_title">添加新任务</string>
     <string name="assistant_screen_all_task_type">所有</string>
     <string name="assistant_screen_create_task_alert_dialog_input_field_placeholder">输入一些文字</string>
     <string name="assistant_screen_delete_task_alert_dialog_description">您确定要删除这些任务吗？</string>
@@ -120,6 +121,10 @@
     <string name="battery_optimization_disable">禁用</string>
     <string name="battery_optimization_message">您的设备可能启用了电池优化。仅当您从中排除（允许后台运行）此应用时，自动上传才能正常工作。</string>
     <string name="battery_optimization_title">电池优化</string>
+    <string name="bottom_navigation_menu_assistant_label">助手</string>
+    <string name="bottom_navigation_menu_favorites_label">收藏</string>
+    <string name="bottom_navigation_menu_files_label">全部文件</string>
+    <string name="bottom_navigation_menu_media_label">媒体文件</string>
     <string name="brute_force_delay">因过多的错误尝试而延误</string>
     <string name="calendar">日历</string>
     <string name="calendars">日历</string>
@@ -152,6 +157,7 @@
     <string name="common_loading">正在加载…</string>
     <string name="common_next">下一个</string>
     <string name="common_no">否</string>
+    <string name="common_now">现在</string>
     <string name="common_ok">确定</string>
     <string name="common_pending">待定</string>
     <string name="common_remove">删除</string>
@@ -757,6 +763,7 @@
     <string name="restore">恢复文件</string>
     <string name="restore_backup">还原备份</string>
     <string name="restore_button_description">恢复已删除的文件</string>
+    <string name="restore_item">恢复</string>
     <string name="restore_selected">已选择备份</string>
     <string name="retrieving_file">获取文件中…</string>
     <string name="retry">重试</string>
@@ -1073,7 +1080,7 @@ Nextcloud 是一个私有文件同步、共享和通信服务器。它是自由�
     <string name="uploads_view_upload_status_fetching_server_version">正在获取服务器版本…</string>
     <string name="uploads_view_upload_status_service_interrupted">应用程序已终止</string>
     <string name="uploads_view_upload_status_succeeded">已完成</string>
-    <string name="uploads_view_upload_status_succeeded_same_file">服务器端已存在相同的文件，跳过上传</string>
+    <string name="uploads_view_upload_status_succeeded_same_file">服务端已存在相同的文件，跳过上传</string>
     <string name="uploads_view_upload_status_unknown_fail">未知错误</string>
     <string name="uploads_view_upload_status_virus_detected">检测到病毒。无法完成上传！</string>
     <string name="uploads_view_upload_status_waiting_exit_power_save_mode">等待退出省电模式</string>
@@ -1114,6 +1121,15 @@ Nextcloud 是一个私有文件同步、共享和通信服务器。它是自由�
     <plurals name="minutes">
         <item quantity="other">%d 分钟</item>
     </plurals>
+    <plurals name="time_seconds_ago">
+        <item quantity="other">%d 秒前</item>
+    </plurals>
+    <plurals name="time_minutes_ago">
+        <item quantity="other">%d 分钟前</item>
+    </plurals>
+    <plurals name="time_hours_ago">
+        <item quantity="other">%d 小时前</item>
+    </plurals>
     <plurals name="sync_fail_in_favourites_content">
         <item quantity="other">%1$d 个文件无法被同步 (与%2$d冲突)</item>
     </plurals>
@@ -1149,6 +1165,9 @@ Nextcloud 是一个私有文件同步、共享和通信服务器。它是自由�
     </plurals>
     <plurals name="file_list__footer__file">
         <item quantity="other">%1$d个文件</item>
+    </plurals>
+    <plurals name="trashbin_list__footer__file">
+        <item quantity="other">%1$d 个项目</item>
     </plurals>
     <plurals name="synced_folders_show_hidden_folders">
         <item quantity="other">显示 %1$d 个隐藏文件夹</item>

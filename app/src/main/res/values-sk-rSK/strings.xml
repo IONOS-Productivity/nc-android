@@ -46,6 +46,7 @@
     <string name="app_config_proxy_port_title">Brána proxy</string>
     <string name="app_widget_description">Zobrazí jeden widget z hlavného panela</string>
     <string name="appbar_search_in">Hľadať v %s</string>
+    <string name="assistant_screen_add_task_alert_dialog_title">Pridať novú úlohu</string>
     <string name="assistant_screen_all_task_type">Všetko</string>
     <string name="assistant_screen_create_task_alert_dialog_input_field_placeholder">Napíšte nejaký text</string>
     <string name="assistant_screen_delete_task_alert_dialog_description">Naozaj chcete vymazať túto úlohu?</string>
@@ -119,6 +120,10 @@
     <string name="battery_optimization_disable">Zakázať</string>
     <string name="battery_optimization_message">Vaše zariadenie môže mať zapnutú optimalizáciu batérie. AutoUpload správne funguje iba pokiaľ z túto aplikáciu z optimalizácie vynecháte.</string>
     <string name="battery_optimization_title">Optimalizácia batérie</string>
+    <string name="bottom_navigation_menu_assistant_label">Asistent</string>
+    <string name="bottom_navigation_menu_favorites_label">Obľúbené</string>
+    <string name="bottom_navigation_menu_files_label">Všetky súbory</string>
+    <string name="bottom_navigation_menu_media_label">Média</string>
     <string name="brute_force_delay">Spracovanie oneskorené z dôvodu veľkého množstva chybných požiadavok</string>
     <string name="calendar">Kalendár</string>
     <string name="calendars">Kalendáre</string>
@@ -151,6 +156,7 @@
     <string name="common_loading">Načítavam…</string>
     <string name="common_next">Ďalšie</string>
     <string name="common_no">Nie</string>
+    <string name="common_now">Teraz</string>
     <string name="common_ok">OK</string>
     <string name="common_pending">Prebieha</string>
     <string name="common_remove">Zmazať</string>
@@ -751,6 +757,7 @@
     <string name="restore">Obnoviť súbor</string>
     <string name="restore_backup">Obnoviť zo zálohy</string>
     <string name="restore_button_description">Obnovenie zmazaného súboru</string>
+    <string name="restore_item">Obnoviť</string>
     <string name="restore_selected">Obnoviť vybrané</string>
     <string name="retrieving_file">Získava sa súbor…</string>
     <string name="retry">Zopakovať</string>
