@@ -283,6 +283,7 @@
             android:exported="false" />
         <receiver
             android:name="com.nextcloud.client.widget.DashboardWidgetProvider"
+            android:enabled="false"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
