@@ -7,6 +7,8 @@
   -->
 
 <resources>
+    <color name="ic_launcher_background">#003D8F</color>
+
     <color name="text_color">@color/ionos_default_text_color</color>
     <color name="secondary_text_color">@color/dusk</color>
     <color name="bg_default">@color/white</color>
