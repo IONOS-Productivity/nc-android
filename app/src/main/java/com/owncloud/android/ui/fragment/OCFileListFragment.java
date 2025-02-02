@@ -555,8 +555,6 @@ public class OCFileListFragment extends ExtendedListFragment implements
         final OCFile currentFile = getCurrentFile();
         if (fileDisplayActivity != null && currentFile != null && currentFile.isFolder()) {
 
-//            Intent intent = new Intent(requireContext(), DocumentScanActivity.class);
-//            intent.putExtra(DocumentScanActivity.EXTRA_FOLDER, currentFile.getRemotePath());
             scanbotController.scanToDocument(requireContext(), currentFile.getRemotePath());
         } else {
             Log.w(TAG, "scanDocUpload: Failed to start doc scanning, fileDisplayActivity=" + fileDisplayActivity +

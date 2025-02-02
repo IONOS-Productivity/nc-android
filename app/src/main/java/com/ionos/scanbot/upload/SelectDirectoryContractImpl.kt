@@ -11,7 +11,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import com.ionos.scanbot.screens.save.SelectDirectoryContract
-import com.ionos.scanbot.upload.target.RemoteUploadTarget
+import com.ionos.scanbot.upload.target_provider.ScanbotUploadTarget
 import com.nextcloud.utils.extensions.getParcelableArgument
 import com.owncloud.android.datamodel.OCFile
 import com.owncloud.android.ui.activity.FolderPickerActivity
@@ -34,7 +34,7 @@ class SelectDirectoryContractImpl @Inject constructor(
         return intent.getParcelableArgument(FolderPickerActivity.EXTRA_FOLDER, OCFile::class.java)
             ?.remotePath?.let {
                 SelectDirectoryResult.Success(
-                    RemoteUploadTarget(it)
+                    ScanbotUploadTarget(it)
                 )
             } ?: SelectDirectoryResult.Canceled
     }

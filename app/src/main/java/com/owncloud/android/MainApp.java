@@ -400,6 +400,7 @@ public class MainApp
         }
 
         registerGlobalPassCodeProtection();
+
         scanbotInitializer.initialize();
 
         analyticsManager.setEnabled(privacyPreferences.isAnalyticsEnabled());
