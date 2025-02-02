@@ -115,7 +115,7 @@ class CreateFolderDialogFragment : DialogFragment(), DialogInterface.OnClickList
         })
 
         val builder = buildMaterialAlertDialog(binding.root)
-        viewThemeUtils.ionos.dialog.colorMaterialAlertDialogBackground(binding.userInputContainer.context, builder)
+        viewThemeUtils.dialog.colorMaterialAlertDialogBackground(binding.userInputContainer.context, builder)
         return builder.create()
     }
 

@@ -120,7 +120,7 @@ class SetupEncryptionDialogFragment : DialogFragment(), Injectable {
         viewThemeUtils.ionos.material.colorTextInputLayout(binding.encryptionPasswordInputContainer)
 
         val builder = buildMaterialAlertDialog(binding.root)
-        viewThemeUtils.ionos.dialog.colorMaterialAlertDialogBackground(requireContext(), builder)
+        viewThemeUtils.dialog.colorMaterialAlertDialogBackground(requireContext(), builder)
         return builder.create().apply {
             setCanceledOnTouchOutside(false)
             setOnShowListener { dialog1: DialogInterface ->

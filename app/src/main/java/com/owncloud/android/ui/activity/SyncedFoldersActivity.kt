@@ -223,7 +223,6 @@ class SyncedFoldersActivity :
         return true
     }
 
-    @IonosCustomization
     private fun showPowerCheckDialog() {
         val builder = MaterialAlertDialogBuilder(this)
             .setView(R.id.root_layout)
@@ -231,7 +230,7 @@ class SyncedFoldersActivity :
             .setTitle(R.string.autoupload_disable_power_save_check)
             .setMessage(getString(R.string.power_save_check_dialog_message))
 
-        viewThemeUtils.ionos.dialog.colorMaterialAlertDialogBackground(this, builder)
+        viewThemeUtils.dialog.colorMaterialAlertDialogBackground(this, builder)
 
         builder.create().show()
     }

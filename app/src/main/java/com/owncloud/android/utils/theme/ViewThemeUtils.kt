@@ -34,14 +34,14 @@ class ViewThemeUtils @Inject constructor(
     val androidx = AndroidXViewThemeUtils(schemes, platform)
 
     @JvmField
-    val dialog = DialogViewThemeUtils(schemes)
+    val dialog = IonosDialogViewThemeUtils(DialogViewThemeUtils(schemes))
 
     @JvmField
     val files = FilesSpecificViewThemeUtils(schemes, colorUtil, platform, androidx)
 
     @JvmField
     @IonosCustomization
-    val ionos = IonosViewThemeUtils(platform, material)
+    val ionos = IonosViewThemeUtils(platform)
 
     class Factory @Inject constructor(
         private val schemesProvider: MaterialSchemesProvider,

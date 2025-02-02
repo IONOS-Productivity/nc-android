@@ -140,7 +140,7 @@ class SharePasswordDialogFragment : DialogFragment(), Injectable {
             }
             .setTitle(title)
 
-        viewThemeUtils?.ionos?.dialog?.colorMaterialAlertDialogBackground(requireContext(), builder)
+        viewThemeUtils?.dialog?.colorMaterialAlertDialogBackground(requireContext(), builder)
 
         return builder.create()
     }

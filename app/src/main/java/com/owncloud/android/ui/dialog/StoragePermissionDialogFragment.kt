@@ -85,7 +85,7 @@ class StoragePermissionDialogFragment : DialogFragment(), Injectable {
                 dismiss()
             }
 
-        viewThemeUtils.ionos.dialog.colorMaterialAlertDialogBackground(requireContext(), dialogBuilder)
+        viewThemeUtils.dialog.colorMaterialAlertDialogBackground(requireContext(), dialogBuilder)
 
         return dialogBuilder.create()
     }

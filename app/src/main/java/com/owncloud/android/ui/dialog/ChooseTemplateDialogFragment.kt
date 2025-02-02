@@ -165,7 +165,7 @@ class ChooseTemplateDialogFragment : DialogFragment(), View.OnClickListener, Tem
             .setNegativeButton(R.string.common_cancel, null)
             .setTitle(title)
 
-        viewThemeUtils.ionos.dialog.colorMaterialAlertDialogBackground(binding.list.context, builder)
+        viewThemeUtils.dialog.colorMaterialAlertDialogBackground(binding.list.context, builder)
 
         return builder.create()
     }

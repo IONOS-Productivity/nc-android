@@ -81,7 +81,7 @@ class RenamePublicShareDialogFragment : DialogFragment(), DialogInterface.OnClic
             .setNegativeButton(R.string.common_cancel, this)
             .setTitle(R.string.public_share_name)
 
-        viewThemeUtils.ionos.dialog.colorMaterialAlertDialogBackground(binding.userInput.context, builder)
+        viewThemeUtils.dialog.colorMaterialAlertDialogBackground(binding.userInput.context, builder)
 
         return builder.create()
     }

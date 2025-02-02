@@ -51,7 +51,6 @@ class LocalStoragePathPickerDialogFragment :
         }
     }
 
-    @IonosCustomization
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         require(activity is StoragePathAdapterListener) {
             "Calling activity must implement " +
@@ -73,7 +72,7 @@ class LocalStoragePathPickerDialogFragment :
             .setPositiveButton(R.string.common_cancel, this)
             .setTitle(R.string.storage_choose_location)
 
-        viewThemeUtils.ionos.dialog.colorMaterialAlertDialogBackground(requireContext(), builder)
+        viewThemeUtils.dialog.colorMaterialAlertDialogBackground(requireContext(), builder)
 
         return builder.create()
     }

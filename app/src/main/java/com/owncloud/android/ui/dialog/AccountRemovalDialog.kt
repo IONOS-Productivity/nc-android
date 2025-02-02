@@ -69,7 +69,6 @@ class AccountRemovalDialog : DialogFragment(), AvatarGenerationListener, Injecta
         binding.account.text = user?.let { DisplayUtils.convertIdn(it.accountName, false) }
     }
 
-    @IonosCustomization
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         _binding = AccountRemovalDialogBinding.inflate(layoutInflater)
 
@@ -112,7 +111,7 @@ class AccountRemovalDialog : DialogFragment(), AvatarGenerationListener, Injecta
             }
         }
 
-        viewThemeUtils.ionos.dialog.colorMaterialAlertDialogBackground(requireActivity(), builder)
+        viewThemeUtils.dialog.colorMaterialAlertDialogBackground(requireActivity(), builder)
 
         return builder.create()
     }

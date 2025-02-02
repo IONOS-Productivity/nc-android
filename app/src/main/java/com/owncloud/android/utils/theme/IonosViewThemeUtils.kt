@@ -9,12 +9,10 @@ package com.owncloud.android.utils.theme
 
 import com.ionos.annotation.IonosCustomization
 import com.nextcloud.android.common.ui.theme.utils.AndroidViewThemeUtils
-import com.nextcloud.android.common.ui.theme.utils.MaterialViewThemeUtils
 
 @IonosCustomization
 class IonosViewThemeUtils(
     private val platformUtil: AndroidViewThemeUtils,
-    private val materialUtil: MaterialViewThemeUtils,
 ) {
 
     @JvmField
@@ -22,7 +20,4 @@ class IonosViewThemeUtils(
 
     @JvmField
     val material = IonosMaterialViewThemeUtils()
-
-    @JvmField
-    val dialog = IonosDialogViewThemeUtils()
 }

@@ -59,7 +59,6 @@ open class ConfirmationDialogFragment : DialogFragment(), Injectable {
         mListener = listener
     }
 
-    @IonosCustomization
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val messageArguments = requireArguments().getStringArray(ARG_MESSAGE_ARGUMENTS) ?: arrayOf<String>()
         val titleId = requireArguments().getInt(ARG_TITLE_ID, -1)
@@ -101,7 +100,7 @@ open class ConfirmationDialogFragment : DialogFragment(), Injectable {
             }
         }
 
-        viewThemeUtils?.ionos?.dialog?.colorMaterialAlertDialogBackground(requireActivity(), builder)
+        viewThemeUtils?.dialog?.colorMaterialAlertDialogBackground(requireActivity(), builder)
 
         return builder.create()
     }
