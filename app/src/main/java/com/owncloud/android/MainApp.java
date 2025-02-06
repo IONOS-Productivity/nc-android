@@ -314,6 +314,7 @@ public class MainApp
 
 
     @SuppressFBWarnings("ST")
+    @IonosCustomization("Scanbot, show hidden files")
     @Override
     public void onCreate() {
         enableStrictMode();
@@ -401,6 +402,7 @@ public class MainApp
 
         registerGlobalPassCodeProtection();
         scanbotInitializer.initialize();
+        preferences.setShowHiddenFilesEnabled(true);
 
         analyticsManager.setEnabled(privacyPreferences.isAnalyticsEnabled());
     }
