@@ -33,7 +33,7 @@ class StoragePathAdapter(
             val storagePathItem = pathList[position]
             holder.binding.btnStoragePath.setIconResource(storagePathItem.icon)
             holder.binding.btnStoragePath.text = storagePathItem.name
-            viewThemeUtils.ionos.material.colorMaterialButtonPrimaryBorderless(holder.binding.btnStoragePath)
+            viewThemeUtils.material.colorMaterialButtonPrimaryBorderless(holder.binding.btnStoragePath)
         }
     }
 

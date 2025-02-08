@@ -222,7 +222,7 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
             moreButton.setBackgroundColor(ResourcesCompat.getColor(resources,
                                                                android.R.color.transparent,
                                                                null));
-            viewThemeUtils.ionos.material.colorMaterialButtonPrimaryBorderless(moreButton);
+            viewThemeUtils.material.colorMaterialButtonPrimaryBorderless(moreButton);
 
             moreButton.setAllCaps(false);
 
@@ -270,7 +270,7 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
                     button.setBackgroundColor(ResourcesCompat.getColor(resources,
                                                                        android.R.color.transparent,
                                                                        null));
-                    viewThemeUtils.ionos.material.colorMaterialButtonPrimaryBorderless(button);
+                    viewThemeUtils.material.colorMaterialButtonPrimaryBorderless(button);
                 }
 
                 button.setAllCaps(false);

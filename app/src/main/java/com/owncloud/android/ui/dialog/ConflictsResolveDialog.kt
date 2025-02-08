@@ -90,10 +90,10 @@ class ConflictsResolveDialog : DialogFragment(), Injectable {
         val negativeButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE) as MaterialButton
 
         positiveButton?.let {
-            viewThemeUtils.ionos.material.colorMaterialButtonPrimaryTonal(it)
+            viewThemeUtils.material.colorMaterialButtonPrimaryTonal(it)
         }
 
-        viewThemeUtils.ionos.material.colorMaterialButtonPrimaryBorderless(negativeButton)
+        viewThemeUtils.material.colorMaterialButtonPrimaryBorderless(negativeButton)
         positiveButton?.isEnabled = false
     }
 

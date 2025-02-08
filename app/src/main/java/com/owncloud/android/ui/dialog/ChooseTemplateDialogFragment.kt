@@ -94,12 +94,12 @@ class ChooseTemplateDialogFragment : DialogFragment(), View.OnClickListener, Tem
 
         val negativeButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE) as? MaterialButton
         negativeButton?.let {
-            viewThemeUtils.ionos.material.colorMaterialButtonPrimaryBorderless(negativeButton)
+            viewThemeUtils.material.colorMaterialButtonPrimaryBorderless(negativeButton)
         }
 
         val positiveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE) as? MaterialButton
         positiveButton?.let {
-            viewThemeUtils.ionos.material.colorMaterialButtonPrimaryTonal(positiveButton)
+            viewThemeUtils.material.colorMaterialButtonPrimaryTonal(positiveButton)
             positiveButton.setOnClickListener(this)
             positiveButton.isEnabled = false
             positiveButton.isClickable = false
@@ -133,7 +133,7 @@ class ChooseTemplateDialogFragment : DialogFragment(), View.OnClickListener, Tem
         val inflater = requireActivity().layoutInflater
         _binding = ChooseTemplateBinding.inflate(inflater, null, false)
 
-        viewThemeUtils.ionos.material.colorTextInputLayout(
+        viewThemeUtils.material.colorTextInputLayout(
             binding.filenameContainer
         )
 

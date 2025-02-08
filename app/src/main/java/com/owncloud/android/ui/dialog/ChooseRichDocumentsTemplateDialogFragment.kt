@@ -101,14 +101,14 @@ class ChooseRichDocumentsTemplateDialogFragment :
         alertDialog?.let {
             positiveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE) as? MaterialButton
             positiveButton?.let {
-                viewThemeUtils.ionos.material.colorMaterialButtonPrimaryTonal(it)
+                viewThemeUtils.material.colorMaterialButtonPrimaryTonal(it)
                 it.setOnClickListener(this)
                 it.isEnabled = false
             }
 
             val negativeButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE) as? MaterialButton
             negativeButton?.let {
-                viewThemeUtils.ionos.material.colorMaterialButtonPrimaryBorderless(negativeButton)
+                viewThemeUtils.material.colorMaterialButtonPrimaryBorderless(negativeButton)
             }
         }
 
@@ -134,7 +134,7 @@ class ChooseRichDocumentsTemplateDialogFragment :
 
         initClient()
         initFilenames(arguments)
-        viewThemeUtils.ionos.material.colorTextInputLayout(binding.filenameContainer)
+        viewThemeUtils.material.colorTextInputLayout(binding.filenameContainer)
 
         val type = Type.valueOf(arguments.getString(ARG_TYPE) ?: "")
         FetchTemplateTask(this, client).execute(type)
