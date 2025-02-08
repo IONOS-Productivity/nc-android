@@ -58,10 +58,10 @@ class AccountRemovalDialog : DialogFragment(), AvatarGenerationListener, Injecta
 
         viewThemeUtils.platform.themeRadioButton(binding.radioLocalRemove)
         viewThemeUtils.platform.themeRadioButton(binding.radioRequestDeletion)
-        viewThemeUtils.material.colorMaterialButtonPrimaryTonal(
+        viewThemeUtils.ionos.material.colorMaterialButtonPrimaryTonal(
             alertDialog.getButton(AlertDialog.BUTTON_POSITIVE) as MaterialButton
         )
-        viewThemeUtils.material.colorMaterialButtonPrimaryBorderless(
+        viewThemeUtils.ionos.material.colorMaterialButtonPrimaryBorderless(
             alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE) as MaterialButton
         )
 

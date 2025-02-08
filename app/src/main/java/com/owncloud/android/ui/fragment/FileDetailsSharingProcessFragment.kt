@@ -200,12 +200,12 @@ class FileDetailsSharingProcessFragment :
         viewThemeUtils.androidx.colorSwitchCompat(binding.shareProcessHideDownloadCheckbox)
         viewThemeUtils.androidx.colorSwitchCompat(binding.shareProcessChangeNameSwitch)
 
-        viewThemeUtils.material.colorTextInputLayout(binding.shareProcessEnterPasswordContainer)
-        viewThemeUtils.material.colorTextInputLayout(binding.shareProcessChangeNameContainer)
-        viewThemeUtils.material.colorTextInputLayout(binding.noteContainer)
+        viewThemeUtils.ionos.material.colorTextInputLayout(binding.shareProcessEnterPasswordContainer)
+        viewThemeUtils.ionos.material.colorTextInputLayout(binding.shareProcessChangeNameContainer)
+        viewThemeUtils.ionos.material.colorTextInputLayout(binding.noteContainer)
 
-        viewThemeUtils.material.colorMaterialButtonPrimaryFilled(binding.shareProcessBtnNext)
-        viewThemeUtils.material.colorMaterialButtonPrimaryOutlined(binding.shareProcessBtnCancel)
+        viewThemeUtils.ionos.material.colorMaterialButtonPrimaryFilled(binding.shareProcessBtnNext)
+        viewThemeUtils.ionos.material.colorMaterialButtonPrimaryOutlined(binding.shareProcessBtnCancel)
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {

@@ -10,18 +10,12 @@ package com.ionos.utils
 import android.util.TypedValue
 import androidx.core.view.setPadding
 import com.google.android.material.button.MaterialButton
-import com.google.android.material.chip.Chip
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
-import com.nextcloud.android.common.ui.theme.utils.ColorRole
-import com.nextcloud.android.common.ui.theme.utils.MaterialViewThemeUtils
 import com.nextcloud.android.common.ui.util.buildColorStateList
 import com.owncloud.android.R
 
-class IonosMaterialViewThemeUtils(
-    private val delegate: MaterialViewThemeUtils) {
+class IonosMaterialViewThemeUtils {
 
     fun colorMaterialButtonPrimaryTonal(button: MaterialButton) {}
 
@@ -73,12 +67,4 @@ class IonosMaterialViewThemeUtils(
         textInputLayout.editText?.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize)
         textInputLayout.editText?.highlightColor = context.getColor(R.color.text_input_highlight_color)
     }
-
-    fun themeFAB(fab: FloatingActionButton) = delegate.themeFAB(fab)
-    fun colorMaterialButtonFilledOnPrimary(btn: MaterialButton) = delegate.colorMaterialButtonFilledOnPrimary(btn)
-    fun colorMaterialButtonOutlinedOnPrimary(btn: MaterialButton) = delegate.colorMaterialButtonOutlinedOnPrimary(btn)
-    fun colorMaterialTextButton(btn: MaterialButton) = delegate.colorMaterialTextButton(btn)
-    fun colorProgressBar(progressBar: LinearProgressIndicator) = delegate.colorProgressBar(progressBar)
-    fun themeChipSuggestion(chip: Chip) = delegate.themeChipSuggestion(chip)
-    fun colorTextInputLayout(til: TextInputLayout, colorRole: ColorRole) = delegate.colorTextInputLayout(til, colorRole)
 }

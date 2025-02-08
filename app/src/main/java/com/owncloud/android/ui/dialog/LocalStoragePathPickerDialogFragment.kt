@@ -47,7 +47,7 @@ class LocalStoragePathPickerDialogFragment :
 
         val positiveButton = alertDialog?.getButton(AlertDialog.BUTTON_POSITIVE) as MaterialButton?
         positiveButton?.let {
-            viewThemeUtils.material.colorMaterialButtonPrimaryTonal(positiveButton)
+            viewThemeUtils.ionos.material.colorMaterialButtonPrimaryTonal(positiveButton)
         }
     }
 

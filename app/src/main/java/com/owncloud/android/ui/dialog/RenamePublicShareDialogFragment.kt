@@ -51,11 +51,11 @@ class RenamePublicShareDialogFragment : DialogFragment(), DialogInterface.OnClic
         val negativeButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE) as? MaterialButton
 
         positiveButton?.let {
-            viewThemeUtils.material.colorMaterialButtonPrimaryTonal(positiveButton)
+            viewThemeUtils.ionos.material.colorMaterialButtonPrimaryTonal(positiveButton)
         }
 
         negativeButton?.let {
-            viewThemeUtils.material.colorMaterialButtonPrimaryBorderless(negativeButton)
+            viewThemeUtils.ionos.material.colorMaterialButtonPrimaryBorderless(negativeButton)
         }
     }
 
@@ -72,7 +72,7 @@ class RenamePublicShareDialogFragment : DialogFragment(), DialogInterface.OnClic
         binding = EditBoxDialogBinding.inflate(inflater, null, false)
         val view: View = binding.root
 
-        viewThemeUtils.material.colorTextInputLayout(binding.userInputContainer)
+        viewThemeUtils.ionos.material.colorTextInputLayout(binding.userInputContainer)
         binding.userInput.setText(publicShare?.label)
 
         val builder = MaterialAlertDialogBuilder(view.context)

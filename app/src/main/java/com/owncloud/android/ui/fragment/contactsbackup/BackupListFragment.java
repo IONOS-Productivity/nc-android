@@ -237,7 +237,7 @@ public class BackupListFragment extends FileFragment implements Injectable {
             closeFragment();
         });
 
-        viewThemeUtils.material.colorMaterialButtonPrimaryBorderless(binding.restoreSelected);
+        viewThemeUtils.ionos.material.colorMaterialButtonPrimaryBorderless(binding.restoreSelected);
 
         return view;
     }

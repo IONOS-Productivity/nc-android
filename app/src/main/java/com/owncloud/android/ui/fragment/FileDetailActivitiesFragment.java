@@ -165,7 +165,7 @@ public class FileDetailActivitiesFragment extends Fragment implements
 
         binding.submitComment.setOnClickListener(v -> submitComment());
 
-        viewThemeUtils.material.colorTextInputLayout(binding.commentInputFieldContainer);
+        viewThemeUtils.ionos.material.colorTextInputLayout(binding.commentInputFieldContainer);
 
         DisplayUtils.setAvatar(user,
                                this,

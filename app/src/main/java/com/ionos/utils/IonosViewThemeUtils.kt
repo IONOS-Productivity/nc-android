@@ -17,4 +17,7 @@ class IonosViewThemeUtils(
 
     @JvmField
     val platform = IonosAndroidViewThemeUtils(platformUtil)
+
+    @JvmField
+    val material = IonosMaterialViewThemeUtils()
 }
