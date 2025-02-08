@@ -5,7 +5,7 @@
  * SPDX-License-Identifier: GPL-2.0
  */
 
-package com.owncloud.android.utils.theme
+package com.ionos.utils
 
 import android.app.Activity
 import android.content.Context

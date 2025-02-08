@@ -8,6 +8,8 @@
 package com.owncloud.android.utils.theme
 
 import com.ionos.annotation.IonosCustomization
+import com.ionos.utils.IonosDialogViewThemeUtils
+import com.ionos.utils.IonosViewThemeUtils
 import com.nextcloud.android.common.ui.color.ColorUtil
 import com.nextcloud.android.common.ui.theme.MaterialSchemes
 import com.nextcloud.android.common.ui.theme.ViewThemeUtilsBase
