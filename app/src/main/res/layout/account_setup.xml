@@ -24,6 +24,12 @@
         android:orientation="vertical"
         android:padding="@dimen/standard_padding">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TEST"
+            android:textSize="60dp"
+            />
         <ImageView
             android:id="@+id/thumbnail"
             android:layout_width="@dimen/splash_image_size"
