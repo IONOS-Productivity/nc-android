@@ -338,33 +338,33 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
         }
 
         /// load user interface
-//        if (webViewLoginMethod) {
-//            accountSetupWebviewBinding = AccountSetupWebviewBinding.inflate(getLayoutInflater());
-//            setContentView(accountSetupWebviewBinding.getRoot());
-//            anonymouslyPostLoginRequest(webloginUrl);
-//            // initWebViewLogin(webloginUrl, false);
-//            initCancelButton();
-//        } else {
+        if (webViewLoginMethod) {
+            accountSetupWebviewBinding = AccountSetupWebviewBinding.inflate(getLayoutInflater());
+            setContentView(accountSetupWebviewBinding.getRoot());
+            anonymouslyPostLoginRequest(webloginUrl);
+            // initWebViewLogin(webloginUrl, false);
+            initCancelButton();
+        } else {
             accountSetupBinding = AccountSetupBinding.inflate(getLayoutInflater());
             setContentView(accountSetupBinding.getRoot());
 
             /// initialize general UI elements
             initOverallUi();
-//
-//            /// initialize block to be moved to single Fragment to check server and get info about it
-//
-//            /// initialize block to be moved to single Fragment to retrieve and validate credentials
-//            if (TextUtils.isEmpty(getString(R.string.enforce_servers))) {
-//                initAuthorizationPreFragment(savedInstanceState);
-//            } else {
-//                showEnforcedServers();
-//            }
-//        }
-//
-//        initServerPreFragment(savedInstanceState);
-//        ProcessLifecycleOwner.get().getLifecycle().addObserver(lifecycleEventObserver);
-//
-//        // webViewUtil.checkWebViewVersion();
+
+            /// initialize block to be moved to single Fragment to check server and get info about it
+
+            /// initialize block to be moved to single Fragment to retrieve and validate credentials
+            if (TextUtils.isEmpty(getString(R.string.enforce_servers))) {
+                initAuthorizationPreFragment(savedInstanceState);
+            } else {
+                showEnforcedServers();
+            }
+        }
+            
+        initServerPreFragment(savedInstanceState);
+        ProcessLifecycleOwner.get().getLifecycle().addObserver(lifecycleEventObserver);
+
+        // webViewUtil.checkWebViewVersion();
     }
 
     @IonosCustomization
