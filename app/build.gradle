@@ -54,7 +54,7 @@ if (shotTest) {
 }
 apply plugin: 'com.google.devtools.ksp'
 
-//if (getGradle().getStartParameter().getTaskRequests().toString().contains("Ionos")){
+//if (getGradle().getStartParameter().getTaskRequests().toString().contains("Gplay")){
 //    apply plugin: 'com.google.gms.google-services'
 //}
 
@@ -169,8 +169,10 @@ android {
             }
 
             gplay {
-                applicationId 'com.nextcloud.client'
+                applicationId "com.ionos.hidrivenext"
                 dimension "default"
+                versionCode 2
+                isDefault = true
             }
 
             huawei {
@@ -190,13 +192,6 @@ android {
                 dimension "default"
                 versionCode 1
                 versionName "1"
-            }
-
-            ionos {
-                applicationId "com.ionos.hidrivenext"
-                dimension "default"
-                versionCode 2
-                isDefault = true
             }
         }
 
@@ -335,7 +330,6 @@ dependencies {
     gplayImplementation project(':appscan')
     huaweiImplementation project(':appscan')
     qaImplementation project(':appscan')
-    ionosImplementation project(':appscan')
     implementation project(':scanbot')
 
     spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.13.0'

@@ -62,7 +62,7 @@ import com.nextcloud.client.account.CurrentAccountProvider;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.network.ClientFactory;
 import com.nextcloud.client.preferences.AppPreferences;
-import com.owncloud.android.BuildConfig;
+import com.nextcloud.utils.BuildHelper;
 import com.owncloud.android.MainApp;
 import com.owncloud.android.R;
 import com.owncloud.android.datamodel.ArbitraryDataProvider;
@@ -492,7 +492,7 @@ public final class DisplayUtils {
             ((View) callContext).setContentDescription(String.valueOf(user.toPlatformAccount().hashCode()));
         }
 
-        if (BuildConfig.FLAVOR.equals("ionos")) {
+        if (BuildHelper.INSTANCE.isFlavourGPlay()) {
             Drawable avatar = ResourcesCompat.getDrawable(resources, R.drawable.account_circle_white, null);
             listener.avatarGenerated(avatar, callContext);
             return;
