@@ -119,7 +119,6 @@
     <string name="bottom_navigation_menu_favorites_label">Obľúbené</string>
     <string name="bottom_navigation_menu_files_label">Všetky súbory</string>
     <string name="bottom_navigation_menu_media_label">Média</string>
-    <string name="brute_force_delay">Spracovanie oneskorené z dôvodu veľkého množstva chybných požiadavok</string>
     <string name="calendar">Kalendár</string>
     <string name="calendars">Kalendáre</string>
     <string name="certificate_load_problem">Nastal problém s načítaním certifikátu.</string>
@@ -252,7 +251,7 @@
     <string name="document_scan_pdf_generation_in_progress">Generuje sa PDF...</string>
     <string name="done">Hotové</string>
     <string name="dontClear">Nemazať</string>
-    <string name="download_cannot_create_file">Nieje možné vytvoriť lokálny súbor</string>
+    <string name="download_cannot_create_file">Nie je možné vytvoriť lokálny súbor</string>
     <string name="download_download_invalid_local_file_name">Nesprávny názov pre lokálny súbor</string>
     <string name="download_latest_dev_version">Stiahnuť poslednú vývojársku verziu</string>
     <string name="download_limit">Limit sťahovania</string>
@@ -842,6 +841,7 @@
     <string name="sharee_already_added_to_file">Pridanie zdieľania zlyhalo. Tento súbor alebo adresár už bol zdieľaný s touto osobou alebo skupinou.</string>
     <string name="show_images">Zobraziť fotky</string>
     <string name="show_video">Zobraziť videá</string>
+    <string name="sign_tos_failed">Prosím manuálne skontrolujte podmienky poskytovania služby!</string>
     <string name="signup_with_provider">Zaregistrovať sa u poskytovateľa</string>
     <string name="single_sign_on_request_token" formatted="true">Umožniť %1$s pristupovať k Vášmu Nextcloud účtu %2$s?</string>
     <string name="sort_by">Zoradiť podľa</string>
@@ -890,7 +890,6 @@
     <string name="stream">Streamovať s…</string>
     <string name="stream_not_possible_headline">Vnútorné streamovanie nie je možné</string>
     <string name="stream_not_possible_message">Médium si namiesto toho stiahnite alebo použite externú aplikáciu.</string>
-    <string name="strict_mode">Striktný mód: HTTP spojenie nie je povolené!</string>
     <string name="sub_folder_rule_day">Rok/Mesiac/Deň</string>
     <string name="sub_folder_rule_month">Rok/Mesiac</string>
     <string name="sub_folder_rule_year">Rok</string>
@@ -927,6 +926,8 @@
     <string name="synced_folders_type">Typ</string>
     <string name="synced_icon">Zosynchronizované</string>
     <string name="tags">Štítky</string>
+    <string name="terms_of_service_title">Všeobecné podmienky</string>
+    <string name="terms_of_services_agree">Súhlasím s horeuvedenými Podmienkami poskytovania služby</string>
     <string name="test_server_button">Test serverového pripojenia</string>
     <string name="thirtyMinutes">30 minút</string>
     <string name="thisWeek">Tento týždeň</string>
@@ -1077,9 +1078,6 @@
     <string name="wait_checking_credentials">Overujem uložené prihlasovacie údaje</string>
     <string name="wait_for_tmp_copy_from_private_storage">Kopírovanie súboru z privátneho úložiska</string>
     <string name="warn_rename_extension">Zmena prípony môže spôsobiť, že sa tento súbor otvorí v inej aplikácii</string>
-    <string name="webview_version_check_alert_dialog_message">Pre prihlásenie prosím aktualizujte aplikáciu Android System WebView</string>
-    <string name="webview_version_check_alert_dialog_positive_button_title">Aktualizovať</string>
-    <string name="webview_version_check_alert_dialog_title">Aktualizujte Android System WebView</string>
     <string name="what_s_new_image">Obrázok čo je nové</string>
     <string name="whats_new_skip">Preskočiť</string>
     <string name="whats_new_title">Nové v %1$s</string>

@@ -554,6 +554,7 @@
     <string name="synced_folders_preferences_folder_path">Pa %1$s</string>
     <string name="synced_folders_type">Tipu</string>
     <string name="tags">Etiquetes</string>
+    <string name="terms_of_service_title">Términos del serviciu</string>
     <string name="test_server_button">Probar la conexón del sirvidor</string>
     <string name="thirtyMinutes">30 minutos</string>
     <string name="thisWeek">Esta selmana</string>
@@ -637,7 +638,6 @@
     <string name="wait_a_moment">Espera un momentu…</string>
     <string name="wait_checking_credentials">Comprobación de credenciales almacenaes</string>
     <string name="wait_for_tmp_copy_from_private_storage">Copiando ficheru dende l\'almacenamientu priváu</string>
-    <string name="webview_version_check_alert_dialog_positive_button_title">Anovar</string>
     <string name="whats_new_skip">Saltar</string>
     <string name="whats_your_status">¿Cuál ye\'l to estáu?</string>
     <string name="widgets_not_available_title">Nun ta disponible</string>

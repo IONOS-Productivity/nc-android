@@ -504,6 +504,7 @@
     <string name="synced_folders_preferences_folder_path">Priekš %1$s</string>
     <string name="synced_folders_type">Veids</string>
     <string name="tags">Birkas</string>
+    <string name="terms_of_service_title">Lietošanas noteikumi</string>
     <string name="thirtyMinutes">30 minūtes</string>
     <string name="thisWeek">Šonedēļ</string>
     <string name="today">Šodien</string>
@@ -588,7 +589,6 @@
     <string name="wait_a_moment">Uzgaidiet brītiņu…</string>
     <string name="wait_checking_credentials">Pārbauda saglabātos akredācijas datus</string>
     <string name="wait_for_tmp_copy_from_private_storage">Kopē datni no privātās krātuves</string>
-    <string name="webview_version_check_alert_dialog_positive_button_title">Atjaunināt</string>
     <string name="what_s_new_image">Kas jauns attēls</string>
     <string name="whats_new_skip">Izlaist</string>
     <string name="whats_new_title">Jaunums %1$s</string>

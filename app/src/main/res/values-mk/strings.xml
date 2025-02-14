@@ -671,6 +671,7 @@
     <string name="synced_folders_type">Вид</string>
     <string name="synced_icon">Синхронизирано</string>
     <string name="tags">Ознаки</string>
+    <string name="terms_of_service_title">Услови за користење</string>
     <string name="test_server_button">Тестирајте ја врската со серверот</string>
     <string name="thirtyMinutes">30 минути</string>
     <string name="thisWeek">Оваа недела</string>
@@ -778,7 +779,6 @@
     <string name="wait_a_moment">Почекајте малку…</string>
     <string name="wait_checking_credentials">Проверка на зачуваните акредитиви</string>
     <string name="wait_for_tmp_copy_from_private_storage">Копирам датотека од приватното складиште</string>
-    <string name="webview_version_check_alert_dialog_positive_button_title">Ажурирај</string>
     <string name="what_s_new_image">Слика од тоа што е ново</string>
     <string name="whats_new_skip">Прескокни</string>
     <string name="whats_new_title">Ново во %1$s</string>

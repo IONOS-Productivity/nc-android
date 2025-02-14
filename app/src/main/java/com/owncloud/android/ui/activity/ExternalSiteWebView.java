@@ -151,7 +151,7 @@ public class ExternalSiteWebView extends FileActivity {
             }
         });
 
-        new WebViewUtil(getApplicationContext()).setProxyKKPlus(getWebView());
+        new WebViewUtil().setProxyKKPlus(getWebView());
         getWebView().loadUrl(url);
     }
 

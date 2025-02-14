@@ -119,7 +119,6 @@
     <string name="bottom_navigation_menu_favorites_label">收藏</string>
     <string name="bottom_navigation_menu_files_label">全部文件</string>
     <string name="bottom_navigation_menu_media_label">媒体文件</string>
-    <string name="brute_force_delay">因过多的错误尝试而延误</string>
     <string name="calendar">日历</string>
     <string name="calendars">日历</string>
     <string name="certificate_load_problem">加载证书失败。</string>
@@ -290,6 +289,7 @@
     <string name="drawer_quota">%1$s 中 %2$s 已使用</string>
     <string name="drawer_quota_unlimited">%1$s 已使用</string>
     <string name="drawer_synced_folders">自动上传</string>
+    <string name="due_to_too_many_wrong_attempts">%s 由于错误尝试太多</string>
     <string name="e2e_counter_too_old">计数器过旧</string>
     <string name="e2e_hash_not_found">未找到哈希值</string>
     <string name="e2e_not_yet_setup">尚未安装端到端加密</string>
@@ -433,6 +433,7 @@
     <string name="file_not_found">无法找到文件</string>
     <string name="file_not_synced">文件无法同步。显示最新的可用版本。</string>
     <string name="file_rename">重命名</string>
+    <string name="file_upload_worker_error_notification_title">上传失败，没有互联网连接</string>
     <string name="file_upload_worker_same_file_already_exists">相同的文件已存在，未检测到冲突</string>
     <string name="file_version_restored_error">恢复文件版本时发生错误！</string>
     <string name="file_version_restored_successfully">成功恢复文件版本。</string>
@@ -735,6 +736,7 @@
     <string name="recommend_subject">在你的设备上尝试%1$s！</string>
     <string name="recommend_text">我想邀请你在你的设备上使用 %1$s。\n在这里下载：%2$s</string>
     <string name="recommend_urls">%1$s 或 %2$s</string>
+    <string name="recommended_files_title">推荐文件</string>
     <string name="refresh_content">刷新内容</string>
     <string name="reload">刷新</string>
     <string name="remote">(远程)</string>
@@ -795,6 +797,7 @@
     <string name="share">共享</string>
     <string name="share_copy_link">共享并复制链接</string>
     <string name="share_dialog_title">共享</string>
+    <string name="share_download_limit">设置下载限制</string>
     <string name="share_expiration_date_format">%1$s</string>
     <string name="share_expiration_date_label">过期 %1$s</string>
     <string name="share_file">共享 %1$s</string>
@@ -840,6 +843,7 @@
     <string name="sharee_already_added_to_file">添加共享失败。此文件或文件夹已经与此人或群组共享。</string>
     <string name="show_images">显示照片</string>
     <string name="show_video">显示视频</string>
+    <string name="sign_tos_failed">请手动检查服务条款！</string>
     <string name="signup_with_provider">与提供商签约</string>
     <string name="single_sign_on_request_token" formatted="true">是否允许%1$s访问您的 Nextcloud 账号%2$s？</string>
     <string name="sort_by">排序方式</string>
@@ -911,7 +915,6 @@ Nextcloud 是一个私有文件同步、共享和通信服务器。它是自由�
     <string name="stream">分享给…</string>
     <string name="stream_not_possible_headline">内部流无效</string>
     <string name="stream_not_possible_message">请下载媒体或者使用外部应用代替。</string>
-    <string name="strict_mode">严格模式:不允许 HTTP 连接!</string>
     <string name="sub_folder_rule_day">年/月/日</string>
     <string name="sub_folder_rule_month">年/月</string>
     <string name="sub_folder_rule_year">年</string>
@@ -948,6 +951,8 @@ Nextcloud 是一个私有文件同步、共享和通信服务器。它是自由�
     <string name="synced_folders_type">类型</string>
     <string name="synced_icon">已同步</string>
     <string name="tags">标签</string>
+    <string name="terms_of_service_title">服务条款</string>
+    <string name="terms_of_services_agree">我同意上述服务条款</string>
     <string name="test_server_button">测试服务端连接</string>
     <string name="thirtyMinutes">30分钟</string>
     <string name="thisWeek">本周</string>
@@ -1008,6 +1013,8 @@ Nextcloud 是一个私有文件同步、共享和通信服务器。它是自由�
     <string name="upload_file_dialog_title">输入要上传的文件名和文件类型</string>
     <string name="upload_files">上传文件</string>
     <string name="upload_global_pause_title">所有上传已暂停</string>
+    <string name="upload_gplay">权限更改</string>
+    <string name="upload_gplay_desc">需要新权限才能访问上传图片的位置信息。\n确保媒体访问设置为“始终允许全部”。</string>
     <string name="upload_item_action_button">上传项操作按钮</string>
     <string name="upload_list_delete">删除</string>
     <string name="upload_list_empty_headline">没有可以上传的</string>
@@ -1096,9 +1103,6 @@ Nextcloud 是一个私有文件同步、共享和通信服务器。它是自由�
     <string name="wait_checking_credentials">正在检查保存的证书</string>
     <string name="wait_for_tmp_copy_from_private_storage">正在从私有存储中复制文件</string>
     <string name="warn_rename_extension">修改扩展名可能会导致此文件被不同的应用打开</string>
-    <string name="webview_version_check_alert_dialog_message">请更新 Android System WebView 应用程序以进行登录</string>
-    <string name="webview_version_check_alert_dialog_positive_button_title">更新</string>
-    <string name="webview_version_check_alert_dialog_title">更新 Android System WebView</string>
     <string name="what_s_new_image">有什么新图片</string>
     <string name="whats_new_skip">跳过</string>
     <string name="whats_new_title">新建%1$s</string>
@@ -1169,4 +1173,19 @@ Nextcloud 是一个私有文件同步、共享和通信服务器。它是自由�
     <plurals name="items_selected_count">
         <item quantity="other">已选择 %d 个</item>
     </plurals>
-    </resources>
+    <plurals name="delay_message">
+        <item quantity="other">由于错误尝试太多，延迟了 %d 秒</item>
+    </plurals>
+    <plurals name="delay_message_minutes">
+        <item quantity="other">由于错误尝试太多，延迟了 %d 分钟</item>
+    </plurals>
+    <plurals name="delay_message_minutes_part">
+        <item quantity="other">延迟了 %d 分钟</item>
+    </plurals>
+    <plurals name="delay_message_seconds_part">
+        <item quantity="other">%d 秒</item>
+    </plurals>
+    <plurals name="share_download_limit_description">
+        <item quantity="other">剩余 %1$d 个下载</item>
+    </plurals>
+</resources>

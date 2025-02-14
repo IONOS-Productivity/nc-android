@@ -665,6 +665,7 @@
     <string name="synced_folders_type">סוג</string>
     <string name="synced_icon">מסונכרן</string>
     <string name="tags">תגיות</string>
+    <string name="terms_of_service_title">תנאי שירות</string>
     <string name="test_server_button">בדיקת החיבור לשרת</string>
     <string name="thirtyMinutes">30 דקות</string>
     <string name="thisWeek">השבוע</string>
@@ -777,7 +778,6 @@
     <string name="wait_a_moment">נא להמתין רגע…</string>
     <string name="wait_checking_credentials">בודק אישורים שמורים</string>
     <string name="wait_for_tmp_copy_from_private_storage">מעתיק קובץ מאחסון פרטי</string>
-    <string name="webview_version_check_alert_dialog_positive_button_title">עדכון</string>
     <string name="what_s_new_image">תמונת מה חדש</string>
     <string name="whats_new_skip">דלג</string>
     <string name="whats_new_title">חדש ב־%1$s</string>

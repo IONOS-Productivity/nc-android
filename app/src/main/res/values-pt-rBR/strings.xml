@@ -46,6 +46,7 @@
     <string name="app_config_proxy_port_title">Porta do Proxy</string>
     <string name="app_widget_description">Mostra um widget do painel</string>
     <string name="appbar_search_in">Pesquisar em %s</string>
+    <string name="assistant_screen_add_task_alert_dialog_title">Adicionar nova tarefa</string>
     <string name="assistant_screen_create_task_alert_dialog_input_field_placeholder">Digite algum texto</string>
     <string name="assistant_screen_delete_task_alert_dialog_description">Tem certeza de que deseja excluir esta tarefa?</string>
     <string name="assistant_screen_delete_task_alert_dialog_title">Excluir tarefa</string>
@@ -96,6 +97,7 @@
     <string name="authenticator_activity_login_error">Ocorreu um problema ao processar o seu pedido de início de sessão. Tente novamente mais tarde.</string>
     <string name="authenticator_activity_please_complete_login_process">Conclua o processo de login no seu navegador</string>
     <string name="auto_upload_file_behaviour_kept_in_folder">mantido na pasta original, já que é somente leitura</string>
+    <string name="auto_upload_gplay">Comportamento do upload automático alterado</string>
     <string name="auto_upload_on_wifi">Enviar só por WiFi não medida</string>
     <string name="auto_upload_path">/AutoEnvio</string>
     <string name="autoupload_configure">Configurar</string>
@@ -115,7 +117,6 @@
     <string name="bottom_navigation_menu_favorites_label">Favoritos</string>
     <string name="bottom_navigation_menu_files_label">Todos os arquivos</string>
     <string name="bottom_navigation_menu_media_label">Meios de comunicação</string>
-    <string name="brute_force_delay">Atrasado devido a muitas tentativas erradas</string>
     <string name="calendar">Calendário</string>
     <string name="calendars">Calendários </string>
     <string name="certificate_load_problem">Existe um problema ao carregar o certificado.</string>
@@ -394,6 +395,7 @@
     <string name="file_management_permission_optional">Permissões de armazenamento</string>
     <string name="file_management_permission_optional_text">%1$s funciona melhor com permissões para acessar o armazenamento. Você pode escolher acesso total a todos os arquivos ou acesso somente leitura a fotos e vídeos.</string>
     <string name="file_management_permission_text">%1$s precisa de permissões de gerenciamento de arquivos para enviar arquivos. Você pode escolher acesso total a todos os arquivos ou acesso somente leitura a fotos e vídeos.</string>
+    <string name="file_migration_allow_media_indexing">Permitir acesso por outros apps</string>
     <string name="file_migration_checking_destination">Verificando destino…</string>
     <string name="file_migration_cleaning">Limpando…</string>
     <string name="file_migration_dialog_title">Atualizando a pasta de armazenamento se dados</string>
@@ -875,7 +877,6 @@
     <string name="stream">Stream com…</string>
     <string name="stream_not_possible_headline">Streaming interno não é possível</string>
     <string name="stream_not_possible_message">Faça o download da mídia ou use um aplicativo externo.</string>
-    <string name="strict_mode">Modo restrito: nenhuma conexão HTTP permitida! </string>
     <string name="sub_folder_rule_day">Ano/Mês/Dia</string>
     <string name="sub_folder_rule_month">Ano/Mês</string>
     <string name="sub_folder_rule_year">Ano</string>
@@ -912,6 +913,7 @@
     <string name="synced_folders_type">Tipo</string>
     <string name="synced_icon">Sincronizado</string>
     <string name="tags">Etiquetas</string>
+    <string name="terms_of_service_title">Termos de serviço</string>
     <string name="test_server_button">Teste de conexão ao servidor</string>
     <string name="thirtyMinutes">30 minutos</string>
     <string name="thisWeek">Esta semana</string>
@@ -1059,9 +1061,6 @@
     <string name="wait_a_moment">Aguarde um momento…</string>
     <string name="wait_checking_credentials">Verificando credenciais salvas</string>
     <string name="wait_for_tmp_copy_from_private_storage">Copiando o arquivo da armazenagem privada</string>
-    <string name="webview_version_check_alert_dialog_message">Atualize o aplicativo Android System WebView para fazer login</string>
-    <string name="webview_version_check_alert_dialog_positive_button_title">Atualizar</string>
-    <string name="webview_version_check_alert_dialog_title">Atualizar WebView do sistema Android</string>
     <string name="what_s_new_image">Imagem nova</string>
     <string name="whats_new_skip">Saltar</string>
     <string name="whats_new_title">Novo em %1$s</string>
@@ -1081,6 +1080,21 @@
         <item quantity="one">%d minutos</item>
         <item quantity="many">%d minutos</item>
         <item quantity="other">%d ata</item>
+    </plurals>
+    <plurals name="time_seconds_ago">
+        <item quantity="one">1 segundo atrás</item>
+        <item quantity="many">%d segundos atrás</item>
+        <item quantity="other">%d segundos atrás</item>
+    </plurals>
+    <plurals name="time_minutes_ago">
+        <item quantity="one">1 minuto atrás</item>
+        <item quantity="many">%d minutos atrás</item>
+        <item quantity="other">%d minutos atrás</item>
+    </plurals>
+    <plurals name="time_hours_ago">
+        <item quantity="one">1 hora atrás</item>
+        <item quantity="many">%d horas atrás</item>
+        <item quantity="other">%d horas atrás</item>
     </plurals>
     <plurals name="sync_fail_in_favourites_content">
         <item quantity="one">Erro ao sincronizar %1$d arquivo (conflitos: %2$d)</item>
@@ -1142,6 +1156,11 @@
         <item quantity="many">%1$d arquivos</item>
         <item quantity="other">%1$d arquivos</item>
     </plurals>
+    <plurals name="trashbin_list__footer__file">
+        <item quantity="one">%1$d item</item>
+        <item quantity="many">%1$d itens</item>
+        <item quantity="other">%1$d itens</item>
+    </plurals>
     <plurals name="synced_folders_show_hidden_folders">
         <item quantity="one">Mostrar %1$d pasta oculta</item>
         <item quantity="many">Mostrar %1$d pastas ocultas</item>
@@ -1152,4 +1171,9 @@
         <item quantity="many">%d selecionados</item>
         <item quantity="other">%d selecionados</item>
     </plurals>
-    </resources>
+    <plurals name="share_download_limit_description">
+        <item quantity="one">%1$d download restante</item>
+        <item quantity="many">%1$d downloads restantes</item>
+        <item quantity="other">%1$d downloads restantes</item>
+    </plurals>
+</resources>

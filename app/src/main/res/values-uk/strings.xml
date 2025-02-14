@@ -119,7 +119,6 @@
     <string name="bottom_navigation_menu_favorites_label">Із зірочкою</string>
     <string name="bottom_navigation_menu_files_label">Усі документи</string>
     <string name="bottom_navigation_menu_media_label">Зображення та відео</string>
-    <string name="brute_force_delay">Затримка в доступі через занадто багато неправильних спроб</string>
     <string name="calendar">Календар</string>
     <string name="calendars">Календарі</string>
     <string name="certificate_load_problem">Помилка завантаження сертифіката.</string>
@@ -721,11 +720,13 @@
     <string name="push_notifications_temp_error">Зараз сповіщення push недоступні.</string>
     <string name="qr_could_not_be_read">Неможливо прочитати QR-код!</string>
     <string name="re_enable_auto_upload">Зміни до автоматичного завантаження</string>
+    <string name="re_enable_auto_upload_desc">Через нові обмеження з боку Google ми вилучили важливий дозвіл. Ми зараз працюємо з Google над вирішенням цієї проблеми та відновленням повноцінної функціональности.\n\nДля повторного увімкнення автоматичного завантаження для нових зображень та відео:\nВиберіть \"Дозволити все\" у наступному меню вибору або у системних налаштуваннях.\nУ разі запиту надайте дозвіл до місця розташування, що дозволить Nextcloud зберігати інформацію про місце розташування для зображень, які ви завантажуєте.\n\nАвтоматичне завантаження буде доступне виключно для зображень та відео, якщо ви встановили офіційну версію застосунку Nextcloud з крамниці застосунків Google Play.\n\nПеревірте всі файли, які можливо не було завантажено, починаючи з грудня 2024 р.</string>
     <string name="receive_external_files_activity_start_sync_folder_is_not_exists_message">Неможливо знайти каталог, синхронізацію скасовано</string>
     <string name="receive_external_files_activity_unable_to_find_file_to_upload">Неможливо знайти файл для завантаження</string>
     <string name="recommend_subject">Спробуйте %1$s на Вашому пристрої!</string>
     <string name="recommend_text">Запрошую вас почати використовувати %1$s на вашому пристрої.\nЗвантажити можна тут: %2$s</string>
     <string name="recommend_urls">%1$s або %2$s</string>
+    <string name="recommended_files_title">Рекомендовані файли</string>
     <string name="refresh_content">Оновити вміст</string>
     <string name="reload">Перезавантажити</string>
     <string name="remote">(віддалено)</string>
@@ -873,13 +874,13 @@
     <string name="storage_permission_full_access">Повний доступ</string>
     <string name="storage_permission_media_read_only">Мультимедія лише для читання</string>
     <string name="storage_pictures">Зображення</string>
+    <string name="store_full_desc">Власна платформа продуктивності, яка дозволяє вам контролювати.\n\nФункції:\n* Простий, сучасний інтерфейс, який підходить до теми вашого сервера\n* Завантажуйте файли на свій сервер Nextcloud\n* Поділіться ними з іншими\n * Синхронізуйте улюблені файли та папки\n* Шукайте в усіх папках на сервері\n* Автоматичне завантаження фотографій і відео, знятих вашим пристроєм\n* Будьте в курсі подій за допомогою сповіщення\n* Підтримка кількох облікових записів\n* Безпечний доступ до ваших даних за допомогою відбитків пальців або PIN-коду\n* Інтеграція з DAVx5 (раніше відомий як DAVdroid) для легкого налаштування календаря та синхронізації контактів\n\nБудь ласка, повідомляйте про всі проблеми на https: //github.com/nextcloud/android/issues і обговорити цю програму за адресою https://help.nextcloud.com/c/clients/android\n\nВперше користуєтеся Nextcloud? Nextcloud — це приватний сервер для синхронізації та обміну файлами та спілкування. Це безкоштовне програмне забезпечення, і ви можете розмістити його самостійно або заплатити компанії, яка зробить це за вас. Таким чином ви керуєте своїми фотографіями, календарем і контактними даними, документами та всім іншим.\n\nПерегляньте Nextcloud на https://nextcloud.com</string>
     <string name="store_full_dev_desc">Самостійна платформа продуктивності, яка тримає вас під контролем.\nЦе офіційна версія для розробки, що містить щоденний зразок будь-якої нової неперевіреної функціональності, яка може спричинити нестабільність та втрату даних. Застосунок призначено для користувачів, які бажають протестувати, і повідомляти про помилки у разі їх виникнення. Не використовуйте його для своєї продуктивної роботи!\n\ nОфіційна розробка та звичайна версія доступні на F-droid і можуть бути встановлені одночасно.</string>
     <string name="store_short_desc">Платформа з власним хостингом, яка надає можливість контролювати ваші ресурси</string>
     <string name="store_short_dev_desc">Платформа з власним хостингом, яка надає можливість контролювати ваші ресурси (версія для попереднього ознайомлення)</string>
     <string name="stream">Транслювати з...</string>
     <string name="stream_not_possible_headline">Внутрішня трансляція неможлива</string>
     <string name="stream_not_possible_message">Будь ласка, звантажте мультимедійний файл замість використання зовнішнього застосунку</string>
-    <string name="strict_mode">Строгий режим: з\'єднання HTTP не дозволені!</string>
     <string name="sub_folder_rule_day">Рік/місяць/день</string>
     <string name="sub_folder_rule_month">Рік/місяць</string>
     <string name="sub_folder_rule_year">Рік</string>
@@ -916,6 +917,7 @@
     <string name="synced_folders_type">Тип</string>
     <string name="synced_icon">Синхронізований</string>
     <string name="tags">Мітки</string>
+    <string name="terms_of_service_title">Умови використання</string>
     <string name="test_server_button">Перевірка з\'єднання з сервером</string>
     <string name="thirtyMinutes">30 хвилин</string>
     <string name="thisWeek">Цього тижня</string>
@@ -1065,9 +1067,6 @@
     <string name="wait_checking_credentials">Перевірка збережених даних авторизації</string>
     <string name="wait_for_tmp_copy_from_private_storage">Копіювання файлу з приватного сховища</string>
     <string name="warn_rename_extension">Зміна розширення файлу може призвести до того, що його буде відкривати інший застосунок</string>
-    <string name="webview_version_check_alert_dialog_message">Оновіть застосунок Android System WebView для отримання доступу до входу</string>
-    <string name="webview_version_check_alert_dialog_positive_button_title">Оновлення</string>
-    <string name="webview_version_check_alert_dialog_title">Оновити Android System WebView</string>
     <string name="what_s_new_image">Зображення про нові функції</string>
     <string name="whats_new_skip">Пропустити</string>
     <string name="whats_new_title">Нове у %1$s</string>
