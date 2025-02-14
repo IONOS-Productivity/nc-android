@@ -24,6 +24,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.account.User
 import com.nextcloud.client.di.Injectable
 import com.nextcloud.client.editimage.EditImageActivity
@@ -55,6 +56,8 @@ import com.owncloud.android.ui.fragment.OCFileListFragment
 import com.owncloud.android.ui.preview.model.PreviewImageActivityState
 import com.owncloud.android.utils.DisplayUtils
 import com.owncloud.android.utils.MimeTypeUtil
+import android.graphics.drawable.ColorDrawable
+import androidx.activity.enableEdgeToEdge
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
 import java.io.Serializable
 import javax.inject.Inject
@@ -85,7 +88,9 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
     private var actionBar: ActionBar? = null
     private var showDirectoryWhenDeletionCompleted = false
 
+    @IonosCustomization
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
         actionBar = supportActionBar
@@ -107,8 +112,10 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
         val chosenFile = intent.getParcelableArgument(EXTRA_FILE, OCFile::class.java)
         updateActionBarTitleAndHomeButton(chosenFile)
 
+        viewThemeUtils.ionos.platform.themeSystemBars(this, getColor(R.color.preview_image_system_bars_color))
         if (actionBar != null) {
             viewThemeUtils.files.setWhiteBackButton(this, actionBar!!)
+            actionBar?.setBackgroundDrawable(ColorDrawable(getColor(R.color.preview_image_system_bars_color)))
             actionBar?.setDisplayHomeAsUpEnabled(true)
         }
 
@@ -495,10 +502,15 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
 
     fun toggleFullScreen() {
         if (fullScreenAnchorView == null) return
-        val visible = (
-            fullScreenAnchorView!!.systemUiVisibility
-                and View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-            ) == 0
+        val visible = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val insets = window.decorView.rootWindowInsets
+            insets.isVisible(WindowInsets.Type.statusBars())
+                || insets.isVisible(WindowInsets.Type.navigationBars())
+        } else {
+            @Suppress("DEPRECATION")
+            (fullScreenAnchorView!!.systemUiVisibility
+                and View.SYSTEM_UI_FLAG_HIDE_NAVIGATION) == 0
+        }
 
         if (visible) {
             hideSystemUI(fullScreenAnchorView!!)
@@ -544,6 +556,7 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
 
     private fun hideSystemUI(anchorView: View) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            actionBar?.hide()
             window.insetsController?.let { controller ->
                 controller.hide(WindowInsets.Type.systemBars())
                 controller.systemBarsBehavior = WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
@@ -563,6 +576,7 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
 
     private fun showSystemUI(anchorView: View) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            actionBar?.show()
             window.insetsController?.let { controller ->
                 controller.show(WindowInsets.Type.systemBars())
 
