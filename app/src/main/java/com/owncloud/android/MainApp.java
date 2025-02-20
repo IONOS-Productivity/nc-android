@@ -40,7 +40,6 @@ import android.view.WindowManager;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.ionos.analycis.AnalyticsManager;
-import com.ionos.annotation.IonosCustomization;
 import com.ionos.privacy.PrivacyPreferences;
 import com.nextcloud.appReview.InAppReviewHelper;
 import com.nextcloud.client.account.User;
@@ -91,8 +90,6 @@ import com.owncloud.android.utils.ReceiversHelper;
 import com.owncloud.android.utils.SecurityUtils;
 import com.owncloud.android.utils.appConfig.AppConfigManager;
 import com.owncloud.android.utils.theme.ViewThemeUtils;
-import com.ionos.scanbot.di.ScanbotComponent;
-import com.ionos.scanbot.di.ScanbotComponentProvider;
 import com.ionos.scanbot.initializer.ScanbotInitializer;
 
 import org.conscrypt.Conscrypt;
@@ -135,9 +132,7 @@ import static com.owncloud.android.ui.activity.ContactsPreferenceActivity.PREFER
  * Main Application of the project.
  * Contains methods to build the "static" strings. These strings were before constants in different classes.
  */
-@IonosCustomization("ScanbotComponentProvider")
-public class MainApp
-    extends Application implements HasAndroidInjector, ScanbotComponentProvider {
+public class MainApp extends Application implements HasAndroidInjector {
     public static final OwnCloudVersion OUTDATED_SERVER_VERSION = NextcloudVersion.nextcloud_26;
     public static final OwnCloudVersion MINIMUM_SUPPORTED_SERVER_VERSION = OwnCloudVersion.nextcloud_17;
 
@@ -220,8 +215,6 @@ public class MainApp
     private AppConfigManager appConfigManager;
 
     private static AppComponent appComponent;
-
-    private ScanbotComponent scanbotComponent;
 
 
     /**
@@ -440,14 +433,6 @@ public class MainApp
             appConfigManager.setProxyConfig(isClientBrandedPlus());
         }
     };
-
-    @Override
-    public ScanbotComponent getScanbotComponent() {
-        if (this.scanbotComponent == null) {
-            this.scanbotComponent = appComponent.scanbotComponent();
-        }
-        return this.scanbotComponent;
-    }
 
     private void registerGlobalPassCodeProtection() {
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
