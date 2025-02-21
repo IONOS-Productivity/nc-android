@@ -39,8 +39,6 @@ import android.text.TextUtils;
 import android.view.WindowManager;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.ionos.analycis.AnalyticsManager;
-import com.ionos.privacy.PrivacyPreferences;
 import com.nextcloud.appReview.InAppReviewHelper;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.account.UserAccountManager;
@@ -90,7 +88,6 @@ import com.owncloud.android.utils.ReceiversHelper;
 import com.owncloud.android.utils.SecurityUtils;
 import com.owncloud.android.utils.appConfig.AppConfigManager;
 import com.owncloud.android.utils.theme.ViewThemeUtils;
-import com.ionos.scanbot.initializer.ScanbotInitializer;
 
 import org.conscrypt.Conscrypt;
 import org.greenrobot.eventbus.EventBus;
@@ -150,12 +147,6 @@ public class MainApp extends Application implements HasAndroidInjector {
     protected AppPreferences preferences;
 
     @Inject
-    protected PrivacyPreferences privacyPreferences;
-
-    @Inject
-    protected AnalyticsManager analyticsManager;
-
-    @Inject
     protected DispatchingAndroidInjector<Object> dispatchingAndroidInjector;
 
     @Inject
@@ -166,9 +157,6 @@ public class MainApp extends Application implements HasAndroidInjector {
 
     @Inject
     protected OnboardingService onboarding;
-
-    @Inject
-    ScanbotInitializer scanbotInitializer;
 
     @Inject
     ConnectivityService connectivityService;
@@ -393,10 +381,6 @@ public class MainApp extends Application implements HasAndroidInjector {
         }
 
         registerGlobalPassCodeProtection();
-
-        scanbotInitializer.initialize();
-
-        analyticsManager.setEnabled(privacyPreferences.isAnalyticsEnabled());
     }
 
     private final LifecycleEventObserver lifecycleEventObserver = ((lifecycleOwner, event) -> {
