@@ -173,6 +173,7 @@ android {
                 dimension "default"
                 versionCode 2
                 isDefault = true
+                resConfigs "en", "de", "es", "fr", "nl"
             }
 
             huawei {
