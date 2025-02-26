@@ -16,6 +16,7 @@
 package com.owncloud.android.ui.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
@@ -1104,6 +1105,11 @@ public class SettingsActivity extends PreferenceActivity
 
     public void invalidateOptionsMenu() {
         getDelegate().invalidateOptionsMenu();
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(getDelegate().attachBaseContext2(newBase));
     }
 
     private AppCompatDelegate getDelegate() {
