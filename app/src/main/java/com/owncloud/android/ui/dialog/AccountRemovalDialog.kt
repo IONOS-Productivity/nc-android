@@ -16,7 +16,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.account.User
 import com.nextcloud.client.account.UserAccountManager
 import com.nextcloud.client.di.Injectable
@@ -48,7 +47,6 @@ class AccountRemovalDialog : DialogFragment(), AvatarGenerationListener, Injecta
         user = requireArguments().getParcelableArgument(KEY_USER, User::class.java)
     }
 
-    @IonosCustomization("colorMaterialButtonPrimaryTonal, colorMaterialButtonPrimaryBorderless")
     override fun onStart() {
         super.onStart()
 
@@ -58,10 +56,10 @@ class AccountRemovalDialog : DialogFragment(), AvatarGenerationListener, Injecta
 
         viewThemeUtils.platform.themeRadioButton(binding.radioLocalRemove)
         viewThemeUtils.platform.themeRadioButton(binding.radioRequestDeletion)
-        viewThemeUtils.ionos.material.colorMaterialButtonPrimaryTonal(
+        viewThemeUtils.material.colorMaterialButtonPrimaryTonal(
             alertDialog.getButton(AlertDialog.BUTTON_POSITIVE) as MaterialButton
         )
-        viewThemeUtils.ionos.material.colorMaterialButtonPrimaryBorderless(
+        viewThemeUtils.material.colorMaterialButtonPrimaryBorderless(
             alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE) as MaterialButton
         )
 

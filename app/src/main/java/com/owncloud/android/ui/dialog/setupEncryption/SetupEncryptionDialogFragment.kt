@@ -78,19 +78,18 @@ class SetupEncryptionDialogFragment : DialogFragment(), Injectable {
         executeTask()
     }
 
-    @IonosCustomization()
     private fun setupAlertDialog() {
         val alertDialog = dialog as AlertDialog?
 
         if (alertDialog != null) {
             positiveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE) as? MaterialButton?
             positiveButton?.let {
-                viewThemeUtils.ionos.material.colorMaterialButtonPrimaryTonal(it)
+                viewThemeUtils.material.colorMaterialButtonPrimaryTonal(it)
             }
 
             negativeButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE) as? MaterialButton?
             negativeButton?.let {
-                viewThemeUtils.ionos.material.colorMaterialButtonPrimaryBorderless(it)
+                viewThemeUtils.material.colorMaterialButtonPrimaryBorderless(it)
             }
         }
     }
@@ -100,7 +99,6 @@ class SetupEncryptionDialogFragment : DialogFragment(), Injectable {
         task?.execute()
     }
 
-    @IonosCustomization
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         checkNotNull(arguments) { "Arguments may not be null" }
 
@@ -117,7 +115,7 @@ class SetupEncryptionDialogFragment : DialogFragment(), Injectable {
         binding = SetupEncryptionDialogBinding.inflate(inflater, null, false)
 
         // Setup layout
-        viewThemeUtils.ionos.material.colorTextInputLayout(binding.encryptionPasswordInputContainer)
+        viewThemeUtils.material.colorTextInputLayout(binding.encryptionPasswordInputContainer)
 
         val builder = buildMaterialAlertDialog(binding.root)
         viewThemeUtils.dialog.colorMaterialAlertDialogBackground(requireContext(), builder)
@@ -505,7 +503,7 @@ class SetupEncryptionDialogFragment : DialogFragment(), Injectable {
         }
         requireDialog().setTitle(R.string.end_to_end_encryption_passphrase_title)
         binding.encryptionStatus.setText(R.string.end_to_end_encryption_keywords_description)
-        viewThemeUtils.ionos.material.colorTextInputLayout(binding.encryptionPasswordInputContainer)
+        viewThemeUtils.material.colorTextInputLayout(binding.encryptionPasswordInputContainer)
         binding.encryptionPassphrase.text = generateMnemonicString(true)
         binding.encryptionPassphrase.visibility = View.VISIBLE
 

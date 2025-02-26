@@ -10,7 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.ionos.annotation.IonosCustomization
 import com.owncloud.android.databinding.StoragePathItemBinding
 import com.owncloud.android.ui.adapter.StoragePathAdapter.StoragePathViewHolder
 import com.owncloud.android.utils.theme.ViewThemeUtils
@@ -27,13 +26,12 @@ class StoragePathAdapter(
         )
     }
 
-    @IonosCustomization()
     override fun onBindViewHolder(holder: StoragePathViewHolder, position: Int) {
         if (pathList != null && pathList.size > position) {
             val storagePathItem = pathList[position]
             holder.binding.btnStoragePath.setIconResource(storagePathItem.icon)
             holder.binding.btnStoragePath.text = storagePathItem.name
-            viewThemeUtils.ionos.material.colorMaterialButtonPrimaryBorderless(holder.binding.btnStoragePath)
+            viewThemeUtils.material.colorMaterialButtonPrimaryBorderless(holder.binding.btnStoragePath)
         }
     }
 
