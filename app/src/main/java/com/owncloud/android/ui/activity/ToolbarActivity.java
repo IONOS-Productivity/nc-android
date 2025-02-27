@@ -99,7 +99,7 @@ public abstract class ToolbarActivity extends BaseActivity implements Injectable
 
         mToolbarSpinner = findViewById(R.id.toolbar_spinner);
 
-        viewThemeUtils.ionos.platform.themeSystemBars(this);
+        viewThemeUtils.platform.themeStatusBar(this);
         viewThemeUtils.material.colorMaterialTextButton(mSwitchAccountButton);
     }
 
@@ -164,11 +164,11 @@ public abstract class ToolbarActivity extends BaseActivity implements Injectable
     @IonosCustomization
     private void showHomeSearchToolbar(boolean isShow) {
         if (isShow) {
-            viewThemeUtils.ionos.platform.resetSystemBars(this);
+            viewThemeUtils.platform.resetStatusBar(this);
             mDefaultToolbar.setVisibility(View.GONE);
             mHomeSearchToolbar.setVisibility(View.VISIBLE);
         } else {
-            viewThemeUtils.ionos.platform.themeSystemBars(this);
+            viewThemeUtils.platform.themeStatusBar(this);
             mDefaultToolbar.setVisibility(View.VISIBLE);
             mHomeSearchToolbar.setVisibility(View.GONE);
         }

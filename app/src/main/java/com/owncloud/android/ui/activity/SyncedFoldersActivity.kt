@@ -822,7 +822,6 @@ class SyncedFoldersActivity :
         }
     }
 
-    @IonosCustomization("Buttons style")
     private fun showBatteryOptimizationInfo() {
         if (powerManagementService.isPowerSavingExclusionAvailable || checkIfBatteryOptimizationEnabled()) {
             val alertDialogBuilder = MaterialAlertDialogBuilder(this, R.style.Theme_ownCloud_Dialog)
@@ -843,7 +842,7 @@ class SyncedFoldersActivity :
                 .setIcon(R.drawable.ic_battery_alert)
             if (lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
                 val alertDialog = alertDialogBuilder.show()
-                viewThemeUtils.ionos.platform.colorTextButtons(
+                viewThemeUtils.platform.colorTextButtons(
                     alertDialog.getButton(AlertDialog.BUTTON_POSITIVE),
                     alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL)
                 )

@@ -108,7 +108,7 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
         val chosenFile = intent.getParcelableArgument(EXTRA_FILE, OCFile::class.java)
         updateActionBarTitleAndHomeButton(chosenFile)
 
-        viewThemeUtils.ionos.platform.themeSystemBars(this, getColor(R.color.preview_image_system_bars_color))
+        viewThemeUtils.platform.themeStatusBar(this, getColor(R.color.preview_image_system_bars_color))
         if (actionBar != null) {
             viewThemeUtils.files.setWhiteBackButton(this, actionBar!!)
             actionBar?.setBackgroundDrawable(ColorDrawable(getColor(R.color.preview_image_system_bars_color)))

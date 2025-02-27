@@ -821,7 +821,7 @@ public class OCFileListFragment extends ExtendedListFragment implements
 
             Activity activity = getActivity();
             if (activity != null) {
-                viewThemeUtils.ionos.platform.resetSystemBars(activity);
+                viewThemeUtils.platform.resetStatusBar(activity);
             }
 
             getCommonAdapter().setMultiSelect(false);

@@ -51,7 +51,7 @@ class AnimatedDrawerListener extends ActionBarDrawerToggle {
 
         if (shouldUpdateSystemBarColor(slideOffset)) {
             this.valueAnimator.setCurrentFraction(slideOffset);
-            this.viewThemeUtils.ionos.platform.themeSystemBars(this.activity, (int) this.valueAnimator.getAnimatedValue());
+            this.viewThemeUtils.platform.themeStatusBar(this.activity, (int) this.valueAnimator.getAnimatedValue());
         }
     }
 
@@ -59,14 +59,14 @@ class AnimatedDrawerListener extends ActionBarDrawerToggle {
     public void onDrawerOpened(View drawerView) {
         super.onDrawerOpened(drawerView);
 
-        this.viewThemeUtils.ionos.platform.themeSystemBars(this.activity, getOpenedDrawerColor());
+        this.viewThemeUtils.platform.themeStatusBar(this.activity, getOpenedDrawerColor());
     }
 
     @Override
     public void onDrawerClosed(View drawerView) {
         super.onDrawerClosed(drawerView);
 
-        this.viewThemeUtils.ionos.platform.themeSystemBars(this.activity);
+        this.viewThemeUtils.platform.themeStatusBar(this.activity);
     }
 
     private boolean shouldUpdateSystemBarColor(float slideOffset) {

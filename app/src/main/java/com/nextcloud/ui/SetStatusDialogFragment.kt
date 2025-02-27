@@ -30,7 +30,6 @@ import com.google.android.material.card.MaterialCardView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.account.User
 import com.nextcloud.client.account.UserAccountManager
 import com.nextcloud.client.core.AsyncRunner
@@ -135,7 +134,6 @@ class SetStatusDialogFragment :
         return builder.create()
     }
 
-    @IonosCustomization()
     @SuppressLint("DefaultLocale")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -202,7 +200,7 @@ class SetStatusDialogFragment :
         viewThemeUtils.material.colorMaterialButtonPrimaryTonal(binding.setStatus)
         viewThemeUtils.material.colorTextInputLayout(binding.customStatusInputContainer)
 
-        viewThemeUtils.ionos.platform.themeDialog(binding.root)
+        viewThemeUtils.platform.themeDialog(binding.root)
     }
 
     private fun updateCurrentStatusViews(it: Status) {

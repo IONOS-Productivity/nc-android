@@ -907,7 +907,7 @@ public class SettingsActivity extends PreferenceActivity
         ActionBar actionBar = getDelegate().getSupportActionBar();
 
         if (actionBar != null) {
-            viewThemeUtils.ionos.platform.themeSystemBars(this);
+            viewThemeUtils.platform.themeStatusBar(this);
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowTitleEnabled(true);
             actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back);

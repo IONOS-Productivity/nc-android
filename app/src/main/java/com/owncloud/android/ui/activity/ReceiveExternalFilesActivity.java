@@ -51,7 +51,6 @@ import com.ionos.annotation.IonosCustomization;
 import com.ionos.privacy.DataProtectionActivity;
 import com.ionos.privacy.PrivacyPreferences;
 import com.nextcloud.client.account.User;
-import com.nextcloud.client.account.UserAccountManager;
 import com.nextcloud.client.di.Injectable;
 import com.nextcloud.client.jobs.upload.FileUploadHelper;
 import com.nextcloud.client.jobs.upload.FileUploadWorker;
@@ -791,7 +790,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
 
             btnChooseFolder.setEnabled(mFile.canWrite());
 
-            viewThemeUtils.ionos.platform.themeSystemBars(this);
+            viewThemeUtils.platform.themeStatusBar(this);
 
             viewThemeUtils.material.colorMaterialButtonPrimaryOutlined(binding.uploaderCancel);
             binding.uploaderCancel.setOnClickListener(this);

@@ -8,9 +8,9 @@
 package com.owncloud.android.utils.theme
 
 import com.ionos.annotation.IonosCustomization
+import com.ionos.utils.IonosAndroidViewThemeUtils
 import com.ionos.utils.IonosDialogViewThemeUtils
 import com.ionos.utils.IonosMaterialViewThemeUtils
-import com.ionos.utils.IonosViewThemeUtils
 import com.nextcloud.android.common.ui.color.ColorUtil
 import com.nextcloud.android.common.ui.theme.MaterialSchemes
 import com.nextcloud.android.common.ui.theme.ViewThemeUtilsBase
@@ -23,28 +23,27 @@ import javax.inject.Inject
 /**
  * Child fields intentionally constructed instead of injected in order to reuse schemes for performance
  */
+@IonosCustomization
 class ViewThemeUtils @Inject constructor(
     schemes: MaterialSchemes,
     colorUtil: ColorUtil
 ) : ViewThemeUtilsBase(schemes) {
+    private val platformDelegate = AndroidViewThemeUtils(schemes, colorUtil)
+
     @JvmField
-    val platform = AndroidViewThemeUtils(schemes, colorUtil)
+    val platform = IonosAndroidViewThemeUtils(platformDelegate)
 
     @JvmField
     val material = IonosMaterialViewThemeUtils(MaterialViewThemeUtils(schemes, colorUtil))
 
     @JvmField
-    val androidx = AndroidXViewThemeUtils(schemes, platform)
+    val androidx = AndroidXViewThemeUtils(schemes, platformDelegate)
 
     @JvmField
     val dialog = IonosDialogViewThemeUtils(DialogViewThemeUtils(schemes))
 
     @JvmField
-    val files = FilesSpecificViewThemeUtils(schemes, colorUtil, platform, androidx)
-
-    @JvmField
-    @IonosCustomization
-    val ionos = IonosViewThemeUtils(platform)
+    val files = FilesSpecificViewThemeUtils(schemes, colorUtil, platformDelegate, androidx)
 
     class Factory @Inject constructor(
         private val schemesProvider: MaterialSchemesProvider,
