@@ -19,6 +19,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.account.User
 import com.nextcloud.client.account.UserAccountManager
 import com.nextcloud.client.di.Injectable
@@ -157,9 +158,10 @@ class ChooseAccountDialogFragment :
         themeViews()
     }
 
+    @IonosCustomization
     private fun themeViews() {
         viewThemeUtils.platform.themeDialogDivider(binding.separatorLine)
-        viewThemeUtils.platform.themeDialog(binding.root)
+        viewThemeUtils.ionos.platform.themeDialog(binding.root)
 
         viewThemeUtils.material.colorMaterialTextButton(binding.setStatus)
         viewThemeUtils.dialog.colorDialogMenuText(binding.setStatus)

@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.ionos.annotation.IonosCustomization;
 import com.nextcloud.client.account.User;
 import com.owncloud.android.R;
 import com.owncloud.android.databinding.FileDetailsShareInternalShareLinkBinding;
@@ -183,6 +184,7 @@ public class ShareeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     /**
      * sort all by creation time, then email/link shares on top
      */
+    @IonosCustomization("Hide internal share link")
     protected final void sortShares() {
         List<OCShare> links = new ArrayList<>();
         List<OCShare> users = new ArrayList<>();
@@ -201,12 +203,6 @@ public class ShareeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         shares = links;
         shares.addAll(users);
 
-        // add internal share link at end
-        if (!encrypted) {
-            final OCShare ocShare = new OCShare();
-            ocShare.setShareType(ShareType.INTERNAL);
-            shares.add(ocShare);
-        }
     }
 
     public List<OCShare> getShares() {

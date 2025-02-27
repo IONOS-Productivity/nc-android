@@ -49,11 +49,12 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
+import com.ionos.annotation.IonosCustomization;
+import com.ionos.authorization_method.AuthorizationMethodActivity;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.di.Injectable;
 import com.nextcloud.client.files.DeepLinkConstants;
 import com.nextcloud.client.network.ClientFactory;
-import com.nextcloud.client.onboarding.FirstRunActivity;
 import com.nextcloud.client.preferences.AppPreferences;
 import com.nextcloud.common.NextcloudClient;
 import com.nextcloud.ui.ChooseAccountDialogFragment;
@@ -117,8 +118,8 @@ import javax.inject.Inject;
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -239,8 +240,9 @@ public abstract class DrawerActivity extends ToolbarActivity
     /**
      * initializes and sets up the drawer toggle.
      */
+    @IonosCustomization
     private void setupDrawerToggle() {
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
+        mDrawerToggle = new AnimatedDrawerListener(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close, viewThemeUtils) {
 
             /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {
@@ -268,11 +270,9 @@ public abstract class DrawerActivity extends ToolbarActivity
         mDrawerLayout.addDrawerListener(mDrawerToggle);
         mDrawerToggle.setDrawerIndicatorEnabled(true);
         mDrawerToggle.setDrawerSlideAnimationEnabled(true);
-        Drawable backArrow = ResourcesCompat.getDrawable(getResources(),
-                                                         R.drawable.ic_arrow_back,
-                                                         null);
-
-        viewThemeUtils.platform.tintToolbarArrowDrawable(this, mDrawerToggle, backArrow);
+        Drawable drawerIndicator = AppCompatResources.getDrawable(this, R.drawable.ic_menu);
+        mDrawerToggle.setDrawerArrowDrawable(new SingleStateDrawerArrowDrawable(this, drawerIndicator));
+        mDrawerToggle.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
     }
 
     /**
@@ -479,6 +479,8 @@ public abstract class DrawerActivity extends ToolbarActivity
         DrawerMenuUtil.removeMenuItem(menu, R.id.nav_community, !getResources().getBoolean(R.bool.participate_enabled));
         DrawerMenuUtil.removeMenuItem(menu, R.id.nav_shared, !getResources().getBoolean(R.bool.shared_enabled));
         DrawerMenuUtil.removeMenuItem(menu, R.id.nav_logout, !getResources().getBoolean(R.bool.show_drawer_logout));
+        DrawerMenuUtil.removePersonalFiles(menu);
+        DrawerMenuUtil.removeNotifications(menu);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -596,13 +598,13 @@ public abstract class DrawerActivity extends ToolbarActivity
         startActivityForResult(manageAccountsIntent, ACTION_MANAGE_ACCOUNTS);
     }
 
+    @IonosCustomization
     public void openAddAccount() {
         boolean isProviderOrOwnInstallationVisible = getResources()
             .getBoolean(R.bool.show_provider_or_own_installation);
 
         if (isProviderOrOwnInstallationVisible) {
-            Intent firstRunIntent = new Intent(getApplicationContext(), FirstRunActivity.class);
-            firstRunIntent.putExtra(FirstRunActivity.EXTRA_ALLOW_CLOSE, true);
+            Intent firstRunIntent = AuthorizationMethodActivity.createInstance(getApplicationContext());
             startActivity(firstRunIntent);
         } else {
             startAccountCreation();
@@ -781,6 +783,7 @@ public abstract class DrawerActivity extends ToolbarActivity
      * @param relative   the percentage of space already used
      * @param quotaValue {@link GetUserInfoRemoteOperation#SPACE_UNLIMITED} or other to determinate state
      */
+    @IonosCustomization
     private void setQuotaInformation(long usedSpace, long totalSpace, int relative, long quotaValue) {
         if (GetUserInfoRemoteOperation.SPACE_UNLIMITED == quotaValue) {
             mQuotaTextPercentage.setText(String.format(
@@ -796,10 +799,9 @@ public abstract class DrawerActivity extends ToolbarActivity
         mQuotaProgressBar.setProgress(relative);
 
         if (relative < RELATIVE_THRESHOLD_WARNING) {
-            viewThemeUtils.material.colorProgressBar(mQuotaProgressBar);
+            mQuotaProgressBar.setIndicatorColor(getResources().getColor(R.color.sidemenu_progress_bar_color, getTheme()));
         } else {
-            viewThemeUtils.material.colorProgressBar(mQuotaProgressBar,
-                                                     getResources().getColor(R.color.infolevel_warning, getTheme()));
+            mQuotaProgressBar.setIndicatorColor(getResources().getColor(R.color.sidemenu_warn_progress_bar_color, getTheme()));
         }
 
         updateQuotaLink();
@@ -881,9 +883,9 @@ public abstract class DrawerActivity extends ToolbarActivity
      *
      * @param menuItemId the menu item to be highlighted
      */
+    @IonosCustomization("Removed server styles for the drawer")
     protected void setDrawerMenuItemChecked(int menuItemId) {
         if (mNavigationView != null && mNavigationView.getMenu().findItem(menuItemId) != null) {
-            viewThemeUtils.platform.colorNavigationView(mNavigationView);
             mCheckedMenuItem = menuItemId;
             mNavigationView.getMenu().findItem(menuItemId).setChecked(true);
         } else {

@@ -20,6 +20,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.account.User
 import com.nextcloud.client.di.Injectable
 import com.nextcloud.client.network.ClientFactory
@@ -494,6 +495,7 @@ class SetupEncryptionDialogFragment : DialogFragment(), Injectable {
     }
 
     @VisibleForTesting
+    @IonosCustomization
     fun showMnemonicInfo() {
         if (dialog == null) {
             Log_OC.e(TAG, "Dialog is null cannot proceed further.")
@@ -511,7 +513,7 @@ class SetupEncryptionDialogFragment : DialogFragment(), Injectable {
 
         positiveButton?.let { positiveButton ->
             negativeButton?.let { negativeButton ->
-                viewThemeUtils.platform.colorTextButtons(positiveButton, negativeButton)
+                viewThemeUtils.ionos.platform.colorTextButtons(positiveButton, negativeButton)
             }
         }
 
@@ -519,6 +521,7 @@ class SetupEncryptionDialogFragment : DialogFragment(), Injectable {
     }
 
     @VisibleForTesting
+    @IonosCustomization
     fun errorSavingKeys() {
         if (dialog == null) {
             Log_OC.e(TAG, "Dialog is null cannot proceed further.")
@@ -533,7 +536,7 @@ class SetupEncryptionDialogFragment : DialogFragment(), Injectable {
         positiveButton?.setText(R.string.end_to_end_encryption_dialog_close)
         positiveButton?.visibility = View.VISIBLE
         positiveButton?.let {
-            viewThemeUtils.platform.colorTextButtons(it)
+            viewThemeUtils.ionos.platform.colorTextButtons(it)
         }
     }
 

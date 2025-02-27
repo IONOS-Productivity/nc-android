@@ -7,6 +7,10 @@
  */
 package com.owncloud.android.utils.theme
 
+import com.ionos.annotation.IonosCustomization
+import com.ionos.utils.IonosDialogViewThemeUtils
+import com.ionos.utils.IonosMaterialViewThemeUtils
+import com.ionos.utils.IonosViewThemeUtils
 import com.nextcloud.android.common.ui.color.ColorUtil
 import com.nextcloud.android.common.ui.theme.MaterialSchemes
 import com.nextcloud.android.common.ui.theme.ViewThemeUtilsBase
@@ -27,16 +31,20 @@ class ViewThemeUtils @Inject constructor(
     val platform = AndroidViewThemeUtils(schemes, colorUtil)
 
     @JvmField
-    val material = MaterialViewThemeUtils(schemes, colorUtil)
+    val material = IonosMaterialViewThemeUtils(MaterialViewThemeUtils(schemes, colorUtil))
 
     @JvmField
     val androidx = AndroidXViewThemeUtils(schemes, platform)
 
     @JvmField
-    val dialog = DialogViewThemeUtils(schemes)
+    val dialog = IonosDialogViewThemeUtils(DialogViewThemeUtils(schemes))
 
     @JvmField
     val files = FilesSpecificViewThemeUtils(schemes, colorUtil, platform, androidx)
+
+    @JvmField
+    @IonosCustomization
+    val ionos = IonosViewThemeUtils(platform)
 
     class Factory @Inject constructor(
         private val schemesProvider: MaterialSchemesProvider,
