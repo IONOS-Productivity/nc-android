@@ -69,10 +69,6 @@
 
     <dimen name="nav_drawer_used_storage_drawable_padding">12dp</dimen>
 
-    <dimen name="button_text_padding">16dp</dimen>
-
-    <dimen name="outlined_button_stroke_width">2dp</dimen>
-
     <dimen name="grid_mode_icon_size">32dp</dimen>
     <dimen name="grid_mode_item_outline_margin">4dp</dimen>
     <dimen name="grid_mode_item_margin">5dp</dimen>
