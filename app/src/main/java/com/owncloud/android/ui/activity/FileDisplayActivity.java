@@ -798,7 +798,6 @@ public class FileDisplayActivity extends FileActivity
     }
 
     @Override
-    @IonosCustomization
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.activity_file_display, menu);
@@ -811,6 +810,8 @@ public class FileDisplayActivity extends FileActivity
             showSearchView();
             searchView.setIconified(false);
         });
+
+        viewThemeUtils.androidx.themeToolbarSearchView(searchView);
 
         // populate list of menu items to show/hide when drawer is opened/closed
         mDrawerMenuItemstoShowHideList = new ArrayList<>(1);

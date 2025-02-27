@@ -171,12 +171,12 @@ class UnifiedSearchFragment :
             }
         }
 
-    @IonosCustomization
     private fun setupSearchView(item: MenuItem) {
         (item.actionView as? SearchView?)?.run {
             // Required to align with TextView width.
             // Because this fragment is opened with TextView onClick on the previous screen
             maxWidth = Integer.MAX_VALUE
+            viewThemeUtils.androidx.themeToolbarSearchView(this)
             setQuery(vm.query.value, false)
             setOnQueryTextListener(this@UnifiedSearchFragment)
             isIconified = false

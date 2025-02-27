@@ -87,6 +87,7 @@ import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 
 /**
  * An Activity that allows the user to change the application's settings.
@@ -902,7 +903,6 @@ public class SettingsActivity extends PreferenceActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @IonosCustomization
     private void setupActionBar() {
         ActionBar actionBar = getDelegate().getSupportActionBar();
 
@@ -910,8 +910,14 @@ public class SettingsActivity extends PreferenceActivity
             viewThemeUtils.platform.themeStatusBar(this);
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowTitleEnabled(true);
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
-            actionBar.setTitle(R.string.actionbar_settings);
+            if (this.getResources() != null) {
+                viewThemeUtils.androidx.themeActionBar(this,
+                                                       actionBar,
+                                                       getString(R.string.actionbar_settings),
+                                                       ResourcesCompat.getDrawable(this.getResources(),
+                                                                                   R.drawable.ic_arrow_back,
+                                                                                   null));
+            }
         }
     }
 

@@ -294,6 +294,7 @@ public class UploadFilesActivity extends DrawerActivity implements LocalFileList
 
         final MenuItem item = menu.findItem(R.id.action_search);
         mSearchView = (SearchView) MenuItemCompat.getActionView(item);
+        viewThemeUtils.androidx.themeToolbarSearchView(mSearchView);
 
         mSearchView.setOnSearchClickListener(v -> mToolbarSpinner.setVisibility(View.GONE));
 

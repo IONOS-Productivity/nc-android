@@ -278,11 +278,11 @@ public abstract class ToolbarActivity extends BaseActivity implements Injectable
         return mPreviewImageContainer;
     }
 
-    @IonosCustomization
     public void updateToolbarSubtitle(@NonNull String subtitle) {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setSubtitle(subtitle);
+            viewThemeUtils.androidx.themeActionBarSubtitle(this, actionBar);
         }
     }
 

@@ -1064,7 +1064,6 @@ public class ReceiveExternalFilesActivity extends FileActivity
         return true;
     }
 
-    @IonosCustomization
     private void setupSearchView(Menu menu) {
         final MenuItem searchMenuItem = menu.findItem(R.id.action_search);
 
@@ -1082,6 +1081,8 @@ public class ReceiveExternalFilesActivity extends FileActivity
                 return false;
             }
         });
+
+        viewThemeUtils.androidx.themeToolbarSearchView(searchView);
     }
 
     @Override
