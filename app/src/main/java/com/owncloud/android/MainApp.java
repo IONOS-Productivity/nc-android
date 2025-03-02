@@ -204,7 +204,6 @@ public class MainApp extends Application implements HasAndroidInjector {
 
     private static AppComponent appComponent;
 
-
     /**
      * Temporary hack
      */

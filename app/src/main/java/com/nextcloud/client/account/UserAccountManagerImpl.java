@@ -401,6 +401,7 @@ public class UserAccountManagerImpl implements UserAccountManager {
     @IonosCustomization
     public void startAccountCreation(final Activity activity) {
         Intent intent = AuthorizationMethodActivity.createInstance(context);
+
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
