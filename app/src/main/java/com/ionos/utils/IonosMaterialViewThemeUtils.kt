@@ -16,6 +16,7 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.textfield.TextInputLayout
 import com.nextcloud.android.common.ui.theme.utils.ColorRole
 import com.nextcloud.android.common.ui.theme.utils.MaterialViewThemeUtils
@@ -123,5 +124,9 @@ class IonosMaterialViewThemeUtils(
 
     fun colorTextInputLayout(til: TextInputLayout, colorRole: ColorRole) {
         delegate.colorTextInputLayout(til, colorRole)
+    }
+
+    fun themeTabLayout(tabLayout: TabLayout) {
+        delegate.themeTabLayout(tabLayout)
     }
 }
