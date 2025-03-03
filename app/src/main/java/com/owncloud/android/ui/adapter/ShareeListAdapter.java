@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.ionos.annotation.IonosCustomization;
+import com.ionos.utils.IonosBuildHelper;
 import com.nextcloud.client.account.User;
 import com.owncloud.android.R;
 import com.owncloud.android.databinding.FileDetailsShareInternalShareLinkBinding;
@@ -203,6 +204,12 @@ public class ShareeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         shares = links;
         shares.addAll(users);
 
+        // add internal share link at end
+        if (!IonosBuildHelper.isIonosFlavor() && !encrypted) {
+            final OCShare ocShare = new OCShare();
+            ocShare.setShareType(ShareType.INTERNAL);
+            shares.add(ocShare);
+        }
     }
 
     public List<OCShare> getShares() {
