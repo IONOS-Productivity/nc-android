@@ -19,6 +19,7 @@ import android.graphics.PorterDuff;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.ionos.annotation.IonosCustomization;
 import com.owncloud.android.R;
 import com.owncloud.android.databinding.FileDetailsShareLinkShareItemBinding;
 import com.owncloud.android.lib.resources.shares.OCShare;
@@ -48,6 +49,7 @@ class LinkShareViewHolder extends RecyclerView.ViewHolder {
         this.viewThemeUtils = viewThemeUtils;
     }
 
+    @IonosCustomization
     public void bind(OCShare publicShare, ShareeListAdapterListener listener) {
         if (ShareType.EMAIL == publicShare.getShareType()) {
             binding.name.setText(publicShare.getSharedWithDisplayName());
@@ -72,7 +74,7 @@ class LinkShareViewHolder extends RecyclerView.ViewHolder {
                 }
             }
 
-            viewThemeUtils.platform.colorImageViewBackgroundAndIcon(binding.icon);
+            // viewThemeUtils.platform.colorImageViewBackgroundAndIcon(binding.icon);
         }
 
         String permissionName = SharingMenuHelper.getPermissionName(context, publicShare);

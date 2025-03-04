@@ -388,7 +388,6 @@ class OCFileListDelegate(
         }
     }
 
-    @IonosCustomization
     private fun showShareIcon(gridViewHolder: ListGridImageViewHolder, file: OCFile) {
         val sharedIconView = gridViewHolder.shared
         if (gridViewHolder is OCFileListItemViewHolder || file.unreadCommentsCount == 0) {
@@ -398,18 +397,14 @@ class OCFileListDelegate(
                     sharedIconView.visibility = View.GONE
                 } else {
                     sharedIconView.visibility = View.VISIBLE
-                    sharedIconView.setImageResource(R.drawable.ic_filelist_shared_via_users)
+                    sharedIconView.setImageResource(R.drawable.shared_via_users)
                     sharedIconView.contentDescription = context.getString(R.string.shared_icon_shared)
                 }
             } else if (file.isSharedViaLink) {
-                sharedIconView.setImageResource(R.drawable.ic_filelist_shared_via_link)
+                sharedIconView.setImageResource(R.drawable.shared_via_link)
                 sharedIconView.contentDescription = context.getString(R.string.shared_icon_shared_via_link)
             } else {
-                if (gridViewHolder is OCFileListGridItemViewHolder) {
-                    sharedIconView.setImageResource(R.drawable.ic_filelist_unshared_grid_mode)
-                } else {
-                    sharedIconView.setImageResource(R.drawable.ic_filelist_unshared)
-                }
+                sharedIconView.setImageResource(R.drawable.ic_unshared)
                 sharedIconView.contentDescription = context.getString(R.string.shared_icon_share)
             }
             sharedIconView.setOnClickListener { ocFileListFragmentInterface.onShareIconClick(file) }

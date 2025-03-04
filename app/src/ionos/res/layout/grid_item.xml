@@ -101,7 +101,7 @@
                 android:layout_height="@dimen/grid_mode_icon_size"
                 android:contentDescription="@string/shared_icon_shared_via_link"
                 android:padding="@dimen/standard_half_padding"
-                android:src="@drawable/ic_filelist_unshared_grid_mode"
+                android:src="@drawable/ic_unshared"
                 tools:visibility="visible" />
 
             <ImageView
