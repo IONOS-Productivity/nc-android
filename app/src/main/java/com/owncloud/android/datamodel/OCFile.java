@@ -20,6 +20,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 
+import com.nextcloud.utils.BuildHelper;
 import com.owncloud.android.BuildConfig;
 import com.owncloud.android.R;
 import com.owncloud.android.lib.common.network.WebdavEntry;
@@ -35,6 +36,7 @@ import com.owncloud.android.utils.MimeType;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -783,6 +785,10 @@ public class OCFile implements Parcelable, Comparable<OCFile>, ServerFileInterfa
         return this.sharedWithSharee;
     }
 
+    public boolean isRootDirectory() {
+        return ROOT_PATH.equals(decryptedRemotePath);
+    }
+
     public boolean isFavorite() {
         return this.favorite;
     }
@@ -1055,11 +1061,15 @@ public class OCFile implements Parcelable, Comparable<OCFile>, ServerFileInterfa
     }
 
     public boolean isInternalFolderSync() {
+        if (internalFolderSyncTimestamp == null) {
+            return false;
+        }
+
         return internalFolderSyncTimestamp >= 0;
     }
     
     public Long getInternalFolderSyncTimestamp() {
-        return internalFolderSyncTimestamp;
+        return Objects.requireNonNullElse(internalFolderSyncTimestamp, -1L);
     }
 
     public void setInternalFolderSyncTimestamp(Long internalFolderSyncTimestamp) {
@@ -1075,7 +1085,7 @@ public class OCFile implements Parcelable, Comparable<OCFile>, ServerFileInterfa
     }
     
     public boolean isAPKorAAB() {
-        if ("gplay".equals(BuildConfig.FLAVOR)) {
+        if (BuildHelper.GPLAY.equals(BuildConfig.FLAVOR)) {
             return getFileName().endsWith(".apk") || getFileName().endsWith(".aab");
         } else {
             return false;

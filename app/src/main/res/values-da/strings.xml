@@ -89,7 +89,6 @@
     <string name="autoupload_custom_folder">Indstil en selvvalgt mappe</string>
     <string name="autoupload_disable_power_save_check">Deaktiver strømsparecheck</string>
     <string name="autoupload_hide_folder">Skjul mappe</string>
-    <string name="autoupload_worker_foreground_info">Forbereder automatisk upload</string>
     <string name="avatar">Avatar</string>
     <string name="away">Ikke tilstede</string>
     <string name="backup_settings">Backup indstilinger</string>
@@ -443,6 +442,7 @@
     <string name="instant_upload_existing">Send også eksisterende filer</string>
     <string name="instant_upload_on_charging">Upload kun under opladning</string>
     <string name="instant_upload_path">/Øjeblikkelig upload</string>
+    <string name="internet_connection_required_for_encrypted_folder_setup">En internetforbindelse er påkrævet for at konfigurere den krypterede mappe</string>
     <string name="invalid_url">Ugyldig URL</string>
     <string name="invisible">Usynlig</string>
     <string name="label_empty">Etiketten kan ikke være tom</string>
@@ -539,9 +539,13 @@
     <string name="notification_channel_upload_description">Viser afsendings fremskridt</string>
     <string name="notification_channel_upload_name_short">Uploadede filer</string>
     <string name="notification_icon">Notifikationsikon</string>
+    <string name="notification_icon_description">Der findes ulæste notifikationer</string>
     <string name="notifications_no_results_headline">Ingen notifikationer</string>
     <string name="notifications_no_results_message">Prøv igen senere.</string>
     <string name="offline_mode">Ingen internetforbindelse</string>
+    <string name="offline_mode_info_description">Selv uden internetforbindelse kan du organisere dine mapper, oprette filer. Når du er online igen, synkroniseres dine afventende handlinger automatisk.</string>
+    <string name="offline_mode_info_title">Du er offline, men arbejdet fortsætter</string>
+    <string name="offline_operations_file_does_not_exists_yet">Filen eksisterer ikke endnu. Upload venligst filen først.</string>
     <string name="oneHour">1 time</string>
     <string name="online">Online</string>
     <string name="online_status">Online status</string>
@@ -666,14 +670,13 @@ Enheds legitimationsoplysninger er sat op
     <string name="rename_server_fail_msg">Omdøbning ikke mulig, navnet eksisterer</string>
     <string name="request_account_deletion">Anmodning om sletning af konto</string>
     <string name="request_account_deletion_button">Anmod om sletning</string>
-    <string name="reshare_not_allowed">Gendeling er ikke tilladt</string>
-    <string name="resharing_is_not_allowed">Videredeling ikke tilladt</string>
     <string name="resized_image_not_possible_download">Intet skaleret billede tilgængeligt. Hent fuldt billede?</string>
     <string name="restore">Genskab fil</string>
     <string name="restore_backup">Gendan backup</string>
     <string name="restore_button_description">Genskab slettet fil</string>
     <string name="restore_selected">Gendan udvalgt</string>
     <string name="retrieving_file">Modtager fil…</string>
+    <string name="retry">Prøv igen</string>
     <string name="richdocuments_failed_to_load_document">Fejl ved indlæsning af dokument!</string>
     <string name="scanQR_description">Login med QR kode</string>
     <string name="scan_page">Scan side</string>
@@ -733,7 +736,6 @@ Enheds legitimationsoplysninger er sat op
     <string name="share_permissions">Del Tilladelser</string>
     <string name="share_remote_clarification">%1$s (ekstern)</string>
     <string name="share_room_clarification">%1$s (samtale)</string>
-    <string name="share_search">Navn, Fødereret Cloud ID eller email adresse ...</string>
     <string name="share_send_new_email">Send ny email</string>
     <string name="share_send_note">Note til modtager</string>
     <string name="share_settings">Indstillinger</string>
@@ -784,6 +786,7 @@ Enheds legitimationsoplysninger er sat op
     <string name="storage_description_default">Standard</string>
     <string name="storage_documents">Dokumenter</string>
     <string name="storage_downloads">Downloads</string>
+    <string name="storage_external_storage">Eksternt lager</string>
     <string name="storage_internal_storage">Internt lager</string>
     <string name="storage_movies">Film</string>
     <string name="storage_music">Musik</string>
@@ -963,7 +966,6 @@ Enheds legitimationsoplysninger er sat op
     <string name="whats_new_skip">Spring over</string>
     <string name="whats_new_title">Nyt i %1$s</string>
     <string name="whats_your_status">Hvad er din status</string>
-    <string name="widgets_not_available">Widgets er kun tilgængelige for %1$s 25 eller senere</string>
     <string name="widgets_not_available_title">Ikke tilgængelig</string>
     <string name="worker_download">Henter filer...</string>
     <string name="write_email">Send email</string>

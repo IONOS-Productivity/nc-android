@@ -31,6 +31,7 @@
     <string name="add_to_cloud">הוספה אל %1$s</string>
     <string name="advanced_settings">הגדרות מתקדמות</string>
     <string name="allow_resharing">לאפשר שיתוף מחדש</string>
+    <string name="app_config_base_url_title">כתובת בסיס</string>
     <string name="app_config_proxy_port_title">פתחת מתווך</string>
     <string name="app_widget_description">מצג וידג׳ט אחד מלוח הבקרה</string>
     <string name="appbar_search_in">חפש ב %s</string>
@@ -527,12 +528,11 @@
     <string name="rename_local_fail_msg">לא ניתן לשנות שם של עותק מקומי, נא לנסות שם אחר</string>
     <string name="rename_server_fail_msg">אי אפשר לשנות שם, השם כבר תפוס</string>
     <string name="request_account_deletion">בקשת מחיקת חשבון</string>
-    <string name="reshare_not_allowed">שיתוף מחדש אסור</string>
-    <string name="resharing_is_not_allowed">אסור לשתף מחדש</string>
     <string name="resized_image_not_possible_download">אין תמונה מוקטנת. להוריד את התמונה המלאה?</string>
     <string name="restore">שחזור קובץ</string>
     <string name="restore_button_description">שחזור קובץ שנמחק</string>
     <string name="retrieving_file">הקובץ מתקבל…</string>
+    <string name="retry">ניסיון חוזר</string>
     <string name="richdocuments_failed_to_load_document">טעינת המסמך נכשלה!</string>
     <string name="scanQR_description">כניסה עם קוד QR</string>
     <string name="screenshot_01_gridView_heading">הגנה על הנתונים שלך</string>
@@ -621,6 +621,7 @@
     <string name="storage_description_default">ברירת מחדל</string>
     <string name="storage_documents">מסמכי</string>
     <string name="storage_downloads">הורדות</string>
+    <string name="storage_external_storage">אחסון חיצוני</string>
     <string name="storage_internal_storage">אחסון פנימי</string>
     <string name="storage_movies">סרטים</string>
     <string name="storage_music">מוזיקה</string>
@@ -678,6 +679,7 @@
     <string name="trashbin_file_not_restored">לא ניתן לשחזר את הקובץ %1$s!</string>
     <string name="trashbin_file_remove">מחיקה לצמיתות</string>
     <string name="trashbin_not_emptied">לא ניתן למחוק קבצים לצמיתות!</string>
+    <string name="unexpected_error_occurred">אירעה שגיאה בלתי צפויה</string>
     <string name="unlock_file">שחרור קובץ</string>
     <string name="unread_comments">יש תגובות שלא נקראו</string>
     <string name="unset_encrypted">ביטול הגדרת ההצפנה</string>

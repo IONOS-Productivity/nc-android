@@ -15,6 +15,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.di.Injectable
 import com.owncloud.android.R
 import com.owncloud.android.databinding.StoragePathDialogBinding
@@ -38,6 +39,7 @@ class LocalStoragePathPickerDialogFragment :
 
     private lateinit var binding: StoragePathDialogBinding
 
+    @IonosCustomization()
     override fun onStart() {
         super.onStart()
 
@@ -45,10 +47,11 @@ class LocalStoragePathPickerDialogFragment :
 
         val positiveButton = alertDialog?.getButton(AlertDialog.BUTTON_POSITIVE) as MaterialButton?
         positiveButton?.let {
-            viewThemeUtils.material.colorMaterialButtonPrimaryTonal(positiveButton)
+            viewThemeUtils.ionos.material.colorMaterialButtonPrimaryTonal(positiveButton)
         }
     }
 
+    @IonosCustomization
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         require(activity is StoragePathAdapterListener) {
             "Calling activity must implement " +
@@ -70,7 +73,7 @@ class LocalStoragePathPickerDialogFragment :
             .setPositiveButton(R.string.common_cancel, this)
             .setTitle(R.string.storage_choose_location)
 
-        viewThemeUtils.dialog.colorMaterialAlertDialogBackground(requireContext(), builder)
+        viewThemeUtils.ionos.dialog.colorMaterialAlertDialogBackground(requireContext(), builder)
 
         return builder.create()
     }

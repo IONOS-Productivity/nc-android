@@ -22,11 +22,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.MediaController.MediaPlayerControl
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import androidx.core.content.ContextCompat
+import com.google.android.material.button.MaterialButton
+import com.ionos.annotation.IonosCustomization
 import com.owncloud.android.MainApp
 import com.owncloud.android.R
 import com.owncloud.android.databinding.MediaControlBinding
@@ -77,6 +80,7 @@ class MediaControlView(context: Context, attrs: AttributeSet?) :
     }
 
     @Suppress("MagicNumber")
+    @IonosCustomization("Removed theming")
     private fun initControllerView() {
         binding.playBtn.requestFocus()
 
@@ -85,17 +89,10 @@ class MediaControlView(context: Context, attrs: AttributeSet?) :
         binding.rewindBtn.setOnClickListener(this)
 
         binding.progressBar.run {
-            viewThemeUtils.platform.themeHorizontalSeekBar(this)
             setMax(1000)
         }
 
         binding.progressBar.setOnSeekBarChangeListener(this)
-
-        viewThemeUtils.material.run {
-            colorMaterialButtonPrimaryTonal(binding.rewindBtn)
-            colorMaterialButtonPrimaryTonal(binding.playBtn)
-            colorMaterialButtonPrimaryTonal(binding.forwardBtn)
-        }
     }
 
     /**
@@ -222,15 +219,25 @@ class MediaControlView(context: Context, attrs: AttributeSet?) :
         }
     }
 
+    @IonosCustomization("ImageButton support")
     fun updatePausePlay() {
-        binding.playBtn.icon = ContextCompat.getDrawable(
-            context,
+        val iconResource =
             if (playerControl?.isPlaying == true) {
                 R.drawable.ic_pause
             } else {
                 R.drawable.ic_play
             }
-        )
+        val playBtn: View = binding.playBtn
+
+       if (playBtn is MaterialButton){
+           playBtn.icon = ContextCompat.getDrawable(
+               context,
+               iconResource
+           )
+       } else if(playBtn is ImageButton){
+           playBtn.setImageResource(iconResource)
+       }
+
         binding.forwardBtn.visibility = if (playerControl?.canSeekForward() == true) {
             VISIBLE
         } else {
@@ -266,6 +273,7 @@ class MediaControlView(context: Context, attrs: AttributeSet?) :
     }
 
     @Suppress("MagicNumber")
+    @IonosCustomization("changed forward to 5 sec")
     override fun onClick(v: View) {
         var pos: Int
 
@@ -288,7 +296,7 @@ class MediaControlView(context: Context, attrs: AttributeSet?) :
                 }
                 R.id.forwardBtn -> {
                     pos = playerControl.currentPosition
-                    pos += 15000
+                    pos += 5000
                     playerControl.seekTo(pos)
 
                     if (!playing) {

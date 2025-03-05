@@ -23,11 +23,12 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.google.common.collect.Sets;
+import com.ionos.annotation.IonosCustomization;
+import com.ionos.authorization_method.AuthorizationMethodActivity;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.account.UserAccountManager;
 import com.nextcloud.client.jobs.BackgroundJobManager;
 import com.nextcloud.client.jobs.download.FileDownloadHelper;
-import com.nextcloud.client.onboarding.FirstRunActivity;
 import com.nextcloud.model.WorkerState;
 import com.nextcloud.model.WorkerStateLiveData;
 import com.nextcloud.utils.extensions.BundleExtensionsKt;
@@ -252,9 +253,9 @@ public class ManageAccountsActivity extends FileActivity implements UserListAdap
     }
 
     @Override
+    @IonosCustomization
     public void showFirstRunActivity() {
-        Intent firstRunIntent = new Intent(getApplicationContext(), FirstRunActivity.class);
-        firstRunIntent.putExtra(FirstRunActivity.EXTRA_ALLOW_CLOSE, true);
+        Intent firstRunIntent = AuthorizationMethodActivity.createInstance(getApplicationContext());
         startActivity(firstRunIntent);
     }
 

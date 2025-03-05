@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ IONOS HiDrive Next - Android Client
+  ~
+  ~ SPDX-FileCopyrightText: 2025 STRATO GmbH.
+  ~ SPDX-License-Identifier: GPL-2.0
+  -->
+
+<resources>
+
+    <!-- Authorization Screen -->
+    <item name="authorization_guideline_top" type="dimen">0.2</item>
+    <item name="authorization_guideline_center" type="dimen">0.4</item>
+    <item name="authorization_guideline_bottom" type="dimen">0.8</item>
+
+    <!-- Settings Screen -->
+    <dimen name="settings_screen_list_bottom_padding">8dp</dimen>
+    <dimen name="settings_screen_first_group_top_padding">16dp</dimen>
+    <dimen name="settings_screen_group_top_padding">24dp</dimen>
+    <dimen name="settings_screen_group_bottom_padding">8dp</dimen>
+    <dimen name="settings_screen_group_horizontal_padding">16dp</dimen>
+    <dimen name="settings_screen_items_top_padding">8dp</dimen>
+    <dimen name="settings_screen_items_bottom_padding">8dp</dimen>
+    <dimen name="settings_screen_items_horizontal_padding">16dp</dimen>
+    <dimen name="settings_screen_description_top_margin">8dp</dimen>
+    <dimen name="settings_screen_title_text_size">16sp</dimen>
+    <dimen name="settings_screen_description_text_size">14sp</dimen>
+
+    <!-- Media preview Screen -->
+    <dimen name="exo_center_controls_padding">40dp</dimen>
+    <dimen name="exo_rewind_buttons_size">44dp</dimen>
+    <dimen name="exo_play_pause_button_size">52dp</dimen>
+    <dimen name="exo_play_pause_margin_horizontal">32dp</dimen>
+    <dimen name="exo_bottom_bar_height">96dp</dimen>
+    <dimen name="exo_time_margin_bottom">22dp</dimen>
+    <dimen name="exo_time_divider_size">6dp</dimen>
+    <dimen name="exo_progress_bar_height">24dp</dimen>
+    <dimen name="exo_scrubber_size">24dp</dimen>
+
+
+
+</resources>

@@ -11,6 +11,7 @@ import android.app.Application;
 
 import com.ionos.annotation.IonosCustomization;
 import com.ionos.di.StratoModule;
+import com.ionos.scanbot.di.ScanbotComponent;
 import com.nextcloud.appReview.InAppReviewModule;
 import com.nextcloud.client.appinfo.AppInfoModule;
 import com.nextcloud.client.database.DatabaseModule;
@@ -68,6 +69,8 @@ public interface AppComponent extends ContextbarComponent, PlayerComponent {
     void inject(FileDownloadHelper fileDownloadHelper);
 
     void inject(ProgressIndicator progressIndicator);
+
+    ScanbotComponent scanbotComponent();
 
     @Component.Builder
     interface Builder {

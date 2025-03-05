@@ -13,6 +13,7 @@
  */
 package com.owncloud.android.ui.activity;
 
+import android.Manifest;
 import android.accounts.Account;
 import android.accounts.AuthenticatorException;
 import android.annotation.SuppressLint;
@@ -54,6 +55,7 @@ import com.nextcloud.appReview.InAppReviewHelper;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.appinfo.AppInfo;
 import com.nextcloud.client.core.AsyncRunner;
+import com.nextcloud.client.core.Clock;
 import com.nextcloud.client.di.Injectable;
 import com.nextcloud.client.editimage.EditImageActivity;
 import com.nextcloud.client.files.DeepLinkHandler;
@@ -68,16 +70,21 @@ import com.nextcloud.client.preferences.AppPreferences;
 import com.nextcloud.client.utils.IntentUtil;
 import com.nextcloud.model.WorkerState;
 import com.nextcloud.model.WorkerStateLiveData;
+import com.nextcloud.utils.BuildHelper;
 import com.nextcloud.utils.extensions.ActivityExtensionsKt;
 import com.nextcloud.utils.extensions.BundleExtensionsKt;
 import com.nextcloud.utils.extensions.FileExtensionsKt;
 import com.nextcloud.utils.extensions.IntentExtensionsKt;
+import com.nextcloud.utils.fileNameValidator.FileNameValidator;
 import com.nextcloud.utils.view.FastScrollUtils;
+import com.owncloud.android.BuildConfig;
 import com.owncloud.android.MainApp;
 import com.owncloud.android.R;
 import com.owncloud.android.databinding.FilesBinding;
 import com.owncloud.android.datamodel.FileDataStorageManager;
 import com.owncloud.android.datamodel.OCFile;
+import com.owncloud.android.datamodel.SyncedFolder;
+import com.owncloud.android.datamodel.SyncedFolderProvider;
 import com.owncloud.android.datamodel.VirtualFolderType;
 import com.owncloud.android.files.services.NameCollisionPolicy;
 import com.owncloud.android.lib.common.OwnCloudClient;
@@ -249,6 +256,9 @@ public class FileDisplayActivity extends FileActivity
 
     @Inject FastScrollUtils fastScrollUtils;
     @Inject AsyncRunner asyncRunner;
+    @Inject Clock clock;
+    @Inject SyncedFolderProvider syncedFolderProvider;
+
     @IonosCustomization
     @Inject StartBuiltInMediaPlayerFactory startBuiltInMediaPlayerFactory;
     @IonosCustomization
@@ -293,10 +303,54 @@ public class FileDisplayActivity extends FileActivity
         mPlayerConnection = new PlayerServiceConnection(this);
 
         checkStoragePath();
+        checkAutoUploadOnGPlay();
 
         initSyncBroadcastReceiver();
         observeWorkerState();
         registerRefreshFolderEventReceiver();
+    }
+
+    private void checkAutoUploadOnGPlay() {
+        if (!BuildHelper.GPLAY.equals(BuildConfig.FLAVOR)) {
+            return;
+        }
+
+        // only show on Android11+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
+            return;
+        }
+        
+        if (PermissionUtil.checkSelfPermission(this, Manifest.permission.MANAGE_EXTERNAL_STORAGE)) {
+            return;
+        }
+        
+        if (preferences.isAutoUploadGPlayWarningShown()) {
+            return;
+        }
+        
+        boolean showInfoDialog = false;
+        for (SyncedFolder syncedFolder : syncedFolderProvider.getSyncedFolders()) {
+            // move or delete after success
+            if (syncedFolder.getUploadAction() == FileUploadWorker.LOCAL_BEHAVIOUR_MOVE || 
+                syncedFolder.getUploadAction() == FileUploadWorker.LOCAL_BEHAVIOUR_DELETE) {
+                showInfoDialog = true;
+                break;
+            }
+        }
+
+        if (showInfoDialog) {
+            new MaterialAlertDialogBuilder(this, R.style.Theme_ownCloud_Dialog)
+                .setTitle(R.string.auto_upload_gplay)
+                .setMessage(R.string.auto_upload_gplay_desc)
+                .setNegativeButton(R.string.dialog_close, (dialog, which) -> {
+                    dialog.dismiss();
+                })
+                .setIcon(R.drawable.nav_synced_folders)
+                .create()
+                .show();
+        }
+
+        preferences.setAutoUploadGPlayWarningShown(true);
     }
 
     @SuppressWarnings("unchecked")
@@ -337,6 +391,7 @@ public class FileDisplayActivity extends FileActivity
         }   // else, Fragment already created and retained across configuration change
     }
 
+    @IonosCustomization
     private void checkStoragePath() {
         String newStorage = Environment.getExternalStorageDirectory().getAbsolutePath();
         String storagePath = preferences.getStoragePath(newStorage);
@@ -353,7 +408,7 @@ public class FileDisplayActivity extends FileActivity
                     .setPositiveButton(R.string.dialog_close, (dialog, which) -> dialog.dismiss())
                     .setIcon(R.drawable.ic_settings);
 
-                viewThemeUtils.dialog.colorMaterialAlertDialogBackground(getApplicationContext(), builder);
+                viewThemeUtils.ionos.dialog.colorMaterialAlertDialogBackground(getApplicationContext(), builder);
 
                 builder.create().show();
             } catch (WindowManager.BadTokenException e) {
@@ -583,8 +638,6 @@ public class FileDisplayActivity extends FileActivity
 
                 setLeftFragment(new GroupfolderListFragment());
                 getSupportFragmentManager().executePendingTransactions();
-            } else {
-                handleOpenFileViaIntent(intent);
             }
         }
     }
@@ -765,6 +818,7 @@ public class FileDisplayActivity extends FileActivity
     }
 
     @Override
+    @IonosCustomization
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.activity_file_display, menu);
@@ -777,8 +831,6 @@ public class FileDisplayActivity extends FileActivity
             showSearchView();
             searchView.setIconified(false);
         });
-
-        viewThemeUtils.androidx.themeToolbarSearchView(searchView);
 
         // populate list of menu items to show/hide when drawer is opened/closed
         mDrawerMenuItemstoShowHideList = new ArrayList<>(1);
@@ -951,6 +1003,12 @@ public class FileDisplayActivity extends FileActivity
                 case UploadFilesActivity.RESULT_OK_AND_DELETE -> FileUploadWorker.LOCAL_BEHAVIOUR_DELETE;
                 default -> FileUploadWorker.LOCAL_BEHAVIOUR_FORGET;
             };
+
+            boolean isValidFolderPath = FileNameValidator.INSTANCE.checkFolderPath(remotePathBase,getCapabilities(),this);
+            if (!isValidFolderPath) {
+                DisplayUtils.showSnackMessage(this, R.string.file_name_validator_error_contains_reserved_names_or_invalid_characters);
+                return;
+            }
 
             FileUploadHelper.Companion.instance().uploadNewFiles(getUser().orElseThrow(RuntimeException::new),
                                                                  filePaths,
@@ -1375,6 +1433,7 @@ public class FileDisplayActivity extends FileActivity
     /**
      * Show a text message on screen view for notifying user if content is loading or folder is empty
      */
+    @IonosCustomization
     private void setBackgroundText() {
         final OCFileListFragment ocFileListFragment = getListOfFilesFragment();
         if (ocFileListFragment != null) {
@@ -1382,7 +1441,7 @@ public class FileDisplayActivity extends FileActivity
                 ocFileListFragment.setEmptyListLoadingMessage();
             } else {
                 if (MainApp.isOnlyOnDevice()) {
-                    ocFileListFragment.setMessageForEmptyList(R.string.file_list_empty_headline, R.string.file_list_empty_on_device, R.drawable.ic_list_empty_folder, true);
+                    ocFileListFragment.setMessageForEmptyList(R.string.file_list_empty_headline, R.string.file_list_empty_on_device, R.drawable.ic_list_empty_folder);
                 } else {
                     ocFileListFragment.setEmptyListMessage(SearchType.NO_SEARCH);
                 }
@@ -2391,10 +2450,7 @@ public class FileDisplayActivity extends FileActivity
     }
 
     private void handleOpenFileViaIntent(Intent intent) {
-        Uri deepLinkUri = getIntent().getData();
-        if (deepLinkUri == null || !DeepLinkHandler.Companion.isDeepLinkTypeIsNavigation(deepLinkUri.toString())) {
-            showLoadingDialog(getString(R.string.retrieving_file));
-        }
+        DisplayUtils.showSnackMessage(this, getString(R.string.retrieving_file));
 
         String userName = intent.getStringExtra(KEY_ACCOUNT);
         String fileId = intent.getStringExtra(KEY_FILE_ID);
@@ -2410,11 +2466,9 @@ public class FileDisplayActivity extends FileActivity
                 } else if (!TextUtils.isEmpty(filePath)) {
                     openFileByPath(optionalUser.get(), filePath);
                 } else {
-                    dismissLoadingDialog();
                     accountClicked(optionalUser.get().hashCode());
                 }
             } else {
-                dismissLoadingDialog();
                 DisplayUtils.showSnackMessage(this, getString(R.string.associated_account_not_found));
             }
         }
@@ -2423,11 +2477,10 @@ public class FileDisplayActivity extends FileActivity
     private void openDeepLink(Uri uri) {
         DeepLinkHandler linkHandler = new DeepLinkHandler(getUserAccountManager());
         DeepLinkHandler.Match match = linkHandler.parseDeepLink(uri);
+
         if (match == null) {
-            dismissLoadingDialog();
             handleDeepLink(uri);
         } else if (match.getUsers().isEmpty()) {
-            dismissLoadingDialog();
             DisplayUtils.showSnackMessage(this, getString(R.string.associated_account_not_found));
         } else if (match.getUsers().size() == SINGLE_USER_SIZE) {
             openFile(match.getUsers().get(0), match.getFileId());
@@ -2436,6 +2489,7 @@ public class FileDisplayActivity extends FileActivity
         }
     }
 
+    @IonosCustomization
     private void selectUserAndOpenFile(List<User> users, String fileId) {
         final CharSequence[] userNames = new CharSequence[users.size()];
         for (int i = 0; i < userNames.length; i++) {
@@ -2448,7 +2502,7 @@ public class FileDisplayActivity extends FileActivity
             showLoadingDialog(getString(R.string.retrieving_file));
         });
 
-        viewThemeUtils.dialog.colorMaterialAlertDialogBackground(getApplicationContext(), builder);
+        viewThemeUtils.ionos.dialog.colorMaterialAlertDialogBackground(getApplicationContext(), builder);
 
         final AlertDialog dialog = builder.create();
         dismissLoadingDialog();

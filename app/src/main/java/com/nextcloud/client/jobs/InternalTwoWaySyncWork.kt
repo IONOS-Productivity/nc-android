@@ -13,28 +13,38 @@ import androidx.work.WorkerParameters
 import com.nextcloud.client.account.UserAccountManager
 import com.nextcloud.client.device.PowerManagementService
 import com.nextcloud.client.network.ConnectivityService
+import com.nextcloud.client.preferences.AppPreferences
 import com.owncloud.android.MainApp
 import com.owncloud.android.datamodel.FileDataStorageManager
+import com.owncloud.android.datamodel.OCFile
 import com.owncloud.android.lib.common.utils.Log_OC
 import com.owncloud.android.operations.SynchronizeFolderOperation
 import com.owncloud.android.utils.FileStorageUtils
 import java.io.File
 
-@Suppress("Detekt.NestedBlockDepth")
+@Suppress("Detekt.NestedBlockDepth", "ReturnCount", "LongParameterList")
 class InternalTwoWaySyncWork(
     private val context: Context,
     params: WorkerParameters,
     private val userAccountManager: UserAccountManager,
     private val powerManagementService: PowerManagementService,
-    private val connectivityService: ConnectivityService
+    private val connectivityService: ConnectivityService,
+    private val appPreferences: AppPreferences
 ) : Worker(context, params) {
+    private var shouldRun = true
+    private var operation: SynchronizeFolderOperation? = null
+
     override fun doWork(): Result {
         Log_OC.d(TAG, "Worker started!")
 
         var result = true
 
-        if (powerManagementService.isPowerSavingEnabled ||
-            !connectivityService.isConnected || connectivityService.isInternetWalled
+        @Suppress("ComplexCondition")
+        if (!appPreferences.isTwoWaySyncEnabled ||
+            powerManagementService.isPowerSavingEnabled ||
+            !connectivityService.isConnected ||
+            connectivityService.isInternetWalled ||
+            !connectivityService.connectivity.isWifi
         ) {
             Log_OC.d(TAG, "Not starting due to constraints!")
             return Result.success()
@@ -47,20 +57,20 @@ class InternalTwoWaySyncWork(
             val folders = fileDataStorageManager.getInternalTwoWaySyncFolders(user)
 
             for (folder in folders) {
-                val freeSpaceLeft = File(folder.storagePath).getFreeSpace()
-                val localFolderSize = FileStorageUtils.getFolderSize(File(folder.storagePath, MainApp.getDataFolder()))
-                val remoteFolderSize = folder.fileLength
+                if (!shouldRun) {
+                    Log_OC.d(TAG, "Worker was stopped!")
+                    return Result.failure()
+                }
 
-                if (freeSpaceLeft < (remoteFolderSize - localFolderSize)) {
-                    Log_OC.d(TAG, "Not enough space left!")
-                    result = false
+                checkFreeSpace(folder)?.let { checkFreeSpaceResult ->
+                    return checkFreeSpaceResult
                 }
 
                 Log_OC.d(TAG, "Folder ${folder.remotePath}: started!")
-                val operation = SynchronizeFolderOperation(context, folder.remotePath, user, fileDataStorageManager)
-                    .execute(context)
+                operation = SynchronizeFolderOperation(context, folder.remotePath, user, fileDataStorageManager, true)
+                val operationResult = operation?.execute(context)
 
-                if (operation.isSuccess) {
+                if (operationResult?.isSuccess == true) {
                     Log_OC.d(TAG, "Folder ${folder.remotePath}: finished!")
                 } else {
                     Log_OC.d(TAG, "Folder ${folder.remotePath} failed!")
@@ -68,7 +78,10 @@ class InternalTwoWaySyncWork(
                 }
 
                 folder.apply {
-                    internalFolderSyncResult = operation.code.toString()
+                    operationResult?.let {
+                        internalFolderSyncResult = it.code.toString()
+                    }
+
                     internalFolderSyncTimestamp = System.currentTimeMillis()
                 }
 
@@ -82,6 +95,38 @@ class InternalTwoWaySyncWork(
         } else {
             Log_OC.d(TAG, "Worker finished with failure!")
             Result.failure()
+        }
+    }
+
+    override fun onStopped() {
+        Log_OC.d(TAG, "OnStopped of worker called!")
+        operation?.cancel()
+        shouldRun = false
+        super.onStopped()
+    }
+
+    @Suppress("TooGenericExceptionCaught")
+    private fun checkFreeSpace(folder: OCFile): Result? {
+        val storagePath = folder.storagePath ?: MainApp.getStoragePath()
+        val file = File(storagePath)
+
+        if (!file.exists()) return null
+
+        return try {
+            val freeSpaceLeft = file.freeSpace
+            val localFolder = File(storagePath, MainApp.getDataFolder())
+            val localFolderSize = FileStorageUtils.getFolderSize(localFolder)
+            val remoteFolderSize = folder.fileLength
+
+            if (freeSpaceLeft < (remoteFolderSize - localFolderSize)) {
+                Log_OC.d(TAG, "Not enough space left!")
+                Result.failure()
+            } else {
+                null
+            }
+        } catch (e: Exception) {
+            Log_OC.d(TAG, "Error caught at checkFreeSpace: $e")
+            null
         }
     }
 
