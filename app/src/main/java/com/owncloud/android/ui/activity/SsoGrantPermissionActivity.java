@@ -28,6 +28,7 @@ import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.ionos.annotation.IonosCustomization;
 import com.nextcloud.android.sso.Constants;
 import com.nextcloud.utils.extensions.IntentExtensionsKt;
 import com.owncloud.android.MainApp;
@@ -76,6 +77,7 @@ public class SsoGrantPermissionActivity extends BaseActivity {
     }
 
     @Override
+    @IonosCustomization
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -115,7 +117,7 @@ public class SsoGrantPermissionActivity extends BaseActivity {
                 .setPositiveButton(R.string.permission_allow, (dialog, which) -> grantPermission())
                 .setNegativeButton(R.string.permission_deny, (dialog, which) -> exitFailed());
 
-            viewThemeUtils.dialog.colorMaterialAlertDialogBackground(this, builder);
+            viewThemeUtils.ionos.dialog.colorMaterialAlertDialogBackground(this, builder);
 
             dialog = builder.create();
             dialog.show();

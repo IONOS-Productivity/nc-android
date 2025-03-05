@@ -28,6 +28,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.ionos.annotation.IonosCustomization;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.di.Injectable;
 import com.nextcloud.client.jobs.upload.FileUploadHelper;
@@ -50,6 +51,7 @@ import com.owncloud.android.ui.fragment.ExtendedListFragment;
 import com.owncloud.android.ui.fragment.LocalFileListFragment;
 import com.owncloud.android.utils.DisplayUtils;
 import com.owncloud.android.utils.FileSortOrder;
+import com.owncloud.android.utils.FileStorageUtils;
 import com.owncloud.android.utils.PermissionUtil;
 
 import java.io.File;
@@ -136,6 +138,7 @@ public class UploadFilesActivity extends DrawerActivity implements LocalFileList
 
     @Override
     @SuppressLint("WrongViewCast") // wrong error on finding local_files_list
+    @IonosCustomization
     public void onCreate(Bundle savedInstanceState) {
         Log_OC.d(TAG, "onCreate() start");
         super.onCreate(savedInstanceState);
@@ -171,7 +174,7 @@ public class UploadFilesActivity extends DrawerActivity implements LocalFileList
         /// USER INTERFACE
 
         // Drop-down navigation
-        mDirectories = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item);
+        mDirectories = new ArrayAdapter<>(this, R.layout.simple_spinner_item);
         mDirectories.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         fillDirectoryDropdown();
 
@@ -187,10 +190,10 @@ public class UploadFilesActivity extends DrawerActivity implements LocalFileList
         mFileListFragment = (LocalFileListFragment) getSupportFragmentManager().findFragmentByTag("local_files_list");
 
         // Set input controllers
-        viewThemeUtils.material.colorMaterialButtonPrimaryOutlined(binding.uploadFilesBtnCancel);
+        viewThemeUtils.ionos.material.colorMaterialButtonPrimaryOutlined(binding.uploadFilesBtnCancel);
         binding.uploadFilesBtnCancel.setOnClickListener(this);
 
-        viewThemeUtils.material.colorMaterialButtonPrimaryFilled(binding.uploadFilesBtnUpload);
+        viewThemeUtils.ionos.material.colorMaterialButtonPrimaryFilled(binding.uploadFilesBtnUpload);
         binding.uploadFilesBtnUpload.setOnClickListener(this);
         binding.uploadFilesBtnUpload.setEnabled(mLocalFolderPickerMode);
 
@@ -279,6 +282,7 @@ public class UploadFilesActivity extends DrawerActivity implements LocalFileList
     }
 
     @Override
+    @IonosCustomization
     public boolean onCreateOptionsMenu(Menu menu) {
         mOptionsMenu = menu;
         getMenuInflater().inflate(R.menu.activity_upload_files, menu);
@@ -290,8 +294,6 @@ public class UploadFilesActivity extends DrawerActivity implements LocalFileList
 
         final MenuItem item = menu.findItem(R.id.action_search);
         mSearchView = (SearchView) MenuItemCompat.getActionView(item);
-        viewThemeUtils.androidx.themeToolbarSearchView(mSearchView);
-        viewThemeUtils.platform.tintTextDrawable(this, menu.findItem(R.id.action_choose_storage_path).getIcon());
 
         mSearchView.setOnSearchClickListener(v -> mToolbarSpinner.setVisibility(View.GONE));
 
@@ -567,7 +569,8 @@ public class UploadFilesActivity extends DrawerActivity implements LocalFileList
     }
 
     private void checkWritableFolder(File folder) {
-        boolean canWriteIntoFolder = folder.canWrite();
+        boolean canWriteIntoFolder = FileStorageUtils.isFolderWritable(folder);
+        
         binding.uploadFilesSpinnerBehaviour.setEnabled(canWriteIntoFolder);
 
         TextView textView = findViewById(R.id.upload_files_upload_files_behaviour_text);

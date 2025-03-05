@@ -28,6 +28,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.elyeproj.loaderviewlibrary.LoaderImageView;
+import com.ionos.annotation.IonosCustomization;
 import com.nextcloud.android.common.ui.theme.utils.ColorRole;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.jobs.upload.FileUploadHelper;
@@ -113,8 +114,8 @@ public class OCFileListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     private static final int VIEWTYPE_FOOTER = 0;
     private static final int VIEWTYPE_ITEM = 1;
-    private static final int VIEWTYPE_IMAGE = 2;
-    private static final int VIEWTYPE_HEADER = 3;
+    @IonosCustomization
+    private static final int VIEWTYPE_HEADER = 2;
 
     private boolean onlyOnDevice;
     private final OCFileListDelegate ocFileListDelegate;
@@ -337,6 +338,7 @@ public class OCFileListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     @Override
+    @IonosCustomization
     public int getItemViewType(int position) {
         if (shouldShowHeader() && position == 0) {
             return VIEWTYPE_HEADER;
@@ -347,16 +349,7 @@ public class OCFileListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             return VIEWTYPE_FOOTER;
         }
 
-        OCFile item = getItem(position);
-        if (item == null) {
-            return VIEWTYPE_ITEM;
-        }
-
-        if (MimeTypeUtil.isImageOrVideo(item)) {
-            return VIEWTYPE_IMAGE;
-        } else {
-            return VIEWTYPE_ITEM;
-        }
+        return VIEWTYPE_ITEM;
     }
 
     public boolean isEmpty() {
@@ -365,23 +358,13 @@ public class OCFileListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @NonNull
     @Override
+    @IonosCustomization
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         switch (viewType) {
             default -> {
                 if (gridView) {
                     return new OCFileListGridItemViewHolder(
                         GridItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false)
-                    );
-                } else {
-                    return new OCFileListItemViewHolder(
-                        ListItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false)
-                    );
-                }
-            }
-            case VIEWTYPE_IMAGE -> {
-                if (gridView) {
-                    return new OCFileListGridImageViewHolder(
-                        GridImageBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false)
                     );
                 } else {
                     return new OCFileListItemViewHolder(
@@ -516,19 +499,9 @@ public class OCFileListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
     }
 
+    @IonosCustomization
     private void bindListGridItemViewHolder(ListGridItemViewHolder holder, OCFile file) {
         holder.getFileName().setText(file.getDecryptedFileName());
-
-        boolean gridImage = MimeTypeUtil.isImage(file) || MimeTypeUtil.isVideo(file);
-        if (gridView && gridImage) {
-            holder.getFileName().setVisibility(View.GONE);
-        } else {
-            if (gridView && ocFileListFragmentInterface.getColumnsCount() > showFilenameColumnThreshold) {
-                holder.getFileName().setVisibility(View.GONE);
-            } else {
-                holder.getFileName().setVisibility(View.VISIBLE);
-            }
-        }
     }
 
     private void bindListItemViewHolder(ListItemViewHolder holder, OCFile file) {
@@ -705,7 +678,7 @@ public class OCFileListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             return false;
         }
 
-        return !TextUtils.isEmpty(currentDirectory.getRichWorkspace().trim());
+        return false; //Hide header in IONOS // !TextUtils.isEmpty(currentDirectory.getRichWorkspace().trim());
     }
 
     /**

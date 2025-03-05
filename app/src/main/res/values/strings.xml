@@ -27,7 +27,7 @@
     <string name="ecosystem_apps_display_assistant">Assistant</string>
 
     <string name="app_config_base_url_title">Base URL</string>
-    <string name="app_config_proxy_host_title">Proxy Host Name</string>
+    <string name="app_config_proxy_host_title">Proxy Hostname</string>
     <string name="app_config_proxy_port_title">Proxy Port</string>
 
     <string name="anonymous_account_type" translatable="false">AnonymousAccountType</string>
@@ -108,6 +108,17 @@
     <string name="prefs_value_theme_dark">Dark</string>
     <string name="prefs_value_theme_system">Follow system</string>
     <string name="prefs_theme_title">Theme</string>
+    <string name="prefs_two_way_sync_switch_title">Enable two way sync</string>
+    <string name="prefs_two_way_sync_interval">Interval</string>
+
+    <plurals name="hours">
+        <item quantity="one">%d hour</item>
+        <item quantity="other">%d hours</item>
+    </plurals>
+    <plurals name="minutes">
+        <item quantity="one">%d minute</item>
+        <item quantity="other">%d minutes</item>
+    </plurals>
 
     <string name="recommend_subject">Try %1$s on your device!</string>
     <string name="recommend_text">I want to invite you to use %1$s on your device.\nDownload here: %2$s</string>
@@ -582,8 +593,8 @@
     <string name="share_with_title">Share with…</string>
     <string name="share_via_link_unset_password">Unset</string>
 
-    <string name="share_search">Name, Federated Cloud ID or email address …</string>
-    <string name="secure_share_search">Secure share …</string>
+    <string name="share_search">Name, Federated Cloud ID or email address…</string>
+    <string name="secure_share_search">Secure share…</string>
 
     <string name="share_group_clarification">%1$s (group)</string>
     <string name="share_remote_clarification">%1$s (remote)</string>
@@ -708,7 +719,7 @@
     <string name="empty" translatable="false" />
     <string name="test_server_button">Test server connection</string>
     <string name="info_separator" translatable="false">&#160;&#x2022;</string>
-    <string name="resharing_is_not_allowed">Resharing is not allowed</string>
+    <string name="resharing_is_not_allowed">Policy or permissions prevent resharing</string>
 
     <string name="foreground_service_upload">Uploading files…</string>
     <string name="worker_download">Downloading files…</string>
@@ -946,7 +957,6 @@
     <string name="storage_downloads">Downloads</string>
     <string name="shared_avatar_desc">Avatar from shared user</string>
     <string name="shared_with_you_by">Shared with you by %1$s</string>
-    <string name="reshare_not_allowed">Resharing is not allowed</string>
     <string name="retrieving_file">Retrieving file…</string>
     <string name="associated_account_not_found">Associated account not found!</string>
     <string name="logged_in_as">Logged in as %1$s</string>
@@ -1157,7 +1167,7 @@
     <string name="icon_of_widget_entry">Icon of widget entry</string>
     <string name="choose_widget">Choose widget</string>
     <string name="reload">Reload</string>
-    <string name="widgets_not_available">Widgets are only available on %1$s 25 or later</string>
+    <string name="widgets_not_available">Widgets are only available in %1$s 25 or later when the Dashboard app is enabled</string>
     <string name="widgets_not_available_title">Not available</string>
     <string name="icon_for_empty_list">Icon for empty list</string>
     <string name="no_items">No items</string>
@@ -1238,4 +1248,11 @@
     <string name="sync">Sync</string>
     <string name="please_select_a_server">Please select a server…</string>
     <string name="unset_internal_two_way_sync_description">Remove folder from internal two way sync</string>
+
+    <string name="two_way_sync_activity_empty_list_title">Two way sync not set up</string>
+    <string name="two_way_sync_activity_empty_list_desc">To set up a two way sync folder, please enable it in the details tab of the folder in question.</string>
+    <string name="two_way_sync_activity_title">Internal two way sync</string>
+    <string name="two_way_sync_activity_disable_all_button_title">Disable for all folders</string>
+    <string name="auto_upload_gplay">Auto upload behaviour changed</string>
+    <string name="auto_upload_gplay_desc">Due to new restrictions imposed by Google, the auto upload feature will no longer be able to automatically remove uploaded files.</string>
 </resources>

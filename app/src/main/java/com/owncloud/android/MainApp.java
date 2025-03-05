@@ -39,6 +39,9 @@ import android.text.TextUtils;
 import android.view.WindowManager;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.ionos.analycis.AnalyticsManager;
+import com.ionos.annotation.IonosCustomization;
+import com.ionos.privacy.PrivacyPreferences;
 import com.nextcloud.appReview.InAppReviewHelper;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.account.UserAccountManager;
@@ -88,6 +91,9 @@ import com.owncloud.android.utils.ReceiversHelper;
 import com.owncloud.android.utils.SecurityUtils;
 import com.owncloud.android.utils.appConfig.AppConfigManager;
 import com.owncloud.android.utils.theme.ViewThemeUtils;
+import com.ionos.scanbot.di.ScanbotComponent;
+import com.ionos.scanbot.di.ScanbotComponentProvider;
+import com.ionos.scanbot.initializer.ScanbotInitializer;
 
 import org.conscrypt.Conscrypt;
 import org.greenrobot.eventbus.EventBus;
@@ -129,7 +135,9 @@ import static com.owncloud.android.ui.activity.ContactsPreferenceActivity.PREFER
  * Main Application of the project.
  * Contains methods to build the "static" strings. These strings were before constants in different classes.
  */
-public class MainApp extends Application implements HasAndroidInjector {
+@IonosCustomization("ScanbotComponentProvider")
+public class MainApp
+    extends Application implements HasAndroidInjector, ScanbotComponentProvider {
     public static final OwnCloudVersion OUTDATED_SERVER_VERSION = NextcloudVersion.nextcloud_26;
     public static final OwnCloudVersion MINIMUM_SUPPORTED_SERVER_VERSION = OwnCloudVersion.nextcloud_17;
 
@@ -147,6 +155,12 @@ public class MainApp extends Application implements HasAndroidInjector {
     protected AppPreferences preferences;
 
     @Inject
+    protected PrivacyPreferences privacyPreferences;
+
+    @Inject
+    protected AnalyticsManager analyticsManager;
+
+    @Inject
     protected DispatchingAndroidInjector<Object> dispatchingAndroidInjector;
 
     @Inject
@@ -157,6 +171,9 @@ public class MainApp extends Application implements HasAndroidInjector {
 
     @Inject
     protected OnboardingService onboarding;
+
+    @Inject
+    ScanbotInitializer scanbotInitializer;
 
     @Inject
     ConnectivityService connectivityService;
@@ -203,6 +220,9 @@ public class MainApp extends Application implements HasAndroidInjector {
     private AppConfigManager appConfigManager;
 
     private static AppComponent appComponent;
+
+    private ScanbotComponent scanbotComponent;
+
 
     /**
      * Temporary hack
@@ -294,6 +314,7 @@ public class MainApp extends Application implements HasAndroidInjector {
 
 
     @SuppressFBWarnings("ST")
+    @IonosCustomization("Scanbot, show hidden files")
     @Override
     public void onCreate() {
         enableStrictMode();
@@ -321,6 +342,8 @@ public class MainApp extends Application implements HasAndroidInjector {
         DisplayUtils.useCompatVectorIfNeeded();
 
         fixStoragePath();
+
+        checkCancelDownloadJobs();
 
         MainApp.storagePath = preferences.getStoragePath(getApplicationContext().getFilesDir().getAbsolutePath());
 
@@ -371,10 +394,17 @@ public class MainApp extends Application implements HasAndroidInjector {
             backgroundJobManager.scheduleMediaFoldersDetectionJob();
             backgroundJobManager.startMediaFoldersDetectionJob();
             backgroundJobManager.schedulePeriodicHealthStatus();
-            backgroundJobManager.scheduleInternal2WaySync();
+
+            if (preferences.isTwoWaySyncEnabled()) {
+                backgroundJobManager.scheduleInternal2WaySync(preferences.getTwoWaySyncInterval());
+            }
         }
 
         registerGlobalPassCodeProtection();
+        scanbotInitializer.initialize();
+        preferences.setShowHiddenFilesEnabled(true);
+
+        analyticsManager.setEnabled(privacyPreferences.isAnalyticsEnabled());
     }
 
     private final LifecycleEventObserver lifecycleEventObserver = ((lifecycleOwner, event) -> {
@@ -411,6 +441,14 @@ public class MainApp extends Application implements HasAndroidInjector {
             appConfigManager.setProxyConfig(isClientBrandedPlus());
         }
     };
+
+    @Override
+    public ScanbotComponent getScanbotComponent() {
+        if (this.scanbotComponent == null) {
+            this.scanbotComponent = appComponent.scanbotComponent();
+        }
+        return this.scanbotComponent;
+    }
 
     private void registerGlobalPassCodeProtection() {
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
@@ -583,6 +621,13 @@ public class MainApp extends Application implements HasAndroidInjector {
                                        .detectLeakedClosableObjects()
                                        .penaltyLog()
                                        .build());
+        }
+    }
+
+    private void checkCancelDownloadJobs() {
+        if (backgroundJobManager != null && preferences.shouldStopDownloadJobsOnStart()) {
+            backgroundJobManager.cancelAllFilesDownloadJobs();
+            preferences.setStopDownloadJobsOnStart(false);
         }
     }
 
@@ -821,6 +866,8 @@ public class MainApp extends Application implements HasAndroidInjector {
             }
         }
     }
+
+    
 
     private static void showAutoUploadAlertDialog(Context context) {
         new MaterialAlertDialogBuilder(context, R.style.Theme_ownCloud_Dialog)

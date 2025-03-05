@@ -35,6 +35,13 @@
     <string name="advanced_settings">Напредне поставке</string>
     <string name="allow_resharing">Дозволи дељење даље</string>
     <string name="app_config_base_url_title">Базни URL</string>
+    <string name="app_config_disable_clipboard_title">Искључи клипборд</string>
+    <string name="app_config_disable_intro_title">Искључи интро</string>
+    <string name="app_config_disable_log_title">Искључи дневник</string>
+    <string name="app_config_disable_more_external_site_title">Искључи спољашње сајтове</string>
+    <string name="app_config_disable_multiaccount_title">Искључи вишеструке налоге</string>
+    <string name="app_config_disable_sharing_title">Искључи дељење</string>
+    <string name="app_config_enforce_protection_title">Форсирај заштиту</string>
     <string name="app_config_proxy_host_title">Хост име проксија</string>
     <string name="app_config_proxy_port_title">Прокси порт</string>
     <string name="app_widget_description">Приказује један виџет са контролне табле</string>
@@ -96,6 +103,8 @@
     <string name="authenticator_activity_login_error">Дошло је до проблема при обради вашег захтева за пријаву. Молимо вас да касније покушате поново.</string>
     <string name="authenticator_activity_please_complete_login_process">Молимо вас да довршите процес пријаве у интернет прегледачу</string>
     <string name="auto_upload_file_behaviour_kept_in_folder">остављен у оригиналној фасцикли јер је само за читање</string>
+    <string name="auto_upload_gplay">Промењено је понашање аутоматског отпремања</string>
+    <string name="auto_upload_gplay_desc">Услед нових ограничења које је поставио Google, функционалност аутоматског отпремања више неће моћи аутоматски да отпрема фајлове.</string>
     <string name="auto_upload_on_wifi">Отпремај само на бежичним мрежама без ограничења</string>
     <string name="auto_upload_path">/Аутоматска отпремања</string>
     <string name="autoupload_configure">Подеси</string>
@@ -103,7 +112,6 @@
     <string name="autoupload_custom_folder">Подесите произвољну фасциклу</string>
     <string name="autoupload_disable_power_save_check">Искључи проверу уштеде батерије</string>
     <string name="autoupload_hide_folder">Сакриј фасциклу</string>
-    <string name="autoupload_worker_foreground_info">Припрема се ауто отпремање</string>
     <string name="avatar">Аватар</string>
     <string name="away">Одсутан</string>
     <string name="backup_settings">Поставке резервне копије</string>
@@ -251,7 +259,6 @@
     <string name="downloader_download_failed_credentials_error">Неуспешно преузимање. Поново се пријавите</string>
     <string name="downloader_download_failed_ticker">Преузимање није успело</string>
     <string name="downloader_download_file_not_found">Фајл није више доступан на серверу</string>
-    <string name="downloader_download_in_progress">%1$d%% %2$s</string>
     <string name="downloader_download_in_progress_content">%1$d%% преузимам %2$s</string>
     <string name="downloader_download_in_progress_ticker">Преузимам…</string>
     <string name="downloader_download_succeeded_content">%1$s преузето</string>
@@ -364,6 +371,7 @@
     <string name="file_already_exists">Име фајла већ постоји</string>
     <string name="file_delete">Обриши</string>
     <string name="file_detail_activity_error">Грешка при добављању активности за фајл</string>
+    <string name="file_detail_sharing_fragment_no_contact_app_message">Нема апликације којом могу да се изаберу контакти</string>
     <string name="file_details_no_content">Грешка при учитавању детаља</string>
     <string name="file_icon">Фајл</string>
     <string name="file_keep">Задржи</string>
@@ -391,6 +399,7 @@
     <string name="file_management_permission_optional">Дозволе за складиште</string>
     <string name="file_management_permission_optional_text">%1$s најбоље ради када има дозволу да приступи складишту. Можете избрати пуни приступ свим фајловима, или приступ само-за -читање фотографија и видео снимака.</string>
     <string name="file_management_permission_text">%1$s захтева дозволе управљања за отпремање фајлова. Можете изабрати пуни приступ свим фајловима, или приступ само-за-читање слика и видео снимака.</string>
+    <string name="file_migration_allow_media_indexing">Дозволи приступ из осталих апликација</string>
     <string name="file_migration_checking_destination">Проверавам одредиште…</string>
     <string name="file_migration_cleaning">Чистим…</string>
     <string name="file_migration_dialog_title">Ажурирам фасциклу са подацима</string>
@@ -401,6 +410,7 @@
     <string name="file_migration_failed_not_writable">Не могу да пишем у одредишни фајл </string>
     <string name="file_migration_failed_while_coping">Грешка приликом пресељења</string>
     <string name="file_migration_failed_while_updating_index">Грешка при ажурирању индекса</string>
+    <string name="file_migration_free_space">%1$s\n(%2$s / %3$s)</string>
     <string name="file_migration_migrating">Премештам податке…</string>
     <string name="file_migration_ok_finished">Завршено</string>
     <string name="file_migration_override_data_folder">Замени</string>
@@ -596,6 +606,7 @@
     <string name="notifications_no_results_headline">Нема обавештења</string>
     <string name="notifications_no_results_message">Проверите касније.</string>
     <string name="oc_file_list_adapter_offline_operation_description_text">Операције на чекању</string>
+    <string name="oc_file_list_adapter_offline_operation_remove_description_text">Операција уклањања на чекању</string>
     <string name="offline_mode">Нема везе са интернетом</string>
     <string name="offline_mode_info_description">Чак и без везе са интернетом можете да организујете фолдере, креирате фајлове. Када поново будете на мрежи, ваше акције на чекању ће се аутоматски синхронизовати.</string>
     <string name="offline_mode_info_title">Ван мреже сте, али се рад наставља</string>
@@ -658,6 +669,8 @@
     <string name="prefs_category_sync">Синхронизуј</string>
     <string name="prefs_daily_backup_summary">Дневна резервна копија вашег календара и контаката</string>
     <string name="prefs_daily_contact_backup_summary">Дневно архивирање ваших контаката</string>
+    <string name="prefs_data_storage_location">Локација складишта података</string>
+    <string name="prefs_data_storage_location_summary">Управљање локацијом складишта података</string>
     <string name="prefs_davx5_setup_error">Неочекивана грешка приликом подешавања DAVx5 (раније познатог под именом DAVdroid)</string>
     <string name="prefs_e2e_active">Подешено је шифрирање од почетка-до-краја!</string>
     <string name="prefs_e2e_mnemonic">Е2Е мнемоник</string>
@@ -696,7 +709,9 @@
     <string name="prefs_synced_folders_local_path_title">Локална фасцикла</string>
     <string name="prefs_synced_folders_remote_path_title">Удаљена фасцикла</string>
     <string name="prefs_theme_title">Тема</string>
+    <string name="prefs_two_way_sync_interval">Интервал</string>
     <string name="prefs_two_way_sync_summary">Управљање интерним фолдерима за двосмерну синхронизацију</string>
+    <string name="prefs_two_way_sync_switch_title">Укључи двосмерну синхронизацију</string>
     <string name="prefs_value_theme_dark">тамна</string>
     <string name="prefs_value_theme_light">светла</string>
     <string name="prefs_value_theme_system">системска</string>
@@ -737,8 +752,7 @@
     <string name="request_account_deletion">Захтевајте брисање налога</string>
     <string name="request_account_deletion_button">Захтев за брисање</string>
     <string name="request_account_deletion_details">Захтев пружаоцу сервиса да неповратно обрише налог</string>
-    <string name="reshare_not_allowed">Поновно дељење није дозвољено</string>
-    <string name="resharing_is_not_allowed">Поновно дељење није дозвољено</string>
+    <string name="resharing_is_not_allowed">Полиса или дозволе спречавају поновно дељење</string>
     <string name="resized_image_not_possible_download">Нема доступне умањене сличице. Скинути пуну слику?</string>
     <string name="restore">Поврати фајл</string>
     <string name="restore_backup">Обнови резервну копију</string>
@@ -859,6 +873,7 @@
     <string name="storage_description_default">Подразумевано</string>
     <string name="storage_documents">Документи</string>
     <string name="storage_downloads">Преузимања</string>
+    <string name="storage_external_storage">Спољашње складиште</string>
     <string name="storage_internal_storage">Интерно складиште</string>
     <string name="storage_movies">Филмови</string>
     <string name="storage_music">Музика</string>
@@ -925,6 +940,10 @@
     <string name="trashbin_file_remove">Обриши заувек</string>
     <string name="trashbin_loading_failed">Није успело учитавање корпе за отпатке!</string>
     <string name="trashbin_not_emptied">Фајл не може да се обрише неповратно!</string>
+    <string name="two_way_sync_activity_disable_all_button_title">Искључи за све фолдере</string>
+    <string name="two_way_sync_activity_empty_list_desc">Да бисте подесили двосмерну синхронизацију, молимо вас да је укључите у картици детаљи за жељени фолдер</string>
+    <string name="two_way_sync_activity_empty_list_title">Није подешена двосмерна синхронизација</string>
+    <string name="two_way_sync_activity_title">Интерна двосмерна синхронизација</string>
     <string name="unexpected_error_occurred">Дошло је до неочекиване грешке</string>
     <string name="unified_search_fragment_calendar_event_not_found">Није пронађен догађај, увек можете да сихронизујете да бисте ажурирали. Преусмеравате се на веб</string>
     <string name="unified_search_fragment_contact_not_found">Није пронађен контакт, увек можете да сихронизујете да бисте ажурирали. Преусмеравате се на веб</string>
@@ -933,6 +952,7 @@
     <string name="unread_comments">Постоје непрочитани коментари</string>
     <string name="unset_encrypted">Искључи шифровање</string>
     <string name="unset_favorite">Избаци из омиљених</string>
+    <string name="unset_internal_two_way_sync_description">Уклони фајл из интерне двосмерне синхронизације</string>
     <string name="unshare_link_file_error">Десила се грешка при покушају укидања дељења фајла или фасцикле.</string>
     <string name="unshare_link_file_no_exist">Не могу да укинем дељење. Проверите да ли фајл постоји.</string>
     <string name="unshare_link_forbidden_permissions">да укинете дељење овог фајла</string>
@@ -1005,7 +1025,6 @@
     <string name="uploader_upload_files_behaviour_only_upload">Остави фајл у изворној фасцикли</string>
     <string name="uploader_upload_files_behaviour_upload_and_delete_from_source">Избриши фајл из изворне фасцикле</string>
     <string name="uploader_upload_forbidden_permissions">да отпремите ову фасциклу</string>
-    <string name="uploader_upload_in_progress">%1$d%% %2$s</string>
     <string name="uploader_upload_in_progress_content">%1$d%% Отпремање %2$s</string>
     <string name="uploader_upload_in_progress_ticker">Отпремам…</string>
     <string name="uploader_upload_succeeded_content_single">%1$s отпремљено</string>
@@ -1052,6 +1071,7 @@
     <string name="wait_a_moment">Сачекајте мало…</string>
     <string name="wait_checking_credentials">Проверавам сачуване акредитиве</string>
     <string name="wait_for_tmp_copy_from_private_storage">Копирам фајл из личног складишта</string>
+    <string name="warn_rename_extension">Ако се промена екстензија, фајл ће се можда отварати у другој апликацији</string>
     <string name="webview_version_check_alert_dialog_message">Да бисте се пријавили, молимо вас да ажурирате Андроид апликацију System WebView</string>
     <string name="webview_version_check_alert_dialog_positive_button_title">Ажурирај</string>
     <string name="webview_version_check_alert_dialog_title">Ажурирај Андроид System WebView</string>
@@ -1059,12 +1079,22 @@
     <string name="whats_new_skip">Прескочи</string>
     <string name="whats_new_title">Ново у %1$s</string>
     <string name="whats_your_status">Који је ваш статус?</string>
-    <string name="widgets_not_available">Виџети су доступни само на %1$s 25 или новијем</string>
+    <string name="widgets_not_available">Виџети су доступни само на %1$s 25 или новијем када је укључена апликација Контролна табла</string>
     <string name="widgets_not_available_title">Није доступно</string>
     <string name="worker_download">Преузимам фајлове…</string>
     <string name="write_email">Пошаљи е-пошту</string>
     <string name="wrong_storage_path">Фолдер за чување података не постоји!</string>
     <string name="wrong_storage_path_desc">Ово може да се догоди када се резервна копија обнови на другом уређају. Враћа се на подразумевано подешавање. Молимо вас да проверите подешавања и исправите локацију фолдера за чување података.</string>
+    <plurals name="hours">
+        <item quantity="one">%d сат</item>
+        <item quantity="few">%d сата</item>
+        <item quantity="other">%d сати</item>
+    </plurals>
+    <plurals name="minutes">
+        <item quantity="one">%d минут</item>
+        <item quantity="few">%d минута</item>
+        <item quantity="other">%d минута</item>
+    </plurals>
     <plurals name="sync_fail_in_favourites_content">
         <item quantity="one">Не могу да синхронизујем %1$d фајл (конфликата: %2$d)</item>
         <item quantity="few">Не могу да синхронизујем %1$d фајла (конфликата: %2$d)</item>

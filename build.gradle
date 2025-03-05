@@ -9,6 +9,7 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later OR GPL-2.0-only
  */
 buildscript {
+    apply from: 'ionos_dependencies.gradle'
     ext {
         androidLibraryVersion ="a4d86ef9d1"
         androidPluginVersion = '8.5.2'
@@ -32,6 +33,7 @@ buildscript {
 
         ciBuild = System.getenv("CI") == "true"
         shotTest = System.getenv("SHOT_TEST") == "true"
+
     }
 }
 
@@ -47,6 +49,8 @@ subprojects {
         google()
         mavenCentral()
         maven { url "https://jitpack.io" }
+        maven { url 'https://nexus.scanbot.io/nexus/content/repositories/releases/' }
+        maven { url "https://maven.download.phrase.com" }
     }
 }
 
