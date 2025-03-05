@@ -7,12 +7,13 @@
 
 package com.ionos.utils
 
+import com.nextcloud.utils.BuildHelper
 import com.owncloud.android.BuildConfig
 
 object IonosBuildHelper {
 
     @JvmStatic
     fun isIonosFlavor(): Boolean {
-        return BuildConfig.FLAVOR == "ionos"
+        return BuildHelper.GPLAY == BuildConfig.FLAVOR
     }
 }
