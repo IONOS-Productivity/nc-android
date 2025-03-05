@@ -141,7 +141,7 @@ class UnifiedSearchFragment :
         setupFileDisplayActivity()
         setupAdapter()
         if (supportsOpeningCalendarContactsLocally()) {
-            checkPermissions()
+            // checkPermissions()
         }
     }
 

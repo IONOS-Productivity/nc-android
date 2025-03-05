@@ -12,24 +12,29 @@ import androidx.startup.Initializer
 import com.ionos.analycis.AnalyticsManager
 import com.ionos.privacy.PrivacyPreferences
 import com.ionos.scanbot.initializer.ScanbotInitializer
+import com.nextcloud.client.preferences.AppPreferences
 import com.owncloud.android.MainApp
 import javax.inject.Inject
 
 class IonosInitializer : Initializer<Unit> {
 
     @Inject
-    lateinit var privacyPreferences: PrivacyPreferences
+    lateinit var analyticsManager: AnalyticsManager
 
     @Inject
-    lateinit var analyticsManager: AnalyticsManager
+    lateinit var appPreferences: AppPreferences
+
+    @Inject
+    lateinit var privacyPreferences: PrivacyPreferences
 
     @Inject
     lateinit var scanbotInitializer: ScanbotInitializer
 
     override fun create(context: Context) {
         (context.applicationContext as MainApp).androidInjector().inject(this)
-        scanbotInitializer.initialize()
         analyticsManager.setEnabled(privacyPreferences.isAnalyticsEnabled())
+        appPreferences.setShowHiddenFilesEnabled(true);
+        scanbotInitializer.initialize()
     }
 
     override fun dependencies(): List<Class<out Initializer<*>>> {
