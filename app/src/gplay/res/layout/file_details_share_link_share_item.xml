@@ -55,9 +55,9 @@
             android:singleLine="true"
             tools:text="View only"
             app:drawableEndCompat="@drawable/ic_baseline_arrow_drop_down_24"
-            app:drawableTint="@color/primary"
+            app:drawableTint="@color/file_details_accent_color"
             app:drawableRightCompat="@drawable/ic_baseline_arrow_drop_down_24"
-            android:textColor="@color/primary"
+            android:textColor="@color/file_details_accent_color"
             android:textSize="@dimen/two_line_secondary_text_size" />
     </LinearLayout>
 
@@ -72,7 +72,7 @@
         android:paddingEnd="@dimen/standard_padding"
         android:paddingBottom="@dimen/standard_quarter_margin"
         android:scaleType="fitCenter"
-        app:tint="@color/ionos_default_icon_color"
+        app:tint="@color/file_details_accent_color"
         android:src="@drawable/ic_content_copy" />
 
     <ImageView

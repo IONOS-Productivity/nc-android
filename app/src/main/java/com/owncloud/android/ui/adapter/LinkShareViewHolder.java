@@ -87,11 +87,12 @@ class LinkShareViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
+    @IonosCustomization
     private void setPermissionName(OCShare publicShare, String permissionName) {
         if (!TextUtils.isEmpty(permissionName) && !SharingMenuHelper.isSecureFileDrop(publicShare)) {
             binding.permissionName.setText(permissionName);
             binding.permissionName.setVisibility(View.VISIBLE);
-            viewThemeUtils.androidx.colorPrimaryTextViewElement(binding.permissionName);
+            // viewThemeUtils.androidx.colorPrimaryTextViewElement(binding.permissionName);
         } else {
             binding.permissionName.setVisibility(View.GONE);
         }

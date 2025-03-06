@@ -99,6 +99,7 @@
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:contentDescription="@string/note_icon_hint"
+                    app:tint="@color/file_details_accent_color"
                     android:src="@drawable/file_text" />
 
                 <TextView
