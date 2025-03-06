@@ -24,15 +24,10 @@
     <string name="app_config_base_url_title">URL base</string>
     <string name="app_config_proxy_port_title">Puertu del proxy</string>
     <string name="appbar_search_in">Buscar en: %s</string>
-    <string name="assistant_screen_all_task_type">Too</string>
     <string name="assistant_screen_create_task_alert_dialog_input_field_placeholder">Escribi daqué</string>
-    <string name="assistant_screen_failed_task_text">Falló</string>
-    <string name="assistant_screen_scheduled_task_status_text">Planificóse</string>
-    <string name="assistant_screen_successful_task_text">Completóse</string>
     <string name="assistant_screen_task_list_error_state_message">Nun ye posible dir en cata de la llista de xeres. Comprueba la conexón a internet.</string>
     <string name="assistant_screen_task_types_error_state_message">Nun ye posible dir en cata de los tipos de xeres. Comprueba la conexón a internet.</string>
     <string name="assistant_screen_top_bar_title">Asistente</string>
-    <string name="assistant_screen_unknown_task_status_text">Desconocí­u</string>
     <string name="assistant_task_detail_screen_input_button_title">Entrada</string>
     <string name="assistant_task_detail_screen_output_button_title">Salida</string>
     <string name="auth_account_not_new">Yá esiste nel preséu una cuenta pal mesmu usuariu y sirvidor</string>
@@ -301,7 +296,6 @@
     <string name="image_preview_unit_megapixel">%s MP</string>
     <string name="image_preview_unit_millimetres">%s mm</string>
     <string name="image_preview_unit_seconds">%s s</string>
-    <string name="in_folder">na carpeta %1$s</string>
     <string name="instant_upload_on_charging">Namái xubir al cargar</string>
     <string name="instant_upload_path">/XubidaNelIntre</string>
     <string name="invalid_url">La URL ye inválisa</string>
@@ -560,6 +554,7 @@
     <string name="synced_folders_preferences_folder_path">Pa %1$s</string>
     <string name="synced_folders_type">Tipu</string>
     <string name="tags">Etiquetes</string>
+    <string name="terms_of_service_title">Términos del serviciu</string>
     <string name="test_server_button">Probar la conexón del sirvidor</string>
     <string name="thirtyMinutes">30 minutos</string>
     <string name="thisWeek">Esta selmana</string>
@@ -643,7 +638,6 @@
     <string name="wait_a_moment">Espera un momentu…</string>
     <string name="wait_checking_credentials">Comprobación de credenciales almacenaes</string>
     <string name="wait_for_tmp_copy_from_private_storage">Copiando ficheru dende l\'almacenamientu priváu</string>
-    <string name="webview_version_check_alert_dialog_positive_button_title">Anovar</string>
     <string name="whats_new_skip">Saltar</string>
     <string name="whats_your_status">¿Cuál ye\'l to estáu?</string>
     <string name="widgets_not_available_title">Nun ta disponible</string>
@@ -653,4 +647,4 @@
         <item quantity="one">%d na seleición</item>
         <item quantity="other">%d na seleición</item>
     </plurals>
-</resources>
+    </resources>

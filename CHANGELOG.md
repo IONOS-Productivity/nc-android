@@ -1,3 +1,31 @@
+## 3.30.7 (January 6, 2025)
+
+- Fix crash of auto upload settings
+
+Minimum: NC 16 Server, Android 7.0 Nougat
+
+For a full list, please see https://github.com/nextcloud/android/milestone/104
+
+## 3.30.3 (October 22, 2024)
+
+- Bugfix for two way sync: sync only on wifi
+
+## 3.30.2 (October 21, 2024)
+
+- Bugfix for two way sync. Please check listed folders in settings -> internal two way sync
+
+Minimum: NC 16 Server, Android 7.0 Nougat
+
+For a full list, please see https://github.com/nextcloud/android/milestone/99
+
+## 3.30.1 (October 11, 2024)
+
+- Bugfixes
+
+Minimum: NC 16 Server, Android 7.0 Nougat
+
+For a full list, please see https://github.com/nextcloud/android/milestone/99
+
 ## 3.29.1 (June 27, 2024)
 
 - Bugfixes

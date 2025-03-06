@@ -27,14 +27,12 @@ import com.nextcloud.client.device.PowerManagementService;
 import com.nextcloud.client.jobs.BackgroundJobManager;
 import com.nextcloud.client.jobs.upload.FileUploadHelper;
 import com.nextcloud.client.jobs.upload.FileUploadWorker;
-import com.nextcloud.client.network.ConnectivityService;
 import com.nextcloud.client.utils.Throttler;
 import com.nextcloud.model.WorkerState;
 import com.nextcloud.model.WorkerStateLiveData;
 import com.owncloud.android.R;
 import com.owncloud.android.databinding.UploadListLayoutBinding;
 import com.owncloud.android.datamodel.OCFile;
-import com.owncloud.android.datamodel.SyncedFolder;
 import com.owncloud.android.datamodel.SyncedFolderProvider;
 import com.owncloud.android.datamodel.UploadsStorageManager;
 import com.owncloud.android.lib.common.operations.RemoteOperation;
@@ -45,7 +43,6 @@ import com.owncloud.android.ui.adapter.UploadListAdapter;
 import com.owncloud.android.ui.decoration.MediaGridItemDecoration;
 import com.owncloud.android.utils.DisplayUtils;
 import com.owncloud.android.utils.FilesSyncHelper;
-import com.owncloud.android.utils.theme.ViewThemeUtils;
 
 import javax.inject.Inject;
 
@@ -75,9 +72,6 @@ public class UploadListActivity extends FileActivity {
     UploadsStorageManager uploadsStorageManager;
 
     @Inject
-    ConnectivityService connectivityService;
-
-    @Inject
     PowerManagementService powerManagementService;
 
     @Inject
@@ -91,9 +85,6 @@ public class UploadListActivity extends FileActivity {
 
     @Inject
     LocalBroadcastManager localBroadcastManager;
-
-    @Inject
-    ViewThemeUtils viewThemeUtils;
 
     @Inject Throttler throttler;
 
@@ -132,7 +123,7 @@ public class UploadListActivity extends FileActivity {
         updateActionBarTitleAndHomeButtonByString(getString(R.string.uploads_view_title));
 
         // setup drawer
-        setupDrawer(R.id.nav_uploads);
+        setupDrawer();
 
         setupContent();
         observeWorkerState();
@@ -140,7 +131,7 @@ public class UploadListActivity extends FileActivity {
 
     private void observeWorkerState() {
         WorkerStateLiveData.Companion.instance().observe(this, state -> {
-            if (state instanceof WorkerState.Upload) {
+            if (state instanceof WorkerState.UploadStarted) {
                 Log_OC.d(TAG, "Upload worker started");
                 handleUploadWorkerState();
             }
@@ -232,8 +223,6 @@ public class UploadListActivity extends FileActivity {
     protected void onResume() {
         Log_OC.v(TAG, "onResume() start");
         super.onResume();
-
-        setDrawerMenuItemChecked(R.id.nav_uploads);
 
         // Listen for upload messages
         uploadMessagesReceiver = new UploadMessagesReceiver();
@@ -343,7 +332,7 @@ public class UploadListActivity extends FileActivity {
             dismissLoadingDialog();
             Account account = (Account) result.getData().get(0);
             if (!result.isSuccess()) {
-                requestCredentialsUpdate(this, account);
+                requestCredentialsUpdate(account);
 
             } else {
                 // already updated -> just retry!
