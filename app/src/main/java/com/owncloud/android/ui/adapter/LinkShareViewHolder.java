@@ -19,6 +19,8 @@ import android.graphics.PorterDuff;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.nextcloud.android.lib.resources.files.FileDownloadLimit;
+import com.nextcloud.utils.mdm.MDMConfig;
 import com.owncloud.android.R;
 import com.owncloud.android.databinding.FileDetailsShareLinkShareItemBinding;
 import com.owncloud.android.lib.resources.shares.OCShare;
@@ -75,13 +77,29 @@ class LinkShareViewHolder extends RecyclerView.ViewHolder {
             viewThemeUtils.platform.colorImageViewBackgroundAndIcon(binding.icon);
         }
 
+        FileDownloadLimit downloadLimit = publicShare.getFileDownloadLimit();
+        if (downloadLimit != null && downloadLimit.getLimit() > 0) {
+            int remaining = downloadLimit.getLimit() - downloadLimit.getCount();
+            String text = context.getResources().getQuantityString(R.plurals.share_download_limit_description, remaining, remaining);
+
+            binding.subline.setText(text);
+            binding.subline.setVisibility(View.VISIBLE);
+        } else {
+            binding.subline.setVisibility(View.GONE);
+        }
+
         String permissionName = SharingMenuHelper.getPermissionName(context, publicShare);
         setPermissionName(publicShare, permissionName);
 
-        binding.copyLink.setOnClickListener(v -> listener.copyLink(publicShare));
         binding.overflowMenu.setOnClickListener(v -> listener.showSharingMenuActionSheet(publicShare));
         if (!SharingMenuHelper.isSecureFileDrop(publicShare)) {
             binding.shareByLinkContainer.setOnClickListener(v -> listener.showPermissionsDialog(publicShare));
+        }
+
+        if (MDMConfig.INSTANCE.clipBoardSupport(context)) {
+            binding.copyLink.setOnClickListener(v -> listener.copyLink(publicShare));
+        } else {
+            binding.copyLink.setVisibility(View.GONE);
         }
     }
 

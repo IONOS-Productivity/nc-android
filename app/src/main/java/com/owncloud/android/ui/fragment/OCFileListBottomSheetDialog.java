@@ -16,6 +16,7 @@ import com.nextcloud.client.account.User;
 import com.nextcloud.client.device.DeviceInfo;
 import com.nextcloud.client.di.Injectable;
 import com.nextcloud.client.documentscan.AppScanOptionalFeature;
+import com.nextcloud.utils.BuildHelper;
 import com.nextcloud.utils.EditorUtils;
 import com.owncloud.android.R;
 import com.owncloud.android.databinding.FileListActionsBottomSheetCreatorBinding;
@@ -156,7 +157,13 @@ public class OCFileListBottomSheetDialog extends BottomSheetDialog implements In
             binding.menuCreateRichWorkspaceDivider.setVisibility(View.GONE);
         }
 
+        if (BuildHelper.INSTANCE.isFlavourGPlay()) {
+            binding.menuUploadFiles.setVisibility(View.GONE);
+            binding.uploadContentFromOtherApps.setText(getContext().getString(R.string.upload_files));
+        }
+
         setupClickListener();
+        filterActionsForOfflineOperations();
     }
 
     private void setupClickListener() {
@@ -207,6 +214,27 @@ public class OCFileListBottomSheetDialog extends BottomSheetDialog implements In
         binding.menuNewPresentation.setOnClickListener(v -> {
             actions.newPresentation();
             dismiss();
+        });
+    }
+
+    private void filterActionsForOfflineOperations() {
+        if (file == null) return;
+
+        fileActivity.connectivityService.isNetworkAndServerAvailable(result -> {
+            if (file.isRootDirectory()) {
+                return;
+            }
+
+            if (!result || file.isOfflineOperation()) {
+                binding.menuCreateRichWorkspace.setVisibility(View.GONE);
+                binding.menuUploadFromApp.setVisibility(View.GONE);
+                binding.menuDirectCameraUpload.setVisibility(View.GONE);
+                binding.menuScanDocUpload.setVisibility(View.GONE);
+                binding.menuNewDocument.setVisibility(View.GONE);
+                binding.menuNewSpreadsheet.setVisibility(View.GONE);
+                binding.menuNewPresentation.setVisibility(View.GONE);
+                binding.creatorsContainer.setVisibility(View.GONE);
+            }
         });
     }
 

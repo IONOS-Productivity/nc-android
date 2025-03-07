@@ -13,7 +13,7 @@ import android.view.Gravity
 import androidx.core.graphics.drawable.DrawableCompat
 import com.ionos.annotation.IonosCustomization
 
-class DrawableUtil {
+object DrawableUtil {
 
     fun changeColor(source: Drawable, color: Int): Drawable {
         val drawable = DrawableCompat.wrap(source)
@@ -23,6 +23,7 @@ class DrawableUtil {
 
     @IonosCustomization
     fun addDrawableAsOverlay(backgroundDrawable: Drawable, overlayDrawable: Drawable): LayerDrawable {
+
         return LayerDrawable(arrayOf(backgroundDrawable, overlayDrawable)).apply {
             setLayerSize(1, overlayDrawable.intrinsicWidth, overlayDrawable.intrinsicHeight)
             setLayerGravity(1, Gravity.CENTER)

@@ -34,7 +34,7 @@
         tools:src="@drawable/logo" />
 
     <com.owncloud.android.media.MediaControlView
-        android:id="@+id/media_controller"
+        android:id="@+id/audio_controller_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"

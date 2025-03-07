@@ -6,12 +6,15 @@
  */
 package com.owncloud.android.ui.preview
 
+import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowInsets
@@ -83,6 +86,7 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
     lateinit var localBroadcastManager: LocalBroadcastManager
 
     private var actionBar: ActionBar? = null
+    private var showDirectoryWhenDeletionCompleted = false
 
     @IonosCustomization
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -125,6 +129,10 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
         }
 
         observeWorkerState()
+    }
+
+    fun showDirectoryWhenDeletionCompleted() {
+        showDirectoryWhenDeletionCompleted = true
     }
 
     fun toggleActionBarVisibility(hide: Boolean) {
@@ -189,6 +197,17 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
             // this is necessary because mViewPager.setCurrentItem(0) just after setting the
             // adapter does not result in a call to #onPageSelected(0)
             screenState = PreviewImageActivityState.WaitingForBinder
+        }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun setPreviewImagePagerCurrentItem(position: Int) {
+        if (user.isPresent) {
+            Handler(Looper.getMainLooper()).post {
+                initViewPager(user.get())
+                viewPager?.setCurrentItem(position, false)
+                viewPager?.adapter?.notifyDataSetChanged()
+            }
         }
     }
 
@@ -272,6 +291,10 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
 
             viewPager?.setCurrentItem(nextPosition, true)
             previewImagePagerAdapter?.delete(deletePosition)
+
+            if (showDirectoryWhenDeletionCompleted) {
+                backToDisplayActivity()
+            }
         } else if (operation is SynchronizeFileOperation) {
             onSynchronizeFileOperationFinish(result)
         }
@@ -286,7 +309,7 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
     private fun observeWorkerState() {
         WorkerStateLiveData.instance().observe(this) { state: WorkerState? ->
             when (state) {
-                is WorkerState.Download -> {
+                is WorkerState.DownloadStarted -> {
                     Log_OC.d(TAG, "Download worker started")
                     isDownloadWorkStarted = true
 
@@ -295,7 +318,7 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
                     }
                 }
 
-                is WorkerState.Idle -> {
+                is WorkerState.DownloadFinished -> {
                     Log_OC.d(TAG, "Download worker stopped")
                     isDownloadWorkStarted = false
 
@@ -305,7 +328,7 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
                 }
 
                 else -> {
-                    Log_OC.d(TAG, "Download worker stopped")
+                    Log_OC.d(TAG, "Worker stopped")
                     isDownloadWorkStarted = false
                 }
             }
@@ -364,7 +387,7 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
         }
 
         startActivity(intent)
-        backToDisplayActivity()
+        finish()
     }
 
     override fun showDetails(file: OCFile, activeTab: Int) {

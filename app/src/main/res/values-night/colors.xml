@@ -48,4 +48,6 @@
     <color name="filelist_default_action_icon_color">@color/white</color>
 
     <color name="default_icon_color">@color/primary</color>
+
+    <color name="actionbar_color">#101418</color>
 </resources>

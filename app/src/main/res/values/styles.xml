@@ -70,7 +70,6 @@
     <style name="ThemeOverlay.App.TextInputLayout" parent="ThemeOverlay.Material3.TextInputEditText.OutlinedBox">
         <item name="colorPrimary">@color/text_color</item>
         <item name="colorOnSurface">@color/text_color</item>
-        <item name="colorError">@color/hwSecurityRed</item>
         <item name="editTextStyle">@style/Widget.Material3.TextInputEditText.OutlinedBox</item>
     </style>
 
@@ -128,6 +127,7 @@
 
     <style name="Theme.ownCloud.noActionBar.LoginBase" parent="Theme.ownCloud.Toolbar">
         <item name="android:windowBackground">@color/primary</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="colorControlNormal">@color/login_text_color</item>
         <item name="colorControlActivated">@color/login_text_color</item>
         <item name="colorControlHighlight">@color/login_text_color</item>
@@ -264,7 +264,7 @@
 
     <!-- Launch screen -->
     <style name="Theme.ownCloud.Launcher">
-        <item name="android:statusBarColor">@color/primary</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@color/primary</item>
         <item name="android:windowBackground">@color/primary</item>
         <item name="android:textColorHint">@color/secondary_text_color</item>
@@ -346,7 +346,6 @@
     <style name="ThemeOverlay.App.Login.TextInputLayout" parent="">
         <item name="colorPrimary">@color/white</item>
         <item name="colorOnSurface">@color/white</item>
-        <item name="colorError">@color/hwSecurityRed</item>
         <item name="textAppearanceSubtitle1">@style/TextAppearance.Material3.BodyLarge</item>
         <item name="textAppearanceCaption">@style/TextAppearance.Material3.BodySmall</item>
         <item name="editTextStyle">@style/Widget.Material3.TextInputEditText.OutlinedBox</item>
@@ -431,12 +430,6 @@
         <item name="android:insetBottom">0dp</item>
         <item name="iconGravity">textStart</item>
         <item name="iconPadding">0dp</item>
-    </style>
-
-    <!-- Custom colors for the FIDO dialog -->
-    <style name="FidoDialog" parent="HwSecurity.Dialog">
-        <item name="hwSecurityButtonColor">@color/color_accent</item>
-        <item name="hwSecuritySurfaceColor">@color/primary</item>
     </style>
 
     <style name="Nextcloud.Material.TextButton" parent="Widget.Material3.Button.TextButton.Icon">

@@ -19,12 +19,14 @@ import android.widget.ImageView;
 
 import com.ionos.annotation.IonosCustomization;
 import com.nextcloud.client.account.User;
+import com.nextcloud.utils.mdm.MDMConfig;
 import com.owncloud.android.R;
 import com.owncloud.android.databinding.FileDetailsShareInternalShareLinkBinding;
 import com.owncloud.android.databinding.FileDetailsShareLinkShareItemBinding;
 import com.owncloud.android.databinding.FileDetailsSharePublicLinkAddNewItemBinding;
 import com.owncloud.android.databinding.FileDetailsShareSecureFileDropAddNewItemBinding;
 import com.owncloud.android.databinding.FileDetailsShareShareItemBinding;
+import com.owncloud.android.datamodel.SharesType;
 import com.owncloud.android.lib.resources.shares.OCShare;
 import com.owncloud.android.lib.resources.shares.ShareType;
 import com.owncloud.android.ui.activity.FileActivity;
@@ -51,6 +53,8 @@ public class ShareeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private final User user;
     private final ViewThemeUtils viewThemeUtils;
     private final boolean encrypted;
+    private final SharesType sharesType;
+    private boolean showAll = false;
 
     public ShareeListAdapter(FileActivity fileActivity,
                              List<OCShare> shares,
@@ -58,7 +62,8 @@ public class ShareeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                              String userId,
                              User user,
                              final ViewThemeUtils viewThemeUtils,
-                             boolean encrypted) {
+                             boolean encrypted,
+                             SharesType sharesType) {
         this.fileActivity = fileActivity;
         this.shares = shares;
         this.listener = listener;
@@ -66,6 +71,7 @@ public class ShareeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         this.user = user;
         this.viewThemeUtils = viewThemeUtils;
         this.encrypted = encrypted;
+        this.sharesType = sharesType;
 
         avatarRadiusDimension = fileActivity.getResources().getDimension(R.dimen.user_icon_radius);
 
@@ -80,43 +86,51 @@ public class ShareeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        switch (ShareType.fromValue(viewType)) {
-            case PUBLIC_LINK, EMAIL -> {
-                return new LinkShareViewHolder(
-                    FileDetailsShareLinkShareItemBinding.inflate(LayoutInflater.from(fileActivity),
-                                                                 parent,
-                                                                 false),
-                    fileActivity,
-                    viewThemeUtils);
-            }
-            case NEW_PUBLIC_LINK -> {
-                if (encrypted) {
-                    return new NewSecureFileDropViewHolder(
-                        FileDetailsShareSecureFileDropAddNewItemBinding.inflate(LayoutInflater.from(fileActivity),
+        boolean shareViaLink = MDMConfig.INSTANCE.shareViaLink(fileActivity);
+
+        if (shareViaLink) {
+            switch (ShareType.fromValue(viewType)) {
+                case PUBLIC_LINK, EMAIL -> {
+                    return new LinkShareViewHolder(
+                        FileDetailsShareLinkShareItemBinding.inflate(LayoutInflater.from(fileActivity),
+                                                                     parent,
+                                                                     false),
+                        fileActivity,
+                        viewThemeUtils);
+                }
+                case NEW_PUBLIC_LINK -> {
+                    if (encrypted) {
+                        return new NewSecureFileDropViewHolder(
+                            FileDetailsShareSecureFileDropAddNewItemBinding.inflate(LayoutInflater.from(fileActivity),
+                                                                                    parent,
+                                                                                    false)
+                        );
+                    } else {
+                        return new NewLinkShareViewHolder(
+                            FileDetailsSharePublicLinkAddNewItemBinding.inflate(LayoutInflater.from(fileActivity),
                                                                                 parent,
                                                                                 false)
-                    );
-                } else {
-                    return new NewLinkShareViewHolder(
-                        FileDetailsSharePublicLinkAddNewItemBinding.inflate(LayoutInflater.from(fileActivity),
-                                                                            parent,
-                                                                            false)
-                    );
+                        );
+                    }
+                }
+                case INTERNAL -> {
+                    return new InternalShareViewHolder(
+                        FileDetailsShareInternalShareLinkBinding.inflate(LayoutInflater.from(fileActivity), parent, false),
+                        fileActivity);
+                }
+                default -> {
+                    return new ShareViewHolder(FileDetailsShareShareItemBinding.inflate(LayoutInflater.from(fileActivity),
+                                                                                        parent,
+                                                                                        false),
+                                               user,
+                                               fileActivity,
+                                               viewThemeUtils);
                 }
             }
-            case INTERNAL -> {
-                return new InternalShareViewHolder(
-                    FileDetailsShareInternalShareLinkBinding.inflate(LayoutInflater.from(fileActivity), parent, false),
-                    fileActivity);
-            }
-            default -> {
-                return new ShareViewHolder(FileDetailsShareShareItemBinding.inflate(LayoutInflater.from(fileActivity),
-                                                                                    parent,
-                                                                                    false),
-                                           user,
-                                           fileActivity,
-                                           viewThemeUtils);
-            }
+        } else {
+            return new InternalShareViewHolder(
+                FileDetailsShareInternalShareLinkBinding.inflate(LayoutInflater.from(fileActivity), parent, false),
+                fileActivity);
         }
     }
 
@@ -127,6 +141,16 @@ public class ShareeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
 
         final OCShare share = shares.get(position);
+
+        boolean shareViaLink = MDMConfig.INSTANCE.shareViaLink(fileActivity);
+
+        if (!shareViaLink) {
+            if (holder instanceof InternalShareViewHolder internalShareViewHolder) {
+                internalShareViewHolder.bind(share, listener);
+            }
+
+            return;
+        }
 
         if (holder instanceof LinkShareViewHolder publicShareViewHolder) {
             publicShareViewHolder.bind(share, listener);
@@ -149,7 +173,26 @@ public class ShareeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Override
     public int getItemCount() {
-        return shares.size();
+        boolean shareViaLink = MDMConfig.INSTANCE.shareViaLink(fileActivity);
+        if (shareViaLink) {
+            if (showAll) {
+                return shares.size();
+            } else {
+                return Math.min(shares.size(), 3);
+            }
+        } else {
+            return 1;
+        }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void toggleShowAll() {
+        this.showAll = !this.showAll;
+        notifyDataSetChanged();
+    }
+
+    public boolean isShowAll() {
+        return showAll;
     }
 
     @SuppressLint("NotifyDataSetChanged")

@@ -58,6 +58,7 @@
     <color name="process_dialog_background">#ffffff</color>
     <color name="indicator_dot_selected">#ffffff</color>
     <color name="drawer_shadow">#000000</color>
+    <color name="online">#2d7b41</color>
 
     <color name="background_color_png">#FFFFFF</color>
 
@@ -111,4 +112,5 @@
 
     <color name="popup_background_color" app:ionosCustomization="">@color/bg_default</color>
 
+    <color name="actionbar_color">#F7F9FF</color>
 </resources>

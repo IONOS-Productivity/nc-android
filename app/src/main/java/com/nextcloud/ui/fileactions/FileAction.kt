@@ -54,7 +54,10 @@ enum class FileAction(@IdRes val id: Int, @StringRes val title: Int, @DrawableRe
     LOCK_FILE(R.id.action_lock_file, R.string.lock_file, R.drawable.ic_file_action_lock_file),
 
     // Shortcuts
-    PIN_TO_HOMESCREEN(R.id.action_pin_to_homescreen, R.string.pin_home, R.drawable.ic_file_action_pin_to_homescreen);
+    PIN_TO_HOMESCREEN(R.id.action_pin_to_homescreen, R.string.pin_home, R.drawable.ic_file_action_pin_to_homescreen),
+
+    // Retry for offline operation
+    RETRY(R.id.action_retry, R.string.retry, R.drawable.ic_retry);
 
     companion object {
         /**
@@ -84,7 +87,8 @@ enum class FileAction(@IdRes val id: Int, @StringRes val title: Int, @DrawableRe
             UNSET_ENCRYPTED,
             SET_AS_WALLPAPER,
             REMOVE_FILE,
-            PIN_TO_HOMESCREEN
+            PIN_TO_HOMESCREEN,
+            RETRY
         )
     }
 }

@@ -18,10 +18,15 @@ import androidx.appcompat.app.AlertDialog
 import com.google.android.material.button.MaterialButton
 import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.di.Injectable
+import com.nextcloud.utils.extensions.getTypedActivity
 import com.owncloud.android.R
+import com.owncloud.android.datamodel.FileDataStorageManager
 import com.owncloud.android.datamodel.OCFile
-import com.owncloud.android.ui.activity.ComponentsGetter
+import com.owncloud.android.ui.activity.FileActivity
+import com.owncloud.android.ui.activity.FileDisplayActivity
 import com.owncloud.android.ui.dialog.ConfirmationDialogFragment.ConfirmationDialogFragmentListener
+import com.owncloud.android.ui.preview.PreviewImageActivity
+import javax.inject.Inject
 
 /**
  * Dialog requiring confirmation before removing a collection of given OCFiles.
@@ -31,15 +36,20 @@ class RemoveFilesDialogFragment : ConfirmationDialogFragment(), ConfirmationDial
     private var mTargetFiles: Collection<OCFile>? = null
     private var actionMode: ActionMode? = null
 
+    @Inject
+    lateinit var fileDataStorageManager: FileDataStorageManager
+
+    private var positiveButton: MaterialButton? = null
+
     @IonosCustomization()
     override fun onStart() {
         super.onStart()
 
         val alertDialog = dialog as AlertDialog? ?: return
 
-        val positiveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE) as? MaterialButton
+        positiveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE) as? MaterialButton
         positiveButton?.let {
-            viewThemeUtils?.ionos?.material?.colorMaterialButtonPrimaryTonal(positiveButton)
+            viewThemeUtils?.ionos?.material?.colorMaterialButtonPrimaryTonal(it)
         }
 
         val negativeButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE) as? MaterialButton
@@ -78,14 +88,42 @@ class RemoveFilesDialogFragment : ConfirmationDialogFragment(), ConfirmationDial
     }
 
     private fun removeFiles(onlyLocalCopy: Boolean) {
-        val cg = activity as ComponentsGetter?
-        cg?.fileOperationsHelper?.removeFiles(mTargetFiles, onlyLocalCopy, false)
-        finishActionMode()
+        val (offlineFiles, files) = mTargetFiles?.partition { it.isOfflineOperation } ?: Pair(emptyList(), emptyList())
+
+        offlineFiles.forEach {
+            fileDataStorageManager.deleteOfflineOperation(it)
+        }
+
+        val fileActivity = getTypedActivity(FileActivity::class.java)
+        val fda = getTypedActivity(FileDisplayActivity::class.java)
+
+        fileActivity?.connectivityService?.isNetworkAndServerAvailable { result ->
+            if (result) {
+                if (files.isNotEmpty()) {
+                    getTypedActivity(PreviewImageActivity::class.java)?.showDirectoryWhenDeletionCompleted()
+                    fileActivity.fileOperationsHelper?.removeFiles(files, onlyLocalCopy, false)
+                }
+
+                if (offlineFiles.isNotEmpty()) {
+                    fda?.refreshCurrentDirectory()
+                }
+            } else {
+                files.forEach { file ->
+                    fileDataStorageManager.addRemoveFileOfflineOperation(
+                        file.decryptedRemotePath,
+                        file.fileName,
+                        file.parentId
+                    )
+                }
+
+                fda?.refreshCurrentDirectory()
+            }
+
+            finishActionMode()
+        }
     }
 
-    override fun onNeutral(callerTag: String?) {
-        // nothing to do here
-    }
+    override fun onNeutral(callerTag: String?) = Unit
 
     private fun setActionMode(actionMode: ActionMode?) {
         this.actionMode = actionMode
@@ -153,7 +191,8 @@ class RemoveFilesDialogFragment : ConfirmationDialogFragment(), ConfirmationDial
 
                 putInt(ARG_POSITIVE_BTN_RES, R.string.file_delete)
 
-                if (containsFolder || containsDown) {
+                val isAnyFileOffline = files.any { it.isOfflineOperation }
+                if ((containsFolder || containsDown) && !isAnyFileOffline) {
                     putInt(ARG_NEGATIVE_BTN_RES, R.string.confirmation_remove_local)
                 }
 

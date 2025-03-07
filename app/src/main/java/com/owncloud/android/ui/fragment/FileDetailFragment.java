@@ -12,6 +12,7 @@ package com.owncloud.android.ui.fragment;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -32,10 +33,13 @@ import com.nextcloud.client.jobs.upload.FileUploadHelper;
 import com.nextcloud.client.network.ClientFactory;
 import com.nextcloud.client.network.ConnectivityService;
 import com.nextcloud.client.preferences.AppPreferences;
+import com.nextcloud.model.WorkerState;
+import com.nextcloud.model.WorkerStateLiveData;
 import com.nextcloud.ui.fileactions.FileActionsBottomSheet;
 import com.nextcloud.utils.MenuUtils;
 import com.nextcloud.utils.extensions.BundleExtensionsKt;
 import com.nextcloud.utils.extensions.FileExtensionsKt;
+import com.nextcloud.utils.mdm.MDMConfig;
 import com.owncloud.android.MainApp;
 import com.owncloud.android.R;
 import com.owncloud.android.databinding.FileDetailsFragmentBinding;
@@ -49,6 +53,8 @@ import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.lib.resources.files.ToggleFavoriteRemoteOperation;
 import com.owncloud.android.lib.resources.shares.OCShare;
 import com.owncloud.android.lib.resources.shares.ShareType;
+import com.owncloud.android.lib.resources.tags.Tag;
+import com.owncloud.android.ui.activity.DrawerActivity;
 import com.owncloud.android.ui.activity.FileDisplayActivity;
 import com.owncloud.android.ui.activity.ToolbarActivity;
 import com.owncloud.android.ui.adapter.FileDetailTabAdapter;
@@ -207,6 +213,10 @@ public class FileDetailFragment extends FileFragment implements OnClickListener,
             throw new IllegalArgumentException("Arguments may not be null");
         }
 
+        if (getActivity() instanceof DrawerActivity drawerActivity) {
+            drawerActivity.showBottomNavigationBar(false);
+        }
+
         setFile(BundleExtensionsKt.getParcelableArgument(arguments, ARG_FILE, OCFile.class));
         parentFolder = BundleExtensionsKt.getParcelableArgument(arguments, ARG_PARENT_FOLDER, OCFile.class);
         user = BundleExtensionsKt.getParcelableArgument(arguments, ARG_USER, User.class);
@@ -234,9 +244,9 @@ public class FileDetailFragment extends FileFragment implements OnClickListener,
         if (getFile().getTags().isEmpty()) {
             binding.tagsGroup.setVisibility(View.GONE);
         } else {
-            for (String tag : getFile().getTags()) {
+            for (Tag tag : getFile().getTags()) {
                 Chip chip = new Chip(context);
-                chip.setText(tag);
+                chip.setText(tag.getName());
                 chip.setChipBackgroundColor(ColorStateList.valueOf(getResources().getColor(R.color.bg_default,
                                                                                            context.getTheme())));
                 chip.setShapeAppearanceModel(chip.getShapeAppearanceModel().toBuilder().setAllCornerSizes((100.0f))
@@ -244,6 +254,13 @@ public class FileDetailFragment extends FileFragment implements OnClickListener,
                 chip.setEnsureMinTouchTargetSize(false);
                 chip.setClickable(false);
                 viewThemeUtils.material.themeChipSuggestion(chip);
+
+                if (tag.getColor() != null) {
+                    int color = Color.parseColor(tag.getColor());
+                    chip.setChipStrokeColor(ColorStateList.valueOf(color));
+                    chip.setTextColor(color);
+                }
+
                 binding.tagsGroup.addView(chip);
             }
         }
@@ -264,6 +281,14 @@ public class FileDetailFragment extends FileFragment implements OnClickListener,
 
             updateFileDetails(false, false);
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        if (getActivity() instanceof DrawerActivity drawerActivity) {
+            drawerActivity.showBottomNavigationBar(true);
+        }
+        super.onDestroy();
     }
 
     private void onOverflowIconClicked() {
@@ -400,7 +425,10 @@ public class FileDetailFragment extends FileFragment implements OnClickListener,
                                                                     backgroundJobManager);
         } else if (itemId == R.id.action_set_as_wallpaper) {
             containerActivity.getFileOperationsHelper().setPictureAs(getFile(), getView());
-        } else if (itemId == R.id.action_encrypted) {// TODO implement or remove
+        } else if (itemId == R.id.action_retry) {
+            backgroundJobManager.startOfflineOperations();
+        } else if (itemId == R.id.action_encrypted) {
+            // TODO implement or remove
         } else if (itemId == R.id.action_unset_encrypted) {// TODO implement or remove
         }
     }
@@ -525,8 +553,23 @@ public class FileDetailFragment extends FileFragment implements OnClickListener,
         }
 
         setupViewPager();
+        if (getView() != null) {
+            getView().invalidate();
+        }
 
-        getView().invalidate();
+        observeWorkerState();
+    }
+
+    private void observeWorkerState() {
+        WorkerStateLiveData.Companion.instance().observe(getViewLifecycleOwner(), state -> {
+            if (state instanceof WorkerState.DownloadStarted) {
+                binding.progressText.setText(R.string.downloader_download_in_progress_ticker);
+            } else if (state instanceof WorkerState.UploadStarted) {
+                binding.progressText.setText(R.string.uploader_upload_in_progress_ticker);
+            } else {
+                binding.progressBlock.setVisibility(View.GONE);
+            }
+        });
     }
 
     private void setFileModificationTimestamp(OCFile file, boolean showDetailedTimestamp) {
@@ -541,10 +584,12 @@ public class FileDetailFragment extends FileFragment implements OnClickListener,
     private void setFavoriteIconStatus(boolean isFavorite) {
         if (isFavorite) {
             binding.favorite.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_star, null));
+            binding.favorite.setContentDescription(getString(R.string.unset_favorite));
         } else {
             binding.favorite.setImageDrawable(ResourcesCompat.getDrawable(getResources(),
                                                                           R.drawable.ic_star_outline,
                                                                           null));
+            binding.favorite.setContentDescription(getString(R.string.favorite));
         }
     }
 
@@ -784,6 +829,10 @@ public class FileDetailFragment extends FileFragment implements OnClickListener,
     }
 
     private boolean showSharingTab() {
+         if (!MDMConfig.INSTANCE.shareViaLink(requireContext()) && !MDMConfig.INSTANCE.shareViaUser(requireContext())) {
+            return false;
+        }
+
         if (getFile().isEncrypted()) {
             if (parentFolder == null) {
                 parentFolder = storageManager.getFileById(getFile().getParentId());
