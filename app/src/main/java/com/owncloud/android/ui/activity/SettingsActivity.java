@@ -42,6 +42,7 @@ import android.webkit.URLUtil;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.ionos.annotation.IonosCustomization;
 import com.ionos.privacy.PrivacySettingsActivity;
+import com.ionos.utils.IonosBuildHelper;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.account.UserAccountManager;
 import com.nextcloud.client.di.Injectable;
@@ -584,11 +585,20 @@ public class SettingsActivity extends PreferenceActivity
             });
         }
     }
-
+    
     @IonosCustomization("internal_two_way_sync was hidden")
     private void setupInternalTwoWaySyncPreference(PreferenceCategory preferenceCategorySync) {
         Preference twoWaySync = findPreference("internal_two_way_sync");
-        preferenceCategorySync.removePreference(twoWaySync);
+        if (IonosBuildHelper.isIonosFlavor()) {
+            preferenceCategorySync.removePreference(twoWaySync);
+            return;
+        }
+        
+        twoWaySync.setOnPreferenceClickListener(preference -> {
+            Intent intent = new Intent(this, InternalTwoWaySyncActivity.class);
+            startActivity(intent);
+            return true;
+        });
     }
 
     private void setupBackupPreference() {
