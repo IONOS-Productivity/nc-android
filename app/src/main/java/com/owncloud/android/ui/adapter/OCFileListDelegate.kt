@@ -427,7 +427,6 @@ class OCFileListDelegate(
     }
 
     @Suppress("ReturnCount")
-    @IonosCustomization
     private fun getShareIconIdAndContentDescriptionId(holder: ListViewHolder, file: OCFile): Pair<Int, Int>? {
         if (!MDMConfig.sharingSupport(context)) {
             return null
@@ -439,11 +438,10 @@ class OCFileListDelegate(
 
         return when {
             file.isSharedWithSharee || file.isSharedWithMe -> {
-                if (showShareAvatar) null else R.drawable.ic_filelist_shared_via_users to R.string.shared_icon_shared
+                if (showShareAvatar) null else R.drawable.shared_via_users to R.string.shared_icon_shared
             }
-            file.isSharedViaLink -> R.drawable.ic_filelist_shared_via_link to R.string.shared_icon_shared_via_link
-            holder is OCFileListGridItemViewHolder -> R.drawable.ic_filelist_unshared_grid_mode to R.string.shared_icon_share
-            else -> R.drawable.ic_filelist_unshared to R.string.shared_icon_share
+            file.isSharedViaLink -> R.drawable.shared_via_link to R.string.shared_icon_shared_via_link
+            else -> R.drawable.ic_unshared to R.string.shared_icon_share
         }
     }
 

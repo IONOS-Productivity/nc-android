@@ -254,7 +254,7 @@
                 android:contentDescription="@string/shared_icon_share"
                 android:focusable="true"
                 android:scaleType="centerInside"
-                android:src="@drawable/ic_filelist_unshared"
+                android:src="@drawable/ic_unshared"
                 tools:visibility="visible" />
 
             <com.owncloud.android.ui.AvatarGroupLayout

@@ -57,13 +57,12 @@ import com.caverock.androidsvg.SVG;
 import com.elyeproj.loaderviewlibrary.LoaderImageView;
 import com.google.android.material.snackbar.Snackbar;
 import com.ionos.annotation.IonosCustomization;
+import com.ionos.utils.IonosBuildHelper;
 import com.nextcloud.client.account.CurrentAccountProvider;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.network.ClientFactory;
 import com.nextcloud.client.preferences.AppPreferences;
 import com.nextcloud.model.OfflineOperationType;
-import com.nextcloud.utils.BuildHelper;
-import com.owncloud.android.BuildConfig;
 import com.owncloud.android.MainApp;
 import com.owncloud.android.R;
 import com.owncloud.android.datamodel.ArbitraryDataProvider;
@@ -495,7 +494,7 @@ public final class DisplayUtils {
             ((View) callContext).setContentDescription(String.valueOf(user.toPlatformAccount().hashCode()));
         }
 
-        if (BuildHelper.GPLAY.equals(BuildConfig.FLAVOR)) {
+        if (IonosBuildHelper.isIonosFlavor()) {
             Drawable avatar = ResourcesCompat.getDrawable(resources, R.drawable.account_circle_white, null);
             listener.avatarGenerated(avatar, callContext);
             return;
