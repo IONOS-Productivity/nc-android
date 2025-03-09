@@ -22,6 +22,7 @@ import com.ionos.privacy.PrivacyPreferences
 import com.nextcloud.client.account.UserAccountManager
 import com.nextcloud.client.preferences.AppPreferences
 import com.owncloud.android.R
+import com.owncloud.android.authentication.AuthenticatorActivity
 import com.owncloud.android.databinding.ActivitySplashBinding
 import com.owncloud.android.ui.activity.BaseActivity
 import com.owncloud.android.ui.activity.FileDisplayActivity
@@ -78,6 +79,8 @@ class LauncherActivity : BaseActivity() {
                 } else {
                     startActivity(DataProtectionActivity.createIntent(this, intent))
                 }
+            } else {
+                startActivity(Intent(this, AuthenticatorActivity::class.java))
             }
             finish()
         }, SPLASH_DURATION)
