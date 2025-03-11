@@ -195,13 +195,13 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
     /**
      * Login Flow v1
      */
-    @IonosCustomization
+    @IonosCustomization("Switch to v1 login flow")
     public static final String WEB_LOGIN = "/index.php/login/flow";
 
     /**
      * Login Flow v2
      */
-    @IonosCustomization
+    @IonosCustomization("Switch to v1 login flow")
     // public static final String WEB_LOGIN = "/index.php/login/v2";
 
     public static final String PROTOCOL_SUFFIX = "://";
@@ -520,7 +520,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
     @Deprecated
     @SuppressFBWarnings("ANDROID_WEB_VIEW_JAVASCRIPT")
     @SuppressLint("SetJavaScriptEnabled")
-    @IonosCustomization
+    @IonosCustomization("Switch to v1 login flow")
     private void initWebViewLogin(String baseURL, boolean useGenericUserAgent) {
         // viewThemeUtils.platform.colorCircularProgressBar(accountSetupWebviewBinding.loginWebviewProgressBar, ColorRole.ON_PRIMARY_CONTAINER);
         accountSetupWebviewBinding.loginWebview.setVisibility(View.GONE);
@@ -1062,7 +1062,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
      *
      * @param result Result of the check.
      */
-    @IonosCustomization
+    @IonosCustomization("Switch to v1 login flow")
     private void onGetServerInfoFinish(RemoteOperationResult result) {
         /// update activity state
         mWaitingForOpId = Long.MAX_VALUE;
@@ -1319,7 +1319,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
      * @param result Result of the operation.
      */
     @Override
-    @IonosCustomization
+    @IonosCustomization("Switch to v1 login flow")
     public void onAuthenticatorTaskCallback(RemoteOperationResult<UserInfo> result) {
         mWaitingForOpId = Long.MAX_VALUE;
         dismissWaitingDialog();
