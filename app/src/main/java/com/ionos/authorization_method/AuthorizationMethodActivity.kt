@@ -35,9 +35,8 @@ class AuthorizationMethodActivity : AppCompatActivity() {
     }
 
     private fun login() {
-        val intent = Intent(this, AuthenticatorActivity::class.java).apply {
-            putExtra(AuthenticatorActivity.EXTRA_USE_PROVIDER_AS_WEBLOGIN, true)
-        }
-        startActivity(intent);
+        val intent = Intent(this, AuthenticatorActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }

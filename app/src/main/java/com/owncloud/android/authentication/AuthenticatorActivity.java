@@ -195,12 +195,14 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
     /**
      * Login Flow v1
      */
-    // public static final String WEB_LOGIN = "/index.php/login/flow";
+    @IonosCustomization
+    public static final String WEB_LOGIN = "/index.php/login/flow";
 
     /**
      * Login Flow v2
      */
-    public static final String WEB_LOGIN = "/index.php/login/v2";
+    @IonosCustomization
+    // public static final String WEB_LOGIN = "/index.php/login/v2";
 
     public static final String PROTOCOL_SUFFIX = "://";
     public static final String LOGIN_URL_DATA_KEY_VALUE_SEPARATOR = ":";
@@ -282,7 +284,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
         super.onCreate(savedInstanceState);
         viewThemeUtils = viewThemeUtilsFactory.withPrimaryAsBackground();
 
-        // WebViewUtil webViewUtil = new WebViewUtil(this);
+        WebViewUtil webViewUtil = new WebViewUtil(this);
 
         Uri data = getIntent().getData();
         boolean directLogin = data != null && data.toString().startsWith(getString(R.string.login_data_own_scheme));
@@ -339,7 +341,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
 
         if (!TextUtils.isEmpty(webloginUrl)) {
             webViewLoginMethod = true;
-        } else if (getIntent().getBooleanExtra(EXTRA_USE_PROVIDER_AS_WEBLOGIN, true)) {
+        } else if (getIntent().getBooleanExtra(EXTRA_USE_PROVIDER_AS_WEBLOGIN, false)) {
             webViewLoginMethod = true;
             webloginUrl = getString(R.string.provider_registration_server);
         } else if (!TextUtils.isEmpty(getResources().getString(R.string.webview_login_url))) {
@@ -352,8 +354,8 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
         if (webViewLoginMethod) {
             accountSetupWebviewBinding = AccountSetupWebviewBinding.inflate(getLayoutInflater());
             setContentView(accountSetupWebviewBinding.getRoot());
-            anonymouslyPostLoginRequest(webloginUrl);
-            // initWebViewLogin(webloginUrl, false);
+            // anonymouslyPostLoginRequest(webloginUrl);
+            initWebViewLogin(webloginUrl, false);
             initCancelButton();
         } else {
             accountSetupBinding = AccountSetupBinding.inflate(getLayoutInflater());
@@ -375,7 +377,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
         initServerPreFragment(savedInstanceState);
         ProcessLifecycleOwner.get().getLifecycle().addObserver(lifecycleEventObserver);
 
-        // webViewUtil.checkWebViewVersion();
+        webViewUtil.checkWebViewVersion();
     }
 
     @IonosCustomization
@@ -518,8 +520,9 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
     @Deprecated
     @SuppressFBWarnings("ANDROID_WEB_VIEW_JAVASCRIPT")
     @SuppressLint("SetJavaScriptEnabled")
+    @IonosCustomization
     private void initWebViewLogin(String baseURL, boolean useGenericUserAgent) {
-        viewThemeUtils.platform.colorCircularProgressBar(accountSetupWebviewBinding.loginWebviewProgressBar, ColorRole.ON_PRIMARY_CONTAINER);
+        // viewThemeUtils.platform.colorCircularProgressBar(accountSetupWebviewBinding.loginWebviewProgressBar, ColorRole.ON_PRIMARY_CONTAINER);
         accountSetupWebviewBinding.loginWebview.setVisibility(View.GONE);
         new WebViewUtil(this).setProxyKKPlus(accountSetupWebviewBinding.loginWebview);
 
@@ -866,8 +869,8 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
         if (intent.getBooleanExtra(EXTRA_USE_PROVIDER_AS_WEBLOGIN, true)) {
             accountSetupWebviewBinding = AccountSetupWebviewBinding.inflate(getLayoutInflater());
             setContentView(accountSetupWebviewBinding.getRoot());
-            anonymouslyPostLoginRequest(getString(R.string.provider_registration_server));
-            // initWebViewLogin(getString(R.string.provider_registration_server), true);
+            // anonymouslyPostLoginRequest(getString(R.string.provider_registration_server));
+            initWebViewLogin(getString(R.string.provider_registration_server), true);
         }
     }
 
@@ -1059,6 +1062,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
      *
      * @param result Result of the check.
      */
+    @IonosCustomization
     private void onGetServerInfoFinish(RemoteOperationResult result) {
         /// update activity state
         mWaitingForOpId = Long.MAX_VALUE;
@@ -1104,13 +1108,13 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
                 setContentView(accountSetupWebviewBinding.getRoot());
 
                 if (!isLoginProcessCompleted) {
-                    if (!isRedirectedToTheDefaultBrowser) {
+                    /*if (!isRedirectedToTheDefaultBrowser) {
                         anonymouslyPostLoginRequest(mServerInfo.mBaseUrl + WEB_LOGIN);
                         isRedirectedToTheDefaultBrowser = true;
                     } else {
                         initLoginInfoView();
-                    }
-                    // initWebViewLogin(mServerInfo.mBaseUrl + WEB_LOGIN, false);
+                    }*/
+                    initWebViewLogin(mServerInfo.mBaseUrl + WEB_LOGIN, false);
                 }
             }
         } else {
@@ -1315,6 +1319,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
      * @param result Result of the operation.
      */
     @Override
+    @IonosCustomization
     public void onAuthenticatorTaskCallback(RemoteOperationResult<UserInfo> result) {
         mWaitingForOpId = Long.MAX_VALUE;
         dismissWaitingDialog();
@@ -1378,8 +1383,8 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
 
         } else {    // authorization fail due to client side - probably wrong credentials
             if (accountSetupWebviewBinding != null) {
-                anonymouslyPostLoginRequest(mServerInfo.mBaseUrl + WEB_LOGIN);
-                // initWebViewLogin(mServerInfo.mBaseUrl + WEB_LOGIN, false);
+                // anonymouslyPostLoginRequest(mServerInfo.mBaseUrl + WEB_LOGIN);
+                initWebViewLogin(mServerInfo.mBaseUrl + WEB_LOGIN, false);
                 DisplayUtils.showSnackMessage(this,
                                               accountSetupWebviewBinding.loginWebview, R.string.auth_access_failed,
                                               result.getLogMessage());
