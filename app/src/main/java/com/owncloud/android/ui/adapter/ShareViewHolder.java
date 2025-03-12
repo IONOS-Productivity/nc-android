@@ -130,7 +130,7 @@ class ShareViewHolder extends RecyclerView.ViewHolder {
 
     @IonosCustomization
     private void setImage(ImageView avatar, String name, @DrawableRes int fallback) {
-        if (IonosBuildHelper.isIonosFlavor()) {
+        if (IonosBuildHelper.isIonosBuild()) {
             avatar.setImageResource(R.drawable.account_circle_white);
             return;
         }

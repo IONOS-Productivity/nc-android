@@ -7,13 +7,14 @@
 
 package com.ionos.utils
 
-import com.nextcloud.utils.BuildHelper
 import com.owncloud.android.BuildConfig
 
 object IonosBuildHelper {
 
+    private const val IONOS_APPLICATION_ID = "com.ionos.hidrivenext"
+
     @JvmStatic
-    fun isIonosFlavor(): Boolean {
-        return BuildHelper.GPLAY == BuildConfig.FLAVOR
+    fun isIonosBuild(): Boolean {
+        return IONOS_APPLICATION_ID == BuildConfig.APPLICATION_ID
     }
 }

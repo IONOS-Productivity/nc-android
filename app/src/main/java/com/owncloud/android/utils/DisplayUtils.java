@@ -494,7 +494,7 @@ public final class DisplayUtils {
             ((View) callContext).setContentDescription(String.valueOf(user.toPlatformAccount().hashCode()));
         }
 
-        if (IonosBuildHelper.isIonosFlavor()) {
+        if (IonosBuildHelper.isIonosBuild()) {
             Drawable avatar = ResourcesCompat.getDrawable(resources, R.drawable.account_circle_white, null);
             listener.avatarGenerated(avatar, callContext);
             return;

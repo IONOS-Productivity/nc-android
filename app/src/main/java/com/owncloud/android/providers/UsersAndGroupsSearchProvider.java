@@ -399,7 +399,7 @@ public class UsersAndGroupsSearchProvider extends ContentProvider {
 
         Bitmap avatarBitmap = ThumbnailsCacheManager.getBitmapFromDiskCache(avatarKey);
 
-        if (avatarBitmap == null && IonosBuildHelper.isIonosFlavor()) {
+        if (avatarBitmap == null && IonosBuildHelper.isIonosBuild()) {
             avatarBitmap = BitmapUtils.drawableToBitmap(getContext().getDrawable(R.drawable.account_circle_white));
         } else if (avatarBitmap == null) {
             float avatarRadius = getContext().getResources().getDimension(R.dimen.list_item_avatar_icon_radius);
