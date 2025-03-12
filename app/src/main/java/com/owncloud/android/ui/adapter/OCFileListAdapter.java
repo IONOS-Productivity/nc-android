@@ -350,7 +350,7 @@ public class OCFileListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             return VIEWTYPE_FOOTER;
         }
 
-        if (IonosBuildHelper.isIonosFlavor()) {
+        if (IonosBuildHelper.isIonosBuild()) {
             return VIEWTYPE_ITEM;
         }
 
@@ -527,7 +527,7 @@ public class OCFileListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private void bindListGridItemViewHolder(ListGridItemViewHolder holder, OCFile file) {
         holder.getFileName().setText(file.getDecryptedFileName());
 
-        if (IonosBuildHelper.isIonosFlavor()) {
+        if (IonosBuildHelper.isIonosBuild()) {
             return;
         }
 
@@ -718,7 +718,7 @@ public class OCFileListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             return false;
         }
 
-        return !IonosBuildHelper.isIonosFlavor() && !TextUtils.isEmpty(currentDirectory.getRichWorkspace().trim());
+        return !IonosBuildHelper.isIonosBuild() && !TextUtils.isEmpty(currentDirectory.getRichWorkspace().trim());
     }
 
     /**

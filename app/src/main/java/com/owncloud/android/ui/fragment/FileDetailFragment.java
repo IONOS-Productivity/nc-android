@@ -300,7 +300,7 @@ public class FileDetailFragment extends FileFragment implements OnClickListener,
 
     @IonosCustomization("Hide tabs in IONOS")
     private void setupViewPager() {
-        if (IonosBuildHelper.isIonosFlavor()) {
+        if (IonosBuildHelper.isIonosBuild()) {
             FileDetailTabAdapter adapter = new FileDetailTabAdapter(requireActivity(), getFile(), user, showSharingTab());
             binding.pager.setAdapter(adapter);
             binding.tabLayout.setVisibility(View.GONE);

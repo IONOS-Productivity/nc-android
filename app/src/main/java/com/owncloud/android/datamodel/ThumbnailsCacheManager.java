@@ -626,7 +626,7 @@ public final class ThumbnailsCacheManager {
                         tagId = String.valueOf(((TrashbinFile) mFile).getRemoteId());
                     }
                     if (String.valueOf(imageView.getTag()).equals(tagId)) {
-                        if (IonosBuildHelper.isIonosFlavor()) {
+                        if (IonosBuildHelper.isIonosBuild()) {
                             imageView.setImageBitmap(bitmap);
                         } else if (gridViewEnabled) {
                             BitmapUtils.setRoundedBitmapForGridMode(bitmap, imageView);

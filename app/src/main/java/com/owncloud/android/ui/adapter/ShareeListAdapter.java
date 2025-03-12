@@ -205,7 +205,7 @@ public class ShareeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         shares.addAll(users);
 
         // add internal share link at end
-        if (!IonosBuildHelper.isIonosFlavor() && !encrypted) {
+        if (!IonosBuildHelper.isIonosBuild() && !encrypted) {
             final OCShare ocShare = new OCShare();
             ocShare.setShareType(ShareType.INTERNAL);
             shares.add(ocShare);

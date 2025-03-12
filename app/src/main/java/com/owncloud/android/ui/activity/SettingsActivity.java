@@ -589,7 +589,7 @@ public class SettingsActivity extends PreferenceActivity
     @IonosCustomization("internal_two_way_sync was hidden")
     private void setupInternalTwoWaySyncPreference(PreferenceCategory preferenceCategorySync) {
         Preference twoWaySync = findPreference("internal_two_way_sync");
-        if (IonosBuildHelper.isIonosFlavor()) {
+        if (IonosBuildHelper.isIonosBuild()) {
             preferenceCategorySync.removePreference(twoWaySync);
             return;
         }

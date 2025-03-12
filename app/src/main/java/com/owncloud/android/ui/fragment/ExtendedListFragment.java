@@ -375,7 +375,7 @@ public class ExtendedListFragment extends Fragment implements
     private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
         @Override
         public boolean onScale(ScaleGestureDetector detector) {
-            if (IonosBuildHelper.isIonosFlavor()) {
+            if (IonosBuildHelper.isIonosBuild()) {
                 return true;
             }
 
@@ -690,7 +690,7 @@ public class ExtendedListFragment extends Fragment implements
     @IonosCustomization
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        if (IonosBuildHelper.isIonosFlavor()) {
+        if (IonosBuildHelper.isIonosBuild()) {
             mScale = preferences.getGridColumns();
             setGridViewColumns(1f);
             return;

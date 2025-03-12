@@ -482,7 +482,7 @@ public final class AppPreferencesImpl implements AppPreferences {
     @Override
     @IonosCustomization
     public float getGridColumns() {
-        if (IonosBuildHelper.isIonosFlavor()) {
+        if (IonosBuildHelper.isIonosBuild()) {
             return context.getResources().getInteger(R.integer.grid_mode_column_count);
         }
 

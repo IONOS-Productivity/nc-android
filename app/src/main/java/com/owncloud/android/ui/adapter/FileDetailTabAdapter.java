@@ -58,7 +58,7 @@ public class FileDetailTabAdapter extends FragmentStateAdapter {
     @Override
     @IonosCustomization("Hide tabs in IONOS")
     public Fragment createFragment(int position) {
-        if (IonosBuildHelper.isIonosFlavor()) {
+        if (IonosBuildHelper.isIonosBuild()) {
             fileDetailSharingFragment = FileDetailSharingFragment.newInstance(file, user);
             return fileDetailSharingFragment;
         }
@@ -82,7 +82,7 @@ public class FileDetailTabAdapter extends FragmentStateAdapter {
     @Override
     @IonosCustomization("Hide tabs in IONOS")
     public int getItemCount() {
-        if (IonosBuildHelper.isIonosFlavor()) {
+        if (IonosBuildHelper.isIonosBuild()) {
             return showSharingTab ? 1 : 0;
         }
 
