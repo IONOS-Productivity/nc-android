@@ -43,6 +43,7 @@ internal abstract class BaseActivity<E : Event, S : State<E>, VM : ViewModel<E, 
         applyTheme()
         super.onCreate(savedInstanceState)
         setContentView(viewBinding.root)
+        savedInstanceState?.let(scanbotController::restoreState)
         viewModel.state.observe(this) { it.renderInternal() }
     }
 
@@ -74,11 +75,6 @@ internal abstract class BaseActivity<E : Event, S : State<E>, VM : ViewModel<E, 
     override fun onResume() {
         super.onResume()
         viewModel.onResume()
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        scanbotController.restoreState(savedInstanceState)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
