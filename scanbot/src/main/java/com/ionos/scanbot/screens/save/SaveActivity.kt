@@ -11,6 +11,7 @@ import android.app.Activity
 import android.os.Bundle
 import androidx.activity.addCallback
 import androidx.activity.result.ActivityResultLauncher
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.addTextChangedListener
 import com.ionos.scanbot.R
 import com.ionos.scanbot.databinding.ScanbotActivitySaveBinding
@@ -26,6 +27,7 @@ import com.ionos.scanbot.screens.save.SaveScreen.Event.HandleErrorEvent
 import com.ionos.scanbot.screens.save.SaveScreen.Event.LaunchUploadTargetPickerEvent
 import com.ionos.scanbot.screens.save.SaveScreen.State
 import com.ionos.scanbot.screens.save.SaveScreen.ViewModel
+import com.ionos.scanbot.util.window.getSystemBarsAndDisplayCutoutInsets
 import io.reactivex.disposables.CompositeDisposable
 
 internal class SaveActivity : BaseActivity<Event, State, ViewModel>() {
@@ -49,6 +51,18 @@ internal class SaveActivity : BaseActivity<Event, State, ViewModel>() {
 		overwriteDialogsDisposable.clear()
 		super.onDestroy()
 	}
+
+    override fun onApplyWindowInsets(windowInsets: WindowInsetsCompat): WindowInsetsCompat {
+        windowWrapper.setupStatusBar(theme, R.attr.scanbot_app_bar_color, false)
+        windowWrapper.setupNavigationBar(theme, R.attr.scanbot_window_background, true)
+
+        val insets = windowInsets.getSystemBarsAndDisplayCutoutInsets()
+        viewBinding.toolbar.toolbar.setPadding(insets.left, insets.top, insets.right, 0)
+        viewBinding.scrollView.setPadding(insets.left, 0, insets.right, insets.bottom)
+        viewBinding.scrollView.clipToPadding = false
+
+        return WindowInsetsCompat.CONSUMED
+    }
 
 	private fun initOnBackPressedCallback() {
 		onBackPressedDispatcher.addCallback(this, true) { viewModel.onBackPressed() }

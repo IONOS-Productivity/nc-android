@@ -13,6 +13,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.KeyEvent
 import androidx.activity.addCallback
+import androidx.core.view.WindowInsetsCompat
 import com.ionos.scanbot.screens.camera.ui_components.NoFreeSpaceMessageDialogWrapper
 import com.ionos.scanbot.R
 import com.ionos.scanbot.databinding.ScanbotActivityCameraBinding
@@ -27,6 +28,8 @@ import com.ionos.scanbot.screens.common.LockProgressDialog
 import com.ionos.scanbot.screens.common.use_case.open_screen.OpenScreen
 import com.ionos.scanbot.util.permission.hasPermissionTo
 import com.ionos.scanbot.util.permission.requestPermissionTo
+import com.ionos.scanbot.util.window.containsSideNavigationBar
+import com.ionos.scanbot.util.window.getSystemBarsAndDisplayCutoutInsets
 
 private const val CHECK_PERMISSION_REQUEST_CODE = 99
 
@@ -58,6 +61,21 @@ internal class CameraActivity : BaseActivity<Event, State, ViewModel>() {
 		viewModel.onCreate()
         checkCameraPermissions()
 	}
+
+    override fun onApplyWindowInsets(windowInsets: WindowInsetsCompat): WindowInsetsCompat {
+        windowWrapper.setupStatusBar(theme, R.attr.scanbot_camera_toolbar_background, false)
+        if (windowInsets.containsSideNavigationBar()) {
+            windowWrapper.setupNavigationBar(theme, R.attr.scanbot_window_background, true)
+        } else {
+            windowWrapper.setupNavigationBar(theme, R.attr.scanbot_camera_bottom_bar_background, true)
+        }
+
+        val insets = windowInsets.getSystemBarsAndDisplayCutoutInsets()
+        viewBinding.toolbarLayout.setPadding(insets.left, insets.top, insets.right, 0)
+        viewBinding.bottomBarLayout.setPadding(insets.left, 0, insets.right, insets.bottom)
+
+        return WindowInsetsCompat.CONSUMED
+    }
 
     private fun checkCameraPermissions() {
         if (!hasPermissionTo(Manifest.permission.CAMERA)) {

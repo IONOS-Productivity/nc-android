@@ -13,16 +13,18 @@
 	android:orientation="vertical">
 
 	<FrameLayout
-		android:layout_width="match_parent"
-		android:layout_height="@dimen/scanbot_camera_toolbar_height"
+        android:id="@+id/toolbarLayout"
+        android:layout_width="match_parent"
+		android:layout_height="wrap_content"
 		android:background="?scanbot_camera_toolbar_background">
 
 		<TextView
 			android:id="@+id/tvFlashStatus"
 			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_gravity="center_vertical|right"
+            android:layout_height="@dimen/scanbot_camera_toolbar_height"
+            android:layout_gravity="center_vertical|right"
 			android:layout_marginRight="@dimen/scanbot_padding_normal"
+            android:gravity="center"
 			android:text="@string/scanbot_camera_flash_button"
 			android:textColor="@drawable/scanbot_camera_toggle_text_color_selector"
 			app:drawableLeftCompat="@drawable/scanbot_camera_flash_btn_selector" />
@@ -30,9 +32,10 @@
 		<TextView
 			android:id="@+id/tvAutomaticCaptureStatus"
 			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_gravity="center_vertical|left"
+            android:layout_height="@dimen/scanbot_camera_toolbar_height"
+            android:layout_gravity="center_vertical|left"
 			android:layout_marginLeft="@dimen/scanbot_padding_normal"
+            android:gravity="center"
 			android:text="@string/scanbot_camera_automatic_btn"
 			android:textColor="@drawable/scanbot_camera_toggle_text_color_selector" />
 
@@ -67,6 +70,7 @@
 	</FrameLayout>
 
 	<FrameLayout
+        android:id="@+id/bottomBarLayout"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:background="?scanbot_camera_bottom_bar_background">

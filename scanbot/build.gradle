@@ -18,11 +18,11 @@ buildscript {
 
 android {
     namespace 'com.ionos.scanbot'
-    compileSdk 34
+    compileSdk 35
 
     defaultConfig {
         minSdk 24
-        targetSdk 34
+        targetSdk 35
 
         final String scanbotLicenseKey = project.findProperty('ionosHidriveNextScanbotLicenseKey') ?: ""
         final String scanbotLicenseKeyUrl = project.findProperty('ionosHidriveNextScanbotLicenseKeyUrl') ?: ""
