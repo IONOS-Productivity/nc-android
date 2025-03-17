@@ -69,12 +69,12 @@ class DataProtectionActivity : BaseActivity() {
             viewModel.onAnalyticsCheckedChange(isChecked)
         }
 
-        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { rootView, windowInsets ->
+        ViewCompat.setOnApplyWindowInsetsListener(window.decorView) { _, windowInsets ->
             val insetsType = WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
             val insets = windowInsets.getInsets(insetsType)
             binding.overviewPage.root.setPadding(insets.left, insets.top, insets.right, insets.bottom)
             binding.detailPage.root.setPadding(insets.left, insets.top, insets.right, insets.bottom)
-            ViewCompat.onApplyWindowInsets(rootView, windowInsets)
+            WindowInsetsCompat.CONSUMED
         }
 
         viewModel.stateFlow

@@ -16,6 +16,8 @@ import android.text.TextUtils
 import android.view.View
 import androidx.annotation.VisibleForTesting
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.ionos.annotation.IonosCustomization
 import com.ionos.privacy.DataProtectionActivity
 import com.ionos.privacy.PrivacyPreferences
@@ -38,11 +40,16 @@ class LauncherActivity : BaseActivity() {
     @Inject
     lateinit var privacyPreferences: PrivacyPreferences
 
+    @IonosCustomization("Remove window insets paddings")
     override fun onCreate(savedInstanceState: Bundle?) {
         // Mandatory to call this before super method to show system launch screen for api level 31+
         installSplashScreen()
 
         super.onCreate(savedInstanceState)
+
+        ViewCompat.setOnApplyWindowInsetsListener(window.decorView) { _, _ ->
+            WindowInsetsCompat.CONSUMED
+        }
 
         binding = ActivitySplashBinding.inflate(layoutInflater)
 

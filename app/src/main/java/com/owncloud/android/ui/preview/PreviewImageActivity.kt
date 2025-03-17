@@ -58,6 +58,9 @@ import com.owncloud.android.utils.DisplayUtils
 import com.owncloud.android.utils.MimeTypeUtil
 import android.graphics.drawable.ColorDrawable
 import androidx.activity.enableEdgeToEdge
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
 import java.io.Serializable
 import javax.inject.Inject
@@ -92,6 +95,14 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
+
+        ViewCompat.setOnApplyWindowInsetsListener(window.decorView) { view, windowInsets ->
+            val insetsType = WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
+            val insets = windowInsets.getInsets(insetsType)
+            val actionBarView = view.findViewById<View>(androidx.appcompat.R.id.action_bar)
+            actionBarView?.updatePadding(left = insets.left, top = insets.top, right = insets.right)
+            WindowInsetsCompat.CONSUMED
+        }
 
         actionBar = supportActionBar
 
