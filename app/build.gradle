@@ -194,7 +194,7 @@ android {
             ionos {
                 applicationId "com.ionos.hidrivenext"
                 dimension "default"
-                versionCode 4
+                versionCode 5
                 isDefault = true
                 resConfigs "en", "de", "es", "fr", "nl"
             }
