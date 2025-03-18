@@ -24,7 +24,7 @@
 
     <!-- URLs and flags related -->
     <bool name="show_server_url_input">false</bool>
-    <string name="webview_login_url" translatable="false">https://prelive.storage.ionos.fr/login/flow</string>
+    <string name="webview_login_url" translatable="false">http://storage.ionos.fr/login/flow</string>
 
     <!-- Determine is participate enabled -->
     <bool name="participate_enabled">false</bool>
