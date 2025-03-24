@@ -84,6 +84,7 @@ class ChooseAccountDialogFragment :
         return builder.create()
     }
 
+    @IonosCustomization("Hide account id")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         accountManager = (activity as BaseActivity).userAccountManager
@@ -104,6 +105,7 @@ class ChooseAccountDialogFragment :
             binding.currentAccount.userName.text = user.toOwnCloudAccount().displayName
             binding.currentAccount.ticker.visibility = View.GONE
             binding.currentAccount.account.text = user.accountName
+            binding.currentAccount.account.visibility = View.GONE
 
             // Defining user right indicator
             val icon = viewThemeUtils.platform.tintPrimaryDrawable(requireContext(), R.drawable.ic_check_circle)

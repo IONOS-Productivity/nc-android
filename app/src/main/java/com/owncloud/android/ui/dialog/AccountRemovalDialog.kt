@@ -48,7 +48,7 @@ class AccountRemovalDialog : DialogFragment(), AvatarGenerationListener, Injecta
         user = requireArguments().getParcelableArgument(KEY_USER, User::class.java)
     }
 
-    @IonosCustomization("colorMaterialButtonPrimaryTonal, colorMaterialButtonPrimaryBorderless")
+    @IonosCustomization("colorMaterialButtonPrimaryTonal, colorMaterialButtonPrimaryBorderless, hide account name")
     override fun onStart() {
         super.onStart()
 
@@ -67,6 +67,7 @@ class AccountRemovalDialog : DialogFragment(), AvatarGenerationListener, Injecta
 
         binding.userName.text = UserAccountManager.getDisplayName(user)
         binding.account.text = user?.let { DisplayUtils.convertIdn(it.accountName, false) }
+        binding.account.visibility = View.GONE
     }
 
     @IonosCustomization
