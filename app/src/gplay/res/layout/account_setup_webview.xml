@@ -15,15 +15,15 @@
 
     <!-- Login Flow V1 -->
     <WebView
-        android:visibility="gone"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:id="@+id/login_webview">
     </WebView>
 
     <!-- Login Flow V2 -->
     <include
-        android:visibility="visible"
+        android:visibility="gone"
         android:id="@+id/login_flow_v2"
         layout="@layout/login_flow_info_layout_v2" />
 
