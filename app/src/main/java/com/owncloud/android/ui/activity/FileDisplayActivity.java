@@ -460,6 +460,7 @@ public class FileDisplayActivity extends FileActivity
     }
 
     @Override
+    @IonosCustomization("Hide account id")
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
 
@@ -485,7 +486,7 @@ public class FileDisplayActivity extends FileActivity
             onOpenFileIntent(getIntent());
         } else if (RESTART.equals(getIntent().getAction())) {
             // most likely switched to different account
-            DisplayUtils.showSnackMessage(this, String.format(getString(R.string.logged_in_as), accountManager.getUser().getAccountName()));
+            DisplayUtils.showSnackMessage(this, String.format(getString(R.string.logged_in_as), accountManager.getUser().toOwnCloudAccount().getDisplayName()));
         }
 
         upgradeNotificationForInstantUpload();
