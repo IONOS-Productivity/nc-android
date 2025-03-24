@@ -35,6 +35,8 @@ class PrivacySettingsActivity : BaseActivity() {
     private val binding by lazy { ActivityPrivacySettingsBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableDefaultWindowInsetsHandling = false
+
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
@@ -45,7 +47,7 @@ class PrivacySettingsActivity : BaseActivity() {
             viewModel.onAnalyticsCheckedChange(isChecked)
         }
 
-        ViewCompat.setOnApplyWindowInsetsListener(window.decorView) { _, windowInsets ->
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, windowInsets ->
             val insetsType = WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
             val insets = windowInsets.getInsets(insetsType)
             binding.root.setPadding(insets.left, insets.top, insets.right, insets.bottom)

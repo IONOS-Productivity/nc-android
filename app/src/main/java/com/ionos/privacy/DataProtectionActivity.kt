@@ -48,6 +48,8 @@ class DataProtectionActivity : BaseActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableDefaultWindowInsetsHandling = false
+
         enableEdgeToEdge(SystemBarStyle.dark(Color.TRANSPARENT), SystemBarStyle.dark(Color.TRANSPARENT))
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -69,7 +71,7 @@ class DataProtectionActivity : BaseActivity() {
             viewModel.onAnalyticsCheckedChange(isChecked)
         }
 
-        ViewCompat.setOnApplyWindowInsetsListener(window.decorView) { _, windowInsets ->
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, windowInsets ->
             val insetsType = WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
             val insets = windowInsets.getInsets(insetsType)
             binding.overviewPage.root.setPadding(insets.left, insets.top, insets.right, insets.bottom)

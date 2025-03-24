@@ -13,6 +13,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 
+import com.ionos.annotation.IonosCustomization;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.account.UserAccountManager;
 import com.nextcloud.client.di.Injectable;
@@ -48,6 +49,8 @@ public abstract class BaseActivity extends AppCompatActivity implements Injectab
     private boolean themeChangePending;
     private boolean paused;
     protected boolean enableAccountHandling = true;
+    @IonosCustomization("Window insets handling")
+    protected boolean enableDefaultWindowInsetsHandling = true;
 
     private final MixinRegistry mixinRegistry = new MixinRegistry();
     private SessionMixin sessionMixin;
@@ -68,10 +71,11 @@ public abstract class BaseActivity extends AppCompatActivity implements Injectab
     }
 
     @Override
+    @IonosCustomization("Window insets handling")
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         boolean isApiLevel35OrHigher = (Build.VERSION.SDK_INT >= 35);
 
-        if (isApiLevel35OrHigher) {
+        if (isApiLevel35OrHigher && enableDefaultWindowInsetsHandling) {
             enableEdgeToEdge();
             WindowExtensionsKt.addSystemBarPaddings(getWindow());
         }

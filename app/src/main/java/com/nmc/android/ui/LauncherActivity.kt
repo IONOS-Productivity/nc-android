@@ -16,8 +16,6 @@ import android.text.TextUtils
 import android.view.View
 import androidx.annotation.VisibleForTesting
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.ionos.annotation.IonosCustomization
 import com.ionos.privacy.DataProtectionActivity
 import com.ionos.privacy.PrivacyPreferences
@@ -45,11 +43,9 @@ class LauncherActivity : BaseActivity() {
         // Mandatory to call this before super method to show system launch screen for api level 31+
         installSplashScreen()
 
-        super.onCreate(savedInstanceState)
+        enableDefaultWindowInsetsHandling = false
 
-        ViewCompat.setOnApplyWindowInsetsListener(window.decorView) { _, _ ->
-            WindowInsetsCompat.CONSUMED
-        }
+        super.onCreate(savedInstanceState)
 
         binding = ActivitySplashBinding.inflate(layoutInflater)
 

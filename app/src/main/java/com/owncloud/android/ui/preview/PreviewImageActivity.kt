@@ -57,6 +57,7 @@ import com.owncloud.android.ui.preview.model.PreviewImageActivityState
 import com.owncloud.android.utils.DisplayUtils
 import com.owncloud.android.utils.MimeTypeUtil
 import android.graphics.drawable.ColorDrawable
+import android.view.ViewGroup
 import androidx.activity.enableEdgeToEdge
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -93,10 +94,13 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
 
     @IonosCustomization
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableDefaultWindowInsetsHandling = false
+
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
-        ViewCompat.setOnApplyWindowInsetsListener(window.decorView) { view, windowInsets ->
+        val contentContainer = (window.decorView as ViewGroup).getChildAt(0)
+        ViewCompat.setOnApplyWindowInsetsListener(contentContainer) { view, windowInsets ->
             val insetsType = WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
             val insets = windowInsets.getInsets(insetsType)
             val actionBarView = view.findViewById<View>(androidx.appcompat.R.id.action_bar)
