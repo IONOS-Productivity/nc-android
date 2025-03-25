@@ -35,7 +35,7 @@
     <bool name="show_hidden_files_enabled">false</bool>
 
     <!-- URLs and flags related -->
-    <string name="provider_registration_server">https://easy-qa-1.nextcloud-ionos.com/login/v2</string>
+    <string name="provider_registration_server">https://storage.ionos.fr/login/v2</string>
 
     <!-- Determine is participate enabled -->
     <bool name="participate_enabled">false</bool>
