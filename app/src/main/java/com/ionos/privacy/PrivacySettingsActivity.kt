@@ -35,8 +35,6 @@ class PrivacySettingsActivity : BaseActivity() {
     private val binding by lazy { ActivityPrivacySettingsBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        enableDefaultWindowInsetsHandling = false
-
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
@@ -59,6 +57,8 @@ class PrivacySettingsActivity : BaseActivity() {
             .onEach(::updateState)
             .launchIn(lifecycleScope)
     }
+
+    override fun isDefaultWindowInsetsHandlingEnabled() = false
 
     override fun onStart() {
         super.onStart()

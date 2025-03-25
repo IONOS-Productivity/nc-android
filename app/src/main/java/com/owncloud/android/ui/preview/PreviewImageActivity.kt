@@ -94,8 +94,6 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
 
     @IonosCustomization
     override fun onCreate(savedInstanceState: Bundle?) {
-        enableDefaultWindowInsetsHandling = false
-
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
@@ -145,6 +143,9 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
 
         observeWorkerState()
     }
+
+    @IonosCustomization("Remove default window insets paddings")
+    override fun isDefaultWindowInsetsHandlingEnabled() = false
 
     fun showDirectoryWhenDeletionCompleted() {
         showDirectoryWhenDeletionCompleted = true

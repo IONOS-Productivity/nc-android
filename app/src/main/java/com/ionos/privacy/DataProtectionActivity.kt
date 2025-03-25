@@ -48,8 +48,6 @@ class DataProtectionActivity : BaseActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        enableDefaultWindowInsetsHandling = false
-
         enableEdgeToEdge(SystemBarStyle.dark(Color.TRANSPARENT), SystemBarStyle.dark(Color.TRANSPARENT))
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -84,6 +82,8 @@ class DataProtectionActivity : BaseActivity() {
             .onEach(::updateState)
             .launchIn(lifecycleScope)
     }
+
+    override fun isDefaultWindowInsetsHandlingEnabled() = false
 
     private fun handleLink(type: String) {
         when (type) {

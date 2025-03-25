@@ -38,12 +38,9 @@ class LauncherActivity : BaseActivity() {
     @Inject
     lateinit var privacyPreferences: PrivacyPreferences
 
-    @IonosCustomization("Remove window insets paddings")
     override fun onCreate(savedInstanceState: Bundle?) {
         // Mandatory to call this before super method to show system launch screen for api level 31+
         installSplashScreen()
-
-        enableDefaultWindowInsetsHandling = false
 
         super.onCreate(savedInstanceState)
 
@@ -53,6 +50,9 @@ class LauncherActivity : BaseActivity() {
         updateTitleVisibility()
         scheduleSplashScreen()
     }
+
+    @IonosCustomization("Remove window insets paddings")
+    override fun isDefaultWindowInsetsHandlingEnabled() = false
 
     @VisibleForTesting
     fun setSplashTitles(boldText: String, normalText: String) {

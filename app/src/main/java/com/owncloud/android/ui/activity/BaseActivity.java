@@ -49,8 +49,6 @@ public abstract class BaseActivity extends AppCompatActivity implements Injectab
     private boolean themeChangePending;
     private boolean paused;
     protected boolean enableAccountHandling = true;
-    @IonosCustomization("Window insets handling")
-    protected boolean enableDefaultWindowInsetsHandling = true;
 
     private final MixinRegistry mixinRegistry = new MixinRegistry();
     private SessionMixin sessionMixin;
@@ -75,7 +73,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Injectab
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         boolean isApiLevel35OrHigher = (Build.VERSION.SDK_INT >= 35);
 
-        if (isApiLevel35OrHigher && enableDefaultWindowInsetsHandling) {
+        if (isApiLevel35OrHigher && isDefaultWindowInsetsHandlingEnabled()) {
             enableEdgeToEdge();
             WindowExtensionsKt.addSystemBarPaddings(getWindow());
         }
@@ -87,6 +85,11 @@ public abstract class BaseActivity extends AppCompatActivity implements Injectab
         if (enableAccountHandling) {
             mixinRegistry.onCreate(savedInstanceState);
         }
+    }
+
+    @IonosCustomization("Window insets handling")
+    protected boolean isDefaultWindowInsetsHandlingEnabled() {
+        return true;
     }
 
     private void enableEdgeToEdge() {
