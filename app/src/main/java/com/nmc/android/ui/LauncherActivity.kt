@@ -16,6 +16,10 @@ import android.text.TextUtils
 import android.view.View
 import androidx.annotation.VisibleForTesting
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.ionos.annotation.IonosCustomization
+import com.ionos.privacy.DataProtectionActivity
+import com.ionos.privacy.PrivacyPreferences
+import com.nextcloud.client.account.UserAccountManager
 import com.nextcloud.client.preferences.AppPreferences
 import com.owncloud.android.R
 import com.owncloud.android.databinding.ActivitySplashBinding
@@ -29,6 +33,9 @@ class LauncherActivity : BaseActivity() {
 
     @Inject
     lateinit var appPreferences: AppPreferences
+
+    @Inject
+    lateinit var privacyPreferences: PrivacyPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // Mandatory to call this before super method to show system launch screen for api level 31+
@@ -61,10 +68,16 @@ class LauncherActivity : BaseActivity() {
         }
     }
 
+    @IonosCustomization
     private fun scheduleSplashScreen() {
         Handler(Looper.getMainLooper()).postDelayed({
             if (user.isPresent) {
-                startActivity(Intent(this, FileDisplayActivity::class.java))
+                val intent = Intent(this, FileDisplayActivity::class.java)
+                if (privacyPreferences.isDataProtectionProcessed(userAccountManager.currentOwnCloudAccount?.name)) {
+                    startActivity(intent)
+                } else {
+                    startActivity(DataProtectionActivity.createIntent(this, intent))
+                }
             }
             finish()
         }, SPLASH_DURATION)

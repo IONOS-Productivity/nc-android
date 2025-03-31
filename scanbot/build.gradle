@@ -1,0 +1,82 @@
+/*
+ * IONOS HiDrive Next - Android Client
+ *
+ * SPDX-FileCopyrightText: 2025 STRATO GmbH.
+ * SPDX-License-Identifier: GPL-2.0
+ */
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+buildscript {
+    dependencies {
+        classpath "com.android.tools.build:gradle:$androidPluginVersion"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+android {
+    namespace 'com.ionos.scanbot'
+    compileSdk 34
+
+    defaultConfig {
+        minSdk 24
+        targetSdk 34
+
+        final String scanbotLicenseKey = project.findProperty('ionosHidriveNextScanbotLicenseKey') ?: ""
+        final String scanbotLicenseKeyUrl = project.findProperty('ionosHidriveNextScanbotLicenseKeyUrl') ?: ""
+        println('======================== Scanbot parameters ========================')
+        println('scanbotLicenseKey: ' + scanbotLicenseKey)
+        println('scanbotLicenseKeyUrl: ' + scanbotLicenseKeyUrl)
+        println('====================================================================')
+
+        buildConfigField "String", "SCANBOT_LICENSE_KEY", "\"${scanbotLicenseKey}\""
+        buildConfigField "String", "SCANBOT_LICENSE_KEY_URL", "\"${scanbotLicenseKeyUrl}\""
+        buildConfigField "Boolean", "IS_SCANBOT_FEATURE_AVAILABLE", "true"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildFeatures {
+        viewBinding true
+        buildConfig true
+    }
+
+    buildTypes {
+        release {
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            consumerProguardFiles 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+
+    lint {
+        abortOnError false
+    }
+}
+
+dependencies {
+    api "io.scanbot:sdk-package-2:$scanbot_sdk_version"
+    api "io.scanbot:sdk-common-ocr-assets:$scanbot_sdk_version"
+    implementation "com.google.android.material:material:$material_version"
+
+    compileOnly reactivex_rxjava2
+    compileOnly reactivex_rxandroid2
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "androidx.activity:activity-ktx:$activity_ktx_version"
+    implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
+    implementation "androidx.preference:preference:$preference_version"
+    implementation "androidx.exifinterface:exifinterface:$androidx_exifinterface_version"
+
+    implementation "com.google.dagger:dagger:$daggerVersion"
+    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+}

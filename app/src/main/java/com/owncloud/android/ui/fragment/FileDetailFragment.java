@@ -22,7 +22,7 @@ import android.widget.ProgressBar;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.tabs.TabLayout;
+import com.ionos.annotation.IonosCustomization;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.account.UserAccountManager;
 import com.nextcloud.client.di.Injectable;
@@ -76,7 +76,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.FragmentManager;
-import androidx.viewpager2.widget.ViewPager2;
 
 /**
  * This Fragment is used to display the details about a file.
@@ -296,66 +295,15 @@ public class FileDetailFragment extends FileFragment implements OnClickListener,
             .show(fragmentManager, "actions");
     }
 
+    @IonosCustomization("Hide tabs in IONOS")
     private void setupViewPager() {
-        binding.tabLayout.removeAllTabs();
-
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText(R.string.drawer_item_activities).setIcon(R.drawable.ic_activity));
-
-
-        if (showSharingTab()) {
-            binding.tabLayout.addTab(binding.tabLayout.newTab().setText(R.string.share_dialog_title).setIcon(R.drawable.shared_via_users));
-        }
-
-        if (MimeTypeUtil.isImage(getFile())) {
-            binding.tabLayout.addTab(binding.tabLayout.newTab().setText(R.string.filedetails_details).setIcon(R.drawable.image_32dp));
-        }
-
-        viewThemeUtils.material.themeTabLayout(binding.tabLayout);
+        binding.tabLayout.setVisibility(View.GONE);
 
         final FileDetailTabAdapter adapter = new FileDetailTabAdapter(requireActivity(),
                                                                       getFile(),
                                                                       user,
                                                                       showSharingTab());
         binding.pager.setAdapter(adapter);
-
-        binding.pager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                final FileDetailActivitiesFragment fragment = getFileDetailActivitiesFragment();
-                if (activeTab == 0 && fragment != null) {
-                    fragment.markCommentsAsRead();
-                }
-                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
-            }
-        });
-        binding.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                binding.pager.setCurrentItem(tab.getPosition());
-                if (tab.getPosition() == 0) {
-                    final FileDetailActivitiesFragment fragment = getFileDetailActivitiesFragment();
-                    if (fragment != null) {
-                        fragment.markCommentsAsRead();
-                    }
-                }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-                // unused at the moment
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-                // unused at the moment
-            }
-        });
-
-        binding.tabLayout.post(() -> {
-            TabLayout.Tab tab1 = binding.tabLayout.getTabAt(activeTab);
-            if (tab1 == null) return;
-            tab1.select();
-        });
     }
 
     @Override
@@ -783,8 +731,8 @@ public class FileDetailFragment extends FileFragment implements OnClickListener,
      *
      * @param isFragmentReplaced
      */
+    @IonosCustomization("Hide tabs in IONOS")
     public void showHideFragmentView(boolean isFragmentReplaced) {
-        binding.tabLayout.setVisibility(isFragmentReplaced ? View.GONE : View.VISIBLE);
         binding.pager.setVisibility(isFragmentReplaced ? View.GONE : View.VISIBLE);
         binding.sharingFrameContainer.setVisibility(isFragmentReplaced ? View.VISIBLE : View.GONE);
         FloatingActionButton mFabMain = requireActivity().findViewById(R.id.fab_main);

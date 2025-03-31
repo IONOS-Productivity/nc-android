@@ -47,6 +47,7 @@ import android.view.WindowManager;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
+import com.ionos.annotation.IonosCustomization;
 import com.nextcloud.appReview.InAppReviewHelper;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.appinfo.AppInfo;
@@ -371,6 +372,7 @@ public class FileDisplayActivity extends FileActivity
         }   // else, Fragment already created and retained across configuration change
     }
 
+    @IonosCustomization
     private void checkStoragePath() {
         String newStorage = Environment.getExternalStorageDirectory().getAbsolutePath();
         String storagePath = preferences.getStoragePath(newStorage);
@@ -387,7 +389,7 @@ public class FileDisplayActivity extends FileActivity
                     .setPositiveButton(R.string.dialog_close, (dialog, which) -> dialog.dismiss())
                     .setIcon(R.drawable.ic_settings);
 
-                viewThemeUtils.dialog.colorMaterialAlertDialogBackground(getApplicationContext(), builder);
+                viewThemeUtils.ionos.dialog.colorMaterialAlertDialogBackground(getApplicationContext(), builder);
 
                 builder.create().show();
             } catch (WindowManager.BadTokenException e) {
@@ -797,6 +799,7 @@ public class FileDisplayActivity extends FileActivity
     }
 
     @Override
+    @IonosCustomization
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.activity_file_display, menu);
@@ -809,8 +812,6 @@ public class FileDisplayActivity extends FileActivity
             showSearchView();
             searchView.setIconified(false);
         });
-
-        viewThemeUtils.androidx.themeToolbarSearchView(searchView);
 
         // populate list of menu items to show/hide when drawer is opened/closed
         mDrawerMenuItemstoShowHideList = new ArrayList<>(1);
@@ -1413,6 +1414,7 @@ public class FileDisplayActivity extends FileActivity
     /**
      * Show a text message on screen view for notifying user if content is loading or folder is empty
      */
+    @IonosCustomization
     private void setBackgroundText() {
         final OCFileListFragment ocFileListFragment = getListOfFilesFragment();
         if (ocFileListFragment != null) {
@@ -1420,7 +1422,7 @@ public class FileDisplayActivity extends FileActivity
                 ocFileListFragment.setEmptyListLoadingMessage();
             } else {
                 if (MainApp.isOnlyOnDevice()) {
-                    ocFileListFragment.setMessageForEmptyList(R.string.file_list_empty_headline, R.string.file_list_empty_on_device, R.drawable.ic_list_empty_folder, true);
+                    ocFileListFragment.setMessageForEmptyList(R.string.file_list_empty_headline, R.string.file_list_empty_on_device, R.drawable.ic_list_empty_folder);
                 } else {
                     ocFileListFragment.setEmptyListMessage(SearchType.NO_SEARCH);
                 }
@@ -2453,6 +2455,7 @@ public class FileDisplayActivity extends FileActivity
         }
     }
 
+    @IonosCustomization
     private void selectUserAndOpenFile(List<User> users, String fileId) {
         final CharSequence[] userNames = new CharSequence[users.size()];
         for (int i = 0; i < userNames.length; i++) {
@@ -2465,7 +2468,7 @@ public class FileDisplayActivity extends FileActivity
             showLoadingDialog(getString(R.string.retrieving_file));
         });
 
-        viewThemeUtils.dialog.colorMaterialAlertDialogBackground(getApplicationContext(), builder);
+        viewThemeUtils.ionos.dialog.colorMaterialAlertDialogBackground(getApplicationContext(), builder);
 
         final AlertDialog dialog = builder.create();
         dismissLoadingDialog();

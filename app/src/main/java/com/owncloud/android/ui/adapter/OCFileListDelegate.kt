@@ -16,6 +16,7 @@ import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.elyeproj.loaderviewlibrary.LoaderImageView
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.android.common.ui.theme.utils.ColorRole
 import com.nextcloud.client.account.User
 import com.nextcloud.client.jobs.download.FileDownloadHelper
@@ -194,6 +195,7 @@ class OCFileListDelegate(
         }
     }
 
+    @IonosCustomization
     fun bindGridViewHolder(
         gridViewHolder: ListGridImageViewHolder,
         file: OCFile,
@@ -203,7 +205,7 @@ class OCFileListDelegate(
         // thumbnail
         gridViewHolder.imageFileName?.text = file.fileName
         gridViewHolder.thumbnail.tag = file.fileId
-        DisplayUtils.setThumbnail(
+        OCFileListThumbnailLoader(
             file,
             gridViewHolder.thumbnail,
             user,
@@ -214,8 +216,9 @@ class OCFileListDelegate(
             gridViewHolder.shimmerThumbnail,
             preferences,
             viewThemeUtils,
-            syncFolderProvider
-        )
+            syncFolderProvider,
+            gridViewHolder.fileIcon,
+        ).load()
 
         // item layout + click listeners
         bindGridItemLayout(file, gridViewHolder)
@@ -265,8 +268,9 @@ class OCFileListDelegate(
         }
     }
 
+    @IonosCustomization
     private fun bindGridItemLayout(file: OCFile, gridViewHolder: ListGridImageViewHolder) {
-        setItemLayoutBackgroundColor(file, gridViewHolder)
+        setItemLayoutBackground(file, gridViewHolder)
         setCheckBoxImage(file, gridViewHolder)
         setItemLayoutOnClickListeners(file, gridViewHolder)
 
@@ -287,6 +291,26 @@ class OCFileListDelegate(
                     )
                 }
             }
+        }
+    }
+
+    @IonosCustomization
+    private fun setItemLayoutBackground(file: OCFile, gridViewHolder: ListGridImageViewHolder) {
+        val isSelected = file.fileId == highlightedItem?.fileId || isCheckedFile(file)
+        if (gridViewHolder is OCFileListGridItemViewHolder) {
+            val itemLayoutBackgroundResId = if (isSelected) {
+                R.drawable.grid_mode_selected_item_background
+            } else {
+                R.drawable.grid_mode_item_background
+            }
+            gridViewHolder.itemLayout.setBackgroundResource(itemLayoutBackgroundResId)
+        } else {
+            val itemLayoutBackgroundColor = if (isSelected) {
+                ContextCompat.getColor(context, R.color.selected_item_background)
+            } else {
+                ContextCompat.getColor(context, R.color.bg_default)
+            }
+            gridViewHolder.itemLayout.setBackgroundColor(itemLayoutBackgroundColor)
         }
     }
 
@@ -313,11 +337,10 @@ class OCFileListDelegate(
         }
     }
 
+    @IonosCustomization
     private fun setCheckBoxImage(file: OCFile, gridViewHolder: ListGridImageViewHolder) {
         if (isCheckedFile(file)) {
-            gridViewHolder.checkbox.setImageDrawable(
-                viewThemeUtils.platform.tintDrawable(context, R.drawable.ic_checkbox_marked, ColorRole.PRIMARY)
-            )
+            gridViewHolder.checkbox.setImageResource(R.drawable.ic_checkbox_marked)
         } else {
             gridViewHolder.checkbox.setImageResource(R.drawable.ic_checkbox_blank_outline)
         }
@@ -365,6 +388,7 @@ class OCFileListDelegate(
         }
     }
 
+    @IonosCustomization
     private fun showShareIcon(gridViewHolder: ListGridImageViewHolder, file: OCFile) {
         val sharedIconView = gridViewHolder.shared
         if (gridViewHolder is OCFileListItemViewHolder || file.unreadCommentsCount == 0) {
@@ -374,14 +398,18 @@ class OCFileListDelegate(
                     sharedIconView.visibility = View.GONE
                 } else {
                     sharedIconView.visibility = View.VISIBLE
-                    sharedIconView.setImageResource(R.drawable.shared_via_users)
+                    sharedIconView.setImageResource(R.drawable.ic_filelist_shared_via_users)
                     sharedIconView.contentDescription = context.getString(R.string.shared_icon_shared)
                 }
             } else if (file.isSharedViaLink) {
-                sharedIconView.setImageResource(R.drawable.shared_via_link)
+                sharedIconView.setImageResource(R.drawable.ic_filelist_shared_via_link)
                 sharedIconView.contentDescription = context.getString(R.string.shared_icon_shared_via_link)
             } else {
-                sharedIconView.setImageResource(R.drawable.ic_unshared)
+                if (gridViewHolder is OCFileListGridItemViewHolder) {
+                    sharedIconView.setImageResource(R.drawable.ic_filelist_unshared_grid_mode)
+                } else {
+                    sharedIconView.setImageResource(R.drawable.ic_filelist_unshared)
+                }
                 sharedIconView.contentDescription = context.getString(R.string.shared_icon_share)
             }
             sharedIconView.setOnClickListener { ocFileListFragmentInterface.onShareIconClick(file) }
