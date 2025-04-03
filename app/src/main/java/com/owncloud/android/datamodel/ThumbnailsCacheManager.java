@@ -35,6 +35,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.ionos.annotation.IonosCustomization;
+import com.ionos.utils.IonosBuildHelper;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.network.ConnectivityService;
 import com.owncloud.android.MainApp;
@@ -625,7 +626,13 @@ public final class ThumbnailsCacheManager {
                         tagId = String.valueOf(((TrashbinFile) mFile).getRemoteId());
                     }
                     if (String.valueOf(imageView.getTag()).equals(tagId)) {
-                        imageView.setImageBitmap(bitmap);
+                        if (IonosBuildHelper.isIonosBuild()) {
+                            imageView.setImageBitmap(bitmap);
+                        } else if (gridViewEnabled) {
+                            BitmapUtils.setRoundedBitmapForGridMode(bitmap, imageView);
+                        } else {
+                            BitmapUtils.setRoundedBitmap(bitmap, imageView);
+                        }
                     }
                 }
 

@@ -44,20 +44,19 @@ class StoragePermissionDialogFragment : DialogFragment(), Injectable {
         }
     }
 
-    @IonosCustomization()
     override fun onStart() {
         super.onStart()
         dialog?.let {
             val alertDialog = it as AlertDialog
 
             val positiveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE) as MaterialButton
-            viewThemeUtils.ionos.material.colorMaterialButtonPrimaryTonal(positiveButton)
+            viewThemeUtils.material.colorMaterialButtonPrimaryTonal(positiveButton)
 
             val negativeButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE) as MaterialButton
-            viewThemeUtils.ionos.material.colorMaterialButtonPrimaryBorderless(negativeButton)
+            viewThemeUtils.material.colorMaterialButtonPrimaryBorderless(negativeButton)
 
             val neutralButton = alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL) as MaterialButton
-            viewThemeUtils.ionos.material.colorMaterialButtonPrimaryBorderless(neutralButton)
+            viewThemeUtils.material.colorMaterialButtonPrimaryBorderless(neutralButton)
         }
     }
 
@@ -85,7 +84,7 @@ class StoragePermissionDialogFragment : DialogFragment(), Injectable {
                 dismiss()
             }
 
-        viewThemeUtils.ionos.dialog.colorMaterialAlertDialogBackground(requireContext(), dialogBuilder)
+        viewThemeUtils.dialog.colorMaterialAlertDialogBackground(requireContext(), dialogBuilder)
 
         return dialogBuilder.create()
     }

@@ -15,7 +15,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
@@ -89,7 +88,7 @@ class EditImageActivity :
         val windowInsetsController = WindowCompat.getInsetsController(window, window.decorView)
         windowInsetsController.hide(WindowInsetsCompat.Type.statusBars())
 
-        viewThemeUtils.ionos.platform.themeSystemBars(this,getColor(R.color.edit_image_background))
+        viewThemeUtils.platform.themeStatusBar(this,getColor(R.color.edit_image_background))
 
         setupCropper()
     }

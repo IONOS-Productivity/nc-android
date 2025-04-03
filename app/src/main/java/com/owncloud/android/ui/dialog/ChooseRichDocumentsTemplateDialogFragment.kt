@@ -21,7 +21,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.common.collect.Sets
-import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.account.CurrentAccountProvider
 import com.nextcloud.client.account.User
 import com.nextcloud.client.di.Injectable
@@ -92,7 +91,6 @@ class ChooseRichDocumentsTemplateDialogFragment :
 
     private lateinit var binding: ChooseTemplateBinding
 
-    @IonosCustomization()
     override fun onStart() {
         super.onStart()
 
@@ -101,14 +99,14 @@ class ChooseRichDocumentsTemplateDialogFragment :
         alertDialog?.let {
             positiveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE) as? MaterialButton
             positiveButton?.let {
-                viewThemeUtils.ionos.material.colorMaterialButtonPrimaryTonal(it)
+                viewThemeUtils.material.colorMaterialButtonPrimaryTonal(it)
                 it.setOnClickListener(this)
                 it.isEnabled = false
             }
 
             val negativeButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE) as? MaterialButton
             negativeButton?.let {
-                viewThemeUtils.ionos.material.colorMaterialButtonPrimaryBorderless(negativeButton)
+                viewThemeUtils.material.colorMaterialButtonPrimaryBorderless(negativeButton)
             }
         }
 
@@ -127,14 +125,13 @@ class ChooseRichDocumentsTemplateDialogFragment :
     }
 
     @Suppress("DEPRECATION")
-    @IonosCustomization
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val arguments = arguments ?: throw IllegalArgumentException("Arguments may not be null")
         val activity = activity ?: throw IllegalArgumentException("Activity may not be null")
 
         initClient()
         initFilenames(arguments)
-        viewThemeUtils.ionos.material.colorTextInputLayout(binding.filenameContainer)
+        viewThemeUtils.material.colorTextInputLayout(binding.filenameContainer)
 
         val type = Type.valueOf(arguments.getString(ARG_TYPE) ?: "")
         FetchTemplateTask(this, client).execute(type)
@@ -190,7 +187,6 @@ class ChooseRichDocumentsTemplateDialogFragment :
         })
     }
 
-    @IonosCustomization
     private fun getDialogBuilder(activity: Activity, titleTextId: Int): MaterialAlertDialogBuilder {
         val builder = MaterialAlertDialogBuilder(activity)
             .setView(binding.root)
@@ -198,7 +194,7 @@ class ChooseRichDocumentsTemplateDialogFragment :
             .setNegativeButton(R.string.common_cancel, null)
             .setTitle(titleTextId)
 
-        viewThemeUtils.ionos.dialog.colorMaterialAlertDialogBackground(activity, builder)
+        viewThemeUtils.dialog.colorMaterialAlertDialogBackground(activity, builder)
 
         return builder
     }

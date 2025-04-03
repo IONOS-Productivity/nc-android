@@ -208,6 +208,7 @@ class OCFileListDelegate(
         OCFileListThumbnailLoader(
             file,
             gridViewHolder.thumbnail,
+            gridViewHolder.itemLayout,
             user,
             storageManager,
             asyncTasks,
@@ -216,8 +217,7 @@ class OCFileListDelegate(
             gridViewHolder.shimmerThumbnail,
             preferences,
             viewThemeUtils,
-            syncFolderProvider,
-            gridViewHolder.fileIcon,
+            syncFolderProvider
         ).load()
 
         // item layout + click listeners
