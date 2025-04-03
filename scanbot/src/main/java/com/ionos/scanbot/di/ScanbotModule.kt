@@ -26,9 +26,16 @@ import com.ionos.scanbot.license.oath.security.algorithm.AesGcmEncryptionAlgorit
 import com.ionos.scanbot.license.oath.security.algorithm.AlgorithmParameterSpecFactoryImpl
 import com.ionos.scanbot.license.oath.security.key.AesGcmKeyRepository
 import com.ionos.scanbot.license.oath.settings.SecureEncryptor
+import com.ionos.scanbot.screens.camera.CameraActivity
+import com.ionos.scanbot.screens.crop.CropActivity
+import com.ionos.scanbot.screens.filter.FilterActivity
+import com.ionos.scanbot.screens.gallery.GalleryActivity
+import com.ionos.scanbot.screens.rearrange.RearrangeActivity
+import com.ionos.scanbot.screens.save.SaveActivity
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
+import dagger.android.ContributesAndroidInjector
 import javax.inject.Singleton
 
 @Module(includes = [ScanbotTracking::class])
@@ -76,4 +83,21 @@ abstract class ScanbotModule {
     @Binds
     abstract fun bindScanbotController(controller: ScanbotControllerImpl): ScanbotController
 
+    @ContributesAndroidInjector
+    internal abstract fun cameraActivity(): CameraActivity
+
+    @ContributesAndroidInjector
+    internal abstract fun cropActivity(): CropActivity
+
+    @ContributesAndroidInjector
+    internal abstract fun filterActivity(): FilterActivity
+
+    @ContributesAndroidInjector
+    internal abstract fun galleryActivity(): GalleryActivity
+
+    @ContributesAndroidInjector
+    internal abstract fun rearrangeActivity(): RearrangeActivity
+
+    @ContributesAndroidInjector
+    internal abstract fun saveActivity(): SaveActivity
 }

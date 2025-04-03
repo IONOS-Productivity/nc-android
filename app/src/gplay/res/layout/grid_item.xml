@@ -28,7 +28,7 @@
         android:backgroundTint="@color/bg_default">
 
         <ImageView
-            android:id="@+id/file_icon"
+            android:id="@+id/icon"
             android:layout_width="@dimen/standard_list_item_size"
             android:layout_height="@dimen/standard_list_item_size"
             android:contentDescription="@null"

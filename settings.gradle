@@ -10,7 +10,6 @@ include ':app'
 include ':appscan'
 include ':scanbot'
 
-
 //includeBuild('../android-common') {
 //    dependencySubstitution {
 //        substitute module('com.github.nextcloud.android-common:ui') using project(':ui')

@@ -36,7 +36,7 @@ class PrivacySettingsActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        viewThemeUtils.ionos.platform.themeSystemBars(this);
+        viewThemeUtils.platform.themeStatusBar(this);
 
         binding.toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
         binding.switchers.analyticsSwitch.setOnCheckedChangeListener { _, isChecked ->

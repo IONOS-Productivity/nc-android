@@ -58,12 +58,11 @@ import com.caverock.androidsvg.SVG;
 import com.elyeproj.loaderviewlibrary.LoaderImageView;
 import com.google.android.material.snackbar.Snackbar;
 import com.ionos.annotation.IonosCustomization;
+import com.ionos.utils.IonosBuildHelper;
 import com.nextcloud.client.account.CurrentAccountProvider;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.network.ClientFactory;
 import com.nextcloud.client.preferences.AppPreferences;
-import com.nextcloud.utils.BuildHelper;
-import com.owncloud.android.BuildConfig;
 import com.owncloud.android.MainApp;
 import com.owncloud.android.R;
 import com.owncloud.android.datamodel.ArbitraryDataProvider;
@@ -493,7 +492,7 @@ public final class DisplayUtils {
             ((View) callContext).setContentDescription(String.valueOf(user.toPlatformAccount().hashCode()));
         }
 
-        if (BuildHelper.GPLAY.equals(BuildConfig.FLAVOR)) {
+        if (IonosBuildHelper.isIonosBuild()) {
             Drawable avatar = ResourcesCompat.getDrawable(resources, R.drawable.account_circle_white, null);
             listener.avatarGenerated(avatar, callContext);
             return;
@@ -826,6 +825,24 @@ public final class DisplayUtils {
         fragmentTransaction.addToBackStack(null);
 
         SortingOrderDialogFragment.newInstance(sortOrder).show(fragmentTransaction, SORTING_ORDER_FRAGMENT);
+    }
+
+    public static @StringRes int getSortOrderStringId(FileSortOrder sortOrder) {
+        switch (sortOrder.name) {
+            case SORT_Z_TO_A_ID:
+                return R.string.menu_item_sort_by_name_z_a;
+            case SORT_NEW_TO_OLD_ID:
+                return R.string.menu_item_sort_by_date_newest_first;
+            case SORT_OLD_TO_NEW_ID:
+                return R.string.menu_item_sort_by_date_oldest_first;
+            case SORT_BIG_TO_SMALL_ID:
+                return R.string.menu_item_sort_by_size_biggest_first;
+            case SORT_SMALL_TO_BIG_ID:
+                return R.string.menu_item_sort_by_size_smallest_first;
+            case SORT_A_TO_Z_ID:
+            default:
+                return R.string.menu_item_sort_by_name_a_z;
+        }
     }
 
     @IonosCustomization

@@ -51,7 +51,6 @@ import com.ionos.annotation.IonosCustomization;
 import com.ionos.privacy.DataProtectionActivity;
 import com.ionos.privacy.PrivacyPreferences;
 import com.nextcloud.client.account.User;
-import com.nextcloud.client.account.UserAccountManager;
 import com.nextcloud.client.di.Injectable;
 import com.nextcloud.client.jobs.upload.FileUploadHelper;
 import com.nextcloud.client.jobs.upload.FileUploadWorker;
@@ -339,7 +338,6 @@ public class ReceiveExternalFilesActivity extends FileActivity
 
         @NonNull
         @Override
-        @IonosCustomization
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             final MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(requireContext());
             builder.setIcon(R.drawable.ic_warning);
@@ -359,7 +357,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
             });
             builder.setNeutralButton(R.string.uploader_wrn_no_account_quit_btn_text,
                                      (dialog, which) -> requireActivity().finish());
-            viewThemeUtils.ionos.dialog.colorMaterialAlertDialogBackground(requireContext(), builder);
+            viewThemeUtils.dialog.colorMaterialAlertDialogBackground(requireContext(), builder);
             return builder.create();
         }
     }
@@ -398,7 +396,6 @@ public class ReceiveExternalFilesActivity extends FileActivity
 
         @NonNull
         @Override
-        @IonosCustomization
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             mFilenameBase = new ArrayList<>();
             mFilenameSuffix = new ArrayList<>();
@@ -474,7 +471,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
 
             setFilename(binding.userInput, selectPos);
             binding.userInput.requestFocus();
-            viewThemeUtils.ionos.material.colorTextInputLayout(binding.userInputContainer);
+            viewThemeUtils.material.colorTextInputLayout(binding.userInputContainer);
 
             setupSpinner(adapter, selectPos, binding.userInput, binding.fileType);
             if (adapter.getCount() == SINGLE_SPINNER_ENTRY) {
@@ -793,7 +790,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
 
             btnChooseFolder.setEnabled(mFile.canWrite());
 
-            viewThemeUtils.ionos.platform.themeSystemBars(this);
+            viewThemeUtils.platform.themeStatusBar(this);
 
             viewThemeUtils.material.colorMaterialButtonPrimaryOutlined(binding.uploaderCancel);
             binding.uploaderCancel.setOnClickListener(this);
@@ -1067,7 +1064,6 @@ public class ReceiveExternalFilesActivity extends FileActivity
         return true;
     }
 
-    @IonosCustomization
     private void setupSearchView(Menu menu) {
         final MenuItem searchMenuItem = menu.findItem(R.id.action_search);
 
@@ -1085,6 +1081,8 @@ public class ReceiveExternalFilesActivity extends FileActivity
                 return false;
             }
         });
+
+        viewThemeUtils.androidx.themeToolbarSearchView(searchView);
     }
 
     @Override

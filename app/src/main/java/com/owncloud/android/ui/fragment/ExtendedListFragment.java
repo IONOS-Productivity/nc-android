@@ -42,6 +42,7 @@ import android.widget.TextView;
 
 import com.google.android.material.button.MaterialButton;
 import com.ionos.annotation.IonosCustomization;
+import com.ionos.utils.IonosBuildHelper;
 import com.nextcloud.client.account.UserAccountManager;
 import com.nextcloud.client.di.Injectable;
 import com.nextcloud.client.preferences.AppPreferences;
@@ -106,6 +107,7 @@ public class ExtendedListFragment extends Fragment implements
     @Inject UserAccountManager accountManager;
     @Inject ViewThemeUtils viewThemeUtils;
 
+    private ScaleGestureDetector mScaleGestureDetector;
     protected SwipeRefreshLayout mRefreshListLayout;
     protected MaterialButton mSortButton;
     protected MaterialButton mSwitchGridViewButton;
@@ -169,10 +171,10 @@ public class ExtendedListFragment extends Fragment implements
     }
 
     @Override
-    @IonosCustomization
     public void onCreateOptionsMenu(Menu menu, @NonNull MenuInflater inflater) {
         final MenuItem item = menu.findItem(R.id.action_search);
         searchView = (SearchView) MenuItemCompat.getActionView(item);
+        viewThemeUtils.androidx.themeToolbarSearchView(searchView);
         closeButton = searchView.findViewById(androidx.appcompat.R.id.search_close_btn);
         searchView.setOnQueryTextListener(this);
         searchView.setOnCloseListener(this);
@@ -317,7 +319,6 @@ public class ExtendedListFragment extends Fragment implements
     }
 
     @Override
-    @IonosCustomization
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log_OC.d(TAG, "onCreateView");
 
@@ -334,6 +335,18 @@ public class ExtendedListFragment extends Fragment implements
 
         mScale = preferences.getGridColumns();
         setGridViewColumns(1f);
+
+        mScaleGestureDetector = new ScaleGestureDetector(MainApp.getAppContext(), new ScaleListener());
+
+        getRecyclerView().setOnTouchListener((view, motionEvent) -> {
+            mScaleGestureDetector.onTouchEvent(motionEvent);
+
+            if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                view.performClick();
+            }
+
+            return false;
+        });
 
         // Pull-down to refresh layout
         mRefreshListLayout = binding.swipeContainingList;
@@ -358,9 +371,14 @@ public class ExtendedListFragment extends Fragment implements
         binding = null;
     }
 
+    @IonosCustomization
     private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
         @Override
         public boolean onScale(ScaleGestureDetector detector) {
+            if (IonosBuildHelper.isIonosBuild()) {
+                return true;
+            }
+
             setGridViewColumns(detector.getScaleFactor());
 
             preferences.setGridColumns(mScale);
@@ -672,8 +690,21 @@ public class ExtendedListFragment extends Fragment implements
     @IonosCustomization
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        mScale = preferences.getGridColumns();
-        setGridViewColumns(1f);
+        if (IonosBuildHelper.isIonosBuild()) {
+            mScale = preferences.getGridColumns();
+            setGridViewColumns(1f);
+            return;
+        }
+
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            maxColumnSize = 10;
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            maxColumnSize = 5;
+        }
+
+        if (isGridEnabled() && getColumnsCount() > maxColumnSize) {
+            ((GridLayoutManager) getRecyclerView().getLayoutManager()).setSpanCount(maxColumnSize);
+        }
     }
 
     protected void setGridSwitchButton() {

@@ -42,6 +42,7 @@ import android.webkit.URLUtil;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.ionos.annotation.IonosCustomization;
 import com.ionos.privacy.PrivacySettingsActivity;
+import com.ionos.utils.IonosBuildHelper;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.account.UserAccountManager;
 import com.nextcloud.client.di.Injectable;
@@ -88,6 +89,7 @@ import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 
 /**
  * An Activity that allows the user to change the application's settings.
@@ -583,11 +585,20 @@ public class SettingsActivity extends PreferenceActivity
             });
         }
     }
-
+    
     @IonosCustomization("internal_two_way_sync was hidden")
     private void setupInternalTwoWaySyncPreference(PreferenceCategory preferenceCategorySync) {
         Preference twoWaySync = findPreference("internal_two_way_sync");
-        preferenceCategorySync.removePreference(twoWaySync);
+        if (IonosBuildHelper.isIonosBuild()) {
+            preferenceCategorySync.removePreference(twoWaySync);
+            return;
+        }
+        
+        twoWaySync.setOnPreferenceClickListener(preference -> {
+            Intent intent = new Intent(this, InternalTwoWaySyncActivity.class);
+            startActivity(intent);
+            return true;
+        });
     }
 
     private void setupBackupPreference() {
@@ -903,16 +914,21 @@ public class SettingsActivity extends PreferenceActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @IonosCustomization
     private void setupActionBar() {
         ActionBar actionBar = getDelegate().getSupportActionBar();
 
         if (actionBar != null) {
-            viewThemeUtils.ionos.platform.themeSystemBars(this);
+            viewThemeUtils.platform.themeStatusBar(this);
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowTitleEnabled(true);
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
-            actionBar.setTitle(R.string.actionbar_settings);
+            if (this.getResources() != null) {
+                viewThemeUtils.androidx.themeActionBar(this,
+                                                       actionBar,
+                                                       getString(R.string.actionbar_settings),
+                                                       ResourcesCompat.getDrawable(this.getResources(),
+                                                                                   R.drawable.ic_arrow_back,
+                                                                                   null));
+            }
         }
     }
 

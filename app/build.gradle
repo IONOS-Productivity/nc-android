@@ -378,9 +378,6 @@ dependencies {
         debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.14'
     }
 
-    implementation reactivex_rxjava2
-    implementation reactivex_rxandroid2
-
     // dependencies for local unit tests
     testImplementation 'junit:junit:4.13.2'
     testImplementation "org.mockito:mockito-core:$mockitoVersion"
