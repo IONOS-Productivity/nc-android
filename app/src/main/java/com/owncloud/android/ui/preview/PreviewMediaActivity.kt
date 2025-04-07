@@ -186,6 +186,9 @@ class PreviewMediaActivity :
         }
     }
 
+    @IonosCustomization("Remove default window insets paddings")
+    override fun isDefaultWindowInsetsHandlingEnabled() = false
+
     private fun sendAudioSessionReleaseBroadcast() {
         val intent = Intent(BackgroundPlayerService.RELEASE_MEDIA_SESSION_BROADCAST_ACTION).apply {
             setPackage(packageName)
@@ -250,6 +253,7 @@ class PreviewMediaActivity :
 
     private fun isFileVideo(): Boolean = MimeTypeUtil.isVideo(file)
 
+    @IonosCustomization("System bar colors")
     private fun configureSystemBars() {
         updateActionBarTitleAndHomeButton(file)
 
@@ -270,13 +274,17 @@ class PreviewMediaActivity :
                         ?.apply { setTint(Color.WHITE) }
                 )
 
-                it.setBackgroundDrawable(ColorDrawable(Color.BLACK))
+                it.setBackgroundDrawable(ColorDrawable(getColor(R.color.exo_bottom_bar_background)))
+
+                viewThemeUtils.ionos.platform.themeSystemBars(this, getColor(R.color.transparent))
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    window.isNavigationBarContrastEnforced = false
+                }
+
+            } else {
+                viewThemeUtils.ionos.platform.themeSystemBars(this)
             }
         }
-
-        viewThemeUtils.ionos.platform.themeSystemBars(
-            this
-        )
     }
 
     private fun showProgressLayout() {
@@ -498,26 +506,21 @@ class PreviewMediaActivity :
                     .displayCutout()
             )
 
-            binding.materialToolbar.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                topMargin = insets.top
-            }
             exoControls.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                bottomMargin = insets.bottom
-            }
-            binding.audioControllerView.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                bottomMargin = insets.bottom
+                height = insets.bottom + resources.getDimensionPixelSize(R.dimen.exo_bottom_bar_height)
             }
             exoProgress.updateLayoutParams<ViewGroup.MarginLayoutParams> {
                 bottomMargin = insets.bottom + progressBottomMargin
             }
             exoControls.updatePadding(left = insets.left, right = insets.right)
-            binding.audioControllerView.updatePadding(left = insets.left, right = insets.right)
+            binding.audioControllerView.updatePadding(left = insets.left, right = insets.right, bottom = insets.bottom)
             exoProgress.updatePadding(left = insets.left, right = insets.right)
-            binding.materialToolbar.updatePadding(left = insets.left, right = insets.right)
+            binding.materialToolbar.updatePadding(left = insets.left, top = insets.top, right = insets.right)
             WindowInsetsCompat.CONSUMED
         }
     }
 
+    @IonosCustomization("Hide cantrolls animation fix")
     private fun setupVideoView() {
         initWindowInsetsController()
         val type = WindowInsetsCompat.Type.systemBars()
@@ -532,6 +535,12 @@ class PreviewMediaActivity :
                     } else if (visibility == View.GONE) {
                         windowInsetsController.hide(type)
                         supportActionBar!!.hide()
+                    }
+                    val bottomBarMainControls = it.findViewById<FrameLayout>(R.id.exo_bottom_bar_main_controls)
+                    if (it.isControllerFullyVisible) {
+                        bottomBarMainControls?.visibility = View.VISIBLE
+                    } else {
+                        bottomBarMainControls?.visibility = View.INVISIBLE
                     }
                 }
             )
