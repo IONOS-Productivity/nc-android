@@ -6,11 +6,12 @@
   ~ SPDX-FileCopyrightText: 2022 Nextcloud GmbH
   ~ SPDX-License-Identifier: AGPL-3.0-or-later OR GPL-2.0-only
 -->
-<resources>
+<resources xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <style name="BaseTheme.ownCloud.Toolbar" parent="Theme.Material3.Light">
         <item name="alertDialogTheme">@style/ownCloud.AlertDialog</item>
         <item name="android:alertDialogTheme">@style/Theme.ownCloud.Dialog</item>
+        <item name="materialAlertDialogTheme">@style/Theme.ownCloud.Dialog</item>
         <item name="android:colorBackground">@color/bg_default</item>
         <item name="android:windowBackground">@color/bg_default</item>
         <item name="colorAccent">@color/color_accent</item>
@@ -21,9 +22,26 @@
         <item name="windowActionModeOverlay">true</item>
         <item name="windowNoTitle">true</item>
         <item name="textInputStyle">@style/Widget.App.TextInputLayout</item>
-        <item name="popupMenuStyle">@style/Nextcloud.Widget.PopupMenu</item>
-        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.App.BottomSheetDialog</item>
+        <item name="popupMenuStyle">@style/Generic.Nextcloud.Widget.PopupMenu</item>
+        <item name="bottomSheetDialogTheme">@style/Generic.ThemeOverlay.App.BottomSheetDialog</item>
         <item name="actionModeStyle">@style/App.ActionMode</item>
+
+        <item name="snackbarStyle" app:ionosCustomization="">@style/Widget.App.Snackbar</item>
+        <item name="snackbarButtonStyle" app:ionosCustomization="">@style/Widget.App.SnackbarButton</item>
+        <item name="snackbarTextViewStyle" app:ionosCustomization="">@style/Widget.App.SnackbarTextView</item>
+
+        <item name="actionModeCloseDrawable" app:ionosCustomization="">@drawable/ic_arrow_back</item>
+
+        <item name="android:textColor" app:ionosCustomization="">@color/text_color</item>
+        <item name="android:textColorSecondary" app:ionosCustomization="">@color/secondary_text_color</item>
+
+        <!-- Popup background color -->
+        <!--<item name="popupMenuBackground" app:ionosCustomization="">@drawable/m3_popupmenu_background_overlay</item>-->
+        <item name="colorSurfaceContainer" app:ionosCustomization="">@color/popup_background_color</item>
+
+        <item name="scanbotTheme" app:ionosCustomization="">@style/ScanbotTheme</item>
+        <item name="scanbotOutlinedButtonTheme" app:ionosCustomization="">@style/Theme.Dialog.Button.OutlinedButton</item>
+        <item name="scanbotFilledTonalButtonTheme" app:ionosCustomization="">@style/Theme.Dialog.IconButton.Filled.Tonal</item>
     </style>
 
     <style name="Theme.ownCloud.Toolbar.AppWidgetContainerParent" parent="@android:style/Theme.DeviceDefault">
@@ -40,4 +58,10 @@
         <!-- Apply padding to avoid the content of the widget colliding with the rounded corners -->
         <item name="appWidgetPadding">0dp</item>
     </style>
+
+    <style name="Widget.App.Snackbar" parent="Widget.MaterialComponents.Snackbar" app:ionosCustomization="" />
+
+    <style name="Widget.App.SnackbarButton" parent="Widget.MaterialComponents.Button.TextButton.Snackbar" app:ionosCustomization="" />
+
+    <style name="Widget.App.SnackbarTextView" parent="Widget.MaterialComponents.Snackbar.TextView" app:ionosCustomization="" />
 </resources>

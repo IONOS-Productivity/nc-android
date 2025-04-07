@@ -39,6 +39,9 @@ import android.text.TextUtils;
 import android.view.WindowManager;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.ionos.analycis.AnalyticsManager;
+import com.ionos.annotation.IonosCustomization;
+import com.ionos.privacy.PrivacyPreferences;
 import com.nextcloud.appReview.InAppReviewHelper;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.account.UserAccountManager;
@@ -89,6 +92,9 @@ import com.owncloud.android.utils.PermissionUtil;
 import com.owncloud.android.utils.ReceiversHelper;
 import com.owncloud.android.utils.SecurityUtils;
 import com.owncloud.android.utils.theme.ViewThemeUtils;
+import com.ionos.scanbot.di.ScanbotComponent;
+import com.ionos.scanbot.di.ScanbotComponentProvider;
+import com.ionos.scanbot.initializer.ScanbotInitializer;
 
 import org.conscrypt.Conscrypt;
 import org.greenrobot.eventbus.EventBus;
@@ -128,7 +134,8 @@ import static com.owncloud.android.ui.activity.ContactsPreferenceActivity.PREFER
  * Main Application of the project.
  * Contains methods to build the "static" strings. These strings were before constants in different classes.
  */
-public class MainApp extends Application implements HasAndroidInjector, NetworkChangeListener {
+@IonosCustomization("ScanbotComponentProvider")
+public class MainApp extends Application implements HasAndroidInjector, NetworkChangeListener, ScanbotComponentProvider {
     public static final OwnCloudVersion OUTDATED_SERVER_VERSION = NextcloudVersion.nextcloud_28;
     public static final OwnCloudVersion MINIMUM_SUPPORTED_SERVER_VERSION = OwnCloudVersion.nextcloud_18;
 
@@ -146,6 +153,12 @@ public class MainApp extends Application implements HasAndroidInjector, NetworkC
     protected AppPreferences preferences;
 
     @Inject
+    protected PrivacyPreferences privacyPreferences;
+
+    @Inject
+    protected AnalyticsManager analyticsManager;
+
+    @Inject
     protected DispatchingAndroidInjector<Object> dispatchingAndroidInjector;
 
     @Inject
@@ -156,6 +169,9 @@ public class MainApp extends Application implements HasAndroidInjector, NetworkC
 
     @Inject
     protected OnboardingService onboarding;
+
+    @Inject
+    ScanbotInitializer scanbotInitializer;
 
     @Inject
     ConnectivityService connectivityService;
@@ -200,6 +216,8 @@ public class MainApp extends Application implements HasAndroidInjector, NetworkC
     private boolean mBound;
 
     private static AppComponent appComponent;
+
+    private ScanbotComponent scanbotComponent;
 
     private NetworkChangeReceiver networkChangeReceiver;
 
@@ -298,6 +316,7 @@ public class MainApp extends Application implements HasAndroidInjector, NetworkC
 
 
     @SuppressFBWarnings("ST")
+    @IonosCustomization("Scanbot, show hidden files")
     @Override
     public void onCreate() {
         enableStrictMode();
@@ -379,6 +398,11 @@ public class MainApp extends Application implements HasAndroidInjector, NetworkC
         }
 
         registerGlobalPassCodeProtection();
+
+        scanbotInitializer.initialize();
+        preferences.setShowHiddenFilesEnabled(true);
+        analyticsManager.setEnabled(privacyPreferences.isAnalyticsEnabled());
+
         networkChangeReceiver = new NetworkChangeReceiver(this, connectivityService);
         registerNetworkChangeReceiver();
 
@@ -433,6 +457,14 @@ public class MainApp extends Application implements HasAndroidInjector, NetworkC
             setProxyConfig();
         }
     };
+
+    @Override
+    public ScanbotComponent getScanbotComponent() {
+        if (this.scanbotComponent == null) {
+            this.scanbotComponent = appComponent.scanbotComponent();
+        }
+        return this.scanbotComponent;
+    }
 
     private void setProxyConfig() {
         if (!isClientBrandedPlus()) {

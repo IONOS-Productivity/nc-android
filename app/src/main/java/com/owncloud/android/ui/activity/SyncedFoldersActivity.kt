@@ -26,6 +26,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.core.Clock
 import com.nextcloud.client.device.PowerManagementService
 import com.nextcloud.client.di.Injectable
@@ -215,13 +216,14 @@ class SyncedFoldersActivity :
         return true
     }
 
+    @IonosCustomization
     fun buildPowerCheckDialog(): AlertDialog {
         val builder = MaterialAlertDialogBuilder(this)
             .setPositiveButton(R.string.common_ok) { dialog, _ -> dialog.dismiss() }
             .setTitle(R.string.autoupload_disable_power_save_check)
             .setMessage(getString(R.string.power_save_check_dialog_message))
 
-        viewThemeUtils.dialog.colorMaterialAlertDialogBackground(this, builder)
+        viewThemeUtils.ionos.dialog.colorMaterialAlertDialogBackground(this, builder)
 
         return builder.create()
     }
@@ -246,7 +248,7 @@ class SyncedFoldersActivity :
             viewThemeUtils
         )
         binding.emptyList.emptyListIcon.setImageResource(R.drawable.nav_synced_folders)
-        viewThemeUtils.material.colorMaterialButtonPrimaryFilled(binding.emptyList.emptyListViewAction)
+        viewThemeUtils.ionos.material.colorMaterialButtonPrimaryFilled(binding.emptyList.emptyListViewAction)
         val lm = GridLayoutManager(this, gridWidth)
         adapter.setLayoutManager(lm)
         val spacing = resources.getDimensionPixelSize(R.dimen.media_grid_spacing)
@@ -802,6 +804,8 @@ class SyncedFoldersActivity :
         item.setExcludeHidden(excludeHidden)
     }
 
+    @IonosCustomization("StackOverflow fix")
+    private var externalStoragePermissionRequestCount = 0
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         when (requestCode) {
             PermissionUtil.PERMISSIONS_EXTERNAL_STORAGE -> {
@@ -809,12 +813,15 @@ class SyncedFoldersActivity :
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // permission was granted
                     load(getItemsDisplayedPerFolder(), true)
+                } else if (externalStoragePermissionRequestCount++ == 0) {
+                    PermissionUtil.requestExternalStoragePermission(this, viewThemeUtils, true)
                 }
             }
             else -> super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         }
     }
 
+    @IonosCustomization("Buttons style")
     private fun showBatteryOptimizationInfo() {
         if (powerManagementService.isPowerSavingExclusionAvailable || checkIfBatteryOptimizationEnabled()) {
             val alertDialogBuilder = MaterialAlertDialogBuilder(this, R.style.Theme_ownCloud_Dialog)
@@ -835,7 +842,7 @@ class SyncedFoldersActivity :
                 .setIcon(R.drawable.ic_battery_alert)
             if (lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
                 val alertDialog = alertDialogBuilder.show()
-                viewThemeUtils.platform.colorTextButtons(
+                viewThemeUtils.ionos.platform.colorTextButtons(
                     alertDialog.getButton(AlertDialog.BUTTON_POSITIVE),
                     alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL)
                 )

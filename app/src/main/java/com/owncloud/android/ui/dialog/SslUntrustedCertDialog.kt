@@ -22,6 +22,7 @@ import android.webkit.SslErrorHandler
 import android.widget.Button
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.di.Injectable
 import com.owncloud.android.R
 import com.owncloud.android.databinding.SslUntrustedCertLayoutBinding
@@ -73,6 +74,7 @@ open class SslUntrustedCertDialog : DialogFragment(), Injectable {
         binding = null
     }
 
+    @IonosCustomization
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         Log_OC.d(TAG, "onCreateDialog, savedInstanceState is $savedInstanceState")
 
@@ -103,7 +105,7 @@ open class SslUntrustedCertDialog : DialogFragment(), Injectable {
             setView(layoutBinding.getRoot())
         }
 
-        viewThemeUtils?.dialog?.colorMaterialAlertDialogBackground(requireContext(), builder)
+        viewThemeUtils?.ionos?.dialog?.colorMaterialAlertDialogBackground(requireContext(), builder)
 
         return builder.create().apply {
             requestWindowFeature(Window.FEATURE_NO_TITLE)
