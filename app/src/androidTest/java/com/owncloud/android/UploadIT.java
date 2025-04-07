@@ -8,6 +8,8 @@
  */
 package com.owncloud.android;
 
+import android.os.NetworkOnMainThreadException;
+
 import com.nextcloud.client.account.UserAccountManagerImpl;
 import com.nextcloud.client.device.BatteryStatus;
 import com.nextcloud.client.device.PowerManagementService;
@@ -56,6 +58,11 @@ public class UploadIT extends AbstractOnServerIT {
                                   targetContext.getContentResolver());
 
     private ConnectivityService connectivityServiceMock = new ConnectivityService() {
+        @Override
+        public void isNetworkAndServerAvailable(@NonNull GenericCallback<Boolean> callback) {
+
+        }
+
         @Override
         public boolean isConnected() {
             return false;
@@ -275,6 +282,11 @@ public class UploadIT extends AbstractOnServerIT {
     public void testUploadOnWifiOnlyButNoWifi() {
         ConnectivityService connectivityServiceMock = new ConnectivityService() {
             @Override
+            public void isNetworkAndServerAvailable(@NonNull GenericCallback<Boolean> callback) {
+
+            }
+
+            @Override
             public boolean isConnected() {
                 return false;
             }
@@ -358,6 +370,11 @@ public class UploadIT extends AbstractOnServerIT {
     @Test
     public void testUploadOnWifiOnlyButMeteredWifi() {
         ConnectivityService connectivityServiceMock = new ConnectivityService() {
+            @Override
+            public void isNetworkAndServerAvailable(@NonNull GenericCallback<Boolean> callback) {
+
+            }
+
             @Override
             public boolean isConnected() {
                 return false;
@@ -498,7 +515,7 @@ public class UploadIT extends AbstractOnServerIT {
 
         OCFile ocFile = null;
         for (OCFile f : files) {
-            if (f.getFileName().equals("metadata.jpg")) {
+            if ("metadata.jpg".equals(f.getFileName())) {
                 ocFile = f;
                 break;
             }

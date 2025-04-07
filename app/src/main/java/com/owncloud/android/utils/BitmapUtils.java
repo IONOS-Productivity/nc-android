@@ -15,6 +15,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapFactory.Options;
 import android.graphics.Canvas;
+import android.graphics.ImageDecoder;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
@@ -24,6 +25,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.widget.ImageView;
 
 import com.owncloud.android.MainApp;
@@ -33,9 +35,9 @@ import com.owncloud.android.lib.resources.users.Status;
 import com.owncloud.android.lib.resources.users.StatusType;
 import com.owncloud.android.ui.StatusDrawable;
 
-import org.apache.commons.codec.binary.Hex;
 
-import java.nio.charset.Charset;
+import java.io.File;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Locale;
@@ -57,6 +59,22 @@ public final class BitmapUtils {
         // utility class -> private constructor
     }
 
+    public static Bitmap addColorFilter(Bitmap originalBitmap, int filterColor, int opacity) {
+        Bitmap resultBitmap = originalBitmap.copy(Bitmap.Config.ARGB_8888, true);
+        Canvas canvas = new Canvas(resultBitmap);
+        canvas.drawBitmap(resultBitmap, 0, 0, null);
+
+        Paint paint = new Paint();
+        paint.setColor(filterColor);
+
+        paint.setAlpha(opacity);
+
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_ATOP));
+        canvas.drawRect(0, 0, resultBitmap.getWidth(), resultBitmap.getHeight(), paint);
+
+        return resultBitmap;
+    }
+
     /**
      * Decodes a bitmap from a file containing it minimizing the memory use, known that the bitmap will be drawn in a
      * surface of reqWidth x reqHeight
@@ -67,17 +85,25 @@ public final class BitmapUtils {
      * @return decoded bitmap
      */
     public static Bitmap decodeSampledBitmapFromFile(String srcPath, int reqWidth, int reqHeight) {
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            // For API 28 and above, use ImageDecoder
+            try {
+                return ImageDecoder.decodeBitmap(ImageDecoder.createSource(new File(srcPath)),
+                                                 (decoder, info, source) -> {
+                                                     // Set the target size
+                                                     decoder.setTargetSize(reqWidth, reqHeight);
+                                                 });
+            } catch (Exception exception) {
+                Log_OC.e("BitmapUtil", "Error decoding the bitmap from file: " + srcPath + ", exception: " + exception.getMessage());
+            }
+        }
         // set desired options that will affect the size of the bitmap
         final Options options = new Options();
-        options.inScaled = true;
-        options.inPurgeable = true;
-        options.inPreferQualityOverSpeed = false;
-        options.inMutable = false;
 
         // make a false load of the bitmap to get its dimensions
         options.inJustDecodeBounds = true;
 
+        // FIXME after auto-rename can't generate thumbnail from localPath
         BitmapFactory.decodeFile(srcPath, options);
 
         // calculate factor to subsample the bitmap
@@ -88,7 +114,44 @@ public final class BitmapUtils {
         return BitmapFactory.decodeFile(srcPath, options);
     }
 
+    /**
+     * Decodes a bitmap from a file containing it minimizing the memory use. Scales image to screen size.
+     *
+     * @param storagePath   Absolute path to the file containing the image.
+     */
+    public static Bitmap retrieveBitmapFromFile(String storagePath, int minWidth, int minHeight){
+        // Get the original dimensions of the bitmap
+        var bitmapResolution = getImageResolution(storagePath);
+        var originalWidth = bitmapResolution[0];
+        var originalHeight = bitmapResolution[1];
 
+        // Detect Orientation and swap height/width if the image is to be rotated
+        var shouldRotate = detectRotateImage(storagePath);
+        if (shouldRotate) {
+            // Swap the width and height
+            var tempWidth = originalWidth;
+            originalWidth = originalHeight;
+            originalHeight = tempWidth;
+        }
+
+        var bitmapResult = decodeSampledBitmapFromFile(
+            storagePath, originalWidth, originalHeight);
+
+        // Calculate the scaling factors based on screen dimensions
+        var widthScaleFactor = (float) minWidth/ bitmapResult.getWidth();
+        var heightScaleFactor = (float) minHeight / bitmapResult.getHeight();
+
+        // Use the smaller scaling factor to maintain aspect ratio
+        var scaleFactor = Math.min(widthScaleFactor, heightScaleFactor);
+
+        // Calculate the new scaled width and height
+        var scaledWidth = (int) (bitmapResult.getWidth() * scaleFactor);
+        var scaledHeight = (int) (bitmapResult.getHeight() * scaleFactor);
+
+        bitmapResult = scaleBitmap(bitmapResult,scaledWidth,scaledHeight);
+
+        return bitmapResult;
+    }
     /**
      * Calculates a proper value for options.inSampleSize in order to decode a Bitmap minimizing the memory overload and
      * covering a target surface of reqWidth x reqHeight if the original image is big enough.
@@ -137,6 +200,18 @@ public final class BitmapUtils {
     }
 
     /**
+     * scales a given bitmap depending on the given size parameters.
+     *
+     * @param bitmap the bitmap to be scaled
+     * @param width  the width
+     * @param height the height
+     * @return the scaled bitmap
+     */
+    public static Bitmap scaleBitmap(Bitmap bitmap, int width, int height) {
+        return Bitmap.createScaledBitmap(bitmap, width, height, true);
+    }
+
+    /**
      * Rotate bitmap according to EXIF orientation. Cf. http://www.daveperrett.com/articles/2012/07/28/exif-orientation-handling-is-a-ghetto/
      *
      * @param bitmap      Bitmap to be rotated
@@ -150,50 +225,96 @@ public final class BitmapUtils {
             ExifInterface exifInterface = new ExifInterface(storagePath);
             int orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1);
 
-            Matrix matrix = new Matrix();
+            if (orientation != ExifInterface.ORIENTATION_NORMAL) {
+                Matrix matrix = new Matrix();
+                switch (orientation) {
+                    // 2
+                    case ExifInterface.ORIENTATION_FLIP_HORIZONTAL: {
+                        matrix.postScale(-1.0f, 1.0f);
+                        break;
+                    }
+                    // 3
+                    case ExifInterface.ORIENTATION_ROTATE_180: {
+                        matrix.postRotate(180);
+                        break;
+                    }
+                    // 4
+                    case ExifInterface.ORIENTATION_FLIP_VERTICAL: {
+                        matrix.postScale(1.0f, -1.0f);
+                        break;
+                    }
+                    // 5
+                    case ExifInterface.ORIENTATION_TRANSPOSE: {
+                        matrix.postRotate(-90);
+                        matrix.postScale(1.0f, -1.0f);
+                        break;
+                    }
+                    // 6
+                    case ExifInterface.ORIENTATION_ROTATE_90: {
+                        matrix.postRotate(90);
+                        break;
+                    }
+                    // 7
+                    case ExifInterface.ORIENTATION_TRANSVERSE: {
+                        matrix.postRotate(90);
+                        matrix.postScale(1.0f, -1.0f);
+                        break;
+                    }
+                    // 8
+                    case ExifInterface.ORIENTATION_ROTATE_270: {
+                        matrix.postRotate(270);
+                        break;
+                    }
+                }
 
-            // 1: nothing to do
-
-            // 2
-            if (orientation == ExifInterface.ORIENTATION_FLIP_HORIZONTAL) {
-                matrix.postScale(-1.0f, 1.0f);
-            }
-            // 3
-            else if (orientation == ExifInterface.ORIENTATION_ROTATE_180) {
-                matrix.postRotate(180);
-            }
-            // 4
-            else if (orientation == ExifInterface.ORIENTATION_FLIP_VERTICAL) {
-                matrix.postScale(1.0f, -1.0f);
-            }
-            // 5
-            else if (orientation == ExifInterface.ORIENTATION_TRANSPOSE) {
-                matrix.postRotate(-90);
-                matrix.postScale(1.0f, -1.0f);
-            }
-            // 6
-            else if (orientation == ExifInterface.ORIENTATION_ROTATE_90) {
-                matrix.postRotate(90);
-            }
-            // 7
-            else if (orientation == ExifInterface.ORIENTATION_TRANSVERSE) {
-                matrix.postRotate(90);
-                matrix.postScale(1.0f, -1.0f);
-            }
-            // 8
-            else if (orientation == ExifInterface.ORIENTATION_ROTATE_270) {
-                matrix.postRotate(270);
-            }
-
-            // Rotate the bitmap
-            resultBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-            if (!resultBitmap.equals(bitmap)) {
-                bitmap.recycle();
+                // Rotate the bitmap
+                resultBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+                if (!resultBitmap.equals(bitmap)) {
+                    bitmap.recycle();
+                }
             }
         } catch (Exception exception) {
             Log_OC.e("BitmapUtil", "Could not rotate the image: " + storagePath);
         }
         return resultBitmap;
+    }
+
+    /**
+     * Detect if Image will be rotated according to EXIF orientation. Cf. http://www.daveperrett.com/articles/2012/07/28/exif-orientation-handling-is-a-ghetto/
+     *
+     * @param storagePath Path to source file of bitmap. Needed for EXIF information.
+     * @return true if image's orientation determines it will be rotated to where height and width change
+     */
+    public static boolean detectRotateImage(String storagePath) {
+        try {
+            ExifInterface exifInterface = new ExifInterface(storagePath);
+            int orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1);
+
+            if (orientation != ExifInterface.ORIENTATION_NORMAL) {
+                switch (orientation) {
+                    // 5
+                    case ExifInterface.ORIENTATION_TRANSPOSE: {
+                        return true;
+                    }
+                    // 6
+                    case ExifInterface.ORIENTATION_ROTATE_90: {
+                        return true;
+                    }
+                    // 7
+                    case ExifInterface.ORIENTATION_TRANSVERSE: {
+                        return true;
+                    }
+                    // 8
+                    case ExifInterface.ORIENTATION_ROTATE_270: {
+                        return true;
+                    }
+                }
+            }
+        }
+        catch (Exception exception) {
+            Log_OC.e("BitmapUtil", "Could not read orientation at: " + storagePath);
+        }
+        return false;
     }
 
     public static int[] getImageResolution(String srcPath) {
@@ -206,8 +327,8 @@ public final class BitmapUtils {
     public static Color usernameToColor(String name) {
         String hash = name.toLowerCase(Locale.ROOT);
 
-        // already a md5 hash?
-        if (!hash.matches("([0-9a-f]{4}-?){8}$")) {
+        // Check if the input is already a valid MD5 hash (32 hex characters)
+        if (hash.length() != 32 || !hash.matches("[0-9a-f]+")) {
             try {
                 hash = md5(hash);
             } catch (NoSuchAlgorithmException e) {
@@ -228,22 +349,15 @@ public final class BitmapUtils {
 
     private static int hashToInt(String hash, int maximum) {
         int finalInt = 0;
-        int[] result = new int[hash.length()];
 
-        // splitting evenly the string
+        // Sum the values of the hexadecimal digits
         for (int i = 0; i < hash.length(); i++) {
-            // chars in md5 goes up to f, hex: 16
-            result[i] = Integer.parseInt(String.valueOf(hash.charAt(i)), 16) % 16;
+            // Efficient hex char-to-int conversion
+            finalInt += Character.digit(hash.charAt(i), 16);
         }
 
-        // adds up all results
-        for (int value : result) {
-            finalInt += value;
-        }
-
-        // chars in md5 goes up to f, hex:16
-        // make sure we're always using int in our operation
-        return Integer.parseInt(String.valueOf(Integer.parseInt(String.valueOf(finalInt), 10) % maximum), 10);
+        // Return the sum modulo maximum
+        return finalInt % maximum;
     }
 
     private static Color[] generateColors(int steps) {
@@ -256,13 +370,9 @@ public final class BitmapUtils {
         Color[] palette3 = mixPalette(steps, blue, red);
 
         Color[] resultPalette = new Color[palette1.length + palette2.length + palette3.length];
-        System.arraycopy(palette1, 0, resultPalette, 0, palette1.length);
-        System.arraycopy(palette2, 0, resultPalette, palette1.length, palette2.length);
-        System.arraycopy(palette3,
-                         0,
-                         resultPalette,
-                         palette1.length + palette2.length,
-                         palette1.length);
+        System.arraycopy(palette1, 0, resultPalette, 0, steps);
+        System.arraycopy(palette2, 0, resultPalette, steps, steps);
+        System.arraycopy(palette3, 0, resultPalette, steps * 2, steps);
 
         return resultPalette;
     }
@@ -325,15 +435,21 @@ public final class BitmapUtils {
 
         @Override
         public int hashCode() {
-            return r * 10000 + g * 1000 + b;
+            return (r << 16) + (g << 8) + b;
         }
     }
 
     public static String md5(String string) throws NoSuchAlgorithmException {
         MessageDigest md5 = MessageDigest.getInstance("MD5");
-        md5.update(string.getBytes(Charset.defaultCharset()));
+        // Use UTF-8 for consistency
+        byte[] hashBytes = md5.digest(string.getBytes(StandardCharsets.UTF_8));
 
-        return new String(Hex.encodeHex(md5.digest()));
+        StringBuilder hexString = new StringBuilder(32);
+        for (byte b : hashBytes) {
+            // Convert each byte to a 2-digit hex string
+            hexString.append(String.format("%02x", b));
+        }
+        return hexString.toString();
     }
 
     /**
@@ -417,6 +533,14 @@ public final class BitmapUtils {
         drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
         drawable.draw(canvas);
         return bitmap;
+    }
+
+    public static void setRoundedBitmapAccordingToListType(boolean gridView, Bitmap thumbnail, ImageView thumbnailView) {
+        if (gridView) {
+            BitmapUtils.setRoundedBitmapForGridMode(thumbnail, thumbnailView);
+        } else {
+            BitmapUtils.setRoundedBitmap(thumbnail, thumbnailView);
+        }
     }
 
     public static void setRoundedBitmap(Bitmap thumbnail, ImageView imageView) {

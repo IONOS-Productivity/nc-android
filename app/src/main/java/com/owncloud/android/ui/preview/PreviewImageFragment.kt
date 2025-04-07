@@ -43,6 +43,7 @@ import com.caverock.androidsvg.SVG
 import com.caverock.androidsvg.SVGParseException
 import com.github.chrisbanes.photoview.PhotoView
 import com.google.android.material.snackbar.Snackbar
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.account.UserAccountManager
 import com.nextcloud.client.di.Injectable
 import com.nextcloud.client.jobs.BackgroundJobManager
@@ -64,7 +65,6 @@ import com.owncloud.android.ui.fragment.FileFragment
 import com.owncloud.android.ui.preview.PreviewMediaFragment.Companion.newInstance
 import com.owncloud.android.utils.BitmapUtils
 import com.owncloud.android.utils.DisplayUtils
-import com.owncloud.android.utils.MimeType
 import com.owncloud.android.utils.MimeTypeUtil
 import com.owncloud.android.utils.theme.ViewThemeUtils
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
@@ -263,6 +263,7 @@ class PreviewImageFragment : FileFragment(), Injectable {
         }
     }
 
+    @IonosCustomization
     private fun adjustResizedImage(thumbnail: Bitmap?, width: Int, height: Int) {
         var resizedImage = getResizedBitmap(file, width, height)
 
@@ -271,7 +272,7 @@ class PreviewImageFragment : FileFragment(), Injectable {
             binding.image.visibility = View.VISIBLE
             binding.emptyListView.visibility = View.GONE
             binding.emptyListProgress.visibility = View.GONE
-            binding.image.setBackgroundColor(resources.getColor(R.color.background_color_inverse))
+            binding.image.setBackgroundColor(resources.getColor(R.color.preview_image_background))
 
             bitmap = resizedImage
         } else {
@@ -287,7 +288,7 @@ class PreviewImageFragment : FileFragment(), Injectable {
                         containerActivity.storageManager,
                         connectivityService,
                         containerActivity.storageManager.user,
-                        resources.getColor(R.color.background_color_inverse)
+                        resources.getColor(R.color.preview_image_background)
                     )
                 if (resizedImage == null) {
                     resizedImage = thumbnail
@@ -529,11 +530,7 @@ class PreviewImageFragment : FileFragment(), Injectable {
                         }
 
                         try {
-                            bitmapResult = BitmapUtils.decodeSampledBitmapFromFile(
-                                storagePath,
-                                minWidth,
-                                minHeight
-                            )
+                            bitmapResult = BitmapUtils.retrieveBitmapFromFile(storagePath, minWidth, minHeight)
 
                             if (isCancelled) {
                                 return LoadImage(bitmapResult, null, ocFile)
@@ -543,11 +540,6 @@ class PreviewImageFragment : FileFragment(), Injectable {
                                 mErrorMessageId = R.string.preview_image_error_unknown_format
                                 Log_OC.e(TAG, "File could not be loaded as a bitmap: $storagePath")
                                 break
-                            } else {
-                                if (MimeType.JPEG.equals(ocFile.mimeType, ignoreCase = true)) {
-                                    // Rotate image, obeying exif tag.
-                                    bitmapResult = BitmapUtils.rotateImage(bitmapResult, storagePath)
-                                }
                             }
                         } catch (e: OutOfMemoryError) {
                             mErrorMessageId = R.string.common_error_out_memory
@@ -599,6 +591,7 @@ class PreviewImageFragment : FileFragment(), Injectable {
             }
         }
 
+        @IonosCustomization
         private fun showLoadedImage(result: LoadImage?) {
             val imageView = imageViewRef.get()
             val bitmap = result?.bitmap
@@ -640,7 +633,7 @@ class PreviewImageFragment : FileFragment(), Injectable {
             val progressView = progressViewRef.get()
             progressView?.visibility = View.GONE
 
-            imageView.setBackgroundColor(resources.getColor(R.color.background_color_inverse))
+            imageView.setBackgroundColor(resources.getColor(R.color.preview_image_background))
             imageView.visibility = View.VISIBLE
         }
     }
@@ -721,28 +714,14 @@ class PreviewImageFragment : FileFragment(), Injectable {
         binding.emptyListProgress.visibility = View.GONE
     }
 
-    fun setErrorPreviewMessage() {
+    fun handleUnsupportedImage() {
         try {
-            if (activity != null) {
+            (activity as? PreviewImageActivity)?.requestForDownload(file) ?: context?.let {
                 Snackbar.make(
                     binding.emptyListView,
-                    R.string.resized_image_not_possible_download,
+                    resources.getString(R.string.could_not_download_image),
                     Snackbar.LENGTH_INDEFINITE
-                )
-                    .setAction(
-                        R.string.common_yes
-                    ) { v: View? ->
-                        val activity = activity as PreviewImageActivity?
-                        if (activity != null) {
-                            activity.requestForDownload(file)
-                        } else if (context != null) {
-                            Snackbar.make(
-                                binding.emptyListView,
-                                resources.getString(R.string.could_not_download_image),
-                                Snackbar.LENGTH_INDEFINITE
-                            ).show()
-                        }
-                    }.show()
+                ).show()
             }
         } catch (e: IllegalArgumentException) {
             Log_OC.d(TAG, e.message)

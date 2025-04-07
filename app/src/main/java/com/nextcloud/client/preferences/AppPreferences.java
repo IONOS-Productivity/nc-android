@@ -403,4 +403,13 @@ public interface AppPreferences {
     
     boolean isAutoUploadGPlayWarningShown();
     void setAutoUploadGPlayWarningShown(boolean value);
+
+    boolean isAutoUploadGPlayWarning2Shown();
+    void setAutoUploadGPlayWarning2Shown(boolean value);
+
+    boolean isAutoUploadGPlayNotificationShown();
+    void setAutoUploadGPlayNotificationShown(boolean value);
+
+    int getPassCodeDelay();
+    void setPassCodeDelay(int value);
 }

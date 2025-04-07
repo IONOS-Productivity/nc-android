@@ -12,10 +12,11 @@ package com.owncloud.android.ui.fragment;
 
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.ionos.annotation.IonosCustomization;
+import com.nextcloud.utils.mdm.MDMConfig;
 import com.owncloud.android.databinding.FileDetailsSharingMenuBottomSheetFragmentBinding;
 import com.owncloud.android.lib.resources.shares.OCShare;
 import com.owncloud.android.lib.resources.shares.ShareType;
@@ -42,22 +43,13 @@ public class FileDetailSharingMenuBottomSheetDialog extends BottomSheetDialog {
     }
 
     @Override
+    @IonosCustomization("Remove custom window LayoutParams. Disable icon tinting")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = FileDetailsSharingMenuBottomSheetFragmentBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        if (getWindow() != null) {
-            getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        }
-
-        viewThemeUtils.platform.themeDialog(binding.getRoot());
-
-        viewThemeUtils.platform.colorImageView(binding.menuIconAddAnotherLink);
-        viewThemeUtils.platform.colorImageView(binding.menuIconAdvancedPermissions);
-        viewThemeUtils.platform.colorImageView(binding.menuIconSendLink);
-        viewThemeUtils.platform.colorImageView(binding.menuIconUnshare);
-        viewThemeUtils.platform.colorImageView(binding.menuIconSendNewEmail);
+        viewThemeUtils.ionos.platform.themeDialog(binding.getRoot());
 
         updateUI();
 
@@ -71,16 +63,15 @@ public class FileDetailSharingMenuBottomSheetDialog extends BottomSheetDialog {
 
     private void updateUI() {
         if (ocShare.getShareType() == ShareType.PUBLIC_LINK) {
-            binding.menuShareAddAnotherLink.setVisibility(View.VISIBLE);
-            binding.menuShareSendLink.setVisibility(View.VISIBLE);
+            if (MDMConfig.INSTANCE.sendFilesSupport(getContext())) {
+                binding.menuShareSendLink.setVisibility(View.VISIBLE);
+            }
         } else {
-            binding.menuShareAddAnotherLink.setVisibility(View.GONE);
             binding.menuShareSendLink.setVisibility(View.GONE);
         }
 
         if (SharingMenuHelper.isSecureFileDrop(ocShare)) {
             binding.menuShareAdvancedPermissions.setVisibility(View.GONE);
-            binding.menuShareAddAnotherLink.setVisibility(View.GONE);
         }
     }
 
@@ -102,11 +93,6 @@ public class FileDetailSharingMenuBottomSheetDialog extends BottomSheetDialog {
 
         binding.menuShareSendLink.setOnClickListener(v -> {
             actions.sendLink(ocShare);
-            dismiss();
-        });
-
-        binding.menuShareAddAnotherLink.setOnClickListener(v -> {
-            actions.addAnotherLink(ocShare);
             dismiss();
         });
     }

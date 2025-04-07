@@ -7,8 +7,11 @@
 package com.nextcloud.client.media
 
 import android.app.PendingIntent
+import android.app.PendingIntent.FLAG_IMMUTABLE
 import android.app.Service
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
+import android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP
 import android.media.AudioManager
 import android.os.Build
 import android.os.Bundle
@@ -17,6 +20,7 @@ import android.widget.MediaController
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.account.User
 import com.nextcloud.client.network.ClientFactory
 import com.nextcloud.utils.ForegroundServiceHelper
@@ -117,7 +121,7 @@ class PlayerService : Service() {
         }
 
         val pendingStop = PendingIntent.getService(this, 0, stop, PendingIntent.FLAG_IMMUTABLE)
-        notificationBuilder.addAction(0, getString(R.string.player_stop).toUpperCase(Locale.getDefault()), pendingStop)
+        notificationBuilder.addAction(0, getString(R.string.player_stop).lowercase(Locale.getDefault()), pendingStop)
 
         val toggle = Intent(this, PlayerService::class.java).apply {
             action = ACTION_TOGGLE
@@ -126,7 +130,7 @@ class PlayerService : Service() {
         val pendingToggle = PendingIntent.getService(this, 0, toggle, PendingIntent.FLAG_IMMUTABLE)
         notificationBuilder.addAction(
             0,
-            getString(R.string.player_toggle).toUpperCase(Locale.getDefault()),
+            getString(R.string.player_toggle).lowercase(Locale.getDefault()),
             pendingToggle
         )
     }
@@ -174,9 +178,14 @@ class PlayerService : Service() {
         stopServiceAndRemoveNotification(file)
     }
 
+    @IonosCustomization("clickable notification")
     private fun startForeground(currentFile: OCFile) {
         val ticker = String.format(getString(R.string.media_notif_ticker), getString(R.string.app_name))
         val content = getString(R.string.media_state_playing, currentFile.getFileName())
+        val intent = Intent(this, PreviewMediaActivity::class.java)
+            .apply {
+                flags = FLAG_ACTIVITY_REORDER_TO_FRONT or FLAG_ACTIVITY_SINGLE_TOP
+            }
 
         notificationBuilder.run {
             setSmallIcon(R.drawable.ic_play_arrow)
@@ -184,6 +193,9 @@ class PlayerService : Service() {
             setOngoing(true)
             setContentTitle(ticker)
             setContentText(content)
+            setContentIntent(
+                PendingIntent.getActivity(mContext, 0, intent, FLAG_IMMUTABLE)
+            )
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 setChannelId(NotificationUtils.NOTIFICATION_CHANNEL_MEDIA)

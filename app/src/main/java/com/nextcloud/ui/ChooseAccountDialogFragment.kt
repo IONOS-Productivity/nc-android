@@ -18,12 +18,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.account.User
 import com.nextcloud.client.account.UserAccountManager
 import com.nextcloud.client.di.Injectable
 import com.nextcloud.client.network.ClientFactory
 import com.nextcloud.utils.extensions.getParcelableArgument
+import com.nextcloud.utils.mdm.MDMConfig
 import com.owncloud.android.R
 import com.owncloud.android.databinding.DialogChooseAccountBinding
 import com.owncloud.android.datamodel.FileDataStorageManager
@@ -33,10 +36,10 @@ import com.owncloud.android.ui.activity.BaseActivity
 import com.owncloud.android.ui.activity.DrawerActivity
 import com.owncloud.android.ui.adapter.UserListAdapter
 import com.owncloud.android.ui.adapter.UserListItem
-import com.owncloud.android.ui.asynctasks.RetrieveStatusAsyncTask
 import com.owncloud.android.utils.DisplayUtils
 import com.owncloud.android.utils.DisplayUtils.AvatarGenerationListener
 import com.owncloud.android.utils.theme.ViewThemeUtils
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 private const val ARG_CURRENT_USER_PARAM = "currentUser"
@@ -70,6 +73,7 @@ class ChooseAccountDialogFragment :
     }
 
     @SuppressLint("InflateParams")
+    @IonosCustomization
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         _binding = DialogChooseAccountBinding.inflate(layoutInflater)
         dialogView = binding.root
@@ -77,11 +81,12 @@ class ChooseAccountDialogFragment :
         val builder = MaterialAlertDialogBuilder(requireContext())
             .setView(binding.root)
 
-        viewThemeUtils.dialog.colorMaterialAlertDialogBackground(binding.statusView.context, builder)
+        viewThemeUtils.ionos.dialog.colorMaterialAlertDialogBackground(binding.statusView.context, builder)
 
         return builder.create()
     }
 
+    @IonosCustomization("Hide account id")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         accountManager = (activity as BaseActivity).userAccountManager
@@ -102,6 +107,7 @@ class ChooseAccountDialogFragment :
             binding.currentAccount.userName.text = user.toOwnCloudAccount().displayName
             binding.currentAccount.ticker.visibility = View.GONE
             binding.currentAccount.account.text = user.accountName
+            binding.currentAccount.account.visibility = View.GONE
 
             // Defining user right indicator
             val icon = viewThemeUtils.platform.tintPrimaryDrawable(requireContext(), R.drawable.ic_check_circle)
@@ -119,8 +125,7 @@ class ChooseAccountDialogFragment :
                 viewThemeUtils
             )
 
-            // hide "add account" when no multi account
-            if (!resources.getBoolean(R.bool.multiaccount_support)) {
+            if (!MDMConfig.multiAccountSupport(requireContext())) {
                 binding.addAccount.visibility = View.GONE
             }
 
@@ -151,22 +156,34 @@ class ChooseAccountDialogFragment :
                 binding.statusView.visibility = View.VISIBLE
             }
 
-            RetrieveStatusAsyncTask(user, this, clientFactory).execute()
+            loadAndSetUserStatus(user)
         }
 
         themeViews()
     }
 
+    private fun loadAndSetUserStatus(user: User) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            val status = retrieveUserStatus(user, clientFactory)
+
+            if (isAdded && !isDetached) {
+                val context = requireContext()
+                setStatus(status, context)
+            }
+        }
+    }
+
+    @IonosCustomization
     private fun themeViews() {
         viewThemeUtils.platform.themeDialogDivider(binding.separatorLine)
-        viewThemeUtils.platform.themeDialog(binding.root)
+        viewThemeUtils.ionos.platform.themeDialog(binding.root)
 
         viewThemeUtils.material.colorMaterialTextButton(binding.setStatus)
-        viewThemeUtils.dialog.colorDialogMenuText(binding.setStatus)
+        viewThemeUtils.ionos.dialog.colorDialogMenuText(binding.setStatus)
         viewThemeUtils.material.colorMaterialTextButton(binding.addAccount)
-        viewThemeUtils.dialog.colorDialogMenuText(binding.addAccount)
+        viewThemeUtils.ionos.dialog.colorDialogMenuText(binding.addAccount)
         viewThemeUtils.material.colorMaterialTextButton(binding.manageAccounts)
-        viewThemeUtils.dialog.colorDialogMenuText(binding.manageAccounts)
+        viewThemeUtils.ionos.dialog.colorDialogMenuText(binding.manageAccounts)
     }
 
     private fun getAccountListItems(): List<UserListItem> {

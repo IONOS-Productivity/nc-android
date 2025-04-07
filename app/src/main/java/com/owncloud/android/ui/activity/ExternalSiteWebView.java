@@ -22,6 +22,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
 
+import com.ionos.annotation.IonosCustomization;
 import com.owncloud.android.MainApp;
 import com.owncloud.android.R;
 import com.owncloud.android.databinding.ExternalsiteWebviewBinding;
@@ -44,18 +45,17 @@ public class ExternalSiteWebView extends FileActivity {
     public static final String EXTRA_URL = "URL";
     public static final String EXTRA_SHOW_SIDEBAR = "SHOW_SIDEBAR";
     public static final String EXTRA_SHOW_TOOLBAR = "SHOW_TOOLBAR";
-    public static final String EXTRA_MENU_ITEM_ID = "MENU_ITEM_ID";
     public static final String EXTRA_TEMPLATE = "TEMPLATE";
 
     private static final String TAG = ExternalSiteWebView.class.getSimpleName();
 
     protected boolean showToolbar = true;
     private ExternalsiteWebviewBinding binding;
-    private int menuItemId;
     private boolean showSidebar;
     String url;
 
     @Override
+    @IonosCustomization
     protected final void onCreate(Bundle savedInstanceState) {
         Log_OC.v(TAG, "onCreate() start");
         bindView();
@@ -67,7 +67,6 @@ public class ExternalSiteWebView extends FileActivity {
             showToolbar = extras.getBoolean(EXTRA_SHOW_TOOLBAR);
         }
 
-        menuItemId = extras.getInt(EXTRA_MENU_ITEM_ID);
         showSidebar = extras.getBoolean(EXTRA_SHOW_SIDEBAR);
 
         // show progress
@@ -81,6 +80,8 @@ public class ExternalSiteWebView extends FileActivity {
         setContentView(getRootView());
 
         postOnCreate();
+
+        viewThemeUtils.ionos.platform.themeSystemBars(this);
     }
 
     protected void postOnCreate() {
@@ -107,8 +108,7 @@ public class ExternalSiteWebView extends FileActivity {
             }
         }
 
-        // setup drawer
-        setupDrawer(menuItemId);
+        setupDrawer();
 
         if (!showSidebar) {
             setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
@@ -151,7 +151,7 @@ public class ExternalSiteWebView extends FileActivity {
             }
         });
 
-        new WebViewUtil(getApplicationContext()).setProxyKKPlus(getWebView());
+        new WebViewUtil().setProxyKKPlus(getWebView());
         getWebView().loadUrl(url);
     }
 
@@ -233,12 +233,6 @@ public class ExternalSiteWebView extends FileActivity {
         } else {
             return super.onOptionsItemSelected(item);
         }
-    }
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        setDrawerMenuItemChecked(menuItemId);
     }
 
     protected WebView getWebView() {

@@ -47,17 +47,11 @@
     <string name="app_widget_description">Pokazuje jeden widżet z pulpitu nawigacyjnego</string>
     <string name="appbar_search_in">Szukaj w %s</string>
     <string name="assistant_screen_add_task_alert_dialog_title">Dodaj nowe zadanie</string>
-    <string name="assistant_screen_all_task_type">Wszystkie</string>
     <string name="assistant_screen_create_task_alert_dialog_input_field_placeholder">Wpisz jakiś tekst</string>
     <string name="assistant_screen_delete_task_alert_dialog_description">Czy na pewno chcesz usunąć to zadanie?</string>
     <string name="assistant_screen_delete_task_alert_dialog_title">Usuń zadanie</string>
-    <string name="assistant_screen_failed_task_text">Nie powiodło się</string>
     <string name="assistant_screen_loading">Trwa wczytywanie listy zadań. Proszę czekać</string>
-    <string name="assistant_screen_no_task_available_for_all_task_filter_text">Brak dostępnych zadań. Wybierz typ zadania, aby utworzyć nowe zadanie.</string>
     <string name="assistant_screen_no_task_available_text">Brak dostępnych zadań dla typu zadania %s. Możesz utworzyć nowe zadanie w prawym dolnym rogu.</string>
-    <string name="assistant_screen_running_task_text">W trakcie</string>
-    <string name="assistant_screen_scheduled_task_status_text">Zaplanowane</string>
-    <string name="assistant_screen_successful_task_text">Zakończone</string>
     <string name="assistant_screen_task_create_fail_message">Wystąpił błąd podczas tworzenia zadania</string>
     <string name="assistant_screen_task_create_success_message">Zadanie pomyślnie utworzone</string>
     <string name="assistant_screen_task_delete_fail_message">Wystąpił błąd podczas usuwania zadania</string>
@@ -67,7 +61,6 @@
     <string name="assistant_screen_task_output_empty_text">Wynik zadanie nie jest jeszcze gotowy</string>
     <string name="assistant_screen_task_types_error_state_message">Nie można pobrać typów zadań. Sprawdź swoje połączenie internetowe.</string>
     <string name="assistant_screen_top_bar_title">Asystent</string>
-    <string name="assistant_screen_unknown_task_status_text">Nieznany</string>
     <string name="assistant_task_detail_screen_input_button_title">Wejście</string>
     <string name="assistant_task_detail_screen_output_button_title">Wyjście</string>
     <string name="associated_account_not_found">Nie znaleziono powiązanego konta!</string>
@@ -106,6 +99,7 @@
     <string name="auto_upload_file_behaviour_kept_in_folder">zachowany w oryginalnym katalogu, jak jest tylko do odczytu</string>
     <string name="auto_upload_gplay">Zmieniono zachowanie automatycznego przesyłania</string>
     <string name="auto_upload_gplay_desc">Ze względu na nowe ograniczenia nałożone przez Google funkcja automatycznego przesyłania nie będzie już w stanie automatycznie usuwać przesłanych plików.</string>
+    <string name="auto_upload_gplay_desc2">Ze względu na nowe ograniczenia nałożone przez Google, zostaliśmy zmuszeni do usunięcia ważnego uprawnienia. W rezultacie automatyczne przesyłanie będzie mogło przesyłać tylko pliki graficzne i wideo.\nDodatkowo, nowe uprawnienie jest wymagane do dostępu do informacji o lokalizacji dla przesłanych obrazów.\nUpewnij się, że dostęp do multimediów jest ustawiony na \"Zawsze zezwalaj na wszystko\".</string>
     <string name="auto_upload_on_wifi">Wysyłaj tylko przez Wi-Fi</string>
     <string name="auto_upload_path">/AutoUpload</string>
     <string name="autoupload_configure">Konfiguruj</string>
@@ -125,7 +119,6 @@
     <string name="bottom_navigation_menu_favorites_label">Ulubione</string>
     <string name="bottom_navigation_menu_files_label">Wszystkie pliki</string>
     <string name="bottom_navigation_menu_media_label">Multimedia</string>
-    <string name="brute_force_delay">Opóźnienie z powodu zbyt wielu błędnych prób</string>
     <string name="calendar">Kalendarz</string>
     <string name="calendars">Kalendarze</string>
     <string name="certificate_load_problem">Problem podczas ładowania certyfikatu.</string>
@@ -140,6 +133,7 @@
     <string name="clear_notifications_failed">Wyczyszczenie powiadomień nie powiodło się.</string>
     <string name="clear_status_message">Wyczyść komunikat statusu</string>
     <string name="clear_status_message_after">Wyczyść komunikat statusu po</string>
+    <string name="click_to_learn_how_to_re_enable_auto_uploads">Aby ponownie włączyć automatyczne przesyłanie, wymagana jest ręczna interwencja</string>
     <string name="clipboard_label">Skopiowano tekst z %1$s</string>
     <string name="clipboard_no_text_to_copy">Nie otrzymano tekstu do skopiowania do schowka</string>
     <string name="clipboard_text_copied">Link skopiowany</string>
@@ -194,7 +188,6 @@
     <string name="confirmation_remove_folders_alert">Czy na pewno chcesz usunąć wybrane pozycje i ich zawartość?</string>
     <string name="confirmation_remove_local">Tylko lokalnie</string>
     <string name="conflict_dialog_error">Nie można utworzyć okna dialogowego rozwiązywania konfliktów</string>
-    <string name="conflict_file_headline">Plik powodujący konflikt %1$s</string>
     <string name="conflict_folder_headline">Konflikt katalogów</string>
     <string name="conflict_local_file">Plik lokalny</string>
     <string name="conflict_message_description">Jeśli wybierzesz obie wersje, to do nazwy pliku lokalnego zostanie dodany numer.</string>
@@ -261,6 +254,7 @@
     <string name="download_cannot_create_file">Nie można utworzyć pliku lokalnego</string>
     <string name="download_download_invalid_local_file_name">Nieprawidłowa nazwa pliku lokalnego</string>
     <string name="download_latest_dev_version">Pobierz najnowszą wersję dev</string>
+    <string name="download_limit">Limit pobierania</string>
     <string name="downloader_download_failed_content">Nie udało się pobrać %1$s</string>
     <string name="downloader_download_failed_credentials_error">Pobieranie nieudane, zaloguj się ponownie</string>
     <string name="downloader_download_failed_ticker">Pobieranie nie powiodło się</string>
@@ -295,6 +289,7 @@
     <string name="drawer_quota">Wykorzystane: %1$s z %2$s</string>
     <string name="drawer_quota_unlimited">Wykorzystane: %1$s</string>
     <string name="drawer_synced_folders">Automatyczne wysyłanie</string>
+    <string name="due_to_too_many_wrong_attempts">%s z powodu zbyt wielu błędnych prób</string>
     <string name="e2e_counter_too_old">Licznik jest za stary</string>
     <string name="e2e_hash_not_found">Nie znaleziono hasza</string>
     <string name="e2e_not_yet_setup">E2E jeszcze nie skonfigurowane</string>
@@ -309,6 +304,8 @@
     <string name="ecosystem_apps_talk">Nextcloud Talk</string>
     <string name="email_pick_failed">Nie udało się wybrać adresu e-mail.</string>
     <string name="encrypted">Ustaw jako zaszyfrowane</string>
+    <string name="end_to_end_encryption_certificate_unavailable">Nie można pobrać certyfikatu serwera</string>
+    <string name="end_to_end_encryption_certificate_verification_failed">Nie udało się zweryfikować klucza publicznego</string>
     <string name="end_to_end_encryption_confirm_button">Włącz szyfrowanie</string>
     <string name="end_to_end_encryption_decrypting">Odszyfrowywanie…</string>
     <string name="end_to_end_encryption_dialog_close">Zamknij</string>
@@ -320,8 +317,11 @@
     <string name="end_to_end_encryption_passphrase_title">Zapisz swoje hasło do szyfrowania z 12-stu słów</string>
     <string name="end_to_end_encryption_password">Hasło…</string>
     <string name="end_to_end_encryption_retrieving_keys">Pobieranie kluczy…</string>
+    <string name="end_to_end_encryption_server_private_key_unavailable">Nie można pobrać klucza prywatnego</string>
+    <string name="end_to_end_encryption_server_public_key_unavailable">Nie można pobrać klucza publicznego</string>
     <string name="end_to_end_encryption_storing_keys">Przechowywanie kluczy</string>
     <string name="end_to_end_encryption_title">Włącz szyfrowanie</string>
+    <string name="end_to_end_encryption_unexpected_error_occurred">Wystąpił nieoczekiwany błąd podczas pobierania kluczy</string>
     <string name="end_to_end_encryption_unsuccessful">Nie można zapisać kluczy, spróbuj ponownie.</string>
     <string name="end_to_end_encryption_wrong_password">Wystąpił błąd podczas deszyfracji. Nieprawidłowe hasło?</string>
     <string name="enter_destination_filename">Wpisz nazwę pliku docelowego</string>
@@ -435,10 +435,10 @@
     <string name="file_name_validator_error_invalid_character">Nazwa zawiera niedozwolone znaki %s</string>
     <string name="file_name_validator_error_reserved_names">%sjest zabronioną nazwą</string>
     <string name="file_name_validator_rename_before_move_or_copy">%s. Zmień nazwę pliku przed przeniesieniem lub skopiowaniem</string>
-    <string name="file_name_validator_upload_content_error">Część zawartości nie może zostać uploadowana ponieważ zawiera niewłaściwe nazwy lub znaki</string>
     <string name="file_not_found">Nie znaleziono pliku</string>
     <string name="file_not_synced">Nie można zsynchronizować pliku. Pokazana jest najnowsza dostępna wersja.</string>
     <string name="file_rename">Zmień nazwę</string>
+    <string name="file_upload_worker_error_notification_title">Przesyłanie nie powiodło się. Brak połączenia internetowego</string>
     <string name="file_upload_worker_same_file_already_exists">Ten sam plik już istnieje, nie wykryto konfliktu</string>
     <string name="file_version_restored_error">Wystąpił błąd podczas przywracania wersji pliku!</string>
     <string name="file_version_restored_successfully">Pomyślnie przywrócono wersję pliku.</string>
@@ -502,7 +502,6 @@
     <string name="image_preview_unit_megapixel">%s MP</string>
     <string name="image_preview_unit_millimetres">%s mm</string>
     <string name="image_preview_unit_seconds">%s s</string>
-    <string name="in_folder">w katalogu %1$s</string>
     <string name="instant_upload_existing">Wyślij również istniejące pliki</string>
     <string name="instant_upload_on_charging">Wysyłaj tylko podczas ładowania</string>
     <string name="instant_upload_path">/InstantUpload</string>
@@ -641,6 +640,7 @@
     <string name="permission_allow">Akceptuj</string>
     <string name="permission_deny">Odrzuć</string>
     <string name="permission_storage_access">Wymagane są dodatkowe uprawnienia do pobierania i wysyłania plików.</string>
+    <string name="pick_contact_to_share_with">Wybierz kontakt, któremu chcesz udostępnić</string>
     <string name="picture_set_as_no_app">Nie znaleziono aplikacji do ustawienia obrazu</string>
     <string name="pin_home">Przypnij do ekranu głównego</string>
     <string name="pin_shortcut_label">Otwórz %1$s</string>
@@ -710,7 +710,6 @@
     <string name="prefs_show_ecosystem_apps_summary">Sugestie aplikacji Nextcloud w nagłówku nawigacji</string>
     <string name="prefs_show_hidden_files">Pokaż ukryte pliki</string>
     <string name="prefs_sourcecode">Pobierz kod źródłowy</string>
-    <string name="prefs_storage_path">Katalog przechowywania danych</string>
     <string name="prefs_sycned_folders_summary">Zarządzaj katalogami do automatycznego wysyłania</string>
     <string name="prefs_synced_folders_local_path_title">Katalog lokalny</string>
     <string name="prefs_synced_folders_remote_path_title">Katalog zdalny</string>
@@ -735,11 +734,14 @@
     <string name="push_notifications_old_login">Brak powiadomień Push z powodu nieaktualnej sesji logowania. Rozważ ponowne dodanie swojego konta.</string>
     <string name="push_notifications_temp_error">Powiadomienia Push nie są obecnie dostępne.</string>
     <string name="qr_could_not_be_read">Nie można odczytać kodu QR!</string>
+    <string name="re_enable_auto_upload">Zmiany w automatycznym przesyłaniu</string>
+    <string name="re_enable_auto_upload_desc">Ze względu na nowe ograniczenia nałożone przez Google zostaliśmy zmuszeni do usunięcia ważnego uprawnienia. Obecnie współpracujemy z Google, aby rozwiązać ten problem i przywrócić pełną funkcjonalność.\n\nAby ponownie włączyć automatyczne przesyłanie nowych zdjęć i filmów:\nWybierz \"Zezwól na wszystko\" w następującym oknie dialogowym lub ustawieniach systemowych.\nZezwól na lokalizację multimediów, gdy pojawi się monit, ponieważ umożliwia to Nextcloud przechowywanie danych o lokalizacji podczas przesyłania obrazów.\n\nOkno dialogowe uprawnień jest wyświetlane tylko wtedy, gdy jest to konieczne. W razie wątpliwości sprawdź ustawienia systemowe.\n\nAutomatyczne przesyłanie będzie mogło przesyłać pliki obrazów i wideo tylko podczas korzystania z wersji Google Play aplikacji Nextcloud.\n\nSprawdź, czy nie ma plików, które nie zostały przesłane od grudnia 2024 r.</string>
     <string name="receive_external_files_activity_start_sync_folder_is_not_exists_message">Nie można znaleźć katalogu, operacja synchronizacji została anulowana</string>
     <string name="receive_external_files_activity_unable_to_find_file_to_upload">Nie można znaleźć pliku do wysłania</string>
     <string name="recommend_subject">Wypróbuj %1$s na swoim urządzeniu!</string>
     <string name="recommend_text">Chciałbym zaprosić Ciebie do użytkowania z %1$s na swoim urządzeniu.\nPobierz stąd: %2$s</string>
     <string name="recommend_urls">%1$s lub %2$s</string>
+    <string name="recommended_files_title">Polecane pliki</string>
     <string name="refresh_content">Odśwież zawartość</string>
     <string name="reload">Przeładuj</string>
     <string name="remote">(zdalne)</string>
@@ -759,7 +761,6 @@
     <string name="request_account_deletion_button">Poproś o usunięcie</string>
     <string name="request_account_deletion_details">Prośba o stałe usunięcie konta przez dostawcę usługi</string>
     <string name="resharing_is_not_allowed">Polityka lub uprawnienia uniemożliwiają ponowne udostępnianie</string>
-    <string name="resized_image_not_possible_download">Brak obrazu o zmienionym rozmiarze. Pobrać pełny obraz?</string>
     <string name="restore">Przywróć plik</string>
     <string name="restore_backup">Przywróć kopię zapasową</string>
     <string name="restore_button_description">Przywróć usunięty plik</string>
@@ -784,6 +785,7 @@
     <string name="screenshot_06_davdroid_subline">Synchronizuj z DAVx5</string>
     <string name="search_error">Błąd podczas pobierania wyników wyszukiwania</string>
     <string name="secure_share_not_set_up">Dla tego użytkownika nie skonfigurowano bezpiecznego udostępniania</string>
+    <string name="secure_share_search">Bezpieczne udostępnianie…</string>
     <string name="select_all">Wybierz wszystko</string>
     <string name="select_media_folder">Ustaw katalog multimediów</string>
     <string name="select_one_template">Wybierz jeden szablon</string>
@@ -800,6 +802,7 @@
     <string name="share">Udostępnij</string>
     <string name="share_copy_link">Udostępnij i skopiuj odnośnik</string>
     <string name="share_dialog_title">Udostępnianie</string>
+    <string name="share_download_limit">Ustaw limit pobierania</string>
     <string name="share_expiration_date_format">%1$s</string>
     <string name="share_expiration_date_label">Wygaśnie o %1$s</string>
     <string name="share_file">Udostępnij %1$s</string>
@@ -845,6 +848,7 @@
     <string name="sharee_already_added_to_file">Dodanie współudziału nie powiodło się. Ten plik lub katalog został już udostępniony tej osobie lub grupie.</string>
     <string name="show_images">Pokaż zdjęcia</string>
     <string name="show_video">Pokaż filmy</string>
+    <string name="sign_tos_failed">Sprawdź ręcznie warunki korzystania z usługi!</string>
     <string name="signup_with_provider">Zarejestruj się u usługodawcy</string>
     <string name="single_sign_on_request_token" formatted="true">Zezwolić %1$s na dostęp do Twojego konta Nextcloud %2$s?</string>
     <string name="sort_by">Sortuj według</string>
@@ -893,7 +897,6 @@
     <string name="stream">Przesyłaj strumieniowo…</string>
     <string name="stream_not_possible_headline">Wewnętrzne przesyłanie strumieniowe nie jest możliwe</string>
     <string name="stream_not_possible_message">Pobierz plik lub użyj zewnętrznej aplikacji.</string>
-    <string name="strict_mode">Tryb wymagający: połączenie HTTP nie jest dozwolone!</string>
     <string name="sub_folder_rule_day">Rok/Miesiąc/Dzień</string>
     <string name="sub_folder_rule_month">Rok/Miesiąc</string>
     <string name="sub_folder_rule_year">Rok</string>
@@ -930,6 +933,8 @@
     <string name="synced_folders_type">Typ</string>
     <string name="synced_icon">Zsynchronizowano</string>
     <string name="tags">Etykiety</string>
+    <string name="terms_of_service_title">Warunki usługi</string>
+    <string name="terms_of_services_agree">Zgadzam się z powyższymi Warunkami korzystania z usługi</string>
     <string name="test_server_button">Sprawdź połączenie z serwerem</string>
     <string name="thirtyMinutes">30 minut</string>
     <string name="thisWeek">W tym tygodniu</string>
@@ -990,6 +995,8 @@
     <string name="upload_file_dialog_title">Wprowadź nazwę i typ pliku do wysłania</string>
     <string name="upload_files">Wyślij pliki</string>
     <string name="upload_global_pause_title">Wszystkie przesyłania zostały wstrzymane</string>
+    <string name="upload_gplay">Zmiany uprawnień</string>
+    <string name="upload_gplay_desc">Aby uzyskać dostęp do informacji o lokalizacji przesłanych zdjęć, wymagane jest nowe uprawnienie.\nUpewnij się, że dostęp do multimediów jest ustawiony na \"Zawsze zezwalaj na wszystko\".</string>
     <string name="upload_item_action_button">Przycisk wysyłania elementu</string>
     <string name="upload_list_delete">Usuń</string>
     <string name="upload_list_empty_headline">Brak wysłanych plików</string>
@@ -1078,9 +1085,6 @@
     <string name="wait_checking_credentials">Sprawdzanie danych</string>
     <string name="wait_for_tmp_copy_from_private_storage">Kopiowanie pliku z prywatnego magazynu</string>
     <string name="warn_rename_extension">Zmiana rozszerzenia spowoduje otwarcie pliku w innej aplikacji</string>
-    <string name="webview_version_check_alert_dialog_message">Aby się zalogować, zaktualizuj aplikację WebView systemu Android</string>
-    <string name="webview_version_check_alert_dialog_positive_button_title">Aktualizuj</string>
-    <string name="webview_version_check_alert_dialog_title">Zaktualizuj WebView systemu Android</string>
     <string name="what_s_new_image">Jaki jest nowy obraz</string>
     <string name="whats_new_skip">Pomiń</string>
     <string name="whats_new_title">Co nowego w %1$s</string>
@@ -1102,6 +1106,24 @@
         <item quantity="few">%d minuty</item>
         <item quantity="many">%d minut</item>
         <item quantity="other">%d minut</item>
+    </plurals>
+    <plurals name="time_seconds_ago">
+        <item quantity="one">1 sekunda temu</item>
+        <item quantity="few">%d sekundy temu</item>
+        <item quantity="many">%d sekund temu</item>
+        <item quantity="other">%d sekund temu</item>
+    </plurals>
+    <plurals name="time_minutes_ago">
+        <item quantity="one">1 minuta temu</item>
+        <item quantity="few">%d minuty temu</item>
+        <item quantity="many">%d minut temu</item>
+        <item quantity="other">%d minut temu</item>
+    </plurals>
+    <plurals name="time_hours_ago">
+        <item quantity="one">1 godzina temu</item>
+        <item quantity="few">%d godziny temu</item>
+        <item quantity="many">%d godzin temu</item>
+        <item quantity="other">%d godzin temu</item>
     </plurals>
     <plurals name="sync_fail_in_favourites_content">
         <item quantity="one">Nie udała się synchronizacja %1$d pliku (konflikty: %2$d)</item>
@@ -1175,6 +1197,12 @@
         <item quantity="many">%1$d plików</item>
         <item quantity="other">%1$d plików</item>
     </plurals>
+    <plurals name="trashbin_list__footer__file">
+        <item quantity="one">%1$d pozycja</item>
+        <item quantity="few">%1$d pozycje</item>
+        <item quantity="many">%1$d pozycji</item>
+        <item quantity="other">%1$d pozycji</item>
+    </plurals>
     <plurals name="synced_folders_show_hidden_folders">
         <item quantity="one">Pokaż %1$d katalog ukryty</item>
         <item quantity="few">Pokaż %1$d katalogi ukryte</item>
@@ -1186,5 +1214,35 @@
         <item quantity="few">%d wybrane</item>
         <item quantity="many">%d wybranych</item>
         <item quantity="other">%d wybranych</item>
+    </plurals>
+    <plurals name="delay_message">
+        <item quantity="one">Opóźnienie %d sekunda z powodu zbyt wielu błędnych prób</item>
+        <item quantity="few">Opóźnienie %d sekundy z powodu zbyt wielu błędnych prób</item>
+        <item quantity="many">Opóźnienie %d sekund z powodu zbyt wielu błędnych prób</item>
+        <item quantity="other">Opóźnienie %d sekund z powodu zbyt wielu błędnych prób</item>
+    </plurals>
+    <plurals name="delay_message_minutes">
+        <item quantity="one">Opóźnienie %d minuta z powodu zbyt wielu błędnych prób</item>
+        <item quantity="few">Opóźnienie %d minuty z powodu zbyt wielu błędnych prób</item>
+        <item quantity="many">Opóźnienie %d minut z powodu zbyt wielu błędnych prób</item>
+        <item quantity="other">Opóźnienie %d minut z powodu zbyt wielu błędnych prób</item>
+    </plurals>
+    <plurals name="delay_message_minutes_part">
+        <item quantity="one">Opóźnienie %d minuta</item>
+        <item quantity="few">Opóźnienie %d minuty</item>
+        <item quantity="many">Opóźnienie %d minut</item>
+        <item quantity="other">Opóźnienie %d minut</item>
+    </plurals>
+    <plurals name="delay_message_seconds_part">
+        <item quantity="one">%d sekunda</item>
+        <item quantity="few">%d sekundy</item>
+        <item quantity="many">%d sekund</item>
+        <item quantity="other">%d sekund</item>
+    </plurals>
+    <plurals name="share_download_limit_description">
+        <item quantity="one">Pozostało %1$d pobranie</item>
+        <item quantity="few">Pozostało %1$d pobrania</item>
+        <item quantity="many">Pozostało %1$d pobrań</item>
+        <item quantity="other">Pozostało %1$d pobrań</item>
     </plurals>
 </resources>

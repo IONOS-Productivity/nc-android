@@ -22,8 +22,10 @@ import androidx.fragment.app.DialogFragment
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.common.collect.Sets
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.account.CurrentAccountProvider
 import com.nextcloud.client.di.Injectable
+import com.nextcloud.client.network.ConnectivityService
 import com.nextcloud.utils.extensions.getParcelableArgument
 import com.nextcloud.utils.extensions.typedActivity
 import com.nextcloud.utils.fileNameValidator.FileNameValidator
@@ -31,8 +33,10 @@ import com.owncloud.android.R
 import com.owncloud.android.databinding.EditBoxDialogBinding
 import com.owncloud.android.datamodel.FileDataStorageManager
 import com.owncloud.android.datamodel.OCFile
+import com.owncloud.android.lib.common.utils.Log_OC
 import com.owncloud.android.lib.resources.status.OCCapability
 import com.owncloud.android.ui.activity.ComponentsGetter
+import com.owncloud.android.ui.activity.FileDisplayActivity
 import com.owncloud.android.utils.DisplayUtils
 import com.owncloud.android.utils.KeyboardUtils
 import com.owncloud.android.utils.theme.ViewThemeUtils
@@ -56,9 +60,12 @@ class CreateFolderDialogFragment : DialogFragment(), DialogInterface.OnClickList
     lateinit var keyboardUtils: KeyboardUtils
 
     @Inject
-    lateinit var currentAccount: CurrentAccountProvider
+    lateinit var connectivityService: ConnectivityService
 
-    private var mParentFolder: OCFile? = null
+    @Inject
+    lateinit var accountProvider: CurrentAccountProvider
+
+    private var parentFolder: OCFile? = null
     private var positiveButton: MaterialButton? = null
 
     private lateinit var binding: EditBoxDialogBinding
@@ -68,6 +75,7 @@ class CreateFolderDialogFragment : DialogFragment(), DialogInterface.OnClickList
         bindButton()
     }
 
+    @IonosCustomization("colorMaterialButtonPrimaryTonal, colorMaterialButtonPrimaryBorderless")
     private fun bindButton() {
         val dialog = dialog
 
@@ -75,12 +83,6 @@ class CreateFolderDialogFragment : DialogFragment(), DialogInterface.OnClickList
             positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE) as? MaterialButton
             positiveButton?.let {
                 it.isEnabled = false
-                viewThemeUtils.material.colorMaterialButtonPrimaryTonal(it)
-            }
-
-            val negativeButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE) as? MaterialButton
-            negativeButton?.let {
-                viewThemeUtils.material.colorMaterialButtonPrimaryBorderless(it)
             }
         }
     }
@@ -92,14 +94,15 @@ class CreateFolderDialogFragment : DialogFragment(), DialogInterface.OnClickList
     }
 
     @Suppress("EmptyFunctionBlock")
+    @IonosCustomization
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        mParentFolder = arguments?.getParcelableArgument(ARG_PARENT_FOLDER, OCFile::class.java)
+        parentFolder = arguments?.getParcelableArgument(ARG_PARENT_FOLDER, OCFile::class.java)
 
         val inflater = requireActivity().layoutInflater
         binding = EditBoxDialogBinding.inflate(inflater, null, false)
 
         binding.userInput.setText(R.string.empty)
-        viewThemeUtils.material.colorTextInputLayout(binding.userInputContainer)
+        viewThemeUtils.ionos.material.colorTextInputLayout(binding.userInputContainer)
 
         val parentFolder = requireArguments().getParcelableArgument(ARG_PARENT_FOLDER, OCFile::class.java)
 
@@ -118,11 +121,11 @@ class CreateFolderDialogFragment : DialogFragment(), DialogInterface.OnClickList
         })
 
         val builder = buildMaterialAlertDialog(binding.root)
-        viewThemeUtils.dialog.colorMaterialAlertDialogBackground(binding.userInputContainer.context, builder)
+        viewThemeUtils.ionos.dialog.colorMaterialAlertDialogBackground(binding.userInputContainer.context, builder)
         return builder.create()
     }
 
-    private fun getOCCapability(): OCCapability = fileDataStorageManager.getCapability(currentAccount.user.accountName)
+    private fun getOCCapability(): OCCapability = fileDataStorageManager.getCapability(accountProvider.user.accountName)
 
     private fun checkFileNameAfterEachType(fileNames: MutableSet<String>) {
         val newFileName = binding.userInput.text?.toString() ?: ""
@@ -174,12 +177,26 @@ class CreateFolderDialogFragment : DialogFragment(), DialogInterface.OnClickList
                 return
             }
 
-            val path = mParentFolder?.decryptedRemotePath + newFolderName + OCFile.PATH_SEPARATOR
-            typedActivity<ComponentsGetter>()?.fileOperationsHelper?.createFolder(path)
+            val path = parentFolder?.decryptedRemotePath + newFolderName + OCFile.PATH_SEPARATOR
+            connectivityService.isNetworkAndServerAvailable { result ->
+                if (result) {
+                    typedActivity<ComponentsGetter>()?.fileOperationsHelper?.createFolder(path)
+                } else {
+                    Log_OC.d(TAG, "Network not available, creating offline operation")
+                    fileDataStorageManager.addCreateFolderOfflineOperation(
+                        path,
+                        newFolderName,
+                        parentFolder?.fileId
+                    )
+
+                    typedActivity<FileDisplayActivity>()?.refreshCurrentDirectory()
+                }
+            }
         }
     }
 
     companion object {
+        private const val TAG = "CreateFolderDialogFragment"
         private const val ARG_PARENT_FOLDER = "PARENT_FOLDER"
         const val CREATE_FOLDER_FRAGMENT = "CREATE_FOLDER_FRAGMENT"
 

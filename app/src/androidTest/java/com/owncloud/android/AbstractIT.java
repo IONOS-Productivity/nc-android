@@ -182,7 +182,7 @@ public abstract class AbstractIT {
         String darkModeParameter = arguments.getString("DARKMODE");
 
         if (darkModeParameter != null) {
-            if (darkModeParameter.equalsIgnoreCase("dark")) {
+            if ("dark".equalsIgnoreCase(darkModeParameter)) {
                 DARK_MODE = "dark";
                 AppPreferencesImpl.fromContext(targetContext).setDarkThemeMode(DarkMode.DARK);
                 MainApp.setAppTheme(DarkMode.DARK);
@@ -191,7 +191,7 @@ public abstract class AbstractIT {
             }
         }
 
-        if (DARK_MODE.equalsIgnoreCase("light") && COLOR.equalsIgnoreCase("blue")) {
+        if ("light".equalsIgnoreCase(DARK_MODE) && "blue".equalsIgnoreCase(COLOR)) {
             // use already existing names
             DARK_MODE = "";
             COLOR = "";
@@ -376,6 +376,11 @@ public abstract class AbstractIT {
     public void uploadOCUpload(OCUpload ocUpload) {
         ConnectivityService connectivityServiceMock = new ConnectivityService() {
             @Override
+            public void isNetworkAndServerAvailable(@NonNull GenericCallback<Boolean> callback) {
+
+            }
+
+            @Override
             public boolean isConnected() {
                 return false;
             }
@@ -460,6 +465,12 @@ public abstract class AbstractIT {
     protected void screenshotViaName(Activity activity, String name) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
             Screenshot.snapActivity(activity).setName(name).record();
+        }
+    }
+
+    protected void screenshotViaName(View view, String name) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
+            Screenshot.snap(view).setName(name).record();
         }
     }
 

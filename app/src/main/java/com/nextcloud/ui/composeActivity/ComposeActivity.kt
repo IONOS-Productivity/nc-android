@@ -31,17 +31,14 @@ import com.owncloud.android.lib.common.utils.Log_OC
 import com.owncloud.android.ui.activity.DrawerActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import java.lang.ref.WeakReference
 
 class ComposeActivity : DrawerActivity() {
 
     lateinit var binding: ActivityComposeBinding
-    private var menuItemId: Int = R.id.nav_all_files
 
     companion object {
         const val DESTINATION = "DESTINATION"
         const val TITLE = "TITLE"
-        const val MENU_ITEM = "MENU_ITEM"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,9 +48,8 @@ class ComposeActivity : DrawerActivity() {
 
         val destination = intent.getSerializableArgument(DESTINATION, ComposeDestination::class.java)
         val titleId = intent.getIntExtra(TITLE, R.string.empty)
-        menuItemId = intent.getIntExtra(MENU_ITEM, R.id.nav_all_files)
 
-        setupDrawer(menuItemId)
+        setupDrawer()
 
         setupToolbarShowOnlyMenuButtonAndTitle(getString(titleId)) {
             openDrawer()
@@ -67,11 +63,6 @@ class ComposeActivity : DrawerActivity() {
                 }
             )
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        setDrawerMenuItemChecked(menuItemId)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -93,13 +84,16 @@ class ComposeActivity : DrawerActivity() {
         }
 
         if (destination == ComposeDestination.AssistantScreen) {
+            val assistantMenuItem = binding.bottomNavigation.menu.findItem(R.id.nav_assistant)
+            assistantMenuItem.setChecked(true)
+
             nextcloudClient?.let { client ->
                 AssistantScreen(
                     viewModel = AssistantViewModel(
-                        repository = AssistantRepository(client),
-                        context = WeakReference(this)
+                        repository = AssistantRepository(client, capabilities)
                     ),
-                    activity = this
+                    activity = this,
+                    capability = capabilities
                 )
             }
         }

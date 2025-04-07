@@ -47,17 +47,11 @@
     <string name="app_widget_description">Panodan bir pano bileşeni görüntüler</string>
     <string name="appbar_search_in">%s içinde arama</string>
     <string name="assistant_screen_add_task_alert_dialog_title">Yeni görev ekle</string>
-    <string name="assistant_screen_all_task_type">Tümü</string>
     <string name="assistant_screen_create_task_alert_dialog_input_field_placeholder">Bir şeyler yazın</string>
     <string name="assistant_screen_delete_task_alert_dialog_description">Bu görevi silmek istediğinize emin misiniz?</string>
     <string name="assistant_screen_delete_task_alert_dialog_title">Görevi sil</string>
-    <string name="assistant_screen_failed_task_text">Tamamlanamadı</string>
     <string name="assistant_screen_loading">Lütfen görev listesi yüklenirken bekleyin</string>
-    <string name="assistant_screen_no_task_available_for_all_task_filter_text">Herhangi bir görev yok.Yeni bir görev eklemek için bir görev türü seçin.</string>
     <string name="assistant_screen_no_task_available_text">%s türünde bir görev yok. Sağ alttan yeni bir görev ekleyebilirsiniz.</string>
-    <string name="assistant_screen_running_task_text">Yapılıyor</string>
-    <string name="assistant_screen_scheduled_task_status_text">Zamanlanmış</string>
-    <string name="assistant_screen_successful_task_text">Tamamlanmış</string>
     <string name="assistant_screen_task_create_fail_message">Görev oluşturulurken bir sorun çıktı</string>
     <string name="assistant_screen_task_create_success_message">Görev oluşturuldu</string>
     <string name="assistant_screen_task_delete_fail_message">Görev silinirken bir sorun çıktı</string>
@@ -67,7 +61,6 @@
     <string name="assistant_screen_task_output_empty_text">Görev çıktısı henüz hazır değil.</string>
     <string name="assistant_screen_task_types_error_state_message">Görev türleri alınamadı. Lütfen İnternet bağlantınızı denetleyin.</string>
     <string name="assistant_screen_top_bar_title">Yardımcı</string>
-    <string name="assistant_screen_unknown_task_status_text">Bilinmiyor</string>
     <string name="assistant_task_detail_screen_input_button_title">Giriş</string>
     <string name="assistant_task_detail_screen_output_button_title">Çıkış</string>
     <string name="associated_account_not_found">İlişkili hesap bulunamadı!</string>
@@ -106,6 +99,7 @@
     <string name="auto_upload_file_behaviour_kept_in_folder">salt okunur olduğundan özgün klasörde kaldı</string>
     <string name="auto_upload_gplay">Otomatik yükleme davranışı değiştirildi</string>
     <string name="auto_upload_gplay_desc">Google tarafından getirilen yeni kısıtlamalar nedeniyle otomatik yükleme özelliği artık yüklenen dosyaları otomatik olarak kaldıramayacak.</string>
+    <string name="auto_upload_gplay_desc2">Google tarafından uygulanan yeni kısıtlamalar nedeniyle önemli bir izni kaldırmak zorunda kaldık. Sonuç olarak, otomatik yükleme yalnızca görsel ve video dosyalarını yükleyebilecek.\nAyrıca, yüklenen görsellerin konum bilgilerine erişmek için yeni bir izin gerekiyor.\nMedya erişiminin \"Her zaman tümüne izin verilsin\" olarak ayarlandığından emin olun.</string>
     <string name="auto_upload_on_wifi">Yalnızca kullanıma göre ücretlendirilmeyen kablosuz ağ üzerinden yüklensin</string>
     <string name="auto_upload_path">/OtomatikYükleme</string>
     <string name="autoupload_configure">Yapılandır</string>
@@ -125,7 +119,6 @@
     <string name="bottom_navigation_menu_favorites_label">Sık kullanılanlar</string>
     <string name="bottom_navigation_menu_files_label">Tüm dosyalar</string>
     <string name="bottom_navigation_menu_media_label">Ortam</string>
-    <string name="brute_force_delay">Çok sayıda hatalı deneme nedeniyle geciktirildi</string>
     <string name="calendar">Takvim</string>
     <string name="calendars">Takvimler</string>
     <string name="certificate_load_problem">Sertifika yüklenirken bir sorun çıktı.</string>
@@ -140,6 +133,7 @@
     <string name="clear_notifications_failed">Bildirimler temizlenemedi.</string>
     <string name="clear_status_message">Durum iletisini kaldır</string>
     <string name="clear_status_message_after">Durum iletisi şu süre sonunda kaldırılsın</string>
+    <string name="click_to_learn_how_to_re_enable_auto_uploads">Otomatik yükleme özelliğini yeniden el ile açmalısınız.</string>
     <string name="clipboard_label">Metin %1$s kaynağından kopyalandı</string>
     <string name="clipboard_no_text_to_copy">Panoya kopyalanacak bir metin alınamadı</string>
     <string name="clipboard_text_copied">Bağlantı kopyalandı</string>
@@ -194,7 +188,6 @@
     <string name="confirmation_remove_folders_alert">Seçilmiş ögeleri ve içindekileri silmek istediğinize emin misiniz?</string>
     <string name="confirmation_remove_local">Yalnızca yerel</string>
     <string name="conflict_dialog_error">Çakışma çözümleme penceresi oluşturulamadı</string>
-    <string name="conflict_file_headline">%1$s dosyası çakışıyor</string>
     <string name="conflict_folder_headline">Klasör çakışması</string>
     <string name="conflict_local_file">Yerel dosya</string>
     <string name="conflict_message_description">İki sürümü de saklamayı seçerseniz, yerel dosyanın adına bir numara eklenecek.</string>
@@ -251,7 +244,7 @@
     <string name="dismiss_notification_description">Bildirimi yok say</string>
     <string name="displays_mnemonic">12 sözcüklü parolanızı görüntüler</string>
     <string name="dnd">Rahatsız etmeyin</string>
-    <string name="document_scan_export_dialog_images">Çok sayıda görsel</string>
+    <string name="document_scan_export_dialog_images">Birkaç görsel</string>
     <string name="document_scan_export_dialog_pdf">PDF dosyası</string>
     <string name="document_scan_export_dialog_title">Dışa aktarma türünü seçin</string>
     <string name="document_scan_pdf_generation_failed">PDF dosyası oluşturulamadı</string>
@@ -261,6 +254,7 @@
     <string name="download_cannot_create_file">Yerel dosya oluşturulamadı</string>
     <string name="download_download_invalid_local_file_name">Yerel dosya adı geçersiz</string>
     <string name="download_latest_dev_version">Son geliştirici sürümünü indirin</string>
+    <string name="download_limit">İndirme sınırı</string>
     <string name="downloader_download_failed_content">%1$s indirmesi tamamlanamadı</string>
     <string name="downloader_download_failed_credentials_error">İndirilemedi, yeniden oturum açmalısınız</string>
     <string name="downloader_download_failed_ticker">İndirilemedi</string>
@@ -295,6 +289,7 @@
     <string name="drawer_quota">%1$s / %2$s kullanıldı</string>
     <string name="drawer_quota_unlimited">%1$s kullanılıyor</string>
     <string name="drawer_synced_folders">Otomatik yükleme</string>
+    <string name="due_to_too_many_wrong_attempts">Çok sayıda hatalı deneme nedeniyle %s</string>
     <string name="e2e_counter_too_old">Sayaç çok eski</string>
     <string name="e2e_hash_not_found">Karma bulunamadı</string>
     <string name="e2e_not_yet_setup">Uçtan uca şifreleme henüz kurulmamış</string>
@@ -435,10 +430,10 @@
     <string name="file_name_validator_error_invalid_character">Ad içinde geçersiz karakterler var: %s</string>
     <string name="file_name_validator_error_reserved_names">%s adına izin verilmiyor</string>
     <string name="file_name_validator_rename_before_move_or_copy">%s. Kopyalamadan ya da taşımadan önce lütfen dosyayı yeniden adlandırın</string>
-    <string name="file_name_validator_upload_content_error">Bazı içerikler, içinde ayrılmış adlar veya geçersiz karakterler bulunduğundan yüklenemedi</string>
     <string name="file_not_found">Dosya bulunamadı</string>
     <string name="file_not_synced">Dosya eşitlenemedi. Kullanılabilen son sürüm görüntüleniyor.</string>
     <string name="file_rename">Yeniden adlandır</string>
+    <string name="file_upload_worker_error_notification_title">Yüklenemedi. İnternet bağlantısı yok</string>
     <string name="file_upload_worker_same_file_already_exists">Aynı dosya zaten var. Herhangi bir çakışma bulunmadı</string>
     <string name="file_version_restored_error">Geri yüklenecek dosya sürümünü seçin!</string>
     <string name="file_version_restored_successfully">Dosya sürümü geri yüklendi.</string>
@@ -502,7 +497,6 @@
     <string name="image_preview_unit_megapixel">%s MP</string>
     <string name="image_preview_unit_millimetres">%s mm</string>
     <string name="image_preview_unit_seconds">%s s</string>
-    <string name="in_folder">%1$s klasöründe</string>
     <string name="instant_upload_existing">Var olan dosyalar da yüklensin</string>
     <string name="instant_upload_on_charging">Yalnızca şarj edilirken yüklensin</string>
     <string name="instant_upload_path">/AnındaYükle</string>
@@ -641,6 +635,7 @@
     <string name="permission_allow">İzin ver</string>
     <string name="permission_deny">Reddet</string>
     <string name="permission_storage_access">Dosya yüklemek ve indirmek için ek izinler gerekli.</string>
+    <string name="pick_contact_to_share_with">Paylaşılacak kişiyi seçin</string>
     <string name="picture_set_as_no_app">Görselin ayarlanabileceği bir uygulama bulunamadı</string>
     <string name="pin_home">Ana sayfaya sabitle</string>
     <string name="pin_shortcut_label">%1$s aç</string>
@@ -710,7 +705,6 @@
     <string name="prefs_show_ecosystem_apps_summary">Gezinme başlığında Nextcloud uygulama önerileri</string>
     <string name="prefs_show_hidden_files">Gizli dosyaları görüntüle</string>
     <string name="prefs_sourcecode">Kaynak kodunu alın</string>
-    <string name="prefs_storage_path">Veri depolama klasörü</string>
     <string name="prefs_sycned_folders_summary">Otomatik yükleme klasörleri yönetimi</string>
     <string name="prefs_synced_folders_local_path_title">Yerel klasör</string>
     <string name="prefs_synced_folders_remote_path_title">Uzak klasör</string>
@@ -735,11 +729,14 @@
     <string name="push_notifications_old_login">Oturumunuzun süresi dolduğundan anında bildirimler gönderilemez. Lütfen hesabınızı yeniden eklemeyi düşünün.</string>
     <string name="push_notifications_temp_error">Anında bildirimler şu anda kullanılamıyor.</string>
     <string name="qr_could_not_be_read">QR kodu okunamadı!</string>
+    <string name="re_enable_auto_upload">Otomatik yüklenecek değişiklikler</string>
+    <string name="re_enable_auto_upload_desc">Google tarafından getirilen yeni kısıtlamalar nedeniyle önemli bir izni kaldırmak zorunda kaldık. Şu anda bu sorunu çözmek ve tam özellikleri yeniden kullanabilmek için Google ile birlikte çalışıyoruz.\n\nYeni fotoğrafları ve videoları otomatik yüklemeyi yeniden kullanıma almak için:\nAşağıdaki pencereden veya sistem ayarlarından \"Tümüne izin verilsin\" seçeneğini seçin.\nSorulduğunda medya konumu iznini verin: Böylece Nextcloud görselleri yüklerken konum verilerini kaydedebilir.\n\nİzin penceresi yalnızca gerektiğinde görüntülenir. Şüpheniz varsa, lütfen sistem ayarları bölümünden yeniden kontrol edin.\n\nOtomatik yükleme, yalnızca Nextcloud uygulamasının Google Play sürümünü kullanırken görsel ve video dosyalarını yükleyebilir.\n\nLütfen 2024 Aralık ayından sonra yüklenmemiş olabilecek dosyaları kontrol edin.</string>
     <string name="receive_external_files_activity_start_sync_folder_is_not_exists_message">Klasör bulunamadı. Eşitleme işlemi iptal edildi</string>
     <string name="receive_external_files_activity_unable_to_find_file_to_upload">Yüklenecek dosya bulunamadı</string>
     <string name="recommend_subject">%1$s uygulamasını aygıtınız üzerinde deneyin!</string>
     <string name="recommend_text">Aygıtında %1$s kullanmanı öneriyorum!\nŞuradan indirebilirsin: %2$s</string>
     <string name="recommend_urls">%1$s ya da %2$s</string>
+    <string name="recommended_files_title">Önerilen dosyalar</string>
     <string name="refresh_content">İçeriği yenile</string>
     <string name="reload">Yeniden yükle</string>
     <string name="remote">(uzak)</string>
@@ -759,7 +756,6 @@
     <string name="request_account_deletion_button">Silme isteğinde bulunun</string>
     <string name="request_account_deletion_details">Hesabın hizmet sağlayıcı tarafından kalıcı olarak silinmesini isteyin</string>
     <string name="resharing_is_not_allowed">Yeniden paylaşımı engelleyen ilke ya da izinler</string>
-    <string name="resized_image_not_possible_download">Boyutu değiştirilmiş bir görsel yok. Tam boyuttaki görsel indirilsin mi?</string>
     <string name="restore">Dosyayı geri yükle</string>
     <string name="restore_backup">Yedeği geri yükle</string>
     <string name="restore_button_description">Silinmiş dosyayı geri yükle</string>
@@ -801,6 +797,7 @@
     <string name="share">Paylaş</string>
     <string name="share_copy_link">Bağlantıyı paylaş ve kopyala</string>
     <string name="share_dialog_title">Paylaşım</string>
+    <string name="share_download_limit">İndirme sınırını ayarla</string>
     <string name="share_expiration_date_format">%1$s</string>
     <string name="share_expiration_date_label">Geçerlilik süresi %1$s zamanında dolacak</string>
     <string name="share_file">%1$s paylaş</string>
@@ -846,6 +843,7 @@
     <string name="sharee_already_added_to_file">Paylaşım eklenemedi. Bu dosya ya da klasör bu kişi ya da grup ile zaten paylaşılmış.</string>
     <string name="show_images">Fotoğraflar görüntülensin</string>
     <string name="show_video">Görüntüler görüntülensin</string>
+    <string name="sign_tos_failed">Lütfen hizmet koşullarını el ile denetleyin!</string>
     <string name="signup_with_provider">Hizmet sağlayıcı ile hesap aç</string>
     <string name="single_sign_on_request_token" formatted="true">%1$s, %2$s Nextcloud hesabınıza erişebilsin mi?</string>
     <string name="sort_by">Sıralama</string>
@@ -894,7 +892,6 @@
     <string name="stream">Şununla akıt …</string>
     <string name="stream_not_possible_headline">İç akış yapılamaz</string>
     <string name="stream_not_possible_message">Onun yerine ortamı indirin ya da dış bir uygulama kullanın.</string>
-    <string name="strict_mode">Kısıtlanmış kip: HTTP bağlantılarına izin verilmez!</string>
     <string name="sub_folder_rule_day">Yıl/Ay/Gün</string>
     <string name="sub_folder_rule_month">Yıl/Ay</string>
     <string name="sub_folder_rule_year">Yıl</string>
@@ -931,6 +928,8 @@
     <string name="synced_folders_type">Tür</string>
     <string name="synced_icon">Eşitle</string>
     <string name="tags">Etiketler</string>
+    <string name="terms_of_service_title">Hizmet koşulları</string>
+    <string name="terms_of_services_agree">Yukarıdaki hizmet koşullarını kabul ediyorum</string>
     <string name="test_server_button">Sunucu bağlantısını sına</string>
     <string name="thirtyMinutes">30 dakika</string>
     <string name="thisWeek">Bu hafta</string>
@@ -991,6 +990,8 @@
     <string name="upload_file_dialog_title">Yüklenecek dosya adını ve dosya türünü belirtin</string>
     <string name="upload_files">Dosyaları yükle</string>
     <string name="upload_global_pause_title">Tüm yüklemeler duraklatıldı</string>
+    <string name="upload_gplay">İzin değişiklikleri</string>
+    <string name="upload_gplay_desc">Yüklenen görsellerin konum bilgilerine erişmek için yeni bir izin gerekiyor.\nMedya erişiminin \"Her zaman tümüne izin verilsin\" olarak ayarlandığından emin olun.</string>
     <string name="upload_item_action_button">Öge yükleme işlemi düğmesi</string>
     <string name="upload_list_delete">Sil</string>
     <string name="upload_list_empty_headline">Herhangi bir yükleme yok</string>
@@ -1079,9 +1080,6 @@
     <string name="wait_checking_credentials">Kayıtlı kimlik bilgileri denetleniyor</string>
     <string name="wait_for_tmp_copy_from_private_storage">Dosya kişisel depolamadan kopyalanıyor</string>
     <string name="warn_rename_extension">Uzantının değiştirilmesi bu dosyanın başka bir uygulama ile açılmasına neden olabilir</string>
-    <string name="webview_version_check_alert_dialog_message">Lütfen oturum açmak için Android Sistem Web Görünümü uygulamasını güncelleyin</string>
-    <string name="webview_version_check_alert_dialog_positive_button_title">Güncelle</string>
-    <string name="webview_version_check_alert_dialog_title">Android Sistem Web Görünümü uygulamasını güncelle</string>
     <string name="what_s_new_image">Yenilikler görseli</string>
     <string name="whats_new_skip">Atla</string>
     <string name="whats_new_title">%1$s yenilikleri</string>
@@ -1171,5 +1169,25 @@
     <plurals name="items_selected_count">
         <item quantity="one">%d seçilmiş</item>
         <item quantity="other">%d seçilmiş</item>
+    </plurals>
+    <plurals name="delay_message">
+        <item quantity="one">Çok sayıda hatalı deneme nedeniyle %d saniye geciktirildi</item>
+        <item quantity="other">Çok sayıda hatalı deneme nedeniyle %d saniye geciktirildi</item>
+    </plurals>
+    <plurals name="delay_message_minutes">
+        <item quantity="one">Çok sayıda hatalı deneme nedeniyle %d dakika geciktirildi</item>
+        <item quantity="other">Çok sayıda hatalı deneme nedeniyle %d dakika geciktirildi</item>
+    </plurals>
+    <plurals name="delay_message_minutes_part">
+        <item quantity="one">%d dakika geciktirildi</item>
+        <item quantity="other">%d dakika geciktirildi</item>
+    </plurals>
+    <plurals name="delay_message_seconds_part">
+        <item quantity="one">%d saniye</item>
+        <item quantity="other">%d saniye</item>
+    </plurals>
+    <plurals name="share_download_limit_description">
+        <item quantity="one">%1$d indirme kaldı</item>
+        <item quantity="other">%1$d indirme kaldı</item>
     </plurals>
 </resources>

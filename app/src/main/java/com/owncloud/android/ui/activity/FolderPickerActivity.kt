@@ -22,6 +22,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.di.Injectable
 import com.nextcloud.utils.fileNameValidator.FileNameValidator
 import com.owncloud.android.R
@@ -206,6 +207,7 @@ open class FolderPickerActivity :
     /**
      * Show a text message on screen view for notifying user if content is loading or folder is empty
      */
+    @IonosCustomization
     private fun setBackgroundText() {
         val listFragment = listOfFilesFragment
 
@@ -219,7 +221,6 @@ open class FolderPickerActivity :
                     R.string.folder_list_empty_headline,
                     R.string.file_list_empty_moving,
                     R.drawable.ic_list_empty_create_folder,
-                    true
                 )
             } else {
                 it.setEmptyListLoadingMessage()
@@ -403,15 +404,16 @@ open class FolderPickerActivity :
     private fun checkButtonStates(isConditionMet: Boolean) {
         folderPickerBinding.run {
             folderPickerBtnChoose.isEnabled = isConditionMet
-            folderPickerBtnCopy.isEnabled = isFolderSelectable() && isConditionMet
-            folderPickerBtnMove.isEnabled = isFolderSelectable() && isConditionMet
+            folderPickerBtnCopy.isEnabled = isFolderSelectable(COPY) && isConditionMet
+            folderPickerBtnMove.isEnabled = isFolderSelectable(MOVE) && isConditionMet
         }
     }
 
     // for copy and move, disable selecting parent folder of target files
-    private fun isFolderSelectable(): Boolean {
+    private fun isFolderSelectable(type: String): Boolean {
         return when {
             action != MOVE_OR_COPY -> true
+            action == MOVE_OR_COPY && type == COPY -> true
             targetFilePaths.isNullOrEmpty() -> true
             file?.isFolder != true -> true
 
@@ -443,23 +445,23 @@ open class FolderPickerActivity :
 
     private fun initControls() {
         if (this is FilePickerActivity) {
-            viewThemeUtils.material.colorMaterialButtonPrimaryFilled(filesPickerBinding.folderPickerBtnCancel)
+            viewThemeUtils.ionos.material.colorMaterialButtonPrimaryFilled(filesPickerBinding.folderPickerBtnCancel)
             filesPickerBinding.folderPickerBtnCancel.setOnClickListener { finish() }
         } else {
-            viewThemeUtils.material.colorMaterialButtonText(folderPickerBinding.folderPickerBtnCancel)
+            viewThemeUtils.ionos.material.colorMaterialButtonText(folderPickerBinding.folderPickerBtnCancel)
             folderPickerBinding.folderPickerBtnCancel.setOnClickListener { finish() }
 
-            viewThemeUtils.material.colorMaterialButtonPrimaryTonal(folderPickerBinding.folderPickerBtnChoose)
+            viewThemeUtils.ionos.material.colorMaterialButtonPrimaryTonal(folderPickerBinding.folderPickerBtnChoose)
             folderPickerBinding.folderPickerBtnChoose.setOnClickListener { processOperation(null) }
 
-            viewThemeUtils.material.colorMaterialButtonPrimaryFilled(folderPickerBinding.folderPickerBtnCopy)
+            viewThemeUtils.ionos.material.colorMaterialButtonPrimaryFilled(folderPickerBinding.folderPickerBtnCopy)
             folderPickerBinding.folderPickerBtnCopy.setOnClickListener {
                 processOperation(
                     OperationsService.ACTION_COPY_FILE
                 )
             }
 
-            viewThemeUtils.material.colorMaterialButtonPrimaryTonal(folderPickerBinding.folderPickerBtnMove)
+            viewThemeUtils.ionos.material.colorMaterialButtonPrimaryTonal(folderPickerBinding.folderPickerBtnMove)
             folderPickerBinding.folderPickerBtnMove.setOnClickListener {
                 processOperation(
                     OperationsService.ACTION_MOVE_FILE
@@ -580,7 +582,7 @@ open class FolderPickerActivity :
                             RefreshFolderOperation.EVENT_SINGLE_FOLDER_SHARES_SYNCED != event
                         )
 
-                    checkCredentials(syncResult, context, event)
+                    checkCredentials(syncResult, event)
                 }
 
                 DataHolderUtil.getInstance().delete(intent.getStringExtra(FileSyncAdapter.EXTRA_RESULT))
@@ -619,7 +621,7 @@ open class FolderPickerActivity :
             browseToRoot()
         }
 
-        private fun checkCredentials(syncResult: RemoteOperationResult<*>, context: Context, event: String?) {
+        private fun checkCredentials(syncResult: RemoteOperationResult<*>, event: String?) {
             if (RefreshFolderOperation.EVENT_SINGLE_FOLDER_CONTENTS_SYNCED == event && !syncResult.isSuccess
             ) {
                 if (ResultCode.UNAUTHORIZED == syncResult.code || (
@@ -627,7 +629,7 @@ open class FolderPickerActivity :
                             syncResult.exception is AuthenticatorException
                         )
                 ) {
-                    requestCredentialsUpdate(context)
+                    requestCredentialsUpdate()
                 } else if (ResultCode.SSL_RECOVERABLE_PEER_UNVERIFIED == syncResult.code) {
                     showUntrustedCertDialog(syncResult)
                 }
@@ -688,6 +690,8 @@ open class FolderPickerActivity :
         const val MOVE_OR_COPY = "MOVE_OR_COPY"
         const val CHOOSE_LOCATION = "CHOOSE_LOCATION"
         private val TAG = FolderPickerActivity::class.java.simpleName
+        private const val MOVE = "MOVE"
+        private const val COPY = "COPY"
 
         const val TAG_LIST_OF_FOLDERS = "LIST_OF_FOLDERS"
     }
