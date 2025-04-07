@@ -14,6 +14,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.di.Injectable
 import com.owncloud.android.R
 import com.owncloud.android.databinding.SortingOrderFragmentBinding
@@ -49,6 +50,7 @@ class SortingOrderDialogFragment : DialogFragment(), Injectable {
      *
      * @param binding the parent binding
      */
+    @IonosCustomization("Remove material buttons styling")
     private fun setupDialogElements(binding: SortingOrderFragmentBinding) {
         val bindings = listOf(
             binding.sortByNameAscending to FileSortOrder.SORT_A_TO_Z,
@@ -63,14 +65,13 @@ class SortingOrderDialogFragment : DialogFragment(), Injectable {
             view.tag = sortOrder
             view.let {
                 it.setOnClickListener(OnSortOrderClickListener())
-                viewThemeUtils?.material?.colorMaterialButtonPrimaryBorderless(it)
             }
         }
 
-        viewThemeUtils?.material?.colorMaterialButtonPrimaryTonal(binding.cancel)
         binding.cancel.setOnClickListener { dismiss() }
     }
 
+    @IonosCustomization
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding = SortingOrderFragmentBinding.inflate(requireActivity().layoutInflater, null, false)
         setupDialogElements(binding!!)
@@ -78,7 +79,7 @@ class SortingOrderDialogFragment : DialogFragment(), Injectable {
         val builder = MaterialAlertDialogBuilder(requireContext())
         builder.setView(binding?.root)
 
-        viewThemeUtils?.dialog?.colorMaterialAlertDialogBackground(requireContext(), builder)
+        viewThemeUtils?.ionos?.dialog?.colorMaterialAlertDialogBackground(requireContext(), builder)
 
         return builder.create()
     }

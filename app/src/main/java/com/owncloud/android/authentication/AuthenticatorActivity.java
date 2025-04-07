@@ -37,7 +37,6 @@ import android.webkit.CookieManager;
 import android.webkit.URLUtil;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
@@ -48,7 +47,10 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.ionos.annotation.IonosCustomization;
 import com.google.gson.reflect.TypeToken;
+import com.ionos.privacy.DataProtectionActivity;
+import com.ionos.privacy.PrivacyPreferences;
 import com.nextcloud.android.common.ui.color.ColorUtil;
 import com.nextcloud.android.common.ui.theme.utils.ColorRole;
 import com.nextcloud.client.account.User;
@@ -57,7 +59,6 @@ import com.nextcloud.client.device.DeviceInfo;
 import com.nextcloud.client.di.Injectable;
 import com.nextcloud.client.network.ClientFactory;
 import com.nextcloud.client.onboarding.FirstRunActivity;
-import com.nextcloud.client.onboarding.OnboardingService;
 import com.nextcloud.client.preferences.AppPreferences;
 import com.nextcloud.common.PlainClient;
 import com.nextcloud.operations.PostMethod;
@@ -91,8 +92,6 @@ import com.owncloud.android.providers.DocumentsStorageProvider;
 import com.owncloud.android.services.OperationsService;
 import com.owncloud.android.services.OperationsService.OperationsServiceBinder;
 import com.owncloud.android.ui.activity.FileDisplayActivity;
-import com.owncloud.android.ui.activity.SettingsActivity;
-import com.owncloud.android.ui.dialog.IndeterminateProgressDialog;
 import com.owncloud.android.ui.dialog.SslUntrustedCertDialog;
 import com.owncloud.android.ui.dialog.SslUntrustedCertDialog.OnSslUntrustedCertListener;
 import com.owncloud.android.utils.DisplayUtils;
@@ -106,7 +105,6 @@ import org.json.JSONObject;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -215,7 +213,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
 
     @Inject UserAccountManager accountManager;
     @Inject AppPreferences preferences;
-    @Inject OnboardingService onboarding;
+    @Inject PrivacyPreferences privacyPreferences;
     @Inject DeviceInfo deviceInfo;
     @Inject PassCodeManager passCodeManager;
     @Inject ViewThemeUtils.Factory viewThemeUtilsFactory;
@@ -239,16 +237,13 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
      * IMPORTANT ENTRY POINT 1: activity is shown to the user
      */
     @Override
+    @IonosCustomization
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewThemeUtils = viewThemeUtilsFactory.withPrimaryAsBackground();
-        viewThemeUtils.platform.colorStatusBar(this, getResources().getColor(R.color.primary));
 
         Uri data = getIntent().getData();
         boolean directLogin = data != null && data.toString().startsWith(getString(R.string.login_data_own_scheme));
-        if (savedInstanceState == null && !directLogin) {
-            onboarding.launchFirstRunIfNeeded(this);
-        }
 
         onlyAdd = getIntent().getBooleanExtra(KEY_ONLY_ADD, false) || checkIfViaSSO(getIntent());
 
@@ -284,6 +279,10 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
             mIsFirstAuthAttempt = savedInstanceState.getBoolean(KEY_AUTH_IS_FIRST_ATTEMPT_TAG);
         }
 
+        if (directLogin) {
+            return;
+        }
+
         boolean webViewLoginMethod = false;
         String webloginUrl = null;
 
@@ -296,7 +295,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
 
         if (!TextUtils.isEmpty(webloginUrl)) {
             webViewLoginMethod = true;
-        } else if (getIntent().getBooleanExtra(EXTRA_USE_PROVIDER_AS_WEBLOGIN, false)) {
+        } else if (getIntent().getBooleanExtra(EXTRA_USE_PROVIDER_AS_WEBLOGIN, true)) {
             webViewLoginMethod = true;
             webloginUrl = getString(R.string.provider_registration_server);
         } else if (!TextUtils.isEmpty(getResources().getString(R.string.webview_login_url))) {
@@ -310,6 +309,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
             accountSetupWebviewBinding = AccountSetupWebviewBinding.inflate(getLayoutInflater());
             setContentView(accountSetupWebviewBinding.getRoot());
             anonymouslyPostLoginRequest(webloginUrl);
+            initCancelButton();
         } else {
             accountSetupBinding = AccountSetupBinding.inflate(getLayoutInflater());
             setContentView(accountSetupBinding.getRoot());
@@ -332,6 +332,17 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
         ProcessLifecycleOwner.get().getLifecycle().addObserver(lifecycleEventObserver);
     }
 
+    @IonosCustomization
+    private void initCancelButton() {
+        MaterialButton cancelButton = accountSetupWebviewBinding.loginFlowV2.cancelButton;
+
+        cancelButton.setOnClickListener(v -> {
+            loginFlowExecutorService.shutdown();
+            ProcessLifecycleOwner.get().getLifecycle().removeObserver(lifecycleEventObserver);
+            finish();
+        });
+    }
+    
     private void showEnforcedServers() {
         showAuthStatus();
         accountSetupBinding.hostUrlFrame.setVisibility(View.GONE);
@@ -651,6 +662,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
      * AndroidManifest.xml file.
      */
     @Override
+    @IonosCustomization
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         Log_OC.d(TAG, "onNewIntent()");
@@ -676,7 +688,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
             }
         }
 
-        if (intent.getBooleanExtra(EXTRA_USE_PROVIDER_AS_WEBLOGIN, false)) {
+        if (intent.getBooleanExtra(EXTRA_USE_PROVIDER_AS_WEBLOGIN, true)) {
             accountSetupWebviewBinding = AccountSetupWebviewBinding.inflate(getLayoutInflater());
             setContentView(accountSetupWebviewBinding.getRoot());
             anonymouslyPostLoginRequest(getString(R.string.provider_registration_server));
@@ -799,13 +811,11 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
      * Tests the credentials entered by the user performing a check of existence on the root folder of the ownCloud
      * server.
      */
+    @IonosCustomization
     private void checkBasicAuthorization(@Nullable String webViewUsername, @Nullable String webViewPassword) {
-        // be gentle with the user
-        IndeterminateProgressDialog dialog = IndeterminateProgressDialog.newInstance(R.string.auth_trying_to_login,
-                                                                                     true);
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.add(dialog, WAIT_DIALOG_TAG);
-        ft.commitAllowingStateLoss();
+        if (accountSetupWebviewBinding != null) {
+            accountSetupWebviewBinding.loginFlowV2.tvAuthorizationDescription.setText(R.string.auth_trying_to_login);
+        }
 
         // validate credentials accessing the root folder
         OwnCloudCredentials credentials = OwnCloudCredentialsFactory.newBasicCredentials(webViewUsername,
@@ -920,12 +930,11 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
     }
 
     // region LoginInfoView
+    @IonosCustomization
     private void initLoginInfoView() {
-        LinearLayout loginFlowLayout = accountSetupWebviewBinding.loginFlowV2.getRoot();
-        MaterialButton cancelButton = accountSetupWebviewBinding.loginFlowV2.cancelButton;
-        loginFlowLayout.setVisibility(View.VISIBLE);
+        MaterialButton retryButton = accountSetupWebviewBinding.loginFlowV2.bRetry;
 
-        cancelButton.setOnClickListener(v -> {
+        retryButton.setOnClickListener(v -> {
             loginFlowExecutorService.shutdown();
             ProcessLifecycleOwner.get().getLifecycle().removeObserver(lifecycleEventObserver);
             recreate();
@@ -1187,17 +1196,19 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
         }
     }
 
+    @IonosCustomization
     private void endSuccess() {
         if (!onlyAdd) {
-            if (MDMConfig.INSTANCE.enforceProtection(this) && Objects.equals(preferences.getLockPreference(), SettingsActivity.LOCK_NONE)) {
-                Intent i = new Intent(this, SettingsActivity.class);
-                startActivity(i);
-            } else {
-                Intent i = new Intent(this, FileDisplayActivity.class);
-                i.setAction(FileDisplayActivity.RESTART);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);
+            Intent i = new Intent(this, FileDisplayActivity.class);
+            i.setAction(FileDisplayActivity.RESTART);
+            String accountName = accountManager.getCurrentOwnCloudAccount() != null
+                ? accountManager.getCurrentOwnCloudAccount().getName()
+                : null;
+            if (!privacyPreferences.isDataProtectionProcessed(accountName)) {
+                i = DataProtectionActivity.createIntent(this, i);
             }
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(i);
         }
 
         finish();

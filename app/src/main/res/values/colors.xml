@@ -9,7 +9,7 @@
   ~ SPDX-FileCopyrightText: 2012 Bartosz Przybylski
   ~ SPDX-License-Identifier: GPL-2.0-only AND (AGPL-3.0-or-later OR GPL-2.0-only)
 -->
-<resources>
+<resources xmlns:app="http://schemas.android.com/apk/res-auto">
     <color name="list_item_lastmod_and_filesize_text">@color/secondary_text_color</color>
     <color name="black">#000000</color>
     <color name="white">#ffffff</color>
@@ -28,6 +28,8 @@
     <color name="transparent">#00000000</color>
     <color name="secondary_text_color">#666666</color>
     <color name="highlight_textColor_Warning">#e53935</color>
+    <color name="sidemenu_progress_bar_color">#3672be</color>
+    <color name="sidemenu_warn_progress_bar_color">#d62e2b</color>
 
     <!-- Colors -->
     <color name="standard_grey">#757575</color>
@@ -76,6 +78,39 @@
     <color name="appbar">@android:color/white</color>
     <color name="fontAppbar">#666666</color>
     <color name="fontSecondaryAppbar">#A5A5A5</color>
+
+    <color name="settings_screen_background">@color/bg_default</color>
+
+    <color name="fab_icon_tint">@color/white</color>
+    <color name="fab_background_color">@color/primary</color>
+    <color name="fab_pressed_background_color">@color/primary_dark</color>
+    <color name="fab_disabled_background_color">@color/disabled_text</color>
+
+    <color name="filelist_file_icon_color">@color/primary</color>
+    <color name="filelist_default_action_icon_color">@color/black</color>
+
+    <color name="system_bars_color">@color/bg_default</color>
+    <color name="synced_folders_item_title_color">?android:textColorPrimary</color>
+
+    <color name="default_icon_color" app:ionosCustomization="">@color/primary</color>
+    <color name="preview_image_background" app:ionosCustomization="">@color/background_color_inverse</color>
+    <color name="preview_image_system_bars_color" app:ionosCustomization="">@color/color_transparent</color>
+    <color name="edit_image_background" app:ionosCustomization="">@color/black</color>
+    <color name="edit_image_toolbar_background" app:ionosCustomization="">@color/black</color>
+    <color name="edit_image_controls_background" app:ionosCustomization="">@color/grey_900</color>
+    <color name="filled_button_text_color" app:ionosCustomization="">@color/primary_button_text_color</color>
+
+    <color name="text_input_border_stroke_color" app:ionosCustomization="">@color/text_color</color>
+    <color name="text_input_focused_border_stroke_color" app:ionosCustomization="">@color/primary</color>
+    <color name="text_input_error_color" app:ionosCustomization="">@color/primary</color>
+    <color name="text_input_hint_text_color" app:ionosCustomization="">@color/disabled_text</color>
+    <color name="text_input_focused_hint_text_color" app:ionosCustomization="">@color/primary</color>
+    <color name="text_input_highlight_color" app:ionosCustomization="">@color/primary</color>
+
+    <color name="navigation_bar_background_color" app:ionosCustomization="">@color/primary</color>
+    <color name="drawer_header_background" app:ionosCustomization="">@color/primary</color>
+
+    <color name="popup_background_color" app:ionosCustomization="">@color/bg_default</color>
 
     <color name="actionbar_color">#F7F9FF</color>
 </resources>
