@@ -10,7 +10,6 @@
     <string name="action_edit">แก้ไข</string>
     <string name="action_empty_notifications">ล้างการแจ้งเตือน</string>
     <string name="action_empty_trashbin">ล้างข้อมูลในถังขยะ</string>
-    <string name="action_send_share">ส่ง/แชร์</string>
     <string name="action_switch_grid_view">มุมมองแบบตาราง</string>
     <string name="action_switch_list_view">มุมมองแบบรายการ</string>
     <string name="actionbar_mkdir">โฟลเดอร์ใหม่</string>
@@ -27,7 +26,6 @@
     <string name="activity_chooser_send_file_title">ส่ง</string>
     <string name="activity_chooser_title">ส่งลิงก์ไปยัง...</string>
     <string name="activity_icon">กิจกรรม</string>
-    <string name="add_another_public_share_link">เพิ่มลิงก์อื่น</string>
     <string name="add_new_public_share">เพื่มลิงก์การแชร์แบบสาธารณะ</string>
     <string name="add_to_cloud">เพิ่มไปยัง %1$s</string>
     <string name="advanced_settings">การตั้งค่าขั้นสูง</string>
@@ -235,9 +233,7 @@
     <string name="drawer_synced_folders">อัปโหลดอัตโนมัติ</string>
     <string name="e2e_offline">ใช้โดยไม่มีการเชื่อมต่ออินเทอร์เน็ตไม่ได้</string>
     <string name="ecosystem_apps_display_more">เพิ่มเติม</string>
-    <string name="ecosystem_apps_display_notes">โน้ต</string>
     <string name="ecosystem_apps_more">แอพ Nextcloud เพิ่มเติม</string>
-    <string name="ecosystem_apps_notes">Nextcloud โน้ต</string>
     <string name="end_to_end_encryption_decrypting">กำลังถอดรหัส…</string>
     <string name="end_to_end_encryption_dialog_close">ปิด</string>
     <string name="end_to_end_encryption_folder_not_empty">โฟลเดอร์นี้ไม่ว่าง</string>
@@ -253,7 +249,6 @@
     <string name="etm_accounts">บัญชี</string>
     <string name="etm_background_job_user">ผู้ใช้</string>
     <string name="etm_preferences">การกำหนดลักษณะ</string>
-    <string name="etm_title">โหมดทดสอบทางวิศวกรรม</string>
     <string name="etm_transfer_type">โอนย้าย</string>
     <string name="etm_transfer_type_download">ดาวน์โหลด</string>
     <string name="etm_transfer_type_upload">อัปโหลด</string>
@@ -424,7 +419,6 @@
     <string name="new_media_folder_detected">ตรวจพบโฟลเดอร์สื่อ %1$s ใหม่</string>
     <string name="new_media_folder_photos">รูปภาพ</string>
     <string name="new_media_folder_videos">วิดีโอ</string>
-    <string name="new_notification">การแจ้งเตือนใหม่</string>
     <string name="new_version_was_created">สร้างรุ่นใหม่แล้ว</string>
     <string name="no_actions">ไม่มีการกระทำสำหรับผู้ใช้นี้</string>
     <string name="no_browser_available">ไม่มีแอปสำหรับจัดการลิงก์</string>
@@ -488,6 +482,7 @@
     <string name="privacy">ความเป็นส่วนตัว</string>
     <string name="recommend_subject">ลอง %1$s บนอุปกรณ์ของคุณ!</string>
     <string name="recommend_text">ฉันอยากชวนคุณมาใช้ %1$s บนอุปกรณ์ของคุณ\nดาวน์โหลดที่นี่: %2$s</string>
+    <string name="recommended_files_title">ไฟล์แนะนำ</string>
     <string name="reload">โหลดใหม่</string>
     <string name="remove_push_notification">ลบออก</string>
     <string name="remove_success_msg">ลบแล้ว</string>

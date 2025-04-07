@@ -126,6 +126,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.content.res.AppCompatResources;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.GravityCompat;
@@ -469,7 +470,7 @@ public abstract class DrawerActivity extends ToolbarActivity
         }
 
         // hide ecosystem apps according to user preference or in branded client
-        LinearLayout banner = mNavigationViewHeader.findViewById(R.id.drawer_ecosystem_apps);
+        ConstraintLayout banner = mNavigationViewHeader.findViewById(R.id.drawer_ecosystem_apps);
         boolean shouldHideTopBanner = isClientBranded || !preferences.isShowEcosystemApps();
 
         if (shouldHideTopBanner) {
@@ -479,11 +480,11 @@ public abstract class DrawerActivity extends ToolbarActivity
         }
     }
 
-    private void hideTopBanner(LinearLayout banner) {
+    private void hideTopBanner(ConstraintLayout banner) {
         banner.setVisibility(View.GONE);
     }
 
-    private void showTopBanner(LinearLayout banner, int primaryColor) {
+    private void showTopBanner(ConstraintLayout banner, int primaryColor) {
         LinearLayout notesView = banner.findViewById(R.id.drawer_ecosystem_notes);
         LinearLayout talkView = banner.findViewById(R.id.drawer_ecosystem_talk);
         LinearLayout moreView = banner.findViewById(R.id.drawer_ecosystem_more);

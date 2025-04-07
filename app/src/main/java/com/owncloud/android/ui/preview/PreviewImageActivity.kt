@@ -307,10 +307,6 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
 
             viewPager?.setCurrentItem(nextPosition, true)
             previewImagePagerAdapter?.delete(deletePosition)
-
-            if (showDirectoryWhenDeletionCompleted) {
-                backToDisplayActivity()
-            }
         } else if (operation is SynchronizeFileOperation) {
             onSynchronizeFileOperationFinish(result)
         }

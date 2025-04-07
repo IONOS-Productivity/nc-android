@@ -45,7 +45,6 @@ import com.ionos.annotation.IonosCustomization;
 import com.ionos.scanbot.controller.ScanbotController;
 import com.nextcloud.android.lib.resources.files.ToggleFileLockRemoteOperation;
 import com.nextcloud.android.lib.resources.recommendations.GetRecommendationsRemoteOperation;
-import com.nextcloud.android.lib.resources.recommendations.Recommendation;
 import com.nextcloud.android.lib.richWorkspace.RichWorkspaceDirectEditingRemoteOperation;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.account.UserAccountManager;
@@ -254,7 +253,6 @@ public class OCFileListFragment extends ExtendedListFragment implements
     protected MenuItemAddRemove menuItemAddRemoveValue = MenuItemAddRemove.ADD_GRID_AND_SORT_WITH_SEARCH;
 
     private List<MenuItem> mOriginalMenuItems = new ArrayList<>();
-    private final Set<Recommendation> recommendedFiles = new HashSet<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -436,6 +434,12 @@ public class OCFileListFragment extends ExtendedListFragment implements
 
     // TODO - This can be replaced via separate class
     public void fetchRecommendedFiles() {
+        OCFile folder = getCurrentFile();
+
+        if (getCapabilities().getRecommendations().isFalse() || !folder.isRootDirectory()) {
+            return;
+        }
+
         new Thread(() -> {{
             try {
                 User user = accountManager.getUser();
@@ -444,12 +448,11 @@ public class OCFileListFragment extends ExtendedListFragment implements
                 if (result.isSuccess()) {
                     final var recommendations = result.getResultData().getRecommendations();
                     Log_OC.d(TAG,"Recommended files fetched size: " + recommendations.size());
-                    recommendedFiles.addAll(recommendations);
                     requireActivity().runOnUiThread(new Runnable() {
                         @SuppressLint("NotifyDataSetChanged")
                         @Override
                         public void run() {
-                            mAdapter.notifyItemChanged(0);
+                            mAdapter.updateRecommendedFiles(recommendations);
                         }
                     });
                 }
@@ -471,8 +474,7 @@ public class OCFileListFragment extends ExtendedListFragment implements
             this,
             hideItemOptions,
             isGridViewPreferred(mFile),
-            viewThemeUtils,
-            recommendedFiles
+            viewThemeUtils
         );
 
         setRecyclerViewAdapter(mAdapter);

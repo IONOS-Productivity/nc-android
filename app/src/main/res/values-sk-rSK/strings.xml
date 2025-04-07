@@ -15,7 +15,7 @@
     <string name="action_switch_list_view">Zobrazenie zoznamu</string>
     <string name="actionbar_calendar_contacts_restore">Obnoviť kontakty a kalendár</string>
     <string name="actionbar_mkdir">Nový priečinok</string>
-    <string name="actionbar_move_or_copy">Presunúť alebo Kopírovať</string>
+    <string name="actionbar_move_or_copy">Presunúť alebo kopírovať</string>
     <string name="actionbar_open_with">Otvoriť pomocou</string>
     <string name="actionbar_search">Hľadať</string>
     <string name="actionbar_see_details">Podrobnosti</string>
@@ -28,7 +28,6 @@
     <string name="activity_chooser_send_file_title">Odoslať</string>
     <string name="activity_chooser_title">Odoslať odkaz…</string>
     <string name="activity_icon">Aktivita</string>
-    <string name="add_another_public_share_link">Pridať ďalší odkaz</string>
     <string name="add_new_public_share">Pridajte nový odkaz na verejné zdieľanie</string>
     <string name="add_new_secure_file_drop">Pridať nový zabezpečený file drop</string>
     <string name="add_to_cloud">Pridaj do %1$s</string>
@@ -49,8 +48,8 @@
     <string name="assistant_screen_add_task_alert_dialog_title">Pridať novú úlohu</string>
     <string name="assistant_screen_create_task_alert_dialog_input_field_placeholder">Napíšte nejaký text</string>
     <string name="assistant_screen_delete_task_alert_dialog_description">Naozaj chcete vymazať túto úlohu?</string>
-    <string name="assistant_screen_delete_task_alert_dialog_title">Vymazať Úlohu</string>
-    <string name="assistant_screen_loading">Zoznam úloh sa nahráva, prosím čakajte</string>
+    <string name="assistant_screen_delete_task_alert_dialog_title">Odstrániť úlohu</string>
+    <string name="assistant_screen_loading">Načítavam zoznam úloh...</string>
     <string name="assistant_screen_no_task_available_text">Pre typ úlohy %s nie je k dispozícii žiadna úloha, môžete vytvoriť novú úlohu vpravo dole.</string>
     <string name="assistant_screen_task_create_fail_message">Pri vytváraní úlohy nastala chyba</string>
     <string name="assistant_screen_task_create_success_message">Úloha bola úspešne vytvorená</string>
@@ -215,6 +214,7 @@
     <string name="could_not_retrieve_url">Nepodarilo sa načítať webovú adresu</string>
     <string name="create">Vytvoriť</string>
     <string name="create_dir_fail_msg">Nemožno vytvoriť priečinok</string>
+    <string name="create_link">Vytvoriť odkaz</string>
     <string name="create_new">Nový</string>
     <string name="create_new_document">Nový dokument</string>
     <string name="create_new_folder">Nový priečinok</string>
@@ -297,11 +297,7 @@
     <string name="e2e_signature_does_not_match">Podpis nesúhlasí</string>
     <string name="ecosystem_apps_display_assistant">Asistent</string>
     <string name="ecosystem_apps_display_more">Viac</string>
-    <string name="ecosystem_apps_display_notes">Poznámky</string>
-    <string name="ecosystem_apps_display_talk">Talk /Rozhovor/</string>
     <string name="ecosystem_apps_more">Ďalšie Nextcloud aplikácie</string>
-    <string name="ecosystem_apps_notes">Nextcloud poznámky</string>
-    <string name="ecosystem_apps_talk">Nextcloud Talk /Rozhovor/</string>
     <string name="email_pick_failed">Nepodarilo sa vybrať e-mailovú adresu.</string>
     <string name="encrypted">Nastaviť ako zašifrované</string>
     <string name="end_to_end_encryption_certificate_unavailable">Nepodarilo sa získať certifikát servera</string>
@@ -309,7 +305,7 @@
     <string name="end_to_end_encryption_confirm_button">Nastavenie šifrovania</string>
     <string name="end_to_end_encryption_decrypting">Dešifrujem…</string>
     <string name="end_to_end_encryption_dialog_close">Zatvoriť</string>
-    <string name="end_to_end_encryption_enter_password">Prosím zadajte heslo na dešifrovanie privátneho kľúča.</string>
+    <string name="end_to_end_encryption_enter_passphrase_to_access_files">Vložte vaše heslo pre prístup k vašim súborom</string>
     <string name="end_to_end_encryption_folder_not_empty">Tento priečinok nie je prázdny.</string>
     <string name="end_to_end_encryption_generating_keys">Vytvárajú sa nové kľúče…</string>
     <string name="end_to_end_encryption_keywords_description">Táto 12-slovná fráza je veľmi silné heslo, ktoré poskytuje úplný prístup k prezeraniu a používaniu šifrovaných súborov. Napíšte si ju a uschovajte niekde v bezpečí.</string>
@@ -366,6 +362,7 @@
     <string name="etm_transfer_type">Prenos</string>
     <string name="etm_transfer_type_download">Stiahnuť</string>
     <string name="etm_transfer_type_upload">Nahrať</string>
+    <string name="external_shares">Externé zdieľania</string>
     <string name="fab_label">Pridať alebo nahrať</string>
     <string name="failed_to_download">Nepodarilo sa odovzdať súbor správcovi preberania</string>
     <string name="failed_to_print">Nepodarilo sa vytlačiť súbor</string>
@@ -457,6 +454,7 @@
     <string name="first_run_3_text">Jednoduchý webmail, kalendár a kontakty</string>
     <string name="first_run_4_text">Zdieľanie obrazovky, online meetingy a web konferencie</string>
     <string name="folder_already_exists">Priečinok už existuje</string>
+    <string name="folder_best_viewed_in">Tento adresár je najlepšie prezerať v %1$s.</string>
     <string name="folder_confirm_create">Vytvoriť</string>
     <string name="folder_list_empty_headline">Nie sú tu žiadne priečinky</string>
     <string name="folder_name_empty">Názov adresára nemôže byť prázdny</string>
@@ -505,6 +503,7 @@
     <string name="instant_upload_existing">Nahrať aj existujúce súbory</string>
     <string name="instant_upload_on_charging">Nahrať iba počas nabíjania</string>
     <string name="instant_upload_path">/InstantUpload</string>
+    <string name="internal_shares">Interné zdieľania</string>
     <string name="internal_two_way_sync">Interná obojsmerná synchronizácia</string>
     <string name="internal_two_way_sync_not_yet">Zatiaľ nie, čoskoro bude zosynchronizované</string>
     <string name="internet_connection_required_for_encrypted_folder_setup">Pre nastavenie šifrovaného adresára je potrebné internetové pripojenie</string>
@@ -616,14 +615,15 @@
     <string name="offline_mode_info_description">Dokonca aj bez internetového pripojenia môžete organizovať svoje adresáre a vytvárať súbory. Keď budete opäť online, vaše nespracované akcie sa automaticky zosynchronizujú.</string>
     <string name="offline_mode_info_title">Nie ste pripojený, ale môžete pokračovať v práci</string>
     <string name="offline_operations_file_does_not_exists_yet">Žiadny súbor zatiaľ neexistuje. Prosím, nahrajte prvý súbor.</string>
-    <string name="offline_operations_worker_notification_conflict_text">Konfliktný adresár? %s</string>
-    <string name="offline_operations_worker_notification_delete_offline_folder">Zmazať Offline Adresár</string>
+    <string name="offline_operations_worker_notification_conflict_text">Konfliktný adresár: %s</string>
+    <string name="offline_operations_worker_notification_delete_offline_folder">Zmazať offline adresár</string>
     <string name="offline_operations_worker_notification_error_text">Offline operácia nemôže byť dokončená. %s</string>
     <string name="offline_operations_worker_notification_manager_ticker">Offline operace</string>
-    <string name="offline_operations_worker_notification_start_text">Spúšťanie Offline operácií</string>
+    <string name="offline_operations_worker_notification_start_text">Spúšťanie offline operácií</string>
     <string name="oneHour">1 hodina</string>
     <string name="online">Pripojené</string>
     <string name="online_status">Stav pripojenia</string>
+    <string name="open_in_app">Otvoriť v %1$s</string>
     <string name="outdated_server">Verzia servra už nie je podporovaná, prosím aktualizujte!</string>
     <string name="overflow_menu">Ďalšie menu</string>
     <string name="pass_code_configure_your_pass_code">Vložte svoje heslo</string>
@@ -741,7 +741,7 @@
     <string name="recommend_subject">Vyskúšajte %1$s na vašom zariadení!</string>
     <string name="recommend_text">Chcel by som odporučiť %1$s pre vaše zariadenie.\nZískať ho môžete aj tu: %2$s</string>
     <string name="recommend_urls">%1$s alebo %2$s</string>
-    <string name="recommended_files_title">Odporúčané Súbory</string>
+    <string name="recommended_files_title">Odporúčané súbory</string>
     <string name="refresh_content">Obnoviť obsah</string>
     <string name="reload">Znovu načítať</string>
     <string name="remote">(vzdialené)</string>
@@ -800,7 +800,7 @@
     <string name="set_status_message">Nastaviť správu o stave</string>
     <string name="setup_e2e">Počas nastavovania end-to-end šifrovania dostanete náhodný 12-slovový mnemotechnický záznam, ktorý budete potrebovať na otvorenie svojich súborov na iných zariadeniach. Tento záznam bude uložený iba na tomto zariadení a môže byť znovu zobrazený na tejto obrazovke. Prosím, zapíšte si ho na bezpečné miesto!</string>
     <string name="share">Zdieľať</string>
-    <string name="share_copy_link">Zdieľať a Kopírovať Odkaz</string>
+    <string name="share_copy_link">Zdieľať a kopírovať odkaz</string>
     <string name="share_dialog_title">Sprístupnenie</string>
     <string name="share_download_limit">Nastaviť limit sťahovania</string>
     <string name="share_expiration_date_format">%1$s</string>
@@ -831,6 +831,7 @@
     <string name="share_remote_clarification">%1$s (vzdialený)</string>
     <string name="share_room_clarification">%1$s (rozhovor)</string>
     <string name="share_search">Meno, ID v rámci Federatívneho cloudu, alebo e-mailová adresa…</string>
+    <string name="share_search_internal">Pridať užívateľov a tímy</string>
     <string name="share_send_new_email">Odoslať nový e-mail</string>
     <string name="share_send_note">Poznámka pre príjemcu</string>
     <string name="share_settings">Nastavenia</string>
@@ -846,7 +847,9 @@
     <string name="shared_with_you_by">Sprístupnené vám používateľom %1$s</string>
     <string name="sharee_add_failed">Pridanie sprístupňujúceho sa nepodarilo</string>
     <string name="sharee_already_added_to_file">Pridanie zdieľania zlyhalo. Tento súbor alebo adresár už bol zdieľaný s touto osobou alebo skupinou.</string>
+    <string name="show_all">Zobraziť všetko</string>
     <string name="show_images">Zobraziť fotky</string>
+    <string name="show_less">Zobraziť menej</string>
     <string name="show_video">Zobraziť videá</string>
     <string name="sign_tos_failed">Prosím manuálne skontrolujte podmienky poskytovania služby!</string>
     <string name="signup_with_provider">Zaregistrovať sa u poskytovateľa</string>

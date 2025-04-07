@@ -325,9 +325,10 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
             } else {
                 showEnforcedServers();
             }
+            
+            initServerPreFragment(savedInstanceState);
         }
 
-        initServerPreFragment(savedInstanceState);
         ProcessLifecycleOwner.get().getLifecycle().addObserver(lifecycleEventObserver);
     }
 
@@ -341,50 +342,50 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
             finish();
         });
     }
-        
-        private void showEnforcedServers() {
-            showAuthStatus();
-            accountSetupBinding.hostUrlFrame.setVisibility(View.GONE);
-            accountSetupBinding.hostUrlInputHelperText.setVisibility(View.GONE);
-            accountSetupBinding.scanQr.setVisibility(View.GONE);
-            accountSetupBinding.serversSpinner.setVisibility(View.VISIBLE);
+    
+    private void showEnforcedServers() {
+        showAuthStatus();
+        accountSetupBinding.hostUrlFrame.setVisibility(View.GONE);
+        accountSetupBinding.hostUrlInputHelperText.setVisibility(View.GONE);
+        accountSetupBinding.scanQr.setVisibility(View.GONE);
+        accountSetupBinding.serversSpinner.setVisibility(View.VISIBLE);
 
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.enforced_servers_spinner);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.enforced_servers_spinner);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-            ArrayList<String> servers = new ArrayList<>();
-            servers.add("");
-            adapter.add(getString(R.string.please_select_a_server));
+        ArrayList<String> servers = new ArrayList<>();
+        servers.add("");
+        adapter.add(getString(R.string.please_select_a_server));
 
-            ArrayList<EnforcedServer> t = new Gson().fromJson(getString(R.string.enforce_servers),
-                                                              new TypeToken<ArrayList<EnforcedServer>>() {
-                                                              }
-                                                                  .getType());
+        ArrayList<EnforcedServer> t = new Gson().fromJson(getString(R.string.enforce_servers),
+                                                          new TypeToken<ArrayList<EnforcedServer>>() {
+                                                          }
+                                                              .getType());
 
-            for (EnforcedServer e : t) {
-                adapter.add(e.getName());
-                servers.add(e.getUrl());
+        for (EnforcedServer e : t) {
+            adapter.add(e.getName());
+            servers.add(e.getUrl());
+        }
+
+        accountSetupBinding.serversSpinner.setAdapter(adapter);
+        accountSetupBinding.serversSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String url = servers.get(position);
+
+                if (URLUtil.isValidUrl(url)) {
+                    accountSetupBinding.hostUrlInput.setText(url);
+                    checkOcServer();
+                }
             }
 
-            accountSetupBinding.serversSpinner.setAdapter(adapter);
-            accountSetupBinding.serversSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
-
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    String url = servers.get(position);
-
-                    if (URLUtil.isValidUrl(url)) {
-                        accountSetupBinding.hostUrlInput.setText(url);
-                        checkOcServer();
-                    }
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-                    // do nothing
-                }
-            });
-        }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // do nothing
+            }
+        });
+    }
 
     private final LifecycleEventObserver lifecycleEventObserver = ((lifecycleOwner, event) -> {
         if (event == Lifecycle.Event.ON_START && token != null) {

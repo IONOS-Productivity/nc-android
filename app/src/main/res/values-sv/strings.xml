@@ -10,7 +10,7 @@
     <string name="action_edit">Redigera</string>
     <string name="action_empty_notifications">Rensa alla aviseringar</string>
     <string name="action_empty_trashbin">Töm papperskorgen</string>
-    <string name="action_send_share">Skicka/Dela</string>
+    <string name="action_send_share">Skicka/dela</string>
     <string name="action_switch_grid_view">Rutnätsvy</string>
     <string name="action_switch_list_view">Listvy</string>
     <string name="actionbar_calendar_contacts_restore">Återställ kontakter och kalender</string>
@@ -28,7 +28,6 @@
     <string name="activity_chooser_send_file_title">Skicka</string>
     <string name="activity_chooser_title">Skicka länk till…</string>
     <string name="activity_icon">Aktivitet</string>
-    <string name="add_another_public_share_link">Lägg till en annan länk</string>
     <string name="add_new_public_share">Lägg till en ny publik delad länk</string>
     <string name="add_new_secure_file_drop">Lägg till ny säker gömd fillista</string>
     <string name="add_to_cloud">Lägg till %1$s</string>
@@ -47,15 +46,17 @@
     <string name="app_widget_description">Visa en widget från dashboard</string>
     <string name="appbar_search_in">Sök i %s</string>
     <string name="assistant_screen_add_task_alert_dialog_title">Lägg till ny uppgift</string>
+    <string name="assistant_screen_create_a_new_task_from_bottom_right_text">Skapa en ny uppgift från nedre högra hörnet</string>
     <string name="assistant_screen_create_task_alert_dialog_input_field_placeholder">Skriv någon text</string>
     <string name="assistant_screen_delete_task_alert_dialog_description">Är du säker på att du vill ta bort den här uppgiften?</string>
     <string name="assistant_screen_delete_task_alert_dialog_title">Ta bort uppgift</string>
-    <string name="assistant_screen_loading">Uppgiftslistan laddas, vänta</string>
+    <string name="assistant_screen_loading">Laddar uppgiftslista…</string>
     <string name="assistant_screen_no_task_available_text">Ingen uppgift tillgänglig för uppgiftstyp %s, du kan skapa en ny uppgift längst ner till höger.</string>
     <string name="assistant_screen_task_create_fail_message">Ett fel uppstod när uppgiften skapades</string>
     <string name="assistant_screen_task_create_success_message">Uppgiften har skapats</string>
     <string name="assistant_screen_task_delete_fail_message">Ett fel uppstod när uppgiften skulle tas bort</string>
     <string name="assistant_screen_task_delete_success_message">Uppgiften har raderats</string>
+    <string name="assistant_screen_task_list_empty_message">Uppgiftslistan är tom.</string>
     <string name="assistant_screen_task_list_error_state_message">Det går inte att hämta uppgiftslistan, kontrollera din internetanslutning.</string>
     <string name="assistant_screen_task_more_actions_bottom_sheet_delete_action">Ta bort uppgift</string>
     <string name="assistant_screen_task_output_empty_text">Uppgiftens resultat är inte redo än.</string>
@@ -102,6 +103,7 @@
     <string name="auto_upload_gplay_desc2">På grund av nya begränsningar införda av Google har vi tvingats ta bort en viktig behörighet. Som en följd av detta kommer automatisk uppladdning endast att kunna ladda upp bild- och videofiler.\nDessutom krävs en ny behörighet för att få åtkomst till platsinformation för uppladdade bilder.\nSe till att medieåtkomst är inställd på “Tillåt alltid allt”.</string>
     <string name="auto_upload_on_wifi">Ladda bara upp via obelastad Wi-Fi</string>
     <string name="auto_upload_path">/AutomatiskUppladdning</string>
+    <string name="auto_upload_sub_folder_warning">Denna mapp ingår redan i synkroniseringen av den överordnade mappen, vilket kan orsaka dubbla uppladdningar</string>
     <string name="autoupload_configure">Konfigurera</string>
     <string name="autoupload_create_new_custom_folder">Skapa en ny anpassad mappkonfiguration </string>
     <string name="autoupload_custom_folder">Skapa en anpassad mapp</string>
@@ -215,6 +217,7 @@
     <string name="could_not_retrieve_url">Kunde inte hämta URL</string>
     <string name="create">Skapa</string>
     <string name="create_dir_fail_msg">Kunde inte skapa mapp</string>
+    <string name="create_link">Skapa länk</string>
     <string name="create_new">Ny</string>
     <string name="create_new_document">Nytt dokument</string>
     <string name="create_new_folder">Ny mapp</string>
@@ -297,11 +300,7 @@
     <string name="e2e_signature_does_not_match">Signaturen matchar inte</string>
     <string name="ecosystem_apps_display_assistant">Assistent</string>
     <string name="ecosystem_apps_display_more">Mer</string>
-    <string name="ecosystem_apps_display_notes">Anteckning</string>
-    <string name="ecosystem_apps_display_talk">Talk</string>
     <string name="ecosystem_apps_more">Fler Nextcloud-appar</string>
-    <string name="ecosystem_apps_notes">Nextcloud anteckningar</string>
-    <string name="ecosystem_apps_talk">Nextcloud Talk</string>
     <string name="email_pick_failed">Det gick inte att välja e-postadress.</string>
     <string name="encrypted">Sätt som krypterad</string>
     <string name="end_to_end_encryption_certificate_unavailable">Kunde inte hämta servercertifikatet</string>
@@ -309,7 +308,7 @@
     <string name="end_to_end_encryption_confirm_button">Aktivera kryptering</string>
     <string name="end_to_end_encryption_decrypting">Dekrypterar…</string>
     <string name="end_to_end_encryption_dialog_close">Stäng</string>
-    <string name="end_to_end_encryption_enter_password">Ange lösenord för att dekryptera privat nyckel.</string>
+    <string name="end_to_end_encryption_enter_passphrase_to_access_files">Ange din lösenfras för att komma åt dina filer</string>
     <string name="end_to_end_encryption_folder_not_empty">Den här mappen är inte tom.</string>
     <string name="end_to_end_encryption_generating_keys">Generera nya nycklar…</string>
     <string name="end_to_end_encryption_keywords_description">Alla 12 ord tillsammans utgör ett mycket starkt lösenord, så att bara du kan visa och använda dina krypterade filer. Vänligen spara det och förvara det på ett säkert sätt. </string>
@@ -366,6 +365,7 @@
     <string name="etm_transfer_type">Överför</string>
     <string name="etm_transfer_type_download">Ladda ner</string>
     <string name="etm_transfer_type_upload">Ladda upp</string>
+    <string name="external_shares">Externa delningar</string>
     <string name="fab_label">Lägg till eller ladda upp</string>
     <string name="failed_to_download">Misslyckades skicka filen till hämtningshanteraren</string>
     <string name="failed_to_print">Kunde inte skriva ut filen</string>
@@ -457,6 +457,7 @@
     <string name="first_run_3_text">Lättanvänd webmail, kalender och kontakter</string>
     <string name="first_run_4_text">Skärmdelning, onlinemöten och webbkonferenser</string>
     <string name="folder_already_exists">Mapp finns redan</string>
+    <string name="folder_best_viewed_in">Denna mapp visas bäst i %1$s.</string>
     <string name="folder_confirm_create">Skapa</string>
     <string name="folder_list_empty_headline">Inga mappar här</string>
     <string name="folder_name_empty">Mappnamnet får inte vara tomt</string>
@@ -505,6 +506,7 @@
     <string name="instant_upload_existing">Ladda även upp befintliga filer</string>
     <string name="instant_upload_on_charging">Ladda enbart upp när enheten laddas</string>
     <string name="instant_upload_path">/AutomatiskUppladdning</string>
+    <string name="internal_shares">Interna delningar</string>
     <string name="internal_two_way_sync">Intern tvåvägssynk</string>
     <string name="internal_two_way_sync_not_yet">Inte än, synkroniseras snart</string>
     <string name="internet_connection_required_for_encrypted_folder_setup">En internetanslutning krävs för att konfigurera den krypterade mappen</string>
@@ -577,7 +579,7 @@
     <string name="new_media_folder_detected">Ny %1$s media-mapp upptäckt.</string>
     <string name="new_media_folder_photos">bild</string>
     <string name="new_media_folder_videos">video</string>
-    <string name="new_notification">Nytt meddelande</string>
+    <string name="new_notification">Ny avisering</string>
     <string name="new_version_was_created">Ny version skapades</string>
     <string name="no_actions">Inga tillgängliga åtgärder för användaren</string>
     <string name="no_browser_available">Ingen app tillgänglig för att hantera länkar</string>
@@ -624,6 +626,7 @@
     <string name="oneHour">1 timme</string>
     <string name="online">Online</string>
     <string name="online_status">Online-status</string>
+    <string name="open_in_app">Öpnns i %1$s</string>
     <string name="outdated_server">Servern har nått slutet av livet, vänligen uppgradera!</string>
     <string name="overflow_menu">Mer Meny</string>
     <string name="pass_code_configure_your_pass_code">Skriv in ditt lösenord</string>
@@ -642,7 +645,7 @@
     <string name="permission_storage_access">Ytterligare rättigheter krävs för att ladda upp eller hämta filer</string>
     <string name="pick_contact_to_share_with">Välj kontakt att dela med</string>
     <string name="picture_set_as_no_app">Ingen app hittades för att ställa in en bild med</string>
-    <string name="pin_home">Fäst upp på hemskärmen</string>
+    <string name="pin_home">Fäst på hemskärmen</string>
     <string name="pin_shortcut_label">Öppna %1$s</string>
     <string name="placeholder_fileSize">389 KB</string>
     <string name="placeholder_filename">placeholder.txt</string>
@@ -828,10 +831,11 @@
     <string name="share_permission_file_drop">Göm fillista</string>
     <string name="share_permission_secure_file_drop">Säker gömd fillista</string>
     <string name="share_permission_view_only">Skrivskyddat läge</string>
-    <string name="share_permissions">Dela behörigheter</string>
+    <string name="share_permissions">Delningsbehörigheter</string>
     <string name="share_remote_clarification">%1$s (extern)</string>
     <string name="share_room_clarification">%1$s (konversation)</string>
     <string name="share_search">Namn, federerat moln-ID eller e-postadress...</string>
+    <string name="share_search_internal">Lägg till användare och team</string>
     <string name="share_send_new_email">Skicka nytt mail</string>
     <string name="share_send_note">Notering till mottagare</string>
     <string name="share_settings">Inställningar</string>
@@ -847,7 +851,9 @@
     <string name="shared_with_you_by">Delad med dig av %1$s</string>
     <string name="sharee_add_failed">Misslyckades lägga till delning</string>
     <string name="sharee_already_added_to_file">Det gick inte att lägga till delning. Den här filen eller mappen har redan delats med den här personen eller gruppen.</string>
+    <string name="show_all">Visa alla</string>
     <string name="show_images">Visa bilder</string>
+    <string name="show_less">Visa mindre</string>
     <string name="show_video">Visa video</string>
     <string name="sign_tos_failed">Vänligen kontrollera användarvillkoren manuellt!</string>
     <string name="signup_with_provider">Registrera hos en leverantör</string>
@@ -908,8 +914,10 @@
     <string name="subtitle_videos_only">Endast videos</string>
     <string name="suggest">Föreslå</string>
     <string name="sync">Synkronisera</string>
+    <string name="sync_anyway">Synkronisera ändå</string>
     <string name="sync_conflicts_in_favourites_ticker">Konflikter uppstod</string>
     <string name="sync_current_folder_was_removed">Mappen %1$s finns inte längre</string>
+    <string name="sync_duplication">Synkroniseringsduplicering</string>
     <string name="sync_fail_content">Kunde inte synkronisera %1$s</string>
     <string name="sync_fail_content_unauthorized">Fel lösenord för %1$s</string>
     <string name="sync_fail_in_favourites_ticker">Filer flaggade som Håll-filen-uppdaterad misslyckades</string>
@@ -926,6 +934,7 @@
     <string name="sync_not_enough_space_dialog_title">Inte tillräckligt med utrymme</string>
     <string name="sync_status_button">Knappen Synkroniseringsstatus</string>
     <string name="sync_string_files">Filer</string>
+    <string name="sync_warning_button">Synkvarningsknapp</string>
     <string name="synced_folder_settings_button">Inställningar-knapp</string>
     <string name="synced_folders_configure_folders">Konfigurera mappar</string>
     <string name="synced_folders_new_info">Direktuppladdning heter numera Automatisk uppladdning och har blivit totalt omgjort. Vänligen se huvudmenyn för att konfigurera Automatisk uppladdning igen. Ledsen för besväret.\n\nNjut av de nya och förbättrade uppladdningsmöjligheterna!</string>

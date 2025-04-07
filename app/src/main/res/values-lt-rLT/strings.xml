@@ -10,7 +10,7 @@
     <string name="action_edit">Taisyti</string>
     <string name="action_empty_notifications">Išvalyti visus pranešimus</string>
     <string name="action_empty_trashbin">Išvalyti šiukšlinę</string>
-    <string name="action_send_share">Siųsti/Bendrinti</string>
+    <string name="action_send_share">Siųsti/bendrinti</string>
     <string name="action_switch_grid_view">Tinklelio rodinys</string>
     <string name="action_switch_list_view">Sąrašo rodinys</string>
     <string name="actionbar_calendar_contacts_restore">Atkurti adresatus ir kalendorių</string>
@@ -28,7 +28,6 @@
     <string name="activity_chooser_send_file_title">Siųsti</string>
     <string name="activity_chooser_title">Siųsti nuorodą…</string>
     <string name="activity_icon">Veikla</string>
-    <string name="add_another_public_share_link">Pridėti kitą nuorodą</string>
     <string name="add_to_cloud">Pridėti į %1$s</string>
     <string name="advanced_settings">Išplėstiniai nustatymai</string>
     <string name="allow_resharing">Leisti bendrinti iš naujo</string>
@@ -188,6 +187,7 @@
     <string name="could_not_retrieve_url">Nepavyko nuskaityti URL</string>
     <string name="create">Sukurti</string>
     <string name="create_dir_fail_msg">Nepavyko sukurti failo</string>
+    <string name="create_link">Sukurti nuorodą</string>
     <string name="create_new">Nauja</string>
     <string name="create_new_document">Naujas dokumentas</string>
     <string name="create_new_folder">Naujas aplankas</string>
@@ -255,16 +255,12 @@
     <string name="e2e_offline">Neįmanoma, kai nėra interneto ryšio</string>
     <string name="e2e_signature_does_not_match">Parašas nesutampa</string>
     <string name="ecosystem_apps_display_more">Daugiau</string>
-    <string name="ecosystem_apps_display_notes">Užrašai</string>
-    <string name="ecosystem_apps_display_talk">Kalba</string>
     <string name="ecosystem_apps_more">Daugiau Nextcloud programėlių</string>
-    <string name="ecosystem_apps_notes">Nextcloud užrašai</string>
     <string name="email_pick_failed">Nepavyko pasirinkti el. pašto adreso.</string>
     <string name="encrypted">Nustatyti kaip šifruotą</string>
     <string name="end_to_end_encryption_confirm_button">Nustatyti šifravimą</string>
     <string name="end_to_end_encryption_decrypting">Iššifruojama…</string>
     <string name="end_to_end_encryption_dialog_close">Užverti</string>
-    <string name="end_to_end_encryption_enter_password">Norėdami iššifruoti privatųjį raktą, įveskite slaptažodį.</string>
     <string name="end_to_end_encryption_folder_not_empty">Šis aplankas nėra tuščias.</string>
     <string name="end_to_end_encryption_generating_keys">Generuojami nauji raktai…</string>
     <string name="end_to_end_encryption_keywords_description"> Visi 12 žodžių sudaro saugų slaptažodį, leidžiantį tik jums peržiūrėti ir naudoti užšifruotus failus. Prašau jį užsirašyti ir saugoti.</string>
@@ -303,7 +299,6 @@
     <string name="etm_background_jobs_stop_test_job">Sustabdyti testinę užduotį</string>
     <string name="etm_migrations">Perkėlimas (programos atnaujinimas)</string>
     <string name="etm_preferences">Nuostatos</string>
-    <string name="etm_title">Inžinerinis bandymo režimas</string>
     <string name="etm_transfer">Failų persiuntimas</string>
     <string name="etm_transfer_enqueue_test_download">Užbaikite bandomąjį atsisiuntimą</string>
     <string name="etm_transfer_remote_path">Nuotolinis kelias</string>
@@ -493,7 +488,6 @@
     <string name="network_host_not_available">Nepavyko užbaigti operacijos, Serveris nepasiekiamas.</string>
     <string name="new_comment">Naujas komentaras…</string>
     <string name="new_media_folder_detected">Aptiktas naujas %1$s medijos failas.</string>
-    <string name="new_notification">Naujas pranešimas</string>
     <string name="new_version_was_created">Buvo sukurta nauja versija</string>
     <string name="no_browser_available">Nėra programėlės, skirtos apdoroti nuorodas</string>
     <string name="no_calendar_exists">Nėra jokių kalendorių</string>
@@ -612,6 +606,7 @@
     <string name="recommend_subject">Išbandykite %1$s savo įrenginyje!</string>
     <string name="recommend_text">Noriu jus paraginti naudoti %1$s savo įrenginyje.\nAtsisiųskite čia: %2$s</string>
     <string name="recommend_urls">%1$s arba %2$s</string>
+    <string name="recommended_files_title">Rekomenduojami failai</string>
     <string name="refresh_content">Įkelti turinį iš naujo</string>
     <string name="reload">Įkelti iš naujo</string>
     <string name="remote">(nuotolinis)</string>
@@ -653,12 +648,10 @@
     <string name="send">Siųsti</string>
     <string name="sendbutton_description">Siuntimo mygtuko priktograma</string>
     <string name="set_as">Nustatyti kaip</string>
-    <string name="set_note">Įrašyti pastabą</string>
     <string name="set_picture_as">Naudoti paveikslėlį kaip</string>
     <string name="set_status">Nustatyti būseną</string>
     <string name="set_status_message">Nustatyti būsenos žinutę</string>
     <string name="share">Bendrinti</string>
-    <string name="share_copy_link">Bendrinti ir kopijuoti nuorodą</string>
     <string name="share_dialog_title">Bendrinimas</string>
     <string name="share_expiration_date_format">%1$s</string>
     <string name="share_expiration_date_label">Galioja iki %1$s</string>
@@ -696,7 +689,9 @@
     <string name="shared_icon_shared_via_link">bendrinama per nuorodą</string>
     <string name="shared_with_you_by">%1$s bendrina su Jumis.</string>
     <string name="sharee_add_failed">Bendrinimo pridėjimas nepavyko</string>
+    <string name="show_all">Rodyti visus</string>
     <string name="show_images">Rodyti nuotraukas</string>
+    <string name="show_less">Rodyti mažiau</string>
     <string name="show_video">Rodyti vaizdo įrašus</string>
     <string name="signup_with_provider">Registruotis su tiekėju</string>
     <string name="single_sign_on_request_token" formatted="true">Leisti %1$s gauti prieigą prie jūsų Nextcloud paskyros %2$s?</string>

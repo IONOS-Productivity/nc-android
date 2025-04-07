@@ -15,7 +15,7 @@
     <string name="action_switch_list_view">Zobrazení v seznamu</string>
     <string name="actionbar_calendar_contacts_restore">Obnovit kontakty a kalendář</string>
     <string name="actionbar_mkdir">Nová složka</string>
-    <string name="actionbar_move_or_copy">Přesunout</string>
+    <string name="actionbar_move_or_copy">Přesunout nebo zkopírovat</string>
     <string name="actionbar_open_with">Otevřít pomocí</string>
     <string name="actionbar_search">Hledat</string>
     <string name="actionbar_see_details">Podrobnosti</string>
@@ -28,7 +28,6 @@
     <string name="activity_chooser_send_file_title">Odeslat</string>
     <string name="activity_chooser_title">Poslat odkaz na…</string>
     <string name="activity_icon">Aktivita</string>
-    <string name="add_another_public_share_link">Přidat další odkaz</string>
     <string name="add_new_public_share">Přidat nový veřejný odkaz na sdílení</string>
     <string name="add_new_secure_file_drop">Přidat nové bezpečné předání souborů</string>
     <string name="add_to_cloud">Přidat k %1$s</string>
@@ -47,15 +46,17 @@
     <string name="app_widget_description">Zobrazuje jeden ovládací prvek z nástěnky</string>
     <string name="appbar_search_in">Hledat v %s</string>
     <string name="assistant_screen_add_task_alert_dialog_title">Přidat nový úkol</string>
+    <string name="assistant_screen_create_a_new_task_from_bottom_right_text">Z pravého dolního rohu vytvořte nový úkol</string>
     <string name="assistant_screen_create_task_alert_dialog_input_field_placeholder">Zadejte nějaký text</string>
     <string name="assistant_screen_delete_task_alert_dialog_description">Opravdu chcete tuto úlohu smazat?</string>
     <string name="assistant_screen_delete_task_alert_dialog_title">Smazat úkol</string>
-    <string name="assistant_screen_loading">Načítá se seznam úkolů – vyčkejte</string>
+    <string name="assistant_screen_loading">Načítání seznamu úkolů…</string>
     <string name="assistant_screen_no_task_available_text">Pro typ úkolu %s nejsou k dispozici žádné úkoly – nový úkol je možné vytvořit vpravo dole.</string>
     <string name="assistant_screen_task_create_fail_message">Při vytváření úlohy se vyskytla chyba</string>
     <string name="assistant_screen_task_create_success_message">Úloha byla úspěšně vytvořena</string>
     <string name="assistant_screen_task_delete_fail_message">Při mazání úlohy se vyskytla chyba</string>
     <string name="assistant_screen_task_delete_success_message">Úloha úspěšně smazána</string>
+    <string name="assistant_screen_task_list_empty_message">Seznam úkolů je prázdný.</string>
     <string name="assistant_screen_task_list_error_state_message">Nedaří se získat seznam úloh – zkontrolujte připojení k Internetu.</string>
     <string name="assistant_screen_task_more_actions_bottom_sheet_delete_action">Smazat úlohu</string>
     <string name="assistant_screen_task_output_empty_text">Výstup z úkolu ještě není připraven.</string>
@@ -102,6 +103,7 @@
     <string name="auto_upload_gplay_desc2">Kvůli omezením, nově zavedeným ze strany Google, jsme byli nuceni odebrat důležité oprávnění. Výsledkem je, že automatické nahrávání bude moci pouze nahrávat soubory s obrázky a videi.\nOvěřte, že přístup k takovým médiím je nastaven na „Vždy umožnit vše“.</string>
     <string name="auto_upload_on_wifi">Nahrávat pouze přes neúčtované Wi-Fi připojení</string>
     <string name="auto_upload_path">/AutoUpload</string>
+    <string name="auto_upload_sub_folder_warning">Tato složka už je obsažena v synchronizaci nadřazené složky, což může způsobovat duplicitní nahrávání</string>
     <string name="autoupload_configure">Nastavit</string>
     <string name="autoupload_create_new_custom_folder">Vytvořit nové uživatelsky určené nastavení složky</string>
     <string name="autoupload_custom_folder">Nastavit uživatelsky určenou složku</string>
@@ -188,7 +190,7 @@
     <string name="confirmation_remove_folders_alert">Opravdu chcete vybrané položky a jejich obsah odstranit?</string>
     <string name="confirmation_remove_local">Pouze místní</string>
     <string name="conflict_dialog_error">Nepodařilo se vytvořit dialog nástroje pro řešení konfliktu</string>
-    <string name="conflict_folder_headline">Konflikt složek</string>
+    <string name="conflict_folder_headline">Kolize složek</string>
     <string name="conflict_local_file">Místní soubor</string>
     <string name="conflict_message_description">Pokud zvolíte obě verze, k názvu místního souboru bude připojeno číslo.</string>
     <string name="conflict_message_description_for_folder">Pokud zvolíte obě verze, k názvu místní složky bude připojeno číslo.</string>
@@ -215,6 +217,7 @@
     <string name="could_not_retrieve_url">Nepodařilo se získat URL</string>
     <string name="create">Vytvořit</string>
     <string name="create_dir_fail_msg">Nepodařilo se vytvořit složku</string>
+    <string name="create_link">Vytvořit odkaz</string>
     <string name="create_new">Nové</string>
     <string name="create_new_document">Nový dokument</string>
     <string name="create_new_folder">Nová složka</string>
@@ -297,11 +300,7 @@
     <string name="e2e_signature_does_not_match">Signatura se neshoduje</string>
     <string name="ecosystem_apps_display_assistant">Asistent</string>
     <string name="ecosystem_apps_display_more">Další</string>
-    <string name="ecosystem_apps_display_notes">Poznámky</string>
-    <string name="ecosystem_apps_display_talk">Talk</string>
     <string name="ecosystem_apps_more">Další Nextcloud aplikace</string>
-    <string name="ecosystem_apps_notes">Nextcloud poznámky</string>
-    <string name="ecosystem_apps_talk">Nextcloud Talk</string>
     <string name="email_pick_failed">Nepodařilo se vybrat e-mailovou adresu.</string>
     <string name="encrypted">Nastavit jako šifrované</string>
     <string name="end_to_end_encryption_certificate_unavailable">Nedaří se získat certifikát serveru</string>
@@ -309,7 +308,7 @@
     <string name="end_to_end_encryption_confirm_button">Nastavit šifrování</string>
     <string name="end_to_end_encryption_decrypting">Rozšifrovávání…</string>
     <string name="end_to_end_encryption_dialog_close">Zavřít</string>
-    <string name="end_to_end_encryption_enter_password">Zadejte heslo pro rozšifrování soukromého klíče.</string>
+    <string name="end_to_end_encryption_enter_passphrase_to_access_files">Pro přístup k souborům zadejte svou heslovou frázi</string>
     <string name="end_to_end_encryption_folder_not_empty">Tato složka není prázdná.</string>
     <string name="end_to_end_encryption_generating_keys">Vytváření nových klíčů…</string>
     <string name="end_to_end_encryption_keywords_description">Všech 12 slov dohromady tvoří velmi silné heslo, které pouze vám umožní prohlížet a používat vaše zašifrované soubory. Poznamenejte si ho a někam bezpečně uložte.</string>
@@ -366,6 +365,7 @@
     <string name="etm_transfer_type">Přenos</string>
     <string name="etm_transfer_type_download">Stáhnout</string>
     <string name="etm_transfer_type_upload">Nahrát</string>
+    <string name="external_shares">Externí sdílení</string>
     <string name="fab_label">Přidat nebo nahrát</string>
     <string name="failed_to_download">Předání souboru správci stahování se nezdařilo</string>
     <string name="failed_to_print">Soubor se nepodařilo vytisknout</string>
@@ -457,6 +457,7 @@
     <string name="first_run_3_text">Snadno použitelný webový e-mailový klient, kalendář a kontakty</string>
     <string name="first_run_4_text">Sdílení obrazovky, online schůzky a webové konference</string>
     <string name="folder_already_exists">Složka už existuje</string>
+    <string name="folder_best_viewed_in">Tuto složku je nejlépe prohlížet si v %1$s.</string>
     <string name="folder_confirm_create">Vytvořit</string>
     <string name="folder_list_empty_headline">Nejsou zde žádné složky</string>
     <string name="folder_name_empty">Název složky je třeba vyplnit</string>
@@ -505,6 +506,7 @@
     <string name="instant_upload_existing">Také nahrát už existující soubory</string>
     <string name="instant_upload_on_charging">Nahrávat pouze při nabíjení</string>
     <string name="instant_upload_path">/InstantUpload</string>
+    <string name="internal_shares">Vnitřní sdílení</string>
     <string name="internal_two_way_sync">Interní obousměrná synchronizace</string>
     <string name="internal_two_way_sync_not_yet">Zatím ještě ne, brzy bude synchronizováno</string>
     <string name="internet_connection_required_for_encrypted_folder_setup">Pro nastavení šifrované složky je zapotřebí připojení k Internetu</string>
@@ -624,6 +626,7 @@
     <string name="oneHour">1 hodina</string>
     <string name="online">Online</string>
     <string name="online_status">Stav online</string>
+    <string name="open_in_app">Otevřít v %1$s</string>
     <string name="outdated_server">Verze aplikace na straně serveru už je příliš stará na to, aby šla nadále používat – přejděte na novější!</string>
     <string name="overflow_menu">Další nabídka</string>
     <string name="pass_code_configure_your_pass_code">Zadejte svůj bezpečnostní kód</string>
@@ -791,7 +794,7 @@
     <string name="select_one_template">Vyberte jednu šablonu</string>
     <string name="select_template">Vybrat šablonu</string>
     <string name="send">Odeslat</string>
-    <string name="send_share">Odeslat sdílení</string>
+    <string name="send_share">Poslat sdílení</string>
     <string name="sendbutton_description">Ikona tlačítka pro odesílání</string>
     <string name="set_as">Nastavit jako</string>
     <string name="set_note">Nastavit poznámku</string>
@@ -831,6 +834,7 @@
     <string name="share_remote_clarification">%1$s (vzdálený)</string>
     <string name="share_room_clarification">%1$s (konverzace)</string>
     <string name="share_search">Jméno, identifikátor v rámci federovaného cloudu, nebo e-mailová adresa…</string>
+    <string name="share_search_internal">Přidat uživatele a týmy</string>
     <string name="share_send_new_email">Odeslat nový e-mail</string>
     <string name="share_send_note">Poznámka pro příjemce</string>
     <string name="share_settings">Nastavení</string>
@@ -846,7 +850,9 @@
     <string name="shared_with_you_by">Nasdílel(a) vám %1$s</string>
     <string name="sharee_add_failed">Přidání sdílejícího se nezdařilo</string>
     <string name="sharee_already_added_to_file">Přidávání sdílení se nezdařilo. Tento soubor či složka už je této osobě či skupině nasdílena.</string>
+    <string name="show_all">Zobrazit vše</string>
     <string name="show_images">Zobrazit fotky</string>
+    <string name="show_less">Zobrazit méně</string>
     <string name="show_video">Zobrazit videa</string>
     <string name="sign_tos_failed">Prosíme ručně zkontrolujte všeobecné podmínky!</string>
     <string name="signup_with_provider">Zaregistrovat se u poskytovatele</string>
@@ -907,8 +913,10 @@
     <string name="subtitle_videos_only">Pouze videa</string>
     <string name="suggest">Doporučit</string>
     <string name="sync">Synchronizovat</string>
+    <string name="sync_anyway">Synchronizovat i tak</string>
     <string name="sync_conflicts_in_favourites_ticker">Nalezeny konflikty</string>
     <string name="sync_current_folder_was_removed">Složka %1$s už neexistuje</string>
+    <string name="sync_duplication">Synchronizovat duplikaci</string>
     <string name="sync_fail_content">Nepodařilo se synchronizovat %1$s</string>
     <string name="sync_fail_content_unauthorized">Nesprávné heslo pro %1$s</string>
     <string name="sync_fail_in_favourites_ticker">Automatická synchronizace souborů se nezdařila</string>
@@ -925,6 +933,7 @@
     <string name="sync_not_enough_space_dialog_title">Nedostatek místa</string>
     <string name="sync_status_button">Tlačítko Stav synchronizace</string>
     <string name="sync_string_files">Soubory</string>
+    <string name="sync_warning_button">Tlačítko varování synchronizace</string>
     <string name="synced_folder_settings_button">Tlačítko Nastavení</string>
     <string name="synced_folders_configure_folders">Nastavit složky</string>
     <string name="synced_folders_new_info">Okamžité nahrávání bylo zcela předěláno. Proto je třeba ho znovu nastavit z hlavní nabídky.\n\nUžijte si nové a rozšířené automatické nahrávání.</string>

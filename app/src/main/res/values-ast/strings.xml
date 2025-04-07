@@ -9,6 +9,7 @@
     <string name="action_switch_grid_view">Vista de rexella</string>
     <string name="action_switch_list_view">Vista de llista</string>
     <string name="actionbar_mkdir">Carpeta nueva</string>
+    <string name="actionbar_move_or_copy">Mover o copiar</string>
     <string name="actionbar_open_with">Abrir con</string>
     <string name="actionbar_search">Guetar</string>
     <string name="actionbar_see_details">Detalles</string>
@@ -19,12 +20,12 @@
     <string name="activities_no_results_headline"> Entá nun hai actividá</string>
     <string name="activity_chooser_send_file_title">Unviar</string>
     <string name="activity_icon">Actividá</string>
-    <string name="add_another_public_share_link">Amestar otru enllaz</string>
     <string name="advanced_settings">Configuración avanzada</string>
     <string name="app_config_base_url_title">URL base</string>
     <string name="app_config_proxy_port_title">Puertu del proxy</string>
     <string name="appbar_search_in">Buscar en: %s</string>
     <string name="assistant_screen_create_task_alert_dialog_input_field_placeholder">Escribi daqué</string>
+    <string name="assistant_screen_delete_task_alert_dialog_title">Desaniciar la xera</string>
     <string name="assistant_screen_task_list_error_state_message">Nun ye posible dir en cata de la llista de xeres. Comprueba la conexón a internet.</string>
     <string name="assistant_screen_task_types_error_state_message">Nun ye posible dir en cata de los tipos de xeres. Comprueba la conexón a internet.</string>
     <string name="assistant_screen_top_bar_title">Asistente</string>
@@ -159,16 +160,11 @@
     <string name="e2e_offline">Nun ye posible ensin la conexón a internet</string>
     <string name="ecosystem_apps_display_assistant">Asistente</string>
     <string name="ecosystem_apps_display_more">Más</string>
-    <string name="ecosystem_apps_display_notes">Notes</string>
-    <string name="ecosystem_apps_display_talk">Charra</string>
     <string name="ecosystem_apps_more">Más aplicaciones de Nextcloud</string>
-    <string name="ecosystem_apps_notes">Nextcloud Notes</string>
-    <string name="ecosystem_apps_talk">Nextcloud Talk</string>
     <string name="email_pick_failed">Nun se pue escoyer la direición de corréu electrónicu.</string>
     <string name="end_to_end_encryption_confirm_button">Configurar el cifráu</string>
     <string name="end_to_end_encryption_decrypting">Descifrando…</string>
     <string name="end_to_end_encryption_dialog_close">Zarrar</string>
-    <string name="end_to_end_encryption_enter_password">Introduz la contraseña pa descrifrar la clave privada.</string>
     <string name="end_to_end_encryption_folder_not_empty">Esta carpeta nun ta balera.</string>
     <string name="end_to_end_encryption_generating_keys">Xenerando les claves nueves…</string>
     <string name="end_to_end_encryption_password">Contraseña…</string>
@@ -339,7 +335,6 @@
     <string name="new_comment">Comentariu nuevu…</string>
     <string name="new_media_folder_photos">semeya</string>
     <string name="new_media_folder_videos">videu</string>
-    <string name="new_notification">Avisu nuevu</string>
     <string name="new_version_was_created">Creóse la versión</string>
     <string name="no_actions">Nun hai nenguna aición pa esti usuariu</string>
     <string name="no_browser_available">Nun hai nenguna aplicación pa remanar esto</string>
@@ -430,6 +425,7 @@
     <string name="qr_could_not_be_read">¡Nun se pudo lleer el códigu QR!</string>
     <string name="recommend_subject">¡Prueba %1$s nel preséu!</string>
     <string name="recommend_urls">%1$s o %2$s</string>
+    <string name="recommended_files_title">Ficheros recomendaos</string>
     <string name="refresh_content">Anovar el conteníu</string>
     <string name="reload">Volver cargar</string>
     <string name="remote">(remotu)</string>
@@ -487,6 +483,7 @@
     <string name="share_via_link_section_title">Compartir enllaz</string>
     <string name="share_via_link_send_link_label">Unviar l\'enllaz</string>
     <string name="show_images">Amosar les semeyes</string>
+    <string name="show_less">Amosar menos</string>
     <string name="show_video">Amosar los vídeos</string>
     <string name="signup_with_provider">Rexistrase con un fornidor</string>
     <string name="single_sign_on_request_token" formatted="true">¿Quies permitr que %1$s acceda a la cuenta de Nextcloud %2$s?</string>

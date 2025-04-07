@@ -10,7 +10,6 @@
     <string name="action_edit">Rediger</string>
     <string name="action_empty_notifications">Ryd alle notifikationer</string>
     <string name="action_empty_trashbin">Tøm papirkurv</string>
-    <string name="action_send_share">Send/Del</string>
     <string name="action_switch_grid_view">Grid visning</string>
     <string name="action_switch_list_view">List visning</string>
     <string name="actionbar_calendar_contacts_restore">Gendan kontakter og kalender</string>
@@ -28,7 +27,6 @@
     <string name="activity_chooser_send_file_title">Send</string>
     <string name="activity_chooser_title">Send link til...</string>
     <string name="activity_icon">Aktivitet</string>
-    <string name="add_another_public_share_link">Tilføj et link mere</string>
     <string name="add_new_public_share">Tilføj nyt offentligt link til deling</string>
     <string name="add_new_secure_file_drop">Tilføj nyt, sikkert fil drop</string>
     <string name="add_to_cloud">Tilføj til %1$s</string>
@@ -50,7 +48,6 @@
     <string name="assistant_screen_create_task_alert_dialog_input_field_placeholder">Skriv noget tekst</string>
     <string name="assistant_screen_delete_task_alert_dialog_description">Er du sikker på du vil slette denne opgave?</string>
     <string name="assistant_screen_delete_task_alert_dialog_title">Slet opgave</string>
-    <string name="assistant_screen_loading">Opgavelisten indlæser, vent venligst</string>
     <string name="assistant_screen_no_task_available_text">Ingen opgave tilgænge for %s opgavetype. Du kan oprette en ny opgave via bunden til højre.</string>
     <string name="assistant_screen_task_create_fail_message">En fejl opstod under oprettelse af opgaven</string>
     <string name="assistant_screen_task_create_success_message">Opgaven er oprettet</string>
@@ -188,7 +185,6 @@
     <string name="confirmation_remove_folders_alert">Er du sikker på at du vil slette de valgte artikler med indhold?</string>
     <string name="confirmation_remove_local">Kun lokal</string>
     <string name="conflict_dialog_error">Konfliktløserdialog kan ikke oprettes</string>
-    <string name="conflict_folder_headline">Mappekonflikt</string>
     <string name="conflict_local_file">Lokal fil</string>
     <string name="conflict_message_description">Hvis du vælger begge versioner, vil den lokale fil få tilføjet et nummer til sit navn.</string>
     <string name="conflict_message_description_for_folder">Hvis du vælger begge versioner, så vil den lokale mappe få tilføjet et tal til dets navn.</string>
@@ -215,6 +211,7 @@
     <string name="could_not_retrieve_url">Kunne ikke hente URL</string>
     <string name="create">Opret</string>
     <string name="create_dir_fail_msg">Kunne ikke oprette mappe</string>
+    <string name="create_link">Opret link</string>
     <string name="create_new">Nyt</string>
     <string name="create_new_document">Nyt dokument</string>
     <string name="create_new_folder">Ny mappe</string>
@@ -297,11 +294,7 @@
     <string name="e2e_signature_does_not_match">Signaturen matcher ikke</string>
     <string name="ecosystem_apps_display_assistant">Assistent</string>
     <string name="ecosystem_apps_display_more">Mere</string>
-    <string name="ecosystem_apps_display_notes">Noter</string>
-    <string name="ecosystem_apps_display_talk">Snak</string>
     <string name="ecosystem_apps_more">Flere Nextcloud apps</string>
-    <string name="ecosystem_apps_notes">Nextcloud noter</string>
-    <string name="ecosystem_apps_talk">Nextcloud Snak</string>
     <string name="email_pick_failed">Kunne ikke plukke e-mailadresse.</string>
     <string name="encrypted">Angiv som krypteret</string>
     <string name="end_to_end_encryption_certificate_unavailable">Servercertifikatet kunne ikke hentes</string>
@@ -309,7 +302,6 @@
     <string name="end_to_end_encryption_confirm_button">Indstil kryptering</string>
     <string name="end_to_end_encryption_decrypting">Dekrypterer...</string>
     <string name="end_to_end_encryption_dialog_close">Luk</string>
-    <string name="end_to_end_encryption_enter_password">Indtast venligst kodeord til at dekryptere privat nøgle.</string>
     <string name="end_to_end_encryption_folder_not_empty">Denne folder er ikke tom.</string>
     <string name="end_to_end_encryption_generating_keys">Opretter nye nøgler...</string>
     <string name="end_to_end_encryption_keywords_description">Alle 12 ord udgør tilsammen et meget stærkt kodeord, så kun du kan læse og bruge dine krypterede filer. Venligst skriv det ned og gem det et sikkert sted.</string>
@@ -358,7 +350,6 @@
     <string name="etm_background_jobs_stop_test_job">Stop test job</string>
     <string name="etm_migrations">Migrationer (app upgrade)</string>
     <string name="etm_preferences">Indstillinger</string>
-    <string name="etm_title">Udviklers test tilstand</string>
     <string name="etm_transfer">Fil overførsel</string>
     <string name="etm_transfer_enqueue_test_download">Sæt test download i kø</string>
     <string name="etm_transfer_enqueue_test_upload">Sæt test upload i kø</string>
@@ -366,6 +357,7 @@
     <string name="etm_transfer_type">Overførsel</string>
     <string name="etm_transfer_type_download">Download</string>
     <string name="etm_transfer_type_upload">Send</string>
+    <string name="external_shares">Eksterne delinger</string>
     <string name="fab_label">Tilføj eller send</string>
     <string name="failed_to_download">Fejl ved overførsel af fil til download manager</string>
     <string name="failed_to_print">Fejl ved udskrivning af fil</string>
@@ -505,6 +497,7 @@
     <string name="instant_upload_existing">Send også eksisterende filer</string>
     <string name="instant_upload_on_charging">Upload kun under opladning</string>
     <string name="instant_upload_path">/Øjeblikkelig upload</string>
+    <string name="internal_shares">Interne delinger</string>
     <string name="internal_two_way_sync">Intern to-vejs synkronisering</string>
     <string name="internal_two_way_sync_not_yet">Ikke endnu, synkroniseres snart</string>
     <string name="internet_connection_required_for_encrypted_folder_setup">En internetforbindelse er påkrævet for at konfigurere den krypterede mappe</string>
@@ -577,7 +570,6 @@
     <string name="new_media_folder_detected">Ny %1$s medie mappe opdaget.</string>
     <string name="new_media_folder_photos">photo</string>
     <string name="new_media_folder_videos">video</string>
-    <string name="new_notification">Ny notifikation</string>
     <string name="new_version_was_created">Ny version oprettet</string>
     <string name="no_actions">Ingen handlinger for denne bruger</string>
     <string name="no_browser_available">Ingen App tilgængelig til håndtering af links</string>
@@ -593,7 +585,6 @@
     <string name="note_icon_hint">Note ikon</string>
     <string name="notification_action_failed">Handling fejlede</string>
     <string name="notification_channel_background_operations_description">Vis notifikationer for at interagere med resultat af baggrundshandlinger</string>
-    <string name="notification_channel_background_operations_name">Baggrundshandlinger</string>
     <string name="notification_channel_download_description">Viser overførsels fremskridt </string>
     <string name="notification_channel_download_name_short">Downloads</string>
     <string name="notification_channel_file_sync_description">Viser fil synkronisation fremskridt og resultater</string>
@@ -610,17 +601,12 @@
     <string name="notification_icon_description">Der findes ulæste notifikationer</string>
     <string name="notifications_no_results_headline">Ingen notifikationer</string>
     <string name="notifications_no_results_message">Prøv igen senere.</string>
-    <string name="oc_file_list_adapter_offline_operation_description_text">Afventende handlinger</string>
     <string name="oc_file_list_adapter_offline_operation_remove_description_text">Afventende fjernelseshandling</string>
     <string name="offline_mode">Ingen internetforbindelse</string>
     <string name="offline_mode_info_description">Selv uden internetforbindelse kan du organisere dine mapper, oprette filer. Når du er online igen, synkroniseres dine afventende handlinger automatisk.</string>
-    <string name="offline_mode_info_title">Du er offline, men arbejdet fortsætter</string>
     <string name="offline_operations_file_does_not_exists_yet">Filen eksisterer ikke endnu. Upload venligst filen først.</string>
-    <string name="offline_operations_worker_notification_conflict_text">Konfliktende mappe: %s</string>
-    <string name="offline_operations_worker_notification_delete_offline_folder">Slet offline mappe</string>
     <string name="offline_operations_worker_notification_error_text">Offline handlingen kan ikke gennemføres. %s</string>
     <string name="offline_operations_worker_notification_manager_ticker">Offline handlinger</string>
-    <string name="offline_operations_worker_notification_start_text">Starter offline handlinger</string>
     <string name="oneHour">1 time</string>
     <string name="online">Online</string>
     <string name="online_status">Online status</string>
@@ -642,7 +628,6 @@
     <string name="permission_storage_access">Yderligere tilladelser nødvendige for at hente og sende filer.</string>
     <string name="pick_contact_to_share_with">Vælg en kontakt at dele med</string>
     <string name="picture_set_as_no_app">Ingen apps fundet til at vælge et billede med</string>
-    <string name="pin_home">Fastgør til hjemmeskærm</string>
     <string name="pin_shortcut_label">Åbn %1$s</string>
     <string name="placeholder_fileSize">389 KB</string>
     <string name="placeholder_filename">pladsholder.txt</string>
@@ -792,16 +777,13 @@
     <string name="select_one_template">Vælg venligst en skabelon</string>
     <string name="select_template">Vælg model</string>
     <string name="send">Send</string>
-    <string name="send_share">Send Deling</string>
     <string name="sendbutton_description">Send knap ikon</string>
     <string name="set_as">Sæt som</string>
-    <string name="set_note">Sæt Note</string>
     <string name="set_picture_as">Anvend billede som</string>
     <string name="set_status">Sæt status</string>
     <string name="set_status_message">Sæt statusbesked</string>
     <string name="setup_e2e">Undervejs i opsætningen af end-to-end kryptering, så vil du modtage en tilfældig huskeregel på 12 ord, som du får brug for til at åbne dine filer på andre enheder. Denne vil kun blive gemt på denne enhed, og kan blive vist senere i denne visning. Skriv den venligst ned et sikkert sted!</string>
     <string name="share">Del</string>
-    <string name="share_copy_link">Del og kopier link</string>
     <string name="share_dialog_title">Deling</string>
     <string name="share_download_limit">Indstil downloadgrænse</string>
     <string name="share_expiration_date_format">%1$s</string>
@@ -828,7 +810,6 @@
     <string name="share_permission_file_drop">Fil drop</string>
     <string name="share_permission_secure_file_drop">Sikkert fil drop</string>
     <string name="share_permission_view_only">Kun visning</string>
-    <string name="share_permissions">Del Tilladelser</string>
     <string name="share_remote_clarification">%1$s (ekstern)</string>
     <string name="share_room_clarification">%1$s (samtale)</string>
     <string name="share_search">Navn, sammenkoblings cloud ID eller e-mailadresse…</string>

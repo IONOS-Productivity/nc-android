@@ -10,7 +10,6 @@
     <string name="action_edit">Editar</string>
     <string name="action_empty_notifications">Limpar todas as notificacións</string>
     <string name="action_empty_trashbin">Baleirar o lixo</string>
-    <string name="action_send_share">Enviar/compartir</string>
     <string name="action_switch_grid_view">Ver como grade</string>
     <string name="action_switch_list_view">Ver como lista</string>
     <string name="actionbar_calendar_contacts_restore">Restaurar contactos e calendario</string>
@@ -28,7 +27,6 @@
     <string name="activity_chooser_send_file_title">Enviar</string>
     <string name="activity_chooser_title">Enviar a ligazón a…</string>
     <string name="activity_icon">Actividade</string>
-    <string name="add_another_public_share_link">Engadir outra ligazón</string>
     <string name="add_new_public_share">Engadir unha nova ligazón para compartir pública</string>
     <string name="add_new_secure_file_drop">Engadir unha nova entrega segura de ficheiro</string>
     <string name="add_to_cloud">Engadir en %1$s</string>
@@ -50,7 +48,6 @@
     <string name="assistant_screen_create_task_alert_dialog_input_field_placeholder">Escriba algún texto</string>
     <string name="assistant_screen_delete_task_alert_dialog_description">Confirma que quere eliminar esta tarefa?</string>
     <string name="assistant_screen_delete_task_alert_dialog_title">Eliminar tarefa</string>
-    <string name="assistant_screen_loading">Estase a cargar a lista de tarefas, agarde</string>
     <string name="assistant_screen_no_task_available_text">Non hai ningunha tarefa dispoñible para o tipo de tarefa %s, pode crear unha nova desde a parte inferior dereita.</string>
     <string name="assistant_screen_task_create_fail_message">Produciuse un erro ao crear a tarefa</string>
     <string name="assistant_screen_task_create_success_message">A tarefa creouse satisfactoriamente</string>
@@ -188,7 +185,6 @@
     <string name="confirmation_remove_folders_alert">Confirma que quere eliminar os elementos seleccionados e o seu contido?</string>
     <string name="confirmation_remove_local">Só local</string>
     <string name="conflict_dialog_error">Non é posíbel crear o diálogo de resolución de conflitos</string>
-    <string name="conflict_folder_headline">Conflito de cartafol</string>
     <string name="conflict_local_file">Ficheiro local</string>
     <string name="conflict_message_description">Se selecciona ambas versións, o ficheiro local terá un número engadido ao nome.</string>
     <string name="conflict_message_description_for_folder">Se selecciona ambas versións, o cartafol local terá un número engadido ao nome.</string>
@@ -215,6 +211,7 @@
     <string name="could_not_retrieve_url">Non foi posíbel recuperar o URL</string>
     <string name="create">Crear</string>
     <string name="create_dir_fail_msg">Non foi posíbel crear o cartafol</string>
+    <string name="create_link">Crear ligazón</string>
     <string name="create_new">Novo</string>
     <string name="create_new_document">Novo documento</string>
     <string name="create_new_folder">Novo cartafol</string>
@@ -297,11 +294,7 @@
     <string name="e2e_signature_does_not_match">A sinatura non coincide</string>
     <string name="ecosystem_apps_display_assistant">Asistente</string>
     <string name="ecosystem_apps_display_more">Máis</string>
-    <string name="ecosystem_apps_display_notes">Notas</string>
-    <string name="ecosystem_apps_display_talk">Parladoiro</string>
     <string name="ecosystem_apps_more">Máis aplicacións de Nextcloud</string>
-    <string name="ecosystem_apps_notes">Notas de Nextcloud</string>
-    <string name="ecosystem_apps_talk">Parladoiro de Nextcloud</string>
     <string name="email_pick_failed">Produciuse un fallo ao escoller o enderezo de correo.</string>
     <string name="encrypted">Definir como cifrado</string>
     <string name="end_to_end_encryption_certificate_unavailable">Non é posíbel recuperar o certificado de servidor</string>
@@ -309,7 +302,7 @@
     <string name="end_to_end_encryption_confirm_button">Configurar o cifrado</string>
     <string name="end_to_end_encryption_decrypting">Descifrando…</string>
     <string name="end_to_end_encryption_dialog_close">Pechar</string>
-    <string name="end_to_end_encryption_enter_password">Introduza o contrasinal para descifrar a chave privada.</string>
+    <string name="end_to_end_encryption_enter_passphrase_to_access_files">Introduza a súa frase de contrasinal para acceder aos seus ficheiros</string>
     <string name="end_to_end_encryption_folder_not_empty">Este cartafol non está baleiro</string>
     <string name="end_to_end_encryption_generating_keys">Xerando chave novas…</string>
     <string name="end_to_end_encryption_keywords_description">As 12 palabras xuntas forman un contrasinal moi forte, permitíndolle só a Vde. ver e facer uso dos seus  ficheiros cifrados. Escríbaas e mantéñaas nun lugar seguro.</string>
@@ -358,7 +351,6 @@
     <string name="etm_background_jobs_stop_test_job">Deter o traballo de proba</string>
     <string name="etm_migrations">Migracións (anovación de aplicación)</string>
     <string name="etm_preferences">Preferencias</string>
-    <string name="etm_title">Modo de proba de enxeñería</string>
     <string name="etm_transfer">Transferencia de ficheiros</string>
     <string name="etm_transfer_enqueue_test_download">Poñer na cola a descarga de proba</string>
     <string name="etm_transfer_enqueue_test_upload">Poñer na cola o envío de proba</string>
@@ -366,6 +358,7 @@
     <string name="etm_transfer_type">Transferencia</string>
     <string name="etm_transfer_type_download">Descargar</string>
     <string name="etm_transfer_type_upload">Enviar</string>
+    <string name="external_shares">Comparticións externas</string>
     <string name="fab_label">Engadir ou enviar</string>
     <string name="failed_to_download">Produciuse un fallo ao pasar o ficheiro para o xestor de descargas</string>
     <string name="failed_to_print">Produciuse un fallo ao imprimir o ficheiro</string>
@@ -457,6 +450,7 @@
     <string name="first_run_3_text">Correo web, calendario e contactos doados de usar</string>
     <string name="first_run_4_text">Compartir a pantalla, xuntanzas en liña e conferencias web </string>
     <string name="folder_already_exists">Xa existe o cartafol</string>
+    <string name="folder_best_viewed_in">Este cartafol vese mellor en %1$s.</string>
     <string name="folder_confirm_create">Crear</string>
     <string name="folder_list_empty_headline">Aquí non hai cartafoles</string>
     <string name="folder_name_empty">O nome do cartafol non pode estar baleiro</string>
@@ -505,6 +499,7 @@
     <string name="instant_upload_existing">Envíar tamén os ficheiros existentes</string>
     <string name="instant_upload_on_charging">Enviar só cando estea cargando</string>
     <string name="instant_upload_path">/EnvíoInstantáneo</string>
+    <string name="internal_shares">Comparticións internas</string>
     <string name="internal_two_way_sync">Sincronización interna bidireccional</string>
     <string name="internal_two_way_sync_not_yet">Aínda non, pronto se sincronizará</string>
     <string name="internet_connection_required_for_encrypted_folder_setup">Precisase dunha conexión a Internet para definir o cartafol cifrado</string>
@@ -577,7 +572,6 @@
     <string name="new_media_folder_detected">Detectouse un novo cartafol de medios %1$s</string>
     <string name="new_media_folder_photos">foto</string>
     <string name="new_media_folder_videos">vídeo</string>
-    <string name="new_notification">Nova notificación</string>
     <string name="new_version_was_created">Creouse unha versión nova</string>
     <string name="no_actions">Non hai accións para este usuario</string>
     <string name="no_browser_available">Non hai ningunha aplicación dispoñíbel para manexar ligazóns</string>
@@ -593,7 +587,6 @@
     <string name="note_icon_hint">Icona de nota</string>
     <string name="notification_action_failed">Produciuse un fallo ao executar a acción.</string>
     <string name="notification_channel_background_operations_description">Amosar notificacións para interactuar co resultado das operacións en segundo plano</string>
-    <string name="notification_channel_background_operations_name">Operacións en segundo plano</string>
     <string name="notification_channel_download_description">Amosa o progreso da descarga</string>
     <string name="notification_channel_download_name_short">Descargas</string>
     <string name="notification_channel_file_sync_description">Amosa o progreso e os resultados da sincronización de ficheiros</string>
@@ -610,20 +603,16 @@
     <string name="notification_icon_description">Hai notificacións sen ler</string>
     <string name="notifications_no_results_headline">Non hai notificacións</string>
     <string name="notifications_no_results_message">Compróbeo máis adiante.</string>
-    <string name="oc_file_list_adapter_offline_operation_description_text">Operación pendente</string>
     <string name="oc_file_list_adapter_offline_operation_remove_description_text">Operación de retirada pendente</string>
     <string name="offline_mode">Sen conexión a Internet</string>
     <string name="offline_mode_info_description">Mesmo sen conexión a Internet, pode organizar os seus cartafoles, crear ficheiros. Unha vez que volva estar conectado, as túas accións pendentes sincronizaranse automaticamente.</string>
-    <string name="offline_mode_info_title">Está sen conexión, mais o traballo continúa</string>
     <string name="offline_operations_file_does_not_exists_yet">O ficheiro aínda non existe. Envíe primeiro o ficheiro.</string>
-    <string name="offline_operations_worker_notification_conflict_text">Cartafol en conflito: %s</string>
-    <string name="offline_operations_worker_notification_delete_offline_folder">Eliminar o cartafol sen conexión</string>
     <string name="offline_operations_worker_notification_error_text">Non é posíbel completar a operación sen conexión. %s</string>
     <string name="offline_operations_worker_notification_manager_ticker">Operacións sen conexión</string>
-    <string name="offline_operations_worker_notification_start_text">Iniciando operacións sen conexión</string>
     <string name="oneHour">1 hora</string>
     <string name="online">En liña</string>
     <string name="online_status">Estado en liña</string>
+    <string name="open_in_app">Abrir en %1$s</string>
     <string name="outdated_server">O servidor acadou a fin da súa vida. Anóveo!</string>
     <string name="overflow_menu">Máis menús</string>
     <string name="pass_code_configure_your_pass_code">Introduza o seu código de acceso</string>
@@ -642,7 +631,6 @@
     <string name="permission_storage_access">Precísanse permisos adicionais para enviar e descargar ficheiros.</string>
     <string name="pick_contact_to_share_with">Escolla un contacto co que compartir</string>
     <string name="picture_set_as_no_app">Non se atopou unha aplicación coa que definir unha imaxe</string>
-    <string name="pin_home">Fixar na pantalla de Inicio</string>
     <string name="pin_shortcut_label">Abrir %1$s</string>
     <string name="placeholder_fileSize">389 KB</string>
     <string name="placeholder_filename">marcadordesubstitución.txt</string>
@@ -792,16 +780,13 @@
     <string name="select_one_template">Seleccione un modelo</string>
     <string name="select_template">Seleccionar o modelo</string>
     <string name="send">Enviar</string>
-    <string name="send_share">Enviar o compartido</string>
     <string name="sendbutton_description">Icona do botón de envío</string>
     <string name="set_as">Definir como</string>
-    <string name="set_note">Definir a nota</string>
     <string name="set_picture_as">Usar a imaxe como</string>
     <string name="set_status">Definir o estado</string>
     <string name="set_status_message">Definir a mensaxe de estado</string>
     <string name="setup_e2e">Durante a configuración do cifrado de extremo a extremo, recibirá un mnemotécnico ao chou de 12 palabras, que necesitará para abrir os seus ficheiros noutros dispositivos. Isto só se almacenará neste dispositivo e pódese amosar de novo nesta pantalla. Anóteo nun lugar seguro!</string>
     <string name="share">Compartir</string>
-    <string name="share_copy_link">Compartir e copiar a ligazón</string>
     <string name="share_dialog_title">Compartindo</string>
     <string name="share_download_limit">Definir o límite de descarga</string>
     <string name="share_expiration_date_format">%1$s</string>
@@ -828,10 +813,10 @@
     <string name="share_permission_file_drop">Soltar o ficheiro</string>
     <string name="share_permission_secure_file_drop">Entrega segura de ficheiros</string>
     <string name="share_permission_view_only">Só ver</string>
-    <string name="share_permissions">Permisos ao compartir</string>
     <string name="share_remote_clarification">%1$s (remoto)</string>
     <string name="share_room_clarification">%1$s (conversa)</string>
     <string name="share_search">Nome, ID da nube federada ou enderezo de correo…</string>
+    <string name="share_search_internal">Engadir usuarios e equipos</string>
     <string name="share_send_new_email">Enviar correo-e novo</string>
     <string name="share_send_note">Nota para o destinatario</string>
     <string name="share_settings">Axustes</string>
@@ -847,7 +832,9 @@
     <string name="shared_with_you_by">Compartido con Vde. por %1$s</string>
     <string name="sharee_add_failed">Produciuse un fallo ao engadir unha compartición</string>
     <string name="sharee_already_added_to_file">Produciuse un erro ao engadir o contido compartido. Este ficheiro ou cartafol xa foi compartido con esta persoa ou grupo.</string>
+    <string name="show_all">Amosar todo</string>
     <string name="show_images">Amosar as fotos</string>
+    <string name="show_less">Amosar menos</string>
     <string name="show_video">Amosar os vídeos</string>
     <string name="sign_tos_failed">Comprobe manualmente as condicións de servizo.</string>
     <string name="signup_with_provider">Rexistrarse cun provedor</string>

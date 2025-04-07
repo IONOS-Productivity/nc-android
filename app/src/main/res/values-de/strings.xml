@@ -28,7 +28,6 @@
     <string name="activity_chooser_send_file_title">Senden</string>
     <string name="activity_chooser_title">Link senden an…</string>
     <string name="activity_icon">Aktivitäten</string>
-    <string name="add_another_public_share_link">Weiteren Link hinzufügen</string>
     <string name="add_new_public_share">Öffentlichen Link zum Teilen hinzufügen</string>
     <string name="add_new_secure_file_drop">Neue sichere Dateiablage hinzufügen</string>
     <string name="add_to_cloud">Hinzufügen zu %1$s</string>
@@ -47,15 +46,17 @@
     <string name="app_widget_description">Zeigt ein Widget aus dem Dashboard an</string>
     <string name="appbar_search_in">Suche in %s</string>
     <string name="assistant_screen_add_task_alert_dialog_title">Neue Aufgabe hinzufügen</string>
+    <string name="assistant_screen_create_a_new_task_from_bottom_right_text">Unten rechts eine neue Aufgabe erstellen</string>
     <string name="assistant_screen_create_task_alert_dialog_input_field_placeholder">Bitte einen Text eingeben</string>
     <string name="assistant_screen_delete_task_alert_dialog_description">Möchten Sie diese Aufgabe wirklich löschen?</string>
     <string name="assistant_screen_delete_task_alert_dialog_title">Aufgabe löschen</string>
-    <string name="assistant_screen_loading">Aufgabenlisten werden geladen, bitte warten</string>
+    <string name="assistant_screen_loading">Lade Aufgabenliste…</string>
     <string name="assistant_screen_no_task_available_text">Für den Aufgabentyp %s ist keine Aufgabe verfügbar. Sie können unten rechts eine neue Aufgabe erstellen.</string>
     <string name="assistant_screen_task_create_fail_message">Es ist ein Fehler beim Erstellen der Aufgabe aufgetreten</string>
     <string name="assistant_screen_task_create_success_message">Aufgabe erfolgreich erstellt</string>
     <string name="assistant_screen_task_delete_fail_message">Es ist ein Fehler beim Löschen der Aufgabe aufgetreten</string>
     <string name="assistant_screen_task_delete_success_message">Aufgabe gelöscht</string>
+    <string name="assistant_screen_task_list_empty_message">Aufgabenliste ist leer.</string>
     <string name="assistant_screen_task_list_error_state_message">Die Aufgabenliste kann nicht abgerufen werden. Bitte überprüfen Sie Ihre Internetverbindung.</string>
     <string name="assistant_screen_task_more_actions_bottom_sheet_delete_action">Aufgabe löschen</string>
     <string name="assistant_screen_task_output_empty_text">Die Aufgabenausgabe ist noch nicht fertig.</string>
@@ -102,6 +103,7 @@
     <string name="auto_upload_gplay_desc2">Aufgrund neuer, von Google auferlegter Beschränkungen waren wir gezwungen, eine wichtige Berechtigung zu entfernen. Infolgedessen kann das automatische Hochladen nur noch Bild- und Videodateien hochladen.\nZusätzlich ist eine neue Berechtigung erforderlich, um auf Standortinformationen für hochgeladene Bilder zuzugreifen.\nStellen Sie sicher, dass der Medienzugriff auf \"Immer alles zulassen\" eingestellt ist.</string>
     <string name="auto_upload_on_wifi">Nur über gebührenfreies WLAN hochladen</string>
     <string name="auto_upload_path">/AutoUpload</string>
+    <string name="auto_upload_sub_folder_warning">Dieser Ordner ist bereits in der Synchronisierung des übergeordneten Ordners enthalten, was zu doppelten Uploads führen kann</string>
     <string name="autoupload_configure">Einrichten</string>
     <string name="autoupload_create_new_custom_folder">Erstellen Sie ein Setup für den eigenen Ordner</string>
     <string name="autoupload_custom_folder">Erstellen Sie einen eigenen Ordner</string>
@@ -192,7 +194,7 @@
     <string name="conflict_local_file">Lokale Datei</string>
     <string name="conflict_message_description">Falls beide Versionen gewählt werden, wird bei der lokalen Datei eine Zahl am Ende des Dateinamens hinzugefügt.</string>
     <string name="conflict_message_description_for_folder">Falls beide Versionen gewählt werden, wird beim lokalen Ordner eine Zahl am Ende des Dateinamens hinzugefügt.</string>
-    <string name="conflict_server_file">Server-Datei</string>
+    <string name="conflict_server_file">Serverdatei</string>
     <string name="contact_backup_title">Kontakte-Backup</string>
     <string name="contact_no_permission">Eine Kontakterlaubnis ist erforderlich.</string>
     <string name="contactlist_item_icon">Nutzericon für Kontaktliste</string>
@@ -215,6 +217,7 @@
     <string name="could_not_retrieve_url">Konnte URL nicht abrufen</string>
     <string name="create">Erstellen</string>
     <string name="create_dir_fail_msg">Verzeichnis konnte nicht erstellt werden</string>
+    <string name="create_link">Link erstellen</string>
     <string name="create_new">Neu</string>
     <string name="create_new_document">Neues Dokument</string>
     <string name="create_new_folder">Neuer Ordner</string>
@@ -297,11 +300,7 @@
     <string name="e2e_signature_does_not_match">Signatur stimmt nicht überein</string>
     <string name="ecosystem_apps_display_assistant">Assistent</string>
     <string name="ecosystem_apps_display_more">Mehr</string>
-    <string name="ecosystem_apps_display_notes">Notizen</string>
-    <string name="ecosystem_apps_display_talk">Talk</string>
     <string name="ecosystem_apps_more">Weitere Nextcloud-Apps</string>
-    <string name="ecosystem_apps_notes">Nextcloud Notizen</string>
-    <string name="ecosystem_apps_talk">Nextcloud Talk</string>
     <string name="email_pick_failed">E-Mail-Adresse konnte nicht ausgewählt werden.</string>
     <string name="encrypted">Als verschlüsselt festlegen</string>
     <string name="end_to_end_encryption_certificate_unavailable">Serverzertifikat kann nicht abgerufen werden</string>
@@ -309,7 +308,7 @@
     <string name="end_to_end_encryption_confirm_button">Verschlüsselung einrichten</string>
     <string name="end_to_end_encryption_decrypting">Entschlüssele…</string>
     <string name="end_to_end_encryption_dialog_close">Schließen</string>
-    <string name="end_to_end_encryption_enter_password">Geben Sie bitte das Passwort ein, um den privaten Schlüssel zu entschlüsseln.</string>
+    <string name="end_to_end_encryption_enter_passphrase_to_access_files">Geben Sie Ihre Passphrase ein, um auf Ihre Dateien zuzugreifen</string>
     <string name="end_to_end_encryption_folder_not_empty">Dieser Ordner ist nicht leer.</string>
     <string name="end_to_end_encryption_generating_keys">Neue Schlüssel generieren…</string>
     <string name="end_to_end_encryption_keywords_description">Diese 12 Wörter-Phrase ist wie ein sehr starkes Passwort: Sie bietet vollen Zugriff um Ihre verschlüsselten Dateien anzusehen und zu verwenden. Bitte schreiben Sie sie auf und verwahren sie an einem sicheren Ort.</string>
@@ -366,6 +365,7 @@
     <string name="etm_transfer_type">Übertragen</string>
     <string name="etm_transfer_type_download">Herunterladen</string>
     <string name="etm_transfer_type_upload">Hochladen</string>
+    <string name="external_shares">Externe Freigaben</string>
     <string name="fab_label">Hinzufügen oder hochladen</string>
     <string name="failed_to_download">Datei konnte nicht an den Downloadmanager übergeben werden</string>
     <string name="failed_to_print">Drucken der Datei fehlgeschlagen</string>
@@ -457,6 +457,7 @@
     <string name="first_run_3_text">Benutzerfreundlicher Webmailer, Kalender und Kontakte</string>
     <string name="first_run_4_text">Bildschirmfreigabe, Online-Meetings und Webkonferenzen</string>
     <string name="folder_already_exists">Ordner existiert bereits</string>
+    <string name="folder_best_viewed_in">Dieser Ordner lässt sich am besten in %1$s anzeigen.</string>
     <string name="folder_confirm_create">Erstellen</string>
     <string name="folder_list_empty_headline">Keine Ordner vorhanden</string>
     <string name="folder_name_empty">Der Ordnername darf nicht leer sein</string>
@@ -505,6 +506,7 @@
     <string name="instant_upload_existing">Vorhandene Dateien ebenfalls hochladen</string>
     <string name="instant_upload_on_charging">Nur während des Ladens der Batterie hochladen</string>
     <string name="instant_upload_path">/SofortUpload</string>
+    <string name="internal_shares">Interne Freigaben</string>
     <string name="internal_two_way_sync">Interne 2-Wege-Synchronisierung</string>
     <string name="internal_two_way_sync_not_yet">Bislang nicht, wird demnächst synchronisiert</string>
     <string name="internet_connection_required_for_encrypted_folder_setup">Zum Einrichten des verschlüsselten Ordners ist eine Internetverbindung erforderlich</string>
@@ -544,7 +546,7 @@
     <string name="logs_title">Protokolle (Logs)</string>
     <string name="maintenance_mode">Server befindet sich im Wartungsmodus</string>
     <string name="manage_space_clear_data">Daten löschen</string>
-    <string name="manage_space_description">Einstellungen, Datenbank und Server-Zertifikate von %1$s\'s Daten werden dauerhaft gelöscht.\n\nHerunter geladene Dateien bleiben unangetastet.\n\nDieser Vorgang kann eine Zeit dauern.</string>
+    <string name="manage_space_description">Einstellungen, Datenbank und Serverzertifikate von %1$s\'s Daten werden dauerhaft gelöscht.\n\nHerunter geladene Dateien bleiben unangetastet.\n\nDieser Vorgang kann eine Zeit dauern.</string>
     <string name="manage_space_title">Verwalte Speicherplatz</string>
     <string name="max_file_count_warning_message">Sie haben die maximale Anzahl an Datei-Uploads erreicht. Bitte laden Sie weniger als 500 Dateien gleichzeitig hoch.</string>
     <string name="media_err_invalid_progressive_playback">Die Mediendatei kann nicht gestreamt werden</string>
@@ -593,7 +595,7 @@
     <string name="note_icon_hint">Notiz-Symbol</string>
     <string name="notification_action_failed">Ausführen der Aktion fehlgeschlagen.</string>
     <string name="notification_channel_background_operations_description">Benachrichtigungen anzeigen, um auf die Ergebnisse von Hintergrundoperationen zu reagieren</string>
-    <string name="notification_channel_background_operations_name">Hintergrundoperationen</string>
+    <string name="notification_channel_background_operations_name">Hintergrundvorgänge</string>
     <string name="notification_channel_download_description">Zeigt den Herunterlade-Fortschritt an</string>
     <string name="notification_channel_download_name_short">Downloads</string>
     <string name="notification_channel_file_sync_description">Zeigt den Fortschritt der Dateisynchronisierung und die Ergebnisse an</string>
@@ -610,11 +612,11 @@
     <string name="notification_icon_description">Ungelesene Benachrichtigungen vorhanden</string>
     <string name="notifications_no_results_headline">Keine Benachrichtigungen</string>
     <string name="notifications_no_results_message">Bitte später noch einmal nachsehen.</string>
-    <string name="oc_file_list_adapter_offline_operation_description_text">Ausstehende Operationen</string>
+    <string name="oc_file_list_adapter_offline_operation_description_text">Ausstehende Vorgang</string>
     <string name="oc_file_list_adapter_offline_operation_remove_description_text">Ausstehender Entfernungsvorgang</string>
     <string name="offline_mode">Keine Internetverbindung</string>
     <string name="offline_mode_info_description">Auch ohne Internetverbindung können Sie Ihre Ordner organisieren und Dateien erstellen. Sobald Sie wieder online sind, werden die ausstehenden Aktionen automatisch synchronisiert.</string>
-    <string name="offline_mode_info_title">Sie sind offline, aber die Arbeit geht weiter</string>
+    <string name="offline_mode_info_title">Sie sind offline, können aber weiterarbeiten</string>
     <string name="offline_operations_file_does_not_exists_yet">Datei existiert noch nicht. Bitte laden Sie zuerst die Datei hoch.</string>
     <string name="offline_operations_worker_notification_conflict_text">Konfliktordner: %s</string>
     <string name="offline_operations_worker_notification_delete_offline_folder">Offlineordner löschen</string>
@@ -624,6 +626,7 @@
     <string name="oneHour">1 Stunde</string>
     <string name="online">Online</string>
     <string name="online_status">Online-Status</string>
+    <string name="open_in_app">Öffnen mit %1$s</string>
     <string name="outdated_server">Die Serverversion wird nicht mehr unterstützt, bitte aktualisieren Sie diesen!</string>
     <string name="overflow_menu">Weiteres Menü</string>
     <string name="pass_code_configure_your_pass_code">PIN eingeben</string>
@@ -831,6 +834,7 @@
     <string name="share_remote_clarification">%1$s (remote)</string>
     <string name="share_room_clarification">%1$s (Unterhaltung)</string>
     <string name="share_search">Name, Federated-Cloud-ID oder E-Mail-Adresse …</string>
+    <string name="share_search_internal">Benutzer oder Teams hinzufügen</string>
     <string name="share_send_new_email">Neue E-Mail senden</string>
     <string name="share_send_note">Notiz an Empfänger</string>
     <string name="share_settings">Einstellungen</string>
@@ -846,7 +850,9 @@
     <string name="shared_with_you_by">Geteilt mit Ihnen von %1$s</string>
     <string name="sharee_add_failed">Freigeben fehlgeschlagen</string>
     <string name="sharee_already_added_to_file">Das Hinzufügen der Freigabe ist fehlgeschlagen. Diese Datei oder dieser Ordner wurden bereits für diese Person oder Gruppe freigegeben.</string>
+    <string name="show_all">Alle anzeigen</string>
     <string name="show_images">Fotos anzeigen</string>
+    <string name="show_less">Weniger anzeigen</string>
     <string name="show_video">Videos anzeigen</string>
     <string name="sign_tos_failed">Bitte überprüfen Sie die Nutzungsbedingungen selbst!</string>
     <string name="signup_with_provider">Mit Provider anmelden</string>
@@ -907,8 +913,10 @@
     <string name="subtitle_videos_only">Nur Videos</string>
     <string name="suggest">Vorschlagen</string>
     <string name="sync">Synchronisieren</string>
+    <string name="sync_anyway">Trotzdem synchronisieren</string>
     <string name="sync_conflicts_in_favourites_ticker">Konflikte gefunden</string>
     <string name="sync_current_folder_was_removed">Der Ordner %1$s existiert nicht mehr</string>
+    <string name="sync_duplication">Synchronisierungsduplizierung</string>
     <string name="sync_fail_content">Synchronisierung von %1$s konnte nicht abgeschlossen werden</string>
     <string name="sync_fail_content_unauthorized">Falsches Passwort für %1$s</string>
     <string name="sync_fail_in_favourites_ticker">Synchronhalten schlug fehl.</string>
@@ -925,6 +933,7 @@
     <string name="sync_not_enough_space_dialog_title">Nicht genügend Speicherplatz</string>
     <string name="sync_status_button">Status-synchronisieren-Button</string>
     <string name="sync_string_files">Dateien</string>
+    <string name="sync_warning_button">Schaltfläche „Synchronisationswarnung“</string>
     <string name="synced_folder_settings_button">Einstellungs-Button</string>
     <string name="synced_folders_configure_folders">Ordner konfigurieren</string>
     <string name="synced_folders_new_info">Die Sofort-Uploads wurden vollständig überarbeitet. Konfiguriere Sie Ihren automatischen Uploader im Hauptmenü.\n\nGenießen Sie den verbesserten Auto-Upload.</string>
@@ -935,7 +944,7 @@
     <string name="tags">Schlagworte</string>
     <string name="terms_of_service_title">Nutzungsbedingungen</string>
     <string name="terms_of_services_agree">Ich stimme den oben genannten ToS zu</string>
-    <string name="test_server_button">Prüfe Server-Verbindung</string>
+    <string name="test_server_button">Prüfe Serververbindung</string>
     <string name="thirtyMinutes">30 Minuten</string>
     <string name="thisWeek">Diese Woche</string>
     <string name="thumbnail">Vorschaubild</string>

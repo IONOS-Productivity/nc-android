@@ -10,7 +10,6 @@
     <string name="action_edit">Deasaich</string>
     <string name="action_empty_notifications">Falamhaich a h-uile brath</string>
     <string name="action_empty_trashbin">Falamhaich an sgudal</string>
-    <string name="action_send_share">Cuir/Co-roinn</string>
     <string name="action_switch_grid_view">Sealladh griod</string>
     <string name="action_switch_list_view">Sealladh liosta</string>
     <string name="actionbar_mkdir">Pasgan ùr</string>
@@ -26,7 +25,6 @@
     <string name="activity_chooser_send_file_title">Cuir</string>
     <string name="activity_chooser_title">Cuir ceangal gu…</string>
     <string name="activity_icon">Gnìomhachd</string>
-    <string name="add_another_public_share_link">Cuir ceangal eile ris</string>
     <string name="add_new_public_share">Cuir ceangal co-roinnidh poblach ùr ris</string>
     <string name="add_to_cloud">Cuir ri %1$s</string>
     <string name="allow_resharing">Ceadaich co-roinneadh às ùr</string>
@@ -205,13 +203,10 @@
     <string name="drawer_quota_unlimited">Tha %1$s ’ga chleachdadh</string>
     <string name="drawer_synced_folders">Luchdaich suas gu fèin-obrachail</string>
     <string name="ecosystem_apps_display_more">Barrachd</string>
-    <string name="ecosystem_apps_display_notes">Nòtaichean</string>
-    <string name="ecosystem_apps_notes">Nòtaichean Nextcloud</string>
     <string name="encrypted">Suidhich crioptachadh air</string>
     <string name="end_to_end_encryption_confirm_button">Suidhich an crioptachadh</string>
     <string name="end_to_end_encryption_decrypting">’Ga dhì-chrioptachadh…</string>
     <string name="end_to_end_encryption_dialog_close">Dùin</string>
-    <string name="end_to_end_encryption_enter_password">Cuir a-steach am facal-faire agus an iuchair phrìobhaideach a dhì-chrioptachadh.</string>
     <string name="end_to_end_encryption_folder_not_empty">Chan eil am pasgan seo falamh.</string>
     <string name="end_to_end_encryption_generating_keys">A’ gintinn nan iuchraichean ùra…</string>
     <string name="end_to_end_encryption_keywords_description">Nì an 12 fhacal còmhla facal-faire glè làidir gus nach seall ’s nach cleachd ach thu fhèin na faidhlichean crioptaichte agad. Sgrìobh sìos e is cùm am badeigin sàbhailte e.</string>
@@ -246,7 +241,6 @@
     <string name="etm_background_jobs_stop_test_job">Cuir stad air an obair dheuchainneach</string>
     <string name="etm_migrations">Imrichean (àrdachadh aplacaide)</string>
     <string name="etm_preferences">Roghainnean</string>
-    <string name="etm_title">Modh deuchainnean innleadaireachd</string>
     <string name="etm_transfer">Tar-chur fhaidhlichean</string>
     <string name="etm_transfer_enqueue_test_download">Cuir luchdadh a-nuas deuchainneach air a’ chiutha</string>
     <string name="etm_transfer_enqueue_test_upload">Cuir luchdadh suas deuchainneach air a’ chiutha</string>
@@ -403,7 +397,6 @@
     <string name="new_media_folder_detected">Mhothaich sinn do phasgan mheadhanan ùr le %1$s.</string>
     <string name="new_media_folder_photos">dealbh</string>
     <string name="new_media_folder_videos">video</string>
-    <string name="new_notification">Brath ùr</string>
     <string name="new_version_was_created">Chaidh tionndadh ùr dheth a chruthachadh</string>
     <string name="no_browser_available">Chan eil aplacaid ann a làimhsicheas ceanglaichean</string>
     <string name="no_mutliple_accounts_allowed">Chan eil ach aon chunntas ceadaichte</string>

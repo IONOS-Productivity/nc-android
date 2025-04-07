@@ -10,12 +10,12 @@
     <string name="action_edit">Уреди</string>
     <string name="action_empty_notifications">Очисти сва обавештења</string>
     <string name="action_empty_trashbin">Испразни корпу за отпатке</string>
-    <string name="action_send_share">Слање/Дељење</string>
+    <string name="action_send_share">Слање/дељење</string>
     <string name="action_switch_grid_view">Приказ мреже</string>
     <string name="action_switch_list_view">Приказ листе</string>
     <string name="actionbar_calendar_contacts_restore">Обнови контакте и календар </string>
     <string name="actionbar_mkdir">Нова фасцикла</string>
-    <string name="actionbar_move_or_copy">Премести или копирај</string>
+    <string name="actionbar_move_or_copy">Помери или копирај</string>
     <string name="actionbar_open_with">Отвори помоћу</string>
     <string name="actionbar_search">Претрага</string>
     <string name="actionbar_see_details">Детаљи</string>
@@ -28,7 +28,6 @@
     <string name="activity_chooser_send_file_title">Пошаљи</string>
     <string name="activity_chooser_title">Пошаљи везу…</string>
     <string name="activity_icon">Активност</string>
-    <string name="add_another_public_share_link">Додај још једну везу</string>
     <string name="add_new_public_share">Додај везу новог јавног дељења</string>
     <string name="add_new_secure_file_drop">Додај ново безбедно место за спуштање фајлова</string>
     <string name="add_to_cloud">Додај у %1$s</string>
@@ -47,15 +46,17 @@
     <string name="app_widget_description">Приказује један виџет са контролне табле</string>
     <string name="appbar_search_in">Тражи у %s</string>
     <string name="assistant_screen_add_task_alert_dialog_title">Додај нови задатак</string>
+    <string name="assistant_screen_create_a_new_task_from_bottom_right_text">Креирај нови задатак од доњег десног</string>
     <string name="assistant_screen_create_task_alert_dialog_input_field_placeholder">Откуцајте неки текст</string>
     <string name="assistant_screen_delete_task_alert_dialog_description">Да ли сте сигурни да желите да обришете овај задатак?</string>
     <string name="assistant_screen_delete_task_alert_dialog_title">Обриши задатак</string>
-    <string name="assistant_screen_loading">Листа задатака се учитава, молимо вас сачекајте</string>
+    <string name="assistant_screen_loading">Листа задатака се учитава…</string>
     <string name="assistant_screen_no_task_available_text">Не постоји ниједан задатак типа %s, нови задатак можете да креирате доле десно.</string>
     <string name="assistant_screen_task_create_fail_message">Дошло је до грешке током креирања задатка</string>
     <string name="assistant_screen_task_create_success_message">Задатак је успешно креиран</string>
     <string name="assistant_screen_task_delete_fail_message">Дошло је до грешке током брисања задатка</string>
     <string name="assistant_screen_task_delete_success_message">Задатак је успешно завршен</string>
+    <string name="assistant_screen_task_list_empty_message">Листа задатака је празна.</string>
     <string name="assistant_screen_task_list_error_state_message">Не може да се преузме листа задатака, молимо вас да проверите везу са интернетом.</string>
     <string name="assistant_screen_task_more_actions_bottom_sheet_delete_action">Обриши задатак</string>
     <string name="assistant_screen_task_output_empty_text">Излаз задатка још увек није спреман.</string>
@@ -102,6 +103,7 @@
     <string name="auto_upload_gplay_desc2">Услед нових ограничења која је наметнуо Google, приморани смо да уклонимо важну дозволу. Последица тога је да ће аутоматско отпремање моћи да отпреми само фајлове слика и видео клипова.\nУз то, за приступ информацијама о локацији отпремљених слика потребна је нова дозвола.\nОбезбедите да је приступ медијским фајловима подешен на „Увек дозволи све”.</string>
     <string name="auto_upload_on_wifi">Отпремај само на бежичним мрежама без ограничења</string>
     <string name="auto_upload_path">/Аутоматска отпремања</string>
+    <string name="auto_upload_sub_folder_warning">Овај фолдер је већ укључен у синхронизацију фолдера родитеља, па се могу јавити двострука отпремања</string>
     <string name="autoupload_configure">Подеси</string>
     <string name="autoupload_create_new_custom_folder">Направи нову поставку за посебну фасциклу</string>
     <string name="autoupload_custom_folder">Подесите произвољну фасциклу</string>
@@ -215,6 +217,7 @@
     <string name="could_not_retrieve_url">Не могу да добавим УРЛ</string>
     <string name="create">Направи</string>
     <string name="create_dir_fail_msg">Не могу да направим фасциклу</string>
+    <string name="create_link">Креирај линк</string>
     <string name="create_new">Нов</string>
     <string name="create_new_document">Нови документ</string>
     <string name="create_new_folder">Нова фасцикла</string>
@@ -297,11 +300,7 @@
     <string name="e2e_signature_does_not_match">Потпис се не подудара</string>
     <string name="ecosystem_apps_display_assistant">Асистент</string>
     <string name="ecosystem_apps_display_more">Више</string>
-    <string name="ecosystem_apps_display_notes">Белешке</string>
-    <string name="ecosystem_apps_display_talk">Разговор</string>
     <string name="ecosystem_apps_more">Још Nextcloud апликација</string>
-    <string name="ecosystem_apps_notes">Некстклауд Белешке</string>
-    <string name="ecosystem_apps_talk">Nextcloud Talk</string>
     <string name="email_pick_failed">Није успело бирање и-мејл адресе.</string>
     <string name="encrypted">Постави као шифровано</string>
     <string name="end_to_end_encryption_certificate_unavailable">Серверски сертификат није могао да се преузме</string>
@@ -309,7 +308,7 @@
     <string name="end_to_end_encryption_confirm_button">Подесите шифровање</string>
     <string name="end_to_end_encryption_decrypting">Дешифрујем…</string>
     <string name="end_to_end_encryption_dialog_close">Затвори</string>
-    <string name="end_to_end_encryption_enter_password">Унесите лозинку за дешифрујете приватни кључ.</string>
+    <string name="end_to_end_encryption_enter_passphrase_to_access_files">Унесите приступну лозинку за приступ фајловима</string>
     <string name="end_to_end_encryption_folder_not_empty">Фасцикла није празна.</string>
     <string name="end_to_end_encryption_generating_keys">Генеришем нове кључеве…</string>
     <string name="end_to_end_encryption_keywords_description">Ових 12 речи чини веома јаку лозинку, чиме сте обезбедили да само ви видите и користите своје шифроване фајлове. Запишите је и држите је негде на сигурном.</string>
@@ -366,6 +365,7 @@
     <string name="etm_transfer_type">Пренеси</string>
     <string name="etm_transfer_type_download">Преузми</string>
     <string name="etm_transfer_type_upload">Отпреми</string>
+    <string name="external_shares">Спољна дељења</string>
     <string name="fab_label">Додај или отпреми</string>
     <string name="failed_to_download">Неуспело прослеђивање фајла менаџеру преузимања</string>
     <string name="failed_to_print">Неуспело штампање фајла</string>
@@ -457,6 +457,7 @@
     <string name="first_run_3_text">Веб пошта лака за коришћење, календар и контакти</string>
     <string name="first_run_4_text">Дељење екрана, састанци на мрежи и веб конференције</string>
     <string name="folder_already_exists">Фасцикла већ постоји</string>
+    <string name="folder_best_viewed_in">Овај фолдер се најбоље приказује у %1$s.</string>
     <string name="folder_confirm_create">Направи</string>
     <string name="folder_list_empty_headline">Нема фасцикли овде</string>
     <string name="folder_name_empty">Назив фолдера не може да буде празно</string>
@@ -505,6 +506,7 @@
     <string name="instant_upload_existing">Отпреми и постојеће фајлове</string>
     <string name="instant_upload_on_charging">Отпремај само на пуњењу</string>
     <string name="instant_upload_path">/InstantUpload</string>
+    <string name="internal_shares">Интерна дељења</string>
     <string name="internal_two_way_sync">Интерна двосмерна синхронизација</string>
     <string name="internal_two_way_sync_not_yet">Још увек није, ускоро ће се синхронизовати</string>
     <string name="internet_connection_required_for_encrypted_folder_setup">За постављање шифрованог фолдера, неопходна је веза са интернетом</string>
@@ -624,6 +626,7 @@
     <string name="oneHour">1 сат</string>
     <string name="online">На мрежи</string>
     <string name="online_status">Мрежни статус</string>
+    <string name="open_in_app">Отвори у %1$s</string>
     <string name="outdated_server">Сервер је превише стар. Ажурирајте га!</string>
     <string name="overflow_menu">Додатни мени</string>
     <string name="pass_code_configure_your_pass_code">Унесите кôд</string>
@@ -642,7 +645,7 @@
     <string name="permission_storage_access">Потребне су дозволе за отпремање и преузимање фајлова.</string>
     <string name="pick_contact_to_share_with">Изаберите контакт са којим желите да поделите</string>
     <string name="picture_set_as_no_app">Нема апликације којом се поставља слика</string>
-    <string name="pin_home">Закачи на Почетни екран</string>
+    <string name="pin_home">Закачи на почетни екран</string>
     <string name="pin_shortcut_label">Отвори %1$s</string>
     <string name="placeholder_fileSize">389 KB</string>
     <string name="placeholder_filename">чувамместо.txt</string>
@@ -791,10 +794,10 @@
     <string name="select_one_template">Молимо вас да изаберете један шаблон</string>
     <string name="select_template">Одаберите шаблон</string>
     <string name="send">Пошаљи</string>
-    <string name="send_share">Пошаљи дељени ресурс</string>
+    <string name="send_share">Пошаљи дељење</string>
     <string name="sendbutton_description">Икона за слање</string>
     <string name="set_as">Постави као</string>
-    <string name="set_note">Пошаљи белешку</string>
+    <string name="set_note">Постави белешку</string>
     <string name="set_picture_as">Постави слику као</string>
     <string name="set_status">Постави статус</string>
     <string name="set_status_message">Постављање статусне поруке</string>
@@ -831,6 +834,7 @@
     <string name="share_remote_clarification">%1$s(удаљено)</string>
     <string name="share_room_clarification">%1$s (разговор)</string>
     <string name="share_search">Име, ИД здруженог облака или адреса е-поште…</string>
+    <string name="share_search_internal">Додај кориснике и тимове</string>
     <string name="share_send_new_email">Пошаљи нови и-мејл</string>
     <string name="share_send_note">Напомена примаоцу</string>
     <string name="share_settings">Поставке</string>
@@ -846,7 +850,9 @@
     <string name="shared_with_you_by">Дели са вама %1$s</string>
     <string name="sharee_add_failed">Додавање особе за дељење није успело</string>
     <string name="sharee_already_added_to_file">Није успело додавање дељења. Овај фајл или фолдер се већ дели са наведеном особом или групом.</string>
+    <string name="show_all">Прикажи све</string>
     <string name="show_images">Прикажи слике</string>
+    <string name="show_less">Прикажи мање</string>
     <string name="show_video">Прикажи видео снимке</string>
     <string name="sign_tos_failed">Молимо вас да ручно погледате услове коришћења!</string>
     <string name="signup_with_provider">Пријавите се преко провајдера</string>
@@ -907,8 +913,10 @@
     <string name="subtitle_videos_only">Само видео снимци</string>
     <string name="suggest">Предложи</string>
     <string name="sync">Синхронизуј</string>
+    <string name="sync_anyway">Ипак синхронизуј</string>
     <string name="sync_conflicts_in_favourites_ticker">Постоје сукоби</string>
     <string name="sync_current_folder_was_removed">Фасцикла %1$s више не постоји</string>
+    <string name="sync_duplication">Дуплирање синхронизације</string>
     <string name="sync_fail_content">Не могу да синхронизујем %1$s</string>
     <string name="sync_fail_content_unauthorized">Погрешна лозинка за %1$s</string>
     <string name="sync_fail_in_favourites_ticker">Синхронизација није успела</string>
@@ -925,6 +933,7 @@
     <string name="sync_not_enough_space_dialog_title">Нема довољно простора</string>
     <string name="sync_status_button">Дугме статуса синхронизације</string>
     <string name="sync_string_files">Фајлови</string>
+    <string name="sync_warning_button">Дугме упозорења синхронизације</string>
     <string name="synced_folder_settings_button">Дугме поставки</string>
     <string name="synced_folders_configure_folders">Подесите фасцикле</string>
     <string name="synced_folders_new_info">Брзо отпремање је потпуно редизајнирано. Поново подесите аутоматска отпремања из главног менија.\n\nУживајте у новом и надограђеном аутоматском отпремању.</string>

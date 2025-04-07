@@ -10,10 +10,10 @@
     <string name="action_edit">Chỉnh sửa</string>
     <string name="action_empty_notifications">Xoá tất cả thông báo</string>
     <string name="action_empty_trashbin">Dọn sạch thùng rác</string>
-    <string name="action_send_share">Gửi/Chia sẽ</string>
     <string name="action_switch_grid_view">Xem dạng Lưới</string>
     <string name="action_switch_list_view">Xem dạng Danh sách</string>
     <string name="actionbar_mkdir">Tạo thư mục</string>
+    <string name="actionbar_move_or_copy">Di chuyển hoặc sao chép</string>
     <string name="actionbar_open_with">Mở với</string>
     <string name="actionbar_search">Tìm</string>
     <string name="actionbar_see_details">Chi tiết</string>
@@ -26,13 +26,13 @@
     <string name="activity_chooser_send_file_title">Gởi</string>
     <string name="activity_chooser_title">Gửi liên kết đến…</string>
     <string name="activity_icon">Hoạt động</string>
-    <string name="add_another_public_share_link">Thêm một liên kết khác</string>
     <string name="add_new_public_share">Thêm liên kết chia sẻ công khai mới</string>
     <string name="add_to_cloud">Thêm vào %1$s</string>
     <string name="advanced_settings">Cài đặt nâng cao</string>
     <string name="allow_resharing">Cho phép chia sẻ lại</string>
     <string name="app_widget_description">Hiện thị lối tắt từ dashboard</string>
     <string name="appbar_search_in">Tìm kiếm trong %s</string>
+    <string name="assistant_screen_delete_task_alert_dialog_title">Xóa nhiệm vụ</string>
     <string name="associated_account_not_found">Không tìm thấy tài khoản được liên kết!</string>
     <string name="auth_access_failed">Lỗi truy cập: %1$s</string>
     <string name="auth_account_does_not_exist">Tài khoản chưa được thêm vào thiết bị này.</string>
@@ -232,14 +232,10 @@
     <string name="drawer_synced_folders">Tự động tải lên</string>
     <string name="e2e_not_yet_setup">E2E chưa được thiết lập</string>
     <string name="ecosystem_apps_display_more">Thêm</string>
-    <string name="ecosystem_apps_display_notes">Ghi chú</string>
-    <string name="ecosystem_apps_display_talk">Nói chuyện</string>
-    <string name="ecosystem_apps_notes">Nextcloud Ghi chú</string>
     <string name="encrypted">Đặt mã hóa</string>
     <string name="end_to_end_encryption_confirm_button">Thiết lập mã hóa</string>
     <string name="end_to_end_encryption_decrypting">Đang giải mã…</string>
     <string name="end_to_end_encryption_dialog_close">Đóng</string>
-    <string name="end_to_end_encryption_enter_password">Vui lòng nhập mật khẩu để giải mã mã khóa riêng.</string>
     <string name="end_to_end_encryption_folder_not_empty">Thư mục này rỗng</string>
     <string name="end_to_end_encryption_generating_keys">Đang tạo các mã khóa mới...</string>
     <string name="end_to_end_encryption_keywords_description">Tất cả 12 từ này tạo nên một mật khẩu rất manh, để đảm bảo rằng chỉ mình bạn xem và sử dụng những tệp đã mã hóa. Vui lòng ghi xuống và giữ thông tin này ở nơi nào an toàn.</string>
@@ -278,7 +274,6 @@
     <string name="etm_background_jobs_stop_test_job">Kết thúc công việc kiểm tra</string>
     <string name="etm_migrations">Di cư (nâng cấp ứng dụng)</string>
     <string name="etm_preferences">Cài đặt</string>
-    <string name="etm_title">Chế độ kiểm tra kỹ thuật</string>
     <string name="etm_transfer">Truyền tệp</string>
     <string name="etm_transfer_enqueue_test_download">Cho mục tải xuống thử nghiệm vào hàng chờ</string>
     <string name="etm_transfer_enqueue_test_upload">Cho mục tải lên thử nghiệm vào hàng chờ</string>
@@ -451,7 +446,6 @@
     <string name="new_media_folder_detected">Đã phát hiện thư mục media %1$s mới.</string>
     <string name="new_media_folder_photos">photo</string>
     <string name="new_media_folder_videos">video</string>
-    <string name="new_notification">Thông báo mới</string>
     <string name="new_version_was_created">Phiên bản mới đã được tạo</string>
     <string name="no_actions">Không có hành động nào cho người dùng này</string>
     <string name="no_browser_available">Không có ứng dụng để xử lý các liên kết</string>
@@ -572,6 +566,7 @@
     <string name="recommend_subject">Thử %1$s trên điện thoại của bạn!</string>
     <string name="recommend_text">Tôi muốn mời bạn sử dụng %1$s trên điện thoại của bạn.\nTải về: %2$s</string>
     <string name="recommend_urls">%1$s hoặc %2$s</string>
+    <string name="recommended_files_title">Tệp được đề xuất</string>
     <string name="refresh_content">Làm mới nội dung</string>
     <string name="reload">Tải lại</string>
     <string name="remote">(từ xa)</string>
@@ -607,10 +602,8 @@
     <string name="select_one_template">Vui lòng chọn một mẫu</string>
     <string name="select_template">Chon mẫu</string>
     <string name="send">Gửi</string>
-    <string name="send_share">Gửi kho</string>
     <string name="sendbutton_description">Biểu tượng nút gửi</string>
     <string name="set_as">Đặt như</string>
-    <string name="set_note">Đặt ghi chú</string>
     <string name="set_picture_as">Dùng hình ảnh như</string>
     <string name="set_status">Đặt trạng thái</string>
     <string name="set_status_message">Đặt thông báo trạng thái</string>
@@ -638,7 +631,6 @@
     <string name="share_permission_can_edit">Có thể chỉnh sửa</string>
     <string name="share_permission_file_drop">Thả file</string>
     <string name="share_permission_view_only">Chỉ xem</string>
-    <string name="share_permissions">Quyền kho</string>
     <string name="share_remote_clarification">%1$s (từ xa)</string>
     <string name="share_room_clarification">%1$s (cuộc hội thoại)</string>
     <string name="share_send_new_email">Gửi email mới</string>

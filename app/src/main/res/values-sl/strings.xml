@@ -10,12 +10,11 @@
     <string name="action_edit">Uredi</string>
     <string name="action_empty_notifications">Počisti vsa obvestila</string>
     <string name="action_empty_trashbin">Izprazni smeti</string>
-    <string name="action_send_share">Pošlji/Omogoči souporabo</string>
     <string name="action_switch_grid_view">Mrežni pogled</string>
     <string name="action_switch_list_view">Seznamski pogled</string>
     <string name="actionbar_calendar_contacts_restore">Obnovi stike in koledar</string>
     <string name="actionbar_mkdir">Nova mapa</string>
-    <string name="actionbar_move_or_copy">Premakni ali Kopiraj</string>
+    <string name="actionbar_move_or_copy">Premakni ali kopiraj</string>
     <string name="actionbar_open_with">Odpri s programom</string>
     <string name="actionbar_search">Iskanje</string>
     <string name="actionbar_see_details">Podrobnosti</string>
@@ -28,7 +27,6 @@
     <string name="activity_chooser_send_file_title">Pošlji</string>
     <string name="activity_chooser_title">Pošlji povezavo …</string>
     <string name="activity_icon">Dejavnosti</string>
-    <string name="add_another_public_share_link">Dodaj novo povezavo</string>
     <string name="add_new_public_share">Nova javna povezava za souporabo</string>
     <string name="add_new_secure_file_drop">Dodaj novo mesto varnega pošiljanja</string>
     <string name="add_to_cloud">Dodaj v %1$s</string>
@@ -38,6 +36,7 @@
     <string name="app_config_proxy_port_title">Vrata posredniškega strežnika</string>
     <string name="app_widget_description">Pokaži en gradnik iz nadzorne plošče</string>
     <string name="appbar_search_in">Poišči v %s</string>
+    <string name="assistant_screen_delete_task_alert_dialog_title">Izbriši nalogo</string>
     <string name="associated_account_not_found">Povezanega računa ni mogoče najti!</string>
     <string name="auth_access_failed">Dostop je spodletel: %1$s</string>
     <string name="auth_account_does_not_exist">Račun še ni dodan na to napravo.</string>
@@ -177,6 +176,7 @@
     <string name="could_not_retrieve_url">Naslova URL ni mogoče pridobiti</string>
     <string name="create">Ustvari</string>
     <string name="create_dir_fail_msg">Ni mogoče ustvariti mape</string>
+    <string name="create_link">Ustvari povezavo</string>
     <string name="create_new">Novo</string>
     <string name="create_new_document">Nov dokument</string>
     <string name="create_new_folder">Nova mapa</string>
@@ -247,17 +247,12 @@
     <string name="e2e_not_yet_setup">Celovito šifriranje E2E ni še nastavljeno.</string>
     <string name="e2e_offline">Opravila ni mogoče izvesti brez vzpostavljene internetne povezave</string>
     <string name="ecosystem_apps_display_more">Več</string>
-    <string name="ecosystem_apps_display_notes">Beležke</string>
-    <string name="ecosystem_apps_display_talk">Pogovor Talk</string>
     <string name="ecosystem_apps_more">Več programov Nexcloud</string>
-    <string name="ecosystem_apps_notes">Nextcloud Beležke</string>
-    <string name="ecosystem_apps_talk">Nextcloud Talk</string>
     <string name="email_pick_failed">Elektronskega naslova ni mogoče izbrati.</string>
     <string name="encrypted">Nastavi kot šifrirano</string>
     <string name="end_to_end_encryption_confirm_button">Nastavitev šifriranja</string>
     <string name="end_to_end_encryption_decrypting">Poteka odšifriranje…</string>
     <string name="end_to_end_encryption_dialog_close">Zapri</string>
-    <string name="end_to_end_encryption_enter_password">Vpišite geslo za odšifriranje zasebnega ključa.</string>
     <string name="end_to_end_encryption_folder_not_empty">Mapa ni prazna.</string>
     <string name="end_to_end_encryption_generating_keys">Poteka ustvarjanje novih ključev…</string>
     <string name="end_to_end_encryption_keywords_description">Vseh 12 besed skupaj predstavlja izredno močno geslo, s katerim imate le vi možnost ogleda in uporabe šifriranih datotek. Geslo si zapišite in shranite nekje na varnem.</string>
@@ -300,7 +295,6 @@
     <string name="etm_background_jobs_stop_test_job">Zaustavi preizkusno opravilo</string>
     <string name="etm_migrations">Preselitev (posodobitev programa)</string>
     <string name="etm_preferences">Nastavitve</string>
-    <string name="etm_title">Inženirski preizkusni način</string>
     <string name="etm_transfer">Prenos datoteke</string>
     <string name="etm_transfer_enqueue_test_download">Uvrsti preizkusni prejem</string>
     <string name="etm_transfer_enqueue_test_upload">Uvrsti preizkusno pošiljanje</string>
@@ -494,7 +488,6 @@
     <string name="new_media_folder_detected">Zaznana je nova mapa s predstavno vsebino: %1$s .</string>
     <string name="new_media_folder_photos">slika</string>
     <string name="new_media_folder_videos">video</string>
-    <string name="new_notification">Novo obvestilo</string>
     <string name="new_version_was_created">Ustvarjena je nova različica</string>
     <string name="no_actions">Ni dejanj za tega uporabnika</string>
     <string name="no_browser_available">Ni nameščenega programa, ki upravlja s povezavami</string>
@@ -545,7 +538,6 @@
     <string name="permission_deny">Zavrni</string>
     <string name="permission_storage_access">Za prejemanje oziroma pošiljanje datotek v oblak so zahtevana dodatna dovoljenja.</string>
     <string name="picture_set_as_no_app">Ni najdenega programa za nastavitev slike</string>
-    <string name="pin_home">Pripni na osnovni zaslon</string>
     <string name="pin_shortcut_label">Odpri %1$s</string>
     <string name="placeholder_fileSize">389 KB</string>
     <string name="placeholder_filename">vsebnik.txt</string>
@@ -626,6 +618,7 @@
     <string name="recommend_subject">Poskusite %1$s na vaši napravi!</string>
     <string name="recommend_text">Želim priporočiti program %1$s!\nPrejeti ga je mogoče prek: %2$s</string>
     <string name="recommend_urls">%1$s ali %2$s</string>
+    <string name="recommended_files_title">Priporočene datoteke</string>
     <string name="refresh_content">Osveži vsebino</string>
     <string name="reload">Ponovno naloži</string>
     <string name="remote">(oddaljeno) </string>
@@ -667,10 +660,8 @@
     <string name="select_one_template">Izbor predloge</string>
     <string name="select_template">Izbor predloge</string>
     <string name="send">Pošlji</string>
-    <string name="send_share">Pošlji povezavo do mesta souporabe</string>
     <string name="sendbutton_description">Ikona gumba za pošiljanje</string>
     <string name="set_as">Nastavi kot</string>
-    <string name="set_note">Nastavi sporočilo</string>
     <string name="set_picture_as">Uporabi sliko kot</string>
     <string name="set_status">Nastavi stanje</string>
     <string name="set_status_message">Nastavi sporočilo stanja</string>
@@ -701,7 +692,6 @@
     <string name="share_permission_file_drop">Poteg datotek v mapo</string>
     <string name="share_permission_secure_file_drop">Varno pošiljanje daottek</string>
     <string name="share_permission_view_only">Le ogled</string>
-    <string name="share_permissions">Dovoljenja souporabe</string>
     <string name="share_remote_clarification">%1$s (oddaljeno)</string>
     <string name="share_room_clarification">%1$s (pogovor)</string>
     <string name="share_send_new_email">Pošlji novo elektronsko sporočilo</string>
@@ -718,7 +708,9 @@
     <string name="shared_icon_shared_via_link">v souporabi s povezavo</string>
     <string name="shared_with_you_by">Souporabo omogoča %1$s</string>
     <string name="sharee_add_failed">Dodajanje souporabnika je spodletelo</string>
+    <string name="show_all">Pokaži vse</string>
     <string name="show_images">Pokaži fotografije</string>
+    <string name="show_less">Pokaži manj</string>
     <string name="show_video">Pokaži posnetke</string>
     <string name="signup_with_provider">Prijava prek ponudnika</string>
     <string name="single_sign_on_request_token" formatted="true">Ali dovolite uporabniku %1$s dostop do računa Nextcloud %2$s?</string>
