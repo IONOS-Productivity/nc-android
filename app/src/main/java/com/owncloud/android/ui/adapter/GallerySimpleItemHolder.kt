@@ -7,14 +7,12 @@
 
 package com.owncloud.android.ui.adapter
 
-import android.view.View
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
 import com.owncloud.android.databinding.GallerySimpleItemBinding
 import com.owncloud.android.datamodel.OCFile
 import com.owncloud.android.ui.fragment.GalleryFragment
 import com.owncloud.android.ui.interfaces.OCFileListFragmentInterface
-import com.owncloud.android.utils.MimeTypeUtil
 import com.owncloud.android.utils.glide.CustomGlideStreamLoader
 
 class GallerySimpleItemHolder(
@@ -36,6 +34,7 @@ class GallerySimpleItemHolder(
             .using(modelLoader)
             .load("$getThumbnailUrl?fileId=${file.localId}&x=$thumbnailSize&y=$thumbnailSize&a=1&mode=cover&forceIcon=0")
             .placeholder(com.elyeproj.loaderviewlibrary.R.color.default_color)
+            .override(thumbnailSize, thumbnailSize)
             .into(binding.thumbnail)
     }
 }
