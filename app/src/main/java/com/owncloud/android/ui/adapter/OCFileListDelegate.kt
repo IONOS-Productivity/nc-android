@@ -95,12 +95,11 @@ class OCFileListDelegate(
         checkedFiles.clear()
     }
 
-    @IonosCustomization("Nullable galleryRowHolder")
     fun bindGalleryRowThumbnail(
         shimmer: LoaderImageView?,
         imageView: ImageView,
         file: OCFile,
-        galleryRowHolder: GalleryRowHolder?,
+        galleryRowHolder: GalleryRowHolder,
         width: Int
     ) {
         // thumbnail
@@ -115,17 +114,16 @@ class OCFileListDelegate(
 
         imageView.setOnClickListener {
             ocFileListFragmentInterface.onItemClicked(file)
-            GalleryFragment.setLastMediaItemPosition(galleryRowHolder?.absoluteAdapterPosition)
+            GalleryFragment.setLastMediaItemPosition(galleryRowHolder.absoluteAdapterPosition)
         }
     }
 
     @Suppress("ComplexMethod")
-    @IonosCustomization("Nullable galleryRowHolder")
     private fun setGalleryImage(
         file: OCFile,
         thumbnailView: ImageView,
         shimmerThumbnail: LoaderImageView?,
-        galleryRowHolder: GalleryRowHolder?,
+        galleryRowHolder: GalleryRowHolder,
         width: Int
     ) {
         // cancel previous generation, if view is re-used
@@ -172,13 +170,13 @@ class OCFileListDelegate(
                 }
                 task.setListener(object : GalleryListener {
                     override fun onSuccess() {
-                        galleryRowHolder?.binding?.rowLayout?.invalidate()
+                        galleryRowHolder.binding.rowLayout.invalidate()
                         Log_OC.d("Shimmer", "stop Shimmer")
                         DisplayUtils.stopShimmer(shimmerThumbnail, thumbnailView)
                     }
 
                     override fun onNewGalleryImage() {
-                        galleryRowHolder?.redraw()
+                        galleryRowHolder.redraw()
                     }
 
                     override fun onError() {
