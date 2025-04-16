@@ -15,7 +15,6 @@ include ':libs:exif_info'
 include ':libs:context_action_bar'
 include ':feature:player'
 
-
 //includeBuild('../android-common') {
 //    dependencySubstitution {
 //        substitute module('com.github.nextcloud.android-common:ui') using project(':ui')

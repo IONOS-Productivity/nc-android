@@ -18,7 +18,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.di.Injectable
 import com.owncloud.android.utils.theme.ViewThemeUtils
 import javax.inject.Inject
@@ -31,7 +30,6 @@ open class ConfirmationDialogFragment : DialogFragment(), Injectable {
 
     private var mListener: ConfirmationDialogFragmentListener? = null
 
-    @IonosCustomization()
     override fun onStart() {
         super.onStart()
 
@@ -40,17 +38,17 @@ open class ConfirmationDialogFragment : DialogFragment(), Injectable {
         if (alertDialog != null) {
             val positiveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE) as MaterialButton?
             if (positiveButton != null) {
-                viewThemeUtils?.ionos?.material?.colorMaterialButtonPrimaryTonal(positiveButton)
+                viewThemeUtils?.material?.colorMaterialButtonPrimaryTonal(positiveButton)
             }
 
             val negativeButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE) as MaterialButton?
             if (negativeButton != null) {
-                viewThemeUtils?.ionos?.material?.colorMaterialButtonPrimaryBorderless(negativeButton)
+                viewThemeUtils?.material?.colorMaterialButtonPrimaryBorderless(negativeButton)
             }
 
             val neutralButton = alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL) as MaterialButton?
             if (neutralButton != null) {
-                viewThemeUtils?.ionos?.material?.colorMaterialButtonPrimaryBorderless(neutralButton)
+                viewThemeUtils?.material?.colorMaterialButtonPrimaryBorderless(neutralButton)
             }
         }
     }
@@ -59,7 +57,6 @@ open class ConfirmationDialogFragment : DialogFragment(), Injectable {
         mListener = listener
     }
 
-    @IonosCustomization
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val messageArguments = requireArguments().getStringArray(ARG_MESSAGE_ARGUMENTS) ?: arrayOf<String>()
         val titleId = requireArguments().getInt(ARG_TITLE_ID, -1)
@@ -101,7 +98,7 @@ open class ConfirmationDialogFragment : DialogFragment(), Injectable {
             }
         }
 
-        viewThemeUtils?.ionos?.dialog?.colorMaterialAlertDialogBackground(requireActivity(), builder)
+        viewThemeUtils?.dialog?.colorMaterialAlertDialogBackground(requireActivity(), builder)
 
         return builder.create()
     }

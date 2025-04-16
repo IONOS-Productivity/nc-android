@@ -20,7 +20,6 @@ import android.os.AsyncTask;
 import android.view.View;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.ionos.annotation.IonosCustomization;
 import com.nextcloud.client.account.User;
 import com.owncloud.android.MainApp;
 import com.owncloud.android.R;
@@ -89,7 +88,6 @@ public class StorageMigration {
         return f.exists() && f.isDirectory();
     }
 
-    @IonosCustomization
     public static void a(ViewThemeUtils viewThemeUtils, Context context) {
         final MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context)
             .setMessage(R.string.file_migration_directory_already_exists)
@@ -107,14 +105,13 @@ public class StorageMigration {
 
             });
 
-        viewThemeUtils.ionos.dialog.colorMaterialAlertDialogBackground(context, builder);
+        viewThemeUtils.dialog.colorMaterialAlertDialogBackground(context, builder);
 
         AlertDialog alertDialog = builder.create();
 
         alertDialog.show();
     }
 
-    @IonosCustomization
     private void askToOverride() {
         final MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(mContext)
                 .setMessage(R.string.file_migration_directory_already_exists)
@@ -159,7 +156,7 @@ public class StorageMigration {
                     progressDialog.getButton(ProgressDialog.BUTTON_POSITIVE).setVisibility(View.GONE);
                 });
 
-        viewThemeUtils.ionos.dialog.colorMaterialAlertDialogBackground(mContext, builder);
+        viewThemeUtils.dialog.colorMaterialAlertDialogBackground(mContext, builder);
         builder.create().show();
     }
 
@@ -246,7 +243,6 @@ public class StorageMigration {
             }
         }
 
-        @IonosCustomization
         private void askToStillMove() {
             final MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(mContext)
                     .setTitle(R.string.file_migration_source_not_readable_title)
@@ -258,7 +254,7 @@ public class StorageMigration {
                         }
                     });
 
-            viewThemeUtils.ionos.dialog.colorMaterialAlertDialogBackground(mContext, builder);
+            viewThemeUtils.dialog.colorMaterialAlertDialogBackground(mContext, builder);
             builder.create().show();
         }
 

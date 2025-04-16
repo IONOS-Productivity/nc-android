@@ -14,7 +14,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.elyeproj.loaderviewlibrary.LoaderImageView
-import com.ionos.annotation.IonosCustomization
 import com.owncloud.android.databinding.GridItemBinding
 
 internal class OCFileListGridItemViewHolder(var binding: GridItemBinding) :
@@ -33,9 +32,6 @@ internal class OCFileListGridItemViewHolder(var binding: GridItemBinding) :
 
     override val shimmerThumbnail: LoaderImageView
         get() = binding.thumbnailShimmer
-    @IonosCustomization
-    override val fileIcon: ImageView
-        get() = binding.fileIcon
     override val favorite: ImageView
         get() = binding.favoriteAction
     override val localFileIndicator: ImageView

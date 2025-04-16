@@ -85,7 +85,7 @@ public abstract class EditorWebView extends ExternalSiteWebView {
                                                                     R.string.timeout_richDocuments, Snackbar.LENGTH_INDEFINITE)
                         .setAction(R.string.common_cancel, v -> closeView());
 
-                    viewThemeUtils.ionos.material.themeSnackbar(snackbar);
+                    viewThemeUtils.material.themeSnackbar(snackbar);
                     setLoadingSnackbar(snackbar);
                     snackbar.show();
                 }

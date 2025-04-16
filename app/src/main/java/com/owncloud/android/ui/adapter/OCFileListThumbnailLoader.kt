@@ -31,6 +31,7 @@ import com.owncloud.android.utils.theme.ViewThemeUtils
 class OCFileListThumbnailLoader(
     private val file: OCFile,
     private val thumbnailView: ImageView,
+    private val itemLayout: View,
     private val user: User,
     private val storageManager: FileDataStorageManager,
     private val asyncTasks: MutableList<ThumbnailGenerationTask>,
@@ -40,8 +41,8 @@ class OCFileListThumbnailLoader(
     private val preferences: AppPreferences,
     private val viewThemeUtils: ViewThemeUtils,
     private val syncedFolderProvider: SyncedFolderProvider?,
-    private val iconView: ImageView,
 ) {
+    private val iconView: ImageView? = itemLayout.findViewById(R.id.icon)
 
     fun load() {
         if (file.isFolder) {
@@ -120,10 +121,16 @@ class OCFileListThumbnailLoader(
     }
 
     private fun showIcon(icon: Drawable) {
-        iconView.setImageDrawable(icon)
-        iconView.visibility = View.VISIBLE
-        thumbnailView.visibility = View.GONE
-        shimmerView.visibility = View.GONE
+        if (iconView != null) {
+            iconView.setImageDrawable(icon)
+            iconView.visibility = View.VISIBLE
+            thumbnailView.visibility = View.GONE
+            shimmerView.visibility = View.GONE
+        } else {
+            thumbnailView.setImageDrawable(icon)
+            thumbnailView.visibility = View.VISIBLE
+            shimmerView.visibility = View.GONE
+        }
     }
 
     private fun showThumbnail(thumbnail: Bitmap) {
@@ -132,7 +139,7 @@ class OCFileListThumbnailLoader(
     }
 
     private fun showExistedThumbnail() {
-        iconView.visibility = View.GONE
+        iconView?.visibility = View.GONE
         thumbnailView.visibility = View.VISIBLE
         shimmerView.visibility = View.GONE
     }
@@ -140,7 +147,7 @@ class OCFileListThumbnailLoader(
     private fun showShimmer() {
         shimmerView.setImageResource(R.drawable.background)
         shimmerView.resetLoader()
-        iconView.visibility = View.GONE
+        iconView?.visibility = View.GONE
         thumbnailView.visibility = View.GONE
         shimmerView.visibility = View.VISIBLE
     }

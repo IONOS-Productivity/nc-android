@@ -223,14 +223,13 @@ class SyncedFoldersActivity :
         return true
     }
 
-    @IonosCustomization
     private fun showPowerCheckDialog() {
         val builder = MaterialAlertDialogBuilder(this)
             .setPositiveButton(R.string.common_ok) { dialog, _ -> dialog.dismiss() }
             .setTitle(R.string.autoupload_disable_power_save_check)
             .setMessage(getString(R.string.power_save_check_dialog_message))
 
-        viewThemeUtils.ionos.dialog.colorMaterialAlertDialogBackground(this, builder)
+        viewThemeUtils.dialog.colorMaterialAlertDialogBackground(this, builder)
 
         builder.create().show()
     }
@@ -250,7 +249,7 @@ class SyncedFoldersActivity :
             viewThemeUtils
         )
         binding.emptyList.emptyListIcon.setImageResource(R.drawable.nav_synced_folders)
-        viewThemeUtils.ionos.material.colorMaterialButtonPrimaryFilled(binding.emptyList.emptyListViewAction)
+        viewThemeUtils.material.colorMaterialButtonPrimaryFilled(binding.emptyList.emptyListViewAction)
         val lm = GridLayoutManager(this, gridWidth)
         adapter.setLayoutManager(lm)
         val spacing = resources.getDimensionPixelSize(R.dimen.media_grid_spacing)
@@ -822,7 +821,6 @@ class SyncedFoldersActivity :
         }
     }
 
-    @IonosCustomization("Buttons style")
     private fun showBatteryOptimizationInfo() {
         if (powerManagementService.isPowerSavingExclusionAvailable || checkIfBatteryOptimizationEnabled()) {
             val alertDialogBuilder = MaterialAlertDialogBuilder(this, R.style.Theme_ownCloud_Dialog)
@@ -843,7 +841,7 @@ class SyncedFoldersActivity :
                 .setIcon(R.drawable.ic_battery_alert)
             if (lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
                 val alertDialog = alertDialogBuilder.show()
-                viewThemeUtils.ionos.platform.colorTextButtons(
+                viewThemeUtils.platform.colorTextButtons(
                     alertDialog.getButton(AlertDialog.BUTTON_POSITIVE),
                     alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL)
                 )

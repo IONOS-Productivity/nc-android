@@ -33,7 +33,6 @@ buildscript {
 
         ciBuild = System.getenv("CI") == "true"
         shotTest = System.getenv("SHOT_TEST") == "true"
-
     }
 }
 
@@ -49,8 +48,6 @@ subprojects {
         google()
         mavenCentral()
         maven { url "https://jitpack.io" }
-        maven { url 'https://nexus.scanbot.io/nexus/content/repositories/releases/' }
-        maven { url "https://maven.download.phrase.com" }
     }
 }
 
