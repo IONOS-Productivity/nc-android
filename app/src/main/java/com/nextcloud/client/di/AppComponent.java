@@ -27,7 +27,6 @@ import com.owncloud.android.media.MediaControlView;
 import com.owncloud.android.ui.ThemeableSwitchPreference;
 import com.owncloud.android.ui.whatsnew.ProgressIndicator;
 import com.strato.hidrive.player.di.PlayerComponent;
-import com.strato.hidrive.views.contextbar.di.ContextbarComponent;
 
 import javax.inject.Singleton;
 
@@ -55,7 +54,7 @@ import dagger.android.support.AndroidSupportInjectionModule;
     StratoModule.class,
 })
 @Singleton
-public interface AppComponent extends ContextbarComponent, PlayerComponent {
+public interface AppComponent extends PlayerComponent {
 
     void inject(MainApp app);
 

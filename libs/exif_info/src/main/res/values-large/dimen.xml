@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <dimen name="exif_info_title_container_margin_left">24dp</dimen>
-    <dimen name="exif_info_file_name_margin_left">32dp</dimen>
-    <dimen name="exif_info_close_btn_margin_left">24dp</dimen>
-    <dimen name="exif_info_close_btn_margin_top">24dp</dimen>
-    <dimen name="exif_info_panel_width">376dp</dimen>
-    <dimen name="exif_info_header_image_height">312dp</dimen>
-</resources>

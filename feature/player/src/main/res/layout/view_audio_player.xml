@@ -2,7 +2,6 @@
 <androidx.drawerlayout.widget.DrawerLayout
     android:id="@+id/drawer_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -13,7 +12,7 @@
         android:background="@color/player_full_screen_audio_player_background"
         android:orientation="vertical">
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/topBar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/player_full_screen_audio_player_top_bar_height"
@@ -23,41 +22,23 @@
 
             <ImageView
                 android:id="@+id/ivBack"
-                style="@style/NavigationBarIconStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/player_header_left_padding"
                 android:layout_marginRight="@dimen/player_full_screen_audio_player_back_button_margin"
                 android:src="@drawable/ic_player_arrow_back_white_24dp"/>
 
-            <com.strato.hidrive.stylized_view.StylizedTextView
+            <TextView
                 android:id="@+id/tvTitle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_toLeftOf="@+id/topContextActionBar"
-                android:layout_toRightOf="@+id/ivBack"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:singleLine="true"
                 android:textColor="@color/player_full_screen_audio_player_text_color"
                 android:textSize="@dimen/player_full_screen_audio_player_nav_bar_text_view_size"/>
 
-            <com.strato.hidrive.views.contextbar.ContextActionBar
-                android:id="@+id/topContextActionBar"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
-                custom:cab_bottom_item_selector="@drawable/drawable_player_selector_more_menu_bottom_item_light_style"
-                custom:cab_item_selector="@drawable/drawable_player_selector_more_menu_item_bg_light_style"
-                custom:cab_more_divider="@drawable/drawable_player_more_menu_divider_none_style"
-                custom:cab_more_elevation_padding="@dimen/player_cab_more_elevation_padding"
-                custom:cab_more_font_color="@color/player_more_menu_item_text_color_style"
-                custom:cab_more_icon="@drawable/ic_player_more_vert_white_24dp"
-                custom:cab_more_width="@dimen/player_more_popup_width"
-                custom:cab_top_bottom_item_selector="@drawable/drawable_player_selector_toolbar_popup_item_top_bottom_light_style"
-                custom:cab_top_item_selector="@drawable/drawable_player_selector_more_menu_top_item_light_style"/>
-
-        </RelativeLayout>
+        </LinearLayout>
 
         <com.strato.hidrive.player.views.player.view.PlayerSourcesView
             android:id="@+id/playerSourcesView"
@@ -76,14 +57,5 @@
             android:background="@color/player_full_screen_audio_player_background"/>
 
     </LinearLayout>
-
-    <com.strato.hidrive.views.exif_info.ExifInfoView
-        android:id="@+id/exif_info_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="end"
-        app:panel_header_image_height="@dimen/exif_info_header_image_height"
-        app:panel_toolbar_height="@dimen/exif_info_toolbar_height"
-        app:panel_width="@dimen/exif_info_panel_width"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>

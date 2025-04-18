@@ -3,9 +3,6 @@ package com.ionos.player.activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import com.ionos.player.font.PlayerCustomFonts
-import com.ionos.player.tracking.AudioPlayerEventTrackerImpl
-import com.ionos.player.tracking.VideoPlayerEventTrackerImpl
 import com.nextcloud.client.di.Injectable
 import com.owncloud.android.datamodel.OCFile
 import com.owncloud.android.ui.activity.BaseActivity
@@ -17,8 +14,6 @@ import com.strato.hidrive.player.views.player.fragment.SurfaceInvalidator
 import com.strato.hidrive.player.views.player.view.PlayerCompatible
 import com.strato.hidrive.player.views.player.view.PlayerView
 import com.strato.hidrive.player.views.player.view.PlayerViewContainer
-import com.strato.hidrive.stylized_view.StylizedTextView
-import javax.inject.Inject
 
 class IonosPlayerActivity : BaseActivity(), PlayerViewContainer, PlayerCompatible, Injectable {
 
@@ -54,10 +49,6 @@ class IonosPlayerActivity : BaseActivity(), PlayerViewContainer, PlayerCompatibl
 
     }
 
-    @Inject
-    lateinit var audioPlayerEventTracker: AudioPlayerEventTrackerImpl
-    @Inject
-    lateinit var videoPlayerEventTracker: VideoPlayerEventTrackerImpl
 
     private val surfaceInvalidator = SurfaceInvalidator()
     private lateinit var playerView: PlayerView
@@ -67,11 +58,9 @@ class IonosPlayerActivity : BaseActivity(), PlayerViewContainer, PlayerCompatibl
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        StylizedTextView.initialize(PlayerCustomFonts())
-
         playerView = when(getPlayerType()){
-            PlayerType.AUDIO -> AudioPlayerView(this, audioPlayerEventTracker)
-            PlayerType.VIDEO -> VideoPlayerView(this, videoPlayerEventTracker)
+            PlayerType.AUDIO -> AudioPlayerView(this)
+            PlayerType.VIDEO -> VideoPlayerView(this)
         }
         setContentView(playerView)
     }

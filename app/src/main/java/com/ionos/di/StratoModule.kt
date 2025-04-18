@@ -10,7 +10,6 @@ package com.ionos.di
 import com.ionos.analycis.AnalyticsManager
 import com.ionos.privacy.DataProtectionActivity
 import com.ionos.analycis.FirebaseAnalyticsManager
-import com.ionos.exif_info.di.NCExifInfoModule
 import com.ionos.player.di.NCPlayerModule
 import com.ionos.privacy.PrivacySettingsActivity
 import com.ionos.scanbot.di.NCScanbotModule
@@ -19,7 +18,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
-@Module(includes = [NCScanbotModule::class, NCPlayerModule::class, NCExifInfoModule::class])
+@Module(includes = [NCScanbotModule::class, NCPlayerModule::class])
 abstract class StratoModule {
 
     @ContributesAndroidInjector

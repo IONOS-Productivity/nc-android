@@ -6,7 +6,7 @@
               android:gravity="center"
               android:orientation="vertical">
 
-    <com.strato.hidrive.stylized_view.StylizedTextView
+    <TextView
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,7 +17,7 @@
         android:textColor="@color/player_full_screen_audio_detail_view_title_text_color"
         android:textSize="@dimen/player_file_text_detail_view_title_text_size"/>
 
-    <com.strato.hidrive.stylized_view.StylizedTextView
+    <TextView
         android:id="@+id/tvSubtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<com.strato.hidrive.stylized_view.StylizedTextView
-    android:id="@+id/stylizedButton"
-    style="@style/MoreMenuItem"
-    xmlns:android="http://schemas.android.com/apk/res/android"/>

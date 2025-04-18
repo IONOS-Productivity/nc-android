@@ -3,7 +3,6 @@ package com.ionos.player.di
 import androidx.media3.common.util.UnstableApi
 import com.ionos.player.NCMultiplePlaybackSettings
 import com.ionos.player.activity.IonosPlayerActivity
-import com.ionos.player.cab.PlayerCABStrategyProviderImpl
 import com.ionos.player.cache.InMemoryPlayerSourceInfoCache
 import com.ionos.player.cache.PlayerPathProviderImpl
 import com.ionos.player.cache.PlayerSourceInfoCache
@@ -20,12 +19,10 @@ import com.ionos.player.transformation.FileInfoToMimetypeTransformationImpl
 import com.ionos.player.transformation.FileInfoToStringSizeTransformationImpl
 import com.ionos.player.transformation.FileInfoToUriTransformationImpl
 import com.ionos.player.transformation.MediaItemToDataSourceFactoryTransformationImpl
-import com.ionos.player.transformation.PlayerFileInfoToExifInfoProviderTransformationImpl
 import com.ionos.player.util.PlayerLocaleProviderImpl
 import com.strato.hidrive.player.PlayerMultiplePlaybackSettings
 import com.strato.hidrive.player.cache.PlayerPathProvider
 import com.strato.hidrive.player.chromecast.PlayerChromecastModel
-import com.strato.hidrive.player.di.PlayerExifInfoViewDependencies
 import com.strato.hidrive.player.di.PlayerModule
 import com.strato.hidrive.player.di.PlayerModule.Companion.PLAYER_CACHE_SIZE_QUALIFIER
 import com.strato.hidrive.player.image_loading.PlayerImageLoader
@@ -44,11 +41,7 @@ import com.strato.hidrive.player.transformation.FileInfoToMimetypeTransformation
 import com.strato.hidrive.player.transformation.FileInfoToStringSizeTransformation
 import com.strato.hidrive.player.transformation.FileInfoToUriTransformation
 import com.strato.hidrive.player.transformation.MediaItemToDataSourceFactoryTransformation
-import com.strato.hidrive.player.transformation.PlayerFileInfoToExifInfoProviderTransformation
 import com.strato.hidrive.player.util.PlayerLocaleProvider
-import com.strato.hidrive.player.views.PlayerCABStrategyProvider
-import com.strato.hidrive.views.contextbar.toolbar.views.ToolbarItemViewFactory
-import com.strato.hidrive.views.contextbar.toolbar.views.ToolbarItemViewFactoryImpl
 import com.viseven.develop.player.interfaces.PlayerExceptionMessageProvider
 import dagger.Binds
 import dagger.Module
@@ -93,12 +86,6 @@ abstract class NCPlayerModule {
         fun providePlayerChromecastModel(
         ): Optional<PlayerChromecastModel> {
             return Optional.empty()
-        }
-
-        @Provides
-        @Singleton
-        fun provideToolbarItemViewFactory(): ToolbarItemViewFactory{
-            return ToolbarItemViewFactoryImpl()
         }
     }
 
@@ -165,21 +152,6 @@ abstract class NCPlayerModule {
     abstract fun bindFileBeingProcessedPredicate(
         predicate: FileBeingProcessedPredicateImpl
     ): FileBeingProcessedPredicate
-
-    @Binds
-    abstract fun bindPlayerCABStrategyProvider(
-        provider: PlayerCABStrategyProviderImpl
-    ): PlayerCABStrategyProvider
-
-    @Binds
-    abstract fun bindPlayerFileInfoToExifInfoProviderTransformation(
-        transformation: PlayerFileInfoToExifInfoProviderTransformationImpl,
-    ): PlayerFileInfoToExifInfoProviderTransformation
-
-    @Binds
-    abstract fun bindExifInfoViewDependencies(
-        impl: PlayerExifInfoViewDependenciesImpl
-    ): PlayerExifInfoViewDependencies
 
     @Binds
     abstract fun bindPlayerMessageBuilderFactory(

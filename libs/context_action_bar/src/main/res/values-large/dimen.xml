@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <dimen name="contextbar_navigation_bar_context_button_left_right_margin">9dp</dimen>
-    <dimen name="contextbar_more_popup_top_padding">16dp</dimen>
-    <dimen name="contextbar_more_popup_right_padding">16dp</dimen>
-    <dimen name="contextbar_navigation_bar_height">64dp</dimen>
-    <dimen name="contextbar_cab_buttons_place_margin_right">0dp</dimen>
-
-</resources>

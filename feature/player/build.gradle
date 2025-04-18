@@ -41,9 +41,6 @@ android {
 
 dependencies {
     api project(':libs:playerCore')
-    api project(':libs:exif_info')
-    api project(':libs:context_action_bar')
-    api project(':libs:stylizedView')
 
     implementation "androidx.core:core-ktx:$androidx_core"
     implementation "androidx.appcompat:appcompat:$appCompatVersion"

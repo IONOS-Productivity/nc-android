@@ -15,7 +15,7 @@
 		android:paddingLeft="@dimen/player_full_screen_audio_player_progress_panel_padding"
 		android:paddingRight="@dimen/player_full_screen_audio_player_progress_panel_padding">
 
-		<com.strato.hidrive.stylized_view.StylizedTextView
+		<TextView
 			android:id="@+id/tvElapsed"
 			style="@style/FullScreenAudioPlayerTimeTextViewStyle"/>
 
@@ -30,7 +30,7 @@
 			android:max="100"
 			android:progress="0"/>
 
-		<com.strato.hidrive.stylized_view.StylizedTextView
+		<TextView
 			android:id="@+id/tvTotalTime"
 			style="@style/FullScreenAudioPlayerTimeTextViewStyle"/>
 
