@@ -1,7 +1,6 @@
 package com.ionos.player.message
 
 import android.content.Context
-import com.strato.hidrive.player.message.PlayerMessageBuilderFactory
 import javax.inject.Inject
 
 class PlayerMessageBuilderFactoryImpl @Inject constructor(): PlayerMessageBuilderFactory {

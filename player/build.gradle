@@ -9,7 +9,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
 android {
-    namespace 'com.strato.hidrive.player'
+    namespace 'com.ionos.player'
 
     defaultConfig {
         compileSdk 34

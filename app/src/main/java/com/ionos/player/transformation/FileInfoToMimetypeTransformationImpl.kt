@@ -1,8 +1,7 @@
 package com.ionos.player.transformation
 
 import com.ionos.player.transformation.oc_file.PlayerFileInfoToOCFileTransformation
-import com.strato.hidrive.player.domain.PlayerFileInfo
-import com.strato.hidrive.player.transformation.FileInfoToMimetypeTransformation
+import com.ionos.player.domain.PlayerFileInfo
 import javax.inject.Inject
 
 class FileInfoToMimetypeTransformationImpl @Inject constructor(

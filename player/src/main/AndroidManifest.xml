@@ -7,7 +7,7 @@
     <application>
 
         <service
-            android:name="com.viseven.develop.media3.PlaybackService"
+            android:name=".media3.PlaybackService"
             android:exported="false"
             android:foregroundServiceType="mediaPlayback">
             <intent-filter>

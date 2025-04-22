@@ -3,7 +3,7 @@ package com.ionos.player.transformation.oc_file
 import com.ionos.player.NeighborFilesTypes
 import com.owncloud.android.datamodel.OCFile
 import com.owncloud.android.utils.MimeTypeUtil
-import com.strato.hidrive.player.transformation.PlayerTransformation
+import com.ionos.player.transformation.PlayerTransformation
 import javax.inject.Inject
 
 class OCFileToNeighborFilesTypesTransformation @Inject constructor(

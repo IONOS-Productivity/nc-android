@@ -3,9 +3,8 @@ package com.ionos.player.transformation
 import android.content.Context
 import android.content.Intent
 import com.ionos.player.activity.IonosPlayerActivity
-import com.strato.hidrive.player.domain.PlayerFileInfo
-import com.strato.hidrive.player.predicate.IsVideoPredicate
-import com.strato.hidrive.player.transformation.FileInfoToIntentTransformation
+import com.ionos.player.domain.PlayerFileInfo
+import com.ionos.player.predicate.IsVideoPredicate
 import javax.inject.Inject
 
 class FileInfoToIntentTransformationImpl @Inject constructor(

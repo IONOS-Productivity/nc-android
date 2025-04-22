@@ -18,7 +18,7 @@
             android:layout_marginTop="@dimen/player_full_screen_audio_player_album_photo_margin_top"
             android:src="@drawable/ic_player_audio_player_album_cover"/>
 
-        <com.strato.hidrive.player.views.player.view.FileTextDetailView
+        <com.ionos.player.views.player.view.FileTextDetailView
             android:id="@+id/fileDetailView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

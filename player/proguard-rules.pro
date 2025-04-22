@@ -15,13 +15,13 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
--keep class com.viseven.develop.player.volume.Volume { *; }
--keep class com.viseven.develop.multipleplayer.multiple_playback_error_strategy.SwitchToNextSourceMultiplePlaybackErrorStrategy { *; }
--keep class com.viseven.develop.player.video_view_setter.MediaPlayerVideoViewSetter { *; }
--keep class com.viseven.develop.multipleplayermvp.settings.InMemoryMultiplePlaybackSettings { *; }
--keep class com.viseven.develop.multipleplayer.multiple_playback_error_strategy.DoNotSwitchToNextSourceMultiplePlaybackErrorStrategy { *; }
--keep class com.viseven.develop.multipleplayer.player_source_release_strategy.DoNotReleaseSourceInfoReleaseStrategy { *; }
--keep class com.viseven.develop.multipleplayermvp.presenter.CompositeMultiplePlayerBasePresenter { *; }
+-keep class com.ionos.player.player.volume.Volume { *; }
+-keep class com.ionos.player.multipleplayer.multiple_playback_error_strategy.SwitchToNextSourceMultiplePlaybackErrorStrategy { *; }
+-keep class com.ionos.player.player.video_view_setter.MediaPlayerVideoViewSetter { *; }
+-keep class com.ionos.player.multipleplayermvp.settings.InMemoryMultiplePlaybackSettings { *; }
+-keep class com.ionos.player.multipleplayer.multiple_playback_error_strategy.DoNotSwitchToNextSourceMultiplePlaybackErrorStrategy { *; }
+-keep class com.ionos.player.multipleplayer.player_source_release_strategy.DoNotReleaseSourceInfoReleaseStrategy { *; }
+-keep class com.ionos.player.multipleplayermvp.presenter.CompositeMultiplePlayerBasePresenter { *; }
 
 # This prevents the names of native methods from being obfuscated.
 -keepclasseswithmembernames class * { native <methods>; }

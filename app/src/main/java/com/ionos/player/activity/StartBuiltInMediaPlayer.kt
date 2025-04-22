@@ -8,10 +8,10 @@ import com.ionos.player.cache.PlayerSourceInfoCache
 import com.ionos.player.transformation.oc_file.OCFileToNeighborFilesTypesTransformation
 import com.ionos.player.transformation.oc_file.OCFileToPlayerFileInfoTransformation
 import com.owncloud.android.datamodel.OCFile
-import com.strato.hidrive.player.domain.PlayerFileInfo
-import com.strato.hidrive.player.player_mode.PlayerMode
-import com.strato.hidrive.player.player_source_release_strategy.DoNotReleaseIfExistsSourceInfoReleaseStrategy
-import com.viseven.develop.multipleplayermvp.interfaces.MultiplePlayer
+import com.ionos.player.domain.PlayerFileInfo
+import com.ionos.player.player_mode.PlayerMode
+import com.ionos.player.player_source_release_strategy.DoNotReleaseIfExistsSourceInfoReleaseStrategy
+import com.ionos.player.multipleplayermvp.interfaces.MultiplePlayer
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject

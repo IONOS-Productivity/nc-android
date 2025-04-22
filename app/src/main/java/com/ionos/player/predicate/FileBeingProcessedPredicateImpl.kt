@@ -1,7 +1,6 @@
 package com.ionos.player.predicate
 
-import com.strato.hidrive.player.domain.PlayerFileInfo
-import com.strato.hidrive.player.predicate.FileBeingProcessedPredicate
+import com.ionos.player.domain.PlayerFileInfo
 import javax.inject.Inject
 
 class FileBeingProcessedPredicateImpl @Inject constructor(): FileBeingProcessedPredicate {

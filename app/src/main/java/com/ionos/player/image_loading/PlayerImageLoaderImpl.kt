@@ -1,8 +1,6 @@
 package com.ionos.player.image_loading
 
-import com.strato.hidrive.player.domain.PlayerFileInfo
-import com.strato.hidrive.player.image_loading.PlayerImageLoader
-import com.strato.hidrive.player.image_loading.PlayerImageRequestBuilder
+import com.ionos.player.domain.PlayerFileInfo
 import javax.inject.Inject
 
 class PlayerImageLoaderImpl @Inject constructor(): PlayerImageLoader {

@@ -1,7 +1,7 @@
 package com.ionos.player.cache
 
 import com.owncloud.android.datamodel.OCFile
-import com.strato.hidrive.player.domain.PlayerFileInfo
+import com.ionos.player.domain.PlayerFileInfo
 import java.util.concurrent.ConcurrentHashMap
 import javax.inject.Inject
 

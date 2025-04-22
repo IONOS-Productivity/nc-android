@@ -1,6 +1,6 @@
 package com.ionos.player.message
 
-import com.viseven.develop.player.interfaces.PlayerExceptionMessageProvider
+import com.ionos.player.player.interfaces.PlayerExceptionMessageProvider
 import javax.inject.Inject
 
 class NCPlayerExceptionMessageProvider @Inject constructor(): PlayerExceptionMessageProvider {

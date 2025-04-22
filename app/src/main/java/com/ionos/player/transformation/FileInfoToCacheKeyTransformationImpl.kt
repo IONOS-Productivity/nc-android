@@ -1,7 +1,6 @@
 package com.ionos.player.transformation
 
-import com.strato.hidrive.player.domain.PlayerFileInfo
-import com.strato.hidrive.player.transformation.FileInfoToCacheKeyTransformation
+import com.ionos.player.domain.PlayerFileInfo
 import javax.inject.Inject
 
 class FileInfoToCacheKeyTransformationImpl @Inject constructor(): FileInfoToCacheKeyTransformation {

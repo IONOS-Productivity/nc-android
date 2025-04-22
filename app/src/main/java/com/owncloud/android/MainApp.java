@@ -89,7 +89,7 @@ import com.owncloud.android.utils.ReceiversHelper;
 import com.owncloud.android.utils.SecurityUtils;
 import com.owncloud.android.utils.appConfig.AppConfigManager;
 import com.owncloud.android.utils.theme.ViewThemeUtils;
-import com.strato.hidrive.player.di.PlayerComponentProvider;
+import com.ionos.player.di.PlayerComponentProvider;
 
 import org.conscrypt.Conscrypt;
 import org.greenrobot.eventbus.EventBus;

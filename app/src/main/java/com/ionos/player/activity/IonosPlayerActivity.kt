@@ -6,14 +6,14 @@ import android.os.Bundle
 import com.nextcloud.client.di.Injectable
 import com.owncloud.android.datamodel.OCFile
 import com.owncloud.android.ui.activity.BaseActivity
-import com.strato.hidrive.player.domain.PlayerFileInfo
-import com.strato.hidrive.player.util.SystemVersion
-import com.strato.hidrive.player.views.AudioPlayerView
-import com.strato.hidrive.player.views.VideoPlayerView
-import com.strato.hidrive.player.views.player.fragment.SurfaceInvalidator
-import com.strato.hidrive.player.views.player.view.PlayerCompatible
-import com.strato.hidrive.player.views.player.view.PlayerView
-import com.strato.hidrive.player.views.player.view.PlayerViewContainer
+import com.ionos.player.domain.PlayerFileInfo
+import com.ionos.player.util.SystemVersion
+import com.ionos.player.views.AudioPlayerView
+import com.ionos.player.views.VideoPlayerView
+import com.ionos.player.views.player.fragment.SurfaceInvalidator
+import com.ionos.player.views.player.view.PlayerCompatible
+import com.ionos.player.views.player.view.PlayerView
+import com.ionos.player.views.player.view.PlayerViewContainer
 
 class IonosPlayerActivity : BaseActivity(), PlayerViewContainer, PlayerCompatible, Injectable {
 

@@ -1,7 +1,5 @@
 package com.ionos.player
 
-import com.strato.hidrive.player.PlayerMultiplePlaybackSettings
-
 class NCMultiplePlaybackSettings(
     shouldRepeatAll: Boolean,
 ) : PlayerMultiplePlaybackSettings(shouldRepeatAll) {

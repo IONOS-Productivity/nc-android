@@ -26,7 +26,7 @@ import com.owncloud.android.MainApp;
 import com.owncloud.android.media.MediaControlView;
 import com.owncloud.android.ui.ThemeableSwitchPreference;
 import com.owncloud.android.ui.whatsnew.ProgressIndicator;
-import com.strato.hidrive.player.di.PlayerComponent;
+import com.ionos.player.di.PlayerComponent;
 
 import javax.inject.Singleton;
 
