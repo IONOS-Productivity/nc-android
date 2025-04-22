@@ -1,6 +1,7 @@
 package com.ionos.player.di
 
 import android.content.Context
+import com.ionos.player.media3.PlaybackServiceComponent
 import com.ionos.player.views.AudioPlayerView
 import com.ionos.player.views.VideoPlayerView
 import com.ionos.player.views.player.fragment.AudioPlayerSourceFragment
@@ -9,7 +10,7 @@ import com.ionos.player.views.player.view.FileTextDetailView
 import com.ionos.player.views.player.view.PlayerControlView
 import com.ionos.player.views.player.view.PlayerSourcesView
 
-interface PlayerComponent {
+interface PlayerComponent : PlaybackServiceComponent {
 
 	companion object{
 		fun from(from: Context?): PlayerComponent {

@@ -9,7 +9,6 @@ import com.ionos.player.transformation.oc_file.OCFileToNeighborFilesTypesTransfo
 import com.ionos.player.transformation.oc_file.OCFileToPlayerFileInfoTransformation
 import com.owncloud.android.datamodel.OCFile
 import com.ionos.player.domain.PlayerFileInfo
-import com.ionos.player.player_mode.PlayerMode
 import com.ionos.player.player_source_release_strategy.DoNotReleaseIfExistsSourceInfoReleaseStrategy
 import com.ionos.player.multipleplayermvp.interfaces.MultiplePlayer
 import dagger.assisted.Assisted
@@ -33,7 +32,7 @@ class StartBuiltInMediaPlayer @AssistedInject constructor(
 	@Assisted private val input: OpenFileConfig,
 	@Assisted private val options: ActivityOptionsCompat,
 	@Assisted private val activityLauncher: ActivityResultLauncher<MediaPlayerResultContract.Input>?,
-    private val playerModel: MultiplePlayer.Model<PlayerFileInfo, PlayerMode.Mode>,
+    private val playerModel: MultiplePlayer.Model<PlayerFileInfo>,
     private val sourceInfoCache: PlayerSourceInfoCache,
     private val toNeighborFilesTypes: OCFileToNeighborFilesTypesTransformation,
 	private val toPlayerFileInfo: OCFileToPlayerFileInfoTransformation,
@@ -48,7 +47,7 @@ class StartBuiltInMediaPlayer @AssistedInject constructor(
 			return Completable.error(typeError)
 
 		return Completable
-			.create { playerModel.start(PlayerMode.Mode.REGULAR, it::onComplete, it::onError) }
+			.create { playerModel.start(it::onComplete, it::onError) }
             .doOnComplete(sourceInfoCache::clear)
             .andThen(Completable.fromAction { launchPlayer(input.fileInfo, type) })
 			.andThen(createObservable(input, type))

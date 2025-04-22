@@ -11,12 +11,10 @@ import static com.ionos.player.player_mode.PlayerMode.Mode.REGULAR;
 public class PlayerModePresenter implements PlayerMode.Presenter {
 
 	private final PlayerMode.Model model;
-	private final SwitchModeStrategy playerModeStrategy;
 	private PlayerMode.View view = new NullPlayerModeView();
 
-	public PlayerModePresenter(PlayerMode.Model model, SwitchModeStrategy playerModeStrategy) {
+	public PlayerModePresenter(PlayerMode.Model model) {
 		this.model = model;
-		this.playerModeStrategy = playerModeStrategy;
 	}
 
 	@Override
@@ -49,7 +47,6 @@ public class PlayerModePresenter implements PlayerMode.Presenter {
 	private final PlayerMode.Model.Listener modelListener = new PlayerMode.Model.Listener() {
 		@Override
 		public void onModeChanged(PlayerMode.Mode mode) {
-			playerModeStrategy.doOnSwitchToMode(mode);
 			if (mode == REGULAR) {
 				view.switchToRegularMode();
 			} else if (mode == CHROMECAST) {

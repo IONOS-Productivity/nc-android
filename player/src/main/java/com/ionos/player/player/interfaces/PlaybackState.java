@@ -23,7 +23,6 @@ public class PlaybackState<SourceInfo> implements Serializable {
 	public final int currentTimeInMilliseconds;
 	@Nullable
 	private final Integer maxTimeInMilliseconds;
-	public final boolean repeat;
 	public final SourceInfo sourceInfo;
 	public final Optional<VideoSize> videoSize;
 
@@ -35,24 +34,12 @@ public class PlaybackState<SourceInfo> implements Serializable {
 			State state,
 			int currentTimeInMilliseconds,
 			Optional<Integer> maxTimeInMilliseconds,
-			boolean repeat,
 			SourceInfo sourceInfo,
 			Optional<VideoSize> videoSize) {
 		this.state = state;
 		this.currentTimeInMilliseconds = currentTimeInMilliseconds;
 		this.maxTimeInMilliseconds = maxTimeInMilliseconds.orElse(null);
-		this.repeat = repeat;
 		this.sourceInfo = sourceInfo;
 		this.videoSize = videoSize;
-	}
-
-	public PlaybackState<SourceInfo> withRepeat(boolean repeat) {
-		return new PlaybackState<>(
-				this.state,
-				this.currentTimeInMilliseconds,
-				getMaxTimeInMilliseconds(),
-				repeat,
-				this.sourceInfo,
-				this.videoSize);
 	}
 }

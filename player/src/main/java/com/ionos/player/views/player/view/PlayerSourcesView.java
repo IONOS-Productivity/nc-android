@@ -8,7 +8,6 @@ import android.widget.LinearLayout;
 import com.ionos.player.R;
 import com.ionos.player.di.PlayerComponent;
 import com.ionos.player.domain.PlayerFileInfo;
-import com.ionos.player.player_mode.PlayerMode;
 import com.ionos.player.player_source_release_strategy.DoNotReleaseIfExistsSourceInfoReleaseStrategy;
 import com.ionos.player.util.Cast;
 import com.ionos.player.views.infinite_view_pager.InfiniteViewPager;
@@ -33,7 +32,7 @@ import androidx.viewpager.widget.ViewPager;
 public class PlayerSourcesView extends LinearLayout {
 
 	@Inject
-	MultiplePlayer.Model<PlayerFileInfo, PlayerMode.Mode> playerModel;
+	MultiplePlayer.Model<PlayerFileInfo> playerModel;
 	@Inject
 	PlayerExceptionMessageProvider playerExceptionMessageProvider;
 

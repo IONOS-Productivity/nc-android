@@ -16,19 +16,17 @@ import com.ionos.player.player.interfaces.PlaybackState
 import com.ionos.player.player.interfaces.State
 import com.ionos.player.player.interfaces.VideoSize
 
-class PlaybackStateFactory<SourceInfo, Mode>(
+class PlaybackStateFactory<SourceInfo>(
 	private val sourceInfoStore: SourceInfoStore<SourceInfo>,
-	private val playbackSettings: MultiplePlaybackSettings<Mode>,
+	private val playbackSettings: MultiplePlaybackSettings,
 ) {
 
-	fun create(player: Player?): Optional<MultiplePlaybackState<SourceInfo, Mode>> {
+	fun create(player: Player?): Optional<MultiplePlaybackState<SourceInfo>> {
 		val state = MultiplePlaybackState(
-			sourceInfoStore.getSourceInfos(),
 			sourceInfoStore.getSourceInfos(),
 			getCurrentPlaybackState(player),
 			playbackSettings.isRepeatSingle,
 			playbackSettings.isShuffle,
-			playbackSettings.mode,
 		)
 		return Optional.of(state)
 	}
@@ -46,7 +44,6 @@ class PlaybackStateFactory<SourceInfo, Mode>(
 		mapState(),
 		currentPosition.toInt(),
 		Optional.of(duration.toInt()),
-		playbackSettings.isRepeatSingle,
 		currentSourceInfo,
 		mapVideoSize(),
 	)

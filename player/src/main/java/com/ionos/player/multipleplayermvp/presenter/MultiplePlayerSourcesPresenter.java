@@ -24,18 +24,18 @@ import java.util.List;
  * User: zuzik
  * Date: 6/4/16
  */
-public class MultiplePlayerSourcesPresenter<SourceInfo, Mode> implements MultiplePlayer.SourcesPresenter<SourceInfo> {
+public class MultiplePlayerSourcesPresenter<SourceInfo> implements MultiplePlayer.SourcesPresenter<SourceInfo> {
 
-	private final MultiplePlayer.Model<SourceInfo, Mode> model;
+	private final MultiplePlayer.Model<SourceInfo> model;
 	private final ExceptionToMessageTransformation exceptionToMessageTransformation;
 	private MultiplePlayer.SourcesView<SourceInfo> view = NullMultiplePlayerSourcesView.getInstance();
 
-	private final MultiplePlayerPresenterDestroyStrategy<SourceInfo, Mode> destroyStrategy;
+	private final MultiplePlayerPresenterDestroyStrategy<SourceInfo> destroyStrategy;
 	private final SourceInfoReleaseStrategy<SourceInfo> releaseStrategy;
 
 	public MultiplePlayerSourcesPresenter(
-			MultiplePlayer.Model<SourceInfo, Mode> model,
-			MultiplePlayerPresenterDestroyStrategy<SourceInfo, Mode> destroyStrategy,
+			MultiplePlayer.Model<SourceInfo> model,
+			MultiplePlayerPresenterDestroyStrategy<SourceInfo> destroyStrategy,
 			SourceInfoReleaseStrategy<SourceInfo> releaseStrategy,
 			PlayerExceptionMessageProvider exceptionMessageProvider) {
 		this.model = model;
@@ -80,7 +80,7 @@ public class MultiplePlayerSourcesPresenter<SourceInfo, Mode> implements Multipl
 		updateView(this.model.getState());
 	}
 
-	private void updateView(Optional<MultiplePlaybackState<SourceInfo, Mode>> state) {
+	private void updateView(Optional<MultiplePlaybackState<SourceInfo>> state) {
 		List<SourceInfo> sources = new ArrayList<>();
 
 		if (state.isPresent()) {
@@ -94,9 +94,9 @@ public class MultiplePlayerSourcesPresenter<SourceInfo, Mode> implements Multipl
 		}
 	}
 
-	private final MultiplePlayer.Model.Listener<SourceInfo, Mode> listener = new MultiplePlayer.Model.Listener<SourceInfo, Mode>() {
+	private final MultiplePlayer.Model.Listener<SourceInfo> listener = new MultiplePlayer.Model.Listener<>() {
 		@Override
-		public void onUpdate(MultiplePlaybackState<SourceInfo, Mode> state) {
+		public void onUpdate(MultiplePlaybackState<SourceInfo> state) {
 			updateView();
 		}
 

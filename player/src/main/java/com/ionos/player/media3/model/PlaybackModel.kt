@@ -10,7 +10,6 @@ package com.ionos.player.media3.model
 import android.content.Context
 import androidx.media3.session.MediaController
 import com.annimon.stream.Optional
-import com.ionos.player.media3.PlaybackServiceComponent
 import com.ionos.player.media3.controller.MediaControllerFactory
 import com.ionos.player.media3.controller.MediaControllerProvider
 import com.ionos.player.media3.controller.indexOfFirst
@@ -18,7 +17,7 @@ import com.ionos.player.media3.controller.setRepeatMode
 import com.ionos.player.media3.controller.updateMediaItems
 import com.ionos.player.media3.item.MediaIdFactory
 import com.ionos.player.media3.item.MediaItemFactory
-import com.ionos.player.media3.session.MediaSessionCommandManager
+import com.ionos.player.media3.session.MediaSessionHolder
 import com.ionos.player.media3.store.SourceInfoStore
 import com.ionos.player.multipleplayer.interfaces.MultiplePlaybackErrorStrategy
 import com.ionos.player.multipleplayer.interfaces.MultiplePlaybackState
@@ -35,16 +34,15 @@ import com.ionos.player.player.volume.IVolumeController
 import com.ionos.player.player.volume.VolumeController
 import javax.inject.Inject
 
-class PlaybackModel<SourceInfo, Mode> @Inject constructor(
+class PlaybackModel<SourceInfo> @Inject constructor(
 	private val context: Context,
+	private val mediaSessionHolder: MediaSessionHolder,
 	private val mediaIdFactory: MediaIdFactory<SourceInfo>,
 	private val mediaItemFactory: MediaItemFactory<SourceInfo>,
 	private val sourceInfoStore: SourceInfoStore<SourceInfo>,
-	private val playbackSettings: MultiplePlaybackSettings<Mode>,
-	private val sessionCommandManager: MediaSessionCommandManager<Mode>,
-	private val playbackServiceComponentFactory: PlaybackServiceComponent.Factory,
-	private val playbackErrorStrategy: MultiplePlaybackErrorStrategy<SourceInfo, Mode>,
-) : MultiplePlayer.Model<SourceInfo, Mode>,
+	private val playbackSettings: MultiplePlaybackSettings,
+	private val playbackErrorStrategy: MultiplePlaybackErrorStrategy<SourceInfo>,
+) : MultiplePlayer.Model<SourceInfo>,
 	IVolumeController by VolumeController(context) {
 
 	companion object {
@@ -52,7 +50,7 @@ class PlaybackModel<SourceInfo, Mode> @Inject constructor(
 	}
 
 	private val stateFactory = PlaybackStateFactory(sourceInfoStore, playbackSettings)
-	private val compositeListener = CompositeListener<SourceInfo, Mode>()
+	private val compositeListener = CompositeListener<SourceInfo>()
 
 	private val checkProgressPeriodicAction = PeriodicAction(CHECK_PROGRESS_INTERVAL) {
 		state.ifPresent(compositeListener::onUpdate)
@@ -77,13 +75,7 @@ class PlaybackModel<SourceInfo, Mode> @Inject constructor(
 	private val controllerProvider = MediaControllerProvider(controllerFactory)
 	private val controller: MediaController? by controllerProvider
 
-	init {
-		PlaybackServiceComponent.FactoryProvider.initialize(playbackServiceComponentFactory)
-	}
-
-	override fun start(mode: Mode, onSuccess: Action, onError: ParamAction<Throwable>) {
-		switchToMode(mode)
-
+	override fun start(onSuccess: Action, onError: ParamAction<Throwable>) {
 		if (controllerProvider.isInitialized) {
 			onSuccess.execute()
 
@@ -131,9 +123,10 @@ class PlaybackModel<SourceInfo, Mode> @Inject constructor(
 
 	override fun release() {
 		controllerProvider.release()
+		mediaSessionHolder.release()
 	}
 
-	override fun getState(): Optional<MultiplePlaybackState<SourceInfo, Mode>> {
+	override fun getState(): Optional<MultiplePlaybackState<SourceInfo>> {
 		return stateFactory.create(controller)
 	}
 
@@ -143,11 +136,11 @@ class PlaybackModel<SourceInfo, Mode> @Inject constructor(
 		}
 	}
 
-	override fun addListener(listener: MultiplePlayer.Model.Listener<SourceInfo, Mode>) {
+	override fun addListener(listener: MultiplePlayer.Model.Listener<SourceInfo>) {
 		compositeListener.addListener(listener)
 	}
 
-	override fun removeListener(listener: MultiplePlayer.Model.Listener<SourceInfo, Mode>) {
+	override fun removeListener(listener: MultiplePlayer.Model.Listener<SourceInfo>) {
 		compositeListener.removeListener(listener)
 	}
 
@@ -212,16 +205,6 @@ class PlaybackModel<SourceInfo, Mode> @Inject constructor(
 				seekToDefaultPosition(mediaItemIndex)
 				prepare()
 			}
-		}
-	}
-
-	override fun switchToMode(mode: Mode) {
-		if (playbackSettings.mode != mode) {
-			playbackSettings.mode = mode
-			controller?.sendCustomCommand(
-				sessionCommandManager.switchToModeCommand,
-				sessionCommandManager.createSwitchToModeArgs(mode),
-			)
 		}
 	}
 

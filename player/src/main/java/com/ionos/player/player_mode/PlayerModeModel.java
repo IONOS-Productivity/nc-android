@@ -1,7 +1,7 @@
 package com.ionos.player.player_mode;
 
 import com.ionos.player.chromecast.PlayerChromecastModel;
-import com.ionos.player.chromecast.PlayerModelState;
+import com.ionos.player.chromecast.PlayerChromecastModelState;
 
 import androidx.annotation.NonNull;
 
@@ -40,7 +40,7 @@ public class PlayerModeModel implements PlayerMode.Model {
 		this.listener = listener == null ? new NullPlayerModeModelListener() : listener;
 	}
 
-	private void updateMode(PlayerModelState state) {
+	private void updateMode(PlayerChromecastModelState state) {
 		PlayerMode.Mode newMode = getPlayerMode(state);
 		if (this.mode != newMode) {
 			this.mode = newMode;
@@ -49,7 +49,7 @@ public class PlayerModeModel implements PlayerMode.Model {
 	}
 
 	@NonNull
-	private PlayerMode.Mode getPlayerMode(PlayerModelState state) {
+	private PlayerMode.Mode getPlayerMode(PlayerChromecastModelState state) {
 		return state.getConnected() ?
 				CHROMECAST :
 				REGULAR;
@@ -64,7 +64,7 @@ public class PlayerModeModel implements PlayerMode.Model {
 
 	private final PlayerChromecastModel.Listener chromecastListener = new PlayerChromecastModel.Listener() {
 		@Override
-		public void onUpdate(PlayerModelState state) {
+		public void onUpdate(PlayerChromecastModelState state) {
 			updateMode(state);
 		}
 

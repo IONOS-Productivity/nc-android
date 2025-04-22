@@ -14,9 +14,9 @@ import com.ionos.player.multipleplayermvp.interfaces.MultiplePlayerPresenterDest
  * User: zuzik
  * Date: 7/4/16
  */
-public class DoNothingMultiplePlayerPresenterDestroyStrategy<SourceInfo, Mode> implements MultiplePlayerPresenterDestroyStrategy<SourceInfo, Mode> {
+public class DoNothingMultiplePlayerPresenterDestroyStrategy<SourceInfo> implements MultiplePlayerPresenterDestroyStrategy<SourceInfo> {
 	@Override
-	public void onDestroy(MultiplePlayer.Model<SourceInfo, Mode> model) {
-		
+	public void onDestroy(MultiplePlayer.Model<SourceInfo> model) {
+
 	}
 }

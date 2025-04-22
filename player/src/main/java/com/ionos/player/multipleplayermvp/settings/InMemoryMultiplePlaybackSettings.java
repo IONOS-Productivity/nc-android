@@ -13,15 +13,13 @@ import com.ionos.player.multipleplayermvp.interfaces.MultiplePlaybackSettings;
  * User: zuzik
  * Date: 7/7/16
  */
-public class InMemoryMultiplePlaybackSettings<Mode> implements MultiplePlaybackSettings<Mode> {
+public class InMemoryMultiplePlaybackSettings implements MultiplePlaybackSettings {
 
 	private final boolean shouldRepeatAll;
 	private boolean repeatSingle;
 	private boolean shuffle;
-	private Mode mode;
 
-	public InMemoryMultiplePlaybackSettings(Mode mode, boolean shouldRepeatAll) {
-		this.mode = mode;
+	public InMemoryMultiplePlaybackSettings(boolean shouldRepeatAll) {
 		this.shouldRepeatAll = shouldRepeatAll;
 	}
 
@@ -64,15 +62,5 @@ public class InMemoryMultiplePlaybackSettings<Mode> implements MultiplePlaybackS
 	@Override
 	public void doNotShuffle() {
 		this.shuffle = false;
-	}
-
-	@Override
-	public Mode getMode() {
-		return this.mode;
-	}
-
-	@Override
-	public void setMode(Mode mode) {
-		this.mode = mode;
 	}
 }

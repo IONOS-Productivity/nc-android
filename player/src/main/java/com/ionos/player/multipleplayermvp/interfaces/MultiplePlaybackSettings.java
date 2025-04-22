@@ -11,7 +11,7 @@ package com.ionos.player.multipleplayermvp.interfaces;
  * User: zuzik
  * Date: 7/7/16
  */
-public interface MultiplePlaybackSettings<Mode> {
+public interface MultiplePlaybackSettings {
 
 	RepeatMode getRepeatMode();
 
@@ -26,10 +26,6 @@ public interface MultiplePlaybackSettings<Mode> {
 	void shuffle();
 
 	void doNotShuffle();
-
-	Mode getMode();
-
-	void setMode(Mode mode);
 
 	enum RepeatMode {
 		SINGLE,

@@ -18,13 +18,13 @@ import java.util.List;
  * User: zuzik
  * Date: 6/4/16
  */
-public class MultiplePlayerErrorPresenter<SourceInfo, Mode> implements MultiplePlayer.ErrorPresenter<SourceInfo> {
+public class MultiplePlayerErrorPresenter<SourceInfo> implements MultiplePlayer.ErrorPresenter<SourceInfo> {
 	private MultiplePlayer.ErrorView errorView = NullMultiplePlayerErrorView.getInstance();
-	private final MultiplePlayer.Model<SourceInfo, Mode> model;
+	private final MultiplePlayer.Model<SourceInfo> model;
 	private final Transformation<Throwable, String> exceptionToMessageTransformation;
 
 	public MultiplePlayerErrorPresenter(
-			MultiplePlayer.Model<SourceInfo, Mode> model,
+			MultiplePlayer.Model<SourceInfo> model,
 			Transformation<Throwable, String> exceptionToMessageTransformation) {
 		this.model = model;
 		this.exceptionToMessageTransformation = exceptionToMessageTransformation;
@@ -60,9 +60,9 @@ public class MultiplePlayerErrorPresenter<SourceInfo, Mode> implements MultipleP
 		this.model.removeListener(this.listener);
 	}
 
-	private final MultiplePlayer.Model.Listener<SourceInfo, Mode> listener = new MultiplePlayer.Model.Listener<SourceInfo, Mode>() {
+	private final MultiplePlayer.Model.Listener<SourceInfo> listener = new MultiplePlayer.Model.Listener<>() {
 		@Override
-		public void onUpdate(MultiplePlaybackState<SourceInfo, Mode> state) {
+		public void onUpdate(MultiplePlaybackState<SourceInfo> state) {
 
 		}
 

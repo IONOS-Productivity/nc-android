@@ -17,12 +17,12 @@ import java.util.List;
  * User: zuzik
  * Date: 6/4/16
  */
-public class MultiplePlayerHidingPresenter<SourceInfo, Mode> implements MultiplePlayer.HidingPresenter<SourceInfo> {
+public class MultiplePlayerHidingPresenter<SourceInfo> implements MultiplePlayer.HidingPresenter<SourceInfo> {
 
-	private final MultiplePlayer.Model<SourceInfo, Mode> model;
+	private final MultiplePlayer.Model<SourceInfo> model;
 	private MultiplePlayer.HidingView<SourceInfo> view = NullMultiplePlayerHidingView.getInstance();
 
-	public MultiplePlayerHidingPresenter(MultiplePlayer.Model<SourceInfo, Mode> model) {
+	public MultiplePlayerHidingPresenter(MultiplePlayer.Model<SourceInfo> model) {
 		this.model = model;
 	}
 
@@ -63,9 +63,9 @@ public class MultiplePlayerHidingPresenter<SourceInfo, Mode> implements Multiple
 		}
 	}
 
-	private final MultiplePlayer.Model.Listener<SourceInfo, Mode> listener = new MultiplePlayer.Model.Listener<SourceInfo, Mode>() {
+	private final MultiplePlayer.Model.Listener<SourceInfo> listener = new MultiplePlayer.Model.Listener<>() {
 		@Override
-		public void onUpdate(MultiplePlaybackState<SourceInfo, Mode> state) {
+		public void onUpdate(MultiplePlaybackState<SourceInfo> state) {
 			updateView();
 		}
 

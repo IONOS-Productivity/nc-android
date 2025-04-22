@@ -10,12 +10,10 @@ import com.ionos.player.chromecast.PlayerChromecastModel;
 import com.ionos.player.di.PlayerComponent;
 import com.ionos.player.domain.PlayerFileInfo;
 import com.ionos.player.player_mode.EmptyPlayerModeModel;
-import com.ionos.player.player_mode.MultiplePlayerSwitchModeStrategy;
 import com.ionos.player.player_mode.PlayerMode;
 import com.ionos.player.player_mode.PlayerModeModel;
 import com.ionos.player.player_mode.PlayerModePresenter;
 import com.ionos.player.views.player.view.FileTextDetailView;
-import com.ionos.player.multipleplayermvp.interfaces.MultiplePlayer;
 
 import java.util.Optional;
 
@@ -33,8 +31,6 @@ public class AudioPlayerSourceFragment extends Fragment {
 
 	private final static String ARGUMENT_FILE_INFO = "ARGUMENT_FILE_INFO";
 
-	@Inject
-	MultiplePlayer.Model<PlayerFileInfo, PlayerMode.Mode> playerModel;
 	@Inject
 	Optional<PlayerChromecastModel> chromecastModel;
 
@@ -65,10 +61,7 @@ public class AudioPlayerSourceFragment extends Fragment {
 		}else {
 			playerModeModel = new EmptyPlayerModeModel();
 		}
-		this.playerModePresenter = new PlayerModePresenter(
-				playerModeModel,
-				new MultiplePlayerSwitchModeStrategy(this.playerModel)
-		);
+		this.playerModePresenter = new PlayerModePresenter(playerModeModel);
 	}
 
 	@Override

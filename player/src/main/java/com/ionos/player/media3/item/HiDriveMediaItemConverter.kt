@@ -10,13 +10,24 @@ import com.ionos.player.media3.store.SourceInfoStore
 import javax.inject.Inject
 
 @UnstableApi
-class HiDriveMediaItemConverter @Inject constructor(
+class HiDriveMediaItemConverter private constructor(
 	private val sourceInfoStore: SourceInfoStore<PlayerFileInfo>,
 	private val mediaItemFactory: MediaItemFactory<PlayerFileInfo>,
 	private val castMediaItemFactory: HiDriveCastMediaItemFactory,
-) : MediaItemConverter {
+	private val delegate: MediaItemConverter,
+) : MediaItemConverter by delegate {
 
-	private val delegate = DefaultMediaItemConverter()
+	@Inject
+	constructor(
+		sourceInfoStore: SourceInfoStore<PlayerFileInfo>,
+		mediaItemFactory: MediaItemFactory<PlayerFileInfo>,
+		castMediaItemFactory: HiDriveCastMediaItemFactory,
+	) : this(
+		sourceInfoStore,
+		mediaItemFactory,
+		castMediaItemFactory,
+		DefaultMediaItemConverter(),
+	)
 
 	override fun toMediaQueueItem(mediaItem: MediaItem): MediaQueueItem {
 		val sourceInfo = sourceInfoStore.getSourceInfo(mediaItem.mediaId)

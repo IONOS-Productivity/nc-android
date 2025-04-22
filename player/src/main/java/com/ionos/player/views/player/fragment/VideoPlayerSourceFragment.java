@@ -19,7 +19,6 @@ import com.ionos.player.domain.PlayerFileInfo;
 import com.ionos.player.image_loading.PlayerImageLoader;
 import com.ionos.player.image_loading.PlayerImageLoaderOptions;
 import com.ionos.player.player_mode.EmptyPlayerModeModel;
-import com.ionos.player.player_mode.MultiplePlayerSwitchModeStrategy;
 import com.ionos.player.player_mode.PlayerMode;
 import com.ionos.player.player_mode.PlayerModeModel;
 import com.ionos.player.player_mode.PlayerModePresenter;
@@ -51,7 +50,7 @@ public class VideoPlayerSourceFragment extends Fragment {
 	private final static String ARGUMENT_FILE_INFO = "ARGUMENT_FILE_INFO";
 
 	@Inject
-	MultiplePlayer.Model<PlayerFileInfo, PlayerMode.Mode> playerModel;
+	MultiplePlayer.Model<PlayerFileInfo> playerModel;
 	@Inject
 	java.util.Optional<PlayerChromecastModel> chromecastModel;
 	@Inject
@@ -109,9 +108,7 @@ public class VideoPlayerSourceFragment extends Fragment {
 		}else {
 			this.playerModeModel = new EmptyPlayerModeModel();
 		}
-		this.playerModePresenter = new PlayerModePresenter(
-				this.playerModeModel,
-				new MultiplePlayerSwitchModeStrategy(this.playerModel));
+		this.playerModePresenter = new PlayerModePresenter(this.playerModeModel);
 		this.chromecastVideoErrorPresenter = new ChromecastVideoErrorPresenter(this.chromecastVideoErrorView, this.playerModel);
 	}
 
@@ -126,7 +123,7 @@ public class VideoPlayerSourceFragment extends Fragment {
 		this.surfaceView = content.findViewById(R.id.surfaceView);
 		this.progressBar = content.findViewById(R.id.progressBar);
 		FileTextDetailView fileTextDetailView = content.findViewById(R.id.fileDetailView);
-		MultiplePlayerVideoPresenter<PlayerFileInfo, PlayerMode.Mode> surfaceVideoViewPresenter = new MultiplePlayerVideoPresenter<>(this.playerModel, this.fileInfo);
+		MultiplePlayerVideoPresenter<PlayerFileInfo> surfaceVideoViewPresenter = new MultiplePlayerVideoPresenter<>(this.playerModel, this.fileInfo);
 		this.surfaceVideoView = new SurfaceVideoView<>(this.surfaceView, surfaceVideoViewPresenter);
 		surfaceVideoViewPresenter.setView(this.surfaceVideoView);
 		fileTextDetailView.displayFileInfo(this.fileInfo);

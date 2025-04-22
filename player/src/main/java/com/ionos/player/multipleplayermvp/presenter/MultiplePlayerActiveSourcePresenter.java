@@ -20,13 +20,13 @@ import java.util.List;
  * User: zuzik
  * Date: 6/4/16
  */
-public class MultiplePlayerActiveSourcePresenter<SourceInfo, Mode> implements MultiplePlayer.ActiveSourcePresenter<SourceInfo> {
+public class MultiplePlayerActiveSourcePresenter<SourceInfo> implements MultiplePlayer.ActiveSourcePresenter<SourceInfo> {
 
-	private final MultiplePlayer.Model<SourceInfo, Mode> model;
+	private final MultiplePlayer.Model<SourceInfo> model;
 	private Optional<SourceInfo> sourceInfo = Optional.empty();
 	private MultiplePlayer.ActiveSourceView<SourceInfo> view = NullMultiplePlayerActiveSourceView.getInstance();
 
-	public MultiplePlayerActiveSourcePresenter(MultiplePlayer.Model<SourceInfo, Mode> model) {
+	public MultiplePlayerActiveSourcePresenter(MultiplePlayer.Model<SourceInfo> model) {
 		this.model = model;
 	}
 
@@ -67,7 +67,7 @@ public class MultiplePlayerActiveSourcePresenter<SourceInfo, Mode> implements Mu
 		updateView(this.model.getState());
 	}
 
-	private void updateView(Optional<MultiplePlaybackState<SourceInfo, Mode>> state) {
+	private void updateView(Optional<MultiplePlaybackState<SourceInfo>> state) {
 		if (this.sourceInfo.isPresent() && state
 				.mapToBoolean(input -> input.getCurrentPlaybackState().isPresent())
 				.orElse(false)) {
@@ -91,9 +91,9 @@ public class MultiplePlayerActiveSourcePresenter<SourceInfo, Mode> implements Mu
 		}
 	}
 
-	private final MultiplePlayer.Model.Listener<SourceInfo, Mode> listener = new MultiplePlayer.Model.Listener<SourceInfo, Mode>() {
+	private final MultiplePlayer.Model.Listener<SourceInfo> listener = new MultiplePlayer.Model.Listener<>() {
 		@Override
-		public void onUpdate(MultiplePlaybackState<SourceInfo, Mode> state) {
+		public void onUpdate(MultiplePlaybackState<SourceInfo> state) {
 			updateView();
 		}
 

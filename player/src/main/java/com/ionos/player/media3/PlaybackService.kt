@@ -14,23 +14,34 @@ import androidx.media3.session.MediaSession
 import androidx.media3.session.MediaSession.ControllerInfo
 import androidx.media3.session.MediaSessionService
 import com.ionos.player.media3.session.MediaSessionActivityFactory
+import com.ionos.player.media3.session.MediaSessionFactory
+import com.ionos.player.media3.session.MediaSessionHolder
+import javax.inject.Inject
 
 class PlaybackService : MediaSessionService() {
-	private val componentFactory by PlaybackServiceComponent.FactoryProvider
-	private var mediaSession: MediaSession? = null
-	private lateinit var mediaSessionActivityFactory: MediaSessionActivityFactory
+
+	@Inject
+	lateinit var mediaSessionHolder: MediaSessionHolder
+
+	@Inject
+	lateinit var mediaSessionFactory: MediaSessionFactory
+
+	@Inject
+	lateinit var mediaSessionActivityFactory: MediaSessionActivityFactory
+
 	private var bindingCount: Int = 0
 
 	@UnstableApi
 	override fun onCreate() {
 		super.onCreate()
-		val component = componentFactory.create()
-		mediaSession = component.provideMediaSession()
-		mediaSessionActivityFactory = component.provideMediaSessionActivityFactory()
+		val component = (applicationContext as PlaybackServiceComponentProvider).getComponent()
+		component.inject(this)
 	}
 
-	override fun onGetSession(controllerInfo: ControllerInfo): MediaSession {
-		return mediaSession ?: throw IllegalStateException()
+	override fun onGetSession(controllerInfo: ControllerInfo): MediaSession? {
+		return mediaSessionHolder.get() ?: mediaSessionFactory
+			.create()
+			.also(mediaSessionHolder::init)
 	}
 
 	@UnstableApi
@@ -58,18 +69,12 @@ class PlaybackService : MediaSessionService() {
 
 	override fun onTaskRemoved(rootIntent: Intent?) {
 		super.onTaskRemoved(rootIntent)
-		release()
+		mediaSessionHolder.release()
 		stopSelf()
 	}
 
 	override fun onDestroy() {
-		release()
+		mediaSessionHolder.release()
 		super.onDestroy()
-	}
-
-	private fun release() {
-		mediaSession?.player?.release()
-		mediaSession?.release()
-		mediaSession = null
 	}
 }

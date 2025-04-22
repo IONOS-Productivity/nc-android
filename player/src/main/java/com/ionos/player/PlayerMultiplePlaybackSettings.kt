@@ -7,15 +7,11 @@
 
 package com.ionos.player
 
-import com.ionos.player.player_mode.PlayerMode
 import com.ionos.player.multipleplayermvp.interfaces.MultiplePlaybackSettings
 
 abstract class PlayerMultiplePlaybackSettings(
 	private val shouldRepeatAll: Boolean
-): MultiplePlaybackSettings<PlayerMode.Mode> {
-
-	private var _mode = PlayerMode.Mode.REGULAR
-
+): MultiplePlaybackSettings {
 
 	override fun getRepeatMode(): MultiplePlaybackSettings.RepeatMode {
 		return if (isRepeatSingle) {
@@ -26,13 +22,4 @@ abstract class PlayerMultiplePlaybackSettings(
 			MultiplePlaybackSettings.RepeatMode.OFF
 		}
 	}
-
-	override fun getMode(): PlayerMode.Mode {
-		return _mode
-	}
-
-	override fun setMode(mode: PlayerMode.Mode) {
-		_mode = mode
-	}
-
 }

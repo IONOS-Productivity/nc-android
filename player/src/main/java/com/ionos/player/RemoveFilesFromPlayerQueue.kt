@@ -8,13 +8,12 @@
 package com.ionos.player
 
 import com.ionos.player.domain.PlayerFileInfo
-import com.ionos.player.player_mode.PlayerMode
 import com.ionos.player.player_source_release_strategy.DoNotReleaseIfExistsSourceInfoReleaseStrategy
 import com.ionos.player.multipleplayermvp.interfaces.MultiplePlayer
 import javax.inject.Inject
 
 class RemoveFilesFromPlayerQueue @Inject constructor(
-	private val model: MultiplePlayer.Model<PlayerFileInfo, PlayerMode.Mode>,
+	private val model: MultiplePlayer.Model<PlayerFileInfo>,
 ) {
 
 	operator fun invoke(deletedFiles: List<PlayerFileInfo>) {

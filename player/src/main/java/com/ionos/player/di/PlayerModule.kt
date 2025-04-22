@@ -10,18 +10,19 @@ import com.ionos.player.cache.PlayerPathProvider
 import com.ionos.player.chromecast.ChromecastTitleFactory
 import com.ionos.player.chromecast.ChromecastTitleFactoryImpl
 import com.ionos.player.domain.PlayerFileInfo
-import com.ionos.player.media3.HiDrivePlaybackServiceComponentFactory
+import com.ionos.player.media3.HiDriveMediaSessionFactory
 import com.ionos.player.media3.item.HiDriveMediaIdFactory
 import com.ionos.player.media3.item.HiDriveMediaItemConverter
 import com.ionos.player.media3.item.HiDriveMediaItemFactory
-import com.ionos.player.media3.session.HiDriveMediaSessionCommandManager
-import com.ionos.player.media3.session.HiDriveMediaSessionCommandManagerImpl
 import com.ionos.player.media3.store.HiDriveSourceInfoStore
-import com.ionos.player.player_mode.PlayerMode
-import com.ionos.player.media3.PlaybackServiceComponent
 import com.ionos.player.media3.item.MediaIdFactory
 import com.ionos.player.media3.item.MediaItemFactory
 import com.ionos.player.media3.model.PlaybackModel
+import com.ionos.player.media3.session.HiDriveMediaSessionActivityFactory
+import com.ionos.player.media3.session.HiDriveMediaSessionHolder
+import com.ionos.player.media3.session.MediaSessionActivityFactory
+import com.ionos.player.media3.session.MediaSessionFactory
+import com.ionos.player.media3.session.MediaSessionHolder
 import com.ionos.player.media3.store.SourceInfoStore
 import com.ionos.player.multipleplayer.interfaces.MultiplePlaybackErrorStrategy
 import com.ionos.player.multipleplayermvp.interfaces.MultiplePlayer
@@ -60,8 +61,8 @@ abstract class PlayerModule {
 	@Binds
 	@Singleton
 	abstract fun bindMultiplePlayerModel(
-		model: PlaybackModel<PlayerFileInfo, PlayerMode.Mode>,
-	): MultiplePlayer.Model<PlayerFileInfo, PlayerMode.Mode>
+		model: PlaybackModel<PlayerFileInfo>,
+	): MultiplePlayer.Model<PlayerFileInfo>
 
 	@Singleton
 	@Binds
@@ -91,23 +92,25 @@ abstract class PlayerModule {
 		factory: HiDriveMediaIdFactory
 	): MediaIdFactory<PlayerFileInfo>
 
-	@UnstableApi
-	@Binds
-	@Singleton
-	abstract fun bindHiDriveMediaSessionCommandManager(
-		manager: HiDriveMediaSessionCommandManagerImpl
-	): HiDriveMediaSessionCommandManager
-
-	@UnstableApi
-	@Binds
-	@Singleton
-	abstract fun bindPlaybackServiceComponentFactory(
-		factory: HiDrivePlaybackServiceComponentFactory
-	): PlaybackServiceComponent.Factory
-
 	@Binds
 	@Singleton
 	abstract fun bindMultiplePlaybackErrorStrategy(
 		strategy: HiDriveMultiplePlaybackErrorStrategy,
-	): MultiplePlaybackErrorStrategy<PlayerFileInfo, PlayerMode.Mode>
+	): MultiplePlaybackErrorStrategy<PlayerFileInfo>
+
+    @UnstableApi
+    @Binds
+	abstract fun bindMediaSessionFactory(
+		factory: HiDriveMediaSessionFactory,
+	): MediaSessionFactory
+
+	@Binds
+	abstract fun bindMediaSessionHolder(
+		holder: HiDriveMediaSessionHolder,
+	): MediaSessionHolder
+
+	@Binds
+	abstract fun bindMediaSessionActivityFactory(
+		factory: HiDriveMediaSessionActivityFactory,
+	): MediaSessionActivityFactory
 }

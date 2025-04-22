@@ -14,9 +14,9 @@ import com.ionos.player.multipleplayer.interfaces.MultiplePlaybackState;
  * Created by yaz on 1/23/17.
  */
 
-public class DoNotSwitchToNextSourceMultiplePlaybackErrorStrategy<SourceInfo, Mode> implements MultiplePlaybackErrorStrategy<SourceInfo, Mode> {
+public class DoNotSwitchToNextSourceMultiplePlaybackErrorStrategy<SourceInfo> implements MultiplePlaybackErrorStrategy<SourceInfo> {
 	@Override
-	public boolean switchToNextSource(Throwable error, MultiplePlaybackState<SourceInfo, Mode> state) {
+	public boolean switchToNextSource(Throwable error, MultiplePlaybackState<SourceInfo> state) {
 		return false;
 	}
 }

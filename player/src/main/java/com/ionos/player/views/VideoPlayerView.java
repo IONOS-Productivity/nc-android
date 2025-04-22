@@ -13,7 +13,6 @@ import com.ionos.player.chromecast.PlayerChromecastModel;
 import com.ionos.player.di.PlayerComponent;
 import com.ionos.player.domain.PlayerFileInfo;
 import com.ionos.player.message.PlayerMessageBuilderFactory;
-import com.ionos.player.player_mode.PlayerMode;
 import com.ionos.player.predicate.FileBeingProcessedPredicate;
 import com.ionos.player.transformation.FileInfoToDisplayNameTransformation;
 import com.ionos.player.util.Action;
@@ -48,7 +47,7 @@ public class VideoPlayerView extends PlayerView {
 	protected static final long ANIMATION_TIMER_DURATION = 5000;
 
 	@Inject
-	MultiplePlayer.Model<PlayerFileInfo, PlayerMode.Mode> playerModel;
+	MultiplePlayer.Model<PlayerFileInfo> playerModel;
 	@Inject
 	Optional<PlayerChromecastModel> chromecastModel;
 	@Inject
@@ -185,7 +184,7 @@ public class VideoPlayerView extends PlayerView {
 			playerViewContainer.onPlayerViewClose();
 			return;
 		}
-		MultiplePlaybackState<PlayerFileInfo, PlayerMode.Mode> state = this.playerModel.getState().get();
+		MultiplePlaybackState<PlayerFileInfo> state = this.playerModel.getState().get();
 
 		if (state.getCurrentPlaybackState().isPresent()) {
 			PlaybackState<PlayerFileInfo> playbackState = state.getCurrentPlaybackState().get();
@@ -250,9 +249,9 @@ public class VideoPlayerView extends PlayerView {
 		}
 	};
 
-	private final MultiplePlayer.Model.Listener<PlayerFileInfo, PlayerMode.Mode> playerModelListener = new MultiplePlayer.Model.Listener<>() {
+	private final MultiplePlayer.Model.Listener<PlayerFileInfo> playerModelListener = new MultiplePlayer.Model.Listener<>() {
 		@Override
-		public void onUpdate(MultiplePlaybackState<PlayerFileInfo, PlayerMode.Mode> state) {
+		public void onUpdate(MultiplePlaybackState<PlayerFileInfo> state) {
 			updateState();
 		}
 

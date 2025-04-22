@@ -8,11 +8,16 @@ import androidx.media3.session.SessionCommand
 import androidx.media3.session.SessionResult
 import com.google.common.util.concurrent.Futures
 import com.google.common.util.concurrent.ListenableFuture
+import javax.inject.Inject
 
 @UnstableApi
-class HiDriveMediaSessionCallback(
-	private val sessionCommandManager: HiDriveMediaSessionCommandManager,
+class HiDriveMediaSessionCallback @Inject constructor(
+	private val sessionHolder: HiDriveMediaSessionHolder,
 ) : MediaSession.Callback {
+
+	companion object {
+		const val CLOSE_ACTION = "CLOSE_ACTION"
+	}
 
 	override fun onConnect(
 		session: MediaSession,
@@ -20,7 +25,7 @@ class HiDriveMediaSessionCallback(
 	): ConnectionResult {
 		val connectionResult = super.onConnect(session, controller)
 		val sessionCommandsBuilder = connectionResult.availableSessionCommands.buildUpon()
-		sessionCommandManager.getCustomCommands().forEach(sessionCommandsBuilder::add)
+		sessionCommandsBuilder.add(SessionCommand(CLOSE_ACTION, Bundle.EMPTY))
 		val sessionCommands = sessionCommandsBuilder.build()
 		return ConnectionResult.accept(sessionCommands, connectionResult.availablePlayerCommands)
 	}
@@ -31,7 +36,9 @@ class HiDriveMediaSessionCallback(
 		customCommand: SessionCommand,
 		args: Bundle
 	): ListenableFuture<SessionResult> {
-		sessionCommandManager.handleCustomCommand(session, customCommand, args)
+		if (customCommand.customAction == CLOSE_ACTION) {
+			sessionHolder.release()
+		}
 		return Futures.immediateFuture(SessionResult(SessionResult.RESULT_SUCCESS))
 	}
 }

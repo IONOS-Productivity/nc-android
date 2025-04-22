@@ -9,14 +9,12 @@ package com.ionos.player;
 
 import com.annimon.stream.Optional;
 import com.ionos.player.domain.PlayerFileInfo;
-import com.ionos.player.player_mode.PlayerMode;
 import com.ionos.player.multipleplayer.interfaces.MultiplePlaybackState;
 import com.ionos.player.player.interfaces.PlaybackState;
 import com.ionos.player.player.interfaces.State;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import androidx.annotation.NonNull;
@@ -33,7 +31,7 @@ public class HiDriveMultiplePlaybackErrorStrategyTest {
 
 	@Test
 	public void switchToNextSourceReturnFalseIfOneFileQueue() throws Exception {
-		MultiplePlaybackState<PlayerFileInfo, PlayerMode.Mode> state = createState(Optional.of(mockWithName("a")), mockWithName("a"));
+		MultiplePlaybackState<PlayerFileInfo> state = createState(Optional.of(mockWithName("a")), mockWithName("a"));
 
 		boolean switchToNext = strategy.switchToNextSource(new RuntimeException(), state);
 
@@ -42,7 +40,7 @@ public class HiDriveMultiplePlaybackErrorStrategyTest {
 
 	@Test
 	public void switchToNextSourceReturnFalseIfNotOneFileQueueAndCurentFileIsLast() throws Exception {
-		MultiplePlaybackState<PlayerFileInfo, PlayerMode.Mode> state = createState(Optional.of(mockWithName("b")), mockWithName("a"), mockWithName("b"));
+		MultiplePlaybackState<PlayerFileInfo> state = createState(Optional.of(mockWithName("b")), mockWithName("a"), mockWithName("b"));
 
 		boolean switchToNext = strategy.switchToNextSource(new RuntimeException(), state);
 
@@ -51,23 +49,21 @@ public class HiDriveMultiplePlaybackErrorStrategyTest {
 
 	@Test
 	public void switchToNextSourceReturnTrueIfNotOneFileQueueAndCurrentFileIsNotLast() throws Exception {
-		MultiplePlaybackState<PlayerFileInfo, PlayerMode.Mode> state = createState(Optional.of(mockWithName("b")), mockWithName("a"), mockWithName("a"));
+		MultiplePlaybackState<PlayerFileInfo> state = createState(Optional.of(mockWithName("b")), mockWithName("a"), mockWithName("a"));
 
 		boolean switchToNext = strategy.switchToNextSource(new RuntimeException(), state);
 
 		assertTrue(switchToNext);
 	}
 
-	private MultiplePlaybackState<PlayerFileInfo, PlayerMode.Mode> createState(Optional<PlayerFileInfo> currentFile, PlayerFileInfo... files) {
+	private MultiplePlaybackState<PlayerFileInfo> createState(Optional<PlayerFileInfo> currentFile, PlayerFileInfo... files) {
 		Optional<PlaybackState<PlayerFileInfo>> current = currentFile
-				.map(input -> new PlaybackState<>(State.NONE, 0, Optional.empty(), false, input, Optional.empty()));
+				.map(input -> new PlaybackState<>(State.NONE, 0, Optional.empty(), input, Optional.empty()));
 		return new MultiplePlaybackState<>(
 				Arrays.asList(files),
-				new ArrayList<>(),
 				current,
 				false,
-				false,
-				PlayerMode.Mode.REGULAR);
+				false);
 	}
 
 	@NonNull

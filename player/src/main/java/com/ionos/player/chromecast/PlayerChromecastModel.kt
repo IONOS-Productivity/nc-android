@@ -9,7 +9,7 @@ interface PlayerChromecastModel {
 		CONNECTED
 	}
 
-	fun state(): PlayerModelState
+	fun state(): PlayerChromecastModelState
 
 	fun addListener(listener: Listener)
 
@@ -23,7 +23,7 @@ interface PlayerChromecastModel {
 
 
 	interface Listener {
-		fun onUpdate(state: PlayerModelState)
+		fun onUpdate(state: PlayerChromecastModelState)
 
 		fun onApplicationConnectedToCastSession()
 	}

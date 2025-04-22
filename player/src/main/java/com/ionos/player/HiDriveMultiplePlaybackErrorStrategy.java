@@ -8,7 +8,6 @@
 package com.ionos.player;
 
 import com.ionos.player.domain.PlayerFileInfo;
-import com.ionos.player.player_mode.PlayerMode;
 import com.ionos.player.multipleplayer.interfaces.MultiplePlaybackErrorStrategy;
 import com.ionos.player.multipleplayer.interfaces.MultiplePlaybackState;
 import com.ionos.player.player.exception.AudioFocusLostException;
@@ -21,14 +20,14 @@ import javax.inject.Inject;
  * Created by yaz on 1/23/17.
  */
 
-public class HiDriveMultiplePlaybackErrorStrategy implements MultiplePlaybackErrorStrategy<PlayerFileInfo, PlayerMode.Mode> {
+public class HiDriveMultiplePlaybackErrorStrategy implements MultiplePlaybackErrorStrategy<PlayerFileInfo> {
 
 	@Inject
 	public HiDriveMultiplePlaybackErrorStrategy(){
 	}
 
 	@Override
-	public boolean switchToNextSource(Throwable throwable, final MultiplePlaybackState<PlayerFileInfo, PlayerMode.Mode> multiplePlaybackState) {
+	public boolean switchToNextSource(Throwable throwable, final MultiplePlaybackState<PlayerFileInfo> multiplePlaybackState) {
 		if (throwable instanceof AudioFocusLostException) {
 			return false;
 		}

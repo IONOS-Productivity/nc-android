@@ -2,7 +2,6 @@ package com.ionos.player.views.player.presenter;
 
 import com.ionos.player.domain.PlayerFileInfo;
 import com.ionos.player.error.ChromecastUnsupportedFileException;
-import com.ionos.player.player_mode.PlayerMode;
 import com.ionos.player.views.player.view.ChromecastErrorView;
 import com.ionos.player.multipleplayer.interfaces.MultiplePlaybackState;
 import com.ionos.player.multipleplayermvp.interfaces.MultiplePlayer;
@@ -15,9 +14,9 @@ import java.util.List;
 
 public class ChromecastVideoErrorPresenter {
 	private final ChromecastErrorView view;
-	private final MultiplePlayer.Model<PlayerFileInfo, PlayerMode.Mode> playerModel;
+	private final MultiplePlayer.Model<PlayerFileInfo> playerModel;
 
-	public ChromecastVideoErrorPresenter(ChromecastErrorView view, MultiplePlayer.Model<PlayerFileInfo, PlayerMode.Mode> playerModel) {
+	public ChromecastVideoErrorPresenter(ChromecastErrorView view, MultiplePlayer.Model<PlayerFileInfo> playerModel) {
 		this.view = view;
 		this.playerModel = playerModel;
 	}
@@ -30,7 +29,7 @@ public class ChromecastVideoErrorPresenter {
 		playerModel.removeListener(this.listener);
 	}
 
-	private final MultiplePlayer.Model.Listener<PlayerFileInfo, PlayerMode.Mode> listener = new MultiplePlayer.Model.Listener<>() {
+	private final MultiplePlayer.Model.Listener<PlayerFileInfo> listener = new MultiplePlayer.Model.Listener<>() {
 
 		@Override
 		public void onUpdate(MultiplePlaybackState multiplePlaybackState) {

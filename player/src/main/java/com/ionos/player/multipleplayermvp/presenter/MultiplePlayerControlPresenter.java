@@ -22,16 +22,16 @@ import java.util.List;
  * User: zuzik
  * Date: 6/4/16
  */
-public class MultiplePlayerControlPresenter<SourceInfo, Mode> implements MultiplePlayer.ControlPresenter<SourceInfo> {
+public class MultiplePlayerControlPresenter<SourceInfo> implements MultiplePlayer.ControlPresenter<SourceInfo> {
 
-	private final MultiplePlayer.Model<SourceInfo, Mode> model;
+	private final MultiplePlayer.Model<SourceInfo> model;
 	private final ControlAvailabilityStrategy<SourceInfo> nextControlAvailabilityStrategy;
 	private final ControlAvailabilityStrategy<SourceInfo> previousControlAvailabilityStrategy;
 	private MultiplePlayer.ControlView<SourceInfo> view = NullMultiplePlayerControlView.getInstance();
 	private double currentVolume = 0;
 
 	public MultiplePlayerControlPresenter(
-			MultiplePlayer.Model<SourceInfo, Mode> model,
+			MultiplePlayer.Model<SourceInfo> model,
 			ControlAvailabilityStrategy<SourceInfo> nextControlAvailabilityStrategy,
 			ControlAvailabilityStrategy<SourceInfo> previousControlAvailabilityStrategy) {
 		this.model = model;
@@ -152,7 +152,7 @@ public class MultiplePlayerControlPresenter<SourceInfo, Mode> implements Multipl
 		updateView(this.model.getState());
 	}
 
-	private void updateView(Optional<MultiplePlaybackState<SourceInfo, Mode>> state) {
+	private void updateView(Optional<MultiplePlaybackState<SourceInfo>> state) {
 		boolean repeatSingle = false;
 		boolean shuffle = false;
 
@@ -208,7 +208,7 @@ public class MultiplePlayerControlPresenter<SourceInfo, Mode> implements Multipl
 		}
 	}
 
-	private final MultiplePlayer.Model.Listener<SourceInfo, Mode> listener = new MultiplePlayer.Model.Listener<SourceInfo, Mode>() {
+	private final MultiplePlayer.Model.Listener<SourceInfo> listener = new MultiplePlayer.Model.Listener<>() {
 		@Override
 		public void onUpdate(MultiplePlaybackState state) {
 			updateView();

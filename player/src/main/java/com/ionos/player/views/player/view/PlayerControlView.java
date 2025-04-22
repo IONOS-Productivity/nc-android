@@ -15,7 +15,6 @@ import com.ionos.player.HiDriveCyclicPreviousControlAvailabilityStrategy;
 import com.ionos.player.R;
 import com.ionos.player.di.PlayerComponent;
 import com.ionos.player.domain.PlayerFileInfo;
-import com.ionos.player.player_mode.PlayerMode;
 import com.ionos.player.util.PlayerLocaleProvider;
 import com.ionos.player.views.multiple_click.MultipleClickListener;
 import com.ionos.player.views.player.presenter.play_previous_presenter.MultiplePlayerPlayPreviousPresenter;
@@ -52,7 +51,7 @@ public class PlayerControlView extends LinearLayout {
 	private static final String TAG_CLICK_COMMAND_UNKNOWN = "TAG_CLICK_COMMAND_UNKNOWN";
 
 	@Inject
-	MultiplePlayer.Model<PlayerFileInfo, PlayerMode.Mode> playerModel;
+	MultiplePlayer.Model<PlayerFileInfo> playerModel;
 	@Inject
 	PlayerLocaleProvider localeProvider;
 

@@ -20,15 +20,15 @@ import java.util.List;
  * User: zuzik
  * Date: 6/4/16
  */
-public class MultiplePlayerVideoPresenter<SourceInfo, Mode> implements MultiplePlayer.VideoPresenter<SourceInfo> {
+public class MultiplePlayerVideoPresenter<SourceInfo> implements MultiplePlayer.VideoPresenter<SourceInfo> {
 
-	private final MultiplePlayer.Model<SourceInfo, Mode> model;
+	private final MultiplePlayer.Model<SourceInfo> model;
 	private final SourceInfo sourceInfo;
 	private MultiplePlayer.VideoView<SourceInfo> view = NullMultiplePlayerVideoView.getInstance();
 	private boolean appeared;
 
 	public MultiplePlayerVideoPresenter(
-			MultiplePlayer.Model<SourceInfo, Mode> model,
+			MultiplePlayer.Model<SourceInfo> model,
 			SourceInfo sourceInfo) {
 		this.model = model;
 		this.sourceInfo = sourceInfo;
@@ -99,7 +99,7 @@ public class MultiplePlayerVideoPresenter<SourceInfo, Mode> implements MultipleP
 
 	private boolean isCurrentSourceInfo() {
 		if (this.model.getState().isPresent()) {
-			MultiplePlaybackState<SourceInfo, Mode> modelState = this.model.getState().get();
+			MultiplePlaybackState<SourceInfo> modelState = this.model.getState().get();
 			if (modelState.getCurrentPlaybackState().isPresent()) {
 				PlaybackState<SourceInfo> playbackState = modelState.getCurrentPlaybackState().get();
 				if (this.sourceInfo.equals(playbackState.sourceInfo)) {
@@ -110,9 +110,9 @@ public class MultiplePlayerVideoPresenter<SourceInfo, Mode> implements MultipleP
 		return false;
 	}
 
-	private final MultiplePlayer.Model.Listener<SourceInfo, Mode> listener = new MultiplePlayer.Model.Listener<SourceInfo, Mode>() {
+	private final MultiplePlayer.Model.Listener<SourceInfo> listener = new MultiplePlayer.Model.Listener<>() {
 		@Override
-		public void onUpdate(MultiplePlaybackState<SourceInfo, Mode> state) {
+		public void onUpdate(MultiplePlaybackState<SourceInfo> state) {
 			updateView();
 		}
 

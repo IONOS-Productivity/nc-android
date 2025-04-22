@@ -7,8 +7,9 @@ import com.ionos.player.domain.PlayerFileInfo
 import com.ionos.player.transformation.FileInfoToIntentTransformation
 import com.ionos.player.util.SystemVersion
 import com.ionos.player.media3.store.SourceInfoStore
+import javax.inject.Inject
 
-class HiDriveMediaSessionActivityFactory(
+class HiDriveMediaSessionActivityFactory @Inject constructor(
 	private val context: Context,
 	private val sourceInfoStore: SourceInfoStore<PlayerFileInfo>,
 	private val fileInfoToIntentTransformation: FileInfoToIntentTransformation,

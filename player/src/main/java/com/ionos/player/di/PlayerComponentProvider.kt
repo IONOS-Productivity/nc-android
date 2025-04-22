@@ -1,5 +1,7 @@
 package com.ionos.player.di
 
-interface PlayerComponentProvider {
-	fun getComponent(): PlayerComponent
+import com.ionos.player.media3.PlaybackServiceComponentProvider
+
+interface PlayerComponentProvider : PlaybackServiceComponentProvider {
+	override fun getComponent(): PlayerComponent
 }

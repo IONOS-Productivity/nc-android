@@ -25,21 +25,21 @@ import androidx.annotation.NonNull;
  */
 public interface MultiplePlayer {
 
-	interface Model<SourceInfo, Mode> {
+	interface Model<SourceInfo> {
 
-		void start(Mode mode, Action onSuccess, ParamAction<Throwable> onError);
+		void start(Action onSuccess, ParamAction<Throwable> onError);
 
 		void setSourceInfos(List<SourceInfo> sourceInfos, SourceInfoReleaseStrategy<SourceInfo> releaseStrategy);
 
 		void release();
 
-		Optional<MultiplePlaybackState<SourceInfo, Mode>> getState();
+		Optional<MultiplePlaybackState<SourceInfo>> getState();
 
 		void videoViewSetter(ParamAction<VideoViewSetter> success);
 
-		void addListener(Listener<SourceInfo, Mode> listener);
+		void addListener(Listener<SourceInfo> listener);
 
-		void removeListener(Listener<SourceInfo, Mode> listener);
+		void removeListener(Listener<SourceInfo> listener);
 
 		void play();
 
@@ -63,8 +63,6 @@ public interface MultiplePlayer {
 
 		void switchToSourceInfo(SourceInfo sourceInfo);
 
-		void switchToMode(Mode mode);
-
 		void simulateError();
 
 		void setVolume(double volume);
@@ -81,8 +79,8 @@ public interface MultiplePlayer {
 
 		void stopTrackingVolumeEvents();
 
-		interface Listener<SourceInfo, Mode> {
-			void onUpdate(MultiplePlaybackState<SourceInfo, Mode> state);
+		interface Listener<SourceInfo> {
+			void onUpdate(MultiplePlaybackState<SourceInfo> state);
 
 			void onError(Throwable error);
 

@@ -10,12 +10,12 @@ import com.ionos.player.player.interfaces.State;
  * Created by yaz on 1/25/17.
  */
 
-public class MultiplePlayerPlayPreviousPresenterImpl<SourceInfo, Mode> implements MultiplePlayerPlayPreviousPresenter {
+public class MultiplePlayerPlayPreviousPresenterImpl<SourceInfo> implements MultiplePlayerPlayPreviousPresenter {
 
-	private final MultiplePlayer.Model<SourceInfo, Mode> playerModel;
+	private final MultiplePlayer.Model<SourceInfo> playerModel;
 	private final MultiplePlayer.ControlPresenter<SourceInfo> controlPresenter;
 
-	public MultiplePlayerPlayPreviousPresenterImpl(MultiplePlayer.Model<SourceInfo, Mode> playerModel, MultiplePlayer.ControlPresenter<SourceInfo> controlPresenter) {
+	public MultiplePlayerPlayPreviousPresenterImpl(MultiplePlayer.Model<SourceInfo> playerModel, MultiplePlayer.ControlPresenter<SourceInfo> controlPresenter) {
 		this.playerModel = playerModel;
 		this.controlPresenter = controlPresenter;
 	}
@@ -46,9 +46,9 @@ public class MultiplePlayerPlayPreviousPresenterImpl<SourceInfo, Mode> implement
 	}
 
 	private PlaybackState<SourceInfo> findState() {
-		Optional<MultiplePlaybackState<SourceInfo, Mode>> multiplePlaybackStateOptional = this.playerModel.getState();
+		Optional<MultiplePlaybackState<SourceInfo>> multiplePlaybackStateOptional = this.playerModel.getState();
 		if (multiplePlaybackStateOptional.isPresent()) {
-			MultiplePlaybackState<SourceInfo, Mode> multiplePlaybackState = multiplePlaybackStateOptional.get();
+			MultiplePlaybackState<SourceInfo> multiplePlaybackState = multiplePlaybackStateOptional.get();
 			Optional<PlaybackState<SourceInfo>> playbackStateOptional = multiplePlaybackState.getCurrentPlaybackState();
 			if (playbackStateOptional.isPresent()) {
 				return playbackStateOptional.get();

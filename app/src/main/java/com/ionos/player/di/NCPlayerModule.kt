@@ -30,6 +30,7 @@ import com.ionos.player.media3.PlayerFactoryImpl
 import com.ionos.player.media3.player.CreateExoPlayer
 import com.ionos.player.media3.player.CreateStubPlayer
 import com.ionos.player.message.PlayerMessageBuilderFactory
+import com.ionos.player.multipleplayermvp.interfaces.MultiplePlaybackSettings
 import com.ionos.player.predicate.FileBeingProcessedPredicate
 import com.ionos.player.predicate.IsVideoPredicate
 import com.ionos.player.transformation.FileInfoToCacheKeyTransformation
@@ -73,10 +74,12 @@ abstract class NCPlayerModule {
         fun provideHiDrivePlayerFactory(
             createExoPlayer: CreateExoPlayer,
             createChromeCastPlayer: CreateStubPlayer,
+            playbackSettings: MultiplePlaybackSettings,
         ): PlayerFactory {
             return PlayerFactoryImpl(
                 createExoPlayer,
                 createChromeCastPlayer,
+                playbackSettings
             )
         }
 
