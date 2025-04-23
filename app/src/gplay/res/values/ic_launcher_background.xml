@@ -7,5 +7,5 @@
   -->
 
 <resources>
-    <color name="ic_launcher_background">#003D8F</color>
+    <color name="ic_launcher_background">@color/madison</color>
 </resources>

@@ -498,6 +498,7 @@ class PreviewMediaActivity :
         val playerView = binding.exoplayerView
         val exoControls = playerView.findViewById<FrameLayout>(R.id.exo_bottom_bar)
         val exoProgress = playerView.findViewById<DefaultTimeBar>(R.id.exo_progress)
+        val exoControlsHeight = exoControls.layoutParams.height
         val progressBottomMargin = exoProgress.marginBottom
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, windowInsets ->
@@ -507,7 +508,7 @@ class PreviewMediaActivity :
             )
 
             exoControls.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                height = insets.bottom + resources.getDimensionPixelSize(R.dimen.exo_bottom_bar_height)
+                height = insets.bottom + exoControlsHeight
             }
             exoProgress.updateLayoutParams<ViewGroup.MarginLayoutParams> {
                 bottomMargin = insets.bottom + progressBottomMargin
@@ -536,11 +537,11 @@ class PreviewMediaActivity :
                         windowInsetsController.hide(type)
                         supportActionBar!!.hide()
                     }
-                    val bottomBarMainControls = it.findViewById<FrameLayout>(R.id.exo_bottom_bar_main_controls)
+                    val exoControls = it.findViewById<FrameLayout>(R.id.exo_bottom_bar)
                     if (it.isControllerFullyVisible) {
-                        bottomBarMainControls?.visibility = View.VISIBLE
+                        exoControls.getChildAt(0)?.visibility = View.VISIBLE
                     } else {
-                        bottomBarMainControls?.visibility = View.INVISIBLE
+                        exoControls.getChildAt(0)?.visibility = View.INVISIBLE
                     }
                 }
             )
