@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <string name="ionos_authorization_method_description">È necessario effettuare il login tramite il browser</string>
+    <string name="ionos_authorization_method_greeting">Benvenuti nel cloud storage</string>
+    <string name="ionos_authorization_method_login_button">Accedi</string>
+    <string name="ionos_authorization_screen_cancel_button">Annulla</string>
+    <string name="ionos_authorization_screen_retry_button">Riprova</string>
+    <string name="ionos_file_management_permission">Autorizzazioni di archiviazione</string>
+    <string name="ionos_file_management_permission_optional">Autorizzazioni di archiviazione</string>
+    <string name="ionos_file_management_permission_text">%1$s ha bisogno del permesso di accedere ai file per una migliore funzionalità. È possibile consentire o negare l\'accesso.</string>
+    <string name="ionos_side_menu_storage_used">Storage usato</string>
+    <string name="ionos_toolbar_sort_button_text">Filtro</string>
+</resources>

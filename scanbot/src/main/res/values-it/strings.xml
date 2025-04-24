@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <string name="scanbot_camera_automatic_btn">Automatico</string>
+    <string name="scanbot_camera_detection_result_error_nothing_detected">Nessun documento</string>
+    <string name="scanbot_camera_detection_result_error_too_dark">Luce scarsa</string>
+    <string name="scanbot_camera_detection_result_error_too_noisy">Sfondo troppo rumoroso</string>
+    <string name="scanbot_camera_detection_result_ok">Non muoverti</string>
+    <string name="scanbot_filter_applying_for_all">Applicazione del filtro a tutte le immagini</string>
+    <string name="scanbot_filter_black_n_white">Bianco e nero</string>
+    <string name="scanbot_filter_color">Colore</string>
+    <string name="scanbot_filter_grayscale">Scala di grigi</string>
+    <string name="scanbot_filter_magic_color">Colore magico</string>
+    <string name="scanbot_filter_magic_text">Testo magico</string>
+    <string name="scanbot_filter_none">Nessun filtro</string>
+    <string name="scanbot_filter_popup_apply_for_all">Applica per tutti</string>
+    <string name="scanbot_no_enough_free_device_space_message">Lo spazio sul dispositivo non è sufficiente per scattare le foto. Per favore, liberate la memoria.</string>
+    <string name="scanbot_no_free_space_message">Lo smartphone non dispone di spazio di archiviazione sufficiente.</string>
+    <string name="scanbot_ok_btn_title">OK</string>
+    <string name="scanbot_processing_document_title">Elaborazione del documento...</string>
+    <string name="scanbot_save">Salva</string>
+    <string name="scanbot_save_as">Salva come</string>
+    <string name="scanbot_unknown_exception">Si è verificato un errore. Riprovare più tardi</string>
+</resources>
