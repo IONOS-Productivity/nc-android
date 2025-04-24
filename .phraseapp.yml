@@ -27,16 +27,16 @@ phraseapp:
   push:
     sources:
     #Ionos
-    - file: ./commonUI/src/Ionos/res/values/strings.xml
+    - file: ./scanbot/src/main/res/values/strings.xml
       project_id: 9453e2fb482156dfed60b47805ed3e52
       params: {locale_id: a9ada87657aefb57695d33a27f5b248e}
-    - file: ./commonUI/src/Ionos/res/values-de/strings.xml
+    - file: ./scanbot/src/main/res/values-de/strings.xml
       project_id: 9453e2fb482156dfed60b47805ed3e52
       params: {locale_id: 76f8beac88adf476f248360e111557e8}
-    - file: ./commonUI/src/Ionos/res/values-fr/strings.xml
+    - file: ./scanbot/src/main/res/values-fr/strings.xml
       project_id: 9453e2fb482156dfed60b47805ed3e52
       params: {locale_id: e54bd05002e163018d4923436ef76345}
-    - file: ./commonUI/src/Ionos/res/values-es/strings.xml
+    - file: ./scanbot/src/main/res/values-es/strings.xml
       project_id: 9453e2fb482156dfed60b47805ed3e52
       params: {locale_id: c230ef320d30d186bcdd693a21a8b21c}
     - file: ./scanbot/src/main/res/values-nl/strings.xml
