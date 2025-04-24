@@ -22,7 +22,6 @@ import androidx.fragment.app.DialogFragment
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.common.collect.Sets
-import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.account.CurrentAccountProvider
 import com.nextcloud.client.di.Injectable
 import com.nextcloud.client.network.ConnectivityService
@@ -76,7 +75,6 @@ class CreateFolderDialogFragment : DialogFragment(), DialogInterface.OnClickList
         bindButton()
     }
 
-    @IonosCustomization("colorMaterialButtonPrimaryTonal, colorMaterialButtonPrimaryBorderless")
     private fun bindButton() {
         val dialog = dialog
 
@@ -84,6 +82,12 @@ class CreateFolderDialogFragment : DialogFragment(), DialogInterface.OnClickList
             positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE) as? MaterialButton
             positiveButton?.let {
                 it.isEnabled = false
+                viewThemeUtils.material.colorMaterialButtonPrimaryTonal(it)
+            }
+
+            val negativeButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE) as? MaterialButton
+            negativeButton?.let {
+                viewThemeUtils.material.colorMaterialButtonPrimaryBorderless(it)
             }
         }
     }
@@ -95,7 +99,6 @@ class CreateFolderDialogFragment : DialogFragment(), DialogInterface.OnClickList
     }
 
     @Suppress("EmptyFunctionBlock")
-    @IonosCustomization
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         parentFolder = arguments?.getParcelableArgument(ARG_PARENT_FOLDER, OCFile::class.java)
 
@@ -103,7 +106,7 @@ class CreateFolderDialogFragment : DialogFragment(), DialogInterface.OnClickList
         binding = EditBoxDialogBinding.inflate(inflater, null, false)
 
         binding.userInput.setText(R.string.empty)
-        viewThemeUtils.ionos.material.colorTextInputLayout(binding.userInputContainer)
+        viewThemeUtils.material.colorTextInputLayout(binding.userInputContainer)
 
         val parentFolder = requireArguments().getParcelableArgument(ARG_PARENT_FOLDER, OCFile::class.java)
 
@@ -122,7 +125,7 @@ class CreateFolderDialogFragment : DialogFragment(), DialogInterface.OnClickList
         })
 
         val builder = buildMaterialAlertDialog(binding.root)
-        viewThemeUtils.ionos.dialog.colorMaterialAlertDialogBackground(binding.userInputContainer.context, builder)
+        viewThemeUtils.dialog.colorMaterialAlertDialogBackground(binding.userInputContainer.context, builder)
         return builder.create()
     }
 

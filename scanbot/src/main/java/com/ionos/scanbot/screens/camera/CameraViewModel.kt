@@ -126,7 +126,8 @@ internal class CameraViewModel @Inject constructor(
 
 	override fun onTakePictureClicked() {
 		eventTracker.trackTakePictureClicked()
-		subscriptions += getLocalFreeSpace()
+		subscriptions += Single
+            .fromCallable { getLocalFreeSpace() }
 			.subscribeOn(Schedulers.computation())
 			.observeOn(AndroidSchedulers.mainThread())
 			.subscribe(::takePictureIfDeviceHasEnoughFreeSpace, ::onError)

@@ -18,7 +18,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.material.snackbar.Snackbar;
-import com.ionos.annotation.IonosCustomization;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.account.UserAccountManager;
 import com.nextcloud.client.di.Injectable;
@@ -111,7 +110,6 @@ public class FileDetailActivitiesFragment extends Fragment implements
     }
 
     @Override
-    @IonosCustomization
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
@@ -166,7 +164,7 @@ public class FileDetailActivitiesFragment extends Fragment implements
 
         binding.submitComment.setOnClickListener(v -> submitComment());
 
-        viewThemeUtils.ionos.material.colorTextInputLayout(binding.commentInputFieldContainer);
+        viewThemeUtils.material.colorTextInputLayout(binding.commentInputFieldContainer);
 
         DisplayUtils.setAvatar(user,
                                this,

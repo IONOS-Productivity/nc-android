@@ -19,21 +19,22 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.ionos.scanbot.R
 import com.ionos.scanbot.controller.ScanbotController
-import com.ionos.scanbot.di.inject
 import com.ionos.scanbot.screens.base.BaseScreen.Event
 import com.ionos.scanbot.screens.base.BaseScreen.State
 import com.ionos.scanbot.screens.base.BaseScreen.ViewModel
 import com.ionos.scanbot.util.config.applyDefaultFontScale
 import com.ionos.scanbot.util.window.WindowWrapper
+import dagger.android.AndroidInjection
+import javax.inject.Inject
 
 internal abstract class BaseActivity<E : Event, S : State<E>, VM : ViewModel<E, S>> : BaseWindowInsetsActivity() {
-    protected abstract val viewModelFactory: ViewModelProvider.Factory
+    abstract val viewModelFactory: ViewModelProvider.Factory
     protected abstract val viewBinding: ViewBinding
 
     protected val context: Context get() = this
     protected val viewModel: VM by viewModels { viewModelFactory }
     protected val windowWrapper: WindowWrapper by lazy { WindowWrapper(window) }
-    protected val scanbotController: ScanbotController by inject { scanbotController() }
+    @Inject lateinit var scanbotController: ScanbotController
 
     override fun attachBaseContext(newBase: Context) {
         newBase.resources.configuration.applyDefaultFontScale()
@@ -43,6 +44,7 @@ internal abstract class BaseActivity<E : Event, S : State<E>, VM : ViewModel<E, 
     override fun onCreate(savedInstanceState: Bundle?) {
         applyTheme()
         super.onCreate(savedInstanceState)
+        AndroidInjection.inject(this)
         setContentView(viewBinding.root)
         savedInstanceState?.let(scanbotController::restoreState)
         viewModel.state.observe(this) { it.renderInternal() }

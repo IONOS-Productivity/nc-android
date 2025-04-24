@@ -16,6 +16,8 @@ import androidx.work.ListenableWorker
 import androidx.work.WorkerFactory
 import androidx.work.WorkerParameters
 import com.ionos.privacy.PrivacyPreferences
+import com.ionos.scanbot.license.ScanbotLicenseDownloadWorker
+import com.ionos.scanbot.license.ScanbotLicenseJobFactory
 import com.nextcloud.client.account.UserAccountManager
 import com.nextcloud.client.core.Clock
 import com.nextcloud.client.device.DeviceInfo
@@ -33,8 +35,6 @@ import com.owncloud.android.datamodel.ArbitraryDataProvider
 import com.owncloud.android.datamodel.SyncedFolderProvider
 import com.owncloud.android.datamodel.UploadsStorageManager
 import com.owncloud.android.utils.theme.ViewThemeUtils
-import com.ionos.scanbot.license.ScanbotLicenseDownloadWorker
-import com.ionos.scanbot.license.ScanbotLicenseJobFactory
 import org.greenrobot.eventbus.EventBus
 import javax.inject.Inject
 import javax.inject.Provider

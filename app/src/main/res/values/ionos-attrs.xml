@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
   ~ IONOS HiDrive Next - Android Client
   ~
   ~ SPDX-FileCopyrightText: 2025 STRATO GmbH.
@@ -6,5 +7,5 @@
   -->
 
 <resources>
-    <color name="file_details_accent_color">@color/curious_blue</color>
+    <attr format="string" name="ionosCustomization"/>
 </resources>

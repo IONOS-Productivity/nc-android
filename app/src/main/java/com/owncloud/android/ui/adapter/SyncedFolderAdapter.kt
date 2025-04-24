@@ -9,17 +9,13 @@ package com.owncloud.android.ui.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.PopupMenu
-import androidx.annotation.ColorRes
-import androidx.annotation.DrawableRes
 import androidx.annotation.VisibleForTesting
-import androidx.appcompat.content.res.AppCompatResources
 import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter
 import com.afollestad.sectionedrecyclerview.SectionedViewHolder
 import com.ionos.annotation.IonosCustomization
@@ -245,7 +241,6 @@ class SyncedFolderAdapter(
         return -1
     }
 
-    @IonosCustomization
     override fun onBindHeaderViewHolder(commonHolder: SectionedViewHolder, section: Int, expanded: Boolean) {
         if (section < filteredSyncFolderItems.size) {
             val holder = commonHolder as HeaderViewHolder
@@ -254,11 +249,11 @@ class SyncedFolderAdapter(
             holder.binding.title.text = filteredSyncFolderItems[section].folderName
 
             if (MediaFolderType.VIDEO == filteredSyncFolderItems[section].type) {
-                holder.binding.type.setImageDrawable(colorDrawable(R.drawable.video_32dp))
+                holder.binding.type.setImageResource(R.drawable.video_32dp)
             } else if (MediaFolderType.IMAGE == filteredSyncFolderItems[section].type) {
-                holder.binding.type.setImageDrawable(colorDrawable(R.drawable.image_32dp))
+                holder.binding.type.setImageResource(R.drawable.image_32dp)
             } else {
-                holder.binding.type.setImageDrawable(colorDrawable(R.drawable.folder_star_32dp))
+                holder.binding.type.setImageResource(R.drawable.folder_star_32dp)
             }
 
             holder.binding.syncStatusButton.visibility = View.VISIBLE
@@ -446,21 +441,11 @@ class SyncedFolderAdapter(
     @IonosCustomization
     private fun setSyncButtonActiveIcon(syncStatusButton: ImageButton, enabled: Boolean) {
         if (enabled) {
-            syncStatusButton.setImageDrawable(colorDrawable(R.drawable.ic_cloud_sync_on))
+            syncStatusButton.setImageResource(R.drawable.ic_cloud_sync_on)
         } else {
-            syncStatusButton.setImageDrawable(colorDrawable(R.drawable.ic_cloud_sync_off))
+            syncStatusButton.setImageResource(R.drawable.ic_cloud_sync_off)
         }
     }
-
-    @IonosCustomization
-    private fun colorDrawable(
-        @DrawableRes drawableRes: Int,
-        @ColorRes colorRes: Int = R.color.default_icon_color,
-        context: Context = this.context,
-    ): Drawable? =
-        AppCompatResources.getDrawable(context, drawableRes)?.let { drawable ->
-            viewThemeUtils.platform.colorDrawable(drawable, context.getColor(colorRes))
-        }
 
     companion object {
         private const val VIEW_TYPE_EMPTY = Int.MAX_VALUE

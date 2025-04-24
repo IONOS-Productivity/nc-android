@@ -12,12 +12,16 @@ import com.ionos.privacy.DataProtectionActivity
 import com.ionos.analycis.FirebaseAnalyticsManager
 import com.ionos.privacy.PrivacySettingsActivity
 import com.ionos.scanbot.di.NCScanbotModule
+import com.ionos.startup.IonosInitializer
 import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
 @Module(includes = [NCScanbotModule::class])
 abstract class StratoModule {
+
+    @ContributesAndroidInjector
+    abstract fun ionosInitializer(): IonosInitializer
 
     @ContributesAndroidInjector
     abstract fun dataProtectionActivity(): DataProtectionActivity

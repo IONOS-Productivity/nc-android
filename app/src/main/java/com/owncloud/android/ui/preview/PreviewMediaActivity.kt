@@ -276,13 +276,13 @@ class PreviewMediaActivity :
 
                 it.setBackgroundDrawable(ColorDrawable(getColor(R.color.exo_bottom_bar_background)))
 
-                viewThemeUtils.ionos.platform.themeSystemBars(this, getColor(R.color.transparent))
+                viewThemeUtils.platform.themeStatusBar(this, getColor(R.color.transparent))
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                     window.isNavigationBarContrastEnforced = false
                 }
 
             } else {
-                viewThemeUtils.ionos.platform.themeSystemBars(this)
+                viewThemeUtils.platform.themeStatusBar(this)
             }
         }
     }

@@ -7,6 +7,8 @@
   -->
 
 <resources>
+    <color name="ic_launcher_background">@color/madison</color>
+
     <color name="text_color">@color/ionos_default_text_color</color>
     <color name="secondary_text_color">@color/dusk</color>
     <color name="bg_default">@color/white</color>
@@ -33,27 +35,6 @@
     <color name="ionos_secondary_text_color">@color/dusk</color>
     <color name="sidemenu_progress_bar_color">@color/dodger_blue</color>
     <color name="sidemenu_warn_progress_bar_color">@color/chocolate</color>
-
-    <color name="ionos_default_button_bg_color">@color/madison</color>
-    <color name="ionos_default_pressed_button_bg_color">@color/dodger_blue</color>
-    <color name="ionos_default_disabled_button_bg_color">@color/gull_grayapprox</color>
-
-    <color name="ionos_filled_button_default_text_color">@color/white</color>
-    <color name="ionos_filled_button_pressed_text_color">@color/white</color>
-    <color name="ionos_filled_button_disabled_text_color">@color/geyser</color>
-
-    <color name="ionos_outlined_default_button_bg_color">@color/transparent</color>
-    <color name="ionos_outlined_pressed_button_bg_color">@color/navy</color>
-    <color name="ionos_outlined_disabled_button_bg_color">@color/transparent</color>
-    <color name="ionos_outlined_default_button_stroke_color">@color/madison</color>
-    <color name="ionos_outlined_pressed_button_stroke_color">@color/navy</color>
-    <color name="ionos_outlined_disabled_button_stroke_color">@color/gull_grayapprox</color>
-    <color name="ionos_outlined_button_default_text_color">@color/madison</color>
-    <color name="ionos_outlined_button_pressed_text_color">@color/white</color>
-    <color name="ionos_outlined_button_disabled_text_color">@color/gull_grayapprox</color>
-    <color name="ionos_text_button_default_text_color">@color/dodger_blue</color>
-    <color name="ionos_text_button_pressed_text_color">@color/royal_blue</color>
-    <color name="ionos_text_button_disabled_text_color">@color/gull_grayapprox</color>
 
     <color name="dialog_pressed_item_color">@color/lavender_mist</color>
 

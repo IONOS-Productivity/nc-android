@@ -70,7 +70,7 @@
         <item name="android:textColor">@color/outlined_button_text_color</item>
         <item name="android:backgroundTint">@color/outlined_button_bg_color</item>
         <item name="strokeColor">@color/outlined_button_stroke_color</item>
-        <item name="strokeWidth">2dp</item>
+        <item name="strokeWidth">@dimen/outlined_button_stroke_width</item>
         <item name="android:paddingRight">@dimen/button_text_padding</item>
         <item name="android:paddingLeft">@dimen/button_text_padding</item>
     </style>

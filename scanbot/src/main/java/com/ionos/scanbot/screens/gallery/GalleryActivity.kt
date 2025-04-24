@@ -18,7 +18,6 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
 import com.ionos.scanbot.R
 import com.ionos.scanbot.databinding.ScanbotActivityGalleryBinding
-import com.ionos.scanbot.di.inject
 import com.ionos.scanbot.screens.base.BaseActivity
 import com.ionos.scanbot.screens.common.ExitDialog
 import com.ionos.scanbot.screens.common.LockProgressDialog
@@ -38,6 +37,7 @@ import com.ionos.scanbot.screens.gallery.pager.GalleryPagerAdapter
 import com.ionos.scanbot.util.widget.addOnPageSelectedListener
 import com.ionos.scanbot.util.window.containsSideNavigationBar
 import com.ionos.scanbot.util.window.getSystemBarsAndDisplayCutoutInsets
+import javax.inject.Inject
 
 internal class GalleryActivity : BaseActivity<Event, State, ViewModel>() {
 
@@ -55,9 +55,9 @@ internal class GalleryActivity : BaseActivity<Event, State, ViewModel>() {
 	override val viewModelFactory by lazy { viewModelFactoryAssistant.create(getPictureId()) }
 	override val viewBinding by lazy { ScanbotActivityGalleryBinding.inflate(layoutInflater) }
 
-	private val viewModelFactoryAssistant by inject { galleryViewModelFactoryAssistant() }
-	private val viewPagerAdapter: GalleryPagerAdapter by inject { galleryPagerAdapter() }
-	private val exitDialog: ExitDialog by inject { exitDialog() }
+    @Inject lateinit var viewModelFactoryAssistant: GalleryViewModelFactory.Assistant
+    @Inject lateinit var viewPagerAdapter: GalleryPagerAdapter
+    @Inject lateinit var exitDialog: ExitDialog
 	private val progressDialog by lazy { LockProgressDialog() }
 	private val openScreen = OpenScreen(this)
 

@@ -15,7 +15,6 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.addTextChangedListener
 import com.ionos.scanbot.R
 import com.ionos.scanbot.databinding.ScanbotActivitySaveBinding
-import com.ionos.scanbot.di.inject
 import com.ionos.scanbot.exception.InvalidFileNameException
 import com.ionos.scanbot.exception.NoFreeLocalSpaceException
 import com.ionos.scanbot.exception.SaveDocumentException
@@ -29,12 +28,13 @@ import com.ionos.scanbot.screens.save.SaveScreen.State
 import com.ionos.scanbot.screens.save.SaveScreen.ViewModel
 import com.ionos.scanbot.util.window.getSystemBarsAndDisplayCutoutInsets
 import io.reactivex.disposables.CompositeDisposable
+import javax.inject.Inject
 
 internal class SaveActivity : BaseActivity<Event, State, ViewModel>() {
-	override val viewModelFactory: SaveViewModelFactory by inject { saveViewModelFactory() }
+    @Inject override lateinit var viewModelFactory: SaveViewModelFactory
 	override val viewBinding by lazy { ScanbotActivitySaveBinding.inflate(layoutInflater) }
 
-    private val selectDirectoryContract by inject { selectDirectoryContract() }
+    @Inject lateinit var selectDirectoryContract: SelectDirectoryContract
 	private val progressDialog by lazy { LockProgressDialog() }
 
     private val overwriteDialogsDisposable = CompositeDisposable()

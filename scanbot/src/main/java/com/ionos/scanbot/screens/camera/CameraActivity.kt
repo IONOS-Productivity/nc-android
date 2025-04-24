@@ -17,24 +17,25 @@ import androidx.core.view.WindowInsetsCompat
 import com.ionos.scanbot.screens.camera.ui_components.NoFreeSpaceMessageDialogWrapper
 import com.ionos.scanbot.R
 import com.ionos.scanbot.databinding.ScanbotActivityCameraBinding
-import com.ionos.scanbot.di.inject
 import com.ionos.scanbot.screens.base.BaseActivity
 import com.ionos.scanbot.screens.camera.CameraScreen.*
 import com.ionos.scanbot.screens.camera.CameraScreen.Event.*
 import com.ionos.scanbot.screens.camera.image_picker.ImagePickerLauncher
 import com.ionos.scanbot.screens.camera.ui_components.CameraViewController
 import com.ionos.scanbot.screens.camera.ui_components.ImportProgressDialog
+import com.ionos.scanbot.screens.common.ExitDialog
 import com.ionos.scanbot.screens.common.LockProgressDialog
 import com.ionos.scanbot.screens.common.use_case.open_screen.OpenScreen
 import com.ionos.scanbot.util.permission.hasPermissionTo
 import com.ionos.scanbot.util.permission.requestPermissionTo
 import com.ionos.scanbot.util.window.containsSideNavigationBar
 import com.ionos.scanbot.util.window.getSystemBarsAndDisplayCutoutInsets
+import javax.inject.Inject
 
 private const val CHECK_PERMISSION_REQUEST_CODE = 99
 
 internal class CameraActivity : BaseActivity<Event, State, ViewModel>() {
-	override val viewModelFactory by inject { cameraViewModelFactory() }
+    @Inject override lateinit var viewModelFactory: CameraViewModelFactory
 	override val viewBinding by lazy { ScanbotActivityCameraBinding.inflate(layoutInflater) }
 
 	private val imagePickerLauncher = ImagePickerLauncher(this) { viewModel.onPicturesUrisReceived(it) }
@@ -42,7 +43,7 @@ internal class CameraActivity : BaseActivity<Event, State, ViewModel>() {
 	private val decodingProgressDialog by lazy { LockProgressDialog() }
 	private val noFreeSpaceDialog by lazy { NoFreeSpaceMessageDialogWrapper(this) }
 	private val openScreen = OpenScreen(this)
-	private val exitDialog by inject { exitDialog() }
+    @Inject lateinit var exitDialog: ExitDialog
 
 	private val cameraViewController: CameraViewController by lazy {
 		CameraViewController(

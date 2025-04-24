@@ -16,17 +16,18 @@ import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.ionos.scanbot.R
 import com.ionos.scanbot.databinding.ScanbotActivityRearrangeBinding
-import com.ionos.scanbot.di.inject
 import com.ionos.scanbot.screens.base.BaseActivity
 import com.ionos.scanbot.screens.rearrange.RearrangeScreen.*
 import com.ionos.scanbot.screens.rearrange.RearrangeScreen.Event.*
+import com.ionos.scanbot.screens.rearrange.recycler.RearrangeAdapter
 import com.ionos.scanbot.screens.rearrange.recycler.RearrangeCallback
 import com.ionos.scanbot.util.window.getSystemBarsAndDisplayCutoutInsets
+import javax.inject.Inject
 
 internal class RearrangeActivity : BaseActivity<Event, State, ViewModel>() {
-	override val viewModelFactory by inject { rearrangeViewModelFactory() }
+    @Inject override lateinit var viewModelFactory: RearrangeViewModelFactory
 	override val viewBinding by lazy { ScanbotActivityRearrangeBinding.inflate(layoutInflater) }
-	private val adapter by inject { rearrangeAdapter() }
+    @Inject lateinit var adapter: RearrangeAdapter
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)

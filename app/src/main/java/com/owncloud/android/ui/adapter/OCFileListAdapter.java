@@ -32,6 +32,7 @@ import android.widget.LinearLayout;
 import com.elyeproj.loaderviewlibrary.LoaderImageView;
 import com.google.android.material.chip.Chip;
 import com.ionos.annotation.IonosCustomization;
+import com.ionos.utils.IonosBuildHelper;
 import com.nextcloud.android.common.ui.theme.utils.ColorRole;
 import com.nextcloud.android.lib.resources.recommendations.Recommendation;
 import com.nextcloud.client.account.User;
@@ -128,8 +129,8 @@ public class OCFileListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     private static final int VIEW_TYPE_FOOTER = 0;
     private static final int VIEW_TYPE_ITEM = 1;
-    @IonosCustomization
-    private static final int VIEW_TYPE_HEADER = 2;
+    private static final int VIEW_TYPE_IMAGE = 2;
+    private static final int VIEW_TYPE_HEADER = 3;
 
     private boolean onlyOnDevice;
     private final OCFileListDelegate ocFileListDelegate;
@@ -362,7 +363,20 @@ public class OCFileListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             return VIEW_TYPE_FOOTER;
         }
 
-        return VIEW_TYPE_ITEM;
+        if (IonosBuildHelper.isIonosBuild()) {
+            return VIEW_TYPE_ITEM;
+        }
+
+        OCFile item = getItem(position);
+        if (item == null) {
+            return VIEW_TYPE_ITEM;
+        }
+
+        if (MimeTypeUtil.isImageOrVideo(item)) {
+            return VIEW_TYPE_IMAGE;
+        } else {
+            return VIEW_TYPE_ITEM;
+        }
     }
 
     public boolean isEmpty() {
@@ -371,13 +385,23 @@ public class OCFileListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @NonNull
     @Override
-    @IonosCustomization
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         switch (viewType) {
             default -> {
                 if (gridView) {
                     return new OCFileListGridItemViewHolder(
                         GridItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false)
+                    );
+                } else {
+                    return new OCFileListItemViewHolder(
+                        ListItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false)
+                    );
+                }
+            }
+            case VIEW_TYPE_IMAGE -> {
+                if (gridView) {
+                    return new OCFileListViewHolder(
+                        GridImageBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false)
                     );
                 } else {
                     return new OCFileListItemViewHolder(
@@ -521,6 +545,21 @@ public class OCFileListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @IonosCustomization
     private void bindListGridItemViewHolder(ListGridItemViewHolder holder, OCFile file) {
         holder.getFileName().setText(mStorageManager.getFilenameConsideringOfflineOperation(file));
+
+        if (IonosBuildHelper.isIonosBuild()) {
+            return;
+        }
+
+        boolean gridImage = MimeTypeUtil.isImage(file) || MimeTypeUtil.isVideo(file);
+        if (gridView && gridImage) {
+            holder.getFileName().setVisibility(View.GONE);
+        } else {
+            if (gridView && ocFileListFragmentInterface.getColumnsCount() > showFilenameColumnThreshold) {
+                holder.getFileName().setVisibility(View.GONE);
+            } else {
+                holder.getFileName().setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     private void bindListItemViewHolder(ListItemViewHolder holder, OCFile file) {
@@ -721,6 +760,7 @@ public class OCFileListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         return output;
     }
 
+    @IonosCustomization("Hide header in IONOS")
     public boolean shouldShowHeader() {
         if (currentDirectory == null) {
             return false;
@@ -738,7 +778,7 @@ public class OCFileListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             return false;
         }
 
-        return false; //Hide header in IONOS // !TextUtils.isEmpty(currentDirectory.getRichWorkspace().trim());
+        return !IonosBuildHelper.isIonosBuild() && !TextUtils.isEmpty(currentDirectory.getRichWorkspace().trim());
     }
 
     /**

@@ -73,7 +73,6 @@ class ChooseAccountDialogFragment :
     }
 
     @SuppressLint("InflateParams")
-    @IonosCustomization
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         _binding = DialogChooseAccountBinding.inflate(layoutInflater)
         dialogView = binding.root
@@ -81,7 +80,7 @@ class ChooseAccountDialogFragment :
         val builder = MaterialAlertDialogBuilder(requireContext())
             .setView(binding.root)
 
-        viewThemeUtils.ionos.dialog.colorMaterialAlertDialogBackground(binding.statusView.context, builder)
+        viewThemeUtils.dialog.colorMaterialAlertDialogBackground(binding.statusView.context, builder)
 
         return builder.create()
     }
@@ -173,17 +172,16 @@ class ChooseAccountDialogFragment :
         }
     }
 
-    @IonosCustomization
     private fun themeViews() {
         viewThemeUtils.platform.themeDialogDivider(binding.separatorLine)
-        viewThemeUtils.ionos.platform.themeDialog(binding.root)
+        viewThemeUtils.platform.themeDialog(binding.root)
 
         viewThemeUtils.material.colorMaterialTextButton(binding.setStatus)
-        viewThemeUtils.ionos.dialog.colorDialogMenuText(binding.setStatus)
+        viewThemeUtils.dialog.colorDialogMenuText(binding.setStatus)
         viewThemeUtils.material.colorMaterialTextButton(binding.addAccount)
-        viewThemeUtils.ionos.dialog.colorDialogMenuText(binding.addAccount)
+        viewThemeUtils.dialog.colorDialogMenuText(binding.addAccount)
         viewThemeUtils.material.colorMaterialTextButton(binding.manageAccounts)
-        viewThemeUtils.ionos.dialog.colorDialogMenuText(binding.manageAccounts)
+        viewThemeUtils.dialog.colorDialogMenuText(binding.manageAccounts)
     }
 
     private fun getAccountListItems(): List<UserListItem> {

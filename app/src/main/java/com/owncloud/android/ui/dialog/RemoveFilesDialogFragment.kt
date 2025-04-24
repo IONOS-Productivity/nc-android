@@ -16,7 +16,6 @@ import android.os.Bundle
 import android.view.ActionMode
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.button.MaterialButton
-import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.di.Injectable
 import com.nextcloud.utils.extensions.getTypedActivity
 import com.owncloud.android.R
@@ -40,7 +39,6 @@ class RemoveFilesDialogFragment : ConfirmationDialogFragment(), ConfirmationDial
 
     private var positiveButton: MaterialButton? = null
 
-    @IonosCustomization()
     override fun onStart() {
         super.onStart()
 
@@ -48,17 +46,17 @@ class RemoveFilesDialogFragment : ConfirmationDialogFragment(), ConfirmationDial
 
         positiveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE) as? MaterialButton
         positiveButton?.let {
-            viewThemeUtils?.ionos?.material?.colorMaterialButtonPrimaryTonal(it)
+            viewThemeUtils?.material?.colorMaterialButtonPrimaryTonal(it)
         }
 
         val negativeButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE) as? MaterialButton
         negativeButton?.let {
-            viewThemeUtils?.ionos?.material?.colorMaterialButtonPrimaryBorderless(negativeButton)
+            viewThemeUtils?.material?.colorMaterialButtonPrimaryBorderless(negativeButton)
         }
 
         val neutralButton = alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL) as? MaterialButton
         neutralButton?.let {
-            viewThemeUtils?.ionos?.material?.colorMaterialButtonPrimaryBorderless(neutralButton)
+            viewThemeUtils?.material?.colorMaterialButtonPrimaryBorderless(neutralButton)
         }
     }
 

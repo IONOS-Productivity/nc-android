@@ -81,7 +81,7 @@ public class ExternalSiteWebView extends FileActivity {
 
         postOnCreate();
 
-        viewThemeUtils.ionos.platform.themeSystemBars(this);
+        viewThemeUtils.platform.themeStatusBar(this);
     }
 
     protected void postOnCreate() {
