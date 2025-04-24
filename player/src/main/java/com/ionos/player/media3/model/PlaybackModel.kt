@@ -25,7 +25,6 @@ import com.ionos.player.multipleplayer.interfaces.SourceInfoReleaseStrategy
 import com.ionos.player.multipleplayermvp.composite.CompositeListener
 import com.ionos.player.multipleplayermvp.interfaces.MultiplePlaybackSettings
 import com.ionos.player.multipleplayermvp.interfaces.MultiplePlayer
-import com.ionos.player.player.exception.FakeMediaPlayerException
 import com.ionos.player.player.interfaces.Action
 import com.ionos.player.player.interfaces.ParamAction
 import com.ionos.player.player.interfaces.VideoViewSetter
@@ -206,10 +205,6 @@ class PlaybackModel<SourceInfo> @Inject constructor(
 				prepare()
 			}
 		}
-	}
-
-	override fun simulateError() {
-		compositeListener.onError(FakeMediaPlayerException())
 	}
 
 	private fun onPlaybackUpdate() {

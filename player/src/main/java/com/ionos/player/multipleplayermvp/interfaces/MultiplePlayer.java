@@ -63,8 +63,6 @@ public interface MultiplePlayer {
 
 		void switchToSourceInfo(SourceInfo sourceInfo);
 
-		void simulateError();
-
 		void setVolume(double volume);
 
 		double getCurrentVolume();
@@ -109,8 +107,6 @@ public interface MultiplePlayer {
 
 	interface ErrorPresenter<SourceInfo> extends BasePresenter<SourceInfo> {
 		void setView(ErrorView<SourceInfo> errorView);
-
-		void simulateError();
 	}
 
 	interface ActiveSourceView<SourceInfo> {

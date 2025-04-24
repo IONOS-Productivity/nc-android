@@ -13,14 +13,6 @@ package com.ionos.player.player.interfaces;
  */
 public interface PlayerExceptionMessageProvider {
 
-	String playerInitializeExceptionMessage();
-
-	String failRequestAudioFocusExceptionMessage();
-
-	String audioFocusLostExceptionMessage();
-
-	String fakeExceptionMessage();
-
 	String sourceNotFoundExceptionMessage();
 
 	String unknownExceptionMessage();

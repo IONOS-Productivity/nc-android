@@ -10,7 +10,6 @@ package com.ionos.player;
 import com.ionos.player.domain.PlayerFileInfo;
 import com.ionos.player.multipleplayer.interfaces.MultiplePlaybackErrorStrategy;
 import com.ionos.player.multipleplayer.interfaces.MultiplePlaybackState;
-import com.ionos.player.player.exception.AudioFocusLostException;
 
 import java.util.List;
 
@@ -28,9 +27,6 @@ public class HiDriveMultiplePlaybackErrorStrategy implements MultiplePlaybackErr
 
 	@Override
 	public boolean switchToNextSource(Throwable throwable, final MultiplePlaybackState<PlayerFileInfo> multiplePlaybackState) {
-		if (throwable instanceof AudioFocusLostException) {
-			return false;
-		}
 		final List<PlayerFileInfo> sourceInfos = multiplePlaybackState.currentSourceInfos;
 		boolean oneFileInQueue = sourceInfos.size() == 1;
 		boolean endOfQueue = multiplePlaybackState.getCurrentPlaybackState()

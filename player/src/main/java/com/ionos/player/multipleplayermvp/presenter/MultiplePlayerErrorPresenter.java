@@ -36,11 +36,6 @@ public class MultiplePlayerErrorPresenter<SourceInfo> implements MultiplePlayer.
 	}
 
 	@Override
-	public void simulateError() {
-		this.model.simulateError();
-	}
-
-	@Override
 	public void onCreate() {
 
 	}
