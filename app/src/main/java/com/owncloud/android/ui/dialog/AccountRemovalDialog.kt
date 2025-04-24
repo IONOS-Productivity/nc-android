@@ -48,7 +48,7 @@ class AccountRemovalDialog : DialogFragment(), AvatarGenerationListener, Injecta
         user = requireArguments().getParcelableArgument(KEY_USER, User::class.java)
     }
 
-    @IonosCustomization("hide account name")
+    @IonosCustomization("Hide account name")
     override fun onStart() {
         super.onStart()
 
