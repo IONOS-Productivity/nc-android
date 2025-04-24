@@ -1,32 +1,21 @@
 package com.ionos.player.views.player.fragment;
 
 import android.app.Activity;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.annimon.stream.Optional;
 import com.ionos.player.R;
-import com.ionos.player.chromecast.PlayerChromecastModel;
 import com.ionos.player.di.PlayerComponent;
 import com.ionos.player.domain.PlayerFileInfo;
 import com.ionos.player.image_loading.PlayerImageLoader;
-import com.ionos.player.image_loading.PlayerImageLoaderOptions;
-import com.ionos.player.player_mode.EmptyPlayerModeModel;
-import com.ionos.player.player_mode.PlayerMode;
-import com.ionos.player.player_mode.PlayerModeModel;
-import com.ionos.player.player_mode.PlayerModePresenter;
 import com.ionos.player.predicate.IsVideoPredicate;
 import com.ionos.player.util.ScreenUtils;
 import com.ionos.player.util.SystemVersion;
-import com.ionos.player.views.player.presenter.ChromecastVideoErrorPresenter;
-import com.ionos.player.views.player.view.ChromecastErrorView;
 import com.ionos.player.views.player.view.FileTextDetailView;
 import com.ionos.player.views.player.view.PlayerCompatible;
 import com.ionos.player.multipleplayermvp.interfaces.MultiplePlayer;
@@ -52,40 +41,19 @@ public class VideoPlayerSourceFragment extends Fragment {
 	@Inject
 	MultiplePlayer.Model<PlayerFileInfo> playerModel;
 	@Inject
-	java.util.Optional<PlayerChromecastModel> chromecastModel;
-	@Inject
 	PlayerImageLoader imageLoader;
 	@Inject
 	IsVideoPredicate isVideoPredicate;
 
 	private PlayerFileInfo fileInfo;
 	private MultiplePlayer.VideoPresenter<PlayerFileInfo> videoPresenter;
-	private PlayerMode.Presenter playerModePresenter;
-	private PlayerMode.Model playerModeModel;
 
 	private View coverContainer;
 	private View videoContainer;
-	private View chromecastCoverContainer;
-	private ImageView chromecastCover;
-	private TextView chromecastTitleView;
 	private SurfaceView surfaceView;
 	private ProgressBar progressBar;
 	private SurfaceVideoView<PlayerFileInfo> surfaceVideoView;
 	private Optional<VideoSize> previousVideoSize = Optional.empty();
-	private ChromecastVideoErrorPresenter chromecastVideoErrorPresenter;
-
-	final ChromecastErrorView chromecastVideoErrorView = new ChromecastErrorView() {
-		@Override
-		public void showErrorPlaceholder() {
-			if (isCastingToChromecast()) {
-				if (isAdded()) {
-					progressBar.setVisibility(View.GONE);
-					chromecastCover.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.ic_player_movie_white_48dp));
-					chromecastCover.setVisibility(View.VISIBLE);
-				}
-			}
-		}
-	};
 
 	public static Fragment createInstance(PlayerFileInfo fileInfo) {
 		VideoPlayerSourceFragment fragment = new VideoPlayerSourceFragment();
@@ -103,13 +71,6 @@ public class VideoPlayerSourceFragment extends Fragment {
 		this.videoPresenter = isVideoPredicate.satisfied(fileInfo)
 				? new MultiplePlayerVideoPresenter<>(this.playerModel, this.fileInfo)
 				: NullMultiplePlayerVideoPresenter.getInstance();
-		if (chromecastModel.isPresent()) {
-			this.playerModeModel = new PlayerModeModel(this.chromecastModel.get());
-		}else {
-			this.playerModeModel = new EmptyPlayerModeModel();
-		}
-		this.playerModePresenter = new PlayerModePresenter(this.playerModeModel);
-		this.chromecastVideoErrorPresenter = new ChromecastVideoErrorPresenter(this.chromecastVideoErrorView, this.playerModel);
 	}
 
 	@Override
@@ -117,9 +78,6 @@ public class VideoPlayerSourceFragment extends Fragment {
 		View content = inflater.inflate(R.layout.fragment_video_player_source, container, false);
 		this.coverContainer = content.findViewById(R.id.album_cover_container);
 		this.videoContainer = content.findViewById(R.id.videoContainer);
-		this.chromecastCoverContainer = content.findViewById(R.id.chromecastCoverContainer);
-		this.chromecastCover = content.findViewById(R.id.chromecast_cover);
-		this.chromecastTitleView = content.findViewById(R.id.chromecastTitle);
 		this.surfaceView = content.findViewById(R.id.surfaceView);
 		this.progressBar = content.findViewById(R.id.progressBar);
 		FileTextDetailView fileTextDetailView = content.findViewById(R.id.fileDetailView);
@@ -137,9 +95,6 @@ public class VideoPlayerSourceFragment extends Fragment {
 		this.videoPresenter.setView(this.videoView);
 		this.videoPresenter.onCreate();
 		this.surfaceVideoView.onCreate();
-		this.playerModePresenter.setView(this.playerModeView);
-		this.playerModePresenter.onCreate();
-		this.chromecastVideoErrorPresenter.onStart();
 	}
 
 	@Override
@@ -147,9 +102,6 @@ public class VideoPlayerSourceFragment extends Fragment {
 		this.videoPresenter.setView(null);
 		this.videoPresenter.onDestroy();
 		this.surfaceVideoView.onDestroy();
-		this.playerModePresenter.setView(null);
-		this.playerModePresenter.onDestroy();
-		this.chromecastVideoErrorPresenter.onStop();
 		super.onDestroyView();
 	}
 
@@ -158,7 +110,6 @@ public class VideoPlayerSourceFragment extends Fragment {
 		super.onStart();
 		this.videoPresenter.onAppear();
 		this.surfaceVideoView.onAppear();
-		this.playerModePresenter.onAppear();
 
 		SurfaceInvalidator surfaceInvalidator = getSurfaceInvalidator();
 		if (surfaceInvalidator != null) {
@@ -184,7 +135,6 @@ public class VideoPlayerSourceFragment extends Fragment {
 	public void onStop() {
 		this.videoPresenter.onDisappear();
 		this.surfaceVideoView.onDisappear();
-		this.playerModePresenter.onDisappear();
 
 		SurfaceInvalidator surfaceInvalidator = getSurfaceInvalidator();
 		if (surfaceInvalidator != null && surfaceView != null) {
@@ -195,74 +145,35 @@ public class VideoPlayerSourceFragment extends Fragment {
 	}
 
 	private void switchToCoverContainer() {
-		setContainersVisibility(true, false, false);
+		setContainersVisibility(true, false);
 	}
 
 	private void switchToVideoContainer() {
-		setContainersVisibility(false, true, false);
+		setContainersVisibility(false, true);
 	}
 
-	private void switchToChromecastCoverContainer() {
-		setContainersVisibility(false, false, true);
-		String deviceName = chromecastModel.get().getCastDeviceName();
-		if (!deviceName.isEmpty()) {
-			chromecastTitleView.setVisibility(View.VISIBLE);
-			chromecastTitleView.setText(getString(R.string.player_casting_to_text) + " " + deviceName);
-		}
-		progressBar.setVisibility(View.VISIBLE);
-        var requestBuilder = imageLoader.load(fileInfo);
-        if (requestBuilder != null) {
-            requestBuilder
-				.onSuccess(() -> progressBar.setVisibility(View.GONE))
-				.onError(() -> progressBar.setVisibility(View.GONE))
-				.errorResources(R.drawable.ic_player_movie_white_48dp)
-				.options(new PlayerImageLoaderOptions(PlayerImageLoaderOptions.ScaleType.CENTER_INSIDE))
-				.into(chromecastCover);
-            }
-	}
-
-	private void setContainersVisibility(boolean songContainerVisible, boolean videoContainerVisible, boolean chromecastCoverVisible) {
+	private void setContainersVisibility(boolean songContainerVisible, boolean videoContainerVisible) {
 		this.coverContainer.setVisibility(songContainerVisible ? View.VISIBLE : View.INVISIBLE);
 		this.videoContainer.setVisibility(videoContainerVisible ? View.VISIBLE : View.INVISIBLE);
 		this.surfaceView.setVisibility(videoContainerVisible ? View.VISIBLE : View.INVISIBLE);
-		this.chromecastCoverContainer.setVisibility(chromecastCoverVisible ? View.VISIBLE : View.INVISIBLE);
 	}
-
-	private final PlayerMode.View playerModeView = new PlayerMode.View() {
-		@Override
-		public void switchToRegularMode() {
-			switchToCoverContainer();
-		}
-
-		@Override
-		public void switchToChromecastMode() {
-			if (chromecastModel.isPresent()) {
-				switchToChromecastCoverContainer();
-			}
-		}
-	};
 
 	private final MultiplePlayer.VideoView<PlayerFileInfo> videoView = new MultiplePlayer.VideoView<>() {
 		@Override
 		public void setVideoViewAvailable() {
-			if (isCastingToChromecast()) {
-				switchToChromecastCoverContainer();
-			} else {
-				switchToVideoContainer();
-				final Optional<VideoSize> videoSize = playerModel.getState().get().getCurrentPlaybackState().get().videoSize;
-				if (videoSize.isPresent()) {
-					if (!previousVideoSize.equals(videoSize)) {
-						previousVideoSize = videoSize;
-						setVideoSize(videoSize.get().getWidth(), videoSize.get().getHeight());
-					}
-				}
-			}
+            switchToVideoContainer();
+            final Optional<VideoSize> videoSize = playerModel.getState().get().getCurrentPlaybackState().get().videoSize;
+            if (videoSize.isPresent()) {
+                if (!previousVideoSize.equals(videoSize)) {
+                    previousVideoSize = videoSize;
+                    setVideoSize(videoSize.get().getWidth(), videoSize.get().getHeight());
+                }
+            }
 		}
 
 		@Override
 		public void setVideoViewUnavailable() {
 			switchToCoverContainer();
-			chromecastCover.setImageResource(android.R.color.transparent);
 		}
 
 		@Override
@@ -273,10 +184,6 @@ public class VideoPlayerSourceFragment extends Fragment {
 		public void clearVideoView(VideoViewSetter setter) {
 		}
 	};
-
-	private boolean isCastingToChromecast() {
-		return playerModeModel.getMode() == PlayerMode.Mode.CHROMECAST;
-	}
 
 	private void setVideoSize(int videoWidth, int videoHeight) {
 		float videoProportion = (float) videoWidth / (float) videoHeight;

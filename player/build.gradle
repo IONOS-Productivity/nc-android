@@ -60,14 +60,6 @@ dependencies {
     implementation "com.google.dagger:dagger:$daggerVersion"
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
 
-    api "androidx.media3:media3-cast:$androidxMediaVersion"
-    implementation("com.google.android.gms:play-services-cast:$playServicesCastVersion") {
-        exclude group: 'androidx.versionedparcelable'
-        exclude group: 'javax.inject'
-    }
-    implementation("com.google.android.gms:play-services-cast-framework:$playServicesCastVersion") {
-        exclude group: 'javax.inject'
-    }
     api "com.annimon:stream:$annimon_stream"
 
     testImplementation "junit:junit:$junit"

@@ -22,15 +22,9 @@ import com.ionos.player.transformation.MediaItemToDataSourceFactoryTransformatio
 import com.ionos.player.util.PlayerLocaleProviderImpl
 import com.ionos.player.PlayerMultiplePlaybackSettings
 import com.ionos.player.cache.PlayerPathProvider
-import com.ionos.player.chromecast.PlayerChromecastModel
 import com.ionos.player.di.PlayerModule.Companion.PLAYER_CACHE_SIZE_QUALIFIER
 import com.ionos.player.image_loading.PlayerImageLoader
-import com.ionos.player.media3.PlayerFactory
-import com.ionos.player.media3.PlayerFactoryImpl
-import com.ionos.player.media3.player.CreateExoPlayer
-import com.ionos.player.media3.player.CreateStubPlayer
 import com.ionos.player.message.PlayerMessageBuilderFactory
-import com.ionos.player.multipleplayermvp.interfaces.MultiplePlaybackSettings
 import com.ionos.player.predicate.FileBeingProcessedPredicate
 import com.ionos.player.predicate.IsVideoPredicate
 import com.ionos.player.transformation.FileInfoToCacheKeyTransformation
@@ -47,7 +41,6 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
-import java.util.Optional
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -66,28 +59,6 @@ abstract class NCPlayerModule {
             return NCMultiplePlaybackSettings(
                 true
             )
-        }
-
-        @UnstableApi
-        @Provides
-        @Singleton
-        fun provideHiDrivePlayerFactory(
-            createExoPlayer: CreateExoPlayer,
-            createChromeCastPlayer: CreateStubPlayer,
-            playbackSettings: MultiplePlaybackSettings,
-        ): PlayerFactory {
-            return PlayerFactoryImpl(
-                createExoPlayer,
-                createChromeCastPlayer,
-                playbackSettings
-            )
-        }
-
-        @Provides
-        @Singleton
-        fun providePlayerChromecastModel(
-        ): Optional<PlayerChromecastModel> {
-            return Optional.empty()
         }
     }
 

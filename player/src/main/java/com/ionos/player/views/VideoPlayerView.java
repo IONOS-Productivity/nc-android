@@ -9,7 +9,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ionos.player.R;
-import com.ionos.player.chromecast.PlayerChromecastModel;
 import com.ionos.player.di.PlayerComponent;
 import com.ionos.player.domain.PlayerFileInfo;
 import com.ionos.player.message.PlayerMessageBuilderFactory;
@@ -32,7 +31,6 @@ import com.ionos.player.player.interfaces.PlaybackState;
 import com.ionos.player.player.volume.Volume;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.inject.Inject;
 
@@ -48,8 +46,6 @@ public class VideoPlayerView extends PlayerView {
 
 	@Inject
 	MultiplePlayer.Model<PlayerFileInfo> playerModel;
-	@Inject
-	Optional<PlayerChromecastModel> chromecastModel;
 	@Inject
 	PlayerMessageBuilderFactory messageBuilderFactory;
 	@Inject
@@ -161,9 +157,6 @@ public class VideoPlayerView extends PlayerView {
 		this.hidingPresenter.onAppear();
 		this.playerModel.addListener(this.playerModelListener);
 		this.timer.subscribe(this.timerCallbackListener);
-		if(chromecastModel.isPresent()) {
-			this.chromecastModel.get().addReceiverStateChangeListener(this.receiverStateChangeListener);
-		}
 	}
 
 	@CallSuper
@@ -174,9 +167,6 @@ public class VideoPlayerView extends PlayerView {
 		this.hidingPresenter.onDisappear();
 		this.playerModel.removeListener(this.playerModelListener);
 		this.timer.unSubscribe();
-		if(chromecastModel.isPresent()) {
-			this.chromecastModel.get().removeReceiverStateChangeListener(this.receiverStateChangeListener);
-		}
 	}
 
 	protected void updateState() {
@@ -215,14 +205,6 @@ public class VideoPlayerView extends PlayerView {
 		@Override
 		public void onClick(View view) {
 			playerViewContainer.onPlayerViewClose();
-		}
-	};
-
-	private final PlayerChromecastModel.ReceiverStateChangeListener receiverStateChangeListener = new PlayerChromecastModel.ReceiverStateChangeListener() {
-
-		@Override
-		public void onStateChange() {
-			updateState();
 		}
 	};
 

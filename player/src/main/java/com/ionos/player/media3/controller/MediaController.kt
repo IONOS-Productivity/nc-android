@@ -53,7 +53,7 @@ fun MediaController.updateMediaItems(newMediaItems: List<MediaItem>) {
 	}
 }
 
-fun Player.setRepeatMode(mode: RepeatMode) {
+fun MediaController.setRepeatMode(mode: RepeatMode) {
 	repeatMode = when (mode) {
 		RepeatMode.SINGLE -> Player.REPEAT_MODE_ONE
 		RepeatMode.ALL -> Player.REPEAT_MODE_ALL

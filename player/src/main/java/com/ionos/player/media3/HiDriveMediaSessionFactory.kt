@@ -8,34 +8,28 @@ import androidx.media3.session.CommandButton
 import androidx.media3.session.MediaSession
 import androidx.media3.session.SessionCommand
 import com.ionos.player.R
-import com.ionos.player.chromecast.PlayerChromecastModel
 import com.ionos.player.domain.PlayerFileInfo
 import com.ionos.player.image_loading.PlayerImageLoader
 import com.ionos.player.media3.session.HiDriveMediaSessionBitmapLoader
 import com.ionos.player.media3.session.HiDriveMediaSessionCallback
 import com.ionos.player.media3.session.MediaSessionFactory
 import com.ionos.player.media3.store.SourceInfoStore
-import com.ionos.player.player_mode.PlayerMode
 import com.ionos.player.predicate.IsVideoPredicate
-import java.util.Optional
 import javax.inject.Inject
-import kotlin.jvm.optionals.getOrNull
 
 @UnstableApi
 class HiDriveMediaSessionFactory @Inject constructor(
 	private val context: Context,
 	private val playerFactory: PlayerFactory,
-	private val chromecastModel: Optional<PlayerChromecastModel>,
 	private val sessionCallback: HiDriveMediaSessionCallback,
 	private val sourceInfoStore: SourceInfoStore<PlayerFileInfo>,
 	private val imageLoader: PlayerImageLoader,
 	private val isVideoPredicate: IsVideoPredicate,
 ) : MediaSessionFactory {
-    private val playerMode get() = chromecastModel.getOrNull()?.state()?.getPlayerMode() ?: PlayerMode.Mode.REGULAR
 
 	override fun create(): MediaSession {
 		return MediaSession
-			.Builder(context, playerFactory.create(playerMode))
+			.Builder(context, playerFactory.create())
 			.setBitmapLoader(provideBitmapLoader())
 			.setCallback(sessionCallback)
 			.setCustomLayout(provideCustomLayout())

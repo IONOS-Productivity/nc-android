@@ -6,20 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ionos.player.R;
-import com.ionos.player.chromecast.PlayerChromecastModel;
 import com.ionos.player.di.PlayerComponent;
 import com.ionos.player.domain.PlayerFileInfo;
-import com.ionos.player.player_mode.EmptyPlayerModeModel;
-import com.ionos.player.player_mode.PlayerMode;
-import com.ionos.player.player_mode.PlayerModeModel;
-import com.ionos.player.player_mode.PlayerModePresenter;
 import com.ionos.player.views.player.view.FileTextDetailView;
 
-import java.util.Optional;
-
-import javax.inject.Inject;
-
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
@@ -30,11 +20,6 @@ import androidx.fragment.app.Fragment;
 public class AudioPlayerSourceFragment extends Fragment {
 
 	private final static String ARGUMENT_FILE_INFO = "ARGUMENT_FILE_INFO";
-
-	@Inject
-	Optional<PlayerChromecastModel> chromecastModel;
-
-	private PlayerMode.Presenter playerModePresenter;
 
 	private PlayerFileInfo fileInfo;
 
@@ -54,14 +39,6 @@ public class AudioPlayerSourceFragment extends Fragment {
 		super.onCreate(savedInstanceState);
 		PlayerComponent.Companion.from(requireContext()).inject(this);
 		this.fileInfo = (PlayerFileInfo) getArguments().getSerializable(ARGUMENT_FILE_INFO);
-
-		PlayerMode.Model playerModeModel;
-		if (chromecastModel.isPresent()){
-			playerModeModel = new PlayerModeModel(this.chromecastModel.get());
-		}else {
-			playerModeModel = new EmptyPlayerModeModel();
-		}
-		this.playerModePresenter = new PlayerModePresenter(playerModeModel);
 	}
 
 	@Override
@@ -77,31 +54,6 @@ public class AudioPlayerSourceFragment extends Fragment {
 
 		return content;
 	}
-
-	@Override
-	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
-		this.playerModePresenter.onCreate();
-	}
-
-	@Override
-	public void onDestroyView() {
-		this.playerModePresenter.onDestroy();
-		super.onDestroyView();
-	}
-
-	@Override
-	public void onStart() {
-		super.onStart();
-		this.playerModePresenter.onAppear();
-	}
-
-	@Override
-	public void onStop() {
-		this.playerModePresenter.onDisappear();
-		super.onStop();
-	}
-
 
 	private void switchToSongContainer() {
 		this.coverContainer.setVisibility(View.VISIBLE);

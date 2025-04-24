@@ -1,18 +1,14 @@
 package com.ionos.player.di
 
-import androidx.media3.cast.MediaItemConverter
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.datasource.cache.Cache
 import androidx.media3.datasource.cache.LeastRecentlyUsedCacheEvictor
 import androidx.media3.datasource.cache.SimpleCache
 import com.ionos.player.HiDriveMultiplePlaybackErrorStrategy
 import com.ionos.player.cache.PlayerPathProvider
-import com.ionos.player.chromecast.ChromecastTitleFactory
-import com.ionos.player.chromecast.ChromecastTitleFactoryImpl
 import com.ionos.player.domain.PlayerFileInfo
 import com.ionos.player.media3.HiDriveMediaSessionFactory
 import com.ionos.player.media3.item.HiDriveMediaIdFactory
-import com.ionos.player.media3.item.HiDriveMediaItemConverter
 import com.ionos.player.media3.item.HiDriveMediaItemFactory
 import com.ionos.player.media3.store.HiDriveSourceInfoStore
 import com.ionos.player.media3.item.MediaIdFactory
@@ -71,20 +67,9 @@ abstract class PlayerModule {
 	): SourceInfoStore<PlayerFileInfo>
 
 	@Binds
-	abstract fun bindChromecastTitleFactory(
-		factory: ChromecastTitleFactoryImpl
-	): ChromecastTitleFactory
-
-	@Binds
 	abstract fun bindMediaItemFactory(
 		factory: HiDriveMediaItemFactory
 	): MediaItemFactory<PlayerFileInfo>
-
-	@UnstableApi
-	@Binds
-	abstract fun bindMediaItemConverter(
-		converter: HiDriveMediaItemConverter,
-	): MediaItemConverter
 
 	@Binds
 	@Singleton
