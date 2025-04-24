@@ -17,12 +17,11 @@ import android.view.View
 import androidx.annotation.VisibleForTesting
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.ionos.annotation.IonosCustomization
+import com.ionos.authorization_method.AuthorizationMethodActivity
 import com.ionos.privacy.DataProtectionActivity
 import com.ionos.privacy.PrivacyPreferences
-import com.nextcloud.client.account.UserAccountManager
 import com.nextcloud.client.preferences.AppPreferences
 import com.owncloud.android.R
-import com.owncloud.android.authentication.AuthenticatorActivity
 import com.owncloud.android.databinding.ActivitySplashBinding
 import com.owncloud.android.ui.activity.BaseActivity
 import com.owncloud.android.ui.activity.FileDisplayActivity
@@ -83,7 +82,7 @@ class LauncherActivity : BaseActivity() {
                     startActivity(DataProtectionActivity.createIntent(this, intent))
                 }
             } else {
-                startActivity(Intent(this, AuthenticatorActivity::class.java))
+                startActivity(AuthorizationMethodActivity.createInstance(this))
             }
             finish()
         }, SPLASH_DURATION)
