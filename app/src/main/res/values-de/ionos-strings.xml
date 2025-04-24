@@ -29,4 +29,16 @@
     <string name="ionos_data_protection_settings_analytics_title">Analyse der Datenerfassung zur bedarfsgerechten Gestaltung</string>
     <string name="ionos_data_protection_settings_save">Einstellungen speichern</string>
 
+    <!-- Authorization Screen -->
+    <string name="ionos_authorization_method_greeting">Willkommen beim Cloud-Speicher</string>
+    <string name="ionos_authorization_method_login_button">Login</string>
+    <string name="ionos_authorization_method_description">Sie müssen sich über den Browser einloggen</string>
+    <string name="ionos_authorization_screen_cancel_button">Abbrechen</string>
+    <string name="ionos_authorization_screen_retry_button">Wiederholen</string>
+
+    <!-- Toolbar -->
+    <string name="ionos_toolbar_sort_button_text">Filtern</string>
+
+    <!-- Side menu -->
+    <string name="ionos_side_menu_storage_used">Verwendeter Speicher</string>
 </resources>

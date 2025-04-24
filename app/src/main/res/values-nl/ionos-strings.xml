@@ -29,4 +29,16 @@
     <string name="ionos_data_protection_settings_analytics_title">Dataverzameling voor gebruikersgebaseerde app-optimalisatie</string>
     <string name="ionos_data_protection_settings_save">Instellingen opslaan</string>
 
+    <!-- Authorization Screen -->
+    <string name="ionos_authorization_method_greeting">Welkom bij je cloud storage</string>
+    <string name="ionos_authorization_method_login_button">Login</string>
+    <string name="ionos_authorization_method_description">Je moet inloggen via je browser</string>
+    <string name="ionos_authorization_screen_cancel_button">Annuleren</string>
+    <string name="ionos_authorization_screen_retry_button">Opnieuw proberen</string>
+
+    <!-- Toolbar -->
+    <string name="ionos_toolbar_sort_button_text">Filteren</string>
+
+    <!-- Side menu -->
+    <string name="ionos_side_menu_storage_used">Opslag in gebruik</string>
  </resources>

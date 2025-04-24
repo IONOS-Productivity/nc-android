@@ -28,4 +28,17 @@
     <string name="ionos_data_protection_settings_analytics_description">Estos datos nos ayudan a optimizar el uso de la aplicación y a identificar los fallos del sistema y los errores más rápidamente.</string>
     <string name="ionos_data_protection_settings_analytics_title">Análisis de la recopilación de datos para un diseño personalizado basado en las necesidades de cada usuario</string>
     <string name="ionos_data_protection_settings_save">Guardar ajustes</string>
+
+    <!-- Authorization Screen -->
+    <string name="ionos_authorization_method_greeting">Bienvenido/a al almacenamiento en la nube</string>
+    <string name="ionos_authorization_method_login_button">Iniciar sesión</string>
+    <string name="ionos_authorization_method_description">Tienes que iniciar sesión en el navegador.</string>
+    <string name="ionos_authorization_screen_cancel_button">Cancelar</string>
+    <string name="ionos_authorization_screen_retry_button">Volver a intentar</string>
+
+    <!-- Toolbar -->
+    <string name="ionos_toolbar_sort_button_text">Filtro</string>
+
+    <!-- Side menu -->
+    <string name="ionos_side_menu_storage_used">Memoria utilizada</string>
  </resources>
