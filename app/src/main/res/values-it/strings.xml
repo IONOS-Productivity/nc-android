@@ -878,6 +878,7 @@
     <string name="stream">Trasmetti con…</string>
     <string name="stream_not_possible_headline">Trasmissione interna non possibile</string>
     <string name="stream_not_possible_message">Scarica invece il media o usa un\'applicazione esterna.</string>
+    <string name="strict_mode">Modalità rigorosa: nessuna connessione HTTP consentita! </string>
     <string name="sub_folder_rule_day">Anno/Mese/Giorno</string>
     <string name="sub_folder_rule_month">Anno/Mese</string>
     <string name="sub_folder_rule_year">Anno</string>
@@ -1062,6 +1063,9 @@
     <string name="wait_a_moment">Attendi…</string>
     <string name="wait_checking_credentials">Controllo delle credenziali memorizzate</string>
     <string name="wait_for_tmp_copy_from_private_storage">Copia file dall\'archiviazione privata</string>
+    <string name="webview_version_check_alert_dialog_message">Aggiorna l\'applicazione System WebView di Android per accedere</string>
+    <string name="webview_version_check_alert_dialog_positive_button_title">Aggiorna</string>
+    <string name="webview_version_check_alert_dialog_title">Aggiorna System WebView di Android</string>
     <string name="warn_rename_extension">La modifica dell\'estensione potrebbe causare l\'apertura di questo file in un\'applicazione diversa</string>
     <string name="what_s_new_image">Immagine Cosa c\'è di nuovo</string>
     <string name="whats_new_skip">Salta</string>
