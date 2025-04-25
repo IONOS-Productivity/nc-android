@@ -562,33 +562,20 @@ public class OCFileListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
     }
 
+    @IonosCustomization("Change share icon")
     private void bindListItemViewHolder(ListItemViewHolder holder, OCFile file) {
+        holder.getSharedAvatars().setVisibility(View.GONE);
+        holder.getSharedAvatars().removeAllViews();
         if ((file.isSharedWithMe() || file.isSharedWithSharee()) && !isMultiSelect() && !gridView &&
             !hideItemOptions) {
-            holder.getSharedAvatars().setVisibility(View.VISIBLE);
-            holder.getSharedAvatars().removeAllViews();
-
-            String fileOwner = file.getOwnerId();
-            List<ShareeUser> sharees = file.getSharees();
-
-            // use fileOwner if not oneself, then add at first
-            ShareeUser fileOwnerSharee = new ShareeUser(fileOwner, file.getOwnerDisplayName(), ShareType.USER);
-            if (!TextUtils.isEmpty(fileOwner) &&
-                !fileOwner.equals(userId) &&
-                !sharees.contains(fileOwnerSharee)) {
-                sharees.add(fileOwnerSharee);
+            if(file.isSharedViaLink()){
+                holder.getShared().setImageResource(R.drawable.ic_shared_all_types);
+            } else {
+                holder.getShared().setImageResource(R.drawable.shared_via_users);
             }
-
-            Collections.reverse(sharees);
-
-            Log_OC.d(this, "sharees of " + file.getFileName() + ": " + sharees);
-
-            holder.getSharedAvatars().setAvatars(user, sharees, viewThemeUtils);
-            holder.getSharedAvatars().setOnClickListener(
+            holder.getShared().setVisibility(View.VISIBLE);
+            holder.getShared().setOnClickListener(
                 view -> ocFileListFragmentInterface.onShareIconClick(file));
-        } else {
-            holder.getSharedAvatars().setVisibility(View.GONE);
-            holder.getSharedAvatars().removeAllViews();
         }
 
         // tags
