@@ -9,6 +9,7 @@ package com.ionos.utils
 
 import android.app.Activity
 import android.content.Context
+import android.content.res.ColorStateList
 import android.graphics.drawable.Drawable
 import android.view.MenuItem
 import android.view.View
@@ -26,6 +27,7 @@ import androidx.annotation.DrawableRes
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.nextcloud.android.common.ui.theme.utils.AndroidViewThemeUtils
 import com.nextcloud.android.common.ui.theme.utils.ColorRole
+import com.nextcloud.android.common.ui.util.buildColorStateList
 import com.owncloud.android.R
 
 class IonosAndroidViewThemeUtils(
@@ -179,6 +181,22 @@ class IonosAndroidViewThemeUtils(
     }
 
     fun colorBottomNavigationView(bottomNavigationView: BottomNavigationView) {
-        delegate.colorBottomNavigationView(bottomNavigationView)
+        with(bottomNavigationView) {
+            setBackgroundResource(R.color.ionos_bottom_navigation_background_color)
+
+            val iconColorInt = context.getColor(R.color.ionos_bottom_navigation_icon_color)
+            itemIconTintList = ColorStateList.valueOf(iconColorInt)
+
+            val activeIndicatorColorInt = context.getColor(R.color.ionos_bottom_navigation_active_indicator_color)
+            itemActiveIndicatorColor = ColorStateList.valueOf(activeIndicatorColorInt)
+
+            val rippleColorInt = context.getColor(R.color.ionos_bottom_navigation_ripple_color)
+            itemRippleColor = ColorStateList.valueOf(rippleColorInt)
+
+            itemTextColor = buildColorStateList(
+                android.R.attr.state_checked to context.getColor(R.color.text_color),
+                -android.R.attr.state_checked to context.getColor(R.color.secondary_text_color),
+            )
+        }
     }
 }
