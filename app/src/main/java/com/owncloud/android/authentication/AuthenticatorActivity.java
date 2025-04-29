@@ -123,7 +123,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -342,9 +341,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
         if (webViewLoginMethod) {
             accountSetupWebviewBinding = AccountSetupWebviewBinding.inflate(getLayoutInflater());
             setContentView(accountSetupWebviewBinding.getRoot());
-//            anonymouslyPostLoginRequest(webloginUrl);
-            initCancelButton();
-             initWebViewLogin(webloginUrl, false);
+            anonymouslyPostLoginRequest(webloginUrl);
         } else {
             accountSetupBinding = AccountSetupBinding.inflate(getLayoutInflater());
             setContentView(accountSetupBinding.getRoot());
@@ -362,20 +359,8 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
             }
         }    
         initServerPreFragment(savedInstanceState);
-        ProcessLifecycleOwner.get().getLifecycle().addObserver(lifecycleEventObserver);
-
-         webViewUtil.checkWebViewVersion();
-    }
-
-    @IonosCustomization
-    private void initCancelButton() {
-        MaterialButton cancelButton = accountSetupWebviewBinding.loginFlowV2.cancelButton;
-
-        cancelButton.setOnClickListener(v -> {
-            loginFlowExecutorService.shutdown();
-            ProcessLifecycleOwner.get().getLifecycle().removeObserver(lifecycleEventObserver);
-            finish();
-        });
+        //ProcessLifecycleOwner.get().getLifecycle().addObserver(lifecycleEventObserver);
+        webViewUtil.checkWebViewVersion();
     }
     
     private void showEnforcedServers() {
@@ -460,8 +445,9 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
                 JsonObject jsonObject = JsonParser.parseString(response).getAsJsonObject();
                 String loginUrl = getLoginUrl(jsonObject);
                 runOnUiThread(() -> {
-                    initLoginInfoView();
-                    launchDefaultWebBrowser(loginUrl);
+                    //initLoginInfoView();
+                    //launchDefaultWebBrowser(loginUrl);
+                    initWebViewLogin(loginUrl, true);
                 });
                 token = jsonObject.getAsJsonObject("poll").get("token").getAsString();
             } catch (Throwable t) {
@@ -500,10 +486,6 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
             Build.MANUFACTURER.substring(1).toLowerCase(Locale.getDefault()) + " " + Build.MODEL + " (Android)";
     }
 
-    /**
-     * @Deprecated This function is deprecated. Please use the {@link #anonymouslyPostLoginRequest(String)} method instead, which utilizes the improved login flow v2.
-     */
-    @Deprecated
     @SuppressFBWarnings("ANDROID_WEB_VIEW_JAVASCRIPT")
     @SuppressLint("SetJavaScriptEnabled")
     private void initWebViewLogin(String baseURL, boolean useGenericUserAgent) {
@@ -596,6 +578,18 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
                     viewThemeUtils.platform.resetStatusBar(AuthenticatorActivity.this);
                     getWindow().setNavigationBarColor(ContextCompat.getColor(AuthenticatorActivity.this, R.color.bg_default));
                 }
+
+                if(url.equals(baseUrl + "/grant")) {
+                    finishLoginProcedure();
+                }
+            }
+
+            private void finishLoginProcedure() {
+                loginFlowExecutorService.execute(() -> {
+                    if (!isLoginProcessCompleted) {
+                        performLoginFlowV2();
+                    }
+                });
             }
 
             @Override
@@ -836,8 +830,8 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
         if (intent.getBooleanExtra(EXTRA_USE_PROVIDER_AS_WEBLOGIN, true)) {
             accountSetupWebviewBinding = AccountSetupWebviewBinding.inflate(getLayoutInflater());
             setContentView(accountSetupWebviewBinding.getRoot());
-//            anonymouslyPostLoginRequest(getString(R.string.provider_registration_server));
-            initWebViewLogin(getString(R.string.provider_registration_server), true);
+            anonymouslyPostLoginRequest(getString(R.string.provider_registration_server));
+			//initWebViewLogin(getString(R.string.provider_registration_server), true);
         }
     }
 
@@ -1080,7 +1074,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
 //                    } else {
 //                        initLoginInfoView();
 //                    }
-                     initWebViewLogin(mServerInfo.mBaseUrl + WEB_LOGIN, false);
+//                     initWebViewLogin(mServerInfo.mBaseUrl + WEB_LOGIN, false);
                 }
             }
         } else {
@@ -1348,8 +1342,8 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
 
         } else {    // authorization fail due to client side - probably wrong credentials
             if (accountSetupWebviewBinding != null) {
-                //anonymouslyPostLoginRequest(mServerInfo.mBaseUrl + WEB_LOGIN);
-                initWebViewLogin(mServerInfo.mBaseUrl + WEB_LOGIN, false);
+                anonymouslyPostLoginRequest(mServerInfo.mBaseUrl + WEB_LOGIN);
+                //initWebViewLogin(mServerInfo.mBaseUrl + WEB_LOGIN, false);
             } else {
                 DisplayUtils.showSnackMessage(this, R.string.auth_access_failed, result.getLogMessage(this));
 
@@ -1759,7 +1753,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
 
         checkOcServer();
         loginFlowExecutorService.shutdown();
-        ProcessLifecycleOwner.get().getLifecycle().removeObserver(lifecycleEventObserver);
+        //ProcessLifecycleOwner.get().getLifecycle().removeObserver(lifecycleEventObserver);
     }
 
     /**
