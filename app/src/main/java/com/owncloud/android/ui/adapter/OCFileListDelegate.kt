@@ -225,14 +225,12 @@ class OCFileListDelegate(
         gridViewHolder.thumbnail.tag = file.fileId
         OCFileListThumbnailLoader(
             file,
-            gridViewHolder.thumbnail,
-            gridViewHolder.itemLayout,
+            gridViewHolder,
             user,
             storageManager,
             asyncTasks,
             gridView,
             context,
-            gridViewHolder.shimmerThumbnail,
             preferences,
             viewThemeUtils,
             syncFolderProvider

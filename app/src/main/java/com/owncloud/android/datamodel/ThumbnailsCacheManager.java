@@ -1186,7 +1186,11 @@ public final class ThumbnailsCacheManager {
         return null;
     }
 
+    @IonosCustomization("Use layout overlay instead of bitmap overlay")
     public static Bitmap addVideoOverlay(Bitmap thumbnail, Context context) {
+        if (IonosBuildHelper.isIonosBuild()) {
+            return thumbnail;
+        }
 
         Drawable playButtonDrawable = ResourcesCompat.getDrawable(MainApp.getAppContext().getResources(),
                                                                   R.drawable.video_white,
