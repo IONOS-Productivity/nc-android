@@ -1086,6 +1086,9 @@
     <string name="write_email">Envoyer un e-mail</string>
     <string name="wrong_storage_path">Le dossier de stockage des données n\'existe pas !</string>
     <string name="wrong_storage_path_desc">Cela peut être dû à une restauration de sauvegarde sur un autre appareil. Retour aux valeurs par défaut. Veuillez vérifier les paramètres pour ajuster le chemin de stockage.</string>
+    <string name="share_copy_link">Partager et copier le lien</string>
+    <string name="send_share">Envoyer le partage</string>
+    <string name="pin_home">Épingler à l\'écran d\'accueil</string>
     <plurals name="hours">
         <item quantity="one">%d heure</item>
         <item quantity="many">%d heures</item>

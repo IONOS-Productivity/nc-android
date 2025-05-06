@@ -1034,6 +1034,9 @@
     <string name="write_email">Stuur e-mail</string>
     <string name="wrong_storage_path">Gegevensopslagmap bestaat niet!</string>
     <string name="wrong_storage_path_desc">Dit kan komen door een back-upherstel op een ander apparaat. Standaardinstelling wordt gebruikt. Controleer de instellingen om de gegevensopslagmap aan te passen.</string>
+    <string name="share_copy_link">Link delen en kopiëren</string>
+    <string name="send_share">Delen verzenden</string>
+    <string name="pin_home">Vastmaken aan beginscherm</string>
     <plurals name="sync_fail_in_favourites_content">
         <item quantity="one">Kon bestand %1$dniet synchroniseren (conflicten: %2$d)</item>
         <item quantity="other">Kon bestand %1$d niet synchroniseren (conflicten: %2$d)</item>

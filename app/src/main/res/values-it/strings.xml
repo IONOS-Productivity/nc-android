@@ -1077,6 +1077,9 @@
     <string name="write_email">Invia email</string>
     <string name="wrong_storage_path">La cartella di archiviazione dei dati non esiste!</string>
     <string name="wrong_storage_path_desc">Ciò potrebbe essere dovuto a un ripristino di backup su un altro dispositivo. Ripristino del valore predefinito. Controlla le impostazioni per modificare la cartella di archiviazione dei dati.</string>
+    <string name="share_copy_link">Condividere e copiare il link</string>
+    <string name="send_share">Inviare la condivisione</string>
+    <string name="pin_home">Pin alla schermata iniziale</string>
     <plurals name="hours">
         <item quantity="one">%d ora</item>
         <item quantity="many">%d ore</item>
