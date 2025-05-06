@@ -631,6 +631,7 @@
     <string name="permission_storage_access">Se necesitan permisos adicionales para subir y descargar archivos.</string>
     <string name="pick_contact_to_share_with">Elige un contacto con quien compartir</string>
     <string name="picture_set_as_no_app">No se ha encontrado una app para establecer con ella la imagen</string>
+    <string name="pin_home">Anclar a pantalla de inicio</string>
     <string name="pin_shortcut_label">Abrir %1$s</string>
     <string name="placeholder_fileSize">389 KB</string>
     <string name="placeholder_filename">placeholder.txt</string>
@@ -780,6 +781,7 @@
     <string name="select_template">Escoge plantilla</string>
     <string name="send">Mandar</string>
     <string name="sendbutton_description">Icono del botón de enviar</string>
+    <string name="send_share">Enviar compartir</string>
     <string name="set_as">Establecer como</string>
     <string name="set_picture_as">Usar imagen como</string>
     <string name="set_status">Configurar estado</string>
@@ -1085,8 +1087,6 @@
     <string name="write_email">Enviar email</string>
     <string name="wrong_storage_path">¡No existe la carpeta de almacenamiento de datos!</string>
     <string name="wrong_storage_path_desc">Esto podría deberse a una copia de seguridad restaurada en otro dispositivo. Se usarán los valores predeterminados. Por favor, compruebe la configuración para ajustar la carpeta de almacenamiento.</string>
-    <string name="send_share">Enviar compartir</string>
-    <string name="pin_home">Anclar a pantalla de inicio</string>
     <plurals name="hours">
         <item quantity="one">%d hora</item>
         <item quantity="many">%d horas</item>

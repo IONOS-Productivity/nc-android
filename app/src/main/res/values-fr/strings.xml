@@ -631,6 +631,7 @@
     <string name="permission_storage_access">Des permissions supplémentaires sont exigées pour téléverser et télécharger des fichiers.</string>
     <string name="pick_contact_to_share_with">Choisir un contact avec qui partager</string>
     <string name="picture_set_as_no_app">Aucune application trouvée pour utiliser cette image</string>
+    <string name="pin_home">Épingler à l\'écran d\'accueil</string>
     <string name="pin_shortcut_label">Ouvrir %1$s</string>
     <string name="placeholder_fileSize">389 Ko</string>
     <string name="placeholder_filename">placeholder.txt</string>
@@ -780,12 +781,14 @@
     <string name="select_template">Sélectionnez un modèle</string>
     <string name="send">Envoyer</string>
     <string name="sendbutton_description">Icône du bouton d\'envoi</string>
+    <string name="send_share">Envoyer le partage</string>
     <string name="set_as">Utiliser comme</string>
     <string name="set_picture_as">Utiliser l\'image comme</string>
     <string name="set_status">Définir le statut</string>
     <string name="set_status_message">Enregistrer le message d\'état</string>
     <string name="setup_e2e">Pendant la configuration du chiffrement de bout en bout, vous recevrez une phrase secrète aléatoire de 12 mots dont vous aurez besoin pour ouvrir vos fichiers sur d\'autres appareils. Cette phrase secrète ne sera stockée que sur cet appareil, et pourra être affichée à nouveau sur cet écran. Veuillez la noter en lieu sûr !</string>
     <string name="share">Partager</string>
+    <string name="share_copy_link">Partager et copier le lien</string>
     <string name="share_dialog_title">Partage</string>
     <string name="share_download_limit">Définir le nombre maximal de téléchargements autorisés</string>
     <string name="share_expiration_date_format">%1$s</string>
@@ -1086,9 +1089,6 @@
     <string name="write_email">Envoyer un e-mail</string>
     <string name="wrong_storage_path">Le dossier de stockage des données n\'existe pas !</string>
     <string name="wrong_storage_path_desc">Cela peut être dû à une restauration de sauvegarde sur un autre appareil. Retour aux valeurs par défaut. Veuillez vérifier les paramètres pour ajuster le chemin de stockage.</string>
-    <string name="share_copy_link">Partager et copier le lien</string>
-    <string name="send_share">Envoyer le partage</string>
-    <string name="pin_home">Épingler à l\'écran d\'accueil</string>
     <plurals name="hours">
         <item quantity="one">%d heure</item>
         <item quantity="many">%d heures</item>
