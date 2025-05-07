@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.annimon.stream.Optional;
-import com.ionos.player.PlayerComponent;
 import com.ionos.player.R;
 import com.ionos.player.model.MultiplePlayer;
 import com.ionos.player.model.PlayerFileInfo;
@@ -28,6 +27,7 @@ import javax.inject.Inject;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import dagger.android.support.AndroidSupportInjection;
 
 /**
  * Created by Sergey Shandyuk on 4/15/2016.
@@ -65,7 +65,7 @@ public class VideoPlayerSourceFragment extends Fragment {
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		PlayerComponent.Companion.from(requireContext()).inject(this);
+		AndroidSupportInjection.inject(this);
 		this.fileInfo = (PlayerFileInfo) getArguments().getSerializable(ARGUMENT_FILE_INFO);
 		this.videoPresenter = isVideoPredicate.satisfied(fileInfo)
 				? new MultiplePlayerVideoPresenter<>(this.playerModel, this.fileInfo)

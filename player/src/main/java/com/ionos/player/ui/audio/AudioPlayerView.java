@@ -5,7 +5,6 @@ import android.content.Context;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ionos.player.PlayerComponent;
 import com.ionos.player.R;
 import com.ionos.player.model.MultiplePlayer;
 import com.ionos.player.model.PlayerFileInfo;
@@ -28,6 +27,7 @@ import javax.inject.Inject;
 import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
 import androidx.drawerlayout.widget.DrawerLayout;
+import dagger.android.HasAndroidInjector;
 
 /**
  * Created by yaz on 9/20/16.
@@ -79,7 +79,7 @@ public class AudioPlayerView extends PlayerView {
 	}
 
 	protected void inject(@NonNull Context context) {
-		PlayerComponent.Companion.from(context).inject(this);
+        ((HasAndroidInjector) context.getApplicationContext()).androidInjector().inject(this);
 	}
 
 	@Override

@@ -5,13 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.ionos.player.PlayerComponent;
 import com.ionos.player.R;
 import com.ionos.player.model.PlayerFileInfo;
 import com.ionos.player.ui.common.FileTextDetailView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import dagger.android.support.AndroidSupportInjection;
 
 /**
  * Created by Sergey Shandyuk on 4/15/2016.
@@ -37,7 +37,7 @@ public class AudioPlayerSourceFragment extends Fragment {
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		PlayerComponent.Companion.from(requireContext()).inject(this);
+		AndroidSupportInjection.inject(this);
 		this.fileInfo = (PlayerFileInfo) getArguments().getSerializable(ARGUMENT_FILE_INFO);
 	}
 

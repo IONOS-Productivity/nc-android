@@ -16,6 +16,7 @@ import androidx.media3.session.MediaSessionService
 import com.ionos.player.media3.session.MediaSessionActivityFactory
 import com.ionos.player.media3.session.MediaSessionFactory
 import com.ionos.player.media3.session.MediaSessionHolder
+import dagger.android.AndroidInjection
 import javax.inject.Inject
 
 class PlaybackService : MediaSessionService() {
@@ -34,8 +35,7 @@ class PlaybackService : MediaSessionService() {
 	@UnstableApi
 	override fun onCreate() {
 		super.onCreate()
-		val component = (applicationContext as PlaybackServiceComponentProvider).getComponent()
-		component.inject(this)
+        AndroidInjection.inject(this)
 	}
 
 	override fun onGetSession(controllerInfo: ControllerInfo): MediaSession? {

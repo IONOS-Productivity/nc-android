@@ -89,7 +89,6 @@ import com.owncloud.android.utils.ReceiversHelper;
 import com.owncloud.android.utils.SecurityUtils;
 import com.owncloud.android.utils.appConfig.AppConfigManager;
 import com.owncloud.android.utils.theme.ViewThemeUtils;
-import com.ionos.player.PlayerComponentProvider;
 
 import org.conscrypt.Conscrypt;
 import org.greenrobot.eventbus.EventBus;
@@ -132,7 +131,7 @@ import static com.owncloud.android.ui.activity.ContactsPreferenceActivity.PREFER
  * Contains methods to build the "static" strings. These strings were before constants in different classes.
  */
 @IonosCustomization("Ionos components provider")
-public class MainApp extends Application implements HasAndroidInjector, PlayerComponentProvider {
+public class MainApp extends Application implements HasAndroidInjector {
     public static final OwnCloudVersion OUTDATED_SERVER_VERSION = NextcloudVersion.nextcloud_26;
     public static final OwnCloudVersion MINIMUM_SUPPORTED_SERVER_VERSION = OwnCloudVersion.nextcloud_17;
 
@@ -990,11 +989,5 @@ public class MainApp extends Application implements HasAndroidInjector, PlayerCo
             case DARK -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             case SYSTEM -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
         }
-    }
-
-    @NonNull
-    @Override
-    public AppComponent getComponent() {
-        return appComponent;
     }
 }

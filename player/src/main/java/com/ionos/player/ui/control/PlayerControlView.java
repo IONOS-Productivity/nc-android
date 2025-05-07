@@ -10,7 +10,6 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.ionos.player.PlayerComponent;
 import com.ionos.player.R;
 import com.ionos.player.model.MultiplePlayer;
 import com.ionos.player.model.PlayerFileInfo;
@@ -19,13 +18,14 @@ import com.ionos.player.ui.control.availability_strategy.HiDriveCyclicPreviousCo
 import com.ionos.player.ui.control.listener.CompositePlayerControlViewListener;
 import com.ionos.player.ui.control.listener.MultipleClickListener;
 import com.ionos.player.ui.control.listener.PlayerControlViewListener;
-import com.ionos.player.util.PlayerLocaleProvider;
 
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
 import androidx.annotation.DrawableRes;
+import dagger.android.HasAndroidInjector;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.disposables.Disposables;
@@ -51,8 +51,6 @@ public class PlayerControlView extends LinearLayout {
 
 	@Inject
 	MultiplePlayer.Model<PlayerFileInfo> playerModel;
-	@Inject
-	PlayerLocaleProvider localeProvider;
 
 	private MultiplePlayer.ControlPresenter<PlayerFileInfo> controlPresenter;
 	private MultiplePlayerPlayPreviousPresenter playPreviousPresenter;
@@ -100,7 +98,7 @@ public class PlayerControlView extends LinearLayout {
 			return;
 		}
 
-		PlayerComponent.Companion.from(context).inject(this);
+        ((HasAndroidInjector) context.getApplicationContext()).androidInjector().inject(this);
 		readAttributes(attrs);
 		setViewsWidthByMode();
 		this.controlPresenter = new MultiplePlayerControlPresenter<>(
@@ -360,9 +358,9 @@ public class PlayerControlView extends LinearLayout {
 				minutes = minutes % 60;
 			}
 			if (mode == Mode.VIDEO) {
-				return String.format(localeProvider.getDefault(), "%02d:%02d:%02d", hours, minutes, seconds);
+				return String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, seconds);
 			} else {
-				return String.format(localeProvider.getDefault(), "%02d:%02d", minutes, seconds);
+				return String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
 			}
 		}
 	};

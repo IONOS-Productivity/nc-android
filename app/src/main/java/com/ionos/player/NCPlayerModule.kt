@@ -4,8 +4,6 @@ import androidx.media3.common.util.UnstableApi
 import androidx.media3.datasource.DataSource
 import com.ionos.player.PlayerModule.Companion.PLAYER_CACHE_SIZE_QUALIFIER
 import com.ionos.player.media3.datasource.IonosDataSourceFactory
-import com.ionos.player.media3.datasource.PlayerPathProvider
-import com.ionos.player.media3.datasource.PlayerPathProviderImpl
 import com.ionos.player.media3.session.HiDriveMediaSessionActivityFactory
 import com.ionos.player.media3.session.MediaSessionActivityFactory
 import com.ionos.player.model.NCMultiplePlaybackSettings
@@ -21,8 +19,6 @@ import com.ionos.player.ui.message.NCPlayerExceptionMessageProvider
 import com.ionos.player.ui.message.PlayerExceptionMessageProvider
 import com.ionos.player.ui.message.PlayerMessageBuilderFactory
 import com.ionos.player.ui.message.PlayerMessageBuilderFactoryImpl
-import com.ionos.player.util.PlayerLocaleProvider
-import com.ionos.player.util.PlayerLocaleProviderImpl
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -63,17 +59,6 @@ abstract class NCPlayerModule {
     abstract fun bindIsVideoPredicate(
         predicate: IsVideoPredicateImpl
     ): IsVideoPredicate
-
-    @Binds
-    @Singleton
-    abstract fun bindPlayerPathProvider(
-        provider: PlayerPathProviderImpl
-    ): PlayerPathProvider
-
-    @Binds
-    abstract fun bindPlayerLocaleProvider(
-        provider: PlayerLocaleProviderImpl
-    ): PlayerLocaleProvider
 
     @Binds
     abstract fun bindFileBeingProcessedPredicate(

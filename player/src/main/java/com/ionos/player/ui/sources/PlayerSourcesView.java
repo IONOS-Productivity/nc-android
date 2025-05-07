@@ -5,7 +5,6 @@ import android.util.AttributeSet;
 import android.view.WindowInsets;
 import android.widget.LinearLayout;
 
-import com.ionos.player.PlayerComponent;
 import com.ionos.player.R;
 import com.ionos.player.model.MultiplePlayer;
 import com.ionos.player.model.PlayerFileInfo;
@@ -24,6 +23,7 @@ import javax.inject.Inject;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager.widget.ViewPager;
+import dagger.android.HasAndroidInjector;
 
 /**
  * Created by yaz on 9/20/16.
@@ -54,7 +54,7 @@ public class PlayerSourcesView extends LinearLayout {
 		if (isInEditMode()) {
 			return;
 		}
-		PlayerComponent.Companion.from(context).inject(this);
+        ((HasAndroidInjector) context.getApplicationContext()).androidInjector().inject(this);
 		this.presenter = new MultiplePlayerSourcesPresenter<>(
 				this.playerModel,
 				new DoNothingMultiplePlayerPresenterDestroyStrategy<>(),

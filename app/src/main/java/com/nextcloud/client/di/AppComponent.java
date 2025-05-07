@@ -26,7 +26,6 @@ import com.owncloud.android.MainApp;
 import com.owncloud.android.media.MediaControlView;
 import com.owncloud.android.ui.ThemeableSwitchPreference;
 import com.owncloud.android.ui.whatsnew.ProgressIndicator;
-import com.ionos.player.PlayerComponent;
 
 import javax.inject.Singleton;
 
@@ -54,7 +53,7 @@ import dagger.android.support.AndroidSupportInjectionModule;
     StratoModule.class,
 })
 @Singleton
-public interface AppComponent extends PlayerComponent {
+public interface AppComponent {
 
     void inject(MainApp app);
 
