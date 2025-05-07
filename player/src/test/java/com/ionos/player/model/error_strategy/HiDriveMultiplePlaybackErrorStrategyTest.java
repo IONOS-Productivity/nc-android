@@ -31,7 +31,7 @@ public class HiDriveMultiplePlaybackErrorStrategyTest {
 
 	@Test
 	public void switchToNextSourceReturnFalseIfOneFileQueue() throws Exception {
-		MultiplePlaybackState<PlayerFileInfo> state = createState(Optional.of(mockWithName("a")), mockWithName("a"));
+		MultiplePlaybackState state = createState(Optional.of(mockWithName("a")), mockWithName("a"));
 
 		boolean switchToNext = strategy.switchToNextSource(new RuntimeException(), state);
 
@@ -40,7 +40,7 @@ public class HiDriveMultiplePlaybackErrorStrategyTest {
 
 	@Test
 	public void switchToNextSourceReturnFalseIfNotOneFileQueueAndCurentFileIsLast() throws Exception {
-		MultiplePlaybackState<PlayerFileInfo> state = createState(Optional.of(mockWithName("b")), mockWithName("a"), mockWithName("b"));
+		MultiplePlaybackState state = createState(Optional.of(mockWithName("b")), mockWithName("a"), mockWithName("b"));
 
 		boolean switchToNext = strategy.switchToNextSource(new RuntimeException(), state);
 
@@ -49,17 +49,17 @@ public class HiDriveMultiplePlaybackErrorStrategyTest {
 
 	@Test
 	public void switchToNextSourceReturnTrueIfNotOneFileQueueAndCurrentFileIsNotLast() throws Exception {
-		MultiplePlaybackState<PlayerFileInfo> state = createState(Optional.of(mockWithName("b")), mockWithName("a"), mockWithName("a"));
+		MultiplePlaybackState state = createState(Optional.of(mockWithName("b")), mockWithName("a"), mockWithName("a"));
 
 		boolean switchToNext = strategy.switchToNextSource(new RuntimeException(), state);
 
 		assertTrue(switchToNext);
 	}
 
-	private MultiplePlaybackState<PlayerFileInfo> createState(Optional<PlayerFileInfo> currentFile, PlayerFileInfo... files) {
-		Optional<PlaybackState<PlayerFileInfo>> current = currentFile
-				.map(input -> new PlaybackState<>(State.NONE, 0, Optional.empty(), input, Optional.empty()));
-		return new MultiplePlaybackState<>(
+	private MultiplePlaybackState createState(Optional<PlayerFileInfo> currentFile, PlayerFileInfo... files) {
+		Optional<PlaybackState> current = currentFile
+				.map(input -> new PlaybackState(State.NONE, 0, Optional.empty(), input, Optional.empty()));
+		return new MultiplePlaybackState(
 				Arrays.asList(files),
 				current,
 				false,
@@ -69,9 +69,12 @@ public class HiDriveMultiplePlaybackErrorStrategyTest {
 	@NonNull
 	private PlayerFileInfo mockWithName(@NonNull String name){
 		return new PlayerFileInfo(
-				name,
-				name.length(),
-				name
+            name,
+			name,
+			"fakeUri:///" + name,
+			"audio/mp3",
+			0,
+			0
 		);
 	}
 }
