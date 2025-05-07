@@ -3,10 +3,10 @@ package com.ionos.player.transformation
 import androidx.media3.common.MediaItem
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.datasource.DataSource
-import com.ionos.player.data_source.IonosDataSourceFactoryFactory
+import com.ionos.player.media3.datasource.IonosDataSourceFactoryFactory
+import com.ionos.player.model.PlayerFileInfo
+import com.ionos.player.model.store.SourceInfoStore
 import com.ionos.player.transformation.oc_file.PlayerFileInfoToOCFileTransformation
-import com.ionos.player.domain.PlayerFileInfo
-import com.ionos.player.media3.store.SourceInfoStore
 import javax.inject.Inject
 
 @UnstableApi

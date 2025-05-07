@@ -2,9 +2,9 @@ package com.ionos.player.transformation
 
 import android.content.Context
 import android.content.Intent
-import com.ionos.player.activity.IonosPlayerActivity
-import com.ionos.player.domain.PlayerFileInfo
-import com.ionos.player.predicate.IsVideoPredicate
+import com.ionos.player.model.PlayerFileInfo
+import com.ionos.player.model.predicate.IsVideoPredicate
+import com.ionos.player.ui.IonosPlayerActivity
 import javax.inject.Inject
 
 class FileInfoToIntentTransformationImpl @Inject constructor(

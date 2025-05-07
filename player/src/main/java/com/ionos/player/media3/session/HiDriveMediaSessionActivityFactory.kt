@@ -3,10 +3,10 @@ package com.ionos.player.media3.session
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import com.ionos.player.domain.PlayerFileInfo
+import com.ionos.player.model.PlayerFileInfo
+import com.ionos.player.model.store.SourceInfoStore
 import com.ionos.player.transformation.FileInfoToIntentTransformation
 import com.ionos.player.util.SystemVersion
-import com.ionos.player.media3.store.SourceInfoStore
 import javax.inject.Inject
 
 class HiDriveMediaSessionActivityFactory @Inject constructor(

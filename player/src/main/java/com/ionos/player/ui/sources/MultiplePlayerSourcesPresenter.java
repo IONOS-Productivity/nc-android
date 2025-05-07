@@ -1,0 +1,111 @@
+/*
+ * IONOS HiDrive Next - Android Client
+ *
+ * SPDX-FileCopyrightText: 2025 STRATO AG.
+ * SPDX-License-Identifier: GPL-2.0
+ */
+
+package com.ionos.player.ui.sources;
+
+import com.annimon.stream.Optional;
+import com.ionos.player.model.MultiplePlayer;
+import com.ionos.player.model.release_strategy.SourceInfoReleaseStrategy;
+import com.ionos.player.model.state.MultiplePlaybackState;
+import com.ionos.player.model.state.PlaybackState;
+import com.ionos.player.ui.message.ExceptionToMessageTransformation;
+import com.ionos.player.ui.message.PlayerExceptionMessageProvider;
+import com.ionos.player.ui.sources.destroy_strategy.MultiplePlayerPresenterDestroyStrategy;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * User: zuzik
+ * Date: 6/4/16
+ */
+public class MultiplePlayerSourcesPresenter<SourceInfo> implements MultiplePlayer.SourcesPresenter<SourceInfo> {
+
+	private final MultiplePlayer.Model<SourceInfo> model;
+	private final ExceptionToMessageTransformation exceptionToMessageTransformation;
+	private MultiplePlayer.SourcesView<SourceInfo> view = NullMultiplePlayerSourcesView.getInstance();
+
+	private final MultiplePlayerPresenterDestroyStrategy<SourceInfo> destroyStrategy;
+	private final SourceInfoReleaseStrategy<SourceInfo> releaseStrategy;
+
+	public MultiplePlayerSourcesPresenter(
+			MultiplePlayer.Model<SourceInfo> model,
+			MultiplePlayerPresenterDestroyStrategy<SourceInfo> destroyStrategy,
+			SourceInfoReleaseStrategy<SourceInfo> releaseStrategy,
+			PlayerExceptionMessageProvider exceptionMessageProvider) {
+		this.model = model;
+		this.destroyStrategy = destroyStrategy;
+		this.releaseStrategy = releaseStrategy;
+		this.exceptionToMessageTransformation = new ExceptionToMessageTransformation(exceptionMessageProvider);
+	}
+
+	@Override
+	public void setView(MultiplePlayer.SourcesView<SourceInfo> view) {
+		this.view = view != null ? view : NullMultiplePlayerSourcesView.<SourceInfo>getInstance();
+	}
+
+	@Override
+	public void onCreate() {
+		updateView();
+	}
+
+	@Override
+	public void onDestroy() {
+		this.view = NullMultiplePlayerSourcesView.getInstance();
+		this.destroyStrategy.onDestroy(this.model);
+	}
+
+	@Override
+	public void onAppear() {
+		updateView();
+		this.model.addListener(this.listener);
+	}
+
+	@Override
+	public void onDisappear() {
+		this.model.removeListener(this.listener);
+	}
+
+	@Override
+	public void onSwitchToSourceInfo(SourceInfo sourceInfo) {
+		this.model.switchToSourceInfo(sourceInfo);
+	}
+
+	private void updateView() {
+		updateView(this.model.getState());
+	}
+
+	private void updateView(Optional<MultiplePlaybackState<SourceInfo>> state) {
+		List<SourceInfo> sources = new ArrayList<>();
+
+		if (state.isPresent()) {
+			sources = state.get().currentSourceInfos;
+		}
+
+		this.view.displaySourceInfos(sources);
+		if (state.mapToBoolean(input -> input.getCurrentPlaybackState().isPresent()).orElse(false)) {
+			PlaybackState<SourceInfo> playbackState = state.get().getCurrentPlaybackState().get();
+			this.view.displayCurrentSourceInfo(playbackState.sourceInfo);
+		}
+	}
+
+	private final MultiplePlayer.Model.Listener<SourceInfo> listener = new MultiplePlayer.Model.Listener<>() {
+		@Override
+		public void onUpdate(MultiplePlaybackState<SourceInfo> state) {
+			updateView();
+		}
+
+		@Override
+		public void onError(Throwable error) {
+		}
+
+		@Override
+		public void onSourceInfosChanged(List<SourceInfo> originalSourceInfos, List<SourceInfo> currentSourceInfos) {
+			view.displaySourceInfos(currentSourceInfos);
+		}
+	};
+}

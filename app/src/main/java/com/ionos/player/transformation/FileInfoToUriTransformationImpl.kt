@@ -1,8 +1,8 @@
 package com.ionos.player.transformation
 
 import android.net.Uri
+import com.ionos.player.model.PlayerFileInfo
 import com.ionos.player.transformation.oc_file.PlayerFileInfoToOCFileTransformation
-import com.ionos.player.domain.PlayerFileInfo
 import javax.inject.Inject
 
 class FileInfoToUriTransformationImpl @Inject constructor(

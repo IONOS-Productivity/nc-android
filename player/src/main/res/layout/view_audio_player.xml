@@ -40,7 +40,7 @@
 
         </LinearLayout>
 
-        <com.ionos.player.views.player.view.PlayerSourcesView
+        <com.ionos.player.ui.sources.PlayerSourcesView
             android:id="@+id/playerSourcesView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -48,7 +48,7 @@
             android:paddingLeft="@dimen/player_padding_normal"
             android:paddingRight="@dimen/player_padding_normal"/>
 
-        <com.ionos.player.views.player.view.PlayerControlView
+        <com.ionos.player.ui.control.PlayerControlView
             android:id="@+id/playerControlView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

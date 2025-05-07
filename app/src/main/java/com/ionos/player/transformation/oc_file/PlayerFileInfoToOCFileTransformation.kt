@@ -1,9 +1,9 @@
 package com.ionos.player.transformation.oc_file
 
-import com.ionos.player.cache.PlayerSourceInfoCache
-import com.owncloud.android.datamodel.OCFile
-import com.ionos.player.domain.PlayerFileInfo
+import com.ionos.player.model.PlayerFileInfo
+import com.ionos.player.model.cache.PlayerSourceInfoCache
 import com.ionos.player.transformation.PlayerTransformation
+import com.owncloud.android.datamodel.OCFile
 import javax.inject.Inject
 
 class PlayerFileInfoToOCFileTransformation @Inject constructor(

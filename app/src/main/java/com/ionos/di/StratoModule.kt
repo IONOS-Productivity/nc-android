@@ -10,7 +10,7 @@ package com.ionos.di
 import com.ionos.analycis.AnalyticsManager
 import com.ionos.privacy.DataProtectionActivity
 import com.ionos.analycis.FirebaseAnalyticsManager
-import com.ionos.player.di.NCPlayerModule
+import com.ionos.player.NCPlayerModule
 import com.ionos.privacy.PrivacySettingsActivity
 import com.ionos.scanbot.di.NCScanbotModule
 import com.ionos.startup.IonosInitializer

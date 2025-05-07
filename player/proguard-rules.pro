@@ -15,7 +15,7 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
--keep class com.ionos.player.player.volume.Volume { *; }
+-keep class com.ionos.player.model.volume.Volume { *; }
 
 # This prevents the names of native methods from being obfuscated.
 -keepclasseswithmembernames class * { native <methods>; }

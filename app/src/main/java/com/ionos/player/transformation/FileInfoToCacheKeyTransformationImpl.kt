@@ -1,6 +1,6 @@
 package com.ionos.player.transformation
 
-import com.ionos.player.domain.PlayerFileInfo
+import com.ionos.player.model.PlayerFileInfo
 import javax.inject.Inject
 
 class FileInfoToCacheKeyTransformationImpl @Inject constructor(): FileInfoToCacheKeyTransformation {

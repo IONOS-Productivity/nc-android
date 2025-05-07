@@ -10,7 +10,7 @@ package com.ionos.player.media3.controller
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.session.MediaController
-import com.ionos.player.multipleplayermvp.interfaces.MultiplePlaybackSettings.RepeatMode
+import com.ionos.player.model.MultiplePlaybackSettings.RepeatMode
 
 fun MediaController.indexOfFirst(satisfies: (MediaItem) -> Boolean): Int {
 	for (index in 0 ..< mediaItemCount) {

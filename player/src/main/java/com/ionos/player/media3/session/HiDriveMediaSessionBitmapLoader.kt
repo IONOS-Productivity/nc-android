@@ -12,14 +12,14 @@ import androidx.media3.datasource.DataSourceBitmapLoader
 import com.google.common.util.concurrent.ListenableFuture
 import com.google.common.util.concurrent.ListeningExecutorService
 import com.google.common.util.concurrent.MoreExecutors
-import com.ionos.player.domain.PlayerFileInfo
-import com.ionos.player.image_loading.PlayerImageLoader
-import com.ionos.player.image_loading.PlayerImageLoaderOptions
-import com.ionos.player.media3.mediaId
-import com.ionos.player.predicate.IsVideoPredicate
-import com.ionos.player.util.SystemVersion
 import com.ionos.player.R
-import com.ionos.player.media3.store.SourceInfoStore
+import com.ionos.player.media3.common.mediaId
+import com.ionos.player.model.PlayerFileInfo
+import com.ionos.player.model.image_loader.PlayerImageLoader
+import com.ionos.player.model.image_loader.PlayerImageLoaderOptions
+import com.ionos.player.model.predicate.IsVideoPredicate
+import com.ionos.player.model.store.SourceInfoStore
+import com.ionos.player.util.SystemVersion
 import java.util.concurrent.Callable
 import java.util.concurrent.Executors
 
