@@ -14,13 +14,12 @@ import androidx.media3.common.util.UnstableApi
 import androidx.media3.exoplayer.DefaultRenderersFactory
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.trackselection.DefaultTrackSelector
-import com.ionos.player.transformation.MediaItemToDataSourceFactoryTransformation
 import javax.inject.Inject
 
 @UnstableApi
 class PlayerFactory @Inject constructor(
 	private val context: Context,
-	private val mediaItemToDataSourceFactoryTransformation: MediaItemToDataSourceFactoryTransformation,
+	private val mediaSourceFactory: HiDriveMediaSourceFactory,
 ) {
 
 	fun create(): Player {
@@ -30,11 +29,7 @@ class PlayerFactory @Inject constructor(
 			.Builder(context, renderersFactory)
 			.setAudioAttributes(AudioAttributes.DEFAULT, true)
 			.setTrackSelector(DefaultTrackSelector(context))
-			.setMediaSourceFactory(
-                HiDriveMediaSourceFactory(
-                    mediaItemToDataSourceFactoryTransformation
-                )
-			)
+			.setMediaSourceFactory(mediaSourceFactory)
 			.build()
 	}
 }

@@ -24,8 +24,6 @@ interface PlayerComponent : PlaybackServiceComponent {
 
 	fun inject(audioPlayerSourceFragment: AudioPlayerSourceFragment)
 
-	fun inject(fileTextDetailView: FileTextDetailView)
-
 	fun inject(videoPlayerSourceFragment: VideoPlayerSourceFragment)
 
 	fun inject(playerControlView: PlayerControlView)

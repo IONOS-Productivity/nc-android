@@ -9,7 +9,7 @@ package com.ionos.player.ui;
 
 import com.ionos.player.model.MultiplePlayer;
 import com.ionos.player.model.state.MultiplePlaybackState;
-import com.ionos.player.transformation.Transformation;
+import com.ionos.player.ui.message.ExceptionToMessageTransformation;
 
 import java.util.List;
 
@@ -20,11 +20,11 @@ import java.util.List;
 public class MultiplePlayerErrorPresenter<SourceInfo> implements MultiplePlayer.ErrorPresenter<SourceInfo> {
 	private MultiplePlayer.ErrorView errorView = NullMultiplePlayerErrorView.getInstance();
 	private final MultiplePlayer.Model<SourceInfo> model;
-	private final Transformation<Throwable, String> exceptionToMessageTransformation;
+	private final ExceptionToMessageTransformation exceptionToMessageTransformation;
 
 	public MultiplePlayerErrorPresenter(
 			MultiplePlayer.Model<SourceInfo> model,
-			Transformation<Throwable, String> exceptionToMessageTransformation) {
+            ExceptionToMessageTransformation exceptionToMessageTransformation) {
 		this.model = model;
 		this.exceptionToMessageTransformation = exceptionToMessageTransformation;
 	}

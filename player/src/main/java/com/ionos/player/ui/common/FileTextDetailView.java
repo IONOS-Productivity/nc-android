@@ -2,31 +2,22 @@ package com.ionos.player.ui.common;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.text.format.DateFormat;
+import android.text.format.Formatter;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.ionos.player.PlayerComponent;
 import com.ionos.player.R;
 import com.ionos.player.model.PlayerFileInfo;
-import com.ionos.player.transformation.FileInfoToDisplayNameTransformation;
-import com.ionos.player.transformation.FileInfoToLastModifiedDateTransformation;
-import com.ionos.player.transformation.FileInfoToStringSizeTransformation;
 
-import javax.inject.Inject;
+import java.util.Date;
 
 /**
  * Created by y.zozulia on 22.06.2015.
  */
 public class FileTextDetailView extends LinearLayout {
-
-	@Inject
-	FileInfoToStringSizeTransformation toStringSizeTransformation;
-	@Inject
-	FileInfoToDisplayNameTransformation toDisplayNameTransformation;
-	@Inject
-	FileInfoToLastModifiedDateTransformation toLastModifiedDateTransformation;
 
 	private TextView tvTitle;
 	private TextView tvSubtitle;
@@ -44,7 +35,6 @@ public class FileTextDetailView extends LinearLayout {
 		if (isInEditMode()) {
 			return;
 		}
-		PlayerComponent.Companion.from(context).inject(this);
 		LayoutInflater.from(getContext()).inflate(layoutResId, this);
 		findViews();
 		readAttrs(attrs);
@@ -67,7 +57,7 @@ public class FileTextDetailView extends LinearLayout {
 	}
 
 	public void displayFileInfo(PlayerFileInfo file) {
-		showData(toDisplayNameTransformation.transform(file), createSubtitleText(file));
+		showData(file.getName(), createSubtitleText(file));
 	}
 
 	private void showData(String title, String subtitle) {
@@ -76,23 +66,13 @@ public class FileTextDetailView extends LinearLayout {
 	}
 
 	private String createSubtitleText(PlayerFileInfo file) {
-		StringBuilder textBuilder = new StringBuilder();
-
-		if (file.getContentLength() != 0) {
-			textBuilder.append(toStringSizeTransformation.transform(file));
-		}
-
-		String lastModifiedDateDescription = toLastModifiedDateTransformation.transform(file);
-		if (!lastModifiedDateDescription.isEmpty()) {
-
-			if (!textBuilder.toString().isEmpty()) {
-				textBuilder.append(", ");
-			}
-			textBuilder.append(getResources().getString(R.string.player_last_change_date));
-			textBuilder.append(" ");
-			textBuilder.append(lastModifiedDateDescription);
-		}
-		return textBuilder.toString();
+		return new StringBuilder()
+			.append(Formatter.formatFileSize(getContext(), file.getContentLength()))
+			.append(", ")
+			.append(getResources().getString(R.string.player_last_change_date))
+			.append(" ")
+			.append(DateFormat.getDateFormat(getContext()).format(new Date(file.getLastModified())))
+			.toString();
 	}
 
 }

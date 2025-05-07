@@ -9,22 +9,10 @@ import androidx.media3.datasource.okhttp.OkHttpDataSource
 import com.nextcloud.client.account.UserAccountManager
 import com.nextcloud.client.network.ClientFactory
 import com.owncloud.android.MainApp
-import com.owncloud.android.datamodel.OCFile
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedFactory
-import dagger.assisted.AssistedInject
+import javax.inject.Inject
 
 @UnstableApi
-@AssistedFactory
-interface IonosDataSourceFactoryFactory{
-    fun create(
-        file: OCFile,
-    ): IonosDataSourceFactory
-}
-
-@UnstableApi
-class IonosDataSourceFactory @AssistedInject constructor(
-    @Assisted private val file: OCFile,
+class IonosDataSourceFactory @Inject constructor(
     private val clientFactory: ClientFactory,
     private val accountManager: UserAccountManager,
     private val cache: Cache,
@@ -43,7 +31,7 @@ class IonosDataSourceFactory @AssistedInject constructor(
             .setCacheKeyFactory(CacheKeyFactory.DEFAULT)
             .createDataSource()
 
-        return IonosDataSource(file, ownCloudClient, cached)
+        return IonosDataSource(ownCloudClient, cached)
     }
 
 }

@@ -13,7 +13,6 @@ import com.ionos.player.model.predicate.FileBeingProcessedPredicate;
 import com.ionos.player.model.state.MultiplePlaybackState;
 import com.ionos.player.model.state.PlaybackState;
 import com.ionos.player.model.volume.Volume;
-import com.ionos.player.transformation.FileInfoToDisplayNameTransformation;
 import com.ionos.player.ui.MultiplePlayerHidingPresenter;
 import com.ionos.player.ui.PlayerView;
 import com.ionos.player.ui.PlayerViewContainer;
@@ -41,8 +40,6 @@ public class AudioPlayerView extends PlayerView {
 	PlayerMessageBuilderFactory messageBuilderFactory;
 	@Inject
 	FileBeingProcessedPredicate fileBeingProcessedPredicate;
-	@Inject
-	FileInfoToDisplayNameTransformation fileInfoToDisplayNameTransformation;
 
 	private final TextView tvTitle;
 	private final PlayerSourcesView playerSourcesView;
@@ -136,7 +133,7 @@ public class AudioPlayerView extends PlayerView {
 				currentFileListener.fileChanged(file);
 			}
 			showMessageThatSelectedFilesAreBeingProcessing(file);
-			this.tvTitle.setText(fileInfoToDisplayNameTransformation.transform(file));
+			this.tvTitle.setText(file.getName());
 		} else {
 			this.tvTitle.setText("");
 		}

@@ -10,10 +10,8 @@ import com.ionos.player.media3.common.HiDriveMediaItemFactory
 import com.ionos.player.media3.common.MediaIdFactory
 import com.ionos.player.media3.common.MediaItemFactory
 import com.ionos.player.media3.datasource.PlayerPathProvider
-import com.ionos.player.media3.session.HiDriveMediaSessionActivityFactory
 import com.ionos.player.media3.session.HiDriveMediaSessionFactory
 import com.ionos.player.media3.session.HiDriveMediaSessionHolder
-import com.ionos.player.media3.session.MediaSessionActivityFactory
 import com.ionos.player.media3.session.MediaSessionFactory
 import com.ionos.player.media3.session.MediaSessionHolder
 import com.ionos.player.model.MultiplePlayer
@@ -93,9 +91,4 @@ abstract class PlayerModule {
 	abstract fun bindMediaSessionHolder(
 		holder: HiDriveMediaSessionHolder,
 	): MediaSessionHolder
-
-	@Binds
-	abstract fun bindMediaSessionActivityFactory(
-		factory: HiDriveMediaSessionActivityFactory,
-	): MediaSessionActivityFactory
 }

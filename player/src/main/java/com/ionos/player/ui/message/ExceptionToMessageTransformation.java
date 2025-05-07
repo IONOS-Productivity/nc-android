@@ -8,13 +8,12 @@
 package com.ionos.player.ui.message;
 
 import com.ionos.player.model.SourceException;
-import com.ionos.player.transformation.Transformation;
 
 /**
  * User: zuzik
  * Date: 6/12/16
  */
-public class ExceptionToMessageTransformation implements Transformation<Throwable, String> {
+public class ExceptionToMessageTransformation {
 
 	private final PlayerExceptionMessageProvider provider;
 
@@ -22,7 +21,6 @@ public class ExceptionToMessageTransformation implements Transformation<Throwabl
 		this.provider = provider;
 	}
 
-	@Override
 	public String transform(Throwable throwable) {
 		if (throwable instanceof SourceException) {
 			return this.provider.sourceNotFoundExceptionMessage();

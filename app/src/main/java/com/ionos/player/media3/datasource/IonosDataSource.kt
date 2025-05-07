@@ -4,13 +4,13 @@ import android.net.Uri
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.datasource.DataSource
 import androidx.media3.datasource.DataSpec
-import com.owncloud.android.datamodel.OCFile
+import com.ionos.player.model.getOCFileId
 import com.owncloud.android.files.StreamMediaFileOperation
 import com.owncloud.android.lib.common.OwnCloudClient
+import java.io.IOException
 
 @UnstableApi
 internal class IonosDataSource(
-    private val file: OCFile,
     private val oClient: OwnCloudClient,
     private val delegate: DataSource,
 ) : DataSource by delegate {
@@ -18,7 +18,8 @@ internal class IonosDataSource(
     private var uri: Uri? = null
 
     override fun open(dataSpec: DataSpec): Long {
-        val sfo = StreamMediaFileOperation(file.localId)
+        val fileId = dataSpec.uri.getOCFileId() ?: throw IllegalArgumentException("Invalid URI: ${dataSpec.uri}")
+        val sfo = StreamMediaFileOperation(fileId)
         val result = sfo.execute(oClient)
 
         if (result.isSuccess) {
@@ -29,7 +30,7 @@ internal class IonosDataSource(
                 .setUri(tmpUri)
                 .build()
             return delegate.open(dataSpecs)
-        } else throw Exception("Failed to retrieve streaming uri")
+        } else throw IOException("Failed to retrieve streaming uri", result.exception)
     }
 
     override fun getUri(): Uri? {

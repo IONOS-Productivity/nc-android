@@ -4,6 +4,9 @@ import java.io.Serializable
 
 data class PlayerFileInfo(
 	val id: String,
+	val uri: String,
+	val name: String,
+	val mimeType: String,
 	val contentLength: Long,
-    val additionalData: Serializable?,
+	val lastModified: Long,
 ): Serializable

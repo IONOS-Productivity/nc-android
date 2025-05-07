@@ -6,10 +6,9 @@ import com.ionos.player.model.MultiplePlayer
 import com.ionos.player.model.NeighborFilesTypes
 import com.ionos.player.model.OpenFileConfig
 import com.ionos.player.model.PlayerFileInfo
-import com.ionos.player.model.cache.PlayerSourceInfoCache
+import com.ionos.player.model.getNeighborFilesTypes
 import com.ionos.player.model.release_strategy.DoNotReleaseIfExistsSourceInfoReleaseStrategy
-import com.ionos.player.transformation.oc_file.OCFileToNeighborFilesTypesTransformation
-import com.ionos.player.transformation.oc_file.OCFileToPlayerFileInfoTransformation
+import com.ionos.player.model.toPlayerFileInfo
 import com.owncloud.android.datamodel.OCFile
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -33,25 +32,21 @@ class StartBuiltInMediaPlayer @AssistedInject constructor(
 	@Assisted private val options: ActivityOptionsCompat,
 	@Assisted private val activityLauncher: ActivityResultLauncher<MediaPlayerResultContract.Input>?,
     private val playerModel: MultiplePlayer.Model<PlayerFileInfo>,
-    private val sourceInfoCache: PlayerSourceInfoCache,
-    private val toNeighborFilesTypes: OCFileToNeighborFilesTypesTransformation,
-	private val toPlayerFileInfo: OCFileToPlayerFileInfoTransformation,
 ) {
 
 	private val typeError = IllegalArgumentException("Supports only audion or video")
 
 	fun invoke(): Completable {
-		val type = toNeighborFilesTypes.transform(input.fileInfo)
+		val type = input.fileInfo.getNeighborFilesTypes()
 
 		if (type != NeighborFilesTypes.AUDIO && type != NeighborFilesTypes.VIDEO)
 			return Completable.error(typeError)
 
 		return Completable
 			.create { playerModel.start(it::onComplete, it::onError) }
-            .doOnComplete(sourceInfoCache::clear)
             .andThen(Completable.fromAction { launchPlayer(input.fileInfo, type) })
 			.andThen(createObservable(input, type))
-			.map { it.map(toPlayerFileInfo::transform) }
+			.map { it.map(OCFile::toPlayerFileInfo) }
 			.observeOn(AndroidSchedulers.mainThread())
 			.doOnNext { sourceInfos ->
 				playerModel.state.ifPresent {
@@ -70,7 +65,7 @@ class StartBuiltInMediaPlayer @AssistedInject constructor(
 		// sourceMode: FileSourceMode,
 		filesTypes: NeighborFilesTypes,
 	) {
-		val playerInfo = toPlayerFileInfo.transform(fileInfo)
+		val playerInfo = fileInfo.toPlayerFileInfo()
 		playerModel.setSourceInfos(
 			listOf(playerInfo),
 			DoNotReleaseIfExistsSourceInfoReleaseStrategy()
