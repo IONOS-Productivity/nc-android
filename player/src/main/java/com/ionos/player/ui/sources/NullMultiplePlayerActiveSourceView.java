@@ -13,11 +13,11 @@ import com.ionos.player.model.MultiplePlayer;
  * User: zuzik
  * Date: 7/12/16
  */
-public class NullMultiplePlayerActiveSourceView<SourceInfo> implements MultiplePlayer.ActiveSourceView<SourceInfo> {
+public class NullMultiplePlayerActiveSourceView implements MultiplePlayer.ActiveSourceView {
 
 	private static final NullMultiplePlayerActiveSourceView INSTANCE = new NullMultiplePlayerActiveSourceView();
 
-	public static <SourceInfo> NullMultiplePlayerActiveSourceView<SourceInfo> getInstance() {
+	public static NullMultiplePlayerActiveSourceView getInstance() {
 		return INSTANCE;
 	}
 

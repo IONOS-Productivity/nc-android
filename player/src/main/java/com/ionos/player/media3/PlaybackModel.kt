@@ -21,6 +21,7 @@ import com.ionos.player.media3.session.MediaSessionHolder
 import com.ionos.player.model.CompositeListener
 import com.ionos.player.model.MultiplePlaybackSettings
 import com.ionos.player.model.MultiplePlayer
+import com.ionos.player.model.PlayerFileInfo
 import com.ionos.player.model.VideoViewSetter
 import com.ionos.player.model.error_strategy.MultiplePlaybackErrorStrategy
 import com.ionos.player.model.release_strategy.SourceInfoReleaseStrategy
@@ -31,14 +32,14 @@ import com.ionos.player.util.ParamAction
 import com.ionos.player.util.PeriodicAction
 import javax.inject.Inject
 
-class PlaybackModel<SourceInfo> @Inject constructor(
+class PlaybackModel @Inject constructor(
 	private val context: Context,
 	private val mediaSessionHolder: MediaSessionHolder,
-	private val mediaIdFactory: MediaIdFactory<SourceInfo>,
-	private val mediaItemFactory: MediaItemFactory<SourceInfo>,
-	private val sourceInfoStore: SourceInfoStore<SourceInfo>,
+	private val mediaIdFactory: MediaIdFactory,
+	private val mediaItemFactory: MediaItemFactory,
+	private val sourceInfoStore: SourceInfoStore,
 	private val playbackSettings: MultiplePlaybackSettings,
-	private val playbackErrorStrategy: MultiplePlaybackErrorStrategy<SourceInfo>,
+	private val playbackErrorStrategy: MultiplePlaybackErrorStrategy,
 ) : MultiplePlayer.Model {
 
 	companion object {
@@ -46,7 +47,7 @@ class PlaybackModel<SourceInfo> @Inject constructor(
 	}
 
 	private val stateFactory = PlaybackStateFactory(sourceInfoStore, playbackSettings)
-	private val compositeListener = CompositeListener<SourceInfo>()
+	private val compositeListener = CompositeListener()
 
 	private val checkProgressPeriodicAction = PeriodicAction(CHECK_PROGRESS_INTERVAL) {
 		state.ifPresent(compositeListener::onUpdate)
@@ -95,8 +96,8 @@ class PlaybackModel<SourceInfo> @Inject constructor(
 	}
 
 	override fun setSourceInfos(
-		sourceInfos: List<SourceInfo>,
-		releaseStrategy: SourceInfoReleaseStrategy<SourceInfo>,
+        sourceInfos: List<PlayerFileInfo>,
+        releaseStrategy: SourceInfoReleaseStrategy,
 	) {
 		val releaseCurrentPlayback = controller
 			?.currentMediaItem
@@ -122,7 +123,7 @@ class PlaybackModel<SourceInfo> @Inject constructor(
 		mediaSessionHolder.release()
 	}
 
-	override fun getState(): Optional<MultiplePlaybackState<SourceInfo>> {
+	override fun getState(): Optional<MultiplePlaybackState> {
 		return stateFactory.create(controller)
 	}
 
@@ -132,11 +133,11 @@ class PlaybackModel<SourceInfo> @Inject constructor(
 		}
 	}
 
-	override fun addListener(listener: MultiplePlayer.Model.Listener<SourceInfo>) {
+	override fun addListener(listener: MultiplePlayer.Model.Listener) {
 		compositeListener.addListener(listener)
 	}
 
-	override fun removeListener(listener: MultiplePlayer.Model.Listener<SourceInfo>) {
+	override fun removeListener(listener: MultiplePlayer.Model.Listener) {
 		compositeListener.removeListener(listener)
 	}
 
@@ -193,7 +194,7 @@ class PlaybackModel<SourceInfo> @Inject constructor(
 		controller?.shuffleModeEnabled = false
 	}
 
-	override fun switchToSourceInfo(sourceInfo: SourceInfo) {
+	override fun switchToSourceInfo(sourceInfo: PlayerFileInfo) {
 		controller?.run {
 			val mediaId = mediaIdFactory.create(sourceInfo)
 			val mediaItemIndex = indexOfFirst { it.mediaId == mediaId }

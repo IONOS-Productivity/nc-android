@@ -9,6 +9,7 @@ package com.ionos.player.ui.control;
 
 import com.annimon.stream.Optional;
 import com.ionos.player.model.MultiplePlayer;
+import com.ionos.player.model.PlayerFileInfo;
 import com.ionos.player.model.state.MultiplePlaybackState;
 import com.ionos.player.model.state.PlaybackState;
 import com.ionos.player.model.state.PlaybackStateAnalyzer;
@@ -20,25 +21,25 @@ import java.util.List;
  * User: zuzik
  * Date: 6/4/16
  */
-public class MultiplePlayerControlPresenter<SourceInfo> implements MultiplePlayer.ControlPresenter<SourceInfo> {
+public class MultiplePlayerControlPresenter implements MultiplePlayer.ControlPresenter {
 
-	private final MultiplePlayer.Model<SourceInfo> model;
-	private final ControlAvailabilityStrategy<SourceInfo> nextControlAvailabilityStrategy;
-	private final ControlAvailabilityStrategy<SourceInfo> previousControlAvailabilityStrategy;
-	private MultiplePlayer.ControlView<SourceInfo> view = NullMultiplePlayerControlView.getInstance();
+	private final MultiplePlayer.Model model;
+	private final ControlAvailabilityStrategy nextControlAvailabilityStrategy;
+	private final ControlAvailabilityStrategy previousControlAvailabilityStrategy;
+	private MultiplePlayer.ControlView view = NullMultiplePlayerControlView.getInstance();
 
 	public MultiplePlayerControlPresenter(
-			MultiplePlayer.Model<SourceInfo> model,
-			ControlAvailabilityStrategy<SourceInfo> nextControlAvailabilityStrategy,
-			ControlAvailabilityStrategy<SourceInfo> previousControlAvailabilityStrategy) {
+			MultiplePlayer.Model model,
+			ControlAvailabilityStrategy nextControlAvailabilityStrategy,
+			ControlAvailabilityStrategy previousControlAvailabilityStrategy) {
 		this.model = model;
 		this.nextControlAvailabilityStrategy = nextControlAvailabilityStrategy;
 		this.previousControlAvailabilityStrategy = previousControlAvailabilityStrategy;
 	}
 
 	@Override
-	public void setView(MultiplePlayer.ControlView<SourceInfo> view) {
-		this.view = view != null ? view : NullMultiplePlayerControlView.<SourceInfo>getInstance();
+	public void setView(MultiplePlayer.ControlView view) {
+		this.view = view != null ? view : NullMultiplePlayerControlView.getInstance();
 	}
 
 	@Override
@@ -116,7 +117,7 @@ public class MultiplePlayerControlPresenter<SourceInfo> implements MultiplePlaye
 		updateView(this.model.getState());
 	}
 
-	private void updateView(Optional<MultiplePlaybackState<SourceInfo>> state) {
+	private void updateView(Optional<MultiplePlaybackState> state) {
 		boolean repeatSingle = false;
 		boolean shuffle = false;
 
@@ -140,8 +141,8 @@ public class MultiplePlayerControlPresenter<SourceInfo> implements MultiplePlaye
 		if (state
 				.mapToBoolean(input -> input.getCurrentPlaybackState().isPresent())
 				.orElse(false)) {
-			PlaybackState<SourceInfo> playbackState = state.get().getCurrentPlaybackState().get();
-			PlaybackStateAnalyzer<SourceInfo> analyzer = new PlaybackStateAnalyzer<>(playbackState);
+			PlaybackState playbackState = state.get().getCurrentPlaybackState().get();
+			PlaybackStateAnalyzer analyzer = new PlaybackStateAnalyzer(playbackState);
 
 			this.view.enablePlayControls(
 					analyzer.playAvailable(),
@@ -172,7 +173,7 @@ public class MultiplePlayerControlPresenter<SourceInfo> implements MultiplePlaye
 		}
 	}
 
-	private final MultiplePlayer.Model.Listener<SourceInfo> listener = new MultiplePlayer.Model.Listener<>() {
+	private final MultiplePlayer.Model.Listener listener = new MultiplePlayer.Model.Listener() {
 		@Override
 		public void onUpdate(MultiplePlaybackState state) {
 			updateView();
@@ -183,7 +184,7 @@ public class MultiplePlayerControlPresenter<SourceInfo> implements MultiplePlaye
 		}
 
 		@Override
-		public void onSourceInfosChanged(List<SourceInfo> originalSourceInfos, List<SourceInfo> currentSourceInfos) {
+		public void onSourceInfosChanged(List<PlayerFileInfo> originalSourceInfos, List<PlayerFileInfo> currentSourceInfos) {
 
 		}
 	};

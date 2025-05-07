@@ -35,7 +35,7 @@ import dagger.android.HasAndroidInjector;
 public class AudioPlayerView extends PlayerView {
 
 	@Inject
-	MultiplePlayer.Model<PlayerFileInfo> playerModel;
+	MultiplePlayer.Model playerModel;
 	@Inject
 	PlayerMessageBuilderFactory messageBuilderFactory;
 	@Inject
@@ -46,7 +46,7 @@ public class AudioPlayerView extends PlayerView {
 	private final PlayerControlView playerControlView;
 	private final DrawerLayout drawerLayout;
 	private PlayerViewContainer playerViewContainer;
-	private MultiplePlayer.HidingPresenter<PlayerFileInfo> hidingPresenter;
+	private MultiplePlayer.HidingPresenter hidingPresenter;
 
 	public AudioPlayerView(Context context) {
 		super(context);
@@ -71,7 +71,7 @@ public class AudioPlayerView extends PlayerView {
 			playerViewContainer.onPlayerViewClose();
 		});
 
-		this.hidingPresenter = new MultiplePlayerHidingPresenter<>(this.playerModel);
+		this.hidingPresenter = new MultiplePlayerHidingPresenter(this.playerModel);
 
 		this.playerSourcesView.init(new AudioPlayerSourceFragmentFactory());
 
@@ -125,9 +125,9 @@ public class AudioPlayerView extends PlayerView {
 			playerViewContainer.onPlayerViewClose();
 			return;
 		}
-		MultiplePlaybackState<PlayerFileInfo> state = this.playerModel.getState().get();
+		MultiplePlaybackState state = this.playerModel.getState().get();
 		if (state.getCurrentPlaybackState().isPresent()) {
-			PlaybackState<PlayerFileInfo> playbackState = state.getCurrentPlaybackState().get();
+			PlaybackState playbackState = state.getCurrentPlaybackState().get();
 			PlayerFileInfo file = playbackState.sourceInfo;
 			if (currentFileListener != null) {
 				currentFileListener.fileChanged(file);
@@ -150,9 +150,9 @@ public class AudioPlayerView extends PlayerView {
 		}
 	}
 
-	private final MultiplePlayer.Model.Listener<PlayerFileInfo> playerModelListener = new MultiplePlayer.Model.Listener<>() {
+	private final MultiplePlayer.Model.Listener playerModelListener = new MultiplePlayer.Model.Listener() {
 		@Override
-		public void onUpdate(MultiplePlaybackState<PlayerFileInfo> state) {
+		public void onUpdate(MultiplePlaybackState state) {
 			updateState();
 		}
 
@@ -163,7 +163,7 @@ public class AudioPlayerView extends PlayerView {
 		public void onSourceInfosChanged(List<PlayerFileInfo> list, List<PlayerFileInfo> list1) { /**/ }
 	};
 
-	private final MultiplePlayer.HidingView<PlayerFileInfo> hidingView = new MultiplePlayer.HidingView<PlayerFileInfo>() {
+	private final MultiplePlayer.HidingView hidingView = new MultiplePlayer.HidingView() {
 		@Override
 		public void displayPlayerView() { /**/ }
 

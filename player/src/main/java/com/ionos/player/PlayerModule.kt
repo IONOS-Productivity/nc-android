@@ -17,7 +17,6 @@ import com.ionos.player.media3.session.MediaSessionFactory
 import com.ionos.player.media3.session.MediaSessionHolder
 import com.ionos.player.model.MultiplePlaybackSettings
 import com.ionos.player.model.MultiplePlayer
-import com.ionos.player.model.PlayerFileInfo
 import com.ionos.player.model.PlayerMultiplePlaybackSettings
 import com.ionos.player.model.error_strategy.HiDriveMultiplePlaybackErrorStrategy
 import com.ionos.player.model.error_strategy.MultiplePlaybackErrorStrategy
@@ -62,31 +61,31 @@ abstract class PlayerModule {
 	@Binds
 	@Singleton
 	abstract fun bindMultiplePlayerModel(
-		model: PlaybackModel<PlayerFileInfo>,
-	): MultiplePlayer.Model<PlayerFileInfo>
+		model: PlaybackModel,
+	): MultiplePlayer.Model
 
 	@Singleton
 	@Binds
 	abstract fun bindSourceInfoStore(
 		store: HiDriveSourceInfoStore
-	): SourceInfoStore<PlayerFileInfo>
+	): SourceInfoStore
 
 	@Binds
 	abstract fun bindMediaItemFactory(
 		factory: HiDriveMediaItemFactory
-	): MediaItemFactory<PlayerFileInfo>
+	): MediaItemFactory
 
 	@Binds
 	@Singleton
 	abstract fun bindMediaIdFactory(
 		factory: HiDriveMediaIdFactory
-	): MediaIdFactory<PlayerFileInfo>
+	): MediaIdFactory
 
 	@Binds
 	@Singleton
 	abstract fun bindMultiplePlaybackErrorStrategy(
 		strategy: HiDriveMultiplePlaybackErrorStrategy,
-	): MultiplePlaybackErrorStrategy<PlayerFileInfo>
+	): MultiplePlaybackErrorStrategy
 
     @UnstableApi
     @Binds

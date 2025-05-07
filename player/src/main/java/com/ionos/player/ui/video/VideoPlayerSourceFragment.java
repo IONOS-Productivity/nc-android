@@ -38,20 +38,20 @@ public class VideoPlayerSourceFragment extends Fragment {
 	private final static String ARGUMENT_FILE_INFO = "ARGUMENT_FILE_INFO";
 
 	@Inject
-	MultiplePlayer.Model<PlayerFileInfo> playerModel;
+	MultiplePlayer.Model playerModel;
 	@Inject
 	PlayerImageLoader imageLoader;
 	@Inject
 	IsVideoPredicate isVideoPredicate;
 
 	private PlayerFileInfo fileInfo;
-	private MultiplePlayer.VideoPresenter<PlayerFileInfo> videoPresenter;
+	private MultiplePlayer.VideoPresenter videoPresenter;
 
 	private View coverContainer;
 	private View videoContainer;
 	private SurfaceView surfaceView;
 	private ProgressBar progressBar;
-	private SurfaceVideoView<PlayerFileInfo> surfaceVideoView;
+	private SurfaceVideoView surfaceVideoView;
 	private Optional<VideoSize> previousVideoSize = Optional.empty();
 
 	public static Fragment createInstance(PlayerFileInfo fileInfo) {
@@ -68,7 +68,7 @@ public class VideoPlayerSourceFragment extends Fragment {
 		AndroidSupportInjection.inject(this);
 		this.fileInfo = (PlayerFileInfo) getArguments().getSerializable(ARGUMENT_FILE_INFO);
 		this.videoPresenter = isVideoPredicate.satisfied(fileInfo)
-				? new MultiplePlayerVideoPresenter<>(this.playerModel, this.fileInfo)
+				? new MultiplePlayerVideoPresenter(this.playerModel, this.fileInfo)
 				: NullMultiplePlayerVideoPresenter.getInstance();
 	}
 
@@ -80,8 +80,8 @@ public class VideoPlayerSourceFragment extends Fragment {
 		this.surfaceView = content.findViewById(R.id.surfaceView);
 		this.progressBar = content.findViewById(R.id.progressBar);
 		FileTextDetailView fileTextDetailView = content.findViewById(R.id.fileDetailView);
-		MultiplePlayerVideoPresenter<PlayerFileInfo> surfaceVideoViewPresenter = new MultiplePlayerVideoPresenter<>(this.playerModel, this.fileInfo);
-		this.surfaceVideoView = new SurfaceVideoView<>(this.surfaceView, surfaceVideoViewPresenter);
+		MultiplePlayerVideoPresenter surfaceVideoViewPresenter = new MultiplePlayerVideoPresenter(this.playerModel, this.fileInfo);
+		this.surfaceVideoView = new SurfaceVideoView(this.surfaceView, surfaceVideoViewPresenter);
 		surfaceVideoViewPresenter.setView(this.surfaceVideoView);
 		fileTextDetailView.displayFileInfo(this.fileInfo);
 		switchToCoverContainer();
@@ -157,7 +157,7 @@ public class VideoPlayerSourceFragment extends Fragment {
 		this.surfaceView.setVisibility(videoContainerVisible ? View.VISIBLE : View.INVISIBLE);
 	}
 
-	private final MultiplePlayer.VideoView<PlayerFileInfo> videoView = new MultiplePlayer.VideoView<>() {
+	private final MultiplePlayer.VideoView videoView = new MultiplePlayer.VideoView() {
 		@Override
 		public void setVideoViewAvailable() {
             switchToVideoContainer();

@@ -5,7 +5,6 @@ import androidx.core.app.ActivityOptionsCompat
 import com.ionos.player.model.MultiplePlayer
 import com.ionos.player.model.NeighborFilesTypes
 import com.ionos.player.model.OpenFileConfig
-import com.ionos.player.model.PlayerFileInfo
 import com.ionos.player.model.getNeighborFilesTypes
 import com.ionos.player.model.release_strategy.DoNotReleaseIfExistsSourceInfoReleaseStrategy
 import com.ionos.player.model.toPlayerFileInfo
@@ -31,7 +30,7 @@ class StartBuiltInMediaPlayer @AssistedInject constructor(
 	@Assisted private val input: OpenFileConfig,
 	@Assisted private val options: ActivityOptionsCompat,
 	@Assisted private val activityLauncher: ActivityResultLauncher<MediaPlayerResultContract.Input>?,
-    private val playerModel: MultiplePlayer.Model<PlayerFileInfo>,
+    private val playerModel: MultiplePlayer.Model,
 ) {
 
 	private val typeError = IllegalArgumentException("Supports only audion or video")

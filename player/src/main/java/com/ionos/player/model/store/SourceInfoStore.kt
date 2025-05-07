@@ -1,12 +1,14 @@
 package com.ionos.player.model.store
 
-interface SourceInfoStore<SourceInfo> {
+import com.ionos.player.model.PlayerFileInfo
 
-	fun getSourceInfos(): List<SourceInfo>
+interface SourceInfoStore {
 
-	fun setSourceInfos(sourceInfos: List<SourceInfo>)
+	fun getSourceInfos(): List<PlayerFileInfo>
 
-	fun getSourceInfo(mediaId: String): SourceInfo?
+	fun setSourceInfos(sourceInfos: List<PlayerFileInfo>)
+
+	fun getSourceInfo(mediaId: String): PlayerFileInfo?
 
 	fun clear()
 }

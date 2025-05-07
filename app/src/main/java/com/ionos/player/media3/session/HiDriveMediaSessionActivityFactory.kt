@@ -3,7 +3,6 @@ package com.ionos.player.media3.session
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import com.ionos.player.model.PlayerFileInfo
 import com.ionos.player.model.predicate.IsVideoPredicate
 import com.ionos.player.model.store.SourceInfoStore
 import com.ionos.player.ui.IonosPlayerActivity
@@ -12,7 +11,7 @@ import javax.inject.Inject
 
 class HiDriveMediaSessionActivityFactory @Inject constructor(
 	private val context: Context,
-	private val sourceInfoStore: SourceInfoStore<PlayerFileInfo>,
+	private val sourceInfoStore: SourceInfoStore,
     private val isVideoPredicate: IsVideoPredicate,
 ) : MediaSessionActivityFactory {
 

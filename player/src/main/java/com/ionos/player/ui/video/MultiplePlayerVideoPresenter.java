@@ -8,6 +8,7 @@
 package com.ionos.player.ui.video;
 
 import com.ionos.player.model.MultiplePlayer;
+import com.ionos.player.model.PlayerFileInfo;
 import com.ionos.player.model.VideoViewSetter;
 import com.ionos.player.model.state.MultiplePlaybackState;
 import com.ionos.player.model.state.PlaybackState;
@@ -19,23 +20,23 @@ import java.util.List;
  * User: zuzik
  * Date: 6/4/16
  */
-public class MultiplePlayerVideoPresenter<SourceInfo> implements MultiplePlayer.VideoPresenter<SourceInfo> {
+public class MultiplePlayerVideoPresenter implements MultiplePlayer.VideoPresenter {
 
-	private final MultiplePlayer.Model<SourceInfo> model;
-	private final SourceInfo sourceInfo;
-	private MultiplePlayer.VideoView<SourceInfo> view = NullMultiplePlayerVideoView.getInstance();
+	private final MultiplePlayer.Model model;
+	private final PlayerFileInfo sourceInfo;
+	private MultiplePlayer.VideoView view = NullMultiplePlayerVideoView.getInstance();
 	private boolean appeared;
 
 	public MultiplePlayerVideoPresenter(
-			MultiplePlayer.Model<SourceInfo> model,
-			SourceInfo sourceInfo) {
+			MultiplePlayer.Model model,
+			PlayerFileInfo sourceInfo) {
 		this.model = model;
 		this.sourceInfo = sourceInfo;
 	}
 
 	@Override
-	public void setView(MultiplePlayer.VideoView<SourceInfo> view) {
-		this.view = view != null ? view : NullMultiplePlayerVideoView.<SourceInfo>getInstance();
+	public void setView(MultiplePlayer.VideoView view) {
+		this.view = view != null ? view : NullMultiplePlayerVideoView.getInstance();
 	}
 
 	@Override
@@ -98,9 +99,9 @@ public class MultiplePlayerVideoPresenter<SourceInfo> implements MultiplePlayer.
 
 	private boolean isCurrentSourceInfo() {
 		if (this.model.getState().isPresent()) {
-			MultiplePlaybackState<SourceInfo> modelState = this.model.getState().get();
+			MultiplePlaybackState modelState = this.model.getState().get();
 			if (modelState.getCurrentPlaybackState().isPresent()) {
-				PlaybackState<SourceInfo> playbackState = modelState.getCurrentPlaybackState().get();
+				PlaybackState playbackState = modelState.getCurrentPlaybackState().get();
 				if (this.sourceInfo.equals(playbackState.sourceInfo)) {
 					return true;
 				}
@@ -109,9 +110,9 @@ public class MultiplePlayerVideoPresenter<SourceInfo> implements MultiplePlayer.
 		return false;
 	}
 
-	private final MultiplePlayer.Model.Listener<SourceInfo> listener = new MultiplePlayer.Model.Listener<>() {
+	private final MultiplePlayer.Model.Listener listener = new MultiplePlayer.Model.Listener() {
 		@Override
-		public void onUpdate(MultiplePlaybackState<SourceInfo> state) {
+		public void onUpdate(MultiplePlaybackState state) {
 			updateView();
 		}
 
@@ -120,7 +121,7 @@ public class MultiplePlayerVideoPresenter<SourceInfo> implements MultiplePlayer.
 		}
 
 		@Override
-		public void onSourceInfosChanged(List<SourceInfo> originalSourceInfos, List<SourceInfo> currentSourceInfos) {
+		public void onSourceInfosChanged(List<PlayerFileInfo> originalSourceInfos, List<PlayerFileInfo> currentSourceInfos) {
 
 		}
 	};

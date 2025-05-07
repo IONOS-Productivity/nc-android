@@ -11,19 +11,20 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import com.ionos.player.model.MultiplePlayer;
+import com.ionos.player.model.PlayerFileInfo;
 import com.ionos.player.model.VideoViewSetter;
 
 /**
  * User: zuzik
  * Date: 8/13/16
  */
-public class SurfaceVideoView<SourceInfo> implements MultiplePlayer.VideoView<SourceInfo> {
+public class SurfaceVideoView implements MultiplePlayer.VideoView {
 
 	private final SurfaceHolder holder;
-	private final MultiplePlayer.VideoPresenter<SourceInfo> presenter;
-	private Strategy<SourceInfo> strategy = new UnavailableHolderStrategy();
+	private final MultiplePlayer.VideoPresenter presenter;
+	private Strategy strategy = new UnavailableHolderStrategy();
 
-	public SurfaceVideoView(SurfaceView view, MultiplePlayer.VideoPresenter<SourceInfo> presenter) {
+	public SurfaceVideoView(SurfaceView view, MultiplePlayer.VideoPresenter presenter) {
 		this.holder = view.getHolder();
 		this.presenter = presenter;
 	}
@@ -77,7 +78,7 @@ public class SurfaceVideoView<SourceInfo> implements MultiplePlayer.VideoView<So
 	}
 
 	@Override
-	public void setVideoView(VideoViewSetter setter, SourceInfo sourceInfo) {
+	public void setVideoView(VideoViewSetter setter, PlayerFileInfo sourceInfo) {
 		this.strategy.setVideoView(setter, sourceInfo);
 	}
 
@@ -90,18 +91,18 @@ public class SurfaceVideoView<SourceInfo> implements MultiplePlayer.VideoView<So
 
 	//region Strategy
 
-	private interface Strategy<SourceInfo> {
-		void setVideoView(VideoViewSetter setter, SourceInfo sourceInfo);
+	private interface Strategy {
+		void setVideoView(VideoViewSetter setter, PlayerFileInfo sourceInfo);
 
 		void setVideoViewAvailable();
 
 		void setVideoViewUnavailable();
 	}
 
-	private class AvailableHolderStrategy implements Strategy<SourceInfo> {
+	private class AvailableHolderStrategy implements Strategy {
 
 		@Override
-		public void setVideoView(VideoViewSetter setter, SourceInfo sourceInfo) {
+		public void setVideoView(VideoViewSetter setter, PlayerFileInfo sourceInfo) {
 			setter.setVideoView(holder);
 		}
 
@@ -115,9 +116,9 @@ public class SurfaceVideoView<SourceInfo> implements MultiplePlayer.VideoView<So
 		}
 	}
 
-	private class UnavailableHolderStrategy implements Strategy<SourceInfo> {
+	private class UnavailableHolderStrategy implements Strategy {
 		@Override
-		public void setVideoView(VideoViewSetter setter, SourceInfo sourceInfo) {
+		public void setVideoView(VideoViewSetter setter, PlayerFileInfo sourceInfo) {
 		}
 
 		@Override

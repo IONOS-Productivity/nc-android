@@ -26,7 +26,7 @@ import java.util.concurrent.Executors
 @UnstableApi
 class HiDriveMediaSessionBitmapLoader(
 	private val context: Context,
-	private val sourceInfoStore: SourceInfoStore<PlayerFileInfo>,
+	private val sourceInfoStore: SourceInfoStore,
 	private val imageLoader: PlayerImageLoader,
 	private val isVideoPredicate: IsVideoPredicate,
 	private val delegate: BitmapLoader = DataSourceBitmapLoader(context),

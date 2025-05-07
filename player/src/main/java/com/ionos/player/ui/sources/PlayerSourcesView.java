@@ -31,11 +31,11 @@ import dagger.android.HasAndroidInjector;
 public class PlayerSourcesView extends LinearLayout {
 
 	@Inject
-	MultiplePlayer.Model<PlayerFileInfo> playerModel;
+	MultiplePlayer.Model playerModel;
 	@Inject
 	PlayerExceptionMessageProvider playerExceptionMessageProvider;
 
-	private MultiplePlayer.SourcesPresenter<PlayerFileInfo> presenter;
+	private MultiplePlayer.SourcesPresenter presenter;
 	private final InfiniteViewPager<PlayerFileInfo> infiniteViewPager;
 	private FragmentActivity activity;
 
@@ -55,7 +55,7 @@ public class PlayerSourcesView extends LinearLayout {
 			return;
 		}
         ((HasAndroidInjector) context.getApplicationContext()).androidInjector().inject(this);
-		this.presenter = new MultiplePlayerSourcesPresenter<>(
+		this.presenter = new MultiplePlayerSourcesPresenter(
 				this.playerModel,
 				new DoNothingMultiplePlayerPresenterDestroyStrategy<>(),
 				new DoNotReleaseIfExistsSourceInfoReleaseStrategy(),
@@ -111,7 +111,7 @@ public class PlayerSourcesView extends LinearLayout {
 		return WindowInsetsCompat.CONSUMED.toWindowInsets();
 	}
 
-	private final MultiplePlayer.SourcesView<PlayerFileInfo> view = new MultiplePlayer.SourcesView<>() {
+	private final MultiplePlayer.SourcesView view = new MultiplePlayer.SourcesView() {
 
 		@Override
 		public void displayCurrentSourceInfo(PlayerFileInfo sourceInfo) {

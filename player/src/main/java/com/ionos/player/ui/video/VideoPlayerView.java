@@ -43,7 +43,7 @@ public class VideoPlayerView extends PlayerView {
 	protected static final long ANIMATION_TIMER_DURATION = 5000;
 
 	@Inject
-	MultiplePlayer.Model<PlayerFileInfo> playerModel;
+	MultiplePlayer.Model playerModel;
 	@Inject
 	PlayerMessageBuilderFactory messageBuilderFactory;
 	@Inject
@@ -56,7 +56,7 @@ public class VideoPlayerView extends PlayerView {
 	private final DrawerLayout drawerLayout;
 	private Activity activity;
 	private PlayerViewContainer playerViewContainer;
-	private MultiplePlayer.HidingPresenter<PlayerFileInfo> hidingPresenter;
+	private MultiplePlayer.HidingPresenter hidingPresenter;
 	private AsyncTimer timer;
 	private final TimeSkippableActionExecutor timeSkipableActionExecutor = new TimeSkippableActionExecutor();
 
@@ -85,7 +85,7 @@ public class VideoPlayerView extends PlayerView {
 
 		this.drawerLayout.addDrawerListener(this.drawerListener);
 
-		this.hidingPresenter = new MultiplePlayerHidingPresenter<>(this.playerModel);
+		this.hidingPresenter = new MultiplePlayerHidingPresenter(this.playerModel);
 
 		this.playerSourcesView.init(new VideoPlayerSourceFragmentFactory());
 
@@ -170,10 +170,10 @@ public class VideoPlayerView extends PlayerView {
 			playerViewContainer.onPlayerViewClose();
 			return;
 		}
-		MultiplePlaybackState<PlayerFileInfo> state = this.playerModel.getState().get();
+		MultiplePlaybackState state = this.playerModel.getState().get();
 
 		if (state.getCurrentPlaybackState().isPresent()) {
-			PlaybackState<PlayerFileInfo> playbackState = state.getCurrentPlaybackState().get();
+			PlaybackState playbackState = state.getCurrentPlaybackState().get();
 			PlayerFileInfo file = playbackState.sourceInfo;
 			if (currentFileListener != null){
 				currentFileListener.fileChanged(file);
@@ -227,9 +227,9 @@ public class VideoPlayerView extends PlayerView {
 		}
 	};
 
-	private final MultiplePlayer.Model.Listener<PlayerFileInfo> playerModelListener = new MultiplePlayer.Model.Listener<>() {
+	private final MultiplePlayer.Model.Listener playerModelListener = new MultiplePlayer.Model.Listener() {
 		@Override
-		public void onUpdate(MultiplePlaybackState<PlayerFileInfo> state) {
+		public void onUpdate(MultiplePlaybackState state) {
 			updateState();
 		}
 
@@ -243,7 +243,7 @@ public class VideoPlayerView extends PlayerView {
 		}
 	};
 
-	private final MultiplePlayer.HidingView<PlayerFileInfo> hidingView = new MultiplePlayer.HidingView<>() {
+	private final MultiplePlayer.HidingView hidingView = new MultiplePlayer.HidingView() {
 		@Override
 		public void displayPlayerView() {
 

@@ -15,6 +15,6 @@ import java.io.Serializable;
  * Created by yaz on 1/23/17.
  */
 
-public interface MultiplePlaybackErrorStrategy<SourceInfo> extends Serializable {
-	boolean switchToNextSource(Throwable error, MultiplePlaybackState<SourceInfo> state);
+public interface MultiplePlaybackErrorStrategy extends Serializable {
+	boolean switchToNextSource(Throwable error, MultiplePlaybackState state);
 }

@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.ionos.player.R;
 import com.ionos.player.model.MultiplePlayer;
-import com.ionos.player.model.PlayerFileInfo;
 import com.ionos.player.ui.control.availability_strategy.HiDriveCyclicNextControlAvailabilityStrategy;
 import com.ionos.player.ui.control.availability_strategy.HiDriveCyclicPreviousControlAvailabilityStrategy;
 import com.ionos.player.ui.control.listener.CompositePlayerControlViewListener;
@@ -50,9 +49,9 @@ public class PlayerControlView extends LinearLayout {
 	private static final String TAG_CLICK_COMMAND_UNKNOWN = "TAG_CLICK_COMMAND_UNKNOWN";
 
 	@Inject
-	MultiplePlayer.Model<PlayerFileInfo> playerModel;
+	MultiplePlayer.Model playerModel;
 
-	private MultiplePlayer.ControlPresenter<PlayerFileInfo> controlPresenter;
+	private MultiplePlayer.ControlPresenter controlPresenter;
 	private MultiplePlayerPlayPreviousPresenter playPreviousPresenter;
 	private final PublishSubject<Integer> seekBarProgressChangePublishSubject = PublishSubject.create();
 	private Disposable seekBarProgressChangeDisposable = Disposables.disposed();
@@ -101,11 +100,11 @@ public class PlayerControlView extends LinearLayout {
         ((HasAndroidInjector) context.getApplicationContext()).androidInjector().inject(this);
 		readAttributes(attrs);
 		setViewsWidthByMode();
-		this.controlPresenter = new MultiplePlayerControlPresenter<>(
+		this.controlPresenter = new MultiplePlayerControlPresenter(
 				this.playerModel,
 				new HiDriveCyclicNextControlAvailabilityStrategy(),
 				new HiDriveCyclicPreviousControlAvailabilityStrategy());
-		this.playPreviousPresenter = new MultiplePlayerPlayPreviousPresenterImpl<>(this.playerModel, this.controlPresenter);
+		this.playPreviousPresenter = new MultiplePlayerPlayPreviousPresenterImpl(this.playerModel, this.controlPresenter);
 
 		setDefaultTags();
 		setListeners();
@@ -277,7 +276,7 @@ public class PlayerControlView extends LinearLayout {
 		}
 	}
 
-	private final MultiplePlayer.ControlView<PlayerFileInfo> controlView = new MultiplePlayer.ControlView<>() {
+	private final MultiplePlayer.ControlView controlView = new MultiplePlayer.ControlView() {
 		@Override
 		public void repeat() {
 			ivRepeat.setImageResource(R.drawable.ic_player_repeat_white_active_48dp);

@@ -8,6 +8,7 @@
 package com.ionos.player.model.state;
 
 import com.annimon.stream.Optional;
+import com.ionos.player.model.PlayerFileInfo;
 
 import java.io.Serializable;
 import java.util.List;
@@ -18,20 +19,20 @@ import androidx.annotation.Nullable;
  * User: zuzik
  * Date: 6/4/16
  */
-public class MultiplePlaybackState<SourceInfo> implements Serializable {
-	public final List<SourceInfo> currentSourceInfos;
+public class MultiplePlaybackState implements Serializable {
+	public final List<PlayerFileInfo> currentSourceInfos;
 	@Nullable
-	private final PlaybackState<SourceInfo> currentPlaybackState;
+	private final PlaybackState currentPlaybackState;
 	public final boolean repeatSingle;
 	public final boolean shuffle;
 
-	public Optional<PlaybackState<SourceInfo>> getCurrentPlaybackState() {
+	public Optional<PlaybackState> getCurrentPlaybackState() {
 		return Optional.ofNullable(this.currentPlaybackState);
 	}
 
 	public MultiplePlaybackState(
-			List<SourceInfo> currentSourceInfos,
-			Optional<PlaybackState<SourceInfo>> currentPlaybackState,
+			List<PlayerFileInfo> currentSourceInfos,
+			Optional<PlaybackState> currentPlaybackState,
 			boolean repeatSingle,
 			boolean shuffle) {
 		this.currentSourceInfos = currentSourceInfos;

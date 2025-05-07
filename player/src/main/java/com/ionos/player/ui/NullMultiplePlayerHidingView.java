@@ -13,11 +13,11 @@ import com.ionos.player.model.MultiplePlayer;
  * User: zuzik
  * Date: 7/12/16
  */
-public class NullMultiplePlayerHidingView<SourceInfo> implements MultiplePlayer.HidingView<SourceInfo> {
+public class NullMultiplePlayerHidingView implements MultiplePlayer.HidingView {
 
 	private static final NullMultiplePlayerHidingView INSTANCE = new NullMultiplePlayerHidingView();
 
-	public static <SourceInfo> NullMultiplePlayerHidingView<SourceInfo> getInstance() {
+	public static NullMultiplePlayerHidingView getInstance() {
 		return INSTANCE;
 	}
 

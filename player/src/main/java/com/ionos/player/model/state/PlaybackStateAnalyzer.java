@@ -15,15 +15,15 @@ import java.util.List;
  * User: zuzik
  * Date: 8/20/16
  */
-public class PlaybackStateAnalyzer<SourceInfo> {
+public class PlaybackStateAnalyzer {
 
 	private static final List<State> ALLOWED_PLAY_STATES = Arrays.asList(State.IDLE, State.PAUSED, State.COMPLETED);
 	private static final List<State> ALLOWED_PAUSE_STATES = Collections.singletonList(State.PLAYING);
 	private static final List<State> ALLOWED_STOP_STATES = Arrays.asList(State.PLAYING, State.PAUSED, State.COMPLETED);
 
-	private final PlaybackState<SourceInfo> state;
+	private final PlaybackState state;
 
-	public PlaybackStateAnalyzer(PlaybackState<SourceInfo> state) {
+	public PlaybackStateAnalyzer(PlaybackState state) {
 		this.state = state;
 	}
 

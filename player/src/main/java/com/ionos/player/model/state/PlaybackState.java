@@ -8,6 +8,7 @@
 package com.ionos.player.model.state;
 
 import com.annimon.stream.Optional;
+import com.ionos.player.model.PlayerFileInfo;
 
 import java.io.Serializable;
 
@@ -17,13 +18,13 @@ import androidx.annotation.Nullable;
  * User: zuzik
  * Date: 6/5/16
  */
-public class PlaybackState<SourceInfo> implements Serializable {
+public class PlaybackState implements Serializable {
 
 	public final State state;
 	public final int currentTimeInMilliseconds;
 	@Nullable
 	private final Integer maxTimeInMilliseconds;
-	public final SourceInfo sourceInfo;
+	public final PlayerFileInfo sourceInfo;
 	public final Optional<VideoSize> videoSize;
 
 	public Optional<Integer> getMaxTimeInMilliseconds() {
@@ -34,7 +35,7 @@ public class PlaybackState<SourceInfo> implements Serializable {
 			State state,
 			int currentTimeInMilliseconds,
 			Optional<Integer> maxTimeInMilliseconds,
-			SourceInfo sourceInfo,
+			PlayerFileInfo sourceInfo,
 			Optional<VideoSize> videoSize) {
 		this.state = state;
 		this.currentTimeInMilliseconds = currentTimeInMilliseconds;

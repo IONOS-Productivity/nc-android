@@ -15,7 +15,7 @@ import java.util.List;
  * User: zuzik
  * Date: 8/27/16
  */
-public class HiDriveCyclicPreviousControlAvailabilityStrategy implements ControlAvailabilityStrategy<PlayerFileInfo> {
+public class HiDriveCyclicPreviousControlAvailabilityStrategy implements ControlAvailabilityStrategy {
 	@Override
 	public boolean available(List<PlayerFileInfo> sourceInfos, PlayerFileInfo currentSourceInfo, boolean shuffle) {
 		return !(sourceInfos.isEmpty());

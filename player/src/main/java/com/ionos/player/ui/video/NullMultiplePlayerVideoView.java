@@ -8,17 +8,18 @@
 package com.ionos.player.ui.video;
 
 import com.ionos.player.model.MultiplePlayer;
+import com.ionos.player.model.PlayerFileInfo;
 import com.ionos.player.model.VideoViewSetter;
 
 /**
  * User: zuzik
  * Date: 7/12/16
  */
-public class NullMultiplePlayerVideoView<SourceInfo> implements MultiplePlayer.VideoView<SourceInfo> {
+public class NullMultiplePlayerVideoView implements MultiplePlayer.VideoView {
 
 	private static final NullMultiplePlayerVideoView INSTANCE = new NullMultiplePlayerVideoView();
 
-	public static <SourceInfo> NullMultiplePlayerVideoView<SourceInfo> getInstance() {
+	public static NullMultiplePlayerVideoView getInstance() {
 		return INSTANCE;
 	}
 
@@ -36,7 +37,7 @@ public class NullMultiplePlayerVideoView<SourceInfo> implements MultiplePlayer.V
 	}
 
 	@Override
-	public void setVideoView(VideoViewSetter setter, SourceInfo sourceInfo) {
+	public void setVideoView(VideoViewSetter setter, PlayerFileInfo sourceInfo) {
 
 	}
 

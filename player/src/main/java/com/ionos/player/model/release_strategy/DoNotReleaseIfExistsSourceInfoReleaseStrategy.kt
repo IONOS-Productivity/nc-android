@@ -2,7 +2,7 @@ package com.ionos.player.model.release_strategy
 
 import com.ionos.player.model.PlayerFileInfo
 
-class DoNotReleaseIfExistsSourceInfoReleaseStrategy : SourceInfoReleaseStrategy<PlayerFileInfo> {
+class DoNotReleaseIfExistsSourceInfoReleaseStrategy : SourceInfoReleaseStrategy {
 
 	override fun releaseCurrentPlayback(
 		newSourceInfos: List<PlayerFileInfo>,

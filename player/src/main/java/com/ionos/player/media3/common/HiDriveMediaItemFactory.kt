@@ -6,8 +6,8 @@ import com.ionos.player.model.PlayerFileInfo
 import javax.inject.Inject
 
 class HiDriveMediaItemFactory @Inject constructor(
-	private val mediaIdFactory: MediaIdFactory<PlayerFileInfo>,
-) : MediaItemFactory<PlayerFileInfo> {
+	private val mediaIdFactory: MediaIdFactory,
+) : MediaItemFactory {
 
 	override fun create(sourceInfo: PlayerFileInfo): MediaItem {
 		val mediaId = mediaIdFactory.create(sourceInfo)

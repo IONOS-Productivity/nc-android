@@ -1,5 +1,7 @@
 package com.ionos.player.media3.common
 
-interface MediaIdFactory<SourceInfo> {
-	fun create(sourceInfo: SourceInfo): String
+import com.ionos.player.model.PlayerFileInfo
+
+interface MediaIdFactory {
+	fun create(sourceInfo: PlayerFileInfo): String
 }

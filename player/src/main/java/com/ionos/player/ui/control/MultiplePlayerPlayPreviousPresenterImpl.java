@@ -10,19 +10,19 @@ import com.ionos.player.model.state.State;
  * Created by yaz on 1/25/17.
  */
 
-public class MultiplePlayerPlayPreviousPresenterImpl<SourceInfo> implements MultiplePlayerPlayPreviousPresenter {
+public class MultiplePlayerPlayPreviousPresenterImpl implements MultiplePlayerPlayPreviousPresenter {
 
-	private final MultiplePlayer.Model<SourceInfo> playerModel;
-	private final MultiplePlayer.ControlPresenter<SourceInfo> controlPresenter;
+	private final MultiplePlayer.Model playerModel;
+	private final MultiplePlayer.ControlPresenter controlPresenter;
 
-	public MultiplePlayerPlayPreviousPresenterImpl(MultiplePlayer.Model<SourceInfo> playerModel, MultiplePlayer.ControlPresenter<SourceInfo> controlPresenter) {
+	public MultiplePlayerPlayPreviousPresenterImpl(MultiplePlayer.Model playerModel, MultiplePlayer.ControlPresenter controlPresenter) {
 		this.playerModel = playerModel;
 		this.controlPresenter = controlPresenter;
 	}
 
 	@Override
 	public void onPreviousClicked() {
-		PlaybackState<SourceInfo> state = findState();
+		PlaybackState state = findState();
 		if (state == null) {
 			return;
 		}
@@ -35,7 +35,7 @@ public class MultiplePlayerPlayPreviousPresenterImpl<SourceInfo> implements Mult
 
 	@Override
 	public void onPreviousDoubleClicked() {
-		PlaybackState<SourceInfo> state = findState();
+		PlaybackState state = findState();
 		if (state == null) {
 			return;
 		}
@@ -45,11 +45,11 @@ public class MultiplePlayerPlayPreviousPresenterImpl<SourceInfo> implements Mult
 		}
 	}
 
-	private PlaybackState<SourceInfo> findState() {
-		Optional<MultiplePlaybackState<SourceInfo>> multiplePlaybackStateOptional = this.playerModel.getState();
+	private PlaybackState findState() {
+		Optional<MultiplePlaybackState> multiplePlaybackStateOptional = this.playerModel.getState();
 		if (multiplePlaybackStateOptional.isPresent()) {
-			MultiplePlaybackState<SourceInfo> multiplePlaybackState = multiplePlaybackStateOptional.get();
-			Optional<PlaybackState<SourceInfo>> playbackStateOptional = multiplePlaybackState.getCurrentPlaybackState();
+			MultiplePlaybackState multiplePlaybackState = multiplePlaybackStateOptional.get();
+			Optional<PlaybackState> playbackStateOptional = multiplePlaybackState.getCurrentPlaybackState();
 			if (playbackStateOptional.isPresent()) {
 				return playbackStateOptional.get();
 			}

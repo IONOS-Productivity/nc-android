@@ -11,7 +11,7 @@ import com.ionos.player.model.release_strategy.DoNotReleaseIfExistsSourceInfoRel
 import javax.inject.Inject
 
 class RemoveFilesFromPlayerQueue @Inject constructor(
-	private val model: MultiplePlayer.Model<PlayerFileInfo>,
+	private val model: MultiplePlayer.Model,
 ) {
 
 	operator fun invoke(deletedFiles: List<PlayerFileInfo>) {

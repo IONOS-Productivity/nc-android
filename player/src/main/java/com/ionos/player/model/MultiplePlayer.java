@@ -21,21 +21,21 @@ import java.util.List;
  */
 public interface MultiplePlayer {
 
-	interface Model<SourceInfo> {
+	interface Model {
 
 		void start(Action onSuccess, ParamAction<Throwable> onError);
 
-		void setSourceInfos(List<SourceInfo> sourceInfos, SourceInfoReleaseStrategy<SourceInfo> releaseStrategy);
+		void setSourceInfos(List<PlayerFileInfo> sourceInfos, SourceInfoReleaseStrategy releaseStrategy);
 
 		void release();
 
-		Optional<MultiplePlaybackState<SourceInfo>> getState();
+		Optional<MultiplePlaybackState> getState();
 
 		void videoViewSetter(ParamAction<VideoViewSetter> success);
 
-		void addListener(Listener<SourceInfo> listener);
+		void addListener(Listener listener);
 
-		void removeListener(Listener<SourceInfo> listener);
+		void removeListener(Listener listener);
 
 		void play();
 
@@ -57,41 +57,41 @@ public interface MultiplePlayer {
 
 		void doNotShuffle();
 
-		void switchToSourceInfo(SourceInfo sourceInfo);
+		void switchToSourceInfo(PlayerFileInfo sourceInfo);
 
-		interface Listener<SourceInfo> {
-			void onUpdate(MultiplePlaybackState<SourceInfo> state);
+		interface Listener {
+			void onUpdate(MultiplePlaybackState state);
 
 			void onError(Throwable error);
 
-			void onSourceInfosChanged(List<SourceInfo> originalSourceInfos,
-									  List<SourceInfo> currentSourceInfos);
+			void onSourceInfosChanged(List<PlayerFileInfo> originalSourceInfos,
+									  List<PlayerFileInfo> currentSourceInfos);
 		}
 	}
 
-	interface SourcesView<SourceInfo> {
+	interface SourcesView {
 
-		void displayCurrentSourceInfo(SourceInfo sourceInfo);
+		void displayCurrentSourceInfo(PlayerFileInfo sourceInfo);
 
-		void displaySourceInfos(List<SourceInfo> sourceInfos);
+		void displaySourceInfos(List<PlayerFileInfo> sourceInfos);
 	}
 
-	interface SourcesPresenter<SourceInfo> extends BasePresenter<SourceInfo> {
+	interface SourcesPresenter extends BasePresenter {
 
-		void setView(SourcesView<SourceInfo> view);
+		void setView(SourcesView view);
 
-		void onSwitchToSourceInfo(SourceInfo sourceInfo);
+		void onSwitchToSourceInfo(PlayerFileInfo sourceInfo);
 	}
 
-	interface ErrorView<SourceInfo> {
+	interface ErrorView {
 		void showError(String message);
 	}
 
-	interface ErrorPresenter<SourceInfo> extends BasePresenter<SourceInfo> {
-		void setView(ErrorView<SourceInfo> errorView);
+	interface ErrorPresenter extends BasePresenter {
+		void setView(ErrorView errorView);
 	}
 
-	interface ActiveSourceView<SourceInfo> {
+	interface ActiveSourceView {
 
 		void displayAsActiveSource();
 
@@ -100,14 +100,14 @@ public interface MultiplePlayer {
 		void setProgress(int currentTimeInMilliseconds, int totalTimeInMilliseconds);
 	}
 
-	interface ActiveSourcePresenter<SourceInfo> extends BasePresenter<SourceInfo> {
+	interface ActiveSourcePresenter extends BasePresenter {
 
-		void setView(ActiveSourceView<SourceInfo> view);
+		void setView(ActiveSourceView view);
 
-		void setSourceInfo(SourceInfo sourceInfo);
+		void setSourceInfo(PlayerFileInfo sourceInfo);
 	}
 
-	interface ControlView<SourceInfo> {
+	interface ControlView {
 		void repeat();
 
 		void doNotRepeat();
@@ -127,9 +127,9 @@ public interface MultiplePlayer {
 		void enableSwitchControls(boolean next, boolean previous);
 	}
 
-	interface ControlPresenter<SourceInfo> extends BasePresenter<SourceInfo> {
+	interface ControlPresenter extends BasePresenter {
 
-		void setView(ControlView<SourceInfo> view);
+		void setView(ControlView view);
 
 		void onPlay();
 
@@ -153,27 +153,27 @@ public interface MultiplePlayer {
 
 	}
 
-	interface VideoView<SourceInfo> {
+	interface VideoView {
 
 		void setVideoViewAvailable();
 
 		void setVideoViewUnavailable();
 
-		void setVideoView(VideoViewSetter setter, SourceInfo sourceInfo);
+		void setVideoView(VideoViewSetter setter, PlayerFileInfo sourceInfo);
 
 		void clearVideoView(VideoViewSetter setter);
 	}
 
-	interface VideoPresenter<SourceInfo> extends BasePresenter<SourceInfo> {
+	interface VideoPresenter extends BasePresenter {
 
-		void setView(VideoView<SourceInfo> view);
+		void setView(VideoView view);
 
 		void onVideoViewCreated();
 
 		void onVideoViewDestroyed();
 	}
 
-	interface HidingView<SourceInfo> {
+	interface HidingView {
 
 		void displayPlayerView();
 
@@ -181,13 +181,13 @@ public interface MultiplePlayer {
 
 	}
 
-	interface HidingPresenter<SourceInfo> extends BasePresenter<SourceInfo> {
+	interface HidingPresenter extends BasePresenter {
 
-		void setView(HidingView<SourceInfo> view);
+		void setView(HidingView view);
 
 	}
 
-	interface BasePresenter<SourceInfo> {
+	interface BasePresenter {
 
 		void onCreate();
 

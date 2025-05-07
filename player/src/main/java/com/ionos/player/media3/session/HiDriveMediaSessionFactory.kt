@@ -9,7 +9,6 @@ import androidx.media3.session.MediaSession
 import androidx.media3.session.SessionCommand
 import com.ionos.player.R
 import com.ionos.player.media3.exoplayer.PlayerFactory
-import com.ionos.player.model.PlayerFileInfo
 import com.ionos.player.model.image_loader.PlayerImageLoader
 import com.ionos.player.model.predicate.IsVideoPredicate
 import com.ionos.player.model.store.SourceInfoStore
@@ -20,7 +19,7 @@ class HiDriveMediaSessionFactory @Inject constructor(
 	private val context: Context,
 	private val playerFactory: PlayerFactory,
 	private val sessionCallback: HiDriveMediaSessionCallback,
-	private val sourceInfoStore: SourceInfoStore<PlayerFileInfo>,
+	private val sourceInfoStore: SourceInfoStore,
 	private val imageLoader: PlayerImageLoader,
 	private val isVideoPredicate: IsVideoPredicate,
 ) : MediaSessionFactory {

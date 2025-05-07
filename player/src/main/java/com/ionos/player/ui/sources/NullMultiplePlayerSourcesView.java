@@ -8,6 +8,7 @@
 package com.ionos.player.ui.sources;
 
 import com.ionos.player.model.MultiplePlayer;
+import com.ionos.player.model.PlayerFileInfo;
 
 import java.util.List;
 
@@ -15,11 +16,11 @@ import java.util.List;
  * User: zuzik
  * Date: 7/12/16
  */
-public class NullMultiplePlayerSourcesView<SourceInfo> implements MultiplePlayer.SourcesView<SourceInfo> {
+public class NullMultiplePlayerSourcesView implements MultiplePlayer.SourcesView {
 
 	private static final NullMultiplePlayerSourcesView INSTANCE = new NullMultiplePlayerSourcesView();
 
-	public static <SourceInfo> NullMultiplePlayerSourcesView<SourceInfo> getInstance() {
+	public static NullMultiplePlayerSourcesView getInstance() {
 		return INSTANCE;
 	}
 
@@ -28,12 +29,12 @@ public class NullMultiplePlayerSourcesView<SourceInfo> implements MultiplePlayer
 
 
 	@Override
-	public void displayCurrentSourceInfo(SourceInfo sourceInfo) {
+	public void displayCurrentSourceInfo(PlayerFileInfo sourceInfo) {
 
 	}
 
 	@Override
-	public void displaySourceInfos(List<SourceInfo> sourceInfos) {
+	public void displaySourceInfos(List<PlayerFileInfo> sourceInfos) {
 
 	}
 }

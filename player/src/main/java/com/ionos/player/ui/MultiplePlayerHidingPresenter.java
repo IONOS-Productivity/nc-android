@@ -8,6 +8,7 @@
 package com.ionos.player.ui;
 
 import com.ionos.player.model.MultiplePlayer;
+import com.ionos.player.model.PlayerFileInfo;
 import com.ionos.player.model.state.MultiplePlaybackState;
 
 import java.util.List;
@@ -16,18 +17,18 @@ import java.util.List;
  * User: zuzik
  * Date: 6/4/16
  */
-public class MultiplePlayerHidingPresenter<SourceInfo> implements MultiplePlayer.HidingPresenter<SourceInfo> {
+public class MultiplePlayerHidingPresenter implements MultiplePlayer.HidingPresenter {
 
-	private final MultiplePlayer.Model<SourceInfo> model;
-	private MultiplePlayer.HidingView<SourceInfo> view = NullMultiplePlayerHidingView.getInstance();
+	private final MultiplePlayer.Model model;
+	private MultiplePlayer.HidingView view = NullMultiplePlayerHidingView.getInstance();
 
-	public MultiplePlayerHidingPresenter(MultiplePlayer.Model<SourceInfo> model) {
+	public MultiplePlayerHidingPresenter(MultiplePlayer.Model model) {
 		this.model = model;
 	}
 
 	@Override
-	public void setView(MultiplePlayer.HidingView<SourceInfo> view) {
-		this.view = view != null ? view : NullMultiplePlayerHidingView.<SourceInfo>getInstance();
+	public void setView(MultiplePlayer.HidingView view) {
+		this.view = view != null ? view : NullMultiplePlayerHidingView.getInstance();
 	}
 
 	@Override
@@ -62,9 +63,9 @@ public class MultiplePlayerHidingPresenter<SourceInfo> implements MultiplePlayer
 		}
 	}
 
-	private final MultiplePlayer.Model.Listener<SourceInfo> listener = new MultiplePlayer.Model.Listener<>() {
+	private final MultiplePlayer.Model.Listener listener = new MultiplePlayer.Model.Listener() {
 		@Override
-		public void onUpdate(MultiplePlaybackState<SourceInfo> state) {
+		public void onUpdate(MultiplePlaybackState state) {
 			updateView();
 		}
 
@@ -73,7 +74,7 @@ public class MultiplePlayerHidingPresenter<SourceInfo> implements MultiplePlayer
 		}
 
 		@Override
-		public void onSourceInfosChanged(List<SourceInfo> originalSourceInfos, List<SourceInfo> currentSourceInfos) {
+		public void onSourceInfosChanged(List<PlayerFileInfo> originalSourceInfos, List<PlayerFileInfo> currentSourceInfos) {
 			updateView();
 		}
 	};

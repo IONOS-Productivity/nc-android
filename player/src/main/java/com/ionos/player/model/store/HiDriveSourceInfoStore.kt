@@ -5,8 +5,8 @@ import com.ionos.player.model.PlayerFileInfo
 import javax.inject.Inject
 
 class HiDriveSourceInfoStore @Inject constructor(
-	private val mediaIdFactory: MediaIdFactory<PlayerFileInfo>,
-) : SourceInfoStore<PlayerFileInfo> {
+	private val mediaIdFactory: MediaIdFactory,
+) : SourceInfoStore {
 	private val sourceInfos = mutableListOf<PlayerFileInfo>()
 
 	override fun getSourceInfos(): List<PlayerFileInfo> {

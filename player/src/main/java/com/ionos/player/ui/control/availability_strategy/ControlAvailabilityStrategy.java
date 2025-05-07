@@ -7,15 +7,17 @@
 
 package com.ionos.player.ui.control.availability_strategy;
 
+import com.ionos.player.model.PlayerFileInfo;
+
 import java.util.List;
 
 /**
  * User: zuzik
  * Date: 6/18/16
  */
-public interface ControlAvailabilityStrategy<SourceInfo> {
+public interface ControlAvailabilityStrategy {
 	boolean available(
-			List<SourceInfo> sourceInfos,
-			SourceInfo currentSourceInfo,
+			List<PlayerFileInfo> sourceInfos,
+			PlayerFileInfo currentSourceInfo,
 			boolean shuffle);
 }

@@ -9,6 +9,7 @@ package com.ionos.player.ui.sources;
 
 import com.annimon.stream.Optional;
 import com.ionos.player.model.MultiplePlayer;
+import com.ionos.player.model.PlayerFileInfo;
 import com.ionos.player.model.release_strategy.SourceInfoReleaseStrategy;
 import com.ionos.player.model.state.MultiplePlaybackState;
 import com.ionos.player.model.state.PlaybackState;
@@ -23,19 +24,19 @@ import java.util.List;
  * User: zuzik
  * Date: 6/4/16
  */
-public class MultiplePlayerSourcesPresenter<SourceInfo> implements MultiplePlayer.SourcesPresenter<SourceInfo> {
+public class MultiplePlayerSourcesPresenter implements MultiplePlayer.SourcesPresenter {
 
-	private final MultiplePlayer.Model<SourceInfo> model;
+	private final MultiplePlayer.Model model;
 	private final ExceptionToMessageTransformation exceptionToMessageTransformation;
-	private MultiplePlayer.SourcesView<SourceInfo> view = NullMultiplePlayerSourcesView.getInstance();
+    private MultiplePlayer.SourcesView view = NullMultiplePlayerSourcesView.getInstance();
 
-	private final MultiplePlayerPresenterDestroyStrategy<SourceInfo> destroyStrategy;
-	private final SourceInfoReleaseStrategy<SourceInfo> releaseStrategy;
+	private final MultiplePlayerPresenterDestroyStrategy destroyStrategy;
+    private final SourceInfoReleaseStrategy releaseStrategy;
 
 	public MultiplePlayerSourcesPresenter(
-			MultiplePlayer.Model<SourceInfo> model,
-			MultiplePlayerPresenterDestroyStrategy<SourceInfo> destroyStrategy,
-			SourceInfoReleaseStrategy<SourceInfo> releaseStrategy,
+			MultiplePlayer.Model model,
+            MultiplePlayerPresenterDestroyStrategy destroyStrategy,
+            SourceInfoReleaseStrategy releaseStrategy,
 			PlayerExceptionMessageProvider exceptionMessageProvider) {
 		this.model = model;
 		this.destroyStrategy = destroyStrategy;
@@ -44,8 +45,8 @@ public class MultiplePlayerSourcesPresenter<SourceInfo> implements MultiplePlaye
 	}
 
 	@Override
-	public void setView(MultiplePlayer.SourcesView<SourceInfo> view) {
-		this.view = view != null ? view : NullMultiplePlayerSourcesView.<SourceInfo>getInstance();
+	public void setView(MultiplePlayer.SourcesView view) {
+		this.view = view != null ? view : NullMultiplePlayerSourcesView.getInstance();
 	}
 
 	@Override
@@ -71,7 +72,7 @@ public class MultiplePlayerSourcesPresenter<SourceInfo> implements MultiplePlaye
 	}
 
 	@Override
-	public void onSwitchToSourceInfo(SourceInfo sourceInfo) {
+	public void onSwitchToSourceInfo(PlayerFileInfo sourceInfo) {
 		this.model.switchToSourceInfo(sourceInfo);
 	}
 
@@ -79,8 +80,8 @@ public class MultiplePlayerSourcesPresenter<SourceInfo> implements MultiplePlaye
 		updateView(this.model.getState());
 	}
 
-	private void updateView(Optional<MultiplePlaybackState<SourceInfo>> state) {
-		List<SourceInfo> sources = new ArrayList<>();
+	private void updateView(Optional<MultiplePlaybackState> state) {
+		List<PlayerFileInfo> sources = new ArrayList<>();
 
 		if (state.isPresent()) {
 			sources = state.get().currentSourceInfos;
@@ -88,14 +89,14 @@ public class MultiplePlayerSourcesPresenter<SourceInfo> implements MultiplePlaye
 
 		this.view.displaySourceInfos(sources);
 		if (state.mapToBoolean(input -> input.getCurrentPlaybackState().isPresent()).orElse(false)) {
-			PlaybackState<SourceInfo> playbackState = state.get().getCurrentPlaybackState().get();
+			PlaybackState playbackState = state.get().getCurrentPlaybackState().get();
 			this.view.displayCurrentSourceInfo(playbackState.sourceInfo);
 		}
 	}
 
-	private final MultiplePlayer.Model.Listener<SourceInfo> listener = new MultiplePlayer.Model.Listener<>() {
+	private final MultiplePlayer.Model.Listener listener = new MultiplePlayer.Model.Listener() {
 		@Override
-		public void onUpdate(MultiplePlaybackState<SourceInfo> state) {
+		public void onUpdate(MultiplePlaybackState state) {
 			updateView();
 		}
 
@@ -104,7 +105,7 @@ public class MultiplePlayerSourcesPresenter<SourceInfo> implements MultiplePlaye
 		}
 
 		@Override
-		public void onSourceInfosChanged(List<SourceInfo> originalSourceInfos, List<SourceInfo> currentSourceInfos) {
+		public void onSourceInfosChanged(List<PlayerFileInfo> originalSourceInfos, List<PlayerFileInfo> currentSourceInfos) {
 			view.displaySourceInfos(currentSourceInfos);
 		}
 	};

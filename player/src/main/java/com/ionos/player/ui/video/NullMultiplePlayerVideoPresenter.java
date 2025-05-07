@@ -13,16 +13,16 @@ import com.ionos.player.model.MultiplePlayer;
  * Created by yaz on 9/23/16.
  */
 
-public class NullMultiplePlayerVideoPresenter<SourceInfo> implements MultiplePlayer.VideoPresenter<SourceInfo> {
+public class NullMultiplePlayerVideoPresenter implements MultiplePlayer.VideoPresenter {
 
 	private static final NullMultiplePlayerVideoPresenter INSTANCE = new NullMultiplePlayerVideoPresenter();
 
-	public static <SourceInfo> NullMultiplePlayerVideoPresenter<SourceInfo> getInstance() {
+	public static NullMultiplePlayerVideoPresenter getInstance() {
 		return INSTANCE;
 	}
 
 	@Override
-	public void setView(MultiplePlayer.VideoView<SourceInfo> view) {
+	public void setView(MultiplePlayer.VideoView view) {
 	}
 
 	@Override

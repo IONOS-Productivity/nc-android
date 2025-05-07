@@ -16,22 +16,22 @@ import java.util.List;
  * User: zuzik
  * Date: 7/17/16
  */
-public class CompositeListener<SourceInfo> implements MultiplePlayer.Model.Listener<SourceInfo> {
+public class CompositeListener implements MultiplePlayer.Model.Listener {
 
-	private final List<MultiplePlayer.Model.Listener<SourceInfo>> listeners = new ArrayList<>();
+	private final List<MultiplePlayer.Model.Listener> listeners = new ArrayList<>();
 
-	public void addListener(MultiplePlayer.Model.Listener<SourceInfo> listener) {
+	public void addListener(MultiplePlayer.Model.Listener listener) {
 		if (!this.listeners.contains(listener)) {
 			this.listeners.add(listener);
 		}
 	}
 
-	public void removeListener(MultiplePlayer.Model.Listener<SourceInfo> listener) {
+	public void removeListener(MultiplePlayer.Model.Listener listener) {
 		this.listeners.remove(listener);
 	}
 
 	@Override
-	public void onUpdate(MultiplePlaybackState<SourceInfo> state) {
+	public void onUpdate(MultiplePlaybackState state) {
 		for (int i = 0; i < this.listeners.size(); i++) {
 			this.listeners.get(i).onUpdate(state);
 		}
@@ -45,7 +45,7 @@ public class CompositeListener<SourceInfo> implements MultiplePlayer.Model.Liste
 	}
 
 	@Override
-	public void onSourceInfosChanged(List<SourceInfo> originalSourceInfos, List<SourceInfo> currentSourceInfos) {
+	public void onSourceInfosChanged(List<PlayerFileInfo> originalSourceInfos, List<PlayerFileInfo> currentSourceInfos) {
 		for (int i = 0; i < this.listeners.size(); i++) {
 			this.listeners.get(i).onSourceInfosChanged(originalSourceInfos, currentSourceInfos);
 		}
