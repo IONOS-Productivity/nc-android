@@ -10,13 +10,10 @@ package com.ionos.player.model;
 import com.annimon.stream.Optional;
 import com.ionos.player.model.release_strategy.SourceInfoReleaseStrategy;
 import com.ionos.player.model.state.MultiplePlaybackState;
-import com.ionos.player.model.volume.VolumeChangedListener;
 import com.ionos.player.util.Action;
 import com.ionos.player.util.ParamAction;
 
 import java.util.List;
-
-import androidx.annotation.NonNull;
 
 /**
  * User: zuzik
@@ -61,20 +58,6 @@ public interface MultiplePlayer {
 		void doNotShuffle();
 
 		void switchToSourceInfo(SourceInfo sourceInfo);
-
-		void setVolume(double volume);
-
-		double getCurrentVolume();
-
-		double getPreviousVolume();
-
-		void removeVolumeChangedListener(VolumeChangedListener volumeChangedListener);
-
-		void addVolumeChangedListener(@NonNull VolumeChangedListener volumeChangedListener);
-
-		void startTrackingVolumeEvents();
-
-		void stopTrackingVolumeEvents();
 
 		interface Listener<SourceInfo> {
 			void onUpdate(MultiplePlaybackState<SourceInfo> state);
@@ -142,8 +125,6 @@ public interface MultiplePlayer {
 		void enablePlayControls(boolean play, boolean pause, boolean stop);
 
 		void enableSwitchControls(boolean next, boolean previous);
-
-		void setCurrentVolume(double volume);
 	}
 
 	interface ControlPresenter<SourceInfo> extends BasePresenter<SourceInfo> {
@@ -169,10 +150,6 @@ public interface MultiplePlayer {
 		void onShuffle();
 
 		void onDoNotShuffle();
-
-		void onVolumeChanged(double volume);
-
-		void onToggleMute();
 
 	}
 

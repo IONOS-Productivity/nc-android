@@ -65,9 +65,4 @@ public class NullMultiplePlayerControlView<SourceInfo> implements MultiplePlayer
 	public void enableSwitchControls(boolean next, boolean previous) {
 
 	}
-
-	@Override
-	public void setCurrentVolume(double volume) {
-
-	}
 }

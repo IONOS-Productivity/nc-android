@@ -2,6 +2,7 @@ package com.ionos.player.ui.audio;
 
 import android.app.Activity;
 import android.content.Context;
+import android.media.AudioManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,7 +12,6 @@ import com.ionos.player.model.PlayerFileInfo;
 import com.ionos.player.model.predicate.FileBeingProcessedPredicate;
 import com.ionos.player.model.state.MultiplePlaybackState;
 import com.ionos.player.model.state.PlaybackState;
-import com.ionos.player.model.volume.Volume;
 import com.ionos.player.ui.MultiplePlayerHidingPresenter;
 import com.ionos.player.ui.PlayerView;
 import com.ionos.player.ui.PlayerViewContainer;
@@ -75,7 +75,7 @@ public class AudioPlayerView extends PlayerView {
 
 		this.playerSourcesView.init(new AudioPlayerSourceFragmentFactory());
 
-		new Volume().useVolumeKeysToControlPlaybackVolume(Cast.castOrError(context, Activity.class));
+		Cast.castOrError(context, Activity.class).setVolumeControlStream(AudioManager.STREAM_MUSIC);
 	}
 
 	protected void inject(@NonNull Context context) {

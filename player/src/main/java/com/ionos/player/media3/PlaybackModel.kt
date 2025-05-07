@@ -26,8 +26,6 @@ import com.ionos.player.model.error_strategy.MultiplePlaybackErrorStrategy
 import com.ionos.player.model.release_strategy.SourceInfoReleaseStrategy
 import com.ionos.player.model.state.MultiplePlaybackState
 import com.ionos.player.model.store.SourceInfoStore
-import com.ionos.player.model.volume.IVolumeController
-import com.ionos.player.model.volume.VolumeController
 import com.ionos.player.util.Action
 import com.ionos.player.util.ParamAction
 import com.ionos.player.util.PeriodicAction
@@ -41,8 +39,7 @@ class PlaybackModel<SourceInfo> @Inject constructor(
 	private val sourceInfoStore: SourceInfoStore<SourceInfo>,
 	private val playbackSettings: MultiplePlaybackSettings,
 	private val playbackErrorStrategy: MultiplePlaybackErrorStrategy<SourceInfo>,
-) : MultiplePlayer.Model<SourceInfo>,
-	IVolumeController by VolumeController(context) {
+) : MultiplePlayer.Model {
 
 	companion object {
 		private const val CHECK_PROGRESS_INTERVAL = 1000

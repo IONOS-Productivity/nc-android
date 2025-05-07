@@ -339,11 +339,6 @@ public class PlayerControlView extends LinearLayout {
 			ivPrevious.setEnabled(previous);
 		}
 
-		@Override
-		public void setCurrentVolume(double v) {
-
-		}
-
 		private void configurePlayPauseButton(@DrawableRes int imageResource, String tagState) {
 			ivPlayPause.setImageResource(imageResource);
 			ivPlayPause.setTag(tagState);

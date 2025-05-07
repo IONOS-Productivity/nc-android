@@ -2,6 +2,7 @@ package com.ionos.player.ui.video;
 
 import android.app.Activity;
 import android.content.Context;
+import android.media.AudioManager;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -14,7 +15,6 @@ import com.ionos.player.model.PlayerFileInfo;
 import com.ionos.player.model.predicate.FileBeingProcessedPredicate;
 import com.ionos.player.model.state.MultiplePlaybackState;
 import com.ionos.player.model.state.PlaybackState;
-import com.ionos.player.model.volume.Volume;
 import com.ionos.player.ui.MultiplePlayerHidingPresenter;
 import com.ionos.player.ui.PlayerView;
 import com.ionos.player.ui.PlayerViewContainer;
@@ -89,7 +89,7 @@ public class VideoPlayerView extends PlayerView {
 
 		this.playerSourcesView.init(new VideoPlayerSourceFragmentFactory());
 
-		new Volume().useVolumeKeysToControlPlaybackVolume(activity);
+        this.activity.setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
 		this.timer = new AsyncTimer(ANIMATION_TIMER_DURATION);
 		this.timer.start();

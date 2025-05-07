@@ -12,7 +12,6 @@ import com.ionos.player.model.MultiplePlayer;
 import com.ionos.player.model.state.MultiplePlaybackState;
 import com.ionos.player.model.state.PlaybackState;
 import com.ionos.player.model.state.PlaybackStateAnalyzer;
-import com.ionos.player.model.volume.VolumeChangedListener;
 import com.ionos.player.ui.control.availability_strategy.ControlAvailabilityStrategy;
 
 import java.util.List;
@@ -27,7 +26,6 @@ public class MultiplePlayerControlPresenter<SourceInfo> implements MultiplePlaye
 	private final ControlAvailabilityStrategy<SourceInfo> nextControlAvailabilityStrategy;
 	private final ControlAvailabilityStrategy<SourceInfo> previousControlAvailabilityStrategy;
 	private MultiplePlayer.ControlView<SourceInfo> view = NullMultiplePlayerControlView.getInstance();
-	private double currentVolume = 0;
 
 	public MultiplePlayerControlPresenter(
 			MultiplePlayer.Model<SourceInfo> model,
@@ -46,7 +44,6 @@ public class MultiplePlayerControlPresenter<SourceInfo> implements MultiplePlaye
 	@Override
 	public void onCreate() {
 		updateView();
-		configureCurrentVolume();
 	}
 
 	@Override
@@ -54,25 +51,15 @@ public class MultiplePlayerControlPresenter<SourceInfo> implements MultiplePlaye
 		this.view = NullMultiplePlayerControlView.getInstance();
 	}
 
-	private void configureCurrentVolume() {
-		this.currentVolume = this.model.getCurrentVolume();
-		this.model.setVolume(this.currentVolume);
-		updateVolumeUi();
-	}
-
 	@Override
 	public void onAppear() {
 		updateView();
 		this.model.addListener(this.listener);
-		this.model.addVolumeChangedListener(this.volumeChangedListener);
-		this.model.startTrackingVolumeEvents();
 	}
 
 	@Override
 	public void onDisappear() {
 		this.model.removeListener(this.listener);
-		this.model.removeVolumeChangedListener(this.volumeChangedListener);
-		this.model.stopTrackingVolumeEvents();
 	}
 
 	@Override
@@ -123,28 +110,6 @@ public class MultiplePlayerControlPresenter<SourceInfo> implements MultiplePlaye
 	@Override
 	public void onDoNotShuffle() {
 		this.model.doNotShuffle();
-	}
-
-	@Override
-	public void onVolumeChanged(double volume) {
-		this.currentVolume = volume;
-		this.model.setVolume(volume);
-		updateVolumeUi();
-	}
-
-	private boolean isMuted() {
-		return this.currentVolume == 0;
-	}
-
-	@Override
-	public void onToggleMute() {
-		this.currentVolume = isMuted() ? model.getPreviousVolume() : 0;
-		this.model.setVolume(this.currentVolume);
-		updateVolumeUi();
-	}
-
-	private void updateVolumeUi() {
-		this.view.setCurrentVolume(this.model.getCurrentVolume());
 	}
 
 	private void updateView() {
@@ -220,13 +185,6 @@ public class MultiplePlayerControlPresenter<SourceInfo> implements MultiplePlaye
 		@Override
 		public void onSourceInfosChanged(List<SourceInfo> originalSourceInfos, List<SourceInfo> currentSourceInfos) {
 
-		}
-	};
-
-	private final VolumeChangedListener volumeChangedListener = new VolumeChangedListener() {
-		@Override
-		public void onVolumeChange(double previousVolume) {
-			updateVolumeUi();
 		}
 	};
 }
