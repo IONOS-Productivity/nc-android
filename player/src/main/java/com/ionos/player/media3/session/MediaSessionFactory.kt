@@ -9,7 +9,7 @@ import androidx.media3.session.MediaSession
 import androidx.media3.session.SessionCommand
 import com.ionos.player.R
 import com.ionos.player.media3.common.PlayerFactory
-import com.ionos.player.model.image_loader.PlayerImageLoader
+import com.ionos.player.model.PlayerImageLoader
 import com.ionos.player.model.predicate.IsVideoPredicate
 import com.ionos.player.model.store.SourceInfoStore
 import javax.inject.Inject

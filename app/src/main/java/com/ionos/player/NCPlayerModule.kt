@@ -7,9 +7,9 @@ import com.ionos.player.media3.datasource.StreamDataSourceFactory
 import com.ionos.player.media3.session.DefaultMediaSessionActivityFactory
 import com.ionos.player.media3.session.MediaSessionActivityFactory
 import com.ionos.player.model.NCMultiplePlaybackSettings
+import com.ionos.player.model.PlayerImageLoader
+import com.ionos.player.model.PlayerImageLoaderImpl
 import com.ionos.player.model.PlayerMultiplePlaybackSettings
-import com.ionos.player.model.image_loader.PlayerImageLoader
-import com.ionos.player.model.image_loader.PlayerImageLoaderImpl
 import com.ionos.player.model.predicate.FileBeingProcessedPredicate
 import com.ionos.player.model.predicate.FileBeingProcessedPredicateImpl
 import com.ionos.player.model.predicate.IsVideoPredicate

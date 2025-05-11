@@ -15,8 +15,7 @@ import com.google.common.util.concurrent.MoreExecutors
 import com.ionos.player.R
 import com.ionos.player.media3.common.mediaId
 import com.ionos.player.model.PlayerFileInfo
-import com.ionos.player.model.image_loader.PlayerImageLoader
-import com.ionos.player.model.image_loader.PlayerImageLoaderOptions
+import com.ionos.player.model.PlayerImageLoader
 import com.ionos.player.model.predicate.IsVideoPredicate
 import com.ionos.player.model.store.SourceInfoStore
 import com.ionos.player.util.SystemVersion
@@ -81,17 +80,14 @@ class MediaSessionBitmapLoader(
 	}
 
 	private fun getBitmapForSourceInfo(sourceInfo: PlayerFileInfo): Bitmap? {
-		val request = imageLoader.load(sourceInfo)?.run {
-			if (SystemVersion.greaterOrEqualToTiramisu()) {
-				submit(context, LARGE_THUMBNAIL_TARGET_SIZE, LARGE_THUMBNAIL_TARGET_SIZE)
-			} else {
-				options(PlayerImageLoaderOptions(PlayerImageLoaderOptions.ScaleType.CENTER_CROP))
-				submit(context, THUMBNAIL_TARGET_SIZE, THUMBNAIL_TARGET_SIZE)
-			}
-		}
+		val request = if (SystemVersion.greaterOrEqualToTiramisu()) {
+            imageLoader.load(context, sourceInfo, LARGE_THUMBNAIL_TARGET_SIZE, LARGE_THUMBNAIL_TARGET_SIZE)
+        } else {
+            imageLoader.load(context, sourceInfo, THUMBNAIL_TARGET_SIZE, THUMBNAIL_TARGET_SIZE)
+        }
 
 		return try {
-			request?.get()
+			request.get()
 		} catch (e: Exception) {
 			null
 		}
