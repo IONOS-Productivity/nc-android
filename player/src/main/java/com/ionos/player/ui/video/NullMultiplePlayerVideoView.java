@@ -7,7 +7,7 @@
 
 package com.ionos.player.ui.video;
 
-import com.ionos.player.model.PlayerFileInfo;
+import com.ionos.player.model.PlaybackFile;
 import com.ionos.player.model.VideoViewSetter;
 import com.ionos.player.ui.MultiplePlayer;
 
@@ -37,7 +37,7 @@ public class NullMultiplePlayerVideoView implements MultiplePlayer.VideoView {
 	}
 
 	@Override
-	public void setVideoView(VideoViewSetter setter, PlayerFileInfo sourceInfo) {
+	public void setVideoView(VideoViewSetter setter, PlaybackFile file) {
 
 	}
 

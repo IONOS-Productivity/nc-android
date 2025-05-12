@@ -1,14 +1,14 @@
 package com.ionos.player.model.file_store
 
-import com.ionos.player.model.PlayerFileInfo
+import com.ionos.player.model.PlaybackFile
 
 interface PlaybackFileStore {
 
-	fun getPlaybackFiles(): List<PlayerFileInfo>
+	fun getFiles(): List<PlaybackFile>
 
-	fun setPlaybackFiles(files: List<PlayerFileInfo>)
+	fun setFiles(files: List<PlaybackFile>)
 
-	fun getPlaybackFile(id: String): PlayerFileInfo?
+	fun getFile(id: String): PlaybackFile?
 
 	fun clear()
 }

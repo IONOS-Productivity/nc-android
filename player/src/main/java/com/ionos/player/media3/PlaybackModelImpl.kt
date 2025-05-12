@@ -16,10 +16,10 @@ import com.ionos.player.media3.controller.indexOfFirst
 import com.ionos.player.media3.controller.setRepeatMode
 import com.ionos.player.media3.controller.updateMediaItems
 import com.ionos.player.media3.session.MediaSessionHolder
+import com.ionos.player.model.PlaybackFile
 import com.ionos.player.model.PlaybackModel
 import com.ionos.player.model.PlaybackModelCompositeListener
 import com.ionos.player.model.PlaybackSettings
-import com.ionos.player.model.PlayerFileInfo
 import com.ionos.player.model.VideoViewSetter
 import com.ionos.player.model.file_store.PlaybackFileStore
 import com.ionos.player.model.state.PlaybackState
@@ -97,17 +97,17 @@ class PlaybackModelImpl @Inject constructor(
 		}
 	}
 
-	override fun setSourceInfos(sourceInfos: List<PlayerFileInfo>) {
+	override fun setFiles(files: List<PlaybackFile>) {
 		val releaseCurrentPlayback = controller
 			?.currentMediaItem
-			?.let { playbackFileStore.getPlaybackFile(it.mediaId) }
-			?.let { playbackReleaseStrategy.releaseCurrentPlayback(sourceInfos, it) }
+			?.let { playbackFileStore.getFile(it.mediaId) }
+			?.let { playbackReleaseStrategy.releaseCurrentPlayback(files, it) }
 			?: true
 
-		playbackFileStore.setPlaybackFiles(sourceInfos)
+		playbackFileStore.setFiles(files)
 
 		controller?.let {
-			val mediaItems = sourceInfos.map(mediaItemFactory::create)
+			val mediaItems = files.map(mediaItemFactory::create)
 			if (releaseCurrentPlayback) {
 				it.setMediaItems(mediaItems)
 			} else {
@@ -179,9 +179,9 @@ class PlaybackModelImpl @Inject constructor(
 		controller?.shuffleModeEnabled = shuffle
 	}
 
-	override fun switchToSourceInfo(sourceInfo: PlayerFileInfo) {
+	override fun switchToFile(file: PlaybackFile) {
 		controller?.run {
-			val mediaItemIndex = indexOfFirst { it.mediaId == sourceInfo.id }
+			val mediaItemIndex = indexOfFirst { it.mediaId == file.id }
 			if (mediaItemIndex >= 0 && mediaItemIndex != currentMediaItemIndex) {
 				seekToDefaultPosition(mediaItemIndex)
 				prepare()

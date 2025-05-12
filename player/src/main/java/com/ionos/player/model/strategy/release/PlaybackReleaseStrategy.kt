@@ -1,8 +1,8 @@
 package com.ionos.player.model.strategy.release
 
-import com.ionos.player.model.PlayerFileInfo
+import com.ionos.player.model.PlaybackFile
 import java.io.Serializable
 
 interface PlaybackReleaseStrategy : Serializable {
-    fun releaseCurrentPlayback(sourceInfos: List<PlayerFileInfo>, currentSourceInfo: PlayerFileInfo): Boolean
+    fun releaseCurrentPlayback(files: List<PlaybackFile>, currentFile: PlaybackFile): Boolean
 }

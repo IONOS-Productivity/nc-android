@@ -7,7 +7,7 @@
 
 package com.ionos.player.ui;
 
-import com.ionos.player.model.PlayerFileInfo;
+import com.ionos.player.model.PlaybackFile;
 import com.ionos.player.model.VideoViewSetter;
 
 import java.util.List;
@@ -20,16 +20,16 @@ public interface MultiplePlayer {
 
 	interface SourcesView {
 
-		void displayCurrentSourceInfo(PlayerFileInfo sourceInfo);
+		void displayCurrentFile(PlaybackFile file);
 
-		void displaySourceInfos(List<PlayerFileInfo> sourceInfos);
+		void displayFiles(List<PlaybackFile> files);
 	}
 
 	interface SourcesPresenter extends BasePresenter {
 
 		void setView(SourcesView view);
 
-		void onSwitchToSourceInfo(PlayerFileInfo sourceInfo);
+		void onSwitchToFile(PlaybackFile file);
 	}
 
 	interface ErrorView {
@@ -53,7 +53,7 @@ public interface MultiplePlayer {
 
 		void setView(ActiveSourceView view);
 
-		void setSourceInfo(PlayerFileInfo sourceInfo);
+		void setFile(PlaybackFile file);
 	}
 
 	interface ControlView {
@@ -108,7 +108,7 @@ public interface MultiplePlayer {
 
 		void setVideoViewUnavailable();
 
-		void setVideoView(VideoViewSetter setter, PlayerFileInfo sourceInfo);
+		void setVideoView(VideoViewSetter setter, PlaybackFile file);
 
 		void clearVideoView(VideoViewSetter setter);
 	}

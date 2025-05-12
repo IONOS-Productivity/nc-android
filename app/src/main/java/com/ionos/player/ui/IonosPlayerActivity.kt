@@ -3,7 +3,7 @@ package com.ionos.player.ui
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import com.ionos.player.model.PlayerFileInfo
+import com.ionos.player.model.PlaybackFile
 import com.ionos.player.ui.audio.AudioPlayerView
 import com.ionos.player.ui.video.VideoPlayerView
 import com.ionos.player.ui.video.surface.PlayerCompatible
@@ -22,7 +22,7 @@ class IonosPlayerActivity : BaseActivity(), PlayerViewContainer, PlayerCompatibl
 
     companion object{
         private const val PLAYER_TYPE: String = "PLAYER_TYPE"
-        private const val RESULT_LAST_FILE_INFO: String = "RESULT_LAST_FILE_INFO"
+        private const val RESULT_LAST_OC_FILE: String = "RESULT_LAST_OC_FILE"
 
         fun createVideoPlayerIntent(context: Context): Intent {
             return Intent(context, IonosPlayerActivity::class.java)
@@ -41,8 +41,8 @@ class IonosPlayerActivity : BaseActivity(), PlayerViewContainer, PlayerCompatibl
         @Suppress("Deprecation")
         fun parseResultIntent(result: Intent?): OCFile? {
             return if (SystemVersion.greaterOrEqualToTiramisu())
-                result?.getParcelableExtra(RESULT_LAST_FILE_INFO, OCFile::class.java)
-            else result?.getParcelableExtra(RESULT_LAST_FILE_INFO) as OCFile?
+                result?.getParcelableExtra(RESULT_LAST_OC_FILE, OCFile::class.java)
+            else result?.getParcelableExtra(RESULT_LAST_OC_FILE) as OCFile?
         }
 
     }
@@ -51,7 +51,7 @@ class IonosPlayerActivity : BaseActivity(), PlayerViewContainer, PlayerCompatibl
     private val surfaceInvalidator = SurfaceInvalidator()
     private lateinit var playerView: PlayerView
     private var isPlayerViewStarted = false
-    private var currentFileInfo: PlayerFileInfo? = null
+    private var currentPlaybackFile: PlaybackFile? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,7 +76,7 @@ class IonosPlayerActivity : BaseActivity(), PlayerViewContainer, PlayerCompatibl
         super.onStart()
         if (!this.isPlayerViewStarted) {
             playerView.onStart()
-            playerView.setCurrentFileListener{ currentFileInfo = it}
+            playerView.setCurrentFileListener{ currentPlaybackFile = it}
             this.isPlayerViewStarted = true
         }
     }

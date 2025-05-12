@@ -1,5 +1,5 @@
 package com.ionos.player.model
 
-enum class NeighborFilesTypes {
+enum class NeighborFilesType {
 	IMAGE, AUDIO, VIDEO, FILES,
 }

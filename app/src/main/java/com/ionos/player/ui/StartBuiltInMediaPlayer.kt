@@ -2,11 +2,11 @@ package com.ionos.player.ui
 
 import androidx.activity.result.ActivityResultLauncher
 import androidx.core.app.ActivityOptionsCompat
-import com.ionos.player.model.NeighborFilesTypes
+import com.ionos.player.model.NeighborFilesType
 import com.ionos.player.model.OpenFileConfig
 import com.ionos.player.model.PlaybackModel
-import com.ionos.player.model.getNeighborFilesTypes
-import com.ionos.player.model.toPlayerFileInfo
+import com.ionos.player.model.getNeighborFilesType
+import com.ionos.player.model.toPlaybackFile
 import com.owncloud.android.datamodel.OCFile
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -35,20 +35,20 @@ class StartBuiltInMediaPlayer @AssistedInject constructor(
 	private val typeError = IllegalArgumentException("Supports only audion or video")
 
 	fun invoke(): Completable {
-		val type = input.fileInfo.getNeighborFilesTypes()
+		val type = input.file.getNeighborFilesType()
 
-		if (type != NeighborFilesTypes.AUDIO && type != NeighborFilesTypes.VIDEO)
+		if (type != NeighborFilesType.AUDIO && type != NeighborFilesType.VIDEO)
 			return Completable.error(typeError)
 
 		return Completable
 			.create { playerModel.start(it::onComplete, it::onError) }
-            .andThen(Completable.fromAction { launchPlayer(input.fileInfo, type) })
+            .andThen(Completable.fromAction { launchPlayer(input.file, type) })
 			.andThen(createObservable(input, type))
-			.map { it.map(OCFile::toPlayerFileInfo) }
+			.map { it.map(OCFile::toPlaybackFile) }
 			.observeOn(AndroidSchedulers.mainThread())
 			.doOnNext { sourceInfos ->
 				playerModel.state.ifPresent {
-					playerModel.setSourceInfos(sourceInfos)
+					playerModel.setFiles(sourceInfos)
 				}
 			}
 			.ignoreElements()
@@ -56,17 +56,17 @@ class StartBuiltInMediaPlayer @AssistedInject constructor(
 
 	@Throws(IllegalStateException::class)
 	private fun launchPlayer(
-		fileInfo: OCFile,
+		file: OCFile,
 		// sourceMode: FileSourceMode,
-		filesTypes: NeighborFilesTypes,
+		filesType: NeighborFilesType,
 	) {
-		val playerInfo = fileInfo.toPlayerFileInfo()
-		playerModel.setSourceInfos(listOf(playerInfo))
-		playerModel.switchToSourceInfo(playerInfo)
+		val playbackFile = file.toPlaybackFile()
+		playerModel.setFiles(listOf(playbackFile))
+		playerModel.switchToFile(playbackFile)
 		playerModel.play()
 		activityLauncher?.launch(
 			MediaPlayerResultContract.Input(
-				filesTypes,
+				filesType,
 				// sourceMode,
 			),
 			options
@@ -75,9 +75,9 @@ class StartBuiltInMediaPlayer @AssistedInject constructor(
 
 	private fun createObservable(
 		input: OpenFileConfig,
-		filesTypes: NeighborFilesTypes,
+		filesType: NeighborFilesType,
 	): Observable<List<OCFile>> {
-		return Observable.just(listOf(input.fileInfo))
+		return Observable.just(listOf(input.file))
 			.subscribeOn(Schedulers.io())
 	}
 

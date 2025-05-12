@@ -10,7 +10,7 @@ interface PlaybackModel {
 
     fun start(onSuccess: () -> Unit, onError: (Throwable) -> Unit)
 
-    fun setSourceInfos(sourceInfos: List<PlayerFileInfo>)
+    fun setFiles(files: List<PlaybackFile>)
 
     fun release()
 
@@ -36,7 +36,7 @@ interface PlaybackModel {
 
     fun setShuffle(shuffle: Boolean)
 
-    fun switchToSourceInfo(sourceInfo: PlayerFileInfo)
+    fun switchToFile(file: PlaybackFile)
 
     interface Listener {
 
@@ -44,6 +44,6 @@ interface PlaybackModel {
 
         fun onError(error: Throwable)
 
-        fun onSourceInfosChanged(originalSourceInfos: List<PlayerFileInfo>, currentSourceInfos: List<PlayerFileInfo>)
+        fun onFilesChanged(originalFiles: List<PlaybackFile>, currentFiles: List<PlaybackFile>)
     }
 }

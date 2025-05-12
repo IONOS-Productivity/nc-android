@@ -6,7 +6,7 @@ import com.owncloud.android.utils.MimeTypeUtil
 
 const val OC_FILE_SCHEME = "OCFile"
 
-fun OCFile.toPlayerFileInfo() = PlayerFileInfo(
+fun OCFile.toPlaybackFile() = PlaybackFile(
     id = localId.toString(),
     uri = getUri().toString(),
     name = fileName.substringBeforeLast("."),
@@ -15,10 +15,10 @@ fun OCFile.toPlayerFileInfo() = PlayerFileInfo(
     lastModified = modificationTimestamp,
 )
 
-fun OCFile.getNeighborFilesTypes() = when {
-    MimeTypeUtil.isAudio(this) -> NeighborFilesTypes.AUDIO
-    MimeTypeUtil.isVideo(this) -> NeighborFilesTypes.VIDEO
-    else -> NeighborFilesTypes.FILES
+fun OCFile.getNeighborFilesType() = when {
+    MimeTypeUtil.isAudio(this) -> NeighborFilesType.AUDIO
+    MimeTypeUtil.isVideo(this) -> NeighborFilesType.VIDEO
+    else -> NeighborFilesType.FILES
 }
 
 fun OCFile.getUri(): Uri {

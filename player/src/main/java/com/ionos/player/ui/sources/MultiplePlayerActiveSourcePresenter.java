@@ -7,8 +7,8 @@
 
 package com.ionos.player.ui.sources;
 
+import com.ionos.player.model.PlaybackFile;
 import com.ionos.player.model.PlaybackModel;
-import com.ionos.player.model.PlayerFileInfo;
 import com.ionos.player.model.state.PlaybackItemState;
 import com.ionos.player.model.state.PlaybackState;
 import com.ionos.player.model.state.PlayerState;
@@ -24,7 +24,7 @@ import java.util.Optional;
 public class MultiplePlayerActiveSourcePresenter implements MultiplePlayer.ActiveSourcePresenter {
 
 	private final PlaybackModel model;
-	private Optional<PlayerFileInfo> sourceInfo = Optional.empty();
+	private Optional<PlaybackFile> file = Optional.empty();
 	private MultiplePlayer.ActiveSourceView view = NullMultiplePlayerActiveSourceView.getInstance();
 
 	public MultiplePlayerActiveSourcePresenter(PlaybackModel model) {
@@ -32,8 +32,8 @@ public class MultiplePlayerActiveSourcePresenter implements MultiplePlayer.Activ
 	}
 
 	@Override
-	public void setSourceInfo(PlayerFileInfo sourceInfo) {
-		this.sourceInfo = Optional.of(sourceInfo);
+	public void setFile(PlaybackFile file) {
+		this.file = Optional.of(file);
 		updateView();
 	}
 
@@ -69,13 +69,13 @@ public class MultiplePlayerActiveSourcePresenter implements MultiplePlayer.Activ
 	}
 
 	private void updateView(Optional<PlaybackState> state) {
-		if (this.sourceInfo.isPresent() && state
-				.map(input -> input.currentPlaybackItemState.isPresent())
+		if (this.file.isPresent() && state
+				.map(input -> input.currentItemState.isPresent())
 				.orElse(false)) {
-			boolean isCurrentSourceInfo = state.get().currentPlaybackItemState.get().sourceInfo.equals(this.sourceInfo.get());
-			boolean sourceInfoCompleted = state.get().currentPlaybackItemState.get().playerState != PlayerState.COMPLETED;
-			if (isCurrentSourceInfo && sourceInfoCompleted) {
-				PlaybackItemState playbackItemState = state.get().currentPlaybackItemState.get();
+			boolean isCurrentFile = state.get().currentItemState.get().file.equals(this.file.get());
+			boolean fileCompleted = state.get().currentItemState.get().playerState != PlayerState.COMPLETED;
+			if (isCurrentFile && fileCompleted) {
+				PlaybackItemState playbackItemState = state.get().currentItemState.get();
 				this.view.displayAsActiveSource();
 				if (playbackItemState.maxTimeInMilliseconds > 0) {
 					int currentTime = playbackItemState.currentTimeInMilliseconds;
@@ -103,7 +103,7 @@ public class MultiplePlayerActiveSourcePresenter implements MultiplePlayer.Activ
 		}
 
 		@Override
-		public void onSourceInfosChanged(List<PlayerFileInfo> originalSourceInfos, List<PlayerFileInfo> currentSourceInfos) {
+		public void onFilesChanged(List<PlaybackFile> originalFiles, List<PlaybackFile> currentFiles) {
 
 		}
 	};

@@ -10,7 +10,7 @@ package com.ionos.player.ui.video.surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import com.ionos.player.model.PlayerFileInfo;
+import com.ionos.player.model.PlaybackFile;
 import com.ionos.player.model.VideoViewSetter;
 import com.ionos.player.ui.MultiplePlayer;
 
@@ -78,8 +78,8 @@ public class SurfaceVideoView implements MultiplePlayer.VideoView {
 	}
 
 	@Override
-	public void setVideoView(VideoViewSetter setter, PlayerFileInfo sourceInfo) {
-		this.strategy.setVideoView(setter, sourceInfo);
+	public void setVideoView(VideoViewSetter setter, PlaybackFile file) {
+		this.strategy.setVideoView(setter, file);
 	}
 
 	@Override
@@ -92,7 +92,7 @@ public class SurfaceVideoView implements MultiplePlayer.VideoView {
 	//region Strategy
 
 	private interface Strategy {
-		void setVideoView(VideoViewSetter setter, PlayerFileInfo sourceInfo);
+		void setVideoView(VideoViewSetter setter, PlaybackFile file);
 
 		void setVideoViewAvailable();
 
@@ -102,7 +102,7 @@ public class SurfaceVideoView implements MultiplePlayer.VideoView {
 	private class AvailableHolderStrategy implements Strategy {
 
 		@Override
-		public void setVideoView(VideoViewSetter setter, PlayerFileInfo sourceInfo) {
+		public void setVideoView(VideoViewSetter setter, PlaybackFile file) {
 			setter.setVideoView(holder);
 		}
 
@@ -118,7 +118,7 @@ public class SurfaceVideoView implements MultiplePlayer.VideoView {
 
 	private class UnavailableHolderStrategy implements Strategy {
 		@Override
-		public void setVideoView(VideoViewSetter setter, PlayerFileInfo sourceInfo) {
+		public void setVideoView(VideoViewSetter setter, PlaybackFile file) {
 		}
 
 		@Override

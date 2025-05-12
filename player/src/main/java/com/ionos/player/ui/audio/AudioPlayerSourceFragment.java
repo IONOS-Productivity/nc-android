@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ionos.player.R;
-import com.ionos.player.model.PlayerFileInfo;
+import com.ionos.player.model.PlaybackFile;
 import com.ionos.player.ui.common.FileTextDetailView;
 
 import androidx.annotation.Nullable;
@@ -19,17 +19,17 @@ import dagger.android.support.AndroidSupportInjection;
 
 public class AudioPlayerSourceFragment extends Fragment {
 
-	private final static String ARGUMENT_FILE_INFO = "ARGUMENT_FILE_INFO";
+	private final static String ARGUMENT_FILE = "ARGUMENT_FILE";
 
-	private PlayerFileInfo fileInfo;
+	private PlaybackFile file;
 
 	private View coverContainer;
 	private View mediaContainer;
 
-	public static Fragment createInstance(PlayerFileInfo fileInfo) {
+	public static Fragment createInstance(PlaybackFile file) {
 		AudioPlayerSourceFragment fragment = new AudioPlayerSourceFragment();
 		Bundle args = new Bundle();
-		args.putSerializable(ARGUMENT_FILE_INFO, fileInfo);
+		args.putSerializable(ARGUMENT_FILE, file);
 		fragment.setArguments(args);
 		return fragment;
 	}
@@ -38,7 +38,7 @@ public class AudioPlayerSourceFragment extends Fragment {
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		AndroidSupportInjection.inject(this);
-		this.fileInfo = (PlayerFileInfo) getArguments().getSerializable(ARGUMENT_FILE_INFO);
+		this.file = (PlaybackFile) getArguments().getSerializable(ARGUMENT_FILE);
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public class AudioPlayerSourceFragment extends Fragment {
 		this.mediaContainer = content.findViewById(R.id.videoContainer);
 		FileTextDetailView fileTextDetailView = content.findViewById(R.id.fileDetailView);
 
-		fileTextDetailView.displayFileInfo(this.fileInfo);
+		fileTextDetailView.displayFile(this.file);
 		switchToSongContainer();
 
 		return content;

@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ionos.player.R;
-import com.ionos.player.model.PlayerFileInfo;
+import com.ionos.player.model.PlaybackFile;
 
 import java.util.Date;
 
@@ -56,7 +56,7 @@ public class FileTextDetailView extends LinearLayout {
 		}
 	}
 
-	public void displayFileInfo(PlayerFileInfo file) {
+	public void displayFile(PlaybackFile file) {
 		showData(file.getName(), createSubtitleText(file));
 	}
 
@@ -65,7 +65,7 @@ public class FileTextDetailView extends LinearLayout {
 		this.tvSubtitle.setText(subtitle);
 	}
 
-	private String createSubtitleText(PlayerFileInfo file) {
+	private String createSubtitleText(PlaybackFile file) {
 		return new StringBuilder()
 			.append(Formatter.formatFileSize(getContext(), file.getContentLength()))
 			.append(", ")

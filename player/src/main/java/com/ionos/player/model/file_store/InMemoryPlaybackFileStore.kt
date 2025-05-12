@@ -1,35 +1,35 @@
 package com.ionos.player.model.file_store
 
-import com.ionos.player.model.PlayerFileInfo
+import com.ionos.player.model.PlaybackFile
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class InMemoryPlaybackFileStore @Inject constructor() : PlaybackFileStore {
-	private val sourceInfos = mutableListOf<PlayerFileInfo>()
+	private val files = mutableListOf<PlaybackFile>()
 
-	override fun getPlaybackFiles(): List<PlayerFileInfo> {
+	override fun getFiles(): List<PlaybackFile> {
 		return synchronized(this) {
-			sourceInfos.toList()
+			files.toList()
 		}
 	}
 
-	override fun setPlaybackFiles(files: List<PlayerFileInfo>) {
+	override fun setFiles(files: List<PlaybackFile>) {
 		synchronized(this) {
-			this.sourceInfos.clear()
-			this.sourceInfos.addAll(files)
+			this.files.clear()
+			this.files.addAll(files)
 		}
 	}
 
-	override fun getPlaybackFile(id: String): PlayerFileInfo? {
+	override fun getFile(id: String): PlaybackFile? {
 		return synchronized(this) {
-			sourceInfos.firstOrNull { id == it.id }
+			files.firstOrNull { id == it.id }
 		}
 	}
 
 	override fun clear() {
 		synchronized(this) {
-			sourceInfos.clear()
+			files.clear()
 		}
 	}
 }

@@ -8,7 +8,7 @@
 package com.ionos.player.media3
 
 import androidx.media3.common.Player
-import com.ionos.player.model.PlayerFileInfo
+import com.ionos.player.model.PlaybackFile
 import com.ionos.player.model.file_store.PlaybackFileStore
 import com.ionos.player.model.state.PlaybackItemState
 import com.ionos.player.model.state.PlaybackState
@@ -23,33 +23,33 @@ class PlaybackStateFactory(
 
 	fun create(player: Player?): Optional<PlaybackState> {
 		val state = PlaybackState(
-            playbackFileStore.getPlaybackFiles(),
-			getCurrentPlaybackState(player),
+            playbackFileStore.getFiles(),
+			getCurrentItemState(player),
 			player.mapRepeatMode(),
 			player?.shuffleModeEnabled == true,
 		)
 		return Optional.of(state)
 	}
 
-	private fun getCurrentPlaybackState(player: Player?): Optional<PlaybackItemState> {
-		val currentSourceInfo = player?.currentSourceInfo()
-		return if (currentSourceInfo != null) {
-			Optional.of(player.getCurrentPlaybackState(currentSourceInfo))
+	private fun getCurrentItemState(player: Player?): Optional<PlaybackItemState> {
+		val currentFile = player?.currentFile()
+		return if (currentFile != null) {
+			Optional.of(player.getCurrentItemState(currentFile))
 		} else {
 			Optional.empty()
 		}
 	}
 
-	private fun Player.getCurrentPlaybackState(currentSourceInfo: PlayerFileInfo) = PlaybackItemState(
-		currentSourceInfo,
+	private fun Player.getCurrentItemState(currentFile: PlaybackFile) = PlaybackItemState(
+		currentFile,
         mapPlayerState(),
 		mapVideoSize(),
 		currentPosition.toInt(),
 		duration.toInt(),
 	)
 
-	private fun Player.currentSourceInfo(): PlayerFileInfo? {
-		return currentMediaItem?.let { playbackFileStore.getPlaybackFile(it.mediaId) }
+	private fun Player.currentFile(): PlaybackFile? {
+		return currentMediaItem?.let { playbackFileStore.getFile(it.mediaId) }
 	}
 
 	private fun Player.mapPlayerState(): PlayerState = when (playbackState) {

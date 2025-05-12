@@ -7,7 +7,7 @@
 
 package com.ionos.player.model.strategy.error;
 
-import com.ionos.player.model.PlayerFileInfo;
+import com.ionos.player.model.PlaybackFile;
 import com.ionos.player.model.state.PlaybackState;
 import com.ionos.player.model.state.PlaybackItemState;
 import com.ionos.player.model.state.PlayerState;
@@ -57,7 +57,7 @@ public class DefaultPlaybackErrorStrategyTest {
 		assertTrue(switchToNext);
 	}
 
-	private PlaybackState createState(Optional<PlayerFileInfo> currentFile, PlayerFileInfo... files) {
+	private PlaybackState createState(Optional<PlaybackFile> currentFile, PlaybackFile... files) {
 		Optional<PlaybackItemState> current = currentFile
 				.map(input -> new PlaybackItemState(input, PlayerState.NONE, Optional.empty(), 0, 0));
 		return new PlaybackState(
@@ -68,8 +68,8 @@ public class DefaultPlaybackErrorStrategyTest {
 	}
 
 	@NonNull
-	private PlayerFileInfo mockWithName(@NonNull String name){
-		return new PlayerFileInfo(
+	private PlaybackFile mockWithName(@NonNull String name){
+		return new PlaybackFile(
             name,
 			name,
 			"fakeUri:///" + name,

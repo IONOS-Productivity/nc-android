@@ -1,7 +1,7 @@
 package com.ionos.player.model.predicate
 
-import com.ionos.player.model.PlayerFileInfo
+import com.ionos.player.model.PlaybackFile
 
 interface FileBeingProcessedPredicate {
-    fun satisfied(fileInfo: PlayerFileInfo): Boolean
+    fun satisfied(file: PlaybackFile): Boolean
 }

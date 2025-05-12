@@ -6,8 +6,8 @@ import android.view.WindowInsets;
 import android.widget.LinearLayout;
 
 import com.ionos.player.R;
+import com.ionos.player.model.PlaybackFile;
 import com.ionos.player.model.PlaybackModel;
-import com.ionos.player.model.PlayerFileInfo;
 import com.ionos.player.ui.MultiplePlayer;
 import com.ionos.player.ui.message.PlayerExceptionMessageProvider;
 import com.ionos.player.ui.pager.InfiniteViewPager;
@@ -36,7 +36,7 @@ public class PlayerSourcesView extends LinearLayout {
 	PlayerExceptionMessageProvider playerExceptionMessageProvider;
 
 	private MultiplePlayer.SourcesPresenter presenter;
-	private final InfiniteViewPager<PlayerFileInfo> infiniteViewPager;
+	private final InfiniteViewPager<PlaybackFile> infiniteViewPager;
 	private FragmentActivity activity;
 
 	public PlayerSourcesView(Context context) {
@@ -57,12 +57,12 @@ public class PlayerSourcesView extends LinearLayout {
         ((HasAndroidInjector) context.getApplicationContext()).androidInjector().inject(this);
 		this.presenter = new MultiplePlayerSourcesPresenter(
 				this.playerModel,
-				new DoNothingMultiplePlayerPresenterDestroyStrategy<>(),
+				new DoNothingMultiplePlayerPresenterDestroyStrategy(),
 				playerExceptionMessageProvider
 		);
 
 		this.activity = Cast.castOrError(context, FragmentActivity.class);
-		this.infiniteViewPager.setInfiniteViewPagerListener(item -> presenter.onSwitchToSourceInfo(item));
+		this.infiniteViewPager.setInfiniteViewPagerListener(item -> presenter.onSwitchToFile(item));
 	}
 
 	public void addViewPagerOnPageChangeListener(ViewPager.OnPageChangeListener listener) {
@@ -73,7 +73,7 @@ public class PlayerSourcesView extends LinearLayout {
 		this.infiniteViewPager.addViewPagerOnPageChangeListener(listener);
 	}
 
-	public void init(ViewPagerFragmentFactory<PlayerFileInfo> fragmentFactory) {
+	public void init(ViewPagerFragmentFactory<PlaybackFile> fragmentFactory) {
 		this.infiniteViewPager.init(activity.getSupportFragmentManager(), Mode.INFINITE, fragmentFactory);
 	}
 
@@ -113,14 +113,14 @@ public class PlayerSourcesView extends LinearLayout {
 	private final MultiplePlayer.SourcesView view = new MultiplePlayer.SourcesView() {
 
 		@Override
-		public void displayCurrentSourceInfo(PlayerFileInfo sourceInfo) {
-			infiniteViewPager.setCurrentItem(sourceInfo);
+		public void displayCurrentFile(PlaybackFile file) {
+			infiniteViewPager.setCurrentItem(file);
 		}
 
 		@Override
-		public void displaySourceInfos(List<PlayerFileInfo> sourceInfos) {
-			if (!infiniteViewPager.getItems().equals(sourceInfos)) {
-				infiniteViewPager.setItems(sourceInfos);
+		public void displayFiles(List<PlaybackFile> files) {
+			if (!infiniteViewPager.getItems().equals(files)) {
+				infiniteViewPager.setItems(files);
 			}
 		}
 	};

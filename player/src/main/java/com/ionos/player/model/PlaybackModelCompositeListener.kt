@@ -23,10 +23,7 @@ class PlaybackModelCompositeListener : PlaybackModel.Listener {
         listeners.forEach { it.onError(error) }
     }
 
-    override fun onSourceInfosChanged(
-        originalSourceInfos: List<PlayerFileInfo>,
-        currentSourceInfos: List<PlayerFileInfo>,
-    ) {
-        listeners.forEach { it.onSourceInfosChanged(originalSourceInfos, currentSourceInfos) }
+    override fun onFilesChanged(originalFiles: List<PlaybackFile>, currentFiles: List<PlaybackFile>) {
+        listeners.forEach { it.onFilesChanged(originalFiles, currentFiles) }
     }
 }

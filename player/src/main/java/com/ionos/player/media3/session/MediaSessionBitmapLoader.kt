@@ -14,7 +14,7 @@ import com.google.common.util.concurrent.ListeningExecutorService
 import com.google.common.util.concurrent.MoreExecutors
 import com.ionos.player.R
 import com.ionos.player.media3.common.mediaId
-import com.ionos.player.model.PlayerFileInfo
+import com.ionos.player.model.PlaybackFile
 import com.ionos.player.model.ThumbnailLoader
 import com.ionos.player.model.file_store.PlaybackFileStore
 import com.ionos.player.model.predicate.IsVideoPredicate
@@ -56,8 +56,8 @@ class MediaSessionBitmapLoader(
 
 		val bitmapFuture = executorService.submit(Callable {
 			getBitmapFromMetadata(metadata) ?: run {
-				val sourceInfo = mediaId?.let(playbackFileStore::getPlaybackFile)
-				sourceInfo?.let(::getBitmapForSourceInfo) ?: getDefaultBitmap(sourceInfo)
+				val file = mediaId?.let(playbackFileStore::getFile)
+				file?.let(::getBitmapForFile) ?: getDefaultBitmap(file)
 			}
 		})
 
@@ -79,11 +79,11 @@ class MediaSessionBitmapLoader(
 		}
 	}
 
-	private fun getBitmapForSourceInfo(sourceInfo: PlayerFileInfo): Bitmap? {
+	private fun getBitmapForFile(file: PlaybackFile): Bitmap? {
 		val request = if (SystemVersion.greaterOrEqualToTiramisu()) {
-            thumbnailLoader.load(context, sourceInfo, LARGE_THUMBNAIL_TARGET_SIZE, LARGE_THUMBNAIL_TARGET_SIZE)
+            thumbnailLoader.load(context, file, LARGE_THUMBNAIL_TARGET_SIZE, LARGE_THUMBNAIL_TARGET_SIZE)
         } else {
-            thumbnailLoader.load(context, sourceInfo, THUMBNAIL_TARGET_SIZE, THUMBNAIL_TARGET_SIZE)
+            thumbnailLoader.load(context, file, THUMBNAIL_TARGET_SIZE, THUMBNAIL_TARGET_SIZE)
         }
 
 		return try {
@@ -93,8 +93,8 @@ class MediaSessionBitmapLoader(
 		}
 	}
 
-	private fun getDefaultBitmap(sourceInfo: PlayerFileInfo?): Bitmap {
-		val drawable = if (sourceInfo != null && isVideoPredicate.satisfied(sourceInfo)) {
+	private fun getDefaultBitmap(file: PlaybackFile?): Bitmap {
+		val drawable = if (file != null && isVideoPredicate.satisfied(file)) {
 			ContextCompat.getDrawable(context, R.drawable.ic_player_notification_video)
 		} else {
 			ContextCompat.getDrawable(context, R.drawable.ic_player_notification_audio)

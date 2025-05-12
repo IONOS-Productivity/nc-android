@@ -13,36 +13,36 @@ class RemoveFilesFromPlayerQueue @Inject constructor(
 	private val model: PlaybackModel,
 ) {
 
-	operator fun invoke(deletedFiles: List<PlayerFileInfo>) {
+	operator fun invoke(deletedFiles: List<PlaybackFile>) {
 		val state = model.state.get()
-		if (!state.currentPlaybackItemState.isPresent) return
+		if (!state.currentItemState.isPresent) return
 
-		val currentPlaybackState = state.currentPlaybackItemState.get()
-		val currentFileInQueue = currentPlaybackState.sourceInfo
-		val sourceInfos = state.currentSourceInfos.toMutableList()
+		val currentPlaybackItemState = state.currentItemState.get()
+		val currentFileInQueue = currentPlaybackItemState.file
+		val currentFiles = state.currentFiles.toMutableList()
 
 		val deletedExceptCurrent = deletedFiles.toMutableList()
 		val containedCurrent = deletedExceptCurrent.remove(currentFileInQueue)
 
 		if (containedCurrent) {
-			sourceInfos.removeAll(deletedExceptCurrent)
-			if (sourceInfos.size > 1) {
-				val indexOfSourceInfoToDelete = sourceInfos.indexOf(currentFileInQueue)
-				val indexOfNextSourceInfo =
-					if (indexOfSourceInfoToDelete > 0) indexOfSourceInfoToDelete - 1
+			currentFiles.removeAll(deletedExceptCurrent)
+			if (currentFiles.size > 1) {
+				val indexOfFileToDelete = currentFiles.indexOf(currentFileInQueue)
+				val indexOfNextFile =
+					if (indexOfFileToDelete > 0) indexOfFileToDelete - 1
 					else 1
-				val nextSourceInfo = sourceInfos[indexOfNextSourceInfo]
-				sourceInfos.removeAt(indexOfSourceInfoToDelete)
+				val nextFile = currentFiles[indexOfNextFile]
+				currentFiles.removeAt(indexOfFileToDelete)
 
-				model.switchToSourceInfo(nextSourceInfo)
-				model.setSourceInfos(sourceInfos)
+				model.switchToFile(nextFile)
+				model.setFiles(currentFiles)
 			} else model.release()
 		} else {
-			val changed = sourceInfos.removeAll(deletedFiles)
+			val changed = currentFiles.removeAll(deletedFiles)
 			if (changed) {
-				if (sourceInfos.isEmpty()) model.release()
+				if (currentFiles.isEmpty()) model.release()
 				else {
-					model.setSourceInfos(sourceInfos)
+					model.setFiles(currentFiles)
 				}
 			}
 		}

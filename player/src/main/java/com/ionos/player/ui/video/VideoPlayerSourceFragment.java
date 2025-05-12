@@ -9,8 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.ionos.player.R;
+import com.ionos.player.model.PlaybackFile;
 import com.ionos.player.model.PlaybackModel;
-import com.ionos.player.model.PlayerFileInfo;
 import com.ionos.player.model.ThumbnailLoader;
 import com.ionos.player.model.VideoViewSetter;
 import com.ionos.player.model.predicate.IsVideoPredicate;
@@ -37,7 +37,7 @@ import dagger.android.support.AndroidSupportInjection;
 
 public class VideoPlayerSourceFragment extends Fragment {
 
-	private final static String ARGUMENT_FILE_INFO = "ARGUMENT_FILE_INFO";
+	private final static String ARGUMENT_FILE = "ARGUMENT_FILE";
 
 	@Inject
     PlaybackModel playerModel;
@@ -46,7 +46,7 @@ public class VideoPlayerSourceFragment extends Fragment {
 	@Inject
 	IsVideoPredicate isVideoPredicate;
 
-	private PlayerFileInfo fileInfo;
+	private PlaybackFile file;
 	private MultiplePlayer.VideoPresenter videoPresenter;
 
 	private View coverContainer;
@@ -56,10 +56,10 @@ public class VideoPlayerSourceFragment extends Fragment {
 	private SurfaceVideoView surfaceVideoView;
 	private Optional<VideoSize> previousVideoSize = Optional.empty();
 
-	public static Fragment createInstance(PlayerFileInfo fileInfo) {
+	public static Fragment createInstance(PlaybackFile file) {
 		VideoPlayerSourceFragment fragment = new VideoPlayerSourceFragment();
 		Bundle args = new Bundle();
-		args.putSerializable(ARGUMENT_FILE_INFO, fileInfo);
+		args.putSerializable(ARGUMENT_FILE, file);
 		fragment.setArguments(args);
 		return fragment;
 	}
@@ -68,9 +68,9 @@ public class VideoPlayerSourceFragment extends Fragment {
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		AndroidSupportInjection.inject(this);
-		this.fileInfo = (PlayerFileInfo) getArguments().getSerializable(ARGUMENT_FILE_INFO);
-		this.videoPresenter = isVideoPredicate.satisfied(fileInfo)
-				? new MultiplePlayerVideoPresenter(this.playerModel, this.fileInfo)
+		this.file = (PlaybackFile) getArguments().getSerializable(ARGUMENT_FILE);
+		this.videoPresenter = isVideoPredicate.satisfied(file)
+				? new MultiplePlayerVideoPresenter(this.playerModel, this.file)
 				: NullMultiplePlayerVideoPresenter.getInstance();
 	}
 
@@ -82,10 +82,10 @@ public class VideoPlayerSourceFragment extends Fragment {
 		this.surfaceView = content.findViewById(R.id.surfaceView);
 		this.progressBar = content.findViewById(R.id.progressBar);
 		FileTextDetailView fileTextDetailView = content.findViewById(R.id.fileDetailView);
-		MultiplePlayerVideoPresenter surfaceVideoViewPresenter = new MultiplePlayerVideoPresenter(this.playerModel, this.fileInfo);
+		MultiplePlayerVideoPresenter surfaceVideoViewPresenter = new MultiplePlayerVideoPresenter(this.playerModel, this.file);
 		this.surfaceVideoView = new SurfaceVideoView(this.surfaceView, surfaceVideoViewPresenter);
 		surfaceVideoViewPresenter.setView(this.surfaceVideoView);
-		fileTextDetailView.displayFileInfo(this.fileInfo);
+		fileTextDetailView.displayFile(this.file);
 		switchToCoverContainer();
 		return content;
 	}
@@ -163,7 +163,7 @@ public class VideoPlayerSourceFragment extends Fragment {
 		@Override
 		public void setVideoViewAvailable() {
             switchToVideoContainer();
-            final Optional<VideoSize> videoSize = playerModel.getState().get().currentPlaybackItemState.get().videoSize;
+            final Optional<VideoSize> videoSize = playerModel.getState().get().currentItemState.get().videoSize;
             if (videoSize.isPresent()) {
                 if (!previousVideoSize.equals(videoSize)) {
                     previousVideoSize = videoSize;
@@ -178,7 +178,7 @@ public class VideoPlayerSourceFragment extends Fragment {
 		}
 
 		@Override
-		public void setVideoView(VideoViewSetter videoViewSetter, PlayerFileInfo fileInfo) {
+		public void setVideoView(VideoViewSetter videoViewSetter, PlaybackFile file) {
 		}
 
 		@Override

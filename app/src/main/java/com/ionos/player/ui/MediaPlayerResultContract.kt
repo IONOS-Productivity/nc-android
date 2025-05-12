@@ -4,14 +4,14 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContract
-import com.ionos.player.model.NeighborFilesTypes
+import com.ionos.player.model.NeighborFilesType
 import com.owncloud.android.datamodel.OCFile
 
 class MediaPlayerResultContract :
 	ActivityResultContract<MediaPlayerResultContract.Input, OCFile?>() {
 
 	data class Input(
-		val filesTypes: NeighborFilesTypes,
+		val filesType: NeighborFilesType,
 		// val sourceMode: FileSourceMode,
 	)
 
@@ -19,13 +19,13 @@ class MediaPlayerResultContract :
 
 	override fun createIntent(context: Context, input: Input): Intent {
 		return with(input) {
-			when (filesTypes) {
-				NeighborFilesTypes.AUDIO -> IonosPlayerActivity.createAudioPlayerIntent(
+			when (filesType) {
+				NeighborFilesType.AUDIO -> IonosPlayerActivity.createAudioPlayerIntent(
 					context,
 					// sourceMode
 				)
 
-				NeighborFilesTypes.VIDEO -> IonosPlayerActivity.createVideoPlayerIntent(
+				NeighborFilesType.VIDEO -> IonosPlayerActivity.createVideoPlayerIntent(
 					context,
 					// sourceMode
 				)

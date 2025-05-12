@@ -7,8 +7,8 @@
 
 package com.ionos.player.ui.sources;
 
+import com.ionos.player.model.PlaybackFile;
 import com.ionos.player.model.PlaybackModel;
-import com.ionos.player.model.PlayerFileInfo;
 import com.ionos.player.model.state.PlaybackItemState;
 import com.ionos.player.model.state.PlaybackState;
 import com.ionos.player.ui.MultiplePlayer;
@@ -69,8 +69,8 @@ public class MultiplePlayerSourcesPresenter implements MultiplePlayer.SourcesPre
 	}
 
 	@Override
-	public void onSwitchToSourceInfo(PlayerFileInfo sourceInfo) {
-		this.model.switchToSourceInfo(sourceInfo);
+	public void onSwitchToFile(PlaybackFile file) {
+		this.model.switchToFile(file);
 	}
 
 	private void updateView() {
@@ -78,16 +78,16 @@ public class MultiplePlayerSourcesPresenter implements MultiplePlayer.SourcesPre
 	}
 
 	private void updateView(Optional<PlaybackState> state) {
-		List<PlayerFileInfo> sources = new ArrayList<>();
+		List<PlaybackFile> sources = new ArrayList<>();
 
 		if (state.isPresent()) {
-			sources = state.get().currentSourceInfos;
+			sources = state.get().currentFiles;
 		}
 
-		this.view.displaySourceInfos(sources);
-		if (state.map(input -> input.currentPlaybackItemState.isPresent()).orElse(false)) {
-			PlaybackItemState playbackItemState = state.get().currentPlaybackItemState.get();
-			this.view.displayCurrentSourceInfo(playbackItemState.sourceInfo);
+		this.view.displayFiles(sources);
+		if (state.map(input -> input.currentItemState.isPresent()).orElse(false)) {
+			PlaybackItemState playbackItemState = state.get().currentItemState.get();
+			this.view.displayCurrentFile(playbackItemState.file);
 		}
 	}
 
@@ -102,8 +102,8 @@ public class MultiplePlayerSourcesPresenter implements MultiplePlayer.SourcesPre
 		}
 
 		@Override
-		public void onSourceInfosChanged(List<PlayerFileInfo> originalSourceInfos, List<PlayerFileInfo> currentSourceInfos) {
-			view.displaySourceInfos(currentSourceInfos);
+		public void onFilesChanged(List<PlaybackFile> originalFiles, List<PlaybackFile> currentFiles) {
+			view.displayFiles(currentFiles);
 		}
 	};
 }

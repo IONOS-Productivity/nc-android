@@ -7,8 +7,8 @@
 
 package com.ionos.player.ui;
 
+import com.ionos.player.model.PlaybackFile;
 import com.ionos.player.model.PlaybackModel;
-import com.ionos.player.model.PlayerFileInfo;
 import com.ionos.player.model.state.PlaybackState;
 import com.ionos.player.ui.message.ExceptionToMessageTransformation;
 
@@ -67,7 +67,7 @@ public class MultiplePlayerErrorPresenter implements MultiplePlayer.ErrorPresent
 		}
 
 		@Override
-		public void onSourceInfosChanged(List<PlayerFileInfo> originalSourceInfos, List<PlayerFileInfo> currentSourceInfos) {
+		public void onFilesChanged(List<PlaybackFile> originalFiles, List<PlaybackFile> currentFiles) {
 
 		}
 	};

@@ -7,8 +7,8 @@
 
 package com.ionos.player.ui.control;
 
+import com.ionos.player.model.PlaybackFile;
 import com.ionos.player.model.PlaybackModel;
-import com.ionos.player.model.PlayerFileInfo;
 import com.ionos.player.model.state.PlaybackItemState;
 import com.ionos.player.model.state.PlaybackState;
 import com.ionos.player.model.state.PlayerStateAnalyzer;
@@ -141,9 +141,9 @@ public class MultiplePlayerControlPresenter implements MultiplePlayer.ControlPre
 		}
 
 		if (state
-				.map(input -> input.currentPlaybackItemState.isPresent())
+				.map(input -> input.currentItemState.isPresent())
 				.orElse(false)) {
-			PlaybackItemState playbackItemState = state.get().currentPlaybackItemState.get();
+			PlaybackItemState playbackItemState = state.get().currentItemState.get();
 			PlayerStateAnalyzer analyzer = new PlayerStateAnalyzer(playbackItemState.playerState);
 
 			this.view.enablePlayControls(
@@ -152,12 +152,12 @@ public class MultiplePlayerControlPresenter implements MultiplePlayer.ControlPre
 					analyzer.stopAvailable());
 			this.view.enableSwitchControls(
 					this.nextControlAvailabilityStrategy.available(
-							state.get().currentSourceInfos,
-							state.get().currentPlaybackItemState.get().sourceInfo,
+							state.get().currentFiles,
+							state.get().currentItemState.get().file,
 							state.get().shuffle),
 					this.previousControlAvailabilityStrategy.available(
-							state.get().currentSourceInfos,
-							state.get().currentPlaybackItemState.get().sourceInfo,
+							state.get().currentFiles,
+							state.get().currentItemState.get().file,
 							state.get().shuffle));
 
 			if (playbackItemState.maxTimeInMilliseconds > 0) {
@@ -186,7 +186,7 @@ public class MultiplePlayerControlPresenter implements MultiplePlayer.ControlPre
 		}
 
 		@Override
-		public void onSourceInfosChanged(List<PlayerFileInfo> originalSourceInfos, List<PlayerFileInfo> currentSourceInfos) {
+		public void onFilesChanged(List<PlaybackFile> originalFiles, List<PlaybackFile> currentFiles) {
 
 		}
 	};

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
-import com.ionos.player.model.PlayerFileInfo;
+import com.ionos.player.model.PlaybackFile;
 
 import androidx.annotation.Nullable;
 
@@ -15,7 +15,7 @@ import androidx.annotation.Nullable;
 public abstract class PlayerView extends LinearLayout {
 
 	public interface CurrentFileListener{
-		void fileChanged(PlayerFileInfo fileInfo);
+		void fileChanged(PlaybackFile file);
 	}
 
 	@Nullable

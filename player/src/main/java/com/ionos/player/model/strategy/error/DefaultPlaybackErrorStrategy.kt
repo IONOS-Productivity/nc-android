@@ -6,10 +6,10 @@ import javax.inject.Inject
 class DefaultPlaybackErrorStrategy @Inject constructor() : PlaybackErrorStrategy {
 
     override fun switchToNextSource(throwable: Throwable, playbackState: PlaybackState): Boolean {
-        val sourceInfos = playbackState.currentSourceInfos
-        val oneFileInQueue = sourceInfos.size == 1
-        val endOfQueue = playbackState.currentPlaybackItemState
-            .map { sourceInfos.indexOf(it.sourceInfo) == sourceInfos.lastIndex }
+        val currentFiles = playbackState.currentFiles
+        val oneFileInQueue = currentFiles.size == 1
+        val endOfQueue = playbackState.currentItemState
+            .map { currentFiles.indexOf(it.file) == currentFiles.lastIndex }
             .orElse(false)
         return !oneFileInQueue && !endOfQueue
     }

@@ -51,7 +51,7 @@ public class MultiplePlayerPlayPreviousPresenterImpl implements MultiplePlayerPl
 		Optional<PlaybackState> playbackStateOptional = this.playerModel.getState();
 		if (playbackStateOptional.isPresent()) {
 			PlaybackState playbackState = playbackStateOptional.get();
-			Optional<PlaybackItemState> playbackItemStateOptional = playbackState.currentPlaybackItemState;
+			Optional<PlaybackItemState> playbackItemStateOptional = playbackState.currentItemState;
 			if (playbackItemStateOptional.isPresent()) {
 				return playbackItemStateOptional.get();
 			}

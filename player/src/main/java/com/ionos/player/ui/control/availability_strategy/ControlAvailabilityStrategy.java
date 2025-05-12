@@ -7,7 +7,7 @@
 
 package com.ionos.player.ui.control.availability_strategy;
 
-import com.ionos.player.model.PlayerFileInfo;
+import com.ionos.player.model.PlaybackFile;
 
 import java.util.List;
 
@@ -16,8 +16,5 @@ import java.util.List;
  * Date: 6/18/16
  */
 public interface ControlAvailabilityStrategy {
-	boolean available(
-			List<PlayerFileInfo> sourceInfos,
-			PlayerFileInfo currentSourceInfo,
-			boolean shuffle);
+	boolean available(List<PlaybackFile> files, PlaybackFile file, boolean shuffle);
 }

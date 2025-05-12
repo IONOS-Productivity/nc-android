@@ -8,7 +8,7 @@ interface ThumbnailLoader {
 
     fun load(
         context: Context,
-        file: PlayerFileInfo,
+        file: PlaybackFile,
         width: Int,
         height: Int,
     ): Future<Bitmap>

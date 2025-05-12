@@ -7,8 +7,8 @@
 
 package com.ionos.player.ui.video;
 
+import com.ionos.player.model.PlaybackFile;
 import com.ionos.player.model.PlaybackModel;
-import com.ionos.player.model.PlayerFileInfo;
 import com.ionos.player.model.state.PlaybackItemState;
 import com.ionos.player.model.state.PlaybackState;
 import com.ionos.player.ui.MultiplePlayer;
@@ -24,15 +24,13 @@ import kotlin.Unit;
 public class MultiplePlayerVideoPresenter implements MultiplePlayer.VideoPresenter {
 
 	private final PlaybackModel model;
-	private final PlayerFileInfo sourceInfo;
+	private final PlaybackFile file;
 	private MultiplePlayer.VideoView view = NullMultiplePlayerVideoView.getInstance();
 	private boolean appeared;
 
-	public MultiplePlayerVideoPresenter(
-			PlaybackModel model,
-			PlayerFileInfo sourceInfo) {
+	public MultiplePlayerVideoPresenter(PlaybackModel model, PlaybackFile file) {
 		this.model = model;
-		this.sourceInfo = sourceInfo;
+		this.file = file;
 	}
 
 	@Override
@@ -75,11 +73,11 @@ public class MultiplePlayerVideoPresenter implements MultiplePlayer.VideoPresent
 	}
 
 	private void updateView() {
-		if (isCurrentSourceInfo()) {
+		if (isCurrentFile()) {
 			if (this.appeared) {
 				this.view.setVideoViewAvailable();
 				this.model.videoViewSetter(value -> {
-					MultiplePlayerVideoPresenter.this.view.setVideoView(value, sourceInfo);
+					MultiplePlayerVideoPresenter.this.view.setVideoView(value, file);
 					return Unit.INSTANCE;
 				});
 			} else {
@@ -94,12 +92,12 @@ public class MultiplePlayerVideoPresenter implements MultiplePlayer.VideoPresent
 		}
 	}
 
-	private boolean isCurrentSourceInfo() {
+	private boolean isCurrentFile() {
 		if (this.model.getState().isPresent()) {
 			PlaybackState modelState = this.model.getState().get();
-			if (modelState.currentPlaybackItemState.isPresent()) {
-				PlaybackItemState playbackItemState = modelState.currentPlaybackItemState.get();
-				if (this.sourceInfo.equals(playbackItemState.sourceInfo)) {
+			if (modelState.currentItemState.isPresent()) {
+				PlaybackItemState playbackItemState = modelState.currentItemState.get();
+				if (this.file.equals(playbackItemState.file)) {
 					return true;
 				}
 			}
@@ -118,7 +116,7 @@ public class MultiplePlayerVideoPresenter implements MultiplePlayer.VideoPresent
 		}
 
 		@Override
-		public void onSourceInfosChanged(List<PlayerFileInfo> originalSourceInfos, List<PlayerFileInfo> currentSourceInfos) {
+		public void onFilesChanged(List<PlaybackFile> originalFiles, List<PlaybackFile> currentFiles) {
 
 		}
 	};

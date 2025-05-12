@@ -7,7 +7,7 @@
 
 package com.ionos.player.ui.sources;
 
-import com.ionos.player.model.PlayerFileInfo;
+import com.ionos.player.model.PlaybackFile;
 import com.ionos.player.ui.MultiplePlayer;
 
 import java.util.List;
@@ -29,12 +29,12 @@ public class NullMultiplePlayerSourcesView implements MultiplePlayer.SourcesView
 
 
 	@Override
-	public void displayCurrentSourceInfo(PlayerFileInfo sourceInfo) {
+	public void displayCurrentFile(PlaybackFile file) {
 
 	}
 
 	@Override
-	public void displaySourceInfos(List<PlayerFileInfo> sourceInfos) {
+	public void displayFiles(List<PlaybackFile> files) {
 
 	}
 }

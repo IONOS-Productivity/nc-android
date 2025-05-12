@@ -10,8 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ionos.player.R;
+import com.ionos.player.model.PlaybackFile;
 import com.ionos.player.model.PlaybackModel;
-import com.ionos.player.model.PlayerFileInfo;
 import com.ionos.player.model.predicate.FileBeingProcessedPredicate;
 import com.ionos.player.model.state.PlaybackItemState;
 import com.ionos.player.model.state.PlaybackState;
@@ -173,9 +173,9 @@ public class VideoPlayerView extends PlayerView {
 		}
 		PlaybackState state = this.playerModel.getState().get();
 
-		if (state.currentPlaybackItemState.isPresent()) {
-			PlaybackItemState playbackItemState = state.currentPlaybackItemState.get();
-			PlayerFileInfo file = playbackItemState.sourceInfo;
+		if (state.currentItemState.isPresent()) {
+			PlaybackItemState playbackItemState = state.currentItemState.get();
+			PlaybackFile file = playbackItemState.file;
 			if (currentFileListener != null){
 				currentFileListener.fileChanged(file);
 			}
@@ -186,7 +186,7 @@ public class VideoPlayerView extends PlayerView {
 		}
 	}
 
-	private void showMessageThatSelectedFilesAreBeingProcessing(PlayerFileInfo selectedFile) {
+	private void showMessageThatSelectedFilesAreBeingProcessing(PlaybackFile selectedFile) {
 		boolean hasCurrentlyProcessingFiles = fileBeingProcessedPredicate.satisfied(selectedFile);
 
 		if (hasCurrentlyProcessingFiles) {
@@ -239,7 +239,7 @@ public class VideoPlayerView extends PlayerView {
 		}
 
 		@Override
-		public void onSourceInfosChanged(List<PlayerFileInfo> list, List<PlayerFileInfo> list1) {
+		public void onFilesChanged(List<PlaybackFile> originalFiles, List<PlaybackFile> currentFiles) {
 
 		}
 	};

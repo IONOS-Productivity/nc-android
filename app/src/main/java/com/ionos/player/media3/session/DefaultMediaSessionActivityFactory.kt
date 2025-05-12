@@ -16,9 +16,9 @@ class DefaultMediaSessionActivityFactory @Inject constructor(
 ) : MediaSessionActivityFactory {
 
 	override fun create(currentMediaId: String?): PendingIntent? {
-		val currentSourceInfo = currentMediaId?.let(playbackFileStore::getPlaybackFile) ?: return null
+		val currentFile = currentMediaId?.let(playbackFileStore::getFile) ?: return null
 
-		val intent = if (isVideoPredicate.satisfied(currentSourceInfo)) {
+		val intent = if (isVideoPredicate.satisfied(currentFile)) {
 			IonosPlayerActivity.createVideoPlayerIntent(context)
 		} else {
 			IonosPlayerActivity.createAudioPlayerIntent(context)

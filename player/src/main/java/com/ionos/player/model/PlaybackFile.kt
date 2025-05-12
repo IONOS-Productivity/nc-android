@@ -2,7 +2,7 @@ package com.ionos.player.model
 
 import java.io.Serializable
 
-data class PlayerFileInfo(
+data class PlaybackFile(
 	val id: String,
 	val uri: String,
 	val name: String,
