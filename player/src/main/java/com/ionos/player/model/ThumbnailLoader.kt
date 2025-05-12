@@ -4,7 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import java.util.concurrent.Future
 
-interface PlayerImageLoader {
+interface ThumbnailLoader {
 
     fun load(
         context: Context,

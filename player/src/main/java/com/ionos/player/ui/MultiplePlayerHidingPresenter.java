@@ -7,9 +7,9 @@
 
 package com.ionos.player.ui;
 
-import com.ionos.player.model.MultiplePlayer;
+import com.ionos.player.model.PlaybackModel;
 import com.ionos.player.model.PlayerFileInfo;
-import com.ionos.player.model.state.MultiplePlaybackState;
+import com.ionos.player.model.state.PlaybackState;
 
 import java.util.List;
 
@@ -19,10 +19,10 @@ import java.util.List;
  */
 public class MultiplePlayerHidingPresenter implements MultiplePlayer.HidingPresenter {
 
-	private final MultiplePlayer.Model model;
+	private final PlaybackModel model;
 	private MultiplePlayer.HidingView view = NullMultiplePlayerHidingView.getInstance();
 
-	public MultiplePlayerHidingPresenter(MultiplePlayer.Model model) {
+	public MultiplePlayerHidingPresenter(PlaybackModel model) {
 		this.model = model;
 	}
 
@@ -54,7 +54,7 @@ public class MultiplePlayerHidingPresenter implements MultiplePlayer.HidingPrese
 
 	private void updateView() {
 		boolean hasSources = this.model.getState()
-				.mapToBoolean(input -> !input.currentSourceInfos.isEmpty())
+				.map(input -> !input.currentSourceInfos.isEmpty())
 				.orElse(false);
 		if (hasSources) {
 			this.view.displayPlayerView();
@@ -63,9 +63,9 @@ public class MultiplePlayerHidingPresenter implements MultiplePlayer.HidingPrese
 		}
 	}
 
-	private final MultiplePlayer.Model.Listener listener = new MultiplePlayer.Model.Listener() {
+	private final PlaybackModel.Listener listener = new PlaybackModel.Listener() {
 		@Override
-		public void onUpdate(MultiplePlaybackState state) {
+		public void onUpdate(PlaybackState state) {
 			updateView();
 		}
 

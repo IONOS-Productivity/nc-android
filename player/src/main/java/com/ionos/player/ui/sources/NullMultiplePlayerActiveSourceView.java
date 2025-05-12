@@ -7,7 +7,7 @@
 
 package com.ionos.player.ui.sources;
 
-import com.ionos.player.model.MultiplePlayer;
+import com.ionos.player.ui.MultiplePlayer;
 
 /**
  * User: zuzik

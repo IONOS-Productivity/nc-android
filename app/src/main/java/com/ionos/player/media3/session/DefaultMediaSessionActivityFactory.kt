@@ -3,20 +3,20 @@ package com.ionos.player.media3.session
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import com.ionos.player.model.file_store.PlaybackFileStore
 import com.ionos.player.model.predicate.IsVideoPredicate
-import com.ionos.player.model.store.SourceInfoStore
 import com.ionos.player.ui.IonosPlayerActivity
 import com.ionos.player.util.SystemVersion
 import javax.inject.Inject
 
 class DefaultMediaSessionActivityFactory @Inject constructor(
 	private val context: Context,
-	private val sourceInfoStore: SourceInfoStore,
+	private val playbackFileStore: PlaybackFileStore,
     private val isVideoPredicate: IsVideoPredicate,
 ) : MediaSessionActivityFactory {
 
 	override fun create(currentMediaId: String?): PendingIntent? {
-		val currentSourceInfo = currentMediaId?.let(sourceInfoStore::getSourceInfo) ?: return null
+		val currentSourceInfo = currentMediaId?.let(playbackFileStore::getPlaybackFile) ?: return null
 
 		val intent = if (isVideoPredicate.satisfied(currentSourceInfo)) {
 			IonosPlayerActivity.createVideoPlayerIntent(context)

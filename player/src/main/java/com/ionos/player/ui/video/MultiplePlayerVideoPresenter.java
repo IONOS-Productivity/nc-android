@@ -7,14 +7,15 @@
 
 package com.ionos.player.ui.video;
 
-import com.ionos.player.model.MultiplePlayer;
+import com.ionos.player.model.PlaybackModel;
 import com.ionos.player.model.PlayerFileInfo;
-import com.ionos.player.model.VideoViewSetter;
-import com.ionos.player.model.state.MultiplePlaybackState;
+import com.ionos.player.model.state.PlaybackItemState;
 import com.ionos.player.model.state.PlaybackState;
-import com.ionos.player.util.ParamAction;
+import com.ionos.player.ui.MultiplePlayer;
 
 import java.util.List;
+
+import kotlin.Unit;
 
 /**
  * User: zuzik
@@ -22,13 +23,13 @@ import java.util.List;
  */
 public class MultiplePlayerVideoPresenter implements MultiplePlayer.VideoPresenter {
 
-	private final MultiplePlayer.Model model;
+	private final PlaybackModel model;
 	private final PlayerFileInfo sourceInfo;
 	private MultiplePlayer.VideoView view = NullMultiplePlayerVideoView.getInstance();
 	private boolean appeared;
 
 	public MultiplePlayerVideoPresenter(
-			MultiplePlayer.Model model,
+			PlaybackModel model,
 			PlayerFileInfo sourceInfo) {
 		this.model = model;
 		this.sourceInfo = sourceInfo;
@@ -77,19 +78,15 @@ public class MultiplePlayerVideoPresenter implements MultiplePlayer.VideoPresent
 		if (isCurrentSourceInfo()) {
 			if (this.appeared) {
 				this.view.setVideoViewAvailable();
-				this.model.videoViewSetter(new ParamAction<VideoViewSetter>() {
-					@Override
-					public void execute(VideoViewSetter value) {
-						MultiplePlayerVideoPresenter.this.view.setVideoView(value, sourceInfo);
-					}
+				this.model.videoViewSetter(value -> {
+					MultiplePlayerVideoPresenter.this.view.setVideoView(value, sourceInfo);
+					return Unit.INSTANCE;
 				});
 			} else {
 				this.view.setVideoViewUnavailable();
-				this.model.videoViewSetter(new ParamAction<VideoViewSetter>() {
-					@Override
-					public void execute(VideoViewSetter value) {
-						MultiplePlayerVideoPresenter.this.view.clearVideoView(value);
-					}
+				this.model.videoViewSetter(value -> {
+					MultiplePlayerVideoPresenter.this.view.clearVideoView(value);
+					return Unit.INSTANCE;
 				});
 			}
 		} else {
@@ -99,10 +96,10 @@ public class MultiplePlayerVideoPresenter implements MultiplePlayer.VideoPresent
 
 	private boolean isCurrentSourceInfo() {
 		if (this.model.getState().isPresent()) {
-			MultiplePlaybackState modelState = this.model.getState().get();
-			if (modelState.getCurrentPlaybackState().isPresent()) {
-				PlaybackState playbackState = modelState.getCurrentPlaybackState().get();
-				if (this.sourceInfo.equals(playbackState.sourceInfo)) {
+			PlaybackState modelState = this.model.getState().get();
+			if (modelState.currentPlaybackItemState.isPresent()) {
+				PlaybackItemState playbackItemState = modelState.currentPlaybackItemState.get();
+				if (this.sourceInfo.equals(playbackItemState.sourceInfo)) {
 					return true;
 				}
 			}
@@ -110,9 +107,9 @@ public class MultiplePlayerVideoPresenter implements MultiplePlayer.VideoPresent
 		return false;
 	}
 
-	private final MultiplePlayer.Model.Listener listener = new MultiplePlayer.Model.Listener() {
+	private final PlaybackModel.Listener listener = new PlaybackModel.Listener() {
 		@Override
-		public void onUpdate(MultiplePlaybackState state) {
+		public void onUpdate(PlaybackState state) {
 			updateView();
 		}
 

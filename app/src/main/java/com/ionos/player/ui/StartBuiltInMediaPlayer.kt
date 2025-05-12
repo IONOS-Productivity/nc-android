@@ -2,11 +2,10 @@ package com.ionos.player.ui
 
 import androidx.activity.result.ActivityResultLauncher
 import androidx.core.app.ActivityOptionsCompat
-import com.ionos.player.model.MultiplePlayer
 import com.ionos.player.model.NeighborFilesTypes
 import com.ionos.player.model.OpenFileConfig
+import com.ionos.player.model.PlaybackModel
 import com.ionos.player.model.getNeighborFilesTypes
-import com.ionos.player.model.release_strategy.DoNotReleaseIfExistsSourceInfoReleaseStrategy
 import com.ionos.player.model.toPlayerFileInfo
 import com.owncloud.android.datamodel.OCFile
 import dagger.assisted.Assisted
@@ -30,7 +29,7 @@ class StartBuiltInMediaPlayer @AssistedInject constructor(
 	@Assisted private val input: OpenFileConfig,
 	@Assisted private val options: ActivityOptionsCompat,
 	@Assisted private val activityLauncher: ActivityResultLauncher<MediaPlayerResultContract.Input>?,
-    private val playerModel: MultiplePlayer.Model,
+    private val playerModel: PlaybackModel,
 ) {
 
 	private val typeError = IllegalArgumentException("Supports only audion or video")
@@ -49,10 +48,7 @@ class StartBuiltInMediaPlayer @AssistedInject constructor(
 			.observeOn(AndroidSchedulers.mainThread())
 			.doOnNext { sourceInfos ->
 				playerModel.state.ifPresent {
-					playerModel.setSourceInfos(
-						sourceInfos,
-						DoNotReleaseIfExistsSourceInfoReleaseStrategy()
-					)
+					playerModel.setSourceInfos(sourceInfos)
 				}
 			}
 			.ignoreElements()
@@ -65,10 +61,7 @@ class StartBuiltInMediaPlayer @AssistedInject constructor(
 		filesTypes: NeighborFilesTypes,
 	) {
 		val playerInfo = fileInfo.toPlayerFileInfo()
-		playerModel.setSourceInfos(
-			listOf(playerInfo),
-			DoNotReleaseIfExistsSourceInfoReleaseStrategy()
-		)
+		playerModel.setSourceInfos(listOf(playerInfo))
 		playerModel.switchToSourceInfo(playerInfo)
 		playerModel.play()
 		activityLauncher?.launch(

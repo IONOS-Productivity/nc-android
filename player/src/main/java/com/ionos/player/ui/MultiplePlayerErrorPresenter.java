@@ -7,9 +7,9 @@
 
 package com.ionos.player.ui;
 
-import com.ionos.player.model.MultiplePlayer;
+import com.ionos.player.model.PlaybackModel;
 import com.ionos.player.model.PlayerFileInfo;
-import com.ionos.player.model.state.MultiplePlaybackState;
+import com.ionos.player.model.state.PlaybackState;
 import com.ionos.player.ui.message.ExceptionToMessageTransformation;
 
 import java.util.List;
@@ -20,11 +20,11 @@ import java.util.List;
  */
 public class MultiplePlayerErrorPresenter implements MultiplePlayer.ErrorPresenter {
 	private MultiplePlayer.ErrorView errorView = NullMultiplePlayerErrorView.getInstance();
-	private final MultiplePlayer.Model model;
+	private final PlaybackModel model;
 	private final ExceptionToMessageTransformation exceptionToMessageTransformation;
 
 	public MultiplePlayerErrorPresenter(
-			MultiplePlayer.Model model,
+			PlaybackModel model,
             ExceptionToMessageTransformation exceptionToMessageTransformation) {
 		this.model = model;
 		this.exceptionToMessageTransformation = exceptionToMessageTransformation;
@@ -55,9 +55,9 @@ public class MultiplePlayerErrorPresenter implements MultiplePlayer.ErrorPresent
 		this.model.removeListener(this.listener);
 	}
 
-	private final MultiplePlayer.Model.Listener listener = new MultiplePlayer.Model.Listener() {
+	private final PlaybackModel.Listener listener = new PlaybackModel.Listener() {
 		@Override
-		public void onUpdate(MultiplePlaybackState state) {
+		public void onUpdate(PlaybackState state) {
 
 		}
 

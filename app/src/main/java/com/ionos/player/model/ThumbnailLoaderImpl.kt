@@ -9,10 +9,10 @@ import com.owncloud.android.utils.glide.CustomGlideStreamLoader
 import java.util.concurrent.Future
 import javax.inject.Inject
 
-class PlayerImageLoaderImpl @Inject constructor(
+class ThumbnailLoaderImpl @Inject constructor(
     userAccountManager: UserAccountManager,
     clientFactory: ClientFactory,
-) : PlayerImageLoader {
+) : ThumbnailLoader {
     private val user = userAccountManager.user
     private val modelLoader = CustomGlideStreamLoader(user, clientFactory)
     private val getThumbnailUrl = clientFactory.create(user).baseUri.toString() + "/index.php/core/preview"

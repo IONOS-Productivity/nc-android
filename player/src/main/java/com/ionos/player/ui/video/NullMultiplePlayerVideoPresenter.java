@@ -7,7 +7,7 @@
 
 package com.ionos.player.ui.video;
 
-import com.ionos.player.model.MultiplePlayer;
+import com.ionos.player.ui.MultiplePlayer;
 
 /**
  * Created by yaz on 9/23/16.

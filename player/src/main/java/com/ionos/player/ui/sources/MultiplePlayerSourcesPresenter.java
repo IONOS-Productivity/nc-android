@@ -7,18 +7,18 @@
 
 package com.ionos.player.ui.sources;
 
-import com.annimon.stream.Optional;
-import com.ionos.player.model.MultiplePlayer;
+import com.ionos.player.model.PlaybackModel;
 import com.ionos.player.model.PlayerFileInfo;
-import com.ionos.player.model.release_strategy.SourceInfoReleaseStrategy;
-import com.ionos.player.model.state.MultiplePlaybackState;
+import com.ionos.player.model.state.PlaybackItemState;
 import com.ionos.player.model.state.PlaybackState;
+import com.ionos.player.ui.MultiplePlayer;
 import com.ionos.player.ui.message.ExceptionToMessageTransformation;
 import com.ionos.player.ui.message.PlayerExceptionMessageProvider;
 import com.ionos.player.ui.sources.destroy_strategy.MultiplePlayerPresenterDestroyStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * User: zuzik
@@ -26,21 +26,18 @@ import java.util.List;
  */
 public class MultiplePlayerSourcesPresenter implements MultiplePlayer.SourcesPresenter {
 
-	private final MultiplePlayer.Model model;
+	private final PlaybackModel model;
 	private final ExceptionToMessageTransformation exceptionToMessageTransformation;
     private MultiplePlayer.SourcesView view = NullMultiplePlayerSourcesView.getInstance();
 
 	private final MultiplePlayerPresenterDestroyStrategy destroyStrategy;
-    private final SourceInfoReleaseStrategy releaseStrategy;
 
 	public MultiplePlayerSourcesPresenter(
-			MultiplePlayer.Model model,
+			PlaybackModel model,
             MultiplePlayerPresenterDestroyStrategy destroyStrategy,
-            SourceInfoReleaseStrategy releaseStrategy,
 			PlayerExceptionMessageProvider exceptionMessageProvider) {
 		this.model = model;
 		this.destroyStrategy = destroyStrategy;
-		this.releaseStrategy = releaseStrategy;
 		this.exceptionToMessageTransformation = new ExceptionToMessageTransformation(exceptionMessageProvider);
 	}
 
@@ -80,7 +77,7 @@ public class MultiplePlayerSourcesPresenter implements MultiplePlayer.SourcesPre
 		updateView(this.model.getState());
 	}
 
-	private void updateView(Optional<MultiplePlaybackState> state) {
+	private void updateView(Optional<PlaybackState> state) {
 		List<PlayerFileInfo> sources = new ArrayList<>();
 
 		if (state.isPresent()) {
@@ -88,15 +85,15 @@ public class MultiplePlayerSourcesPresenter implements MultiplePlayer.SourcesPre
 		}
 
 		this.view.displaySourceInfos(sources);
-		if (state.mapToBoolean(input -> input.getCurrentPlaybackState().isPresent()).orElse(false)) {
-			PlaybackState playbackState = state.get().getCurrentPlaybackState().get();
-			this.view.displayCurrentSourceInfo(playbackState.sourceInfo);
+		if (state.map(input -> input.currentPlaybackItemState.isPresent()).orElse(false)) {
+			PlaybackItemState playbackItemState = state.get().currentPlaybackItemState.get();
+			this.view.displayCurrentSourceInfo(playbackItemState.sourceInfo);
 		}
 	}
 
-	private final MultiplePlayer.Model.Listener listener = new MultiplePlayer.Model.Listener() {
+	private final PlaybackModel.Listener listener = new PlaybackModel.Listener() {
 		@Override
-		public void onUpdate(MultiplePlaybackState state) {
+		public void onUpdate(PlaybackState state) {
 			updateView();
 		}
 

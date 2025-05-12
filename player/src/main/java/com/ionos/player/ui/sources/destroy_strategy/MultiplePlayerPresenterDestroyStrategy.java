@@ -7,12 +7,12 @@
 
 package com.ionos.player.ui.sources.destroy_strategy;
 
-import com.ionos.player.model.MultiplePlayer;
+import com.ionos.player.model.PlaybackModel;
 
 /**
  * User: zuzik
  * Date: 7/4/16
  */
 public interface MultiplePlayerPresenterDestroyStrategy {
-	void onDestroy(MultiplePlayer.Model model);
+	void onDestroy(PlaybackModel model);
 }

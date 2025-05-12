@@ -15,9 +15,9 @@ import com.google.common.util.concurrent.MoreExecutors
 import com.ionos.player.R
 import com.ionos.player.media3.common.mediaId
 import com.ionos.player.model.PlayerFileInfo
-import com.ionos.player.model.PlayerImageLoader
+import com.ionos.player.model.ThumbnailLoader
+import com.ionos.player.model.file_store.PlaybackFileStore
 import com.ionos.player.model.predicate.IsVideoPredicate
-import com.ionos.player.model.store.SourceInfoStore
 import com.ionos.player.util.SystemVersion
 import java.util.concurrent.Callable
 import java.util.concurrent.Executors
@@ -25,8 +25,8 @@ import java.util.concurrent.Executors
 @UnstableApi
 class MediaSessionBitmapLoader(
 	private val context: Context,
-	private val sourceInfoStore: SourceInfoStore,
-	private val imageLoader: PlayerImageLoader,
+	private val playbackFileStore: PlaybackFileStore,
+	private val thumbnailLoader: ThumbnailLoader,
 	private val isVideoPredicate: IsVideoPredicate,
 	private val delegate: BitmapLoader = DataSourceBitmapLoader(context),
 ) : BitmapLoader by delegate {
@@ -56,7 +56,7 @@ class MediaSessionBitmapLoader(
 
 		val bitmapFuture = executorService.submit(Callable {
 			getBitmapFromMetadata(metadata) ?: run {
-				val sourceInfo = mediaId?.let(sourceInfoStore::getSourceInfo)
+				val sourceInfo = mediaId?.let(playbackFileStore::getPlaybackFile)
 				sourceInfo?.let(::getBitmapForSourceInfo) ?: getDefaultBitmap(sourceInfo)
 			}
 		})
@@ -81,9 +81,9 @@ class MediaSessionBitmapLoader(
 
 	private fun getBitmapForSourceInfo(sourceInfo: PlayerFileInfo): Bitmap? {
 		val request = if (SystemVersion.greaterOrEqualToTiramisu()) {
-            imageLoader.load(context, sourceInfo, LARGE_THUMBNAIL_TARGET_SIZE, LARGE_THUMBNAIL_TARGET_SIZE)
+            thumbnailLoader.load(context, sourceInfo, LARGE_THUMBNAIL_TARGET_SIZE, LARGE_THUMBNAIL_TARGET_SIZE)
         } else {
-            imageLoader.load(context, sourceInfo, THUMBNAIL_TARGET_SIZE, THUMBNAIL_TARGET_SIZE)
+            thumbnailLoader.load(context, sourceInfo, THUMBNAIL_TARGET_SIZE, THUMBNAIL_TARGET_SIZE)
         }
 
 		return try {

@@ -7,8 +7,6 @@
 
 package com.ionos.player.ui;
 
-import com.ionos.player.model.MultiplePlayer;
-
 /**
  * User: zuzik
  * Date: 7/12/16

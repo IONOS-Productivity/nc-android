@@ -9,7 +9,6 @@ package com.ionos.player.media3
 
 import android.content.Context
 import androidx.media3.session.MediaController
-import com.annimon.stream.Optional
 import com.ionos.player.media3.common.MediaItemFactory
 import com.ionos.player.media3.controller.MediaControllerFactory
 import com.ionos.player.media3.controller.MediaControllerProvider
@@ -17,35 +16,36 @@ import com.ionos.player.media3.controller.indexOfFirst
 import com.ionos.player.media3.controller.setRepeatMode
 import com.ionos.player.media3.controller.updateMediaItems
 import com.ionos.player.media3.session.MediaSessionHolder
-import com.ionos.player.model.CompositeListener
-import com.ionos.player.model.MultiplePlaybackSettings
-import com.ionos.player.model.MultiplePlayer
+import com.ionos.player.model.PlaybackModel
+import com.ionos.player.model.PlaybackModelCompositeListener
+import com.ionos.player.model.PlaybackSettings
 import com.ionos.player.model.PlayerFileInfo
 import com.ionos.player.model.VideoViewSetter
-import com.ionos.player.model.error_strategy.MultiplePlaybackErrorStrategy
-import com.ionos.player.model.release_strategy.SourceInfoReleaseStrategy
-import com.ionos.player.model.state.MultiplePlaybackState
-import com.ionos.player.model.store.SourceInfoStore
-import com.ionos.player.util.Action
-import com.ionos.player.util.ParamAction
+import com.ionos.player.model.file_store.PlaybackFileStore
+import com.ionos.player.model.state.PlaybackState
+import com.ionos.player.model.state.RepeatMode
+import com.ionos.player.model.strategy.error.PlaybackErrorStrategy
+import com.ionos.player.model.strategy.release.PlaybackReleaseStrategy
 import com.ionos.player.util.PeriodicAction
+import java.util.Optional
 import javax.inject.Inject
 
-class PlaybackModel @Inject constructor(
+class PlaybackModelImpl @Inject constructor(
 	private val context: Context,
 	private val mediaSessionHolder: MediaSessionHolder,
 	private val mediaItemFactory: MediaItemFactory,
-	private val sourceInfoStore: SourceInfoStore,
-	private val playbackSettings: MultiplePlaybackSettings,
-	private val playbackErrorStrategy: MultiplePlaybackErrorStrategy,
-) : MultiplePlayer.Model {
+	private val playbackFileStore: PlaybackFileStore,
+	private val playbackSettings: PlaybackSettings,
+	private val playbackErrorStrategy: PlaybackErrorStrategy,
+    private val playbackReleaseStrategy: PlaybackReleaseStrategy,
+) : PlaybackModel {
 
 	companion object {
 		private const val CHECK_PROGRESS_INTERVAL = 1000
 	}
 
-	private val stateFactory = PlaybackStateFactory(sourceInfoStore, playbackSettings)
-	private val compositeListener = CompositeListener()
+	private val stateFactory = PlaybackStateFactory(playbackFileStore)
+	private val compositeListener = PlaybackModelCompositeListener()
 
 	private val checkProgressPeriodicAction = PeriodicAction(CHECK_PROGRESS_INTERVAL) {
 		state.ifPresent(compositeListener::onUpdate)
@@ -60,7 +60,7 @@ class PlaybackModel @Inject constructor(
 	private val controllerListener = object : MediaController.Listener {
 		override fun onDisconnected(controller: MediaController) {
 			controller.removeListener(playerListener)
-			sourceInfoStore.clear()
+			playbackFileStore.clear()
 			checkProgressPeriodicAction.stop()
 			state.ifPresent(compositeListener::onUpdate)
 		}
@@ -70,14 +70,18 @@ class PlaybackModel @Inject constructor(
 	private val controllerProvider = MediaControllerProvider(controllerFactory)
 	private val controller: MediaController? by controllerProvider
 
-	override fun start(onSuccess: Action, onError: ParamAction<Throwable>) {
+    override val state: Optional<PlaybackState> get() {
+        return stateFactory.create(controller)
+    }
+
+    override fun start(onSuccess: () -> Unit, onError: (Throwable) -> Unit) {
 		if (controllerProvider.isInitialized) {
-			onSuccess.execute()
+			onSuccess()
 
 		} else if (controllerProvider.isInitializing) {
 			controllerProvider.addInitializeListener { result ->
-				result.onSuccess { onSuccess.execute() }
-				result.onFailure { onError.execute(it) }
+				result.onSuccess { onSuccess() }
+				result.onFailure { onError(it) }
 			}
 
 		} else {
@@ -86,24 +90,21 @@ class PlaybackModel @Inject constructor(
 					it.addListener(playerListener)
 					it.setRepeatMode(playbackSettings.repeatMode)
 					it.shuffleModeEnabled = playbackSettings.isShuffle
-					onSuccess.execute()
+					onSuccess()
 				}
-				result.onFailure { onError.execute(it) }
+				result.onFailure { onError(it) }
 			}
 		}
 	}
 
-	override fun setSourceInfos(
-        sourceInfos: List<PlayerFileInfo>,
-        releaseStrategy: SourceInfoReleaseStrategy,
-	) {
+	override fun setSourceInfos(sourceInfos: List<PlayerFileInfo>) {
 		val releaseCurrentPlayback = controller
 			?.currentMediaItem
-			?.let { sourceInfoStore.getSourceInfo(it.mediaId) }
-			?.let { releaseStrategy.releaseCurrentPlayback(sourceInfos, it) }
+			?.let { playbackFileStore.getPlaybackFile(it.mediaId) }
+			?.let { playbackReleaseStrategy.releaseCurrentPlayback(sourceInfos, it) }
 			?: true
 
-		sourceInfoStore.setSourceInfos(sourceInfos)
+		playbackFileStore.setPlaybackFiles(sourceInfos)
 
 		controller?.let {
 			val mediaItems = sourceInfos.map(mediaItemFactory::create)
@@ -121,21 +122,17 @@ class PlaybackModel @Inject constructor(
 		mediaSessionHolder.release()
 	}
 
-	override fun getState(): Optional<MultiplePlaybackState> {
-		return stateFactory.create(controller)
-	}
-
-	override fun videoViewSetter(success: ParamAction<VideoViewSetter>) {
-		success.execute {
+    override fun videoViewSetter(success: (VideoViewSetter) -> Unit) {
+		success {
 			controller?.setVideoSurfaceHolder(it)
 		}
 	}
 
-	override fun addListener(listener: MultiplePlayer.Model.Listener) {
+	override fun addListener(listener: PlaybackModel.Listener) {
 		compositeListener.addListener(listener)
 	}
 
-	override fun removeListener(listener: MultiplePlayer.Model.Listener) {
+	override fun removeListener(listener: PlaybackModel.Listener) {
 		compositeListener.removeListener(listener)
 	}
 
@@ -172,24 +169,14 @@ class PlaybackModel @Inject constructor(
 		controller?.seekTo(positionInMilliseconds.toLong())
 	}
 
-	override fun repeatSingle() {
-		playbackSettings.repeatSingle()
-		controller?.setRepeatMode(playbackSettings.repeatMode)
+	override fun setRepeatMode(repeatMode: RepeatMode) {
+		playbackSettings.setRepeatMode(repeatMode)
+		controller?.setRepeatMode(repeatMode)
 	}
 
-	override fun doNotRepeatSingle() {
-		playbackSettings.doNotRepeatSingle()
-		controller?.setRepeatMode(playbackSettings.repeatMode)
-	}
-
-	override fun shuffle() {
-		playbackSettings.shuffle()
-		controller?.shuffleModeEnabled = true
-	}
-
-	override fun doNotShuffle() {
-		playbackSettings.doNotShuffle()
-		controller?.shuffleModeEnabled = false
+	override fun setShuffle(shuffle: Boolean) {
+		playbackSettings.setShuffle(shuffle)
+		controller?.shuffleModeEnabled = shuffle
 	}
 
 	override fun switchToSourceInfo(sourceInfo: PlayerFileInfo) {

@@ -9,7 +9,6 @@ package com.ionos.player.ui.pager;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.robolectric.annotation.Config;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +20,6 @@ import static org.junit.Assert.assertTrue;
  * User: Anton Shevchuk
  * Date: 03.02.2017
  */
-@Config(sdk = 24, manifest = Config.NONE)
 public class InfiniteViewPagerTest {
 	private final List<Integer> inputList = new ArrayList<>();
 

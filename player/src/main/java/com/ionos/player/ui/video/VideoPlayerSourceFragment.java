@@ -8,20 +8,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
-import com.annimon.stream.Optional;
 import com.ionos.player.R;
-import com.ionos.player.model.MultiplePlayer;
+import com.ionos.player.model.PlaybackModel;
 import com.ionos.player.model.PlayerFileInfo;
-import com.ionos.player.model.PlayerImageLoader;
+import com.ionos.player.model.ThumbnailLoader;
 import com.ionos.player.model.VideoViewSetter;
 import com.ionos.player.model.predicate.IsVideoPredicate;
 import com.ionos.player.model.state.VideoSize;
+import com.ionos.player.ui.MultiplePlayer;
 import com.ionos.player.ui.common.FileTextDetailView;
 import com.ionos.player.ui.video.surface.PlayerCompatible;
 import com.ionos.player.ui.video.surface.SurfaceInvalidator;
 import com.ionos.player.ui.video.surface.SurfaceVideoView;
 import com.ionos.player.util.ScreenUtils;
 import com.ionos.player.util.SystemVersion;
+
+import java.util.Optional;
 
 import javax.inject.Inject;
 
@@ -38,9 +40,9 @@ public class VideoPlayerSourceFragment extends Fragment {
 	private final static String ARGUMENT_FILE_INFO = "ARGUMENT_FILE_INFO";
 
 	@Inject
-	MultiplePlayer.Model playerModel;
+    PlaybackModel playerModel;
 	@Inject
-	PlayerImageLoader imageLoader;
+    ThumbnailLoader thumbnailLoader;
 	@Inject
 	IsVideoPredicate isVideoPredicate;
 
@@ -161,7 +163,7 @@ public class VideoPlayerSourceFragment extends Fragment {
 		@Override
 		public void setVideoViewAvailable() {
             switchToVideoContainer();
-            final Optional<VideoSize> videoSize = playerModel.getState().get().getCurrentPlaybackState().get().videoSize;
+            final Optional<VideoSize> videoSize = playerModel.getState().get().currentPlaybackItemState.get().videoSize;
             if (videoSize.isPresent()) {
                 if (!previousVideoSize.equals(videoSize)) {
                     previousVideoSize = videoSize;

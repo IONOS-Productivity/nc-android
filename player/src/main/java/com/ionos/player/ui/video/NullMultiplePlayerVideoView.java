@@ -7,9 +7,9 @@
 
 package com.ionos.player.ui.video;
 
-import com.ionos.player.model.MultiplePlayer;
 import com.ionos.player.model.PlayerFileInfo;
 import com.ionos.player.model.VideoViewSetter;
+import com.ionos.player.ui.MultiplePlayer;
 
 /**
  * User: zuzik

@@ -7,15 +7,17 @@
 
 package com.ionos.player.ui.control;
 
-import com.annimon.stream.Optional;
-import com.ionos.player.model.MultiplePlayer;
+import com.ionos.player.model.PlaybackModel;
 import com.ionos.player.model.PlayerFileInfo;
-import com.ionos.player.model.state.MultiplePlaybackState;
+import com.ionos.player.model.state.PlaybackItemState;
 import com.ionos.player.model.state.PlaybackState;
-import com.ionos.player.model.state.PlaybackStateAnalyzer;
+import com.ionos.player.model.state.PlayerStateAnalyzer;
+import com.ionos.player.model.state.RepeatMode;
+import com.ionos.player.ui.MultiplePlayer;
 import com.ionos.player.ui.control.availability_strategy.ControlAvailabilityStrategy;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * User: zuzik
@@ -23,13 +25,13 @@ import java.util.List;
  */
 public class MultiplePlayerControlPresenter implements MultiplePlayer.ControlPresenter {
 
-	private final MultiplePlayer.Model model;
+	private final PlaybackModel model;
 	private final ControlAvailabilityStrategy nextControlAvailabilityStrategy;
 	private final ControlAvailabilityStrategy previousControlAvailabilityStrategy;
 	private MultiplePlayer.ControlView view = NullMultiplePlayerControlView.getInstance();
 
 	public MultiplePlayerControlPresenter(
-			MultiplePlayer.Model model,
+			PlaybackModel model,
 			ControlAvailabilityStrategy nextControlAvailabilityStrategy,
 			ControlAvailabilityStrategy previousControlAvailabilityStrategy) {
 		this.model = model;
@@ -95,34 +97,34 @@ public class MultiplePlayerControlPresenter implements MultiplePlayer.ControlPre
 
 	@Override
 	public void onRepeat() {
-		this.model.repeatSingle();
+		this.model.setRepeatMode(RepeatMode.SINGLE);
 	}
 
 	@Override
 	public void onDoNotRepeat() {
-		this.model.doNotRepeatSingle();
+		this.model.setRepeatMode(RepeatMode.ALL);
 	}
 
 	@Override
 	public void onShuffle() {
-		this.model.shuffle();
+		this.model.setShuffle(true);
 	}
 
 	@Override
 	public void onDoNotShuffle() {
-		this.model.doNotShuffle();
+		this.model.setShuffle(false);
 	}
 
 	private void updateView() {
 		updateView(this.model.getState());
 	}
 
-	private void updateView(Optional<MultiplePlaybackState> state) {
+	private void updateView(Optional<PlaybackState> state) {
 		boolean repeatSingle = false;
 		boolean shuffle = false;
 
 		if (state.isPresent()) {
-			repeatSingle = state.get().repeatSingle;
+			repeatSingle = state.get().repeatMode == RepeatMode.SINGLE;
 			shuffle = state.get().shuffle;
 		}
 
@@ -139,10 +141,10 @@ public class MultiplePlayerControlPresenter implements MultiplePlayer.ControlPre
 		}
 
 		if (state
-				.mapToBoolean(input -> input.getCurrentPlaybackState().isPresent())
+				.map(input -> input.currentPlaybackItemState.isPresent())
 				.orElse(false)) {
-			PlaybackState playbackState = state.get().getCurrentPlaybackState().get();
-			PlaybackStateAnalyzer analyzer = new PlaybackStateAnalyzer(playbackState);
+			PlaybackItemState playbackItemState = state.get().currentPlaybackItemState.get();
+			PlayerStateAnalyzer analyzer = new PlayerStateAnalyzer(playbackItemState.playerState);
 
 			this.view.enablePlayControls(
 					analyzer.playAvailable(),
@@ -151,16 +153,16 @@ public class MultiplePlayerControlPresenter implements MultiplePlayer.ControlPre
 			this.view.enableSwitchControls(
 					this.nextControlAvailabilityStrategy.available(
 							state.get().currentSourceInfos,
-							state.get().getCurrentPlaybackState().get().sourceInfo,
+							state.get().currentPlaybackItemState.get().sourceInfo,
 							state.get().shuffle),
 					this.previousControlAvailabilityStrategy.available(
 							state.get().currentSourceInfos,
-							state.get().getCurrentPlaybackState().get().sourceInfo,
+							state.get().currentPlaybackItemState.get().sourceInfo,
 							state.get().shuffle));
 
-			if (playbackState.getMaxTimeInMilliseconds().isPresent()) {
-				int currentTime = playbackState.currentTimeInMilliseconds;
-				int maxTime = playbackState.getMaxTimeInMilliseconds().get();
+			if (playbackItemState.maxTimeInMilliseconds > 0) {
+				int currentTime = playbackItemState.currentTimeInMilliseconds;
+				int maxTime = playbackItemState.maxTimeInMilliseconds;
 				this.view.setProgressAvailable();
 				this.view.setProgress(currentTime, maxTime);
 			} else {
@@ -173,9 +175,9 @@ public class MultiplePlayerControlPresenter implements MultiplePlayer.ControlPre
 		}
 	}
 
-	private final MultiplePlayer.Model.Listener listener = new MultiplePlayer.Model.Listener() {
+	private final PlaybackModel.Listener listener = new PlaybackModel.Listener() {
 		@Override
-		public void onUpdate(MultiplePlaybackState state) {
+		public void onUpdate(PlaybackState state) {
 			updateView();
 		}
 

@@ -2,14 +2,11 @@ package com.ionos.player
 
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.datasource.DataSource
-import com.ionos.player.PlayerModule.Companion.PLAYER_CACHE_SIZE_QUALIFIER
 import com.ionos.player.media3.datasource.StreamDataSourceFactory
 import com.ionos.player.media3.session.DefaultMediaSessionActivityFactory
 import com.ionos.player.media3.session.MediaSessionActivityFactory
-import com.ionos.player.model.NCMultiplePlaybackSettings
-import com.ionos.player.model.PlayerImageLoader
-import com.ionos.player.model.PlayerImageLoaderImpl
-import com.ionos.player.model.PlayerMultiplePlaybackSettings
+import com.ionos.player.model.ThumbnailLoader
+import com.ionos.player.model.ThumbnailLoaderImpl
 import com.ionos.player.model.predicate.FileBeingProcessedPredicate
 import com.ionos.player.model.predicate.FileBeingProcessedPredicateImpl
 import com.ionos.player.model.predicate.IsVideoPredicate
@@ -21,28 +18,10 @@ import com.ionos.player.ui.message.PlayerMessageBuilderFactory
 import com.ionos.player.ui.message.PlayerMessageBuilderFactoryImpl
 import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.android.ContributesAndroidInjector
-import javax.inject.Named
-import javax.inject.Singleton
 
 @Module(includes = [PlayerModule::class])
 abstract class NCPlayerModule {
-
-    companion object {
-        @Named(PLAYER_CACHE_SIZE_QUALIFIER)
-        @Provides
-        fun providePlayerCacheSize(): Long = 300 * 1024 * 1024
-
-        @Provides
-        @Singleton
-        fun providePlayerMultiplePlaybackSettings(
-        ): PlayerMultiplePlaybackSettings {
-            return NCMultiplePlaybackSettings(
-                true
-            )
-        }
-    }
 
     @Binds
     abstract fun bindMediaSessionActivityFactory(
@@ -71,9 +50,9 @@ abstract class NCPlayerModule {
     ): PlayerMessageBuilderFactory
 
     @Binds
-    abstract fun bindPlayerImageLoader(
-        imageLoader: PlayerImageLoaderImpl
-    ): PlayerImageLoader
+    abstract fun bindThumbnailLoader(
+        imageLoader: ThumbnailLoaderImpl
+    ): ThumbnailLoader
 
     @Binds
     abstract fun bindPlayerExceptionMessageProvider(

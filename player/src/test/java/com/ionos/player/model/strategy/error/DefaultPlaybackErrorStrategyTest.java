@@ -5,17 +5,18 @@
  * SPDX-License-Identifier: GPL-2.0
  */
 
-package com.ionos.player.model.error_strategy;
+package com.ionos.player.model.strategy.error;
 
-import com.annimon.stream.Optional;
 import com.ionos.player.model.PlayerFileInfo;
-import com.ionos.player.model.state.MultiplePlaybackState;
 import com.ionos.player.model.state.PlaybackState;
-import com.ionos.player.model.state.State;
+import com.ionos.player.model.state.PlaybackItemState;
+import com.ionos.player.model.state.PlayerState;
+import com.ionos.player.model.state.RepeatMode;
 
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 import androidx.annotation.NonNull;
 
@@ -25,13 +26,13 @@ import static junit.framework.Assert.assertTrue;
 /**
  * Created by yaz on 1/23/17.
  */
-public class HiDriveMultiplePlaybackErrorStrategyTest {
+public class DefaultPlaybackErrorStrategyTest {
 
-	private final HiDriveMultiplePlaybackErrorStrategy strategy = new HiDriveMultiplePlaybackErrorStrategy();
+	private final DefaultPlaybackErrorStrategy strategy = new DefaultPlaybackErrorStrategy();
 
 	@Test
 	public void switchToNextSourceReturnFalseIfOneFileQueue() throws Exception {
-		MultiplePlaybackState state = createState(Optional.of(mockWithName("a")), mockWithName("a"));
+		PlaybackState state = createState(Optional.of(mockWithName("a")), mockWithName("a"));
 
 		boolean switchToNext = strategy.switchToNextSource(new RuntimeException(), state);
 
@@ -40,7 +41,7 @@ public class HiDriveMultiplePlaybackErrorStrategyTest {
 
 	@Test
 	public void switchToNextSourceReturnFalseIfNotOneFileQueueAndCurentFileIsLast() throws Exception {
-		MultiplePlaybackState state = createState(Optional.of(mockWithName("b")), mockWithName("a"), mockWithName("b"));
+		PlaybackState state = createState(Optional.of(mockWithName("b")), mockWithName("a"), mockWithName("b"));
 
 		boolean switchToNext = strategy.switchToNextSource(new RuntimeException(), state);
 
@@ -49,20 +50,20 @@ public class HiDriveMultiplePlaybackErrorStrategyTest {
 
 	@Test
 	public void switchToNextSourceReturnTrueIfNotOneFileQueueAndCurrentFileIsNotLast() throws Exception {
-		MultiplePlaybackState state = createState(Optional.of(mockWithName("b")), mockWithName("a"), mockWithName("a"));
+		PlaybackState state = createState(Optional.of(mockWithName("b")), mockWithName("a"), mockWithName("a"));
 
 		boolean switchToNext = strategy.switchToNextSource(new RuntimeException(), state);
 
 		assertTrue(switchToNext);
 	}
 
-	private MultiplePlaybackState createState(Optional<PlayerFileInfo> currentFile, PlayerFileInfo... files) {
-		Optional<PlaybackState> current = currentFile
-				.map(input -> new PlaybackState(State.NONE, 0, Optional.empty(), input, Optional.empty()));
-		return new MultiplePlaybackState(
+	private PlaybackState createState(Optional<PlayerFileInfo> currentFile, PlayerFileInfo... files) {
+		Optional<PlaybackItemState> current = currentFile
+				.map(input -> new PlaybackItemState(input, PlayerState.NONE, Optional.empty(), 0, 0));
+		return new PlaybackState(
 				Arrays.asList(files),
 				current,
-				false,
+				RepeatMode.OFF,
 				false);
 	}
 

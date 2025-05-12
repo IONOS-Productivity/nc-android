@@ -7,11 +7,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ionos.player.R;
-import com.ionos.player.model.MultiplePlayer;
+import com.ionos.player.model.PlaybackModel;
 import com.ionos.player.model.PlayerFileInfo;
 import com.ionos.player.model.predicate.FileBeingProcessedPredicate;
-import com.ionos.player.model.state.MultiplePlaybackState;
+import com.ionos.player.model.state.PlaybackItemState;
 import com.ionos.player.model.state.PlaybackState;
+import com.ionos.player.ui.MultiplePlayer;
 import com.ionos.player.ui.MultiplePlayerHidingPresenter;
 import com.ionos.player.ui.PlayerView;
 import com.ionos.player.ui.PlayerViewContainer;
@@ -35,7 +36,7 @@ import dagger.android.HasAndroidInjector;
 public class AudioPlayerView extends PlayerView {
 
 	@Inject
-	MultiplePlayer.Model playerModel;
+    PlaybackModel playerModel;
 	@Inject
 	PlayerMessageBuilderFactory messageBuilderFactory;
 	@Inject
@@ -125,10 +126,10 @@ public class AudioPlayerView extends PlayerView {
 			playerViewContainer.onPlayerViewClose();
 			return;
 		}
-		MultiplePlaybackState state = this.playerModel.getState().get();
-		if (state.getCurrentPlaybackState().isPresent()) {
-			PlaybackState playbackState = state.getCurrentPlaybackState().get();
-			PlayerFileInfo file = playbackState.sourceInfo;
+		PlaybackState state = this.playerModel.getState().get();
+		if (state.currentPlaybackItemState.isPresent()) {
+			PlaybackItemState playbackItemState = state.currentPlaybackItemState.get();
+			PlayerFileInfo file = playbackItemState.sourceInfo;
 			if (currentFileListener != null) {
 				currentFileListener.fileChanged(file);
 			}
@@ -150,9 +151,9 @@ public class AudioPlayerView extends PlayerView {
 		}
 	}
 
-	private final MultiplePlayer.Model.Listener playerModelListener = new MultiplePlayer.Model.Listener() {
+	private final PlaybackModel.Listener playerModelListener = new PlaybackModel.Listener() {
 		@Override
-		public void onUpdate(MultiplePlaybackState state) {
+		public void onUpdate(PlaybackState state) {
 			updateState();
 		}
 

@@ -9,9 +9,9 @@ import androidx.media3.session.MediaSession
 import androidx.media3.session.SessionCommand
 import com.ionos.player.R
 import com.ionos.player.media3.common.PlayerFactory
-import com.ionos.player.model.PlayerImageLoader
+import com.ionos.player.model.ThumbnailLoader
+import com.ionos.player.model.file_store.PlaybackFileStore
 import com.ionos.player.model.predicate.IsVideoPredicate
-import com.ionos.player.model.store.SourceInfoStore
 import javax.inject.Inject
 
 @UnstableApi
@@ -19,8 +19,8 @@ class MediaSessionFactory @Inject constructor(
 	private val context: Context,
 	private val playerFactory: PlayerFactory,
 	private val sessionCallback: MediaSessionCallback,
-	private val sourceInfoStore: SourceInfoStore,
-	private val imageLoader: PlayerImageLoader,
+	private val playbackFileStore: PlaybackFileStore,
+	private val thumbnailLoader: ThumbnailLoader,
 	private val isVideoPredicate: IsVideoPredicate,
 ) {
 
@@ -47,8 +47,8 @@ class MediaSessionFactory @Inject constructor(
 	private fun provideBitmapLoader(): BitmapLoader {
 		return MediaSessionBitmapLoader(
 			context,
-			sourceInfoStore,
-			imageLoader,
+			playbackFileStore,
+			thumbnailLoader,
 			isVideoPredicate,
 		)
 	}

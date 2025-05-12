@@ -5,17 +5,17 @@ import androidx.media3.common.util.UnstableApi
 import androidx.media3.datasource.cache.Cache
 import androidx.media3.datasource.cache.LeastRecentlyUsedCacheEvictor
 import androidx.media3.datasource.cache.SimpleCache
-import com.ionos.player.media3.PlaybackModel
+import com.ionos.player.media3.PlaybackModelImpl
 import com.ionos.player.media3.PlaybackService
 import com.ionos.player.media3.common.PlayerFactory
 import com.ionos.player.media3.exoplayer.ExoPlayerFactory
-import com.ionos.player.model.MultiplePlaybackSettings
-import com.ionos.player.model.MultiplePlayer
-import com.ionos.player.model.PlayerMultiplePlaybackSettings
-import com.ionos.player.model.error_strategy.HiDriveMultiplePlaybackErrorStrategy
-import com.ionos.player.model.error_strategy.MultiplePlaybackErrorStrategy
-import com.ionos.player.model.store.HiDriveSourceInfoStore
-import com.ionos.player.model.store.SourceInfoStore
+import com.ionos.player.model.PlaybackModel
+import com.ionos.player.model.file_store.InMemoryPlaybackFileStore
+import com.ionos.player.model.file_store.PlaybackFileStore
+import com.ionos.player.model.strategy.error.DefaultPlaybackErrorStrategy
+import com.ionos.player.model.strategy.error.PlaybackErrorStrategy
+import com.ionos.player.model.strategy.release.DefaultPlaybackReleaseStrategy
+import com.ionos.player.model.strategy.release.PlaybackReleaseStrategy
 import com.ionos.player.ui.audio.AudioPlayerSourceFragment
 import com.ionos.player.ui.audio.AudioPlayerView
 import com.ionos.player.ui.control.PlayerControlView
@@ -27,26 +27,22 @@ import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
 import java.io.File
-import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
 abstract class PlayerModule {
 
 	companion object{
-		const val PLAYER_CACHE_SIZE_QUALIFIER = "PLAYER_CACHE_SIZE_QUALIFIER"
         private const val PLAYER_CACHE_DIR_NAME = "player"
+        private const val PLAYER_CACHE_SIZE = 300 * 1024 * 1024L
 
 		@UnstableApi
 		@Singleton
 		@Provides
-		fun provideCache(
-			context: Context,
-			@Named(PLAYER_CACHE_SIZE_QUALIFIER) playerCacheSize: Long,
-		): Cache {
+		fun provideCache(context: Context): Cache {
 			return SimpleCache(
                 File(context.cacheDir, PLAYER_CACHE_DIR_NAME),
-				LeastRecentlyUsedCacheEvictor(playerCacheSize)
+				LeastRecentlyUsedCacheEvictor(PLAYER_CACHE_SIZE)
 			)
 		}
 	}
@@ -54,15 +50,15 @@ abstract class PlayerModule {
 	@UnstableApi
 	@Binds
 	@Singleton
-	abstract fun bindMultiplePlayerModel(
-		model: PlaybackModel,
-	): MultiplePlayer.Model
+	abstract fun bindPlaybackModel(
+		model: PlaybackModelImpl,
+	): PlaybackModel
 
 	@Singleton
 	@Binds
-	abstract fun bindSourceInfoStore(
-		store: HiDriveSourceInfoStore
-	): SourceInfoStore
+	abstract fun bindPlaybackFileStore(
+		store: InMemoryPlaybackFileStore
+	): PlaybackFileStore
 
 	@Binds
     @UnstableApi
@@ -71,16 +67,14 @@ abstract class PlayerModule {
     ): PlayerFactory
 
 	@Binds
-	@Singleton
-	abstract fun bindMultiplePlaybackErrorStrategy(
-		strategy: HiDriveMultiplePlaybackErrorStrategy,
-	): MultiplePlaybackErrorStrategy
+	abstract fun bindPlaybackErrorStrategy(
+		strategy: DefaultPlaybackErrorStrategy,
+	): PlaybackErrorStrategy
 
     @Binds
-    @Singleton
-    abstract fun provideHiDriveMultiplePlaybackSettings(
-        playbackSettings: PlayerMultiplePlaybackSettings,
-    ): MultiplePlaybackSettings
+    abstract fun bindPlaybackReleaseStrategy(
+        strategy: DefaultPlaybackReleaseStrategy,
+    ): PlaybackReleaseStrategy
 
     @ContributesAndroidInjector
     abstract fun playbackService(): PlaybackService

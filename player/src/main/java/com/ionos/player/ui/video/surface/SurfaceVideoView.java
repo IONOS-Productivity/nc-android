@@ -10,9 +10,9 @@ package com.ionos.player.ui.video.surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import com.ionos.player.model.MultiplePlayer;
 import com.ionos.player.model.PlayerFileInfo;
 import com.ionos.player.model.VideoViewSetter;
+import com.ionos.player.ui.MultiplePlayer;
 
 /**
  * User: zuzik

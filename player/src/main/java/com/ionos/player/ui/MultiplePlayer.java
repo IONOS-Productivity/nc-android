@@ -5,13 +5,10 @@
  * SPDX-License-Identifier: GPL-2.0
  */
 
-package com.ionos.player.model;
+package com.ionos.player.ui;
 
-import com.annimon.stream.Optional;
-import com.ionos.player.model.release_strategy.SourceInfoReleaseStrategy;
-import com.ionos.player.model.state.MultiplePlaybackState;
-import com.ionos.player.util.Action;
-import com.ionos.player.util.ParamAction;
+import com.ionos.player.model.PlayerFileInfo;
+import com.ionos.player.model.VideoViewSetter;
 
 import java.util.List;
 
@@ -20,54 +17,6 @@ import java.util.List;
  * Date: 6/4/16
  */
 public interface MultiplePlayer {
-
-	interface Model {
-
-		void start(Action onSuccess, ParamAction<Throwable> onError);
-
-		void setSourceInfos(List<PlayerFileInfo> sourceInfos, SourceInfoReleaseStrategy releaseStrategy);
-
-		void release();
-
-		Optional<MultiplePlaybackState> getState();
-
-		void videoViewSetter(ParamAction<VideoViewSetter> success);
-
-		void addListener(Listener listener);
-
-		void removeListener(Listener listener);
-
-		void play();
-
-		void pause();
-
-		void stop();
-
-		void playNext();
-
-		void playPrevious();
-
-		void seekToPosition(int positionInMilliseconds);
-
-		void repeatSingle();
-
-		void doNotRepeatSingle();
-
-		void shuffle();
-
-		void doNotShuffle();
-
-		void switchToSourceInfo(PlayerFileInfo sourceInfo);
-
-		interface Listener {
-			void onUpdate(MultiplePlaybackState state);
-
-			void onError(Throwable error);
-
-			void onSourceInfosChanged(List<PlayerFileInfo> originalSourceInfos,
-									  List<PlayerFileInfo> currentSourceInfos);
-		}
-	}
 
 	interface SourcesView {
 

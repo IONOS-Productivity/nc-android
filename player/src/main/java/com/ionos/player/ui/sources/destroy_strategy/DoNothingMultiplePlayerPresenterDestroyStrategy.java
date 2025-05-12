@@ -7,7 +7,7 @@
 
 package com.ionos.player.ui.sources.destroy_strategy;
 
-import com.ionos.player.model.MultiplePlayer;
+import com.ionos.player.model.PlaybackModel;
 
 /**
  * User: zuzik
@@ -15,7 +15,7 @@ import com.ionos.player.model.MultiplePlayer;
  */
 public class DoNothingMultiplePlayerPresenterDestroyStrategy<SourceInfo> implements MultiplePlayerPresenterDestroyStrategy {
 	@Override
-	public void onDestroy(MultiplePlayer.Model model) {
+	public void onDestroy(PlaybackModel model) {
 
 	}
 }

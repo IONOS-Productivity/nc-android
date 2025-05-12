@@ -11,7 +11,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.ionos.player.R;
-import com.ionos.player.model.MultiplePlayer;
+import com.ionos.player.model.PlaybackModel;
+import com.ionos.player.ui.MultiplePlayer;
 import com.ionos.player.ui.control.availability_strategy.HiDriveCyclicNextControlAvailabilityStrategy;
 import com.ionos.player.ui.control.availability_strategy.HiDriveCyclicPreviousControlAvailabilityStrategy;
 import com.ionos.player.ui.control.listener.CompositePlayerControlViewListener;
@@ -49,7 +50,7 @@ public class PlayerControlView extends LinearLayout {
 	private static final String TAG_CLICK_COMMAND_UNKNOWN = "TAG_CLICK_COMMAND_UNKNOWN";
 
 	@Inject
-	MultiplePlayer.Model playerModel;
+    PlaybackModel playerModel;
 
 	private MultiplePlayer.ControlPresenter controlPresenter;
 	private MultiplePlayerPlayPreviousPresenter playPreviousPresenter;

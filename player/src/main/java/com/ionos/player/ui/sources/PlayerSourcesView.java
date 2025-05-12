@@ -6,9 +6,9 @@ import android.view.WindowInsets;
 import android.widget.LinearLayout;
 
 import com.ionos.player.R;
-import com.ionos.player.model.MultiplePlayer;
+import com.ionos.player.model.PlaybackModel;
 import com.ionos.player.model.PlayerFileInfo;
-import com.ionos.player.model.release_strategy.DoNotReleaseIfExistsSourceInfoReleaseStrategy;
+import com.ionos.player.ui.MultiplePlayer;
 import com.ionos.player.ui.message.PlayerExceptionMessageProvider;
 import com.ionos.player.ui.pager.InfiniteViewPager;
 import com.ionos.player.ui.pager.Mode;
@@ -31,7 +31,7 @@ import dagger.android.HasAndroidInjector;
 public class PlayerSourcesView extends LinearLayout {
 
 	@Inject
-	MultiplePlayer.Model playerModel;
+    PlaybackModel playerModel;
 	@Inject
 	PlayerExceptionMessageProvider playerExceptionMessageProvider;
 
@@ -58,7 +58,6 @@ public class PlayerSourcesView extends LinearLayout {
 		this.presenter = new MultiplePlayerSourcesPresenter(
 				this.playerModel,
 				new DoNothingMultiplePlayerPresenterDestroyStrategy<>(),
-				new DoNotReleaseIfExistsSourceInfoReleaseStrategy(),
 				playerExceptionMessageProvider
 		);
 
