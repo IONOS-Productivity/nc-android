@@ -12,7 +12,7 @@ import com.owncloud.android.MainApp
 import javax.inject.Inject
 
 @UnstableApi
-class IonosDataSourceFactory @Inject constructor(
+class StreamDataSourceFactory @Inject constructor(
     private val clientFactory: ClientFactory,
     private val accountManager: UserAccountManager,
     private val cache: Cache,
@@ -31,7 +31,7 @@ class IonosDataSourceFactory @Inject constructor(
             .setCacheKeyFactory(CacheKeyFactory.DEFAULT)
             .createDataSource()
 
-        return IonosDataSource(ownCloudClient, cached)
+        return StreamDataSource(ownCloudClient, cached)
     }
 
 }

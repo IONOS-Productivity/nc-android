@@ -7,14 +7,8 @@ import androidx.media3.datasource.cache.LeastRecentlyUsedCacheEvictor
 import androidx.media3.datasource.cache.SimpleCache
 import com.ionos.player.media3.PlaybackModel
 import com.ionos.player.media3.PlaybackService
-import com.ionos.player.media3.common.HiDriveMediaIdFactory
-import com.ionos.player.media3.common.HiDriveMediaItemFactory
-import com.ionos.player.media3.common.MediaIdFactory
-import com.ionos.player.media3.common.MediaItemFactory
-import com.ionos.player.media3.session.HiDriveMediaSessionFactory
-import com.ionos.player.media3.session.HiDriveMediaSessionHolder
-import com.ionos.player.media3.session.MediaSessionFactory
-import com.ionos.player.media3.session.MediaSessionHolder
+import com.ionos.player.media3.common.PlayerFactory
+import com.ionos.player.media3.exoplayer.ExoPlayerFactory
 import com.ionos.player.model.MultiplePlaybackSettings
 import com.ionos.player.model.MultiplePlayer
 import com.ionos.player.model.PlayerMultiplePlaybackSettings
@@ -71,32 +65,16 @@ abstract class PlayerModule {
 	): SourceInfoStore
 
 	@Binds
-	abstract fun bindMediaItemFactory(
-		factory: HiDriveMediaItemFactory
-	): MediaItemFactory
-
-	@Binds
-	@Singleton
-	abstract fun bindMediaIdFactory(
-		factory: HiDriveMediaIdFactory
-	): MediaIdFactory
+    @UnstableApi
+    abstract fun bindPlayerFactory(
+        playerFactory: ExoPlayerFactory,
+    ): PlayerFactory
 
 	@Binds
 	@Singleton
 	abstract fun bindMultiplePlaybackErrorStrategy(
 		strategy: HiDriveMultiplePlaybackErrorStrategy,
 	): MultiplePlaybackErrorStrategy
-
-    @UnstableApi
-    @Binds
-	abstract fun bindMediaSessionFactory(
-		factory: HiDriveMediaSessionFactory,
-	): MediaSessionFactory
-
-	@Binds
-	abstract fun bindMediaSessionHolder(
-		holder: HiDriveMediaSessionHolder,
-	): MediaSessionHolder
 
     @Binds
     @Singleton

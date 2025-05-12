@@ -9,7 +9,7 @@ import com.ionos.player.ui.IonosPlayerActivity
 import com.ionos.player.util.SystemVersion
 import javax.inject.Inject
 
-class HiDriveMediaSessionActivityFactory @Inject constructor(
+class DefaultMediaSessionActivityFactory @Inject constructor(
 	private val context: Context,
 	private val sourceInfoStore: SourceInfoStore,
     private val isVideoPredicate: IsVideoPredicate,

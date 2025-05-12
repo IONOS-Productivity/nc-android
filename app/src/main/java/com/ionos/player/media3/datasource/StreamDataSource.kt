@@ -10,7 +10,7 @@ import com.owncloud.android.lib.common.OwnCloudClient
 import java.io.IOException
 
 @UnstableApi
-internal class IonosDataSource(
+internal class StreamDataSource(
     private val oClient: OwnCloudClient,
     private val delegate: DataSource,
 ) : DataSource by delegate {

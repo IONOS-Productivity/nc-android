@@ -10,7 +10,6 @@ package com.ionos.player.media3
 import android.content.Context
 import androidx.media3.session.MediaController
 import com.annimon.stream.Optional
-import com.ionos.player.media3.common.MediaIdFactory
 import com.ionos.player.media3.common.MediaItemFactory
 import com.ionos.player.media3.controller.MediaControllerFactory
 import com.ionos.player.media3.controller.MediaControllerProvider
@@ -35,7 +34,6 @@ import javax.inject.Inject
 class PlaybackModel @Inject constructor(
 	private val context: Context,
 	private val mediaSessionHolder: MediaSessionHolder,
-	private val mediaIdFactory: MediaIdFactory,
 	private val mediaItemFactory: MediaItemFactory,
 	private val sourceInfoStore: SourceInfoStore,
 	private val playbackSettings: MultiplePlaybackSettings,
@@ -53,7 +51,7 @@ class PlaybackModel @Inject constructor(
 		state.ifPresent(compositeListener::onUpdate)
 	}
 
-	private val playerListener = PlayerListener(
+	private val playerListener = PlaybackModelPlayerListener(
 		checkProgressPeriodicAction,
 		this::onPlaybackUpdate,
 		this::onPlaybackError,
@@ -196,8 +194,7 @@ class PlaybackModel @Inject constructor(
 
 	override fun switchToSourceInfo(sourceInfo: PlayerFileInfo) {
 		controller?.run {
-			val mediaId = mediaIdFactory.create(sourceInfo)
-			val mediaItemIndex = indexOfFirst { it.mediaId == mediaId }
+			val mediaItemIndex = indexOfFirst { it.mediaId == sourceInfo.id }
 			if (mediaItemIndex >= 0 && mediaItemIndex != currentMediaItemIndex) {
 				seekToDefaultPosition(mediaItemIndex)
 				prepare()

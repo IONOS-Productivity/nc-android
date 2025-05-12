@@ -19,7 +19,7 @@ import androidx.media3.exoplayer.source.UnrecognizedInputFormatException
 import com.ionos.player.model.SourceException
 import com.ionos.player.util.PeriodicAction
 
-class PlayerListener(
+class PlaybackModelPlayerListener(
 	private val checkProgressPeriodicAction: PeriodicAction,
 	private val onPlaybackUpdate: () -> Unit,
 	private val onPlaybackError: (Throwable) -> Unit,

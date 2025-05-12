@@ -11,8 +11,8 @@ import com.google.common.util.concurrent.ListenableFuture
 import javax.inject.Inject
 
 @UnstableApi
-class HiDriveMediaSessionCallback @Inject constructor(
-	private val sessionHolder: HiDriveMediaSessionHolder,
+class MediaSessionCallback @Inject constructor(
+	private val sessionHolder: MediaSessionHolder,
 ) : MediaSession.Callback {
 
 	companion object {

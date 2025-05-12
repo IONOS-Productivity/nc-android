@@ -12,7 +12,7 @@ import androidx.media3.extractor.DefaultExtractorsFactory
 import javax.inject.Inject
 
 @UnstableApi
-class HiDriveMediaSourceFactory @Inject constructor(
+class MediaSourceFactory @Inject constructor(
     private val dataSourceFactory: DataSource.Factory,
 ) : MediaSource.Factory {
 

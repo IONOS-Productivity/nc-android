@@ -3,8 +3,8 @@ package com.ionos.player
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.datasource.DataSource
 import com.ionos.player.PlayerModule.Companion.PLAYER_CACHE_SIZE_QUALIFIER
-import com.ionos.player.media3.datasource.IonosDataSourceFactory
-import com.ionos.player.media3.session.HiDriveMediaSessionActivityFactory
+import com.ionos.player.media3.datasource.StreamDataSourceFactory
+import com.ionos.player.media3.session.DefaultMediaSessionActivityFactory
 import com.ionos.player.media3.session.MediaSessionActivityFactory
 import com.ionos.player.model.NCMultiplePlaybackSettings
 import com.ionos.player.model.PlayerMultiplePlaybackSettings
@@ -46,13 +46,13 @@ abstract class NCPlayerModule {
 
     @Binds
     abstract fun bindMediaSessionActivityFactory(
-        factory: HiDriveMediaSessionActivityFactory,
+        factory: DefaultMediaSessionActivityFactory,
     ): MediaSessionActivityFactory
 
     @Binds
     @UnstableApi
     abstract fun bindDataSourceFactory(
-        factory: IonosDataSourceFactory,
+        factory: StreamDataSourceFactory,
     ): DataSource.Factory
 
     @Binds

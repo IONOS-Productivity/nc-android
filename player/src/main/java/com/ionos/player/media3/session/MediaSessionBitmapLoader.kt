@@ -24,7 +24,7 @@ import java.util.concurrent.Callable
 import java.util.concurrent.Executors
 
 @UnstableApi
-class HiDriveMediaSessionBitmapLoader(
+class MediaSessionBitmapLoader(
 	private val context: Context,
 	private val sourceInfoStore: SourceInfoStore,
 	private val imageLoader: PlayerImageLoader,

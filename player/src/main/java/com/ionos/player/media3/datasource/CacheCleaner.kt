@@ -9,7 +9,7 @@ import com.ionos.player.model.PlayerFileInfo
 import javax.inject.Inject
 
 @UnstableApi
-class PlayerCacheCleaner @Inject constructor(
+class CacheCleaner @Inject constructor(
 	private val cache: Cache,
 ) {
 
