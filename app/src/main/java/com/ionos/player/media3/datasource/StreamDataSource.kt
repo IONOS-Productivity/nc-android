@@ -9,7 +9,6 @@ import com.owncloud.android.files.StreamMediaFileOperation
 import com.owncloud.android.lib.common.OwnCloudClient
 import java.io.IOException
 
-@UnstableApi
 internal class StreamDataSource(
     private val oClient: OwnCloudClient,
     private val delegate: DataSource,
@@ -17,6 +16,7 @@ internal class StreamDataSource(
 
     private var uri: Uri? = null
 
+    @UnstableApi
     override fun open(dataSpec: DataSpec): Long {
         val fileId = dataSpec.uri.getOCFileId() ?: throw IllegalArgumentException("Invalid URI: ${dataSpec.uri}")
         val sfo = StreamMediaFileOperation(fileId)
@@ -33,6 +33,7 @@ internal class StreamDataSource(
         } else throw IOException("Failed to retrieve streaming uri", result.exception)
     }
 
+    @UnstableApi
     override fun getUri(): Uri? {
         return uri
     }

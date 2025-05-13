@@ -32,12 +32,12 @@ class PlaybackService : MediaSessionService() {
 
 	private var bindingCount: Int = 0
 
-	@UnstableApi
 	override fun onCreate() {
 		super.onCreate()
         AndroidInjection.inject(this)
 	}
 
+    @UnstableApi
 	override fun onGetSession(controllerInfo: ControllerInfo): MediaSession? {
 		return mediaSessionHolder.get() ?: mediaSessionFactory
 			.create()

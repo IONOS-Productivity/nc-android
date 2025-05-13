@@ -8,12 +8,12 @@ import androidx.media3.datasource.cache.CacheKeyFactory
 import com.ionos.player.model.PlaybackFile
 import javax.inject.Inject
 
-@UnstableApi
 class CacheCleaner @Inject constructor(
-	private val cache: Cache,
+    @UnstableApi private val cache: Cache,
 ) {
 
 	@WorkerThread
+    @UnstableApi
 	fun clean(file: PlaybackFile) {
 		val dataSpec = DataSpec.Builder()
 			.setUri(file.uri)

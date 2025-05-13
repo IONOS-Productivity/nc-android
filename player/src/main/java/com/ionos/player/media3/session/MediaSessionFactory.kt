@@ -14,7 +14,6 @@ import com.ionos.player.model.file_store.PlaybackFileStore
 import com.ionos.player.model.predicate.IsVideoPredicate
 import javax.inject.Inject
 
-@UnstableApi
 class MediaSessionFactory @Inject constructor(
 	private val context: Context,
 	private val playerFactory: PlayerFactory,
@@ -24,6 +23,7 @@ class MediaSessionFactory @Inject constructor(
 	private val isVideoPredicate: IsVideoPredicate,
 ) {
 
+    @UnstableApi
 	fun create(): MediaSession {
 		return MediaSession
 			.Builder(context, playerFactory.create())
@@ -44,6 +44,7 @@ class MediaSessionFactory @Inject constructor(
 		)
 	}
 
+    @UnstableApi
 	private fun provideBitmapLoader(): BitmapLoader {
 		return MediaSessionBitmapLoader(
 			context,

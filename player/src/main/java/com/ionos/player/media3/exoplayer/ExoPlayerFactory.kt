@@ -17,12 +17,12 @@ import androidx.media3.exoplayer.trackselection.DefaultTrackSelector
 import com.ionos.player.media3.common.PlayerFactory
 import javax.inject.Inject
 
-@UnstableApi
 class ExoPlayerFactory @Inject constructor(
 	private val context: Context,
 	private val mediaSourceFactory: MediaSourceFactory,
 ) : PlayerFactory {
 
+    @UnstableApi
 	override fun create(): Player {
 		val renderersFactory = DefaultRenderersFactory(context)
 			.setExtensionRendererMode(DefaultRenderersFactory.EXTENSION_RENDERER_MODE_ON)

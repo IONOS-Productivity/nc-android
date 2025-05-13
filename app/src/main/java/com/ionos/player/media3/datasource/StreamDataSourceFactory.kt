@@ -11,13 +11,13 @@ import com.nextcloud.client.network.ClientFactory
 import com.owncloud.android.MainApp
 import javax.inject.Inject
 
-@UnstableApi
 class StreamDataSourceFactory @Inject constructor(
     private val clientFactory: ClientFactory,
     private val accountManager: UserAccountManager,
-    private val cache: Cache,
+    @UnstableApi private val cache: Cache,
 ) : DataSource.Factory {
 
+    @UnstableApi
     override fun createDataSource(): DataSource {
         val nextcloudClient = clientFactory.createNextcloudClient(accountManager.user)
         val ownCloudClient = clientFactory.create(accountManager.user)

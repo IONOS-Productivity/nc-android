@@ -1,7 +1,6 @@
 package com.ionos.player.media3.session
 
 import android.os.Bundle
-import androidx.media3.common.util.UnstableApi
 import androidx.media3.session.MediaSession
 import androidx.media3.session.MediaSession.ConnectionResult
 import androidx.media3.session.SessionCommand
@@ -10,7 +9,6 @@ import com.google.common.util.concurrent.Futures
 import com.google.common.util.concurrent.ListenableFuture
 import javax.inject.Inject
 
-@UnstableApi
 class MediaSessionCallback @Inject constructor(
 	private val sessionHolder: MediaSessionHolder,
 ) : MediaSession.Callback {

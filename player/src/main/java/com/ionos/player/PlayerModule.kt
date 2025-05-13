@@ -47,7 +47,6 @@ abstract class PlayerModule {
 		}
 	}
 
-	@UnstableApi
 	@Binds
 	@Singleton
 	abstract fun bindPlaybackModel(
@@ -61,7 +60,6 @@ abstract class PlayerModule {
 	): PlaybackFileStore
 
 	@Binds
-    @UnstableApi
     abstract fun bindPlayerFactory(
         playerFactory: ExoPlayerFactory,
     ): PlayerFactory

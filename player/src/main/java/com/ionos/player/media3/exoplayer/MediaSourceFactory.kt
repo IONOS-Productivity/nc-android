@@ -11,23 +11,26 @@ import androidx.media3.exoplayer.upstream.LoadErrorHandlingPolicy
 import androidx.media3.extractor.DefaultExtractorsFactory
 import javax.inject.Inject
 
-@UnstableApi
 class MediaSourceFactory @Inject constructor(
     private val dataSourceFactory: DataSource.Factory,
 ) : MediaSource.Factory {
 
+    @UnstableApi
 	override fun setDrmSessionManagerProvider(drmSessionManagerProvider: DrmSessionManagerProvider): MediaSource.Factory {
 		return this
 	}
 
+    @UnstableApi
 	override fun setLoadErrorHandlingPolicy(loadErrorHandlingPolicy: LoadErrorHandlingPolicy): MediaSource.Factory {
 		return this
 	}
 
+    @UnstableApi
 	override fun getSupportedTypes(): IntArray {
 		return intArrayOf(C.CONTENT_TYPE_OTHER)
 	}
 
+    @UnstableApi
 	override fun createMediaSource(mediaItem: MediaItem): MediaSource {
 		return ProgressiveMediaSource
 			.Factory(dataSourceFactory, DefaultExtractorsFactory())

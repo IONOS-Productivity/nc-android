@@ -1,6 +1,5 @@
 package com.ionos.player
 
-import androidx.media3.common.util.UnstableApi
 import androidx.media3.datasource.DataSource
 import com.ionos.player.media3.datasource.StreamDataSourceFactory
 import com.ionos.player.media3.session.DefaultMediaSessionActivityFactory
@@ -29,7 +28,6 @@ abstract class NCPlayerModule {
     ): MediaSessionActivityFactory
 
     @Binds
-    @UnstableApi
     abstract fun bindDataSourceFactory(
         factory: StreamDataSourceFactory,
     ): DataSource.Factory
