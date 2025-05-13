@@ -492,9 +492,11 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
 
     @SuppressFBWarnings("ANDROID_WEB_VIEW_JAVASCRIPT")
     @SuppressLint("SetJavaScriptEnabled")
+    @IonosCustomization("Set LoginWebViewContainer visibility")
     private void initWebViewLogin(String baseURL, boolean useGenericUserAgent) {
         viewThemeUtils.platform.colorCircularProgressBar(accountSetupWebviewBinding.loginWebviewProgressBar, ColorRole.ON_PRIMARY_CONTAINER);
         accountSetupWebviewBinding.loginWebview.setVisibility(View.GONE);
+        getLoginWebViewContainer().ifPresent(it -> it.setVisibility(View.GONE));
         new WebViewUtil(this).setProxyKKPlus(accountSetupWebviewBinding.loginWebview);
 
         accountSetupWebviewBinding.loginWebview.getSettings().setAllowFileAccess(false);
@@ -569,11 +571,13 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
             }
 
             @Override
+            @IonosCustomization("Set LoginWebViewContainer visibility")
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
 
                 accountSetupWebviewBinding.loginWebviewProgressBar.setVisibility(View.GONE);
                 accountSetupWebviewBinding.loginWebview.setVisibility(View.VISIBLE);
+                getLoginWebViewContainer().ifPresent(it -> it.setVisibility(View.VISIBLE));
 
                 if (mServerInfo.mVersion != null && mServerInfo.mVersion.isOlderThan(NextcloudVersion.nextcloud_25)) {
                     viewThemeUtils.platform.colorStatusBar(AuthenticatorActivity.this, primaryColor);
@@ -597,9 +601,11 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
             }
 
             @Override
+            @IonosCustomization("Set LoginWebViewContainer visibility")
             public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
                 accountSetupWebviewBinding.loginWebviewProgressBar.setVisibility(View.GONE);
                 accountSetupWebviewBinding.loginWebview.setVisibility(View.VISIBLE);
+                getLoginWebViewContainer().ifPresent(it -> it.setVisibility(View.VISIBLE));
 
                 InputStream resources = getResources().openRawResource(R.raw.custom_error);
                 String customError = DisplayUtils.getData(resources);
@@ -1309,6 +1315,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
      * @param result Result of the operation.
      */
     @Override
+    @IonosCustomization("Set LoginWebViewContainer visibility")
     public void onAuthenticatorTaskCallback(RemoteOperationResult<UserInfo> result) {
         mWaitingForOpId = Long.MAX_VALUE;
         dismissWaitingDialog();
@@ -1345,6 +1352,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
                 // init webView again
                 if (accountSetupWebviewBinding != null) {
                     accountSetupWebviewBinding.loginWebview.setVisibility(View.GONE);
+                    getLoginWebViewContainer().ifPresent(it -> it.setVisibility(View.GONE));
                 }
                 accountSetupBinding = AccountSetupBinding.inflate(getLayoutInflater());
                 setContentView(accountSetupBinding.getRoot());
@@ -1799,5 +1807,14 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
     @Override
     public void onFailedSavingCertificate() {
         DisplayUtils.showSnackMessage(this, R.string.ssl_validator_not_saved);
+    }
+
+    @IonosCustomization("LoginWebViewContainer for consuming window insets")
+    private Optional<View> getLoginWebViewContainer() {
+        int containerId = getResources().getIdentifier("login_webview_container", "id", getPackageName());
+        if (containerId != 0) {
+            return Optional.ofNullable(findViewById(containerId));
+        }
+        return Optional.empty();
     }
 }
