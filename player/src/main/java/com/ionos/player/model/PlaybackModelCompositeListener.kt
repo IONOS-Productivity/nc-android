@@ -16,14 +16,20 @@ class PlaybackModelCompositeListener : PlaybackModel.Listener {
     }
 
     override fun onUpdate(state: PlaybackState) {
-        listeners.forEach { it.onUpdate(state) }
+        for (i in 0 until listeners.size) {
+            listeners[i].onUpdate(state)
+        }
     }
 
     override fun onError(error: Throwable) {
-        listeners.forEach { it.onError(error) }
+        for (i in 0 until listeners.size) {
+            listeners[i].onError(error)
+        }
     }
 
     override fun onFilesChanged(originalFiles: List<PlaybackFile>, currentFiles: List<PlaybackFile>) {
-        listeners.forEach { it.onFilesChanged(originalFiles, currentFiles) }
+        for (i in 0 until listeners.size) {
+            listeners[i].onFilesChanged(originalFiles, currentFiles)
+        }
     }
 }

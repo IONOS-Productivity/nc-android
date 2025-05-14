@@ -13,9 +13,9 @@ class ThumbnailLoaderImpl @Inject constructor(
     userAccountManager: UserAccountManager,
     clientFactory: ClientFactory,
 ) : ThumbnailLoader {
-    private val user = userAccountManager.user
-    private val modelLoader = CustomGlideStreamLoader(user, clientFactory)
-    private val getThumbnailUrl = clientFactory.create(user).baseUri.toString() + "/index.php/core/preview"
+    private val user by lazy { userAccountManager.user }
+    private val modelLoader by lazy { CustomGlideStreamLoader(user, clientFactory) }
+    private val getThumbnailUrl by lazy { clientFactory.create(user).baseUri.toString() + "/index.php/core/preview" }
 
     override fun load(
         context: Context,
