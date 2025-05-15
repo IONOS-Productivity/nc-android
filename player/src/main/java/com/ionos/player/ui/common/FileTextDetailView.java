@@ -66,13 +66,20 @@ public class FileTextDetailView extends LinearLayout {
 	}
 
 	private String createSubtitleText(PlaybackFile file) {
-		return new StringBuilder()
-			.append(Formatter.formatFileSize(getContext(), file.getContentLength()))
-			.append(", ")
-			.append(getResources().getString(R.string.player_last_change_date))
-			.append(" ")
-			.append(DateFormat.getDateFormat(getContext()).format(new Date(file.getLastModified())))
-			.toString();
+		StringBuilder stringBuilder = new StringBuilder();
+		if (file.getContentLength() > 0) {
+			stringBuilder.append(Formatter.formatFileSize(getContext(), file.getContentLength()));
+		}
+		if (file.getLastModified() > 0) {
+			if (stringBuilder.length() > 0) {
+				stringBuilder.append(", ");
+			}
+			stringBuilder
+					.append(getResources().getString(R.string.player_last_change_date))
+					.append(" ")
+					.append(DateFormat.getDateFormat(getContext()).format(new Date(file.getLastModified())));
+		}
+		return stringBuilder.toString();
 	}
 
 }

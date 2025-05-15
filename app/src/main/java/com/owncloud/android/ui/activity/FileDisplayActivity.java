@@ -48,9 +48,7 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 import com.ionos.annotation.IonosCustomization;
-import com.ionos.player.model.OpenFileConfig;
-import com.ionos.player.ui.MediaPlayerResultContract;
-import com.ionos.player.ui.StartBuiltInMediaPlayerFactory;
+import com.ionos.player.model.PlayerLauncher;
 import com.nextcloud.appReview.InAppReviewHelper;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.appinfo.AppInfo;
@@ -154,21 +152,17 @@ import java.util.Optional;
 
 import javax.inject.Inject;
 
-import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SearchView;
-import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.disposables.Disposables;
 import kotlin.Unit;
 
 import static com.owncloud.android.datamodel.OCFile.PATH_SEPARATOR;
@@ -260,15 +254,7 @@ public class FileDisplayActivity extends FileActivity
     @Inject SyncedFolderProvider syncedFolderProvider;
 
     @IonosCustomization
-    @Inject StartBuiltInMediaPlayerFactory startBuiltInMediaPlayerFactory;
-    @IonosCustomization
-    private Disposable playerLauncherDisposable = Disposables.disposed();
-    @IonosCustomization
-    private ActivityResultLauncher<MediaPlayerResultContract.Input> mediaPlayerLauncher =
-        registerForActivityResult(
-            new MediaPlayerResultContract(),
-            this::currentFileChanged
-        );
+    @Inject PlayerLauncher playerLauncher;
 
     public static Intent openFileIntent(Context context, User user, OCFile file) {
         final Intent intent = new Intent(context, PreviewImageActivity.class);
@@ -2148,22 +2134,9 @@ public class FileDisplayActivity extends FileActivity
 
     @IonosCustomization("Launch of custom player")
     private void startMediaActivity(OCFile file, long startPlaybackPosition, boolean autoplay, Optional<User> user) {
-        playerLauncherDisposable.dispose();
-
-        playerLauncherDisposable =
-            startBuiltInMediaPlayerFactory
-                .create(
-                    new OpenFileConfig(
-                        file
-                    ),
-                    ActivityOptionsCompat.makeBasic(),
-                    mediaPlayerLauncher
-                )
-                .invoke()
-                .subscribe(
-                    () -> {},
-                    t -> {}
-                );
+        OCFileListFragment listOfFiles = getListOfFilesFragment();
+        SearchType searchType = listOfFiles != null ? listOfFiles.getCurrentSearchType() : null;
+        playerLauncher.launch(this, file, searchType);
     }
 
     @IonosCustomization

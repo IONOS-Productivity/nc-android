@@ -29,6 +29,9 @@ import com.ionos.player.model.strategy.release.PlaybackReleaseStrategy
 import com.ionos.player.util.PeriodicAction
 import java.util.Optional
 import javax.inject.Inject
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
 class PlaybackModelImpl @Inject constructor(
 	private val context: Context,
@@ -74,14 +77,14 @@ class PlaybackModelImpl @Inject constructor(
         return stateFactory.create(controller)
     }
 
-    override fun start(onSuccess: () -> Unit, onError: (Throwable) -> Unit) {
+    override suspend fun start() = suspendCoroutine { continuation ->
 		if (controllerProvider.isInitialized) {
-			onSuccess()
+			continuation.resume(Unit)
 
 		} else if (controllerProvider.isInitializing) {
 			controllerProvider.addInitializeListener { result ->
-				result.onSuccess { onSuccess() }
-				result.onFailure { onError(it) }
+				result.onSuccess { continuation.resume(Unit) }
+				result.onFailure { continuation.resumeWithException(it) }
 			}
 
 		} else {
@@ -90,9 +93,9 @@ class PlaybackModelImpl @Inject constructor(
 					it.addListener(playerListener)
 					it.setRepeatMode(playbackSettings.repeatMode)
 					it.shuffleModeEnabled = playbackSettings.isShuffle
-					onSuccess()
+					continuation.resume(Unit)
 				}
-				result.onFailure { onError(it) }
+				result.onFailure { continuation.resumeWithException(it) }
 			}
 		}
 	}

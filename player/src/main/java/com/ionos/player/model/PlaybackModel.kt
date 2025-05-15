@@ -8,7 +8,7 @@ interface PlaybackModel {
 
     val state: Optional<PlaybackState>
 
-    fun start(onSuccess: () -> Unit, onError: (Throwable) -> Unit)
+    suspend fun start()
 
     fun setFiles(files: List<PlaybackFile>)
 
