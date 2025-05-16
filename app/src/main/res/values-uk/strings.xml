@@ -29,7 +29,7 @@
     <string name="activity_chooser_title">Надіслати посилання до…</string>
     <string name="activity_icon">Ваші дії</string>
     <string name="add_new_public_share">Додати нове публічне посилання</string>
-    <string name="add_new_secure_file_drop">Додайте новий захищений файл</string>
+    <string name="add_new_secure_file_drop">Додати новий захищений файл</string>
     <string name="add_to_cloud">Додати до хмари %1$s</string>
     <string name="advanced_settings">Розширені</string>
     <string name="allow_resharing">Дозволяти передавати у спільний доступ іншим</string>
@@ -110,7 +110,7 @@
     <string name="autoupload_disable_power_save_check">Вимкнути перевірку режиму енергозаощадження</string>
     <string name="autoupload_hide_folder">Приховати каталог</string>
     <string name="avatar">Світлина</string>
-    <string name="away">Піти</string>
+    <string name="away">Відсутній(-я)</string>
     <string name="backup_settings">Налаштування резервного збереження</string>
     <string name="backup_title">Резервна копія контактів та календаря</string>
     <string name="battery_optimization_close">Закрити</string>
@@ -133,7 +133,7 @@
     <string name="choose_which_file">Виберіть, який файл зберегти!</string>
     <string name="choose_widget">Виберіть віджет</string>
     <string name="clear_notifications_failed">Неможливо очистити сповіщення.</string>
-    <string name="clear_status_message">Очистити повідомлення про стан</string>
+    <string name="clear_status_message">Прибрати статус</string>
     <string name="clear_status_message_after">Очистити повідомлення про стан після</string>
     <string name="click_to_learn_how_to_re_enable_auto_uploads">Потрібна ручна дія для повторного увімкнення автоматичного завантаження.</string>
     <string name="clipboard_label">Текст скопійовано з %1$s</string>
@@ -203,6 +203,7 @@
     <string name="contacts_backup_button">Створити зараз резервну копію</string>
     <string name="contacts_preferences_backup_scheduled">Резервне копіювання додано до розкладу й невдовзі розпочнеться</string>
     <string name="contacts_preferences_import_scheduled">Імпортування додано до розкладу й невдовзі розпочнеться</string>
+    <string name="contacts_preferences_import_scheduled_fail">Не вдалося здійснити імпорт. Спробуйте ще раз</string>
     <string name="contacts_preferences_no_file_found">Файл не знайдено</string>
     <string name="contacts_preferences_something_strange_happened">Неможливо знайти вашу останню резервну копію</string>
     <string name="copied_to_clipboard">Скопійовано</string>
@@ -253,7 +254,7 @@
     <string name="document_scan_pdf_generation_failed">Не вдалося зґенерувати PDF</string>
     <string name="document_scan_pdf_generation_in_progress">Створення PDF...</string>
     <string name="done">Готово</string>
-    <string name="dontClear">Не очистувати</string>
+    <string name="dontClear">Не очищати</string>
     <string name="download_cannot_create_file">Неможливо створити файл на пристрої</string>
     <string name="download_download_invalid_local_file_name">Недійсна назва локального файлу</string>
     <string name="download_latest_dev_version">Отримати останню версію для розробників</string>
@@ -516,7 +517,7 @@
     <string name="link_name">Назва посилання</string>
     <string name="link_share_allow_upload_and_editing">Може завантажувати та редагувати</string>
     <string name="link_share_editing">Редагування</string>
-    <string name="link_share_file_drop">Сховище (тільки завантажування)</string>
+    <string name="link_share_file_drop">Додати файл (тільки завантажування)</string>
     <string name="link_share_view_only">Лише перегляд</string>
     <string name="list_layout">Шаблон списку</string>
     <string name="load_more_results">Завантажити більше результатів</string>
@@ -665,7 +666,6 @@
     <string name="prefs_add_account">Додати обліковий запис</string>
     <string name="prefs_calendar_contacts">Синхронізувати календар та контакти</string>
     <string name="prefs_calendar_contacts_no_store_error">Не встановлено ані F-Droid, ані Google Play</string>
-    <string name="prefs_calendar_contacts_summary">Встановити DAVx5 (раніше відомий як DAVdroid) (v1.3.0+) для цього облікового запису</string>
     <string name="prefs_calendar_contacts_sync_setup_successful">Налаштування синхронізації календаря та контактів</string>
     <string name="prefs_category_about">Про застосунок</string>
     <string name="prefs_category_details">Деталі</string>
@@ -677,7 +677,6 @@
     <string name="prefs_daily_contact_backup_summary">Щоденне резервне копіювання ваших контактів</string>
     <string name="prefs_data_storage_location">Місце збереження даних</string>
     <string name="prefs_data_storage_location_summary">Керувати місцем збереження даних</string>
-    <string name="prefs_davx5_setup_error">Неочікувана помилка під час налаштування DAVx5 (раніше відомого як DAVdroid)</string>
     <string name="prefs_e2e_active">Наскрізне шифрування налаштовано!</string>
     <string name="prefs_e2e_mnemonic">Мнемоніка E2E</string>
     <string name="prefs_e2e_no_device_credentials">Щоб показати мнемоніку, будь ласка, активуйте дані авторизації пристрою</string>
@@ -782,7 +781,6 @@
     <string name="screenshot_05_autoUpload_heading">Автоматичне завантаження</string>
     <string name="screenshot_05_autoUpload_subline">для ваших світлин та відеозаписів</string>
     <string name="screenshot_06_davdroid_heading">Календар та контакти</string>
-    <string name="screenshot_06_davdroid_subline">Синхронізувати з DAVx5</string>
     <string name="search_error">Помилка під час отримання результатів</string>
     <string name="secure_share_not_set_up">Безпечну передачу у спільний доступ не налаштовано для цього користувача</string>
     <string name="secure_share_search">Безпечний спільний доступ...</string>
@@ -797,7 +795,7 @@
     <string name="set_note">Додати примітку</string>
     <string name="set_picture_as">Використати як</string>
     <string name="set_status">Встановити статус</string>
-    <string name="set_status_message">Встановити повідомлення про стан</string>
+    <string name="set_status_message">Оновити статус</string>
     <string name="setup_e2e">Під час налаштування наскрізного шифрування ви отримаєте парольну фразу з 12 слів, за допомогою якої ви зможете відкривати ваші файлі на інших пристроях. Її буде збережено лише на цьому пристрої та буде показано знову на цьому екрані. Будь ласка, занотуйте цю фразу та збережіть у безпеченому місці!</string>
     <string name="share">Спільний доступ</string>
     <string name="share_copy_link">Поділитися та копіювати посилання</string>
@@ -823,9 +821,9 @@
     <string name="share_no_password_title">Встановити пароль</string>
     <string name="share_not_allowed_when_file_drop">Повторну передачу у спільний доступ не дозволено під час безпечної передачі файлів</string>
     <string name="share_password_title">Захищено паролем</string>
-    <string name="share_permission_can_edit">Можна редагувати</string>
+    <string name="share_permission_can_edit">Може редагувати</string>
     <string name="share_permission_file_drop">Додати файл</string>
-    <string name="share_permission_secure_file_drop">Безпечне додавання файлу</string>
+    <string name="share_permission_secure_file_drop">Захищене додавання файлу</string>
     <string name="share_permission_view_only">Лише перегляд</string>
     <string name="share_permissions">Права доступу на спільний ресурс</string>
     <string name="share_remote_clarification">%1$s (віддалено)</string>
@@ -893,7 +891,6 @@
     <string name="storage_permission_full_access">Повний доступ</string>
     <string name="storage_permission_media_read_only">Мультимедія лише для читання</string>
     <string name="storage_pictures">Зображення</string>
-    <string name="store_full_desc">Власна платформа продуктивності, яка дозволяє вам контролювати.\n\nФункції:\n* Простий, сучасний інтерфейс, який підходить до теми вашого сервера\n* Завантажуйте файли на свій сервер Nextcloud\n* Поділіться ними з іншими\n * Синхронізуйте улюблені файли та папки\n* Шукайте в усіх папках на сервері\n* Автоматичне завантаження фотографій і відео, знятих вашим пристроєм\n* Будьте в курсі подій за допомогою сповіщення\n* Підтримка кількох облікових записів\n* Безпечний доступ до ваших даних за допомогою відбитків пальців або PIN-коду\n* Інтеграція з DAVx5 (раніше відомий як DAVdroid) для легкого налаштування календаря та синхронізації контактів\n\nБудь ласка, повідомляйте про всі проблеми на https: //github.com/nextcloud/android/issues і обговорити цю програму за адресою https://help.nextcloud.com/c/clients/android\n\nВперше користуєтеся Nextcloud? Nextcloud — це приватний сервер для синхронізації та обміну файлами та спілкування. Це безкоштовне програмне забезпечення, і ви можете розмістити його самостійно або заплатити компанії, яка зробить це за вас. Таким чином ви керуєте своїми фотографіями, календарем і контактними даними, документами та всім іншим.\n\nПерегляньте Nextcloud на https://nextcloud.com</string>
     <string name="store_full_dev_desc">Самостійна платформа продуктивності, яка тримає вас під контролем.\nЦе офіційна версія для розробки, що містить щоденний зразок будь-якої нової неперевіреної функціональності, яка може спричинити нестабільність та втрату даних. Застосунок призначено для користувачів, які бажають протестувати, і повідомляти про помилки у разі їх виникнення. Не використовуйте його для своєї продуктивної роботи!\n\ nОфіційна розробка та звичайна версія доступні на F-droid і можуть бути встановлені одночасно.</string>
     <string name="store_short_desc">Платформа з власним хостингом, яка надає можливість контролювати ваші ресурси</string>
     <string name="store_short_dev_desc">Платформа з власним хостингом, яка надає можливість контролювати ваші ресурси (версія для попереднього ознайомлення)</string>
@@ -1033,7 +1030,7 @@
     <string name="uploader_info_dirname">Назва каталогу</string>
     <string name="uploader_local_files_uploaded">Повторно після помилки завантажити файли, що на пристрої</string>
     <string name="uploader_top_message">Оберіть каталог для завантаження</string>
-    <string name="uploader_upload_failed_content_single">Неможливо завантажити %1$s</string>
+    <string name="uploader_upload_failed_content_single">Не вдалося завантажити %1$s</string>
     <string name="uploader_upload_failed_credentials_error">Помилка під час завантаження, увійдіть ще раз</string>
     <string name="uploader_upload_failed_sync_conflict_error">Конфлікт під час завантаження файлу</string>
     <string name="uploader_upload_failed_sync_conflict_error_content">Виберіть, яку з версій %1$s зберегти</string>
@@ -1112,24 +1109,6 @@
         <item quantity="few">%d хвилини</item>
         <item quantity="many">%d хвилин</item>
         <item quantity="other">%d хвилин</item>
-    </plurals>
-    <plurals name="time_seconds_ago">
-        <item quantity="one">1 секунду тому</item>
-        <item quantity="few">%d секунди тому</item>
-        <item quantity="many">%d секунд тому</item>
-        <item quantity="other">%d секунд тому</item>
-    </plurals>
-    <plurals name="time_minutes_ago">
-        <item quantity="one">1 хвилину тому</item>
-        <item quantity="few">%d хвилини тому</item>
-        <item quantity="many">%d хвилин тому</item>
-        <item quantity="other">%d хвилин тому</item>
-    </plurals>
-    <plurals name="time_hours_ago">
-        <item quantity="one">1 годину тому</item>
-        <item quantity="few">%d години тому</item>
-        <item quantity="many">%d годин тому</item>
-        <item quantity="other">%d годин тому</item>
     </plurals>
     <plurals name="sync_fail_in_favourites_content">
         <item quantity="one">Не вдалося синхронізувати %1$d файл (конфлікти: %2$d)</item>

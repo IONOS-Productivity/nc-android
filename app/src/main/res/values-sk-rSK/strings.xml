@@ -46,6 +46,7 @@
     <string name="app_widget_description">Zobrazí jeden widget z hlavného panela</string>
     <string name="appbar_search_in">Hľadať v %s</string>
     <string name="assistant_screen_add_task_alert_dialog_title">Pridať novú úlohu</string>
+    <string name="assistant_screen_create_a_new_task_from_bottom_right_text">Vytvorte novú úlohu vpravo dole</string>
     <string name="assistant_screen_create_task_alert_dialog_input_field_placeholder">Napíšte nejaký text</string>
     <string name="assistant_screen_delete_task_alert_dialog_description">Naozaj chcete vymazať túto úlohu?</string>
     <string name="assistant_screen_delete_task_alert_dialog_title">Odstrániť úlohu</string>
@@ -55,6 +56,7 @@
     <string name="assistant_screen_task_create_success_message">Úloha bola úspešne vytvorená</string>
     <string name="assistant_screen_task_delete_fail_message">Pri odstraňovaní úlohy nastala chyba</string>
     <string name="assistant_screen_task_delete_success_message">Úloha bola úspešne odstránená</string>
+    <string name="assistant_screen_task_list_empty_message">Zoznam úloh je prázdny.</string>
     <string name="assistant_screen_task_list_error_state_message">Nie je možné načítať zoznam úloh, skontrolujte svoje internetové pripojenie.</string>
     <string name="assistant_screen_task_more_actions_bottom_sheet_delete_action">Vymazať Úlohu</string>
     <string name="assistant_screen_task_output_empty_text">Výstup úlohy ešte nie je dostupný.</string>
@@ -101,6 +103,7 @@
     <string name="auto_upload_gplay_desc2">Z dôvodu nových obmedzení uložených spoločnosťou Google sme boli nútení odstrániť dôležité práva. Výsledkom je, že automatické nahrávanie bude môcť nahrať iba súbory obrázkov a videí.\nOkrem toho sa vyžadujú nové práva pre prístup k informáciám o polohe pre odovzdané obrázky.\nUistite sa, že prístup k médiám je nastavený na „Vždy povoliť všetky“.</string>
     <string name="auto_upload_on_wifi">Nahrávaj iba na neobmedzenom Wi-Fi</string>
     <string name="auto_upload_path">/AutomatickéNahrávanie</string>
+    <string name="auto_upload_sub_folder_warning">Tento adresár je už zahrnutý v synchronizácii nadradeného adresára, čo môže spôsobiť duplicitné nahrávania</string>
     <string name="autoupload_configure">Nastaviť</string>
     <string name="autoupload_create_new_custom_folder">Nastavenie vytvorenia vlastného priečinku</string>
     <string name="autoupload_custom_folder">Nastaviť vlastný priečinok</string>
@@ -200,6 +203,7 @@
     <string name="contacts_backup_button">Zálohuj teraz</string>
     <string name="contacts_preferences_backup_scheduled">Zálohovanie je naplánované a čoskoro sa začne</string>
     <string name="contacts_preferences_import_scheduled">Importovanie je naplánované a čoskoro sa začne</string>
+    <string name="contacts_preferences_import_scheduled_fail">Spustenie mportu zlyhalo. Prosím skúste to znova</string>
     <string name="contacts_preferences_no_file_found">Nenašiel sa žiadny súbor</string>
     <string name="contacts_preferences_something_strange_happened">Nenašla sa posledná záloha!</string>
     <string name="copied_to_clipboard">Skopírované do schránky</string>
@@ -665,7 +669,6 @@
     <string name="prefs_add_account">Pridať účet</string>
     <string name="prefs_calendar_contacts">Synchronizácia kalendára a kontaktov</string>
     <string name="prefs_calendar_contacts_no_store_error">F-Droid ani Google Play nie sú nainštalované</string>
-    <string name="prefs_calendar_contacts_summary">Nastaviť DAVx5 (predtým známy ako DAVdroid) (v1.3.0+) pre tento účet</string>
     <string name="prefs_calendar_contacts_sync_setup_successful">Synchronizácia kalendára a kontaktov úspešne dokončená</string>
     <string name="prefs_category_about">O aplikácii</string>
     <string name="prefs_category_details">Podrobnosti</string>
@@ -677,7 +680,6 @@
     <string name="prefs_daily_contact_backup_summary">Denná záloha vašich kontaktov</string>
     <string name="prefs_data_storage_location">Umiestnenie úložiska údajov</string>
     <string name="prefs_data_storage_location_summary">Spravovať umiestnenie úložiska údajov</string>
-    <string name="prefs_davx5_setup_error">Neočakávaná chyba pri nastavovaní DAVx5 (predtým známy ako DAVdroid)</string>
     <string name="prefs_e2e_active">Koncové šifrovanie je nastavené!</string>
     <string name="prefs_e2e_mnemonic">E2E mnemotechnické</string>
     <string name="prefs_e2e_no_device_credentials">Pre zobrazenie mnemotechnické, zapnite prihlasovacie údaje zariadenia.</string>
@@ -782,7 +784,6 @@
     <string name="screenshot_05_autoUpload_heading">Automatické nahrávanie</string>
     <string name="screenshot_05_autoUpload_subline">vašich fotiek a videí</string>
     <string name="screenshot_06_davdroid_heading">Kalendár a Kontakty</string>
-    <string name="screenshot_06_davdroid_subline">Synchronizácia s DAVx5</string>
     <string name="search_error">Chyba pri získavaní výsledkov vyhľadávania</string>
     <string name="secure_share_not_set_up">Zabezpečené zdieľanie nie je nastavené pre tohto užívateľa.</string>
     <string name="secure_share_search">Bezpečné zdieľanie…</string>
@@ -893,7 +894,6 @@
     <string name="storage_permission_full_access">Plný prístup</string>
     <string name="storage_permission_media_read_only">Médiá iba načítanie</string>
     <string name="storage_pictures">Obrázky</string>
-    <string name="store_full_desc">Platforma, ktorú môžete bežať na vlastnom serveri, ktorú môžete mať kompletne pod kontrolou.\n\nFunkcie:\n * Jednoducho použiteľné moderné rozhranie, hodiace sa k vzhľadu vášho servera* \n Nahrávanie súborov na Nextcloud server\n * Ich sprístupnenie s inými ľudmi\n * Synchronizácia vašich obľúbených súborov a adresárov\n * Vyhľadávanie naprieč všetkými adresármi na serveri\n * Automatické nahrávanie fotiek a videí nasnímaných vašim zariadením\n * Doručovanie notifikácií\n * Podpora viac účtov naraz\n * Zabezpečený prístup k vašim dátam pomocou odtlačku prstu alebo kódom PIN\n * Začlenenie DAVx5 (predtým známy ako DAVdroid) pre jednoduchý prístup ku kalendáru &amp; synchronizácii kontaktov\n\n Akékoľvek problémy prosím hláste na https://github.com/nextcloud/android/issues a o aplikácii môžete diskutovať na https://help.nextcloud.com/c/clients/android\n\n Nepoznáte ešte Nextcloud? Nextcloud je server pre súkromnú synchronizáciu súborov &amp;, zdieľanie a komunikáciu. Je to slobodný softvér a môžete si ho prevádzkovať buď sami alebo si ho prenajímať od nejakej spoločnosti. Týmto spôsobom získate plnú vládu nad svojimi fotkami, údajom v kalendári a kontaktoch, dokumentom a všetkým ostatným.\n\n Viac zistíte na https://nextcloud.com</string>
     <string name="store_full_dev_desc">Platforma, ktorú môžete bežať na vlastnom serveri, ktorú môžete mať kompletne pod kontrolou.\nToto je oficiálna vývojová verzia, obsahujúca dennú vzorku všetkých nových a nevyskúšaných funkcií, ktoré môžu spôsobovať nestabilitu a viesť ku strate dát. Aplikácia v tomto štádiu vývoja je určená tým používateľom, ktorí sú ochotní skúšať a hlásiť chyby, ktoré sa vyskytnú. Nepoužívajte ju pre svoju produkčnú prácu.\n\nObe oficiálne verzie, tak vývojová ako aj produkčná sú k dispozícii na F-droid a je možné ich mať nainštalované súbežne.</string>
     <string name="store_short_desc">Platforma, ktorú môžete bežať na vlastnom serveri, ktorú môžete mať kompletne pod kontrolou.</string>
     <string name="store_short_dev_desc">Platforma, ktorú môžete bežať na vlastnom serveri, ktorú môžete mať kompletne pod kontrolou (vývojová verzia)</string>
@@ -910,8 +910,10 @@
     <string name="subtitle_videos_only">Iba videá</string>
     <string name="suggest">Navrhnúť</string>
     <string name="sync">Synchronizovať</string>
+    <string name="sync_anyway">Aj napriek tomu synchronizovať</string>
     <string name="sync_conflicts_in_favourites_ticker">Objavené konflikty</string>
     <string name="sync_current_folder_was_removed">Adresár %1$s už neexistuje</string>
+    <string name="sync_duplication">Synchronizovať duplikáty</string>
     <string name="sync_fail_content">Nepodarilo sa synchronizovať %1$s</string>
     <string name="sync_fail_content_unauthorized">Chybné heslo pre %1$s</string>
     <string name="sync_fail_in_favourites_ticker">Automatická synchronizácia súborov zlyhala</string>
@@ -928,6 +930,7 @@
     <string name="sync_not_enough_space_dialog_title">Nedostatok miesta</string>
     <string name="sync_status_button">Tlačidlo stavu synchronizácie</string>
     <string name="sync_string_files">Súbory</string>
+    <string name="sync_warning_button">Tlačidlo upozornenia na synchronizáciu</string>
     <string name="synced_folder_settings_button">Tlačidlo nastavenia</string>
     <string name="synced_folders_configure_folders">Nastavenie priečinkov</string>
     <string name="synced_folders_new_info">Okamžité nahrávanie bolo kompletne prepracované.  Zmente si nastavenie automatického nahrávania cez hlavné menu.\n\nUžite si nové a rozšírene možnosti automatického nahrávania.</string>
@@ -1111,19 +1114,19 @@
         <item quantity="other">%d minút</item>
     </plurals>
     <plurals name="time_seconds_ago">
-        <item quantity="one">pred 1 sekundou</item>
+        <item quantity="one">pred %d sekundou</item>
         <item quantity="few">pred %d sekundami</item>
         <item quantity="many">pred %d sekundami</item>
         <item quantity="other">pred %d sekundami</item>
     </plurals>
     <plurals name="time_minutes_ago">
-        <item quantity="one">pred 1 minútou</item>
+        <item quantity="one">pred %d minútou</item>
         <item quantity="few">pred %d minútami</item>
         <item quantity="many">pred %d minútami</item>
         <item quantity="other">pred %d minútami</item>
     </plurals>
     <plurals name="time_hours_ago">
-        <item quantity="one">pred 1 hodinou</item>
+        <item quantity="one">pred %d hodinou</item>
         <item quantity="few">pred %d hodinami</item>
         <item quantity="many">pred %d hodinami</item>
         <item quantity="other">pred %d hodinami</item>

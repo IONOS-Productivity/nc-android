@@ -48,11 +48,13 @@
     <string name="assistant_screen_create_task_alert_dialog_input_field_placeholder">Наберите какой-то текст</string>
     <string name="assistant_screen_delete_task_alert_dialog_description">Вы уверены, что хотите удалить эту задачу?</string>
     <string name="assistant_screen_delete_task_alert_dialog_title">Удалить задачу</string>
+    <string name="assistant_screen_loading">Загрузить список задач…</string>
     <string name="assistant_screen_no_task_available_text">Нет доступной задачи для типа задачи %s, вы можете создать новую задачу в правом нижнем углу.</string>
     <string name="assistant_screen_task_create_fail_message">Произошла ошибка при создании задачи</string>
     <string name="assistant_screen_task_create_success_message">Задача успешно создана</string>
     <string name="assistant_screen_task_delete_fail_message">Произошла ошибка во время удаления задачи</string>
     <string name="assistant_screen_task_delete_success_message">Задача удалена</string>
+    <string name="assistant_screen_task_list_empty_message">Сптсок задач пуст.</string>
     <string name="assistant_screen_task_list_error_state_message">Не удается получить список задач, проверьте ваше подключение к Интернету.</string>
     <string name="assistant_screen_task_more_actions_bottom_sheet_delete_action">Удалить задачу</string>
     <string name="assistant_screen_task_output_empty_text">Вывод задания еще не готов.</string>
@@ -185,6 +187,7 @@
     <string name="confirmation_remove_folders_alert">Действительно удалить выбранные объекты и их содержимое?</string>
     <string name="confirmation_remove_local">Только локально</string>
     <string name="conflict_dialog_error">Не удается создать диалоговое окно разрешения конфликтов</string>
+    <string name="conflict_folder_headline">Конфликт папок</string>
     <string name="conflict_local_file">Локальный файл</string>
     <string name="conflict_message_description">Если вы выберете обе версии, локальный файл будет иметь номер, добавленный к его имени.</string>
     <string name="conflict_message_description_for_folder">Если вы выберете обе версии, к названию локальной папки будет добавлен номер.</string>
@@ -350,6 +353,7 @@
     <string name="etm_background_jobs_stop_test_job">Остановить задачу тестирования</string>
     <string name="etm_migrations">Перенос (обновление приложения)</string>
     <string name="etm_preferences">Настройки</string>
+    <string name="etm_title">Инженерный режим</string>
     <string name="etm_transfer">Передача файла</string>
     <string name="etm_transfer_enqueue_test_download">Добавить вперёд очереди для тестового скачивания</string>
     <string name="etm_transfer_enqueue_test_upload">Добавить вперёд очереди для тестовой загрузки</string>
@@ -357,6 +361,7 @@
     <string name="etm_transfer_type">Передача</string>
     <string name="etm_transfer_type_download">Скачать</string>
     <string name="etm_transfer_type_upload">Отправить</string>
+    <string name="external_shares">Внешние ссылки</string>
     <string name="fab_label">Добавить или выгрузить</string>
     <string name="failed_to_download">Не удалось передать файл в диспетчер загрузок</string>
     <string name="failed_to_print">Ошибка печати файла</string>
@@ -497,6 +502,7 @@
     <string name="instant_upload_existing">Также загрузить существующие файлы</string>
     <string name="instant_upload_on_charging">Только во время зарядки</string>
     <string name="instant_upload_path">/Автозагрузка</string>
+    <string name="internal_shares">Внутренние ссылки</string>
     <string name="internal_two_way_sync">Внутренняя двусторонняя синхронизация</string>
     <string name="internal_two_way_sync_not_yet">Пока нет, но скоро будет синхронизирован</string>
     <string name="internet_connection_required_for_encrypted_folder_setup">Для настройки зашифрованной папки требуется подключение к Интернету</string>
@@ -569,6 +575,7 @@
     <string name="new_media_folder_detected">Обнаружена новая папка с фото или видеофайлами: «%1$s».</string>
     <string name="new_media_folder_photos">фото</string>
     <string name="new_media_folder_videos">видео</string>
+    <string name="new_notification">Новое уведомление</string>
     <string name="new_version_was_created">Новая версия создана</string>
     <string name="no_actions">Нет действий для этого пользователя</string>
     <string name="no_browser_available">Отсутствует приложение, которое может обрабатывать переход по ссылкам</string>
@@ -584,6 +591,7 @@
     <string name="note_icon_hint">Значок примечания</string>
     <string name="notification_action_failed">Не удалось выполнить задание.</string>
     <string name="notification_channel_background_operations_description">Показывать уведомления для взаимодействия с результатами фоновых операций</string>
+    <string name="notification_channel_background_operations_name">Фоновые задания</string>
     <string name="notification_channel_download_description">Показывает выполнение получения</string>
     <string name="notification_channel_download_name_short">Загрузки</string>
     <string name="notification_channel_file_sync_description">Показывает состояние и результаты синхронизации файлов </string>
@@ -604,11 +612,13 @@
     <string name="offline_mode">Отсутствует подключение к Интернет</string>
     <string name="offline_mode_info_description">Даже без подключения к Интернету вы можете упорядочивать папки и создавать файлы. Как только вы вернетесь в сеть, ваши действия будут автоматически синхронизированы.</string>
     <string name="offline_operations_file_does_not_exists_yet">Файл еще не существует. Пожалуйста, сначала загрузите файл.</string>
+    <string name="offline_operations_worker_notification_conflict_text">Конфликтующая папка: %s</string>
     <string name="offline_operations_worker_notification_error_text">Операция в автономном режиме не может быть завершена. %s</string>
     <string name="offline_operations_worker_notification_manager_ticker">Автономные операции</string>
     <string name="oneHour">1 час</string>
     <string name="online">На связи</string>
     <string name="online_status">Состояние на связи</string>
+    <string name="open_in_app">Открыть в %1$s</string>
     <string name="outdated_server">Версия сервера Nextcloud  более не поддерживается, требуется её обновление.</string>
     <string name="overflow_menu">Дополнительное меню</string>
     <string name="pass_code_configure_your_pass_code">Введите код</string>
@@ -649,7 +659,6 @@
     <string name="prefs_add_account">Добавить аккаунт</string>
     <string name="prefs_calendar_contacts">Синхронизировать календарь и контакты</string>
     <string name="prefs_calendar_contacts_no_store_error">Ни F-Droid, ни Google Play не установлены</string>
-    <string name="prefs_calendar_contacts_summary">Настроить DAVx5 (ранее называвшийся DAVdroid) (v1.3.0+) для текущей учётной записи</string>
     <string name="prefs_calendar_contacts_sync_setup_successful">Настройка синхронизации календаря и контактов</string>
     <string name="prefs_category_about">О программе</string>
     <string name="prefs_category_details">Дополнительные</string>
@@ -661,7 +670,6 @@
     <string name="prefs_daily_contact_backup_summary">Ежедневное сохранение контактов</string>
     <string name="prefs_data_storage_location">Местоположение хранилища данных</string>
     <string name="prefs_data_storage_location_summary">Управление местоположением хранилищем данных</string>
-    <string name="prefs_davx5_setup_error">Неожиданная ошибка при настройке DAVx5 (ранее известного как DAVdroid)</string>
     <string name="prefs_e2e_active">Сквозное шифрование настроено.</string>
     <string name="prefs_e2e_mnemonic">Мнемофраза E2E</string>
     <string name="prefs_e2e_no_device_credentials">Для просмотра мнемофразы включите системную защитную блокировку.</string>
@@ -766,7 +774,6 @@
     <string name="screenshot_05_autoUpload_heading">Автоматическая загрузка</string>
     <string name="screenshot_05_autoUpload_subline">для ваших фотографий и видео</string>
     <string name="screenshot_06_davdroid_heading">Календарь и контакты</string>
-    <string name="screenshot_06_davdroid_subline">Синхронизация с DAVx5</string>
     <string name="search_error">Ошибка при получении результатов поиска</string>
     <string name="secure_share_not_set_up">Безопасная публикация не настроена для данного пользователя</string>
     <string name="secure_share_search">Безопасный общий доступ…</string>
@@ -775,6 +782,7 @@
     <string name="select_one_template">Пожалуйста, выберите один шаблон</string>
     <string name="select_template">Выбрать шаблон</string>
     <string name="send">Отправить</string>
+    <string name="send_share">Отправить ссылку</string>
     <string name="sendbutton_description">Значок кнопки «отправить»</string>
     <string name="set_as">Установить как</string>
     <string name="set_picture_as">Использовать изображение</string>
@@ -782,6 +790,7 @@
     <string name="set_status_message">Установить сообщение о состоянии</string>
     <string name="setup_e2e">При настройке сквозного шифрования будет создана  мнемофраза из 12 слов, которая понадобится для открытия файлов на других устройствах. Мнемофраза будет сохранена  только на этом устройстве и может быть просмотрена повторно. Сохраните мнемофразу в надежном месте!</string>
     <string name="share">Общий ресурс</string>
+    <string name="share_copy_link">Создать и скопировать ссылку</string>
     <string name="share_dialog_title">Общий доступ</string>
     <string name="share_download_limit">Установите лимит загрузки</string>
     <string name="share_expiration_date_format">%1$s</string>
@@ -805,7 +814,7 @@
     <string name="share_not_allowed_when_file_drop">Перенаправление запрещено во время безопасного удаления файлов</string>
     <string name="share_password_title">Защищено паролем</string>
     <string name="share_permission_can_edit">Разрешено редактировать</string>
-    <string name="share_permission_file_drop">Принимать файлы</string>
+    <string name="share_permission_file_drop">Приём файлов</string>
     <string name="share_permission_secure_file_drop">Защищенный очиститель файлов</string>
     <string name="share_permission_view_only">Только просмотр</string>
     <string name="share_remote_clarification">%1$s (на сервере)</string>
@@ -872,7 +881,6 @@
     <string name="storage_permission_full_access">Полный доступ</string>
     <string name="storage_permission_media_read_only">Носитель только для чтения</string>
     <string name="storage_pictures">Изображения</string>
-    <string name="store_full_desc">Устанавливаемая на свой сервер платформа для повышения продуктивности, которая позволяет держать все под контролем.\n\nFeatures:\n* Простой, современный интерфейс, соответствующий тематике вашего сервера\n* Загрузите файлы на свой сервер Nextcloud\n* Делитесь ими с другими\n* Синхронизируйте ваши любимые файлы и папки\n* Поиск во всех папках на вашем сервере\n* Автоматическая отправка фотографий и видео с вашего устройства\n* Будьте в курсе с уведомлениями\n* Поддержка нескольких учетных записей\n* Безопасный доступ к вашим данным с помощью отпечатка пальцев или PIN-кода\n* Интеграция с DAVx5 (ранее известен как DAVdroid) для легкой настройки синхронизации календаря и контактов\n\nПожалуйста, сообщите обо всех проблемах на https://github.com/nextcloud/android/issues и обсудите это приложение на https://help.nextcloud.com/c/clients/android\n\nНовичок в Nextcloud? Nextcloud - это частный сервер синхронизации и обмена файлами и коммуникационный сервер. Это свободное программное обеспечение, и вы можете разместить его самостоятельно или заплатить компании, чтобы это сделали за вас. Таким образом, вы управляете своими фотографиями, календарем и контактными данными, документами и всем остальным.\n\nОзнакомьтесь с Nextcloud по адресу https://nextcloud.com</string>
     <string name="store_full_dev_desc">Платформа, размещаемая на собственных ресурсах и позволяющая самостоятельно управлять данными.\nЭто разрабатываемая версия официального приложения Nextcloud, содержащая новые возможности, тестирование которых не ещё завершено. Разрабатываемая версия может быть нестабильна и её использование может привести к потере данных. Это приложение предназначено для пользователей, которые хотят познакомиться с новыми возможности и сообщать об обнаруженных ошибках. Не используйте его для работы!\n\nРазрабатываемая версия может быть установлена совместно с официальным приложением Nextcloud, которое также доступно в F-Droid.</string>
     <string name="store_short_desc">Платформа, размещаемая на собственных ресурсах и позволяющая самостоятельно управлять данными</string>
     <string name="store_short_dev_desc">Платформа, размещаемая на собственных ресурсах и позволяющая самостоятельно управлять данными (разрабатываемая версия)</string>
@@ -1088,24 +1096,6 @@
         <item quantity="few">%d минуты</item>
         <item quantity="many">%d минут </item>
         <item quantity="other">%d минут</item>
-    </plurals>
-    <plurals name="time_seconds_ago">
-        <item quantity="one">1 секунду назад</item>
-        <item quantity="few">%d секунды назад</item>
-        <item quantity="many">%d секунд назад</item>
-        <item quantity="other">%d секунд назад</item>
-    </plurals>
-    <plurals name="time_minutes_ago">
-        <item quantity="one">1 минуту назад</item>
-        <item quantity="few">%d минуты назад</item>
-        <item quantity="many">%d минут назад</item>
-        <item quantity="other">%d минут назад</item>
-    </plurals>
-    <plurals name="time_hours_ago">
-        <item quantity="one">1 час назад</item>
-        <item quantity="few">%d часа назад</item>
-        <item quantity="many">%d часов назад</item>
-        <item quantity="other">%d часов назад</item>
     </plurals>
     <plurals name="sync_fail_in_favourites_content">
         <item quantity="one">Не удалось синхронизировать %1$d файл (конфликтов: %2$d)</item>
