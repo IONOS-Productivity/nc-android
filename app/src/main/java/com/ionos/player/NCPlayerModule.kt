@@ -4,6 +4,8 @@ import androidx.media3.datasource.DataSource
 import com.ionos.player.media3.datasource.StreamDataSourceFactory
 import com.ionos.player.media3.session.DefaultMediaSessionActivityFactory
 import com.ionos.player.media3.session.MediaSessionActivityFactory
+import com.ionos.player.media3.session.MediaSessionFactory
+import com.ionos.player.media3.session.MediaSessionFactoryImpl
 import com.ionos.player.model.ThumbnailLoader
 import com.ionos.player.model.ThumbnailLoaderImpl
 import com.ionos.player.model.predicate.FileBeingProcessedPredicate
@@ -21,6 +23,11 @@ import dagger.android.ContributesAndroidInjector
 
 @Module(includes = [PlayerModule::class])
 abstract class NCPlayerModule {
+
+    @Binds
+    abstract fun bindMediaSessionFactory(
+        factory: MediaSessionFactoryImpl,
+    ): MediaSessionFactory
 
     @Binds
     abstract fun bindMediaSessionActivityFactory(

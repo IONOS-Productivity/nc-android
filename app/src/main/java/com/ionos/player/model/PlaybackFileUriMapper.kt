@@ -14,7 +14,7 @@ fun OCShare.getPlaybackUri(): Uri {
 	return getPlaybackUri(fileSource)
 }
 
-private fun getPlaybackUri(fileId: Long): Uri {
+fun getPlaybackUri(fileId: Long): Uri {
 	return Uri.Builder()
 		.scheme(REMOTE_FILE_SCHEME)
 		.authority("")
