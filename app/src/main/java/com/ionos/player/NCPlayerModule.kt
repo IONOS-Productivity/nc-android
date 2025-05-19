@@ -12,7 +12,7 @@ import com.ionos.player.model.predicate.FileBeingProcessedPredicate
 import com.ionos.player.model.predicate.FileBeingProcessedPredicateImpl
 import com.ionos.player.model.predicate.IsVideoPredicate
 import com.ionos.player.model.predicate.IsVideoPredicateImpl
-import com.ionos.player.ui.IonosPlayerActivity
+import com.ionos.player.ui.PlayerActivity
 import com.ionos.player.ui.message.NCPlayerExceptionMessageProvider
 import com.ionos.player.ui.message.PlayerExceptionMessageProvider
 import com.ionos.player.ui.message.PlayerMessageBuilderFactory
@@ -65,5 +65,5 @@ abstract class NCPlayerModule {
     ): PlayerExceptionMessageProvider
 
     @ContributesAndroidInjector
-    abstract fun logsActivity(): IonosPlayerActivity
+    abstract fun playerActivity(): PlayerActivity
 }

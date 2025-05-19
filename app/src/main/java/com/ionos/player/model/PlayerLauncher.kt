@@ -5,7 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.ionos.player.media3.resumption.PlaybackResumptionRepository
-import com.ionos.player.ui.IonosPlayerActivity
+import com.ionos.player.ui.PlayerActivity
 import com.nextcloud.client.logger.Logger
 import com.owncloud.android.datamodel.OCFile
 import com.owncloud.android.ui.fragment.SearchType
@@ -50,8 +50,8 @@ class PlayerLauncher @Inject constructor(
 	}
 
 	private fun createIntent(context: Context, fileType: PlaybackFileType): Intent = when (fileType) {
-		PlaybackFileType.AUDIO -> IonosPlayerActivity.createAudioPlayerIntent(context)
-		PlaybackFileType.VIDEO -> IonosPlayerActivity.createVideoPlayerIntent(context)
+		PlaybackFileType.AUDIO -> PlayerActivity.createAudioPlayerIntent(context)
+		PlaybackFileType.VIDEO -> PlayerActivity.createVideoPlayerIntent(context)
 	}
 
 	private fun OCFile.getPlaybackFileType(): PlaybackFileType {

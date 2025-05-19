@@ -13,7 +13,7 @@ import com.nextcloud.client.di.Injectable
 import com.owncloud.android.datamodel.OCFile
 import com.owncloud.android.ui.activity.BaseActivity
 
-class IonosPlayerActivity : BaseActivity(), PlayerViewContainer, PlayerCompatible, Injectable {
+class PlayerActivity : BaseActivity(), PlayerViewContainer, PlayerCompatible, Injectable {
 
     private enum class PlayerType {
         AUDIO,
@@ -25,14 +25,14 @@ class IonosPlayerActivity : BaseActivity(), PlayerViewContainer, PlayerCompatibl
         private const val RESULT_LAST_OC_FILE: String = "RESULT_LAST_OC_FILE"
 
         fun createVideoPlayerIntent(context: Context): Intent {
-            return Intent(context, IonosPlayerActivity::class.java)
+            return Intent(context, PlayerActivity::class.java)
                 .apply {
                     putExtra(PLAYER_TYPE, PlayerType.VIDEO)
                 }
         }
 
         fun createAudioPlayerIntent(context: Context): Intent {
-            return Intent(context, IonosPlayerActivity::class.java)
+            return Intent(context, PlayerActivity::class.java)
                 .apply {
                     putExtra(PLAYER_TYPE, PlayerType.AUDIO)
                 }

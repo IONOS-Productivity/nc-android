@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.Intent
 import com.ionos.player.model.file_store.PlaybackFileStore
 import com.ionos.player.model.predicate.IsVideoPredicate
-import com.ionos.player.ui.IonosPlayerActivity
+import com.ionos.player.ui.PlayerActivity
 import com.ionos.player.util.SystemVersion
 import javax.inject.Inject
 
@@ -19,9 +19,9 @@ class DefaultMediaSessionActivityFactory @Inject constructor(
 		val currentFile = currentMediaId?.let(playbackFileStore::getFile) ?: return null
 
 		val intent = if (isVideoPredicate.satisfied(currentFile)) {
-			IonosPlayerActivity.createVideoPlayerIntent(context)
+			PlayerActivity.createVideoPlayerIntent(context)
 		} else {
-			IonosPlayerActivity.createAudioPlayerIntent(context)
+			PlayerActivity.createAudioPlayerIntent(context)
 		}
 
 		intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
