@@ -1,7 +1,5 @@
 package com.ionos.player.model
 
-import android.content.Context
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.ionos.player.media3.resumption.PlaybackResumptionRepository
@@ -35,7 +33,7 @@ class PlayerLauncher @Inject constructor(
 				playbackModel.switchToFile(currentPlaybackFile)
 				playbackModel.play()
 
-				val intent = createIntent(activity, fileType)
+				val intent = PlayerActivity.createIntent(activity, fileType)
 				activity.startActivity(intent)
 
 				val playbackFiles = playbackFilesRepository.load(file.parentId, fileType, searchType)
@@ -47,11 +45,6 @@ class PlayerLauncher @Inject constructor(
 				logger.e(PlayerLauncher::class.java.simpleName, "Error launching player", t)
 			}
 		}
-	}
-
-	private fun createIntent(context: Context, fileType: PlaybackFileType): Intent = when (fileType) {
-		PlaybackFileType.AUDIO -> PlayerActivity.createAudioPlayerIntent(context)
-		PlaybackFileType.VIDEO -> PlayerActivity.createVideoPlayerIntent(context)
 	}
 
 	private fun OCFile.getPlaybackFileType(): PlaybackFileType {
