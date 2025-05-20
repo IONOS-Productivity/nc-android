@@ -9,20 +9,24 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.ionos.player.model.PlaybackFileType
 import com.ionos.player.ui.PlayerScreenEvent.ShowFileActions
+import com.ionos.player.ui.PlayerScreenEvent.ShowFileDetails
 import com.ionos.player.ui.audio.AudioPlayerView
 import com.ionos.player.ui.video.VideoPlayerView
 import com.ionos.player.ui.video.surface.PlayerCompatible
 import com.ionos.player.ui.video.surface.SurfaceInvalidator
 import com.ionos.player.util.SystemVersion
 import com.nextcloud.client.di.Injectable
+import com.nextcloud.ui.fileactions.FileAction
+import com.nextcloud.ui.fileactions.FileActionsBottomSheet
 import com.owncloud.android.R
 import com.owncloud.android.datamodel.OCFile
-import com.owncloud.android.ui.activity.BaseActivity
+import com.owncloud.android.ui.activity.FileActivity
+import com.owncloud.android.ui.activity.FileDisplayActivity
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
-class PlayerActivity : BaseActivity(), PlayerViewContainer, PlayerCompatible, Injectable {
+class PlayerActivity : FileActivity(), PlayerViewContainer, PlayerCompatible, Injectable {
 
     companion object {
         private const val PLAYBACK_FILE_TYPE: String = "PLAYBACK_FILE_TYPE"
@@ -90,10 +94,31 @@ class PlayerActivity : BaseActivity(), PlayerViewContainer, PlayerCompatible, In
     private fun handleEvent(event: PlayerScreenEvent) {
         when (event) {
             is ShowFileActions -> showFileActions(event.file)
+            is ShowFileDetails -> showFileDetails(event.file)
         }
     }
 
     private fun showFileActions(file: OCFile) {
-        TODO("Not yet implemented")
+        val availableActions = listOf(
+            R.id.action_see_details,
+        )
+
+        val actionsToHide = FileAction.SORTED_VALUES
+            .map { it.id }
+            .filter { it !in availableActions }
+
+        FileActionsBottomSheet.newInstance(file, false, actionsToHide)
+            .setResultListener(supportFragmentManager, this) { viewModel.onFileActionChosen(file, it) }
+            .show(supportFragmentManager, "actions")
+    }
+
+    fun showFileDetails(file: OCFile) {
+        val intent = Intent(this, FileDisplayActivity::class.java).apply {
+            action = FileDisplayActivity.ACTION_DETAILS
+            putExtra(EXTRA_FILE, file)
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        }
+        startActivity(intent)
+        finish()
     }
 }

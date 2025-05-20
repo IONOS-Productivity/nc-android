@@ -6,7 +6,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.ionos.player.model.PlaybackModel
 import com.ionos.player.ui.PlayerScreenEvent.ShowFileActions
+import com.ionos.player.ui.PlayerScreenEvent.ShowFileDetails
 import com.nextcloud.client.logger.Logger
+import com.owncloud.android.R
 import com.owncloud.android.datamodel.FileDataStorageManager
 import com.owncloud.android.datamodel.OCFile
 import kotlinx.coroutines.Dispatchers
@@ -33,6 +35,14 @@ class PlayerViewModel @Inject constructor(
         viewModelScope.launch {
             getCurrentOCFile()?.let { file ->
                 eventChannel.send(ShowFileActions(file))
+            }
+        }
+    }
+
+    fun onFileActionChosen(file: OCFile, actionId: Int) {
+        viewModelScope.launch {
+            when (actionId) {
+                R.id.action_see_details -> eventChannel.send(ShowFileDetails(file))
             }
         }
     }
