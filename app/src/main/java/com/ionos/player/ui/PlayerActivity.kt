@@ -3,14 +3,24 @@ package com.ionos.player.ui
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import androidx.activity.viewModels
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import com.ionos.player.model.PlaybackFileType
+import com.ionos.player.ui.PlayerScreenEvent.ShowFileActions
 import com.ionos.player.ui.audio.AudioPlayerView
 import com.ionos.player.ui.video.VideoPlayerView
 import com.ionos.player.ui.video.surface.PlayerCompatible
 import com.ionos.player.ui.video.surface.SurfaceInvalidator
 import com.ionos.player.util.SystemVersion
 import com.nextcloud.client.di.Injectable
+import com.owncloud.android.R
+import com.owncloud.android.datamodel.OCFile
 import com.owncloud.android.ui.activity.BaseActivity
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import javax.inject.Inject
 
 class PlayerActivity : BaseActivity(), PlayerViewContainer, PlayerCompatible, Injectable {
 
@@ -24,6 +34,10 @@ class PlayerActivity : BaseActivity(), PlayerViewContainer, PlayerCompatible, In
         }
     }
 
+    @Inject
+    lateinit var viewModelFactory: PlayerViewModel.Factory
+    private val viewModel by viewModels<PlayerViewModel> { viewModelFactory }
+
     private val surfaceInvalidator = SurfaceInvalidator()
     private lateinit var playerView: PlayerView
 
@@ -35,6 +49,14 @@ class PlayerActivity : BaseActivity(), PlayerViewContainer, PlayerCompatible, In
             PlaybackFileType.VIDEO -> VideoPlayerView(this)
         }
         setContentView(playerView)
+
+        val moreButton = findViewById<View>(R.id.more)
+        moreButton.setOnClickListener { viewModel.onMoreButtonClick() }
+
+        viewModel.eventFlow
+            .flowWithLifecycle(lifecycle)
+            .onEach { handleEvent(it) }
+            .launchIn(lifecycleScope)
     }
 
     @Suppress("Deprecation")
@@ -63,5 +85,15 @@ class PlayerActivity : BaseActivity(), PlayerViewContainer, PlayerCompatible, In
 
     override fun getSurfaceInvalidator(): SurfaceInvalidator {
         return surfaceInvalidator
+    }
+
+    private fun handleEvent(event: PlayerScreenEvent) {
+        when (event) {
+            is ShowFileActions -> showFileActions(event.file)
+        }
+    }
+
+    private fun showFileActions(file: OCFile) {
+        TODO("Not yet implemented")
     }
 }

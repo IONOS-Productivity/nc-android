@@ -172,6 +172,16 @@ public class FileDataStorageManager {
         return null;
     }
 
+    @IonosCustomization
+    public @Nullable
+    OCFile getFileByLocalId(long localId) {
+        FileEntity fileEntity = fileDao.getFileByLocalId(localId, user.getAccountName());
+        if (fileEntity != null) {
+            return createFileInstance(fileEntity);
+        }
+        return null;
+    }
+
     public boolean fileExists(long id) { return fileDao.getFileById(id) != null; }
 
     public boolean fileExists(String path) {

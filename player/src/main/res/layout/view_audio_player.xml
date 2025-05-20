@@ -30,13 +30,21 @@
 
             <TextView
                 android:id="@+id/tvTitle"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:singleLine="true"
                 android:textColor="@color/player_full_screen_audio_player_text_color"
                 android:textSize="@dimen/player_full_screen_audio_player_nav_bar_text_view_size"/>
+
+            <ImageView
+                android:id="@+id/more"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_player_more_vert_white_24dp"/>
 
         </LinearLayout>
 
