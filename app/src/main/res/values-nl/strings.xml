@@ -774,12 +774,14 @@
     <string name="select_template">Kies sjabloon</string>
     <string name="send">Versturen</string>
     <string name="sendbutton_description">Verstuur-knop pictogram</string>
+    <string name="send_share">Delen verzenden</string>
     <string name="set_as">Stel in als</string>
     <string name="set_picture_as">Gebruik afbeelding als</string>
     <string name="set_status">Instellen status</string>
     <string name="set_status_message">Instellen statusbericht</string>
     <string name="setup_e2e">Tijden het instellen van end-to-end versleuteling ontvang je een mnemonic van 12 woorden, die je nodig hebt om bestanden op je apparaat te openen. Dit wordt alleen opgeslagen op dit apparaat en kan in dit scherm opnieuw getoond worden. Noteer het a.u.b. op een veilige plek!</string>
     <string name="share">Delen</string>
+    <string name="share_copy_link">Link delen en kopiëren</string>
     <string name="share_dialog_title">Delen</string>
     <string name="share_download_limit">Stel downloadlimiet in</string>
     <string name="share_expiration_date_format">%1$s</string>
@@ -873,6 +875,7 @@
     <string name="stream">Streamen met…</string>
     <string name="stream_not_possible_headline">Intern streamen niet mogelijk</string>
     <string name="stream_not_possible_message">Download media in plaats van gebruik externe app.</string>
+    <string name="strict_mode">Strict modus: geen HTTP-verbinding toegestaan!</string>
     <string name="sub_folder_rule_day">Jaar/Maand/Dag</string>
     <string name="sub_folder_rule_month">Jaar/Maand</string>
     <string name="sub_folder_rule_year">Jaar</string>
@@ -1051,6 +1054,9 @@
     <string name="wait_a_moment">Wacht even…</string>
     <string name="wait_checking_credentials">Opgeslagen inloggegevens nakijken</string>
     <string name="wait_for_tmp_copy_from_private_storage">Bestand vanaf privéopslag kopiëren</string>
+    <string name="webview_version_check_alert_dialog_message">Update de  Android System WebView app om in te loggen</string>
+    <string name="webview_version_check_alert_dialog_positive_button_title">Update</string>
+    <string name="webview_version_check_alert_dialog_title">Update Android System WebView</string>
     <string name="warn_rename_extension">Wijzigen van de extensie kan ertoe leiden dat dit bestand in een andere applicatie wordt geopend</string>
     <string name="what_s_new_image">Wat is nieuw afbeelding</string>
     <string name="whats_new_skip">Overslaan</string>
