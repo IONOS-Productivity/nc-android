@@ -20,6 +20,7 @@ import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Lifecycle
@@ -32,7 +33,6 @@ import com.nextcloud.client.di.Injectable
 import com.nextcloud.client.jobs.MediaFoldersDetectionWork
 import com.nextcloud.client.jobs.NotificationWork
 import com.nextcloud.client.jobs.upload.FileUploadWorker
-import com.nextcloud.client.preferences.AppPreferences
 import com.nextcloud.client.preferences.SubFolderRule
 import com.nextcloud.utils.extensions.getParcelableArgument
 import com.nextcloud.utils.extensions.isDialogFragmentReady
@@ -57,7 +57,6 @@ import com.owncloud.android.ui.dialog.SyncedFolderPreferencesDialogFragment.OnSy
 import com.owncloud.android.ui.dialog.parcel.SyncedFolderParcelable
 import com.owncloud.android.utils.PermissionUtil
 import com.owncloud.android.utils.SyncedFolderUtils
-import com.owncloud.android.utils.theme.ViewThemeUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -137,16 +136,10 @@ class SyncedFoldersActivity :
     }
 
     @Inject
-    lateinit var preferences: AppPreferences
-
-    @Inject
     lateinit var powerManagementService: PowerManagementService
 
     @Inject
     lateinit var clock: Clock
-
-    @Inject
-    lateinit var viewThemeUtils: ViewThemeUtils
 
     @Inject
     lateinit var syncedFolderProvider: SyncedFolderProvider
@@ -223,16 +216,20 @@ class SyncedFoldersActivity :
         return true
     }
 
-    @IonosCustomization
-    private fun showPowerCheckDialog() {
+    fun buildPowerCheckDialog(): AlertDialog {
         val builder = MaterialAlertDialogBuilder(this)
             .setPositiveButton(R.string.common_ok) { dialog, _ -> dialog.dismiss() }
             .setTitle(R.string.autoupload_disable_power_save_check)
             .setMessage(getString(R.string.power_save_check_dialog_message))
 
-        viewThemeUtils.ionos.dialog.colorMaterialAlertDialogBackground(this, builder)
+        viewThemeUtils.dialog.colorMaterialAlertDialogBackground(this, builder)
 
-        builder.create().show()
+        return builder.create()
+    }
+
+    @VisibleForTesting
+    fun showPowerCheckDialog() {
+        buildPowerCheckDialog().show()
     }
 
     /**
@@ -250,7 +247,7 @@ class SyncedFoldersActivity :
             viewThemeUtils
         )
         binding.emptyList.emptyListIcon.setImageResource(R.drawable.nav_synced_folders)
-        viewThemeUtils.ionos.material.colorMaterialButtonPrimaryFilled(binding.emptyList.emptyListViewAction)
+        viewThemeUtils.material.colorMaterialButtonPrimaryFilled(binding.emptyList.emptyListViewAction)
         val lm = GridLayoutManager(this, gridWidth)
         adapter.setLayoutManager(lm)
         val spacing = resources.getDimensionPixelSize(R.dimen.media_grid_spacing)
@@ -638,6 +635,7 @@ class SyncedFoldersActivity :
         binding.emptyList.emptyListIcon.visibility = View.VISIBLE
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == SyncedFolderPreferencesDialogFragment.REQUEST_CODE__SELECT_REMOTE_FOLDER &&
             resultCode == RESULT_OK && dialogFragment != null
@@ -822,7 +820,6 @@ class SyncedFoldersActivity :
         }
     }
 
-    @IonosCustomization("Buttons style")
     private fun showBatteryOptimizationInfo() {
         if (powerManagementService.isPowerSavingExclusionAvailable || checkIfBatteryOptimizationEnabled()) {
             val alertDialogBuilder = MaterialAlertDialogBuilder(this, R.style.Theme_ownCloud_Dialog)
@@ -843,7 +840,7 @@ class SyncedFoldersActivity :
                 .setIcon(R.drawable.ic_battery_alert)
             if (lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
                 val alertDialog = alertDialogBuilder.show()
-                viewThemeUtils.ionos.platform.colorTextButtons(
+                viewThemeUtils.platform.colorTextButtons(
                     alertDialog.getButton(AlertDialog.BUTTON_POSITIVE),
                     alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL)
                 )

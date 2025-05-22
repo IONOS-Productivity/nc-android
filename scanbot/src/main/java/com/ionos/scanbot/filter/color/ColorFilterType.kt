@@ -11,11 +11,11 @@ import io.scanbot.sdk.process.ImageFilterType
 import java.io.Serializable
 
 internal sealed class ColorFilterType private constructor(
-	open val brightness: Int,
-	open val sharpness: Int,
-	open val contrast: Int,
-	open val scanbotFilter: ImageFilterType,
+	val scanbotFilter: ImageFilterType,
 ) : Serializable {
+	abstract val brightness: Int
+	abstract val sharpness: Int
+	abstract val contrast: Int
 
 	protected abstract val defaultBrightness: Int
 	protected abstract val defaultSharpness: Int
@@ -76,7 +76,7 @@ internal sealed class ColorFilterType private constructor(
 		override val brightness: Int = DEFAULT_BRIGHTNESS,
 		override val sharpness: Int = DEFAULT_SHARPNESS,
 		override val contrast: Int = DEFAULT_CONTRAST
-	) : ColorFilterType(brightness, sharpness, contrast, ImageFilterType.COLOR_ENHANCED) {
+	) : ColorFilterType(ImageFilterType.COLOR_ENHANCED) {
 
 		companion object {
 			private const val DEFAULT_BRIGHTNESS: Int = 60
@@ -96,7 +96,7 @@ internal sealed class ColorFilterType private constructor(
 		override val brightness: Int = DEFAULT_BRIGHTNESS,
 		override val sharpness: Int = DEFAULT_SHARPNESS,
 		override val contrast: Int = DEFAULT_CONTRAST
-	) : ColorFilterType(brightness, sharpness, contrast, ImageFilterType.COLOR_DOCUMENT) {
+	) : ColorFilterType(ImageFilterType.COLOR_DOCUMENT) {
 
 		companion object {
 			private const val DEFAULT_BRIGHTNESS: Int = 40
@@ -116,7 +116,7 @@ internal sealed class ColorFilterType private constructor(
 		override val brightness: Int = DEFAULT_BRIGHTNESS,
 		override val sharpness: Int = DEFAULT_SHARPNESS,
 		override val contrast: Int = DEFAULT_CONTRAST
-	) : ColorFilterType(brightness, sharpness, contrast, ImageFilterType.DEEP_BINARIZATION) {
+	) : ColorFilterType(ImageFilterType.DEEP_BINARIZATION) {
 
 		companion object {
 			private const val DEFAULT_BRIGHTNESS: Int = 60
@@ -136,7 +136,7 @@ internal sealed class ColorFilterType private constructor(
 		override val brightness: Int = DEFAULT_BRIGHTNESS,
 		override val sharpness: Int = DEFAULT_SHARPNESS,
 		override val contrast: Int = DEFAULT_CONTRAST
-	) : ColorFilterType(brightness, sharpness, contrast, ImageFilterType.GRAYSCALE) {
+	) : ColorFilterType(ImageFilterType.GRAYSCALE) {
 
 		companion object {
 			private const val DEFAULT_BRIGHTNESS: Int = 20
@@ -156,7 +156,7 @@ internal sealed class ColorFilterType private constructor(
 		override val brightness: Int = DEFAULT_BRIGHTNESS,
 		override val sharpness: Int = DEFAULT_SHARPNESS,
 		override val contrast: Int = DEFAULT_CONTRAST
-	) : ColorFilterType(brightness, sharpness, contrast, ImageFilterType.BLACK_AND_WHITE) {
+	) : ColorFilterType(ImageFilterType.BLACK_AND_WHITE) {
 
 		companion object {
 			private const val DEFAULT_BRIGHTNESS: Int = 60
@@ -176,7 +176,7 @@ internal sealed class ColorFilterType private constructor(
 		override val brightness: Int = DEFAULT_BRIGHTNESS,
 		override val sharpness: Int = DEFAULT_SHARPNESS,
 		override val contrast: Int = DEFAULT_CONTRAST
-	) : ColorFilterType(brightness, sharpness, contrast, ImageFilterType.NONE) {
+	) : ColorFilterType(ImageFilterType.NONE) {
 
 		companion object {
 			private const val DEFAULT_BRIGHTNESS: Int = 50

@@ -22,15 +22,15 @@ import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.RestrictionsManager;
-import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -39,9 +39,6 @@ import android.text.TextUtils;
 import android.view.WindowManager;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.ionos.analycis.AnalyticsManager;
-import com.ionos.annotation.IonosCustomization;
-import com.ionos.privacy.PrivacyPreferences;
 import com.nextcloud.appReview.InAppReviewHelper;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.account.UserAccountManager;
@@ -62,9 +59,11 @@ import com.nextcloud.client.onboarding.OnboardingService;
 import com.nextcloud.client.preferences.AppPreferences;
 import com.nextcloud.client.preferences.AppPreferencesImpl;
 import com.nextcloud.client.preferences.DarkMode;
+import com.nextcloud.receiver.NetworkChangeListener;
+import com.nextcloud.receiver.NetworkChangeReceiver;
 import com.nextcloud.utils.extensions.ContextExtensionsKt;
+import com.nextcloud.utils.mdm.MDMConfig;
 import com.nmc.android.ui.LauncherActivity;
-import com.owncloud.android.authentication.AuthenticatorActivity;
 import com.owncloud.android.authentication.PassCodeManager;
 import com.owncloud.android.datamodel.ArbitraryDataProvider;
 import com.owncloud.android.datamodel.ArbitraryDataProviderImpl;
@@ -89,11 +88,7 @@ import com.owncloud.android.utils.FilesSyncHelper;
 import com.owncloud.android.utils.PermissionUtil;
 import com.owncloud.android.utils.ReceiversHelper;
 import com.owncloud.android.utils.SecurityUtils;
-import com.owncloud.android.utils.appConfig.AppConfigManager;
 import com.owncloud.android.utils.theme.ViewThemeUtils;
-import com.ionos.scanbot.di.ScanbotComponent;
-import com.ionos.scanbot.di.ScanbotComponentProvider;
-import com.ionos.scanbot.initializer.ScanbotInitializer;
 
 import org.conscrypt.Conscrypt;
 import org.greenrobot.eventbus.EventBus;
@@ -124,8 +119,6 @@ import androidx.lifecycle.ProcessLifecycleOwner;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasAndroidInjector;
-import de.cotech.hw.SecurityKeyManager;
-import de.cotech.hw.SecurityKeyManagerConfig;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import static com.owncloud.android.ui.activity.ContactsPreferenceActivity.PREFERENCE_CONTACTS_AUTOMATIC_BACKUP;
@@ -135,11 +128,9 @@ import static com.owncloud.android.ui.activity.ContactsPreferenceActivity.PREFER
  * Main Application of the project.
  * Contains methods to build the "static" strings. These strings were before constants in different classes.
  */
-@IonosCustomization("ScanbotComponentProvider")
-public class MainApp
-    extends Application implements HasAndroidInjector, ScanbotComponentProvider {
-    public static final OwnCloudVersion OUTDATED_SERVER_VERSION = NextcloudVersion.nextcloud_26;
-    public static final OwnCloudVersion MINIMUM_SUPPORTED_SERVER_VERSION = OwnCloudVersion.nextcloud_17;
+public class MainApp extends Application implements HasAndroidInjector, NetworkChangeListener {
+    public static final OwnCloudVersion OUTDATED_SERVER_VERSION = NextcloudVersion.nextcloud_28;
+    public static final OwnCloudVersion MINIMUM_SUPPORTED_SERVER_VERSION = OwnCloudVersion.nextcloud_18;
 
     private static final String TAG = MainApp.class.getSimpleName();
     public static final String DOT = ".";
@@ -155,12 +146,6 @@ public class MainApp
     protected AppPreferences preferences;
 
     @Inject
-    protected PrivacyPreferences privacyPreferences;
-
-    @Inject
-    protected AnalyticsManager analyticsManager;
-
-    @Inject
     protected DispatchingAndroidInjector<Object> dispatchingAndroidInjector;
 
     @Inject
@@ -171,9 +156,6 @@ public class MainApp
 
     @Inject
     protected OnboardingService onboarding;
-
-    @Inject
-    ScanbotInitializer scanbotInitializer;
 
     @Inject
     ConnectivityService connectivityService;
@@ -217,12 +199,9 @@ public class MainApp
     @SuppressWarnings("unused")
     private boolean mBound;
 
-    private AppConfigManager appConfigManager;
-
     private static AppComponent appComponent;
 
-    private ScanbotComponent scanbotComponent;
-
+    private NetworkChangeReceiver networkChangeReceiver;
 
     /**
      * Temporary hack
@@ -245,6 +224,11 @@ public class MainApp
      */
     public PowerManagementService getPowerManagementService() {
         return powerManagementService;
+    }
+
+    private void registerNetworkChangeReceiver() {
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangeReceiver, filter);
     }
 
     private String getAppProcessName() {
@@ -314,7 +298,6 @@ public class MainApp
 
 
     @SuppressFBWarnings("ST")
-    @IonosCustomization("Scanbot, show hidden files")
     @Override
     public void onCreate() {
         enableStrictMode();
@@ -327,8 +310,6 @@ public class MainApp
         ProcessLifecycleOwner.get().getLifecycle().addObserver(lifecycleEventObserver);
 
         insertConscrypt();
-
-        initSecurityKeyManager();
 
         registerActivityLifecycleCallbacks(new ActivityInjector());
 
@@ -350,11 +331,7 @@ public class MainApp
         OwnCloudClientManagerFactory.setUserAgent(getUserAgent());
 
         if (isClientBrandedPlus()) {
-            RestrictionsManager restrictionsManager = (RestrictionsManager) getSystemService(Context.RESTRICTIONS_SERVICE);
-            appConfigManager = new AppConfigManager(this, restrictionsManager.getApplicationRestrictions());
-            appConfigManager.setProxyConfig(isClientBrandedPlus());
-
-            // Listen app config changes
+            setProxyConfig();
             ContextExtensionsKt.registerBroadcastReceiver(this, restrictionsReceiver, restrictionsFilter, ReceiverFlag.NotExported);
         } else {
             setProxyForNonBrandedPlusClients();
@@ -363,8 +340,7 @@ public class MainApp
         // initialise thumbnails cache on background thread
         new ThumbnailsCacheManager.InitDiskCacheTask().execute();
 
-
-        if (BuildConfig.DEBUG || getApplicationContext().getResources().getBoolean(R.bool.logger_enabled)) {
+        if (MDMConfig.INSTANCE.isLogEnabled(this)) {
             // use app writable dir, no permissions needed
             Log_OC.setLoggerImplementation(new LegacyLoggerAdapter(logger));
             Log_OC.d("Debug", "start logging");
@@ -398,13 +374,27 @@ public class MainApp
             if (preferences.isTwoWaySyncEnabled()) {
                 backgroundJobManager.scheduleInternal2WaySync(preferences.getTwoWaySyncInterval());
             }
+
+            backgroundJobManager.startPeriodicallyOfflineOperation();
         }
 
         registerGlobalPassCodeProtection();
-        scanbotInitializer.initialize();
-        preferences.setShowHiddenFilesEnabled(true);
+        networkChangeReceiver = new NetworkChangeReceiver(this, connectivityService);
+        registerNetworkChangeReceiver();
 
-        analyticsManager.setEnabled(privacyPreferences.isAnalyticsEnabled());
+        if (!MDMConfig.INSTANCE.sendFilesSupport(this)) {
+            disableDocumentsStorageProvider();
+        }
+        
+        
+     }
+
+    public void disableDocumentsStorageProvider() {
+        String packageName = getPackageName();
+        String providerClassName = "com.owncloud.android.providers.DocumentsStorageProvider";
+        ComponentName componentName = new ComponentName(packageName, providerClassName);
+        PackageManager packageManager = getPackageManager();
+        packageManager.setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
     }
 
     private final LifecycleEventObserver lifecycleEventObserver = ((lifecycleOwner, event) -> {
@@ -414,8 +404,7 @@ public class MainApp
             passCodeManager.setCanAskPin(true);
             Log_OC.d(TAG, "APP IN BACKGROUND");
         } else if (event == Lifecycle.Event.ON_RESUME) {
-            if (appConfigManager == null) return;
-            appConfigManager.setProxyConfig(isClientBrandedPlus());
+            setProxyConfig();
             Log_OC.d(TAG, "APP ON RESUME");
         }
     });
@@ -428,26 +417,45 @@ public class MainApp
             Log_OC.d(TAG, "Error caught at setProxyForNonBrandedPlusClients: " + e);
         }
     }
+    
+    public static boolean isClientBranded() {
+        return getAppContext().getResources().getBoolean(R.bool.is_branded_client);
+    }
 
     public static boolean isClientBrandedPlus() {
-        return (getAppContext().getResources().getBoolean(R.bool.is_branded_plus_client));
+        return getAppContext().getResources().getBoolean(R.bool.is_branded_plus_client);
     }
 
     private final IntentFilter restrictionsFilter = new IntentFilter(Intent.ACTION_APPLICATION_RESTRICTIONS_CHANGED);
 
     private final BroadcastReceiver restrictionsReceiver = new BroadcastReceiver() {
         @Override public void onReceive(Context context, Intent intent) {
-            if (appConfigManager == null) return;
-            appConfigManager.setProxyConfig(isClientBrandedPlus());
+            setProxyConfig();
         }
     };
 
-    @Override
-    public ScanbotComponent getScanbotComponent() {
-        if (this.scanbotComponent == null) {
-            this.scanbotComponent = appComponent.scanbotComponent();
+    private void setProxyConfig() {
+        if (!isClientBrandedPlus()) {
+            Log_OC.d(TAG, "Proxy configuration cannot be set. Client is not branded plus.");
+            return;
         }
-        return this.scanbotComponent;
+
+        String host = MDMConfig.INSTANCE.getHost(this);
+        int port = MDMConfig.INSTANCE.getPort(this);
+
+        if (TextUtils.isEmpty(host) || port == -1) {
+            Log_OC.d(TAG, "Proxy configuration cannot be found");
+            return;
+        }
+
+        try {
+            OwnCloudClientManagerFactory.setProxyHost(host);
+            OwnCloudClientManagerFactory.setProxyPort(port);
+
+            Log_OC.d(TAG, "Proxy configuration successfully set");
+        } catch (Resources.NotFoundException e) {
+            Log_OC.e(TAG, "Proxy config cannot able to set due to: $e");
+        }
     }
 
     private void registerGlobalPassCodeProtection() {
@@ -499,35 +507,6 @@ public class MainApp
                 Log_OC.d(activity.getClass().getSimpleName(), "onDestroy() ending");
             }
         });
-    }
-
-    @SuppressWarnings("unchecked")
-    private void initSecurityKeyManager() {
-        SecurityKeyManager securityKeyManager = SecurityKeyManager.getInstance();
-        final SecurityKeyManagerConfig.Builder configBuilder = new SecurityKeyManagerConfig.Builder()
-            .setEnableDebugLogging(BuildConfig.DEBUG);
-
-        try {
-            // exclude all activities except AuthenticatorActivity
-            final PackageManager pm = this.getPackageManager();
-            final PackageInfo info = pm.getPackageInfo(this.getPackageName(), PackageManager.GET_ACTIVITIES);
-            final ActivityInfo[] activities = info.activities;
-            for (ActivityInfo activityInfo : activities) {
-                try {
-                    final Class<? extends Activity> aClass = (Class<? extends Activity>) Class.forName(activityInfo.name);
-                    if (aClass != AuthenticatorActivity.class) {
-                        configBuilder.addExcludedActivityClass(aClass);
-                    }
-                } catch (ClassNotFoundException | ClassCastException e) {
-                    Log_OC.e(TAG, "Couldn't disable activity for security key listener", e);
-                }
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-            Log_OC.e(TAG, "Couldn't disable activities for security key listener", e);
-        }
-
-
-        securityKeyManager.init(this, configBuilder.build());
     }
 
     public static void initContactsBackup(UserAccountManager accountManager, BackgroundJobManager backgroundJobManager) {
@@ -714,6 +693,10 @@ public class MainApp
                 createChannel(notificationManager, NotificationUtils.NOTIFICATION_CHANNEL_PUSH,
                               R.string.notification_channel_push_name, R.string
                                   .notification_channel_push_description, context, NotificationManager.IMPORTANCE_DEFAULT);
+
+                createChannel(notificationManager, NotificationUtils.NOTIFICATION_CHANNEL_BACKGROUND_OPERATIONS,
+                              R.string.notification_channel_background_operations_name, R.string
+                                  .notification_channel_background_operations_description, context, NotificationManager.IMPORTANCE_DEFAULT);
 
                 createChannel(notificationManager, NotificationUtils.NOTIFICATION_CHANNEL_GENERAL, R.string
                                   .notification_channel_general_name, R.string.notification_channel_general_description,
@@ -1019,6 +1002,18 @@ public class MainApp
             case LIGHT -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             case DARK -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             case SYSTEM -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+        }
+    }
+
+    @Override
+    public void networkAndServerConnectionListener(boolean isNetworkAndServerAvailable) {
+        if (backgroundJobManager == null) {
+            Log_OC.d(TAG, "Offline operations terminated, backgroundJobManager cannot be null");
+            return;
+        }
+
+        if (isNetworkAndServerAvailable) {
+            backgroundJobManager.startOfflineOperations();
         }
     }
 }

@@ -48,7 +48,7 @@ class AccountRemovalDialog : DialogFragment(), AvatarGenerationListener, Injecta
         user = requireArguments().getParcelableArgument(KEY_USER, User::class.java)
     }
 
-    @IonosCustomization("colorMaterialButtonPrimaryTonal, colorMaterialButtonPrimaryBorderless")
+    @IonosCustomization("Hide account name")
     override fun onStart() {
         super.onStart()
 
@@ -58,18 +58,18 @@ class AccountRemovalDialog : DialogFragment(), AvatarGenerationListener, Injecta
 
         viewThemeUtils.platform.themeRadioButton(binding.radioLocalRemove)
         viewThemeUtils.platform.themeRadioButton(binding.radioRequestDeletion)
-        viewThemeUtils.ionos.material.colorMaterialButtonPrimaryTonal(
+        viewThemeUtils.material.colorMaterialButtonPrimaryTonal(
             alertDialog.getButton(AlertDialog.BUTTON_POSITIVE) as MaterialButton
         )
-        viewThemeUtils.ionos.material.colorMaterialButtonPrimaryBorderless(
+        viewThemeUtils.material.colorMaterialButtonPrimaryBorderless(
             alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE) as MaterialButton
         )
 
         binding.userName.text = UserAccountManager.getDisplayName(user)
         binding.account.text = user?.let { DisplayUtils.convertIdn(it.accountName, false) }
+        binding.account.visibility = View.GONE
     }
 
-    @IonosCustomization
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         _binding = AccountRemovalDialogBinding.inflate(layoutInflater)
 
@@ -112,7 +112,7 @@ class AccountRemovalDialog : DialogFragment(), AvatarGenerationListener, Injecta
             }
         }
 
-        viewThemeUtils.ionos.dialog.colorMaterialAlertDialogBackground(requireActivity(), builder)
+        viewThemeUtils.dialog.colorMaterialAlertDialogBackground(requireActivity(), builder)
 
         return builder.create()
     }

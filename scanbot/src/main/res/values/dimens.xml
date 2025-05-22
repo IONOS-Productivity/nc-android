@@ -18,6 +18,7 @@
     <dimen name="scanbot_divider_height">1dp</dimen>
 
     <dimen name="scanbot_navigation_layout_height">56dp</dimen>
+    <dimen name="scanbot_back_button_size">48dp</dimen>
 
 	<dimen name="scanbot_camera_polygon_stroke_widht">2dp</dimen>
 	<dimen name="scanbot_camera_toolbar_height">48dp</dimen>

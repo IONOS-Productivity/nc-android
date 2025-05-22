@@ -35,6 +35,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.ionos.annotation.IonosCustomization;
+import com.ionos.utils.IonosBuildHelper;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.network.ConnectivityService;
 import com.owncloud.android.MainApp;
@@ -71,6 +72,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
@@ -475,7 +477,7 @@ public final class ThumbnailsCacheManager {
                             }
                         } else {
                             if (fileFragment instanceof PreviewImageFragment) {
-                                ((PreviewImageFragment) fileFragment).setErrorPreviewMessage();
+                                ((PreviewImageFragment) fileFragment).handleUnsupportedImage();
                             }
                         }
                     }).start();
@@ -625,7 +627,13 @@ public final class ThumbnailsCacheManager {
                         tagId = String.valueOf(((TrashbinFile) mFile).getRemoteId());
                     }
                     if (String.valueOf(imageView.getTag()).equals(tagId)) {
-                        imageView.setImageBitmap(bitmap);
+                        if (IonosBuildHelper.isIonosBuild()) {
+                            imageView.setImageBitmap(bitmap);
+                        } else if (gridViewEnabled) {
+                            BitmapUtils.setRoundedBitmapForGridMode(bitmap, imageView);
+                        } else {
+                            BitmapUtils.setRoundedBitmap(bitmap, imageView);
+                        }
                     }
                 }
 
@@ -1178,7 +1186,11 @@ public final class ThumbnailsCacheManager {
         return null;
     }
 
+    @IonosCustomization("Use layout overlay instead of bitmap overlay")
     public static Bitmap addVideoOverlay(Bitmap thumbnail, Context context) {
+        if (IonosBuildHelper.isIonosBuild()) {
+            return thumbnail;
+        }
 
         Drawable playButtonDrawable = ResourcesCompat.getDrawable(MainApp.getAppContext().getResources(),
                                                                   R.drawable.video_white,
@@ -1258,9 +1270,11 @@ public final class ThumbnailsCacheManager {
     }
 
     /**
-     * adapted from https://stackoverflow.com/a/8113368
+     * adapted from <a href="https://stackoverflow.com/a/8113368">...</a>
      */
     private static Bitmap handlePNG(Bitmap source, int newWidth, int newHeight) {
+        Bitmap softwareBitmap = source.copy(Bitmap.Config.ARGB_8888, false);
+
         int sourceWidth = source.getWidth();
         int sourceHeight = source.getHeight();
 
@@ -1279,8 +1293,9 @@ public final class ThumbnailsCacheManager {
         Bitmap dest = Bitmap.createBitmap(newWidth, newHeight, Bitmap.Config.ARGB_8888);
 
         Canvas canvas = new Canvas(dest);
-        canvas.drawColor(MainApp.getAppContext().getResources().getColor(R.color.background_color_png));
-        canvas.drawBitmap(source, null, targetRect, null);
+        int color = ContextCompat.getColor(MainApp.getAppContext(),R.color.background_color_png);
+        canvas.drawColor(color);
+        canvas.drawBitmap(softwareBitmap, null, targetRect, null);
 
         return dest;
     }

@@ -10,6 +10,8 @@ package com.nextcloud.client.jobs.upload
 import android.app.PendingIntent
 import android.content.Context
 import com.nextcloud.client.jobs.notification.WorkerNotificationManager
+import com.nextcloud.utils.extensions.isFileSpecificError
+import com.nextcloud.utils.numberFormatter.NumberFormatter
 import com.owncloud.android.R
 import com.owncloud.android.lib.common.operations.RemoteOperationResult
 import com.owncloud.android.operations.UploadFileOperation
@@ -42,10 +44,7 @@ class UploadNotificationManager(private val context: Context, viewThemeUtils: Vi
             uploadFileOperation.fileName
         }
 
-        val progressText = String.format(
-            context.getString(R.string.upload_notification_manager_upload_in_progress_text),
-            0
-        )
+        val progressText = NumberFormatter.getPercentageText(0)
 
         notificationBuilder.run {
             setProgress(100, 0, false)
@@ -70,7 +69,8 @@ class UploadNotificationManager(private val context: Context, viewThemeUtils: Vi
 
     @Suppress("MagicNumber")
     fun updateUploadProgress(percent: Int, currentOperation: UploadFileOperation?) {
-        setProgress(percent, R.string.upload_notification_manager_upload_in_progress_text, false)
+        val progressText = NumberFormatter.getPercentageText(percent)
+        setProgress(percent, progressText, false)
         showNotification()
         dismissOldErrorNotification(currentOperation)
     }
@@ -107,7 +107,11 @@ class UploadNotificationManager(private val context: Context, viewThemeUtils: Vi
             setContentText(errorMessage)
         }
 
-        showNewNotification(uploadFileOperation)
+        if (resultCode.isFileSpecificError()) {
+            showNewNotification(uploadFileOperation)
+        } else {
+            showNotification()
+        }
     }
 
     private fun getFailedResultTitleId(resultCode: RemoteOperationResult.ResultCode): Int {
@@ -138,6 +142,20 @@ class UploadNotificationManager(private val context: Context, viewThemeUtils: Vi
         )
     }
 
+    fun showConnectionErrorNotification() {
+        notificationManager.cancel(getId())
+
+        notificationBuilder.run {
+            setContentTitle(context.getString(R.string.file_upload_worker_error_notification_title))
+            setContentText("")
+        }
+
+        notificationManager.notify(
+            FileUploadWorker.NOTIFICATION_ERROR_ID,
+            notificationBuilder.build()
+        )
+    }
+
     fun dismissOldErrorNotification(operation: UploadFileOperation?) {
         if (operation == null) {
             return
@@ -149,6 +167,8 @@ class UploadNotificationManager(private val context: Context, viewThemeUtils: Vi
             dismissOldErrorNotification(it.remotePath, it.storagePath)
         }
     }
+
+    fun dismissErrorNotification() = notificationManager.cancel(FileUploadWorker.NOTIFICATION_ERROR_ID)
 
     fun dismissOldErrorNotification(remotePath: String, localPath: String) {
         notificationManager.cancel(

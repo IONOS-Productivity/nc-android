@@ -1,6 +1,7 @@
 /*
  * Nextcloud - Android Client
  *
+ * SPDX-FileCopyrightText: 2024 TSI-mc <surinder.kumar@t-systems.com>
  * SPDX-FileCopyrightText: 2020 Chris Narkiewicz <hello@ezaquarii.com>
  * SPDX-License-Identifier: AGPL-3.0-or-later OR GPL-2.0-only
  */
@@ -17,6 +18,7 @@ import com.nextcloud.client.jobs.transfer.FileTransferService;
 import com.nextcloud.client.jobs.upload.FileUploadHelper;
 import com.nextcloud.client.logger.ui.LogsActivity;
 import com.nextcloud.client.logger.ui.LogsViewModel;
+import com.nextcloud.client.media.BackgroundPlayerService;
 import com.nextcloud.client.media.PlayerService;
 import com.nextcloud.client.migrations.Migrations;
 import com.nextcloud.client.onboarding.FirstRunActivity;
@@ -24,11 +26,14 @@ import com.nextcloud.client.onboarding.WhatsNewActivity;
 import com.nextcloud.client.widget.DashboardWidgetConfigurationActivity;
 import com.nextcloud.client.widget.DashboardWidgetProvider;
 import com.nextcloud.client.widget.DashboardWidgetService;
+import com.nextcloud.receiver.NetworkChangeReceiver;
 import com.nextcloud.ui.ChooseAccountDialogFragment;
+import com.nextcloud.ui.ChooseStorageLocationDialogFragment;
 import com.nextcloud.ui.ImageDetailFragment;
 import com.nextcloud.ui.SetStatusDialogFragment;
 import com.nextcloud.ui.composeActivity.ComposeActivity;
 import com.nextcloud.ui.fileactions.FileActionsBottomSheet;
+import com.nextcloud.ui.trashbinFileActions.TrashbinFileActionsBottomSheet;
 import com.nmc.android.ui.LauncherActivity;
 import com.owncloud.android.MainApp;
 import com.owncloud.android.authentication.AuthenticatorActivity;
@@ -87,13 +92,14 @@ import com.owncloud.android.ui.dialog.RenameFileDialogFragment;
 import com.owncloud.android.ui.dialog.RenamePublicShareDialogFragment;
 import com.owncloud.android.ui.dialog.SendFilesDialog;
 import com.owncloud.android.ui.dialog.SendShareDialog;
-import com.owncloud.android.ui.dialog.setupEncryption.SetupEncryptionDialogFragment;
 import com.owncloud.android.ui.dialog.SharePasswordDialogFragment;
 import com.owncloud.android.ui.dialog.SortingOrderDialogFragment;
 import com.owncloud.android.ui.dialog.SslUntrustedCertDialog;
 import com.owncloud.android.ui.dialog.StoragePermissionDialogFragment;
 import com.owncloud.android.ui.dialog.SyncFileNotEnoughSpaceDialogFragment;
 import com.owncloud.android.ui.dialog.SyncedFolderPreferencesDialogFragment;
+import com.owncloud.android.ui.dialog.TermsOfServiceDialog;
+import com.owncloud.android.ui.dialog.setupEncryption.SetupEncryptionDialogFragment;
 import com.owncloud.android.ui.fragment.ExtendedListFragment;
 import com.owncloud.android.ui.fragment.FeatureFragment;
 import com.owncloud.android.ui.fragment.FileDetailActivitiesFragment;
@@ -122,6 +128,8 @@ import com.owncloud.android.ui.preview.PreviewTextStringFragment;
 import com.owncloud.android.ui.preview.pdf.PreviewPdfFragment;
 import com.owncloud.android.ui.trashbin.TrashbinActivity;
 
+import androidx.annotation.OptIn;
+import androidx.media3.common.util.UnstableApi;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 
@@ -221,6 +229,9 @@ abstract class ComponentsModule {
     abstract TrashbinActivity trashbinActivity();
 
     @ContributesAndroidInjector
+    abstract TrashbinFileActionsBottomSheet trashbinFileActionsBottomSheet();
+
+    @ContributesAndroidInjector
     abstract UploadFilesActivity uploadFilesActivity();
 
     @ContributesAndroidInjector
@@ -312,6 +323,9 @@ abstract class ComponentsModule {
 
     @ContributesAndroidInjector
     abstract BootupBroadcastReceiver bootupBroadcastReceiver();
+
+    @ContributesAndroidInjector
+    abstract NetworkChangeReceiver networkChangeReceiver();
 
     @ContributesAndroidInjector
     abstract NotificationWork.NotificationReceiver notificationWorkBroadcastReceiver();
@@ -410,6 +424,9 @@ abstract class ComponentsModule {
     abstract SetupEncryptionDialogFragment setupEncryptionDialogFragment();
 
     @ContributesAndroidInjector
+    abstract ChooseStorageLocationDialogFragment chooseStorageLocationDialogFragment();
+
+    @ContributesAndroidInjector
     abstract SharePasswordDialogFragment sharePasswordDialogFragment();
 
     @ContributesAndroidInjector
@@ -477,7 +494,15 @@ abstract class ComponentsModule {
 
     @ContributesAndroidInjector
     abstract TestJob testJob();
-    
+
     @ContributesAndroidInjector
     abstract InternalTwoWaySyncActivity internalTwoWaySyncActivity();
+
+
+    @OptIn(markerClass = UnstableApi.class)
+    @ContributesAndroidInjector
+    abstract BackgroundPlayerService backgroundPlayerService();
+
+    @ContributesAndroidInjector
+    abstract TermsOfServiceDialog termsOfServiceDialog();
 }

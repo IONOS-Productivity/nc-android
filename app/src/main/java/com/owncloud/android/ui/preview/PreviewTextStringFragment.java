@@ -105,7 +105,6 @@ public class PreviewTextStringFragment extends PreviewTextFragment {
      * {@inheritDoc}
      */
     @Override
-    @IonosCustomization
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
 
@@ -114,6 +113,7 @@ public class PreviewTextStringFragment extends PreviewTextFragment {
         searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
         searchView.setOnQueryTextListener(this);
         searchView.setMaxWidth(Integer.MAX_VALUE);
+        viewThemeUtils.androidx.themeToolbarSearchView(searchView);
 
         if (searchOpen) {
             searchView.setIconified(false);

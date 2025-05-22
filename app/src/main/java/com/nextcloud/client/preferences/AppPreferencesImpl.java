@@ -18,6 +18,7 @@ import android.content.res.Configuration;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.ionos.annotation.IonosCustomization;
+import com.ionos.utils.IonosBuildHelper;
 import com.nextcloud.appReview.AppReviewShownModel;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.account.UserAccountManager;
@@ -57,6 +58,7 @@ public final class AppPreferencesImpl implements AppPreferences {
      */
     public static final String AUTO_PREF__LAST_SEEN_VERSION_CODE = "lastSeenVersionCode";
     public static final String STORAGE_PATH = "storage_path";
+    public static final String DATA_STORAGE_LOCATION = "data_storage_location";
     public static final String STORAGE_PATH_VALID = "storage_path_valid";
     public static final String PREF__DARK_THEME = "dark_theme_mode";
     public static final float DEFAULT_GRID_COLUMN = 3f;
@@ -110,6 +112,10 @@ public final class AppPreferencesImpl implements AppPreferences {
     private static final String PREF__STOP_DOWNLOAD_JOBS_ON_START = "stop_download_jobs_on_start";
     
     private static final String PREF__AUTO_UPLOAD_GPLAY_WARNING_SHOWN = "auto_upload_gplay_warning_shown";
+    private static final String PREF__AUTO_UPLOAD_GPLAY_WARNING2_SHOWN = "auto_upload_gplay_warning2_shown";
+    private static final String PREF__AUTO_UPLOAD_GPLAY_NOTIFICATION_SHOWN = "auto_upload_gplay_notification_shown";
+
+    private static final String PREF__PASSCODE_DELAY_IN_SECONDS = "passcode_delay_in_seconds";
 
     private static final String LOG_ENTRY = "log_entry";
 
@@ -481,7 +487,17 @@ public final class AppPreferencesImpl implements AppPreferences {
     @Override
     @IonosCustomization
     public float getGridColumns() {
-        return context.getResources().getInteger(R.integer.grid_mode_column_count);
+        if (IonosBuildHelper.isIonosBuild()) {
+            return context.getResources().getInteger(R.integer.grid_mode_column_count);
+        }
+
+        float columns = preferences.getFloat(AUTO_PREF__GRID_COLUMNS, DEFAULT_GRID_COLUMN);
+
+        if (columns < 0) {
+            return DEFAULT_GRID_COLUMN;
+        } else {
+            return columns;
+        }
     }
 
     /**
@@ -490,9 +506,8 @@ public final class AppPreferencesImpl implements AppPreferences {
      * @param gridColumns the uploader behavior
      */
     @Override
-    @IonosCustomization
     public void setGridColumns(float gridColumns) {
-        // Do nothing
+        preferences.edit().putFloat(AUTO_PREF__GRID_COLUMNS, gridColumns).apply();
     }
 
     @Override
@@ -833,5 +848,35 @@ public final class AppPreferencesImpl implements AppPreferences {
     @Override
     public void setAutoUploadGPlayWarningShown(boolean value) {
         preferences.edit().putBoolean(PREF__AUTO_UPLOAD_GPLAY_WARNING_SHOWN, value).apply();
+    }
+
+    @Override
+    public boolean isAutoUploadGPlayWarning2Shown() {
+        return preferences.getBoolean(PREF__AUTO_UPLOAD_GPLAY_WARNING2_SHOWN, false);
+    }
+
+    @Override
+    public void setAutoUploadGPlayWarning2Shown(boolean value) {
+        preferences.edit().putBoolean(PREF__AUTO_UPLOAD_GPLAY_WARNING2_SHOWN, value).apply();
+    }
+
+    @Override
+    public boolean isAutoUploadGPlayNotificationShown() {
+        return preferences.getBoolean(PREF__AUTO_UPLOAD_GPLAY_NOTIFICATION_SHOWN, false);
+    }
+
+    @Override
+    public void setAutoUploadGPlayNotificationShown(boolean value) {
+        preferences.edit().putBoolean(PREF__AUTO_UPLOAD_GPLAY_NOTIFICATION_SHOWN, value).apply();
+    }
+
+    @Override
+    public int getPassCodeDelay() {
+        return preferences.getInt(PREF__PASSCODE_DELAY_IN_SECONDS, 0);
+    }
+
+    @Override
+    public void setPassCodeDelay(int value) {
+        preferences.edit().putInt(PREF__PASSCODE_DELAY_IN_SECONDS, value).apply();
     }
 }

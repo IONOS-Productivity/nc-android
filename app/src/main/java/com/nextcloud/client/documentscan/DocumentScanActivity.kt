@@ -17,7 +17,6 @@ import androidx.core.view.MenuProvider
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.di.Injectable
 import com.nextcloud.client.di.ViewModelFactory
 import com.nextcloud.client.logger.Logger
@@ -144,7 +143,6 @@ class DocumentScanActivity : ToolbarActivity(), Injectable {
         }
     }
 
-    @IonosCustomization
     private fun showExportDialog() {
         val dialogBinding = DialogScanExportTypeBinding.inflate(layoutInflater)
 
@@ -157,7 +155,7 @@ class DocumentScanActivity : ToolbarActivity(), Injectable {
             }
             .setOnCancelListener { viewModel.onExportCanceled() }
             .also {
-                viewThemeUtils.ionos.dialog.colorMaterialAlertDialogBackground(this@DocumentScanActivity, it)
+                viewThemeUtils.dialog.colorMaterialAlertDialogBackground(this@DocumentScanActivity, it)
             }
             .create()
 

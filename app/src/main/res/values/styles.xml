@@ -70,7 +70,6 @@
     <style name="ThemeOverlay.App.TextInputLayout" parent="ThemeOverlay.Material3.TextInputEditText.OutlinedBox">
         <item name="colorPrimary">@color/text_color</item>
         <item name="colorOnSurface">@color/text_color</item>
-        <item name="colorError">@color/hwSecurityRed</item>
         <item name="editTextStyle">@style/Widget.Material3.TextInputEditText.OutlinedBox</item>
     </style>
 
@@ -106,7 +105,7 @@
         <item name="android:textColor">#FFFFFF</item>
     </style>
 
-    <style name="Theme.ownCloud.ToolbarBase" parent="BaseTheme.ownCloud.Toolbar">
+    <style name="Theme.ownCloud.ToolbarBase" parent="BaseTheme.Ionos.Toolbar">
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:navigationBarColor">@color/bg_default</item>
     </style>
@@ -121,13 +120,14 @@
         <item name="android:navigationBarColor">@color/bg_default</item>
     </style>
 
-    <style name="Theme.ownCloud.Toolbar.NullBackground" parent="BaseTheme.ownCloud.Toolbar">
+    <style name="Theme.ownCloud.Toolbar.NullBackground" parent="BaseTheme.Ionos.Toolbar">
         <item name="android:colorBackground">@null</item>
         <item name="android:background">@null</item>
     </style>
 
     <style name="Theme.ownCloud.noActionBar.LoginBase" parent="Theme.ownCloud.Toolbar">
         <item name="android:windowBackground">@color/primary</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="colorControlNormal">@color/login_text_color</item>
         <item name="colorControlActivated">@color/login_text_color</item>
         <item name="colorControlHighlight">@color/login_text_color</item>
@@ -238,10 +238,6 @@
         <item name="bottomSheetDialogTheme">@style/Generic.ThemeOverlay.App.BottomSheetDialog</item>
     </style>
 
-    <style name="Theme.ownCloud.PreviewImage" parent="Theme.ownCloud.Overlay">
-        <item name="android:windowFullscreen">false</item>
-    </style>
-
     <style name="Theme.ownCloud.OverlayGrey" parent="Theme.ownCloud.OverlayBase">
         <item name="android:navigationBarColor">@color/grey_400</item>
         <item name="android:background">@color/grey_400</item>
@@ -264,7 +260,7 @@
 
     <!-- Launch screen -->
     <style name="Theme.ownCloud.Launcher">
-        <item name="android:statusBarColor">@color/primary</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@color/primary</item>
         <item name="android:windowBackground">@color/primary</item>
         <item name="android:textColorHint">@color/secondary_text_color</item>
@@ -346,7 +342,6 @@
     <style name="ThemeOverlay.App.Login.TextInputLayout" parent="">
         <item name="colorPrimary">@color/white</item>
         <item name="colorOnSurface">@color/white</item>
-        <item name="colorError">@color/hwSecurityRed</item>
         <item name="textAppearanceSubtitle1">@style/TextAppearance.Material3.BodyLarge</item>
         <item name="textAppearanceCaption">@style/TextAppearance.Material3.BodySmall</item>
         <item name="editTextStyle">@style/Widget.Material3.TextInputEditText.OutlinedBox</item>
@@ -379,8 +374,6 @@
         <item name="popupMenuBackground">@color/bg_default</item>
     </style>
 
-    <style name="Generic.Nextcloud.Widget.PopupMenu" parent="Nextcloud.Widget.PopupMenu" app:ionosCustomization="" />
-
     <style name="Theme.ToolbarTheme" parent="@style/ThemeOverlay.Material3.Dark.ActionBar">
         <item name="android:textColor">@color/menu_item_text_color</item>
         <item name="actionOverflowMenuStyle">@style/Generic.OverflowMenuStyle</item>
@@ -389,11 +382,6 @@
     <style name="OverflowMenuStyle" parent="Widget.Material3.PopupMenu.Overflow">
         <item name="android:popupBackground">@color/bg_default</item>
     </style>
-
-    <style
-        name="Generic.OverflowMenuStyle"
-        parent="OverflowMenuStyle"
-        app:ionosCustomization="" />
 
     <style name="MaterialListItemSingleLine">
         <item name="android:clickable">true</item>
@@ -433,12 +421,6 @@
         <item name="iconPadding">0dp</item>
     </style>
 
-    <!-- Custom colors for the FIDO dialog -->
-    <style name="FidoDialog" parent="HwSecurity.Dialog">
-        <item name="hwSecurityButtonColor">@color/color_accent</item>
-        <item name="hwSecuritySurfaceColor">@color/primary</item>
-    </style>
-
     <style name="Nextcloud.Material.TextButton" parent="Widget.Material3.Button.TextButton.Icon">
         <item name="android:typeface">sans</item>
         <item name="android:textStyle">bold</item>
@@ -459,19 +441,9 @@
         <item name="bottomSheetStyle">@style/Generic.App.BottomSheetDialog</item>
     </style>
 
-    <style
-        name="Generic.ThemeOverlay.App.BottomSheetDialog"
-        parent="ThemeOverlay.App.BottomSheetDialog"
-        app:ionosCustomization="Empty style for further customization in Ionos" />
-
     <style name="App.BottomSheetDialog" parent="Widget.Material3.BottomSheet.Modal">
         <item name="backgroundTint">@color/bg_default</item>
     </style>
-
-    <style
-        name="Generic.App.BottomSheetDialog"
-        parent="App.BottomSheetDialog"
-        app:ionosCustomization="Empty style for further customization in Ionos" />
 
     <style name="App.ActionMode" parent="@style/Widget.Material3.ActionMode">
         <item name="background">@color/action_mode_background</item>
@@ -494,23 +466,6 @@
         <!-- Set the theme of the Activity that directly follows your splash screen. -->
         <!-- Required -->
         <item name="postSplashScreenTheme">@style/Theme.ownCloud.Launcher</item>
-    </style>
-
-    <style name="Theme.Dialog.TextButton" parent="Widget.Material3.Button.TextButton">
-    </style>
-
-    <style name="Theme.Dialog.IconButton.Filled.Tonal" parent="Widget.Material3.Button.IconButton.Filled.Tonal">
-    </style>
-
-    <style name="Theme.Dialog.IconButton.Filled" parent="Widget.Material3.Button.IconButton.Filled">
-    </style>
-
-    <style name="Theme.Dialog.Button.OutlinedButton" parent="Widget.Material3.Button.OutlinedButton">
-    </style>
-
-    <style name="Theme.ownCloud.LoadingDialog" parent="Theme.ownCloud.Dialog">
-        <item name="android:windowMinWidthMajor">0%</item>
-        <item name="android:windowMinWidthMinor">0%</item>
     </style>
 
 </resources>

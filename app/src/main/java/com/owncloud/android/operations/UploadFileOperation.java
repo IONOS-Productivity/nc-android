@@ -23,6 +23,7 @@ import com.nextcloud.client.jobs.upload.FileUploadHelper;
 import com.nextcloud.client.jobs.upload.FileUploadWorker;
 import com.nextcloud.client.network.Connectivity;
 import com.nextcloud.client.network.ConnectivityService;
+import com.nextcloud.utils.autoRename.AutoRename;
 import com.owncloud.android.datamodel.ArbitraryDataProvider;
 import com.owncloud.android.datamodel.ArbitraryDataProviderImpl;
 import com.owncloud.android.datamodel.FileDataStorageManager;
@@ -52,6 +53,7 @@ import com.owncloud.android.lib.resources.files.ReadFileRemoteOperation;
 import com.owncloud.android.lib.resources.files.UploadFileRemoteOperation;
 import com.owncloud.android.lib.resources.files.model.RemoteFile;
 import com.owncloud.android.lib.resources.status.E2EVersion;
+import com.owncloud.android.lib.resources.status.OCCapability;
 import com.owncloud.android.operations.common.SyncOperation;
 import com.owncloud.android.operations.e2e.E2EClientData;
 import com.owncloud.android.operations.e2e.E2EData;
@@ -410,8 +412,8 @@ public class UploadFileOperation extends SyncOperation {
         updateSize(0);
 
         String remoteParentPath = new File(getRemotePath()).getParent();
-        remoteParentPath = remoteParentPath.endsWith(OCFile.PATH_SEPARATOR) ?
-            remoteParentPath : remoteParentPath + OCFile.PATH_SEPARATOR;
+        remoteParentPath = remoteParentPath.endsWith(OCFile.PATH_SEPARATOR) ? remoteParentPath : remoteParentPath + OCFile.PATH_SEPARATOR;
+        remoteParentPath = AutoRename.INSTANCE.rename(remoteParentPath, getCapabilities());
 
         OCFile parent = getStorageManager().getFileByPath(remoteParentPath);
 
@@ -754,7 +756,8 @@ public class UploadFileOperation extends SyncOperation {
         throws InvalidAlgorithmParameterException, UploadException, NoSuchPaddingException, IllegalBlockSizeException, CertificateException,
         NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
 
-        mFile.setDecryptedRemotePath(e2eFiles.getParentFile().getDecryptedRemotePath() + e2eFiles.getOriginalFile().getName());
+        final var filename = new File(mFile.getRemotePath()).getName();
+        mFile.setDecryptedRemotePath(e2eFiles.getParentFile().getDecryptedRemotePath() + filename);
         mFile.setRemotePath(e2eFiles.getParentFile().getRemotePath() + e2eData.getEncryptedFileName());
 
 
@@ -1253,6 +1256,10 @@ public class UploadFileOperation extends SyncOperation {
         }
     }
 
+    private OCCapability getCapabilities() {
+        return CapabilityUtils.getCapability(mContext);
+    }
+
     /**
      * Checks the existence of the folder where the current file will be uploaded both in the remote server and in the
      * local database.
@@ -1336,7 +1343,7 @@ public class UploadFileOperation extends SyncOperation {
      * @param fileNames  list of decrypted file names
      * @return new remote path
      */
-    private String getNewAvailableRemotePath(OwnCloudClient client,
+    public static String getNewAvailableRemotePath(OwnCloudClient client,
                                              String remotePath,
                                              List<String> fileNames,
                                              boolean encrypted) {
@@ -1362,7 +1369,7 @@ public class UploadFileOperation extends SyncOperation {
         return newPath;
     }
 
-    private boolean existsFile(OwnCloudClient client,
+    private static boolean existsFile(OwnCloudClient client,
                                String remotePath,
                                List<String> fileNames,
                                boolean encrypted) {

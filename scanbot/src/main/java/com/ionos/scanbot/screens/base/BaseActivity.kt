@@ -14,25 +14,27 @@ import android.util.TypedValue
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.StringRes
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.ionos.scanbot.R
 import com.ionos.scanbot.controller.ScanbotController
-import com.ionos.scanbot.di.inject
 import com.ionos.scanbot.screens.base.BaseScreen.Event
 import com.ionos.scanbot.screens.base.BaseScreen.State
 import com.ionos.scanbot.screens.base.BaseScreen.ViewModel
 import com.ionos.scanbot.util.config.applyDefaultFontScale
+import com.ionos.scanbot.util.window.WindowWrapper
+import dagger.android.AndroidInjection
+import javax.inject.Inject
 
-internal abstract class BaseActivity<E : Event, S : State<E>, VM : ViewModel<E, S>> : AppCompatActivity() {
-    protected abstract val viewModelFactory: ViewModelProvider.Factory
+internal abstract class BaseActivity<E : Event, S : State<E>, VM : ViewModel<E, S>> : BaseWindowInsetsActivity() {
+    abstract val viewModelFactory: ViewModelProvider.Factory
     protected abstract val viewBinding: ViewBinding
 
     protected val context: Context get() = this
     protected val viewModel: VM by viewModels { viewModelFactory }
-    protected val scanbotController: ScanbotController by inject { scanbotController() }
+    protected val windowWrapper: WindowWrapper by lazy { WindowWrapper(window) }
+    @Inject lateinit var scanbotController: ScanbotController
 
     override fun attachBaseContext(newBase: Context) {
         newBase.resources.configuration.applyDefaultFontScale()
@@ -42,7 +44,9 @@ internal abstract class BaseActivity<E : Event, S : State<E>, VM : ViewModel<E, 
     override fun onCreate(savedInstanceState: Bundle?) {
         applyTheme()
         super.onCreate(savedInstanceState)
+        AndroidInjection.inject(this)
         setContentView(viewBinding.root)
+        savedInstanceState?.let(scanbotController::restoreState)
         viewModel.state.observe(this) { it.renderInternal() }
     }
 
@@ -74,11 +78,6 @@ internal abstract class BaseActivity<E : Event, S : State<E>, VM : ViewModel<E, 
     override fun onResume() {
         super.onResume()
         viewModel.onResume()
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        scanbotController.restoreState(savedInstanceState)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

@@ -26,6 +26,7 @@ import com.nextcloud.client.core.Clock
 import com.nextcloud.client.di.Injectable
 import com.nextcloud.client.documentscan.GeneratePdfFromImagesWork
 import com.nextcloud.client.jobs.download.FileDownloadWorker
+import com.nextcloud.client.jobs.offlineOperations.OfflineOperationsWorker
 import com.nextcloud.client.jobs.upload.FileUploadWorker
 import com.nextcloud.client.preferences.AppPreferences
 import com.nextcloud.utils.extensions.isWorkRunning
@@ -80,7 +81,8 @@ internal class BackgroundJobManagerImpl(
         const val JOB_PDF_GENERATION = "pdf_generation"
         const val JOB_IMMEDIATE_CALENDAR_BACKUP = "immediate_calendar_backup"
         const val JOB_IMMEDIATE_FILES_EXPORT = "immediate_files_export"
-
+        const val JOB_OFFLINE_OPERATIONS = "offline_operations"
+        const val JOB_PERIODIC_OFFLINE_OPERATIONS = "periodic_offline_operations"
         const val JOB_PERIODIC_HEALTH_STATUS = "periodic_health_status"
         const val JOB_IMMEDIATE_HEALTH_STATUS = "immediate_health_status"
 
@@ -98,6 +100,7 @@ internal class BackgroundJobManagerImpl(
         const val NOT_SET_VALUE = "not set"
         const val PERIODIC_BACKUP_INTERVAL_MINUTES = 24 * 60L
         const val DEFAULT_PERIODIC_JOB_INTERVAL_MINUTES = 15L
+        const val OFFLINE_OPERATIONS_PERIODIC_JOB_INTERVAL_MINUTES = 5L
         const val DEFAULT_IMMEDIATE_JOB_DELAY_SEC = 3L
 
         private const val KEEP_LOG_MILLIS = 1000 * 60 * 60 * 24 * 3L
@@ -198,13 +201,15 @@ internal class BackgroundJobManagerImpl(
     private fun oneTimeRequestBuilder(
         jobClass: KClass<out ListenableWorker>,
         jobName: String,
-        user: User? = null
+        user: User? = null,
+        constraints: Constraints = Constraints.Builder().build()
     ): OneTimeWorkRequest.Builder {
         val builder = OneTimeWorkRequest.Builder(jobClass.java)
             .addTag(TAG_ALL)
             .addTag(formatNameTag(jobName, user))
             .addTag(formatTimeTag(clock.currentTime))
             .addTag(formatClassTag(jobClass))
+            .setConstraints(constraints)
         user?.let { builder.addTag(formatUserTag(it)) }
         return builder
     }
@@ -217,7 +222,8 @@ internal class BackgroundJobManagerImpl(
         jobName: String,
         intervalMins: Long = DEFAULT_PERIODIC_JOB_INTERVAL_MINUTES,
         flexIntervalMins: Long = DEFAULT_PERIODIC_JOB_INTERVAL_MINUTES,
-        user: User? = null
+        user: User? = null,
+        constraints: Constraints = Constraints.Builder().build()
     ): PeriodicWorkRequest.Builder {
         val builder = PeriodicWorkRequest.Builder(
             jobClass.java,
@@ -230,6 +236,7 @@ internal class BackgroundJobManagerImpl(
             .addTag(formatNameTag(jobName, user))
             .addTag(formatTimeTag(clock.currentTime))
             .addTag(formatClassTag(jobClass))
+            .setConstraints(constraints)
         user?.let { builder.addTag(formatUserTag(it)) }
         return builder
     }
@@ -411,6 +418,47 @@ internal class BackgroundJobManagerImpl(
             workManager.isWorkRunning(JOB_IMMEDIATE_FILES_SYNC + "_" + syncedFolderID)
     }
 
+    override fun startPeriodicallyOfflineOperation() {
+        val inputData = Data.Builder()
+            .putString(OfflineOperationsWorker.JOB_NAME, JOB_PERIODIC_OFFLINE_OPERATIONS)
+            .build()
+
+        val request = periodicRequestBuilder(
+            jobClass = OfflineOperationsWorker::class,
+            jobName = JOB_PERIODIC_OFFLINE_OPERATIONS,
+            intervalMins = OFFLINE_OPERATIONS_PERIODIC_JOB_INTERVAL_MINUTES
+        )
+            .setInputData(inputData)
+            .build()
+
+        workManager.enqueueUniquePeriodicWork(
+            JOB_PERIODIC_OFFLINE_OPERATIONS,
+            ExistingPeriodicWorkPolicy.UPDATE,
+            request
+        )
+    }
+
+    override fun startOfflineOperations() {
+        val inputData = Data.Builder()
+            .putString(OfflineOperationsWorker.JOB_NAME, JOB_OFFLINE_OPERATIONS)
+            .build()
+
+        val constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .build()
+
+        val request =
+            oneTimeRequestBuilder(OfflineOperationsWorker::class, JOB_OFFLINE_OPERATIONS, constraints = constraints)
+                .setInputData(inputData)
+                .build()
+
+        workManager.enqueueUniqueWork(
+            JOB_OFFLINE_OPERATIONS,
+            ExistingWorkPolicy.REPLACE,
+            request
+        )
+    }
+
     override fun schedulePeriodicFilesSyncJob(syncedFolderID: Long) {
         val arguments = Data.Builder()
             .putLong(FilesSyncWork.SYNCED_FOLDER_ID, syncedFolderID)
@@ -433,7 +481,7 @@ internal class BackgroundJobManagerImpl(
     override fun startImmediateFilesSyncJob(
         syncedFolderID: Long,
         overridePowerSaving: Boolean,
-        changedFiles: Array<String>
+        changedFiles: Array<String?>
     ) {
         val arguments = Data.Builder()
             .putBoolean(FilesSyncWork.OVERRIDE_POWER_SAVING, overridePowerSaving)
@@ -536,9 +584,14 @@ internal class BackgroundJobManagerImpl(
 
         val tag = startFileUploadJobTag(user)
 
+        val constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .build()
+
         val request = oneTimeRequestBuilder(FileUploadWorker::class, JOB_FILES_UPLOAD, user)
             .addTag(tag)
             .setInputData(data)
+            .setConstraints(constraints)
             .build()
 
         workManager.enqueueUniqueWork(tag, ExistingWorkPolicy.KEEP, request)
@@ -578,7 +631,9 @@ internal class BackgroundJobManagerImpl(
             .setInputData(data)
             .build()
 
-        workManager.enqueueUniqueWork(tag, ExistingWorkPolicy.REPLACE, request)
+        // Since for each file new FileDownloadWorker going to be scheduled,
+        // better to use ExistingWorkPolicy.KEEP policy.
+        workManager.enqueueUniqueWork(tag, ExistingWorkPolicy.KEEP, request)
     }
 
     override fun getFileUploads(user: User): LiveData<List<JobInfo>> {

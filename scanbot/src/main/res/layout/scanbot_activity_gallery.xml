@@ -18,7 +18,7 @@
 		android:id="@+id/toolbar"
 		layout="@layout/scanbot_view_common_toolbar"
 		android:layout_width="match_parent"
-		android:layout_height="@dimen/scanbot_navigation_layout_height"
+		android:layout_height="wrap_content"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent" />

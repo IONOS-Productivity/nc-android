@@ -10,10 +10,10 @@
     <string name="action_edit">Επεξεργασία</string>
     <string name="action_empty_notifications">Εκκαθάριση ειδοποιήσεων</string>
     <string name="action_empty_trashbin">Άδειασμα απορριμάτων</string>
-    <string name="action_send_share">Αποστολή/Κοινή χρήση</string>
     <string name="action_switch_grid_view">Προβολή πλέγματος</string>
     <string name="action_switch_list_view">Προβολή λίστας</string>
     <string name="actionbar_mkdir">Νέος φάκελος</string>
+    <string name="actionbar_move_or_copy">Μετακίνηση ή αντιγραφή</string>
     <string name="actionbar_open_with">Άνοιγμα με</string>
     <string name="actionbar_search">Αναζήτηση</string>
     <string name="actionbar_see_details">Λεπτομέρειες</string>
@@ -26,20 +26,18 @@
     <string name="activity_chooser_send_file_title">Αποστολή</string>
     <string name="activity_chooser_title">Αποστολή συνδέσμου σε…</string>
     <string name="activity_icon">Δραστηριότητα</string>
-    <string name="add_another_public_share_link">Προσθήκη άλλου συνδέσμου</string>
     <string name="add_new_public_share">Προσθήκη νέου δημόσιου κοινόχρηστου συνδέσμου</string>
     <string name="add_to_cloud">Προσθήκη στο %1$s</string>
-    <string name="advanced_settings">Ρυθμίσεις για προχωρημένους</string>
+    <string name="advanced_settings">Προχωρημένες ρυθμίσεις</string>
     <string name="allow_resharing">Επιτρέπεται ο επαναδιαμοιρασμός</string>
     <string name="app_config_base_url_title">Βασική URL</string>
     <string name="app_config_proxy_port_title">Θύρα διαμεσολαβητή</string>
     <string name="app_widget_description">Εμφάνιση ενός γραφικού στοιχείου από τον πίνακα ελέγχου</string>
     <string name="appbar_search_in">Αναζήτηση στο %s</string>
-    <string name="assistant_screen_all_task_type">\'Ολα</string>
     <string name="assistant_screen_create_task_alert_dialog_input_field_placeholder">Πληκτρολογήστε κάποιο κείμενο</string>
-    <string name="assistant_screen_failed_task_text">Απέτυχε</string>
-    <string name="assistant_screen_successful_task_text">Ολοκληρωμένες</string>
-    <string name="assistant_screen_unknown_task_status_text">Άγνωστο</string>
+    <string name="assistant_screen_delete_task_alert_dialog_title">Διαγραφή εργασίας</string>
+    <string name="assistant_screen_task_delete_success_message">Η εργασία διαγράφηκε με επιτυχία</string>
+    <string name="assistant_task_detail_screen_input_button_title">Είσοδος</string>
     <string name="associated_account_not_found">Δεν βρέθηκε ο συνδεδεμένος λογαριασμός!</string>
     <string name="auth_access_failed">Αποτυχία πρόσβασης: %1$s</string>
     <string name="auth_account_does_not_exist">Ο λογαριασμός δεν υπάρχει ακόμα στη συσκευή</string>
@@ -85,7 +83,9 @@
     <string name="battery_optimization_disable">Απενεργοποίηση</string>
     <string name="battery_optimization_message">Η συσκευή σας ίσως έχει ενεργές ρυθμίσεις εξοικονόμησης ενέργειας. Η αυτόματη μεταφόρτωση δουλεύει μόνο εάν η εφαρμογή εξαιρεθεί από αυτές.</string>
     <string name="battery_optimization_title">Βελτιστοποίηση μπαταρίας</string>
-    <string name="brute_force_delay">Καθυστέρηση λόγω πάρα πολλών λανθασμένων προσπαθειών</string>
+    <string name="bottom_navigation_menu_favorites_label">Αγαπημένα</string>
+    <string name="bottom_navigation_menu_files_label">Όλα τα αρχεία</string>
+    <string name="bottom_navigation_menu_media_label">Μέσα ενημέρωσης</string>
     <string name="calendar">Ημερολόγιο</string>
     <string name="calendars">Ημερολόγια</string>
     <string name="certificate_load_problem">Πρόβλημα φόρτωσης του πιστοποιητικού.</string>
@@ -117,6 +117,7 @@
     <string name="common_loading">Φόρτωση…</string>
     <string name="common_next">Επόμενο</string>
     <string name="common_no">Όχι</string>
+    <string name="common_now">Τώρα</string>
     <string name="common_ok">Εντάξει</string>
     <string name="common_pending">Εκκρεμεί</string>
     <string name="common_remove">Διαγραφή</string>
@@ -152,7 +153,6 @@
     <string name="confirmation_remove_folder_alert">Θέλετε σίγουρα να διαγράψετε το %1$s και τα περιεχόμενά του;</string>
     <string name="confirmation_remove_folders_alert">Θέλετε να διαγράψετε τα επιλεγμένα αντικείμενα και τα περιεχόμενά τους;</string>
     <string name="confirmation_remove_local">Μόνο τοπικά</string>
-    <string name="conflict_file_headline">Αρχείο σε αντίφαση %1$s</string>
     <string name="conflict_local_file">Τοπικό αρχείο</string>
     <string name="conflict_message_description">Εάν επιλέξετε και τις δύο εκδόσεις, στο όνομα του τοπικού αρχείου θα προστεθεί ένας αριθμός.</string>
     <string name="conflict_server_file">Αρχείο διακομιστή</string>
@@ -215,6 +215,7 @@
     <string name="download_cannot_create_file">Αδυναμία δημιουργίας τοπικού αρχείου</string>
     <string name="download_download_invalid_local_file_name">Μη έγκυρο όνομα τοπικού αρχείου</string>
     <string name="download_latest_dev_version">Λήψη της τελευταίας έκδοσης προγραμματιστή</string>
+    <string name="download_limit">Όριο λήψης</string>
     <string name="downloader_download_failed_content">Η λήψη του %1$s δεν μπόρεσε να ολοκληρωθεί</string>
     <string name="downloader_download_failed_credentials_error">Η λήψη απέτυχε, συνδεθείτε ξανά</string>
     <string name="downloader_download_failed_ticker">Αποτυχημένη λήψη</string>
@@ -235,6 +236,7 @@
     <string name="drawer_item_home">Αρχική</string>
     <string name="drawer_item_notifications">Ειδοποιήσεις</string>
     <string name="drawer_item_on_device">Στην συσκευή</string>
+    <string name="drawer_item_personal_files">Προσωπικά αρχεία</string>
     <string name="drawer_item_recently_modified">Τροποποιήθηκαν πρόσφατα</string>
     <string name="drawer_item_shared">Κοινόχρηστα</string>
     <string name="drawer_item_trashbin">Διεγραμμένα αρχεία</string>
@@ -247,16 +249,11 @@
     <string name="e2e_not_yet_setup">Το Ε2Ε δεν έχει εγκατασταθεί ακόμη</string>
     <string name="e2e_offline">Δεν είναι δυνατό χωρίς σύνδεση στο διαδίκτυο</string>
     <string name="ecosystem_apps_display_more">Περισσότερα</string>
-    <string name="ecosystem_apps_display_notes">Σημειώσεις</string>
-    <string name="ecosystem_apps_display_talk">Ομιλία</string>
     <string name="ecosystem_apps_more">Περισσότερες εφαρμογές Nextcloud</string>
-    <string name="ecosystem_apps_notes">Nextcloud Σημειώσεις</string>
-    <string name="ecosystem_apps_talk">Nextcloud Talk</string>
     <string name="encrypted">Ορισμός ως κρυπτογραφημένου</string>
     <string name="end_to_end_encryption_confirm_button">Ρύθμιση κρυπτογράφησης</string>
     <string name="end_to_end_encryption_decrypting">Γίνεται αποκρυπτογράφηση…</string>
     <string name="end_to_end_encryption_dialog_close">Κλείσιμο</string>
-    <string name="end_to_end_encryption_enter_password">Παρακαλούμε εισάγετε το συνθηματικό για αποκρυπτογράφηση του ιδιωτικού κλειδιού.</string>
     <string name="end_to_end_encryption_folder_not_empty">Αυτός ο φάκελος δεν είναι κενός.</string>
     <string name="end_to_end_encryption_generating_keys">Γίνεται δημιουργία νέων κλειδιών…</string>
     <string name="end_to_end_encryption_keywords_description">Οι 12 λέξεις μαζί φτιάχνουν έναν πολύ ισχυρό κωδικό πρόσβασης, επιτρέποντας μόνο σε εσάς την προβολή και τη χρήση των κρυπτογραφημένων αρχείων σας. Παρακαλούμε γράψτε το κάπου και κρατήστε το σε ασφαλές μεέρος.</string>
@@ -299,7 +296,6 @@
     <string name="etm_background_jobs_stop_test_job">Τερματισμός δοκιμαστικής εργασίας</string>
     <string name="etm_migrations">Μετεγκαταστάσεις (αναβάθμιση εφαρμογής)</string>
     <string name="etm_preferences">Προτιμήσεις</string>
-    <string name="etm_title">Λειτουργία δοκιμής για Τεχνικούς</string>
     <string name="etm_transfer">Μεταφορά αρχείου</string>
     <string name="etm_transfer_enqueue_test_download">Προσθήκη στην ουρά δοκιμαστικής λήψης</string>
     <string name="etm_transfer_enqueue_test_upload">Προσθήκη στην ουρά δοκιμαστικής μεταφόρτωσης</string>
@@ -411,7 +407,6 @@
     <string name="icon_of_widget_entry">Εικονίδιο κενού γραφικού στοιχείου</string>
     <string name="image_editor_flip_horizontal">Οριζόντια περιστροφή</string>
     <string name="image_editor_flip_vertical">Κάθετη περιστροφή</string>
-    <string name="in_folder">Στον φάκελο %1$s</string>
     <string name="instant_upload_existing">Μεταφόρτωση, επίσης, υπαρχόντων αρχείων</string>
     <string name="instant_upload_on_charging">Μεταφόρτωση μόνο κατά τη διάρκεια φόρτισης</string>
     <string name="instant_upload_path">/InstantUpload</string>
@@ -483,7 +478,6 @@
     <string name="new_media_folder_detected">Εντοπίστηκε νέος φάκελος πολυμέσων %1$s.</string>
     <string name="new_media_folder_photos">φωτογραφία</string>
     <string name="new_media_folder_videos">Βίντεο</string>
-    <string name="new_notification">Νέα ειδοποίηση</string>
     <string name="new_version_was_created">Νέα έκδοση δημιουργήθηκε</string>
     <string name="no_actions">Δεν υπάρχουν ενέργειες για αυτόν τον χρήστη</string>
     <string name="no_browser_available">Δεν υπάρχει διαθέσιμη εφαρμογή για χειρισμό συνδέσμων</string>
@@ -532,7 +526,6 @@
     <string name="permission_deny">Απόρριψη</string>
     <string name="permission_storage_access">Επιπλέον διακαιώματα απαιτούνται για μεταφόρτωση και λήψη αρχείων.</string>
     <string name="picture_set_as_no_app">Δεν βρέθηκε εφαρμογή για τον ορισμό φωτογραφίας</string>
-    <string name="pin_home">Καρφίτσωμα στην αρχική οθόνη</string>
     <string name="pin_shortcut_label">Άνοιγμα %1$s</string>
     <string name="placeholder_fileSize">389 KB</string>
     <string name="placeholder_filename">placeholder.txt</string>
@@ -553,7 +546,6 @@
     <string name="pref_instant_name_collision_policy_title">Τι να κάνετε όταν το αρχείο υπάρχει ήδη;</string>
     <string name="prefs_add_account">Προσθήκη λογαριασμού</string>
     <string name="prefs_calendar_contacts_no_store_error">Δεν είναι εγκατεστημένο το Google Play ή το F-Droid</string>
-    <string name="prefs_calendar_contacts_summary">Ρύθμιση του DAVx5 (γνωστό και ως DAVdroid) (v1.3.0+) για τον παρόν λογαριασμό</string>
     <string name="prefs_category_about">Περί</string>
     <string name="prefs_category_details">Λεπτομέρειες</string>
     <string name="prefs_category_dev">Dev</string>
@@ -587,7 +579,6 @@
     <string name="prefs_setup_e2e">Ρύθμιση κρυπτογράφησης από άκρο σε άκρο</string>
     <string name="prefs_show_hidden_files">Εμφάνιση κρυφών αρχείων</string>
     <string name="prefs_sourcecode">Λήψη πηγαίου κώδικα</string>
-    <string name="prefs_storage_path">Φάκελος αποθήκευσης δεδομένων</string>
     <string name="prefs_sycned_folders_summary">Διαχείριση φακέλων για αυτόματη μεταφόρτωση</string>
     <string name="prefs_synced_folders_local_path_title">Τοπικός φάκελος</string>
     <string name="prefs_synced_folders_remote_path_title">Απομακρυσμένος φάκελος</string>
@@ -608,6 +599,7 @@
     <string name="recommend_subject">Δοκιμάστε το %1$s στη συσκευή σας!</string>
     <string name="recommend_text">Θέλω να σας προσκαλέσω να χρησιμοποιήσετε το %1$s στη συσκευή σας. \nΚατεβάστε εδώ:%2$s</string>
     <string name="recommend_urls">%1$s ή %2$s</string>
+    <string name="recommended_files_title">Προτεινόμενα αρχεία</string>
     <string name="refresh_content">Ανανέωση περιεχομένου</string>
     <string name="reload">Επαναφόρτωση</string>
     <string name="remote">(εξ αποστάσεως)</string>
@@ -622,10 +614,10 @@
     <string name="rename_local_fail_msg">Αδυναμία μετονομασίας τοπικού αντιγράφου, δοκιμάστε διαφορετικό όνομα</string>
     <string name="rename_server_fail_msg">Αδύνατη μετονομασία, το όνομα έχει ήδη δοθεί</string>
     <string name="request_account_deletion">Αίτηση διαγραφής λογαριασμού</string>
-    <string name="resized_image_not_possible_download">Δεν υπάρχει διαθέσιμη εικόνα με αλλαγμένο μέγεθος. Κατέβασμα της πλήρους εικόνας;</string>
     <string name="restore">Επαναφορά αρχείου</string>
     <string name="restore_backup">Επαναφορά αντιγράφου ασφαλείας</string>
     <string name="restore_button_description">Επαναφορά διαγραμμένου αρχείου</string>
+    <string name="restore_item">Επαναφορά</string>
     <string name="restore_selected">Επαναφορά επιλεγμένων</string>
     <string name="retrieving_file">Ανάκτηση αρχείου…</string>
     <string name="retry">Δοκιμή ξανά</string>
@@ -642,22 +634,20 @@
     <string name="screenshot_04_accounts_subline">σε ένα σημείο</string>
     <string name="screenshot_05_autoUpload_heading">Αυτόματη μεταφόρτωση</string>
     <string name="screenshot_06_davdroid_heading">Ημερολόγιο και Επαφές</string>
-    <string name="screenshot_06_davdroid_subline">Συγχρονισμός με DAVx5</string>
     <string name="search_error">Σφάλμα λήψης αποτελεσμάτων αναζήτησης</string>
     <string name="select_all">Επιλογή όλων</string>
     <string name="select_media_folder">Επίλεξε φάκελο πολυμέσων</string>
     <string name="select_one_template">Παρακαλούμε επιλέξτε ένα πρότυπο</string>
     <string name="select_template">Επιλογή προτύπου</string>
     <string name="send">Αποστολή</string>
-    <string name="send_share">Αποστολή/Κοινή χρήση</string>
     <string name="sendbutton_description">Εικονίδιο κουμπιού αποστολής</string>
     <string name="set_as">Ορισμός ως</string>
-    <string name="set_note">Ορισμός Σημείωσης</string>
     <string name="set_picture_as">Χρησιμοποίησε την εικόνα ως</string>
     <string name="set_status">Ορισμός κατάστασης</string>
     <string name="set_status_message">Ορισμός μηνύματος κατάστασης</string>
     <string name="share">Διαμοιρασμός</string>
     <string name="share_dialog_title">Γίνεται διαμοιρασμός</string>
+    <string name="share_download_limit">Ορισμός ορίου λήψης</string>
     <string name="share_expiration_date_format">%1$s</string>
     <string name="share_expiration_date_label">Λήγει στις %1$s</string>
     <string name="share_file">Διαμοιρασμός %1$s</string>
@@ -680,7 +670,6 @@
     <string name="share_permission_can_edit">Μπορεί να επεξεργαστεί</string>
     <string name="share_permission_file_drop">Απόθεση αρχείου</string>
     <string name="share_permission_view_only">Μόνο προβολή</string>
-    <string name="share_permissions">Δικαιώματα κοινής χρήσης</string>
     <string name="share_remote_clarification">%1$s (απομακρυσμένα)</string>
     <string name="share_room_clarification">%1$s (συνομιλιία)</string>
     <string name="share_send_new_email">Αποστολή νέου email</string>
@@ -697,7 +686,9 @@
     <string name="shared_icon_shared_via_link">Διαμοιράστηκε μέσω συνδέσμου</string>
     <string name="shared_with_you_by">Διαμοιράστηκε με εσάς από τον %1$s</string>
     <string name="sharee_add_failed">Η προσθήκη κοινής χρήσης απέτυχε</string>
+    <string name="show_all">Εμφάνιση όλων</string>
     <string name="show_images">Εμφάνιση φωτογραφιών</string>
+    <string name="show_less">Εμφάνιση λιγότερων</string>
     <string name="show_video">Εμφάνιση βίντεο</string>
     <string name="signup_with_provider">Σύνδεση με πάροχο</string>
     <string name="single_sign_on_request_token" formatted="true">Να επιτραπεί%1$sη πρόσβαση στον λογαριασμό σας Nextcloud %2$s ?</string>
@@ -740,14 +731,12 @@
     <string name="storage_permission_full_access">Πλήρης πρόσβαση </string>
     <string name="storage_permission_media_read_only">Media μόνο για ανάγνωση</string>
     <string name="storage_pictures">Φωτογραφίες</string>
-    <string name="store_full_desc">Η αυτο-φιλοξενούμενη πλατφόρμα παραγωγικότητας που δίνει τον έλεγχο σε εσάς.\n\nΔυνατότητες:\n* Εύκολη, σύγχρονη διεπαφή, κατάλληλη για το θέμα του διακομιστή σας\n* Ανεβάστε αρχεία στον διακομιστή Nextcloud\n* Μοιραστείτε τα με άλλους\n* Διατηρήστε τα αγαπημένα σας αρχεία και φακέλους συγχρονισμένα\n* Αναζήτηση σε όλους τους φακέλους του διακομιστή σας\n* Αυτόματη μεταφόρτωση φωτογραφιών και βίντεο που τραβήξατε από τη συσκευή σας\n* Μείνετε ενημερωμένοι με τις ειδοποιήσεις\n* Υποστήριξη πολλών λογαριασμών\n* Ασφαλής πρόσβαση στα δεδομένα σας με δακτυλικό αποτύπωμα ή PIN\n* Ενσωμάτωση με DAVx5 (παλαιότερα γνωστό ως DAVdroid) για εύκολη ρύθμιση του ημερολογίου και του συγχρονισμού επαφών\n\nΠαρακαλώ αναφέρετε όλα τα προβλήματα στη διεύθυνση https://github.com/nextcloud/android/issues και συζητήστε για αυτήν την εφαρμογή στη διεύθυνση https://help.nextcloud.com/c/clients/android\n\nNew to Nextcloud? Το Nextcloud είναι ένας ιδιωτικός διακομιστής συγχρονισμού και κοινής χρήσης αρχείων και επικοινωνίας. Είναι ένα δωρεάν λογισμικό και μπορείτε να το φιλοξενήσετε μόνοι σας ή να πληρώσετε μια εταιρεία για να το κάνει για εσάς. Με αυτόν τον τρόπο, έχετε τον έλεγχο των φωτογραφιών σας, του ημερολογίου και των δεδομένων των επαφών σας, των εγγράφων σας και οτιδήποτε άλλο.\n\nΡίξτε μια ματιά στο Nextcloud στη διεύθυνση https://nextcloud.com</string>
     <string name="store_full_dev_desc">Η αυτόνομη πλατφόρμα λειτουργικότητας που σας κρατά υπό έλεγχο. \nΑυτή είναι η επίσημη αναπτυξιακή έκδοση, που περιλαμβάνει καθημερινό δείγμα οποιασδήποτε νέας μη δοκιμασμένης λειτουργικότητας, η οποία μπορεί να προκαλέσει αστάθεια και απώλεια δεδομένων. Η εφαρμογή προορίζεται για χρήστες που είναι πρόθυμοι να δοκιμάσουν και να αναφέρουν σφάλματα όταν προκύψουν. Μην το χρησιμοποιείτε για την κανονική εργασία σας! \n\nΗ επίσημη έκδοση dev και η κανονική έκδοση είναι διαθέσιμες στο F-droid και μπορούν να εγκατασταθούν ταυτόχρονα.</string>
     <string name="store_short_desc">Η αυτόνομη πλατφόρμα λειτουργικότητας που σας κρατά υπό έλεγχο.</string>
     <string name="store_short_dev_desc">Η αυτόνομη πλατφόρμα λειτουργικότητας που σας κρατά υπό έλεγχο (προεπισκόπηση έκδοσης dev)</string>
     <string name="stream">Ροή με…</string>
     <string name="stream_not_possible_headline">Η εσωτερική ροή δεν είναι δυνατή</string>
     <string name="stream_not_possible_message">Παρακαλούμε να γίνει λήψη των μέσων ή να χρησιμοποιηθεί εξωτερική εφαρμογή</string>
-    <string name="strict_mode">Αυστηρή λειτουργία: δεν επιτρέπεται σύνδεση HTTP!</string>
     <string name="sub_folder_rule_year">Έτος</string>
     <string name="subject_shared_with_you">Ο \"%1$s\" διαμοιράστηκε μαζί σας</string>
     <string name="subject_user_shared_with_you">Ο %1$s διαμοιράστηκε το \"%2$s\" με εσάς</string>
@@ -781,6 +770,7 @@
     <string name="synced_folders_type">Τύπος</string>
     <string name="synced_icon">Συγχρονίστηκε</string>
     <string name="tags">Ετικέτες</string>
+    <string name="terms_of_service_title">Όροι χρήσης</string>
     <string name="test_server_button">Δοκιμή σύνδεσης με διακομιστή</string>
     <string name="thirtyMinutes">30 λεπτά</string>
     <string name="thisWeek">Αυτή την εβδομάδα</string>
@@ -904,7 +894,6 @@
     <string name="wait_a_moment">Παρακαλούμε περιμένετε…</string>
     <string name="wait_checking_credentials">Γίνεται έλεγχος αποθηκευμένων διαπιστευτηρίων</string>
     <string name="wait_for_tmp_copy_from_private_storage">Γίνεται αντιγραφή αρχείου από ιδιωτικό αποθηκευτικό χώρο</string>
-    <string name="webview_version_check_alert_dialog_positive_button_title">Ενημέρωση</string>
     <string name="what_s_new_image">Ποιά είναι η νέα εικόνα</string>
     <string name="whats_new_skip">Παράλειψη</string>
     <string name="whats_new_title">Τι νέο υπάρχει στο %1$s</string>
@@ -970,4 +959,4 @@
         <item quantity="one">%d επιλεγμένο</item>
         <item quantity="other">%d επιλεγμένα</item>
     </plurals>
-</resources>
+    </resources>

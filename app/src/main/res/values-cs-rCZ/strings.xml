@@ -15,7 +15,7 @@
     <string name="action_switch_list_view">Zobrazení v seznamu</string>
     <string name="actionbar_calendar_contacts_restore">Obnovit kontakty a kalendář</string>
     <string name="actionbar_mkdir">Nová složka</string>
-    <string name="actionbar_move_or_copy">Přesunout</string>
+    <string name="actionbar_move_or_copy">Přesunout nebo zkopírovat</string>
     <string name="actionbar_open_with">Otevřít pomocí</string>
     <string name="actionbar_search">Hledat</string>
     <string name="actionbar_see_details">Podrobnosti</string>
@@ -28,7 +28,6 @@
     <string name="activity_chooser_send_file_title">Odeslat</string>
     <string name="activity_chooser_title">Poslat odkaz na…</string>
     <string name="activity_icon">Aktivita</string>
-    <string name="add_another_public_share_link">Přidat další odkaz</string>
     <string name="add_new_public_share">Přidat nový veřejný odkaz na sdílení</string>
     <string name="add_new_secure_file_drop">Přidat nové bezpečné předání souborů</string>
     <string name="add_to_cloud">Přidat k %1$s</string>
@@ -46,27 +45,23 @@
     <string name="app_config_proxy_port_title">Port proxy</string>
     <string name="app_widget_description">Zobrazuje jeden ovládací prvek z nástěnky</string>
     <string name="appbar_search_in">Hledat v %s</string>
-    <string name="assistant_screen_all_task_type">Vše</string>
+    <string name="assistant_screen_add_task_alert_dialog_title">Přidat nový úkol</string>
+    <string name="assistant_screen_create_a_new_task_from_bottom_right_text">Z pravého dolního rohu vytvořte nový úkol</string>
     <string name="assistant_screen_create_task_alert_dialog_input_field_placeholder">Zadejte nějaký text</string>
     <string name="assistant_screen_delete_task_alert_dialog_description">Opravdu chcete tuto úlohu smazat?</string>
     <string name="assistant_screen_delete_task_alert_dialog_title">Smazat úkol</string>
-    <string name="assistant_screen_failed_task_text">Nezdařilo se</string>
-    <string name="assistant_screen_loading">Načítá se seznam úkolů – vyčkejte</string>
-    <string name="assistant_screen_no_task_available_for_all_task_filter_text">Není k dispozici žádný úkol. Aby bylo možné vytvořit nový úkol, vyberte jeho typ.</string>
+    <string name="assistant_screen_loading">Načítání seznamu úkolů…</string>
     <string name="assistant_screen_no_task_available_text">Pro typ úkolu %s nejsou k dispozici žádné úkoly – nový úkol je možné vytvořit vpravo dole.</string>
-    <string name="assistant_screen_running_task_text">Probíhá</string>
-    <string name="assistant_screen_scheduled_task_status_text">Naplánováno</string>
-    <string name="assistant_screen_successful_task_text">Dokončeno</string>
     <string name="assistant_screen_task_create_fail_message">Při vytváření úlohy se vyskytla chyba</string>
     <string name="assistant_screen_task_create_success_message">Úloha byla úspěšně vytvořena</string>
     <string name="assistant_screen_task_delete_fail_message">Při mazání úlohy se vyskytla chyba</string>
     <string name="assistant_screen_task_delete_success_message">Úloha úspěšně smazána</string>
+    <string name="assistant_screen_task_list_empty_message">Seznam úkolů je prázdný.</string>
     <string name="assistant_screen_task_list_error_state_message">Nedaří se získat seznam úloh – zkontrolujte připojení k Internetu.</string>
     <string name="assistant_screen_task_more_actions_bottom_sheet_delete_action">Smazat úlohu</string>
     <string name="assistant_screen_task_output_empty_text">Výstup z úkolu ještě není připraven.</string>
     <string name="assistant_screen_task_types_error_state_message">Nedaří se získat typy úloh – zkontrolujte připojení k Internetu.</string>
     <string name="assistant_screen_top_bar_title">Asistent</string>
-    <string name="assistant_screen_unknown_task_status_text">Neznámé</string>
     <string name="assistant_task_detail_screen_input_button_title">Vstup</string>
     <string name="assistant_task_detail_screen_output_button_title">Výstup</string>
     <string name="associated_account_not_found">Související účet nenalezen!</string>
@@ -103,8 +98,12 @@
     <string name="authenticator_activity_login_error">Došlo k problému při zpracovávání vašeho požadavku na přihlášení se. Zkuste to prosím později.</string>
     <string name="authenticator_activity_please_complete_login_process">Dokončete proces přihlášení prostřednictvím webového prohlížeče</string>
     <string name="auto_upload_file_behaviour_kept_in_folder">ponechán v původní složce, protože je pouze pro čtení</string>
+    <string name="auto_upload_gplay">Chování automatického nahrávání změněno</string>
+    <string name="auto_upload_gplay_desc">Kvůli omezením, nově zavedeným společností Google, funkce pro automatické nahrávání už nebude schopná automaticky odebrat soubory, které už byly nahrány.</string>
+    <string name="auto_upload_gplay_desc2">Kvůli omezením, nově zavedeným ze strany Google, jsme byli nuceni odebrat důležité oprávnění. Výsledkem je, že automatické nahrávání bude moci pouze nahrávat soubory s obrázky a videi.\nOvěřte, že přístup k takovým médiím je nastaven na „Vždy umožnit vše“.</string>
     <string name="auto_upload_on_wifi">Nahrávat pouze přes neúčtované Wi-Fi připojení</string>
     <string name="auto_upload_path">/AutoUpload</string>
+    <string name="auto_upload_sub_folder_warning">Tato složka už je obsažena v synchronizaci nadřazené složky, což může způsobovat duplicitní nahrávání</string>
     <string name="autoupload_configure">Nastavit</string>
     <string name="autoupload_create_new_custom_folder">Vytvořit nové uživatelsky určené nastavení složky</string>
     <string name="autoupload_custom_folder">Nastavit uživatelsky určenou složku</string>
@@ -118,7 +117,10 @@
     <string name="battery_optimization_disable">Vypnout</string>
     <string name="battery_optimization_message">Vaše zařízení nejspíš má zapnuté snižování vybíjení akumulátoru. Automatické nahrávání funguje správně jen tehdy, když pro tuto aplikaci nastavíte výjimku.</string>
     <string name="battery_optimization_title">Optimalizace pro snižování vybíjení akumulátoru</string>
-    <string name="brute_force_delay">Pozdrženo z důvodu příliš mnoha nezdařených pokusů</string>
+    <string name="bottom_navigation_menu_assistant_label">Asistent</string>
+    <string name="bottom_navigation_menu_favorites_label">Oblíbené</string>
+    <string name="bottom_navigation_menu_files_label">Všechny soubory</string>
+    <string name="bottom_navigation_menu_media_label">Média</string>
     <string name="calendar">Kalendář</string>
     <string name="calendars">Kalendáře</string>
     <string name="certificate_load_problem">Došlo k problému s načtením certifikátu.</string>
@@ -133,6 +135,7 @@
     <string name="clear_notifications_failed">Upozornění se nepodařilo vyčistit.</string>
     <string name="clear_status_message">Vyčistit stavovou zprávu</string>
     <string name="clear_status_message_after">Vyčistit stavovou zprávu po uplynutí</string>
+    <string name="click_to_learn_how_to_re_enable_auto_uploads">Pro znovuzapnutí automatického nahrávání je třeba ručního zásahu</string>
     <string name="clipboard_label">Text zkopírován z %1$s</string>
     <string name="clipboard_no_text_to_copy">Neobdržen žádný text pro zkopírování do schránky</string>
     <string name="clipboard_text_copied">Odkaz zkopírován</string>
@@ -150,6 +153,7 @@
     <string name="common_loading">Načítání…</string>
     <string name="common_next">Další</string>
     <string name="common_no">Ne</string>
+    <string name="common_now">Nyní</string>
     <string name="common_ok">OK</string>
     <string name="common_pending">Čekající</string>
     <string name="common_remove">Smazat</string>
@@ -186,8 +190,7 @@
     <string name="confirmation_remove_folders_alert">Opravdu chcete vybrané položky a jejich obsah odstranit?</string>
     <string name="confirmation_remove_local">Pouze místní</string>
     <string name="conflict_dialog_error">Nepodařilo se vytvořit dialog nástroje pro řešení konfliktu</string>
-    <string name="conflict_file_headline">Kolidující soubor %1$s</string>
-    <string name="conflict_folder_headline">Konflikt složek</string>
+    <string name="conflict_folder_headline">Kolize složek</string>
     <string name="conflict_local_file">Místní soubor</string>
     <string name="conflict_message_description">Pokud zvolíte obě verze, k názvu místního souboru bude připojeno číslo.</string>
     <string name="conflict_message_description_for_folder">Pokud zvolíte obě verze, k názvu místní složky bude připojeno číslo.</string>
@@ -200,6 +203,7 @@
     <string name="contacts_backup_button">Zazálohovat nyní</string>
     <string name="contacts_preferences_backup_scheduled">Zálohování naplánováno a brzy začne</string>
     <string name="contacts_preferences_import_scheduled">Import naplánován a brzy začne</string>
+    <string name="contacts_preferences_import_scheduled_fail">Import se nepodařilo spustit. Zkuste to znovu</string>
     <string name="contacts_preferences_no_file_found">Nenalezen žádný soubor</string>
     <string name="contacts_preferences_something_strange_happened">Nepodařilo se najít vaši nejaktuálnější zálohu!</string>
     <string name="copied_to_clipboard">Zkopírováno do schránky</string>
@@ -214,6 +218,7 @@
     <string name="could_not_retrieve_url">Nepodařilo se získat URL</string>
     <string name="create">Vytvořit</string>
     <string name="create_dir_fail_msg">Nepodařilo se vytvořit složku</string>
+    <string name="create_link">Vytvořit odkaz</string>
     <string name="create_new">Nové</string>
     <string name="create_new_document">Nový dokument</string>
     <string name="create_new_folder">Nová složka</string>
@@ -253,6 +258,7 @@
     <string name="download_cannot_create_file">Nedaří se vytvořit místní soubor</string>
     <string name="download_download_invalid_local_file_name">Neplatný název pro místní soubor</string>
     <string name="download_latest_dev_version">Stáhnout si nejnovější vývojářskou verzi</string>
+    <string name="download_limit">Limit stahování</string>
     <string name="downloader_download_failed_content">Nepodařilo se stáhnout %1$s</string>
     <string name="downloader_download_failed_credentials_error">Stahování se nezdařilo, přihlaste se znovu</string>
     <string name="downloader_download_failed_ticker">Stahování se nezdařilo</string>
@@ -287,6 +293,7 @@
     <string name="drawer_quota">%1$s z %2$s použito</string>
     <string name="drawer_quota_unlimited">%1$s použito</string>
     <string name="drawer_synced_folders">Automatické nahrávání</string>
+    <string name="due_to_too_many_wrong_attempts">%s z důvodu příliš mnoha nezdařených pokusů</string>
     <string name="e2e_counter_too_old">Čítač je příliš starý</string>
     <string name="e2e_hash_not_found">Otisk nenalezen</string>
     <string name="e2e_not_yet_setup">Šifrování mezi koncovými body doposud není nastavené</string>
@@ -294,17 +301,15 @@
     <string name="e2e_signature_does_not_match">Signatura se neshoduje</string>
     <string name="ecosystem_apps_display_assistant">Asistent</string>
     <string name="ecosystem_apps_display_more">Další</string>
-    <string name="ecosystem_apps_display_notes">Poznámky</string>
-    <string name="ecosystem_apps_display_talk">Talk</string>
     <string name="ecosystem_apps_more">Další Nextcloud aplikace</string>
-    <string name="ecosystem_apps_notes">Nextcloud poznámky</string>
-    <string name="ecosystem_apps_talk">Nextcloud Talk</string>
     <string name="email_pick_failed">Nepodařilo se vybrat e-mailovou adresu.</string>
     <string name="encrypted">Nastavit jako šifrované</string>
+    <string name="end_to_end_encryption_certificate_unavailable">Nedaří se získat certifikát serveru</string>
+    <string name="end_to_end_encryption_certificate_verification_failed">Nepodařilo se ověřit platnost veřejného klíče</string>
     <string name="end_to_end_encryption_confirm_button">Nastavit šifrování</string>
     <string name="end_to_end_encryption_decrypting">Rozšifrovávání…</string>
     <string name="end_to_end_encryption_dialog_close">Zavřít</string>
-    <string name="end_to_end_encryption_enter_password">Zadejte heslo pro rozšifrování soukromého klíče.</string>
+    <string name="end_to_end_encryption_enter_passphrase_to_access_files">Pro přístup k souborům zadejte svou heslovou frázi</string>
     <string name="end_to_end_encryption_folder_not_empty">Tato složka není prázdná.</string>
     <string name="end_to_end_encryption_generating_keys">Vytváření nových klíčů…</string>
     <string name="end_to_end_encryption_keywords_description">Všech 12 slov dohromady tvoří velmi silné heslo, které pouze vám umožní prohlížet a používat vaše zašifrované soubory. Poznamenejte si ho a někam bezpečně uložte.</string>
@@ -312,8 +317,11 @@
     <string name="end_to_end_encryption_passphrase_title">Poznamenejte si někam své 12 slovné šifrovací heslo</string>
     <string name="end_to_end_encryption_password">Heslo…</string>
     <string name="end_to_end_encryption_retrieving_keys">Získávání klíčů…</string>
+    <string name="end_to_end_encryption_server_private_key_unavailable">Nepodařilo se získat soukromý klíč</string>
+    <string name="end_to_end_encryption_server_public_key_unavailable">Nepodařilo se získat veřejný klíč</string>
     <string name="end_to_end_encryption_storing_keys">Ukládání klíčů</string>
     <string name="end_to_end_encryption_title">Nastavit šifrování</string>
+    <string name="end_to_end_encryption_unexpected_error_occurred">Při stahování klíčů došlo k neočekávané chybě</string>
     <string name="end_to_end_encryption_unsuccessful">Nepodařilo se uložit klíče, zkuste to znovu.</string>
     <string name="end_to_end_encryption_wrong_password">Chyba při rozšifrovávání. Nesprávné heslo?</string>
     <string name="enter_destination_filename">Zadejte cílový soubor</string>
@@ -358,6 +366,7 @@
     <string name="etm_transfer_type">Přenos</string>
     <string name="etm_transfer_type_download">Stáhnout</string>
     <string name="etm_transfer_type_upload">Nahrát</string>
+    <string name="external_shares">Externí sdílení</string>
     <string name="fab_label">Přidat nebo nahrát</string>
     <string name="failed_to_download">Předání souboru správci stahování se nezdařilo</string>
     <string name="failed_to_print">Soubor se nepodařilo vytisknout</string>
@@ -427,10 +436,10 @@
     <string name="file_name_validator_error_invalid_character">Název obsahuje neplatné znaky: %s</string>
     <string name="file_name_validator_error_reserved_names">%s je nepovolený název</string>
     <string name="file_name_validator_rename_before_move_or_copy">%s. Před přesunutím nebo kopírováním soubor přejmenujte</string>
-    <string name="file_name_validator_upload_content_error">Některý obsah nebylo možné nahrát protože obsahuje rezervované názvy nebo neplatné znaky</string>
     <string name="file_not_found">Soubor nenalezen</string>
     <string name="file_not_synced">Soubor se nepodařilo synchronizovat. Zobrazuje se poslední dostupná verze.</string>
     <string name="file_rename">Přejmenovat</string>
+    <string name="file_upload_worker_error_notification_title">Nahrávání se nezdařilo. Není k dispozici připojení k Internetu</string>
     <string name="file_upload_worker_same_file_already_exists">Stejný soubor už existuje, nezjištěny žádné konflikty</string>
     <string name="file_version_restored_error">Chyba při obnovování verze souboru!</string>
     <string name="file_version_restored_successfully">Verze souboru úspěšně obnovena.</string>
@@ -449,6 +458,7 @@
     <string name="first_run_3_text">Snadno použitelný webový e-mailový klient, kalendář a kontakty</string>
     <string name="first_run_4_text">Sdílení obrazovky, online schůzky a webové konference</string>
     <string name="folder_already_exists">Složka už existuje</string>
+    <string name="folder_best_viewed_in">Tuto složku je nejlépe prohlížet si v %1$s.</string>
     <string name="folder_confirm_create">Vytvořit</string>
     <string name="folder_list_empty_headline">Nejsou zde žádné složky</string>
     <string name="folder_name_empty">Název složky je třeba vyplnit</string>
@@ -494,10 +504,10 @@
     <string name="image_preview_unit_megapixel">%s MP</string>
     <string name="image_preview_unit_millimetres">%s mm</string>
     <string name="image_preview_unit_seconds">%s s</string>
-    <string name="in_folder">ve složce %1$s</string>
     <string name="instant_upload_existing">Také nahrát už existující soubory</string>
     <string name="instant_upload_on_charging">Nahrávat pouze při nabíjení</string>
     <string name="instant_upload_path">/InstantUpload</string>
+    <string name="internal_shares">Vnitřní sdílení</string>
     <string name="internal_two_way_sync">Interní obousměrná synchronizace</string>
     <string name="internal_two_way_sync_not_yet">Zatím ještě ne, brzy bude synchronizováno</string>
     <string name="internet_connection_required_for_encrypted_folder_setup">Pro nastavení šifrované složky je zapotřebí připojení k Internetu</string>
@@ -617,6 +627,7 @@
     <string name="oneHour">1 hodina</string>
     <string name="online">Online</string>
     <string name="online_status">Stav online</string>
+    <string name="open_in_app">Otevřít v %1$s</string>
     <string name="outdated_server">Verze aplikace na straně serveru už je příliš stará na to, aby šla nadále používat – přejděte na novější!</string>
     <string name="overflow_menu">Další nabídka</string>
     <string name="pass_code_configure_your_pass_code">Zadejte svůj bezpečnostní kód</string>
@@ -633,6 +644,7 @@
     <string name="permission_allow">Povolit</string>
     <string name="permission_deny">Odepřít</string>
     <string name="permission_storage_access">Vyžadována dodatečná oprávnění pro nahrávání a stahování souborů.</string>
+    <string name="pick_contact_to_share_with">Vyberte kontakt kterému nasdílet</string>
     <string name="picture_set_as_no_app">Nenalezena žádná aplikace pro nastavení obrázku</string>
     <string name="pin_home">Připnout na domovskou obrazovku</string>
     <string name="pin_shortcut_label">Otevřít %1$s</string>
@@ -657,7 +669,6 @@
     <string name="prefs_add_account">Přidat účet</string>
     <string name="prefs_calendar_contacts">Synchronizovat kalendář a kontakty</string>
     <string name="prefs_calendar_contacts_no_store_error">F-Droid ani Google Play není nainstalováno</string>
-    <string name="prefs_calendar_contacts_summary">Nastavit pro stávající účet DAVx5 (dříve známé pod názvem DAVdroid) (verze 1.3.0 a novější)</string>
     <string name="prefs_calendar_contacts_sync_setup_successful">Nastavení synchronizace kalendáře a kontaktů</string>
     <string name="prefs_category_about">O aplikaci</string>
     <string name="prefs_category_details">Podrobnosti</string>
@@ -669,7 +680,6 @@
     <string name="prefs_daily_contact_backup_summary">Každodenní záloha vašich kontaktů</string>
     <string name="prefs_data_storage_location">Umístění úložiště dat</string>
     <string name="prefs_data_storage_location_summary">Spravovat umístění úložiště dat</string>
-    <string name="prefs_davx5_setup_error">Neočekávaná chyba při nastavování DAVx5 (dříve známého jako  DAVdroid)</string>
     <string name="prefs_e2e_active">Šifrování mezi koncovými body je nastaveno!</string>
     <string name="prefs_e2e_mnemonic">E2E mnemotechnická</string>
     <string name="prefs_e2e_no_device_credentials">Pokud chcete zobrazit mnemotechnickou, zapněte přihlašovací údaje zařízení.</string>
@@ -702,7 +712,6 @@
     <string name="prefs_show_ecosystem_apps_summary">Doporučování Nextcloud aplikací v záhlaví navigace</string>
     <string name="prefs_show_hidden_files">Zobrazit skryté soubory</string>
     <string name="prefs_sourcecode">Získat zdrojové kódy</string>
-    <string name="prefs_storage_path">Složka pro ukládání dat</string>
     <string name="prefs_sycned_folders_summary">Spravovat složky pro automatické nahrávání</string>
     <string name="prefs_synced_folders_local_path_title">Místní složka</string>
     <string name="prefs_synced_folders_remote_path_title">Vzdálená složka</string>
@@ -727,11 +736,14 @@
     <string name="push_notifications_old_login">Žádná push upozornění kvůli zastaralé relaci přihlášení. Zvažte odebrání a opětovné přidání svého účtu.</string>
     <string name="push_notifications_temp_error">Push upozornění momentálně nejsou k dispozici.</string>
     <string name="qr_could_not_be_read">QR kód se nepodařilo načíst!</string>
+    <string name="re_enable_auto_upload">Změny v automatickém nahrávání</string>
+    <string name="re_enable_auto_upload_desc">Kvůli omezením, nově zavedeným ze strany Google, jsme byli nuceni odebrat důležité oprávnění. V tuto chvíli se s Google snažíme tento problém vyřešit a obnovit tak plnou funkčnost.\n\nPokud chcete znovu zapnout automatické nahrávání nových fotek a videí:\nVyberte „Umožnit vše“ v následujícím dialogu (nebo v nastavení systému).\nKdyž budete dotázání, povolte poloha médií, protože toto Nextcloud umožní ukládat při nahrávání obrázků údaje o poloze.\n\nDialog oprávnění se zobrazí pouze v případě potřeby. Pokud si nejste jistí, důkladně toto zkontrolujte v nastavení systému.\n\nAutomatické nahrávání bude moci nahrávat obrázky a videa pouze pokud používáte instalaci aplikace Nextcloud z Google Play.\n\nPodívejte se po jakýchkoli souborech, u kterých se mohlo stát, že nebyly od prosince 2024 nahrány. </string>
     <string name="receive_external_files_activity_start_sync_folder_is_not_exists_message">Složku se nepodařilo nalézt – operace synchronizace je zrušena</string>
     <string name="receive_external_files_activity_unable_to_find_file_to_upload">Nebylo možné nalézt soubor k nahrání</string>
     <string name="recommend_subject">Vyzkoušejte %1$s ve svém zařízení!</string>
     <string name="recommend_text">Rád(a) bych Vás/Tě pozval(a) k používání %1$s na vašem/tvém zařízení.\nKe stažení zde: %2$s</string>
     <string name="recommend_urls">%1$s nebo %2$s</string>
+    <string name="recommended_files_title">Doporučené soubory</string>
     <string name="refresh_content">Znovu načíst obsah</string>
     <string name="reload">Načíst znovu</string>
     <string name="remote">(vzdálené)</string>
@@ -751,10 +763,10 @@
     <string name="request_account_deletion_button">Vyžádat si smazání</string>
     <string name="request_account_deletion_details">Vyžádat si trvalé vymazání účtu u poskytovatele služby</string>
     <string name="resharing_is_not_allowed">Zásada nebo oprávnění brání sdílení dál dalším</string>
-    <string name="resized_image_not_possible_download">Zmenšená verze obrázku není k dispozici. Stáhnout obrázek v plné velikosti?</string>
     <string name="restore">Obnovit soubor</string>
     <string name="restore_backup">Obnovit ze zálohy</string>
     <string name="restore_button_description">Obnovit smazaný soubor</string>
+    <string name="restore_item">Obnovit</string>
     <string name="restore_selected">Obnovit označené</string>
     <string name="retrieving_file">Získávání souboru…</string>
     <string name="retry">Zkusit znovu</string>
@@ -772,7 +784,7 @@
     <string name="screenshot_05_autoUpload_heading">Automatické nahrávání</string>
     <string name="screenshot_05_autoUpload_subline">pro vaše fotky a videa</string>
     <string name="screenshot_06_davdroid_heading">Kalendář a kontakty</string>
-    <string name="screenshot_06_davdroid_subline">Synchronizace s DAVx5</string>
+    <string name="screenshot_06_davdroid_subline">Synchronizace s DAVx⁵</string>
     <string name="search_error">Chyba při získávání výsledků hledání</string>
     <string name="secure_share_not_set_up">Zabezpečené sdílení není pro tohoto uživatele nastaveno</string>
     <string name="secure_share_search">Zabezpečené sdílení…</string>
@@ -781,7 +793,7 @@
     <string name="select_one_template">Vyberte jednu šablonu</string>
     <string name="select_template">Vybrat šablonu</string>
     <string name="send">Odeslat</string>
-    <string name="send_share">Odeslat sdílení</string>
+    <string name="send_share">Poslat sdílení</string>
     <string name="sendbutton_description">Ikona tlačítka pro odesílání</string>
     <string name="set_as">Nastavit jako</string>
     <string name="set_note">Nastavit poznámku</string>
@@ -792,6 +804,7 @@
     <string name="share">Nasdílet</string>
     <string name="share_copy_link">Nasdílet a zkopírovat odkaz</string>
     <string name="share_dialog_title">Sdílení</string>
+    <string name="share_download_limit">Nastavit limit pro stahování</string>
     <string name="share_expiration_date_format">%1$s</string>
     <string name="share_expiration_date_label">Platnost skončí %1$s</string>
     <string name="share_file">Nasdílet %1$s</string>
@@ -820,6 +833,7 @@
     <string name="share_remote_clarification">%1$s (vzdálený)</string>
     <string name="share_room_clarification">%1$s (konverzace)</string>
     <string name="share_search">Jméno, identifikátor v rámci federovaného cloudu, nebo e-mailová adresa…</string>
+    <string name="share_search_internal">Přidat uživatele a týmy</string>
     <string name="share_send_new_email">Odeslat nový e-mail</string>
     <string name="share_send_note">Poznámka pro příjemce</string>
     <string name="share_settings">Nastavení</string>
@@ -835,8 +849,11 @@
     <string name="shared_with_you_by">Nasdílel(a) vám %1$s</string>
     <string name="sharee_add_failed">Přidání sdílejícího se nezdařilo</string>
     <string name="sharee_already_added_to_file">Přidávání sdílení se nezdařilo. Tento soubor či složka už je této osobě či skupině nasdílena.</string>
+    <string name="show_all">Zobrazit vše</string>
     <string name="show_images">Zobrazit fotky</string>
+    <string name="show_less">Zobrazit méně</string>
     <string name="show_video">Zobrazit videa</string>
+    <string name="sign_tos_failed">Prosíme ručně zkontrolujte všeobecné podmínky!</string>
     <string name="signup_with_provider">Zaregistrovat se u poskytovatele</string>
     <string name="single_sign_on_request_token" formatted="true">Povolit %1$s přístup k vašemu Nextcloud účtu %2$s?</string>
     <string name="sort_by">Řadit podle</string>
@@ -878,14 +895,12 @@
     <string name="storage_permission_full_access">Plný přístup</string>
     <string name="storage_permission_media_read_only">Média pouze pro čtení</string>
     <string name="storage_pictures">Obrázky</string>
-    <string name="store_full_desc">Platforma pro produktivitu hostovaná u vás, kde vaše data jsou opravdu vaše.\n\nFunkce:\n* Snadno použitelné moderní rozhraní, s motivem vzhledu sladěným s tím nastaveným na serveru\n* Nahrávání souborů na vámi využívaný Nextcloud server\n* Jejich sdílení s ostatními\n* Udržování vašich oblíbených souborů a složek synchronizovaných\n* Vyhledávání napříč všemi složkami na vámi využívaném serveru\n* Automatické nahrávání fotek a videí pořízených vaším zařízením\n* Budete v obraze díky upozorněním\n* Podpora vícero účtů\n* Zabezpečení přístupu k vašim datům otiskem prstu nebo PIN kódem\n*  Propojení s aplikací DAVx5 (dříve známé jako DAVdroid) pro snadné nastavení synchronizace kalendáře a kontaktů\n\nVeškeré problémy prosíme hlaste na https://github.com/nextcloud/android/issues, diskutovat lze na https://help.nextcloud.com/c/clients/android\n\nJeště Nextcloud neznáte? Je to server pro komunikaci, synchronizaci a sdílení vašich dat. Jedná se o svobodný software, který můžete provozovat sami, nebo si jako službu koupit u jiné společnosti. Díky tomu máte kontrolu nad svými fotkami, kalendářem, kontakty i dokumenty a vším ostatním.\n\nVíce o Nextcloud naleznete na  https://nextcloud.com</string>
     <string name="store_full_dev_desc">Platforma pro produktivitu hostovaná u vás, kde vaše data jsou opravdu vaše.\nToto je oficiální vývojová verze, sloužící jako denně aktualizovaná ukázka nových nevyzkoušených funkcí, což může způsobovat nestabilitu a ztráty dat. Je určeno pro uživatele, kteří jsou ochotní testovat a hlásit chyby na které narazí. Nepoužívejte pro svou produktivní práci!\n\nJak vývojová tak produkční verze jsou k dispozici na F-droid a mohou být nainstalovány souběžně.</string>
     <string name="store_short_desc">Platforma pro produktivitu hostovaná u vás, kde vaše data jsou opravdu vaše</string>
     <string name="store_short_dev_desc">Platforma pro produktivitu hostovaná u vás, kde vaše data jsou opravdu vaše (vývojová verze)</string>
     <string name="stream">Proudově vysílat pomocí…</string>
     <string name="stream_not_possible_headline">Vnitřní proudové vysílání není možné</string>
     <string name="stream_not_possible_message">Médium si namísto toho stáhněte nebo použijte externí aplikaci.</string>
-    <string name="strict_mode">Přísný režim: připojení přes HTTP není dovoleno!</string>
     <string name="sub_folder_rule_day">Rok/měsíc/den</string>
     <string name="sub_folder_rule_month">Rok/měsíc</string>
     <string name="sub_folder_rule_year">Rok</string>
@@ -896,8 +911,10 @@
     <string name="subtitle_videos_only">Pouze videa</string>
     <string name="suggest">Doporučit</string>
     <string name="sync">Synchronizovat</string>
+    <string name="sync_anyway">Synchronizovat i tak</string>
     <string name="sync_conflicts_in_favourites_ticker">Nalezeny konflikty</string>
     <string name="sync_current_folder_was_removed">Složka %1$s už neexistuje</string>
+    <string name="sync_duplication">Synchronizovat duplikaci</string>
     <string name="sync_fail_content">Nepodařilo se synchronizovat %1$s</string>
     <string name="sync_fail_content_unauthorized">Nesprávné heslo pro %1$s</string>
     <string name="sync_fail_in_favourites_ticker">Automatická synchronizace souborů se nezdařila</string>
@@ -914,6 +931,7 @@
     <string name="sync_not_enough_space_dialog_title">Nedostatek místa</string>
     <string name="sync_status_button">Tlačítko Stav synchronizace</string>
     <string name="sync_string_files">Soubory</string>
+    <string name="sync_warning_button">Tlačítko varování synchronizace</string>
     <string name="synced_folder_settings_button">Tlačítko Nastavení</string>
     <string name="synced_folders_configure_folders">Nastavit složky</string>
     <string name="synced_folders_new_info">Okamžité nahrávání bylo zcela předěláno. Proto je třeba ho znovu nastavit z hlavní nabídky.\n\nUžijte si nové a rozšířené automatické nahrávání.</string>
@@ -922,6 +940,8 @@
     <string name="synced_folders_type">Typ</string>
     <string name="synced_icon">Synchronizováno</string>
     <string name="tags">Štítky</string>
+    <string name="terms_of_service_title">Všeobecné podmínky</string>
+    <string name="terms_of_services_agree">Souhlasím s výše uvedenými VP</string>
     <string name="test_server_button">Vyzkoušet připojení k serveru</string>
     <string name="thirtyMinutes">30 minut</string>
     <string name="thisWeek">Tento týden</string>
@@ -982,6 +1002,8 @@
     <string name="upload_file_dialog_title">Zadejte název a typ souboru k nahrání</string>
     <string name="upload_files">Nahrát soubory</string>
     <string name="upload_global_pause_title">Veškerá nahrávání jsou pozastavena</string>
+    <string name="upload_gplay">Změna oprávnění</string>
+    <string name="upload_gplay_desc">Je zapotřebí nového oprávnění pro přístup k informacím o umístění u nahrávaných obrázků.\nOvěřte, že přístup k médiím je nastaven na „Vždy umožnit vše“.</string>
     <string name="upload_item_action_button">Tlačítko akce Nahrát položku</string>
     <string name="upload_list_delete">Smazat</string>
     <string name="upload_list_empty_headline">Nic k nahrání</string>
@@ -1070,9 +1092,6 @@
     <string name="wait_checking_credentials">Ověřování uložených přihlašovacích údajů</string>
     <string name="wait_for_tmp_copy_from_private_storage">Kopírování souboru ze soukromého úložiště</string>
     <string name="warn_rename_extension">Změna přípony může způsobit, že se soubor bude otevírat jinou aplikací</string>
-    <string name="webview_version_check_alert_dialog_message">Aby se bylo možné přihlásit, zaktualizujte systémovou aplikaci WebView Androidu</string>
-    <string name="webview_version_check_alert_dialog_positive_button_title">Aktualizovat</string>
-    <string name="webview_version_check_alert_dialog_title">Zaktualizovat Android System WebView</string>
     <string name="what_s_new_image">Obrázek „Co je nového“</string>
     <string name="whats_new_skip">Přeskočit</string>
     <string name="whats_new_title">Co je v %1$s nového</string>
@@ -1094,6 +1113,24 @@
         <item quantity="few">%d minuty</item>
         <item quantity="many">%d minut</item>
         <item quantity="other">%d minuty</item>
+    </plurals>
+    <plurals name="time_seconds_ago">
+        <item quantity="one">před %d sekundou</item>
+        <item quantity="few">před %d sekundami</item>
+        <item quantity="many">před %d sekundami</item>
+        <item quantity="other">před %d sekundami</item>
+    </plurals>
+    <plurals name="time_minutes_ago">
+        <item quantity="one">před %d minutou</item>
+        <item quantity="few">před %d minutami</item>
+        <item quantity="many">před %d minutami</item>
+        <item quantity="other">před %d minutami</item>
+    </plurals>
+    <plurals name="time_hours_ago">
+        <item quantity="one">před %d hodinou</item>
+        <item quantity="few">před %d hodinami</item>
+        <item quantity="many">před %d hodinami</item>
+        <item quantity="other">před %d hodinami</item>
     </plurals>
     <plurals name="sync_fail_in_favourites_content">
         <item quantity="one">Nedaří se synchronizovat %1$d soubor (konflikty: %2$d)</item>
@@ -1167,6 +1204,12 @@
         <item quantity="many">%1$d souborů</item>
         <item quantity="other">%1$d soubory</item>
     </plurals>
+    <plurals name="trashbin_list__footer__file">
+        <item quantity="one">%1$d položka</item>
+        <item quantity="few">%1$d položky</item>
+        <item quantity="many">%1$d položek</item>
+        <item quantity="other">%1$d položky</item>
+    </plurals>
     <plurals name="synced_folders_show_hidden_folders">
         <item quantity="one">Zobrazit %1$d skrytou složku</item>
         <item quantity="few">Zobrazit %1$d skryté složky</item>
@@ -1178,5 +1221,35 @@
         <item quantity="few">%d vybrány</item>
         <item quantity="many">%d vybraných</item>
         <item quantity="other">%d vybrané</item>
+    </plurals>
+    <plurals name="delay_message">
+        <item quantity="one">Pozdrženo %d sekundu kvůli příliš mnoha chybným pokusům</item>
+        <item quantity="few">Pozdrženo %d sekundy kvůli příliš mnoha chybným pokusům</item>
+        <item quantity="many">Pozdrženo %d sekund kvůli příliš mnoha chybným pokusům</item>
+        <item quantity="other">Pozdrženo %d sekundy kvůli příliš mnoha chybným pokusům</item>
+    </plurals>
+    <plurals name="delay_message_minutes">
+        <item quantity="one">Pozdrženo %d minutu kvůli příliš mnoha chybným pokusům</item>
+        <item quantity="few">Pozdrženo %d minut kvůli příliš mnoha chybným pokusům</item>
+        <item quantity="many">Pozdrženo %d minuty kvůli příliš mnoha chybným pokusům</item>
+        <item quantity="other">Pozdrženo %d minut kvůli příliš mnoha chybným pokusům</item>
+    </plurals>
+    <plurals name="delay_message_minutes_part">
+        <item quantity="one">Odloženo o %d minutu</item>
+        <item quantity="few">Odloženo o %d minuty</item>
+        <item quantity="many">Odloženo o %d minut</item>
+        <item quantity="other">Odloženo o %d minuty</item>
+    </plurals>
+    <plurals name="delay_message_seconds_part">
+        <item quantity="one">%d sekunda</item>
+        <item quantity="few">%d sekundy</item>
+        <item quantity="many">%d sekund</item>
+        <item quantity="other">%d sekundy</item>
+    </plurals>
+    <plurals name="share_download_limit_description">
+        <item quantity="one">Zbývá %1$d stažení</item>
+        <item quantity="few">Zbývají %1$d stažení</item>
+        <item quantity="many">Zbývá %1$d stažení</item>
+        <item quantity="other">Zbývají %1$d stažení</item>
     </plurals>
 </resources>

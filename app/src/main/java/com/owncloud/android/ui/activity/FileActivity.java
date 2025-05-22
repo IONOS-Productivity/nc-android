@@ -21,8 +21,10 @@ import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -31,17 +33,21 @@ import android.text.TextUtils;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.ionos.annotation.IonosCustomization;
+import com.ionos.utils.IonosBuildHelper;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.account.UserAccountManager;
 import com.nextcloud.client.jobs.BackgroundJobManager;
 import com.nextcloud.client.jobs.download.FileDownloadWorker;
 import com.nextcloud.client.jobs.upload.FileUploadHelper;
 import com.nextcloud.client.network.ConnectivityService;
+import com.nextcloud.receiver.NetworkChangeListener;
+import com.nextcloud.receiver.NetworkChangeReceiver;
 import com.nextcloud.utils.EditorUtils;
 import com.nextcloud.utils.extensions.ActivityExtensionsKt;
 import com.nextcloud.utils.extensions.BundleExtensionsKt;
 import com.nextcloud.utils.extensions.FileExtensionsKt;
 import com.nextcloud.utils.extensions.IntentExtensionsKt;
+import com.nextcloud.utils.mdm.MDMConfig;
 import com.owncloud.android.MainApp;
 import com.owncloud.android.R;
 import com.owncloud.android.authentication.AuthenticatorActivity;
@@ -64,6 +70,7 @@ import com.owncloud.android.lib.resources.shares.ShareType;
 import com.owncloud.android.operations.CreateShareViaLinkOperation;
 import com.owncloud.android.operations.CreateShareWithShareeOperation;
 import com.owncloud.android.operations.GetSharesForFileOperation;
+import com.owncloud.android.operations.SetFilesDownloadLimitOperation;
 import com.owncloud.android.operations.SynchronizeFileOperation;
 import com.owncloud.android.operations.SynchronizeFolderOperation;
 import com.owncloud.android.operations.UnshareOperation;
@@ -113,7 +120,7 @@ import static com.owncloud.android.ui.activity.FileDisplayActivity.TAG_PUBLIC_LI
  */
 public abstract class FileActivity extends DrawerActivity
     implements OnRemoteOperationListener, ComponentsGetter, SslUntrustedCertDialog.OnSslUntrustedCertListener,
-    LoadingVersionNumberTask.VersionDevInterface, FileDetailSharingFragment.OnEditShareListener {
+    LoadingVersionNumberTask.VersionDevInterface, FileDetailSharingFragment.OnEditShareListener, NetworkChangeListener {
 
     public static final String EXTRA_FILE = "com.owncloud.android.ui.activity.FILE";
     public static final String EXTRA_LIVE_PHOTO_FILE = "com.owncloud.android.ui.activity.LIVE.PHOTO.FILE";
@@ -162,8 +169,7 @@ public abstract class FileActivity extends DrawerActivity
     @Inject
     UserAccountManager accountManager;
 
-    @Inject
-    ConnectivityService connectivityService;
+    @Inject public ConnectivityService connectivityService;
 
     @Inject
     BackgroundJobManager backgroundJobManager;
@@ -176,6 +182,13 @@ public abstract class FileActivity extends DrawerActivity
 
     @Inject
     ArbitraryDataProvider arbitraryDataProvider;
+
+    private NetworkChangeReceiver networkChangeReceiver;
+
+    private void registerNetworkChangeReceiver() {
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(networkChangeReceiver, filter);
+    }
 
     @Override
     public void showFiles(boolean onDeviceOnly, boolean personalFiles) {
@@ -199,10 +212,11 @@ public abstract class FileActivity extends DrawerActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        networkChangeReceiver = new NetworkChangeReceiver(this, connectivityService);
         usersAndGroupsSearchConfig.reset();
         mHandler = new Handler();
         mFileOperationsHelper = new FileOperationsHelper(this, getUserAccountManager(), connectivityService, editorUtils);
-        User user = null;
+        User user;
 
         if (savedInstanceState != null) {
             mFile = BundleExtensionsKt.getParcelableArgument(savedInstanceState, FileActivity.EXTRA_FILE, OCFile.class);
@@ -228,11 +242,16 @@ public abstract class FileActivity extends DrawerActivity
         mOperationsServiceConnection = new OperationsServiceConnection();
         bindService(new Intent(this, OperationsService.class), mOperationsServiceConnection,
                     Context.BIND_AUTO_CREATE);
+        registerNetworkChangeReceiver();
     }
 
-    public void checkInternetConnection() {
-        if (connectivityService != null && connectivityService.isConnected()) {
+    @Override
+    public void networkAndServerConnectionListener(boolean isNetworkAndServerAvailable) {
+        if (isNetworkAndServerAvailable) {
             hideInfoBox();
+            refreshList();
+        } else {
+            showInfoBox(R.string.offline_mode);
         }
     }
 
@@ -266,6 +285,8 @@ public abstract class FileActivity extends DrawerActivity
             unbindService(mOperationsServiceConnection);
             mOperationsServiceBinder = null;
         }
+
+        unregisterReceiver(networkChangeReceiver);
 
         super.onDestroy();
     }
@@ -349,7 +370,7 @@ public abstract class FileActivity extends DrawerActivity
                 (result.isException() && result.getException() instanceof AuthenticatorException)
         )) {
 
-            requestCredentialsUpdate(this);
+            requestCredentialsUpdate();
 
             if (result.getCode() == ResultCode.UNAUTHORIZED) {
                 DisplayUtils.showSnackMessage(
@@ -396,7 +417,7 @@ public abstract class FileActivity extends DrawerActivity
             onCreateShareViaLinkOperationFinish((CreateShareViaLinkOperation) operation, result);
         } else if (operation instanceof CreateShareWithShareeOperation) {
             onUpdateShareInformation(result, R.string.sharee_add_failed);
-        } else if (operation instanceof UpdateShareViaLinkOperation || operation instanceof UpdateShareInfoOperation) {
+        } else if (operation instanceof UpdateShareViaLinkOperation || operation instanceof UpdateShareInfoOperation || operation instanceof SetFilesDownloadLimitOperation) {
             onUpdateShareInformation(result, R.string.updating_share_failed);
         } else if (operation instanceof UpdateSharePermissionsOperation) {
             onUpdateShareInformation(result, R.string.updating_share_failed);
@@ -413,38 +434,34 @@ public abstract class FileActivity extends DrawerActivity
      *
      * Equivalent to call requestCredentialsUpdate(context, null);
      *
-     * @param context   Android Context needed to access the {@link AccountManager}. Received as a parameter
-     *                  to make the method accessible to {@link android.content.BroadcastReceiver}s.
      */
-    protected void requestCredentialsUpdate(Context context) {
-        requestCredentialsUpdate(context, null);
+    protected void requestCredentialsUpdate() {
+        requestCredentialsUpdate(null);
     }
 
     /**
      * Invalidates the credentials stored for the given OC account and requests new credentials to the user,
      * navigating to {@link AuthenticatorActivity}
      *
-     * @param context   Android Context needed to access the {@link AccountManager}. Received as a parameter
-     *                  to make the method accessible to {@link android.content.BroadcastReceiver}s.
      * @param account   Stored OC account to request credentials update for. If null, current account will
      *                  be used.
      */
-    protected void requestCredentialsUpdate(Context context, Account account) {
+    protected void requestCredentialsUpdate(Account account) {
         if (account == null) {
             account = getAccount();
         }
 
-        boolean remoteWipeSupported = accountManager.getServerVersion(account).isRemoteWipeSupported();
-
-        if (remoteWipeSupported) {
-            new CheckRemoteWipeTask(backgroundJobManager, account, new WeakReference<>(this)).execute();
-        } else {
-            performCredentialsUpdate(account, context);
-        }
+        new CheckRemoteWipeTask(backgroundJobManager, account, new WeakReference<>(this)).execute();
     }
 
-    @IonosCustomization
+    @IonosCustomization("Remove account with invalid token on Ionos build")
     public void performCredentialsUpdate(Account account, Context context) {
+        if (IonosBuildHelper.isIonosBuild()) {
+            /// Remove account and allow SessionMixin to handle switching to another account
+            /// or requesting new account creation
+            backgroundJobManager.startAccountRemovalJob(account.name, false);
+            return;
+        }
         try {
             /// step 1 - invalidate credentials of current account
             OwnCloudAccount ocAccount = new OwnCloudAccount(account, context);
@@ -469,8 +486,6 @@ public abstract class FileActivity extends DrawerActivity
                 AuthenticatorActivity.EXTRA_ACTION,
                 AuthenticatorActivity.ACTION_UPDATE_EXPIRED_TOKEN);
             updateAccountCredentials.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
-            updateAccountCredentials.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            updateAccountCredentials.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivityForResult(updateAccountCredentials, REQUEST_CODE__UPDATE_CREDENTIALS);
         } catch (com.owncloud.android.lib.common.accounts.AccountUtils.AccountNotFoundException e) {
             DisplayUtils.showSnackMessage(this, R.string.auth_account_does_not_exist);
@@ -529,31 +544,39 @@ public abstract class FileActivity extends DrawerActivity
     public void showLoadingDialog(String message) {
         dismissLoadingDialog();
 
-        Fragment frag = getSupportFragmentManager().findFragmentByTag(DIALOG_WAIT_TAG);
-        if (frag == null) {
-            Log_OC.d(TAG, "show loading dialog");
-            LoadingDialog loadingDialogFragment = LoadingDialog.newInstance(message);
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            boolean isDialogFragmentReady = ActivityExtensionsKt.isDialogFragmentReady(this, loadingDialogFragment);
-            if (isDialogFragmentReady) {
-                loadingDialogFragment.show(fragmentTransaction, DIALOG_WAIT_TAG);
+        runOnUiThread(() -> {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            Fragment fragment = fragmentManager.findFragmentByTag(DIALOG_WAIT_TAG);
+            if (fragment == null) {
+                Log_OC.d(TAG, "show loading dialog");
+                LoadingDialog loadingDialogFragment = LoadingDialog.newInstance(message);
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                boolean isDialogFragmentReady = ActivityExtensionsKt.isDialogFragmentReady(this, loadingDialogFragment);
+                if (isDialogFragmentReady) {
+                    fragmentTransaction.add(loadingDialogFragment, DIALOG_WAIT_TAG);
+                    fragmentTransaction.commitNow();
+                }
             }
-        }
+        });
     }
 
     /**
      * Dismiss loading dialog
      */
     public void dismissLoadingDialog() {
-        Fragment frag = getSupportFragmentManager().findFragmentByTag(DIALOG_WAIT_TAG);
-        if (frag != null) {
-            Log_OC.d(TAG, "dismiss loading dialog");
-            LoadingDialog loadingDialogFragment = (LoadingDialog) frag;
-            boolean isDialogFragmentReady = ActivityExtensionsKt.isDialogFragmentReady(this, loadingDialogFragment);
-            if (isDialogFragmentReady) {
-                loadingDialogFragment.dismiss();
+        runOnUiThread(() -> {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            Fragment fragment = fragmentManager.findFragmentByTag(DIALOG_WAIT_TAG);
+            if (fragment != null) {
+                Log_OC.d(TAG, "dismiss loading dialog");
+                LoadingDialog loadingDialogFragment = (LoadingDialog) fragment;
+                boolean isDialogFragmentReady = ActivityExtensionsKt.isDialogFragmentReady(this, loadingDialogFragment);
+                if (isDialogFragmentReady) {
+                    loadingDialogFragment.dismiss();
+                    fragmentManager.executePendingTransactions();
+                }
             }
-        }
+        });
     }
 
     private void doOnResumeAndBound() {
@@ -696,12 +719,14 @@ public abstract class FileActivity extends DrawerActivity
                                             OCFile file,
                                             String link,
                                             final ViewThemeUtils viewThemeUtils) {
-        ClipboardUtil.copyToClipboard(activity, link, false);
-        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content), R.string.clipboard_text_copied,
-                                          Snackbar.LENGTH_LONG)
-            .setAction(R.string.share, v -> showShareLinkDialog(activity, file, link));
-        viewThemeUtils.ionos.material.themeSnackbar(snackbar);
-        snackbar.show();
+        if (MDMConfig.INSTANCE.shareViaLink(activity) && MDMConfig.INSTANCE.clipBoardSupport(activity)) {
+            ClipboardUtil.copyToClipboard(activity, link, false);
+            Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content), R.string.clipboard_text_copied,
+                                              Snackbar.LENGTH_LONG)
+                .setAction(R.string.share, v -> showShareLinkDialog(activity, file, link));
+            viewThemeUtils.material.themeSnackbar(snackbar);
+            snackbar.show();
+        }
     }
 
     public static void showShareLinkDialog(FileActivity activity, ServerFileInterface file, String link) {
@@ -769,7 +794,7 @@ public abstract class FileActivity extends DrawerActivity
                 snackbar = Snackbar.make(sharingFragment.getView(), result.getMessage(), Snackbar.LENGTH_LONG);
             }
 
-            viewThemeUtils.ionos.material.themeSnackbar(snackbar);
+            viewThemeUtils.material.themeSnackbar(snackbar);
             snackbar.show();
         }
     }
@@ -846,7 +871,7 @@ public abstract class FileActivity extends DrawerActivity
                                                                                            operation,
                                                                                            getResources()),
                                                   Snackbar.LENGTH_LONG);
-                viewThemeUtils.ionos.material.themeSnackbar(snackbar);
+                viewThemeUtils.material.themeSnackbar(snackbar);
                 snackbar.show();
             }
         }

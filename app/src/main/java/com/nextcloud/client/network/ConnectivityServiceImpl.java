@@ -13,6 +13,8 @@ import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
+import android.os.Handler;
+import android.os.Looper;
 
 import com.nextcloud.client.account.Server;
 import com.nextcloud.client.account.UserAccountManager;
@@ -22,6 +24,7 @@ import com.owncloud.android.lib.common.utils.Log_OC;
 
 import org.apache.commons.httpclient.HttpStatus;
 
+import androidx.annotation.NonNull;
 import androidx.core.net.ConnectivityManagerCompat;
 import kotlin.jvm.functions.Function1;
 
@@ -35,6 +38,7 @@ class ConnectivityServiceImpl implements ConnectivityService {
     private final ClientFactory clientFactory;
     private final GetRequestBuilder requestBuilder;
     private final WalledCheckCache walledCheckCache;
+    private final Handler mainThreadHandler = new Handler(Looper.getMainLooper());
 
     static class GetRequestBuilder implements Function1<String, GetMethod> {
         @Override
@@ -53,6 +57,24 @@ class ConnectivityServiceImpl implements ConnectivityService {
         this.clientFactory = clientFactory;
         this.requestBuilder = requestBuilder;
         this.walledCheckCache = walledCheckCache;
+    }
+
+    @Override
+    public void isNetworkAndServerAvailable(@NonNull GenericCallback<Boolean> callback) {
+        new Thread(() -> {
+            Network activeNetwork = platformConnectivityManager.getActiveNetwork();
+            NetworkCapabilities networkCapabilities = platformConnectivityManager.getNetworkCapabilities(activeNetwork);
+            boolean hasInternet = networkCapabilities != null && networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET);
+
+            boolean result;
+            if (hasInternet) {
+                result = !isInternetWalled();
+            } else {
+                result = false;
+            }
+
+            mainThreadHandler.post(() -> callback.onComplete(result));
+        }).start();
     }
 
     @Override

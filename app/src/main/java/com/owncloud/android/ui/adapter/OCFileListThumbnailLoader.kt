@@ -30,18 +30,20 @@ import com.owncloud.android.utils.theme.ViewThemeUtils
 
 class OCFileListThumbnailLoader(
     private val file: OCFile,
-    private val thumbnailView: ImageView,
+    private val viewHolder: ListViewHolder,
     private val user: User,
     private val storageManager: FileDataStorageManager,
     private val asyncTasks: MutableList<ThumbnailGenerationTask>,
     private val gridView: Boolean,
     private val context: Context,
-    private val shimmerView: LoaderImageView,
     private val preferences: AppPreferences,
     private val viewThemeUtils: ViewThemeUtils,
     private val syncedFolderProvider: SyncedFolderProvider?,
-    private val iconView: ImageView,
 ) {
+    private val iconView: ImageView? = viewHolder.itemLayout.findViewById(R.id.icon)
+    private val videoOverlay: ImageView? = viewHolder.itemLayout.findViewById(R.id.videoOverlay)
+    private val thumbnailView: ImageView = viewHolder.thumbnail
+    private val shimmerView: LoaderImageView = viewHolder.shimmerThumbnail
 
     fun load() {
         if (file.isFolder) {
@@ -58,9 +60,6 @@ class OCFileListThumbnailLoader(
         val cachedThumbnail = ThumbnailsCacheManager.getBitmapFromDiskCache(cacheKey)
         if (cachedThumbnail == null || file.isUpdateThumbnailNeeded) {
             loadFromRemote()
-        } else if (MimeTypeUtil.isVideo(file)) {
-            val cachedThumbnailWithOverlay = ThumbnailsCacheManager.addVideoOverlay(cachedThumbnail, context)
-            showThumbnail(cachedThumbnailWithOverlay)
         } else {
             showThumbnail(cachedThumbnail)
         }
@@ -110,7 +109,7 @@ class OCFileListThumbnailLoader(
         val isAutoUploadFolder = SyncedFolderProvider.isAutoUploadFolder(syncedFolderProvider, file, user)
         val isDarkModeActive = preferences.isDarkModeEnabled
         val overlayIconId = file.getFileOverlayIconId(isAutoUploadFolder)
-        val fileIcon = MimeTypeUtil.getFileIcon(isDarkModeActive, overlayIconId, context, viewThemeUtils)
+        val fileIcon = MimeTypeUtil.getFolderIcon(isDarkModeActive, overlayIconId, context, viewThemeUtils)
         showIcon(fileIcon)
     }
 
@@ -120,10 +119,18 @@ class OCFileListThumbnailLoader(
     }
 
     private fun showIcon(icon: Drawable) {
-        iconView.setImageDrawable(icon)
-        iconView.visibility = View.VISIBLE
-        thumbnailView.visibility = View.GONE
-        shimmerView.visibility = View.GONE
+        if (iconView != null) {
+            iconView.setImageDrawable(icon)
+            iconView.visibility = View.VISIBLE
+            thumbnailView.visibility = View.GONE
+            shimmerView.visibility = View.GONE
+            videoOverlay?.visibility = View.GONE
+        } else {
+            thumbnailView.setImageDrawable(icon)
+            thumbnailView.visibility = View.VISIBLE
+            shimmerView.visibility = View.GONE
+            videoOverlay?.visibility = View.GONE
+        }
     }
 
     private fun showThumbnail(thumbnail: Bitmap) {
@@ -132,16 +139,18 @@ class OCFileListThumbnailLoader(
     }
 
     private fun showExistedThumbnail() {
-        iconView.visibility = View.GONE
+        iconView?.visibility = View.GONE
         thumbnailView.visibility = View.VISIBLE
         shimmerView.visibility = View.GONE
+        videoOverlay?.visibility = if (MimeTypeUtil.isVideo(file)) View.VISIBLE else View.GONE
     }
 
     private fun showShimmer() {
         shimmerView.setImageResource(R.drawable.background)
         shimmerView.resetLoader()
-        iconView.visibility = View.GONE
+        iconView?.visibility = View.GONE
         thumbnailView.visibility = View.GONE
         shimmerView.visibility = View.VISIBLE
+        videoOverlay?.visibility = View.GONE
     }
 }

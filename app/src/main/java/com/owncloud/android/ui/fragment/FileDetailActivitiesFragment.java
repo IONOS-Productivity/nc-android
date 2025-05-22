@@ -3,6 +3,7 @@
  *
  * SPDX-FileCopyrightText: 2019 Chris Narkiewicz <hello@ezaquarii.com>
  * SPDX-FileCopyrightText: 2018 Andy Scherzinger <info@andy-scherzinger.de>
+ * SPDX-FileCopyrightText: 2025 TSI-mc <surinder.kumar@t-systems.com>
  * SPDX-License-Identifier: AGPL-3.0-or-later OR GPL-2.0-only
  */
 package com.owncloud.android.ui.fragment;
@@ -17,7 +18,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.material.snackbar.Snackbar;
-import com.ionos.annotation.IonosCustomization;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.account.UserAccountManager;
 import com.nextcloud.client.di.Injectable;
@@ -110,7 +110,6 @@ public class FileDetailActivitiesFragment extends Fragment implements
     }
 
     @Override
-    @IonosCustomization
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
@@ -165,7 +164,7 @@ public class FileDetailActivitiesFragment extends Fragment implements
 
         binding.submitComment.setOnClickListener(v -> submitComment());
 
-        viewThemeUtils.ionos.material.colorTextInputLayout(binding.commentInputFieldContainer);
+        viewThemeUtils.material.colorTextInputLayout(binding.commentInputFieldContainer);
 
         DisplayUtils.setAvatar(user,
                                this,
@@ -333,7 +332,7 @@ public class FileDetailActivitiesFragment extends Fragment implements
                 } else {
                     Log_OC.d(TAG, result.getLogMessage());
                     // show error
-                    String logMessage = result.getLogMessage();
+                    String logMessage = result.getLogMessage(requireContext());
                     if (result.getHttpCode() == HttpStatus.SC_NOT_MODIFIED) {
                         logMessage = getString(R.string.activities_no_results_message);
                     }

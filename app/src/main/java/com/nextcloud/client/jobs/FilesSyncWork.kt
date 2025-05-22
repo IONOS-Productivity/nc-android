@@ -23,7 +23,6 @@ import com.nextcloud.client.jobs.upload.FileUploadWorker
 import com.nextcloud.client.network.ConnectivityService
 import com.nextcloud.client.preferences.SubFolderRule
 import com.owncloud.android.R
-import com.owncloud.android.datamodel.ArbitraryDataProvider
 import com.owncloud.android.datamodel.ArbitraryDataProviderImpl
 import com.owncloud.android.datamodel.FilesystemDataProvider
 import com.owncloud.android.datamodel.MediaFolderType
@@ -230,29 +229,34 @@ class FilesSyncWork(
         val uploadAction: Int?
         val needsCharging: Boolean
         val needsWifi: Boolean
-        var file: File
         val accountName = syncedFolder.account
+
         val optionalUser = userAccountManager.getUser(accountName)
         if (!optionalUser.isPresent) {
             return
         }
+
         val user = optionalUser.get()
-        val arbitraryDataProvider: ArbitraryDataProvider? = if (lightVersion) {
+        val arbitraryDataProvider = if (lightVersion) {
             ArbitraryDataProviderImpl(context)
         } else {
             null
         }
+
+        // Ensure only new files are processed for upload.
+        // Files that have been previously uploaded cannot be re-uploaded,
+        // even if they have been deleted or moved from the target folder,
+        // as they are already marked as uploaded in the database.
         val paths = filesystemDataProvider.getFilesForUpload(
             syncedFolder.localPath,
             syncedFolder.id.toString()
         )
-
-        if (paths.size == 0) {
+        if (paths.isEmpty()) {
             return
         }
 
         val pathsAndMimes = paths.map { path ->
-            file = File(path)
+            val file = File(path)
             val localPath = file.absolutePath
             Triple(
                 localPath,
@@ -260,15 +264,17 @@ class FilesSyncWork(
                 MimeTypeUtil.getBestMimeTypeByFilename(localPath)
             )
         }
+
         val localPaths = pathsAndMimes.map { it.first }.toTypedArray()
         val remotePaths = pathsAndMimes.map { it.second }.toTypedArray()
 
         if (lightVersion) {
             needsCharging = resources.getBoolean(R.bool.syncedFolder_light_on_charging)
-            needsWifi = arbitraryDataProvider!!.getBooleanValue(
+            needsWifi = arbitraryDataProvider?.getBooleanValue(
                 accountName,
                 SettingsActivity.SYNCED_FOLDER_LIGHT_UPLOAD_ON_WIFI
-            )
+            ) ?: true
+
             val uploadActionString = resources.getString(R.string.syncedFolder_light_upload_behaviour)
             uploadAction = getUploadAction(uploadActionString)
         } else {
@@ -276,6 +282,7 @@ class FilesSyncWork(
             needsWifi = syncedFolder.isWifiOnly
             uploadAction = syncedFolder.uploadAction
         }
+
         FileUploadHelper.instance().uploadNewFiles(
             user,
             localPaths,
@@ -290,7 +297,6 @@ class FilesSyncWork(
         )
 
         for (path in paths) {
-            // TODO batch update
             filesystemDataProvider.updateFilesystemFileAsSentForUpload(
                 path,
                 syncedFolder.id.toString()

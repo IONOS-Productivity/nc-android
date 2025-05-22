@@ -10,7 +10,6 @@ package com.nextcloud.client.di;
 import android.app.Application;
 
 import com.ionos.di.StratoModule;
-import com.ionos.scanbot.di.ScanbotComponent;
 import com.nextcloud.appReview.InAppReviewModule;
 import com.nextcloud.client.appinfo.AppInfoModule;
 import com.nextcloud.client.database.DatabaseModule;
@@ -19,6 +18,7 @@ import com.nextcloud.client.integrations.IntegrationsModule;
 import com.nextcloud.client.jobs.JobsModule;
 import com.nextcloud.client.jobs.download.FileDownloadHelper;
 import com.nextcloud.client.jobs.upload.FileUploadHelper;
+import com.nextcloud.client.media.BackgroundPlayerService;
 import com.nextcloud.client.network.NetworkModule;
 import com.nextcloud.client.onboarding.OnboardingModule;
 import com.nextcloud.client.preferences.PreferencesModule;
@@ -29,6 +29,8 @@ import com.owncloud.android.ui.whatsnew.ProgressIndicator;
 
 import javax.inject.Singleton;
 
+import androidx.annotation.OptIn;
+import androidx.media3.common.util.UnstableApi;
 import dagger.BindsInstance;
 import dagger.Component;
 import dagger.android.support.AndroidSupportInjectionModule;
@@ -58,6 +60,9 @@ public interface AppComponent {
 
     void inject(MediaControlView mediaControlView);
 
+    @OptIn(markerClass = UnstableApi.class)
+    void inject(BackgroundPlayerService backgroundPlayerService);
+
     void inject(ThemeableSwitchPreference switchPreference);
 
     void inject(FileUploadHelper fileUploadHelper);
@@ -65,8 +70,6 @@ public interface AppComponent {
     void inject(FileDownloadHelper fileDownloadHelper);
 
     void inject(ProgressIndicator progressIndicator);
-
-    ScanbotComponent scanbotComponent();
 
     @Component.Builder
     interface Builder {

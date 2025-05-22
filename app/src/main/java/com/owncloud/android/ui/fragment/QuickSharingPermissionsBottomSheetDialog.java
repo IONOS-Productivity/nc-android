@@ -63,7 +63,7 @@ public class QuickSharingPermissionsBottomSheetDialog extends BottomSheetDialog 
         binding = QuickSharingPermissionsBottomSheetFragmentBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        viewThemeUtils.ionos.platform.themeDialog(binding.getRoot());
+        viewThemeUtils.platform.themeDialog(binding.getRoot());
 
         setUpRecyclerView();
         setOnShowListener(d ->

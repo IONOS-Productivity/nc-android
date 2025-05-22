@@ -16,6 +16,7 @@ import android.view.View;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.ionos.annotation.IonosCustomization;
+import com.nextcloud.utils.mdm.MDMConfig;
 import com.owncloud.android.databinding.FileDetailsSharingMenuBottomSheetFragmentBinding;
 import com.owncloud.android.lib.resources.shares.OCShare;
 import com.owncloud.android.lib.resources.shares.ShareType;
@@ -48,7 +49,7 @@ public class FileDetailSharingMenuBottomSheetDialog extends BottomSheetDialog {
         binding = FileDetailsSharingMenuBottomSheetFragmentBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        viewThemeUtils.ionos.platform.themeDialog(binding.getRoot());
+        viewThemeUtils.platform.themeDialog(binding.getRoot());
 
         updateUI();
 
@@ -62,16 +63,15 @@ public class FileDetailSharingMenuBottomSheetDialog extends BottomSheetDialog {
 
     private void updateUI() {
         if (ocShare.getShareType() == ShareType.PUBLIC_LINK) {
-            binding.menuShareAddAnotherLink.setVisibility(View.VISIBLE);
-            binding.menuShareSendLink.setVisibility(View.VISIBLE);
+            if (MDMConfig.INSTANCE.sendFilesSupport(getContext())) {
+                binding.menuShareSendLink.setVisibility(View.VISIBLE);
+            }
         } else {
-            binding.menuShareAddAnotherLink.setVisibility(View.GONE);
             binding.menuShareSendLink.setVisibility(View.GONE);
         }
 
         if (SharingMenuHelper.isSecureFileDrop(ocShare)) {
             binding.menuShareAdvancedPermissions.setVisibility(View.GONE);
-            binding.menuShareAddAnotherLink.setVisibility(View.GONE);
         }
     }
 
@@ -93,11 +93,6 @@ public class FileDetailSharingMenuBottomSheetDialog extends BottomSheetDialog {
 
         binding.menuShareSendLink.setOnClickListener(v -> {
             actions.sendLink(ocShare);
-            dismiss();
-        });
-
-        binding.menuShareAddAnotherLink.setOnClickListener(v -> {
-            actions.addAnotherLink(ocShare);
             dismiss();
         });
     }

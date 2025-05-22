@@ -16,6 +16,8 @@ import androidx.work.ListenableWorker
 import androidx.work.WorkerFactory
 import androidx.work.WorkerParameters
 import com.ionos.privacy.PrivacyPreferences
+import com.ionos.scanbot.license.ScanbotLicenseDownloadWorker
+import com.ionos.scanbot.license.ScanbotLicenseJobFactory
 import com.nextcloud.client.account.UserAccountManager
 import com.nextcloud.client.core.Clock
 import com.nextcloud.client.device.DeviceInfo
@@ -24,6 +26,7 @@ import com.nextcloud.client.documentscan.GeneratePDFUseCase
 import com.nextcloud.client.documentscan.GeneratePdfFromImagesWork
 import com.nextcloud.client.integrations.deck.DeckApi
 import com.nextcloud.client.jobs.download.FileDownloadWorker
+import com.nextcloud.client.jobs.offlineOperations.OfflineOperationsWorker
 import com.nextcloud.client.jobs.upload.FileUploadWorker
 import com.nextcloud.client.logger.Logger
 import com.nextcloud.client.network.ConnectivityService
@@ -32,8 +35,6 @@ import com.owncloud.android.datamodel.ArbitraryDataProvider
 import com.owncloud.android.datamodel.SyncedFolderProvider
 import com.owncloud.android.datamodel.UploadsStorageManager
 import com.owncloud.android.utils.theme.ViewThemeUtils
-import com.ionos.scanbot.license.ScanbotLicenseDownloadWorker
-import com.ionos.scanbot.license.ScanbotLicenseJobFactory
 import org.greenrobot.eventbus.EventBus
 import javax.inject.Inject
 import javax.inject.Provider
@@ -101,10 +102,21 @@ class BackgroundJobFactory @Inject constructor(
                 GeneratePdfFromImagesWork::class -> createPDFGenerateWork(context, workerParameters)
                 HealthStatusWork::class -> createHealthStatusWork(context, workerParameters)
                 TestJob::class -> createTestJob(context, workerParameters)
+                OfflineOperationsWorker::class -> createOfflineOperationsWorker(context, workerParameters)
                 InternalTwoWaySyncWork::class -> createInternalTwoWaySyncWork(context, workerParameters)
                 else -> null // caller falls back to default factory
             }
         }
+    }
+
+    private fun createOfflineOperationsWorker(context: Context, params: WorkerParameters): ListenableWorker {
+        return OfflineOperationsWorker(
+            accountManager.user,
+            context,
+            connectivityService,
+            viewThemeUtils.get(),
+            params
+        )
     }
 
     private fun createFilesExportWork(context: Context, params: WorkerParameters): ListenableWorker {

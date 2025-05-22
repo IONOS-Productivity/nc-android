@@ -77,7 +77,10 @@ public abstract class EditorWebView extends ExternalSiteWebView {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
             }
-            this.getWebView().loadUrl(url);
+
+            if (!url.equals(this.getWebView().getUrl())) {
+                this.getWebView().loadUrl(url);
+            }
 
             new Handler().postDelayed(() -> {
                 if (this.getWebView().getVisibility() != View.VISIBLE) {
@@ -85,7 +88,7 @@ public abstract class EditorWebView extends ExternalSiteWebView {
                                                                     R.string.timeout_richDocuments, Snackbar.LENGTH_INDEFINITE)
                         .setAction(R.string.common_cancel, v -> closeView());
 
-                    viewThemeUtils.ionos.material.themeSnackbar(snackbar);
+                    viewThemeUtils.material.themeSnackbar(snackbar);
                     setLoadingSnackbar(snackbar);
                     snackbar.show();
                 }
@@ -250,7 +253,7 @@ public abstract class EditorWebView extends ExternalSiteWebView {
             boolean isAutoUploadFolder = SyncedFolderProvider.isAutoUploadFolder(syncedFolderProvider, file, user);
 
             Integer overlayIconId = file.getFileOverlayIconId(isAutoUploadFolder);
-            LayerDrawable drawable = MimeTypeUtil.getFileIcon(preferences.isDarkModeEnabled(), overlayIconId, this, viewThemeUtils);
+            LayerDrawable drawable = MimeTypeUtil.getFolderIcon(preferences.isDarkModeEnabled(), overlayIconId, this, viewThemeUtils);
             binding.thumbnail.setImageDrawable(drawable);
         } else {
             if ((MimeTypeUtil.isImage(file) || MimeTypeUtil.isVideo(file)) && file.getRemoteId() != null) {

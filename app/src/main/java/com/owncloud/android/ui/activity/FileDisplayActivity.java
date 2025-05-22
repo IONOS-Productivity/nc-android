@@ -62,7 +62,6 @@ import com.nextcloud.client.jobs.upload.FileUploadHelper;
 import com.nextcloud.client.jobs.upload.FileUploadWorker;
 import com.nextcloud.client.media.PlayerServiceConnection;
 import com.nextcloud.client.network.ClientFactory;
-import com.nextcloud.client.network.ConnectivityService;
 import com.nextcloud.client.preferences.AppPreferences;
 import com.nextcloud.client.utils.IntentUtil;
 import com.nextcloud.model.WorkerState;
@@ -74,11 +73,11 @@ import com.nextcloud.utils.extensions.FileExtensionsKt;
 import com.nextcloud.utils.extensions.IntentExtensionsKt;
 import com.nextcloud.utils.fileNameValidator.FileNameValidator;
 import com.nextcloud.utils.view.FastScrollUtils;
-import com.owncloud.android.BuildConfig;
 import com.owncloud.android.MainApp;
 import com.owncloud.android.R;
 import com.owncloud.android.databinding.FilesBinding;
 import com.owncloud.android.datamodel.FileDataStorageManager;
+import com.owncloud.android.datamodel.MediaFolderType;
 import com.owncloud.android.datamodel.OCFile;
 import com.owncloud.android.datamodel.SyncedFolder;
 import com.owncloud.android.datamodel.SyncedFolderProvider;
@@ -91,6 +90,8 @@ import com.owncloud.android.lib.common.operations.RemoteOperationResult.ResultCo
 import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.lib.resources.files.RestoreFileVersionRemoteOperation;
 import com.owncloud.android.lib.resources.files.SearchRemoteOperation;
+import com.owncloud.android.lib.resources.notifications.GetNotificationsRemoteOperation;
+import com.owncloud.android.lib.resources.notifications.models.Notification;
 import com.owncloud.android.operations.CopyFileOperation;
 import com.owncloud.android.operations.CreateFolderOperation;
 import com.owncloud.android.operations.DownloadType;
@@ -101,12 +102,14 @@ import com.owncloud.android.operations.RenameFileOperation;
 import com.owncloud.android.operations.SynchronizeFileOperation;
 import com.owncloud.android.operations.UploadFileOperation;
 import com.owncloud.android.syncadapter.FileSyncAdapter;
+import com.owncloud.android.ui.activity.fileDisplayActivity.OfflineFolderConflictManager;
 import com.owncloud.android.ui.asynctasks.CheckAvailableSpaceTask;
 import com.owncloud.android.ui.asynctasks.FetchRemoteFileTask;
 import com.owncloud.android.ui.asynctasks.GetRemoteFileTask;
 import com.owncloud.android.ui.dialog.SendShareDialog;
 import com.owncloud.android.ui.dialog.SortingOrderDialogFragment;
 import com.owncloud.android.ui.dialog.StoragePermissionDialogFragment;
+import com.owncloud.android.ui.dialog.TermsOfServiceDialog;
 import com.owncloud.android.ui.events.SearchEvent;
 import com.owncloud.android.ui.events.SyncEventFinished;
 import com.owncloud.android.ui.events.TokenPushEvent;
@@ -152,6 +155,7 @@ import java.util.Optional;
 import javax.inject.Inject;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SearchView;
@@ -177,8 +181,11 @@ public class FileDisplayActivity extends FileActivity
     public static final String RESTART = "RESTART";
     public static final String ALL_FILES = "ALL_FILES";
     public static final String LIST_GROUPFOLDERS = "LIST_GROUPFOLDERS";
+    public static final String AUTO_UPLOAD_NOTIFICATION = "AUTO_UPLOAD_NOTIFICATION";
     public static final int SINGLE_USER_SIZE = 1;
     public static final String OPEN_FILE = "NC_OPEN_FILE";
+    public static final String FOLDER_SYNC_CONFLICT = "FOLDER_SYNC_CONFLICT";
+    public static final String FOLDER_SYNC_CONFLICT_ARG_REMOTE_IDS_TO_OPERATION_PATHS = "FOLDER_SYNC_CONFLICT_ARG_REMOTE_IDS_TO_OPERATION_PATHS";
 
     private FilesBinding binding;
 
@@ -198,10 +205,9 @@ public class FileDisplayActivity extends FileActivity
     private static final String KEY_WAITING_TO_PREVIEW = "WAITING_TO_PREVIEW";
     private static final String KEY_SYNC_IN_PROGRESS = "SYNC_IN_PROGRESS";
     private static final String KEY_WAITING_TO_SEND = "WAITING_TO_SEND";
+    private static final String DIALOG_TAG_SHOW_TOS = "DIALOG_TAG_SHOW_TOS";
 
     public static final String ACTION_DETAILS = "com.owncloud.android.ui.activity.action.DETAILS";
-
-    public static final String DRAWER_MENU_ID = "DRAWER_MENU_ID";
 
     public static final int REQUEST_CODE__SELECT_CONTENT_FROM_APPS = REQUEST_CODE__LAST_SHARED + 1;
     public static final int REQUEST_CODE__SELECT_FILES_FROM_FILE_SYSTEM = REQUEST_CODE__LAST_SHARED + 2;
@@ -236,13 +242,10 @@ public class FileDisplayActivity extends FileActivity
     private SearchView searchView;
     private PlayerServiceConnection mPlayerConnection;
     private Optional<User> lastDisplayedUser = Optional.empty();
-    private int menuItemId = -1;
 
     @Inject AppPreferences preferences;
 
     @Inject AppInfo appInfo;
-
-    @Inject ConnectivityService connectivityService;
 
     @Inject InAppReviewHelper inAppReviewHelper;
 
@@ -284,15 +287,19 @@ public class FileDisplayActivity extends FileActivity
         mPlayerConnection = new PlayerServiceConnection(this);
 
         checkStoragePath();
-        checkAutoUploadOnGPlay();
+        notifyGPlayPermissionChanges();
+        showAutoUploadWarningForGPlayFlavour();
 
         initSyncBroadcastReceiver();
         observeWorkerState();
         registerRefreshFolderEventReceiver();
+
+        OfflineFolderConflictManager offlineFolderConflictManager = new OfflineFolderConflictManager(this);
+        offlineFolderConflictManager.registerRefreshSearchEventReceiver();
     }
 
-    private void checkAutoUploadOnGPlay() {
-        if (!BuildHelper.GPLAY.equals(BuildConfig.FLAVOR)) {
+    private void notifyGPlayPermissionChanges() {
+        if (!BuildHelper.INSTANCE.isFlavourGPlay() || MainApp.isClientBranded()) {
             return;
         }
 
@@ -334,6 +341,41 @@ public class FileDisplayActivity extends FileActivity
         preferences.setAutoUploadGPlayWarningShown(true);
     }
 
+    private void showAutoUploadWarningForGPlayFlavour() {
+        if (!BuildHelper.INSTANCE.isFlavourGPlay() || MainApp.isClientBranded()) {
+            return;
+        }
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
+            return;
+        }
+
+        boolean showAutoUploadDialog = false;
+        for (SyncedFolder syncedFolder : syncedFolderProvider.getSyncedFolders()) {
+            if (syncedFolder.getType() == MediaFolderType.CUSTOM) {
+                showAutoUploadDialog = true;
+                break;
+            }
+        }
+
+        if (!preferences.isAutoUploadGPlayWarning2Shown()) {
+            String title = showAutoUploadDialog ? getString(R.string.auto_upload_gplay) : getString(R.string.upload_gplay);
+            String message = showAutoUploadDialog ? getString(R.string.auto_upload_gplay_desc2) : getString(R.string.upload_gplay_desc);
+
+            new MaterialAlertDialogBuilder(this, R.style.Theme_ownCloud_Dialog)
+                .setTitle(title)
+                .setMessage(message)
+                .setNegativeButton(R.string.dialog_close, (dialog, which) -> {
+                    PermissionUtil.requestMediaLocationPermission(this);
+                    preferences.setAutoUploadGPlayWarning2Shown(true);
+                    dialog.dismiss();
+                })
+                .setIcon(R.drawable.nav_synced_folders)
+                .create()
+                .show();
+        }
+    }
+
     @SuppressWarnings("unchecked")
     private void loadSavedInstanceState(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
@@ -359,6 +401,7 @@ public class FileDisplayActivity extends FileActivity
         setupHomeSearchToolbarWithSortAndListButtons();
         mMenuButton.setOnClickListener(v -> openDrawer());
         mSwitchAccountButton.setOnClickListener(v -> showManageAccountsDialog());
+        mNotificationButton.setOnClickListener(v -> startActivity(NotificationsActivity.class));
         fastScrollUtils.fixAppBarForFastScroll(binding.appbar.appbar, binding.rootLayout);
     }
 
@@ -372,7 +415,6 @@ public class FileDisplayActivity extends FileActivity
         }   // else, Fragment already created and retained across configuration change
     }
 
-    @IonosCustomization
     private void checkStoragePath() {
         String newStorage = Environment.getExternalStorageDirectory().getAbsolutePath();
         String storagePath = preferences.getStoragePath(newStorage);
@@ -389,7 +431,7 @@ public class FileDisplayActivity extends FileActivity
                     .setPositiveButton(R.string.dialog_close, (dialog, which) -> dialog.dismiss())
                     .setIcon(R.drawable.ic_settings);
 
-                viewThemeUtils.ionos.dialog.colorMaterialAlertDialogBackground(getApplicationContext(), builder);
+                viewThemeUtils.dialog.colorMaterialAlertDialogBackground(getApplicationContext(), builder);
 
                 builder.create().show();
             } catch (WindowManager.BadTokenException e) {
@@ -417,6 +459,7 @@ public class FileDisplayActivity extends FileActivity
     }
 
     @Override
+    @IonosCustomization("Hide account id")
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
 
@@ -431,11 +474,7 @@ public class FileDisplayActivity extends FileActivity
 
         if (IntentExtensionsKt.getParcelableArgument(getIntent(), OCFileListFragment.SEARCH_EVENT, SearchEvent.class) != null) {
             switchToSearchFragment(savedInstanceState);
-
-            int menuId = getIntent().getIntExtra(DRAWER_MENU_ID, -1);
-            if (menuId != -1) {
-                setupDrawer(menuId);
-            }
+            setupDrawer();
         } else {
             createMinFragments(savedInstanceState);
             syncAndUpdateFolder(true);
@@ -446,11 +485,12 @@ public class FileDisplayActivity extends FileActivity
             onOpenFileIntent(getIntent());
         } else if (RESTART.equals(getIntent().getAction())) {
             // most likely switched to different account
-            DisplayUtils.showSnackMessage(this, String.format(getString(R.string.logged_in_as), accountManager.getUser().getAccountName()));
+            DisplayUtils.showSnackMessage(this, String.format(getString(R.string.logged_in_as), accountManager.getUser().toOwnCloudAccount().getDisplayName()));
         }
 
         upgradeNotificationForInstantUpload();
         checkOutdatedServer();
+        checkNotifications();
     }
 
     private Activity getActivity() {
@@ -480,6 +520,24 @@ public class FileDisplayActivity extends FileActivity
         if (user.isPresent() && CapabilityUtils.checkOutdatedWarning(getResources(), user.get().getServer().getVersion(), getCapabilities().getExtendedSupport().isTrue())) {
             DisplayUtils.showServerOutdatedSnackbar(this, Snackbar.LENGTH_LONG);
         }
+    }
+    
+    private void checkNotifications() {
+        new Thread(() -> {
+            try {
+                RemoteOperationResult<List<Notification>> result = new GetNotificationsRemoteOperation()
+                    .execute(clientFactory.createNextcloudClient(accountManager.getUser()));
+                
+                if (result.isSuccess() && !result.getResultData().isEmpty()) {
+                    runOnUiThread(() -> mNotificationButton.setVisibility(View.VISIBLE));
+                } else {
+                    runOnUiThread(() -> mNotificationButton.setVisibility(View.GONE));
+                }
+                
+            } catch (ClientFactory.CreationException e) {
+                Log_OC.e(TAG, "Could not fetch notifications!");
+            }
+        }).start();
     }
 
     @Override
@@ -610,17 +668,32 @@ public class FileDisplayActivity extends FileActivity
                 }
             } else if (ALL_FILES.equals(intent.getAction())) {
                 Log_OC.d(this, "Switch to oc file fragment");
-
+                DrawerActivity.menuItemId = R.id.nav_all_files;
                 setLeftFragment(new OCFileListFragment());
                 getSupportFragmentManager().executePendingTransactions();
                 browseToRoot();
             } else if (LIST_GROUPFOLDERS.equals(intent.getAction())) {
                 Log_OC.d(this, "Switch to list groupfolders fragment");
-
+                DrawerActivity.menuItemId = R.id.nav_groupfolders;
                 setLeftFragment(new GroupfolderListFragment());
                 getSupportFragmentManager().executePendingTransactions();
             }
         }
+    }
+    
+    private void showReEnableAutoUploadDialog() {
+        new MaterialAlertDialogBuilder(this, R.style.Theme_ownCloud_Dialog)
+            .setTitle(R.string.re_enable_auto_upload)
+            .setMessage(R.string.re_enable_auto_upload_desc)
+            .setNegativeButton(R.string.dialog_close, (dialog, which) -> {
+                PermissionUtil.requestExternalStoragePermission(this, viewThemeUtils);
+                PermissionUtil.requestMediaLocationPermission(this);
+                preferences.setAutoUploadGPlayNotificationShown(true);
+                dialog.dismiss();
+            })
+            .setIcon(R.drawable.nav_synced_folders)
+            .create()
+            .show();
     }
 
     private void onOpenFileIntent(Intent intent) {
@@ -705,11 +778,11 @@ public class FileDisplayActivity extends FileActivity
         listOfFiles.onOverflowIconClicked(file, null);
     }
 
-    public @androidx.annotation.Nullable Fragment getLeftFragment() {
+    public @Nullable Fragment getLeftFragment() {
         return getSupportFragmentManager().findFragmentByTag(FileDisplayActivity.TAG_LIST_OF_FILES);
     }
 
-    public @androidx.annotation.Nullable
+    public @Nullable
     @Deprecated OCFileListFragment getListOfFilesFragment() {
         Fragment listOfFiles = getSupportFragmentManager().findFragmentByTag(FileDisplayActivity.TAG_LIST_OF_FILES);
         if (listOfFiles instanceof OCFileListFragment) {
@@ -799,7 +872,6 @@ public class FileDisplayActivity extends FileActivity
     }
 
     @Override
-    @IonosCustomization
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.activity_file_display, menu);
@@ -812,6 +884,8 @@ public class FileDisplayActivity extends FileActivity
             showSearchView();
             searchView.setIconified(false);
         });
+
+        viewThemeUtils.androidx.themeToolbarSearchView(searchView);
 
         // populate list of menu items to show/hide when drawer is opened/closed
         mDrawerMenuItemstoShowHideList = new ArrayList<>(1);
@@ -923,7 +997,7 @@ public class FileDisplayActivity extends FileActivity
                     if (hasEnoughSpaceAvailable) {
                         File file = new File(filesToUpload[0]);
                         File renamedFile;
-                        if(requestCode == REQUEST_CODE__UPLOAD_FROM_CAMERA) {
+                        if (requestCode == REQUEST_CODE__UPLOAD_FROM_CAMERA) {
                             renamedFile = new File(file.getParent() + PATH_SEPARATOR + FileOperationsHelper.getCapturedImageName());
                         } else {
                             renamedFile = new File(file.getParent() + PATH_SEPARATOR + FileOperationsHelper.getCapturedVideoName());
@@ -985,22 +1059,27 @@ public class FileDisplayActivity extends FileActivity
                 default -> FileUploadWorker.LOCAL_BEHAVIOUR_FORGET;
             };
 
-            boolean isValidFolderPath = FileNameValidator.INSTANCE.checkFolderPath(remotePathBase,getCapabilities(),this);
-            if (!isValidFolderPath) {
-                DisplayUtils.showSnackMessage(this, R.string.file_name_validator_error_contains_reserved_names_or_invalid_characters);
-                return;
-            }
+            connectivityService.isNetworkAndServerAvailable(result -> {
+                if (result) {
+                    boolean isValidFolderPath = FileNameValidator.INSTANCE.checkFolderPath(remotePathBase,getCapabilities(),this);
+                    if (!isValidFolderPath) {
+                        DisplayUtils.showSnackMessage(this, R.string.file_name_validator_error_contains_reserved_names_or_invalid_characters);
+                        return;
+                    }
 
-            FileUploadHelper.Companion.instance().uploadNewFiles(getUser().orElseThrow(RuntimeException::new),
-                                                                 filePaths,
-                                                                 decryptedRemotePaths,
-                                                                 behaviour,
-                                                                 true,
-                                                                 UploadFileOperation.CREATED_BY_USER,
-                                                                 false,
-                                                                 false,
-                                                                 NameCollisionPolicy.ASK_USER);
-
+                    FileUploadHelper.Companion.instance().uploadNewFiles(getUser().orElseThrow(RuntimeException::new),
+                                                                         filePaths,
+                                                                         decryptedRemotePaths,
+                                                                         behaviour,
+                                                                         true,
+                                                                         UploadFileOperation.CREATED_BY_USER,
+                                                                         false,
+                                                                         false,
+                                                                         NameCollisionPolicy.ASK_USER);
+                } else {
+                    fileDataStorageManager.addCreateFileOfflineOperation(filePaths, decryptedRemotePaths);
+                }
+            });
         } else {
             Log_OC.d(TAG, "User clicked on 'Update' with no selection");
             DisplayUtils.showSnackMessage(this, R.string.filedisplay_no_file_selected);
@@ -1057,25 +1136,24 @@ public class FileDisplayActivity extends FileActivity
      */
     @SuppressFBWarnings("ITC_INHERITANCE_TYPE_CHECKING")
     @Override
+    // TODO Apply fail fast principle
     public void onBackPressed() {
-        final boolean isDrawerOpen = isDrawerOpen();
-        final boolean isSearchOpen = isSearchOpen();
-
-        final Fragment leftFragment = getLeftFragment();
-
-        if (isSearchOpen) {
+        if (isSearchOpen()) {
             resetSearchAction();
-        } else if (isDrawerOpen) {
-            super.onBackPressed();
-        } else if (leftFragment instanceof OCFileListFragment listOfFiles) {
+            return;
+        }
 
-            // all closed
-            OCFile currentDir = getCurrentDir();
-            if (isRoot(currentDir)) {
+        if (isDrawerOpen()) {
+            super.onBackPressed();
+            return;
+        }
+
+        if (getLeftFragment() instanceof OCFileListFragment listOfFiles) {
+            if (isRoot(getCurrentDir())) {
                 finish();
-                return;
+            } else {
+                browseUp(listOfFiles);
             }
-            browseUp(listOfFiles);
         } else {
             popBack();
         }
@@ -1174,6 +1252,8 @@ public class FileDisplayActivity extends FileActivity
             if (fileArgs != null) {
                 startFile = fileArgs;
                 setFile(startFile);
+            } else if (AUTO_UPLOAD_NOTIFICATION.equals(getIntent().getAction())) {
+                showReEnableAutoUploadDialog();
             }
         }
 
@@ -1199,10 +1279,7 @@ public class FileDisplayActivity extends FileActivity
         mDownloadFinishReceiver = new DownloadFinishReceiver();
         localBroadcastManager.registerReceiver(mDownloadFinishReceiver, downloadIntentFilter);
 
-        // setup drawer
-        menuItemId = getIntent().getIntExtra(FileDisplayActivity.DRAWER_MENU_ID, -1);
-
-        if (menuItemId == -1) {
+        if (menuItemId == Menu.NONE) {
             setDrawerAllFiles();
         } else {
             if (menuItemId == R.id.nav_all_files || menuItemId == R.id.nav_personal_files) {
@@ -1210,7 +1287,6 @@ public class FileDisplayActivity extends FileActivity
             } else {
                 setupToolbar();
             }
-            setDrawerMenuItemChecked(menuItemId);
         }
 
         if (ocFileListFragment instanceof GalleryFragment) {
@@ -1218,24 +1294,25 @@ public class FileDisplayActivity extends FileActivity
         }
         //show in-app review dialog to user
         inAppReviewHelper.showInAppReview(this);
+        
+        checkNotifications();
 
         Log_OC.v(TAG, "onResume() end");
     }
-
     private void setDrawerAllFiles() {
         if (MainApp.isOnlyPersonFiles()) {
-            setDrawerMenuItemChecked(R.id.nav_personal_files);
-            setupHomeSearchToolbarWithSortAndListButtons();
+            menuItemId = R.id.nav_personal_files;
         } else if (MainApp.isOnlyOnDevice()) {
-            setDrawerMenuItemChecked(R.id.nav_on_device);
+            menuItemId = R.id.nav_on_device;
+        } else if (menuItemId == Menu.NONE) {
+            menuItemId = R.id.nav_all_files;
+        }
+
+        setNavigationViewItemChecked();
+
+        if (MainApp.isOnlyOnDevice()) {
             setupToolbar();
         } else {
-            int lastMenuItem = getCheckedMenuItem();
-            if (lastMenuItem == Menu.NONE) {
-                lastMenuItem = R.id.nav_all_files;
-            }
-
-            setDrawerMenuItemChecked(lastMenuItem);
             setupHomeSearchToolbarWithSortAndListButtons();
         }
     }
@@ -1343,7 +1420,7 @@ public class FileDisplayActivity extends FileActivity
                             } else {
                                 // TODO refactor and make common
                                 if (checkForRemoteOperationError(synchResult)) {
-                                    requestCredentialsUpdate(context);
+                                    requestCredentialsUpdate();
                                 } else {
                                     switch (synchResult.getCode()) {
                                         case SSL_RECOVERABLE_PEER_UNVERIFIED:
@@ -1361,6 +1438,11 @@ public class FileDisplayActivity extends FileActivity
                                         case HOST_NOT_AVAILABLE:
                                             showInfoBox(R.string.host_not_available);
                                             break;
+                                            
+                                        case SIGNING_TOS_NEEDED:
+                                            showTermsOfServiceDialog();
+                                            
+                                            break;
 
                                         default:
                                             // nothing to do
@@ -1372,7 +1454,6 @@ public class FileDisplayActivity extends FileActivity
                         DataHolderUtil.getInstance().delete(intent.getStringExtra(FileSyncAdapter.EXTRA_RESULT));
 
                         Log_OC.d(TAG, "Setting progress visibility to " + mSyncInProgress);
-
 
                         OCFileListFragment ocFileListFragment = getListOfFilesFragment();
                         if (ocFileListFragment != null) {
@@ -1406,6 +1487,11 @@ public class FileDisplayActivity extends FileActivity
             }
         }
     }
+    private void showTermsOfServiceDialog() {
+        if (getSupportFragmentManager().findFragmentByTag(DIALOG_TAG_SHOW_TOS) == null) {
+            new TermsOfServiceDialog().show(getSupportFragmentManager(), DIALOG_TAG_SHOW_TOS);
+        }
+    }
 
     private boolean checkForRemoteOperationError(RemoteOperationResult syncResult) {
         return ResultCode.UNAUTHORIZED == syncResult.getCode() || (syncResult.isException() && syncResult.getException() instanceof AuthenticatorException);
@@ -1424,7 +1510,13 @@ public class FileDisplayActivity extends FileActivity
                 if (MainApp.isOnlyOnDevice()) {
                     ocFileListFragment.setMessageForEmptyList(R.string.file_list_empty_headline, R.string.file_list_empty_on_device, R.drawable.ic_list_empty_folder);
                 } else {
-                    ocFileListFragment.setEmptyListMessage(SearchType.NO_SEARCH);
+                    connectivityService.isNetworkAndServerAvailable(result -> {
+                        if (result) {
+                            ocFileListFragment.setEmptyListMessage(SearchType.NO_SEARCH);
+                        } else {
+                            ocFileListFragment.setEmptyListMessage(SearchType.OFFLINE_MODE);
+                        }
+                    });
                 }
             }
         } else {
@@ -1649,13 +1741,29 @@ public class FileDisplayActivity extends FileActivity
 
     private void observeWorkerState() {
         WorkerStateLiveData.Companion.instance().observe(this, state -> {
-            if (state instanceof WorkerState.Download) {
+            if (state instanceof WorkerState.DownloadStarted) {
                 Log_OC.d(TAG, "Download worker started");
                 handleDownloadWorkerState();
-            } else if (state instanceof WorkerState.Idle) {
+            } else if (state instanceof WorkerState.DownloadFinished) {
                 fileDownloadProgressListener = null;
+            } else if (state instanceof WorkerState.UploadFinished) {
+                refreshList();
+            } else if (state instanceof  WorkerState.OfflineOperationsCompleted) {
+                refreshCurrentDirectory();
             }
         });
+    }
+
+    public void refreshCurrentDirectory() {
+        OCFile currentDir = (getCurrentDir() != null) ?
+            getStorageManager().getFileByDecryptedRemotePath(getCurrentDir().getRemotePath()) : null;
+
+        OCFileListFragment fileListFragment =
+            (ActivityExtensionsKt.lastFragment(this) instanceof OCFileListFragment fragment) ? fragment : getListOfFilesFragment();
+
+        if (fileListFragment != null) {
+            fileListFragment.listDirectory(currentDir, false, false);
+        }
     }
 
     private void handleDownloadWorkerState() {
@@ -1716,6 +1824,15 @@ public class FileDisplayActivity extends FileActivity
             onCopyFileOperationFinish((CopyFileOperation) operation, result);
         } else if (operation instanceof RestoreFileVersionRemoteOperation) {
             onRestoreFileVersionOperationFinish(result);
+        }
+
+        if (operation instanceof RemoveFileOperation || operation instanceof RenameFileOperation) {
+            OCFileListFragment fileListFragment =
+                (ActivityExtensionsKt.lastFragment(this) instanceof OCFileListFragment fragment) ? fragment : getListOfFilesFragment();
+
+            if (fileListFragment != null) {
+                fileListFragment.fetchRecommendedFiles();
+            }
         }
     }
 
@@ -2273,17 +2390,25 @@ public class FileDisplayActivity extends FileActivity
         syncAndUpdateFolder(true);
     }
 
-    private void syncAndUpdateFolder(boolean ignoreETag) {
+    public void syncAndUpdateFolder(boolean ignoreETag) {
         syncAndUpdateFolder(ignoreETag, false);
     }
 
     private void syncAndUpdateFolder(boolean ignoreETag, boolean ignoreFocus) {
         OCFileListFragment listOfFiles = getListOfFilesFragment();
-        if (listOfFiles != null && !listOfFiles.isSearchFragment()) {
-            OCFile folder = listOfFiles.getCurrentFile();
-            if (folder != null) {
-                startSyncFolderOperation(folder, ignoreETag, ignoreFocus);
-            }
+        if (listOfFiles == null || listOfFiles.isSearchFragment()) {
+            return;
+        }
+
+        OCFile folder = listOfFiles.getCurrentFile();
+        if (folder == null) {
+            return;
+        }
+
+        startSyncFolderOperation(folder, ignoreETag, ignoreFocus);
+
+        if (getCapabilities().getRecommendations().isTrue() && folder.isRootDirectory()) {
+            listOfFiles.fetchRecommendedFiles();
         }
     }
 
@@ -2455,7 +2580,6 @@ public class FileDisplayActivity extends FileActivity
         }
     }
 
-    @IonosCustomization
     private void selectUserAndOpenFile(List<User> users, String fileId) {
         final CharSequence[] userNames = new CharSequence[users.size()];
         for (int i = 0; i < userNames.length; i++) {
@@ -2468,7 +2592,7 @@ public class FileDisplayActivity extends FileActivity
             showLoadingDialog(getString(R.string.retrieving_file));
         });
 
-        viewThemeUtils.ionos.dialog.colorMaterialAlertDialogBackground(getApplicationContext(), builder);
+        viewThemeUtils.dialog.colorMaterialAlertDialogBackground(getApplicationContext(), builder);
 
         final AlertDialog dialog = builder.create();
         dismissLoadingDialog();

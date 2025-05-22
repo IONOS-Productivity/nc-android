@@ -15,7 +15,6 @@ import android.view.View
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.account.User
 import com.nextcloud.client.account.UserAccountManager
 import com.nextcloud.client.di.Injectable
@@ -36,7 +35,6 @@ class MultipleAccountsDialog : DialogFragment(), Injectable, UserListAdapter.Cli
     var viewThemeUtils: ViewThemeUtils? = null
     var highlightCurrentlyActiveAccount = true
 
-    @IonosCustomization
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val inflater = requireActivity().layoutInflater
         val binding = MultipleAccountsBinding.inflate(inflater, null, false)
@@ -59,7 +57,7 @@ class MultipleAccountsDialog : DialogFragment(), Injectable, UserListAdapter.Cli
 
         builder.setView(binding.root).setTitle(R.string.common_choose_account)
 
-        viewThemeUtils?.ionos?.dialog?.colorMaterialAlertDialogBackground(requireContext(), builder)
+        viewThemeUtils?.dialog?.colorMaterialAlertDialogBackground(requireContext(), builder)
 
         return builder.create()
     }
@@ -67,7 +65,7 @@ class MultipleAccountsDialog : DialogFragment(), Injectable, UserListAdapter.Cli
     private val accountListItems: List<UserListItem>
         /**
          * creates the account list items list including the add-account action in case
-         * multiaccount_support is enabled.
+         * multi account support is enabled.
          *
          * @return list of account list items
          */

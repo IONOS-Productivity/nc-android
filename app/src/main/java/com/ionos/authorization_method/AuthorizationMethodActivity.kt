@@ -37,6 +37,5 @@ class AuthorizationMethodActivity : AppCompatActivity() {
     private fun login() {
         val intent = Intent(this, AuthenticatorActivity::class.java)
         startActivity(intent)
-        finish()
     }
 }

@@ -127,7 +127,7 @@ interface BackgroundJobManager {
     fun startImmediateFilesSyncJob(
         syncedFolderID: Long,
         overridePowerSaving: Boolean = false,
-        changedFiles: Array<String> = arrayOf<String>()
+        changedFiles: Array<String?> = arrayOf<String?>()
     )
 
     fun cancelTwoWaySyncJob()
@@ -170,6 +170,8 @@ interface BackgroundJobManager {
     fun schedulePeriodicHealthStatus()
     fun startHealthStatus()
     fun bothFilesSyncJobsRunning(syncedFolderID: Long): Boolean
+    fun startOfflineOperations()
+    fun startPeriodicallyOfflineOperation()
     fun scheduleInternal2WaySync(intervalMinutes: Long)
     fun cancelAllFilesDownloadJobs()
 }

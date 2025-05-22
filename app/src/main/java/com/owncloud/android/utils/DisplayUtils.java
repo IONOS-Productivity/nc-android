@@ -32,7 +32,6 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.text.Spannable;
@@ -58,11 +57,12 @@ import com.caverock.androidsvg.SVG;
 import com.elyeproj.loaderviewlibrary.LoaderImageView;
 import com.google.android.material.snackbar.Snackbar;
 import com.ionos.annotation.IonosCustomization;
+import com.ionos.utils.IonosBuildHelper;
 import com.nextcloud.client.account.CurrentAccountProvider;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.network.ClientFactory;
 import com.nextcloud.client.preferences.AppPreferences;
-import com.owncloud.android.BuildConfig;
+import com.nextcloud.model.OfflineOperationType;
 import com.owncloud.android.MainApp;
 import com.owncloud.android.R;
 import com.owncloud.android.datamodel.ArbitraryDataProvider;
@@ -73,6 +73,7 @@ import com.owncloud.android.datamodel.SyncedFolderProvider;
 import com.owncloud.android.datamodel.ThumbnailsCacheManager;
 import com.owncloud.android.lib.common.OwnCloudAccount;
 import com.owncloud.android.lib.common.utils.Log_OC;
+import com.owncloud.android.lib.resources.files.model.ServerFileInterface;
 import com.owncloud.android.ui.TextDrawable;
 import com.owncloud.android.ui.activity.FileDisplayActivity;
 import com.owncloud.android.ui.dialog.SortingOrderDialogFragment;
@@ -108,6 +109,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.widget.AppCompatDrawableManager;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -492,7 +494,7 @@ public final class DisplayUtils {
             ((View) callContext).setContentDescription(String.valueOf(user.toPlatformAccount().hashCode()));
         }
 
-        if (BuildConfig.FLAVOR.equals("ionos")) {
+        if (IonosBuildHelper.isIonosBuild()) {
             Drawable avatar = ResourcesCompat.getDrawable(resources, R.drawable.account_circle_white, null);
             listener.avatarGenerated(avatar, callContext);
             return;
@@ -827,6 +829,24 @@ public final class DisplayUtils {
         SortingOrderDialogFragment.newInstance(sortOrder).show(fragmentTransaction, SORTING_ORDER_FRAGMENT);
     }
 
+    public static @StringRes int getSortOrderStringId(FileSortOrder sortOrder) {
+        switch (sortOrder.name) {
+            case SORT_Z_TO_A_ID:
+                return R.string.menu_item_sort_by_name_z_a;
+            case SORT_NEW_TO_OLD_ID:
+                return R.string.menu_item_sort_by_date_newest_first;
+            case SORT_OLD_TO_NEW_ID:
+                return R.string.menu_item_sort_by_date_oldest_first;
+            case SORT_BIG_TO_SMALL_ID:
+                return R.string.menu_item_sort_by_size_biggest_first;
+            case SORT_SMALL_TO_BIG_ID:
+                return R.string.menu_item_sort_by_size_smallest_first;
+            case SORT_A_TO_Z_ID:
+            default:
+                return R.string.menu_item_sort_by_name_a_z;
+        }
+    }
+
     @IonosCustomization
     public static @DrawableRes int getSortOrderIconRes(FileSortOrder sortOrder) {
         switch (sortOrder.name) {
@@ -861,6 +881,36 @@ public final class DisplayUtils {
         return df.format(timestamp);
     }
 
+    /**
+     * Sets a thumbnail for a offline file, file or folder with various display options and states.
+     * <p>
+     *
+     * This method handles multiple thumbnail scenarios:
+     *
+     * <p>
+     *
+     * 1. Offline Files:
+     *    - For folders: Shows an offline folder icon
+     *    - For files: Loads thumbnail from local path with a gray filter
+     * <p>
+     *
+     * 2. Folders:
+     *    - Displays folder icon with overlays
+     * <p>
+     *
+     * 3. Files:
+     *    - Checks disk cache for existing thumbnails
+     *    - Handles preview availability and updates
+     *    - Supports grid and list view display modes
+     *    - Generates new thumbnails if needed
+     *    - Sets background color for PNG files
+     *
+     * <p>
+     *
+     * The method uses a shimmer effect while loading thumbnails, which is stopped
+     * once the thumbnail is successfully loaded or if an error occurs.
+     *
+     */
     public static void setThumbnail(OCFile file,
                                     ImageView thumbnailView,
                                     User user,
@@ -872,52 +922,96 @@ public final class DisplayUtils {
                                     AppPreferences preferences,
                                     ViewThemeUtils viewThemeUtils,
                                     SyncedFolderProvider syncedFolderProvider) {
+        if (file == null || thumbnailView == null || context == null) {
+            return;
+        }
+
+        if (file.isOfflineOperation()) {
+            setThumbnailForOfflineOperation(file, thumbnailView, storageManager, context);
+            return;
+        }
+
         if (file.isFolder()) {
-            stopShimmer(shimmerThumbnail, thumbnailView);
+            setThumbnailForFolder(file, thumbnailView, shimmerThumbnail, user, syncedFolderProvider, preferences, context, viewThemeUtils);
+            return;
+        }
 
-            boolean isAutoUploadFolder = SyncedFolderProvider.isAutoUploadFolder(syncedFolderProvider, file, user);
-            boolean isDarkModeActive = preferences.isDarkModeEnabled();
+        if (file.getRemoteId() == null || !file.isPreviewAvailable()) {
+            setThumbnailFirstTimeForFile(file, thumbnailView, storageManager, asyncTasks, gridView, shimmerThumbnail, user, preferences, context, viewThemeUtils);
+            return;
+        }
 
-            Integer overlayIconId = file.getFileOverlayIconId(isAutoUploadFolder);
-            LayerDrawable fileIcon = MimeTypeUtil.getFileIcon(isDarkModeActive, overlayIconId, context, viewThemeUtils);
-            thumbnailView.setImageDrawable(fileIcon);
-        } else {
-            if (file.getRemoteId() != null && file.isPreviewAvailable()) {
-                // Thumbnail in cache?
-                Bitmap thumbnail = ThumbnailsCacheManager.getBitmapFromDiskCache(
-                    ThumbnailsCacheManager.PREFIX_THUMBNAIL + file.getRemoteId());
+        setThumbnailFromCache(file, thumbnailView, storageManager, asyncTasks, gridView, shimmerThumbnail, user, preferences, context, viewThemeUtils);
+    }
 
-                if (thumbnail != null && !file.isUpdateThumbnailNeeded()) {
-                    stopShimmer(shimmerThumbnail, thumbnailView);
+    private static void setThumbnailFirstTimeForFile(OCFile file, ImageView thumbnailView, FileDataStorageManager storageManager, List<ThumbnailsCacheManager.ThumbnailGenerationTask> asyncTasks, boolean gridView, LoaderImageView shimmerThumbnail, User user, AppPreferences preferences, Context context, ViewThemeUtils viewThemeUtils) {
+        if (file.getRemoteId() != null) {
+            generateNewThumbnail(file, thumbnailView, user, storageManager, asyncTasks, gridView, context, shimmerThumbnail, preferences, viewThemeUtils);
+            return;
+        }
 
-                    if (MimeTypeUtil.isVideo(file)) {
-                        Bitmap withOverlay = ThumbnailsCacheManager.addVideoOverlay(thumbnail, context);
-                        thumbnailView.setImageBitmap(withOverlay);
-                    } else {
-                        if (gridView) {
-                            BitmapUtils.setRoundedBitmapForGridMode(thumbnail, thumbnailView);
-                        } else {
-                            BitmapUtils.setRoundedBitmap(thumbnail, thumbnailView);
-                        }
-                    }
-                } else {
-                    generateNewThumbnail(file, thumbnailView, user, storageManager, asyncTasks, gridView, context, shimmerThumbnail, preferences, viewThemeUtils);
-                }
+        stopShimmer(shimmerThumbnail, thumbnailView);
+        final var icon = MimeTypeUtil.getFileTypeIcon(file.getMimeType(), file.getFileName(), context, viewThemeUtils);
+        thumbnailView.setImageDrawable(icon);
+    }
 
-                if ("image/png".equalsIgnoreCase(file.getMimeType())) {
-                    thumbnailView.setBackgroundColor(context.getResources().getColor(R.color.bg_default));
-                }
-            } else {
-                if (file.getRemoteId() != null) {
-                    generateNewThumbnail(file, thumbnailView, user, storageManager, asyncTasks, gridView, context, shimmerThumbnail, preferences, viewThemeUtils);
-                } else {
-                    stopShimmer(shimmerThumbnail, thumbnailView);
-                    thumbnailView.setImageDrawable(MimeTypeUtil.getFileTypeIcon(file.getMimeType(),
-                                                                                file.getFileName(),
-                                                                                context,
-                                                                                viewThemeUtils));
-                }
+    private static void setThumbnailForOfflineOperation(OCFile file, ImageView thumbnailView, FileDataStorageManager storageManager, Context context) {
+        if (file.isFolder()) {
+            thumbnailView.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_folder_offline));
+            return;
+        }
+
+        final var entity = storageManager.offlineOperationDao.getByPath(file.getDecryptedRemotePath());
+        if (entity == null) {
+            return;
+        }
+
+        if (entity.getType() instanceof OfflineOperationType.CreateFile createFileOperation) {
+            final var bitmap = BitmapUtils.decodeSampledBitmapFromFile(createFileOperation.getLocalPath(), 105, 105);
+            if (bitmap == null) {
+                return;
             }
+
+            final var thumbnail = BitmapUtils.addColorFilter(bitmap, Color.GRAY, 100);
+            thumbnailView.setImageBitmap(thumbnail);
+        }
+    }
+
+    private static void setThumbnailForFolder(OCFile file, ImageView thumbnailView, LoaderImageView shimmerThumbnail, User user, SyncedFolderProvider syncedFolderProvider, AppPreferences preferences, Context context, ViewThemeUtils viewThemeUtils) {
+        stopShimmer(shimmerThumbnail, thumbnailView);
+
+        boolean isAutoUploadFolder = SyncedFolderProvider.isAutoUploadFolder(syncedFolderProvider, file, user);
+        boolean isDarkModeActive = preferences.isDarkModeEnabled();
+
+        final var overlayIconId = file.getFileOverlayIconId(isAutoUploadFolder);
+        final var fileIcon = MimeTypeUtil.getFolderIcon(isDarkModeActive, overlayIconId, context, viewThemeUtils);
+        thumbnailView.setImageDrawable(fileIcon);
+    }
+
+    private static void setThumbnailFromCache(OCFile file, ImageView thumbnailView, FileDataStorageManager storageManager, List<ThumbnailsCacheManager.ThumbnailGenerationTask> asyncTasks, boolean gridView, LoaderImageView shimmerThumbnail, User user, AppPreferences preferences, Context context, ViewThemeUtils viewThemeUtils) {
+        final var thumbnail = ThumbnailsCacheManager.getBitmapFromDiskCache(ThumbnailsCacheManager.PREFIX_THUMBNAIL + file.getRemoteId());
+        if (thumbnail == null || file.isUpdateThumbnailNeeded()) {
+            generateNewThumbnail(file, thumbnailView, user, storageManager, asyncTasks, gridView, context, shimmerThumbnail, preferences, viewThemeUtils);
+            setThumbnailBackgroundForPNGFileIfNeeded(file, context, thumbnailView);
+            return;
+        }
+
+        stopShimmer(shimmerThumbnail, thumbnailView);
+
+        if (MimeTypeUtil.isVideo(file)) {
+            final var withOverlay = ThumbnailsCacheManager.addVideoOverlay(thumbnail, context);
+            thumbnailView.setImageBitmap(withOverlay);
+        } else {
+            BitmapUtils.setRoundedBitmapAccordingToListType(gridView, thumbnail, thumbnailView);
+        }
+
+        setThumbnailBackgroundForPNGFileIfNeeded(file, context, thumbnailView);
+    }
+
+    private static void setThumbnailBackgroundForPNGFileIfNeeded(ServerFileInterface file, Context context, ImageView thumbnailView) {
+        if ("image/png".equalsIgnoreCase(file.getMimeType())) {
+            final var color = ContextCompat.getColor(context, R.color.bg_default);
+            thumbnailView.setBackgroundColor(color);
         }
     }
 

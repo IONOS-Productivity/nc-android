@@ -20,7 +20,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.account.User
 import com.nextcloud.client.di.Injectable
 import com.nextcloud.client.network.ClientFactory
@@ -78,19 +77,18 @@ class SetupEncryptionDialogFragment : DialogFragment(), Injectable {
         executeTask()
     }
 
-    @IonosCustomization()
     private fun setupAlertDialog() {
         val alertDialog = dialog as AlertDialog?
 
         if (alertDialog != null) {
             positiveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE) as? MaterialButton?
             positiveButton?.let {
-                viewThemeUtils.ionos.material.colorMaterialButtonPrimaryTonal(it)
+                viewThemeUtils.material.colorMaterialButtonPrimaryTonal(it)
             }
 
             negativeButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE) as? MaterialButton?
             negativeButton?.let {
-                viewThemeUtils.ionos.material.colorMaterialButtonPrimaryBorderless(it)
+                viewThemeUtils.material.colorMaterialButtonPrimaryBorderless(it)
             }
         }
     }
@@ -100,7 +98,6 @@ class SetupEncryptionDialogFragment : DialogFragment(), Injectable {
         task?.execute()
     }
 
-    @IonosCustomization
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         checkNotNull(arguments) { "Arguments may not be null" }
 
@@ -117,10 +114,10 @@ class SetupEncryptionDialogFragment : DialogFragment(), Injectable {
         binding = SetupEncryptionDialogBinding.inflate(inflater, null, false)
 
         // Setup layout
-        viewThemeUtils.ionos.material.colorTextInputLayout(binding.encryptionPasswordInputContainer)
+        viewThemeUtils.material.colorTextInputLayout(binding.encryptionPasswordInputContainer)
 
         val builder = buildMaterialAlertDialog(binding.root)
-        viewThemeUtils.ionos.dialog.colorMaterialAlertDialogBackground(requireContext(), builder)
+        viewThemeUtils.dialog.colorMaterialAlertDialogBackground(requireContext(), builder)
         return builder.create().apply {
             setCanceledOnTouchOutside(false)
             setOnShowListener { dialog1: DialogInterface ->
@@ -361,7 +358,7 @@ class SetupEncryptionDialogFragment : DialogFragment(), Injectable {
                     binding.encryptionStatus.setText(R.string.common_error)
                 }
             } else if (privateKey.isNotEmpty()) {
-                binding.encryptionStatus.setText(R.string.end_to_end_encryption_enter_password)
+                binding.encryptionStatus.setText(R.string.end_to_end_encryption_enter_passphrase_to_access_files)
                 binding.encryptionPasswordInputContainer.visibility = View.VISIBLE
                 positiveButton?.visibility = View.VISIBLE
             } else {
@@ -497,7 +494,6 @@ class SetupEncryptionDialogFragment : DialogFragment(), Injectable {
     }
 
     @VisibleForTesting
-    @IonosCustomization
     fun showMnemonicInfo() {
         if (dialog == null) {
             Log_OC.e(TAG, "Dialog is null cannot proceed further.")
@@ -505,7 +501,7 @@ class SetupEncryptionDialogFragment : DialogFragment(), Injectable {
         }
         requireDialog().setTitle(R.string.end_to_end_encryption_passphrase_title)
         binding.encryptionStatus.setText(R.string.end_to_end_encryption_keywords_description)
-        viewThemeUtils.ionos.material.colorTextInputLayout(binding.encryptionPasswordInputContainer)
+        viewThemeUtils.material.colorTextInputLayout(binding.encryptionPasswordInputContainer)
         binding.encryptionPassphrase.text = generateMnemonicString(true)
         binding.encryptionPassphrase.visibility = View.VISIBLE
 
@@ -515,7 +511,7 @@ class SetupEncryptionDialogFragment : DialogFragment(), Injectable {
 
         positiveButton?.let { positiveButton ->
             negativeButton?.let { negativeButton ->
-                viewThemeUtils.ionos.platform.colorTextButtons(positiveButton, negativeButton)
+                viewThemeUtils.platform.colorTextButtons(positiveButton, negativeButton)
             }
         }
 
@@ -523,7 +519,6 @@ class SetupEncryptionDialogFragment : DialogFragment(), Injectable {
     }
 
     @VisibleForTesting
-    @IonosCustomization
     fun errorSavingKeys() {
         if (dialog == null) {
             Log_OC.e(TAG, "Dialog is null cannot proceed further.")
@@ -538,7 +533,7 @@ class SetupEncryptionDialogFragment : DialogFragment(), Injectable {
         positiveButton?.setText(R.string.end_to_end_encryption_dialog_close)
         positiveButton?.visibility = View.VISIBLE
         positiveButton?.let {
-            viewThemeUtils.ionos.platform.colorTextButtons(it)
+            viewThemeUtils.platform.colorTextButtons(it)
         }
     }
 

@@ -13,8 +13,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
+import com.owncloud.android.R
 
 @Composable
 fun CenterText(text: String) {
@@ -22,7 +24,8 @@ fun CenterText(text: String) {
         Text(
             text = text,
             fontSize = 18.sp,
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
+            color = colorResource(R.color.text_color)
         )
     }
 }

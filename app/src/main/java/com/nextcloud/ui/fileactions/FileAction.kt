@@ -16,34 +16,34 @@ import com.owncloud.android.R
 @IonosCustomization("Custom icons")
 enum class FileAction(@IdRes val id: Int, @StringRes val title: Int, @DrawableRes val icon: Int? = null) {
     // selection
-    SELECT_ALL(R.id.action_select_all_action_menu, R.string.select_all, R.drawable.ic_file_action_select_all),
-    SELECT_NONE(R.id.action_deselect_all_action_menu, R.string.deselect_all, R.drawable.ic_file_action_select_none),
+    SELECT_ALL(R.id.action_select_all_action_menu, R.string.select_all, R.drawable.ic_select_all),
+    SELECT_NONE(R.id.action_deselect_all_action_menu, R.string.deselect_all, R.drawable.ic_select_none),
 
     // generic file actions
     EDIT(R.id.action_edit, R.string.action_edit, R.drawable.ic_file_action_edit),
-    SEE_DETAILS(R.id.action_see_details, R.string.actionbar_see_details, R.drawable.ic_file_action_see_details),
-    REMOVE_FILE(R.id.action_remove_file, R.string.common_remove, R.drawable.ic_file_action_remove_file),
+    SEE_DETAILS(R.id.action_see_details, R.string.actionbar_see_details, R.drawable.ic_information_outline),
+    REMOVE_FILE(R.id.action_remove_file, R.string.common_remove, R.drawable.ic_delete),
 
     // File moving
-    RENAME_FILE(R.id.action_rename_file, R.string.common_rename, R.drawable.ic_file_action_rename_file),
+    RENAME_FILE(R.id.action_rename_file, R.string.common_rename, R.drawable.ic_rename),
     MOVE_OR_COPY(R.id.action_move_or_copy, R.string.actionbar_move_or_copy, R.drawable.ic_file_action_move_or_copy),
 
     // favorites
-    FAVORITE(R.id.action_favorite, R.string.favorite, R.drawable.ic_file_action_favorite),
-    UNSET_FAVORITE(R.id.action_unset_favorite, R.string.unset_favorite, R.drawable.ic_file_action_unset_favorite),
+    FAVORITE(R.id.action_favorite, R.string.favorite, R.drawable.ic_star),
+    UNSET_FAVORITE(R.id.action_unset_favorite, R.string.unset_favorite, R.drawable.ic_star_outline),
 
     // Uploads and downloads
-    DOWNLOAD_FILE(R.id.action_download_file, R.string.filedetails_download, R.drawable.ic_file_action_download_file),
+    DOWNLOAD_FILE(R.id.action_download_file, R.string.filedetails_download, R.drawable.ic_cloud_download),
     SYNC_FILE(R.id.action_sync_file, R.string.filedetails_sync_file, R.drawable.ic_file_action_sync_file),
     CANCEL_SYNC(R.id.action_cancel_sync, R.string.common_cancel_sync, R.drawable.ic_file_action_cancel_sync),
 
     // File sharing
-    EXPORT_FILE(R.id.action_export_file, R.string.filedetails_export, R.drawable.ic_file_action_export_file),
-    SEND_SHARE_FILE(R.id.action_send_share_file, R.string.action_send_share, R.drawable.ic_file_action_share_file),
-    SEND_FILE(R.id.action_send_file, R.string.common_send, R.drawable.ic_file_action_share_file),
+    EXPORT_FILE(R.id.action_export_file, R.string.filedetails_export, R.drawable.ic_export),
+    SEND_SHARE_FILE(R.id.action_send_share_file, R.string.action_send_share, R.drawable.ic_share),
+    SEND_FILE(R.id.action_send_file, R.string.common_send, R.drawable.ic_share),
     OPEN_FILE_WITH(R.id.action_open_file_with, R.string.actionbar_open_with, R.drawable.ic_file_action_open_file_with),
     STREAM_MEDIA(R.id.action_stream_media, R.string.stream, R.drawable.ic_file_action_stream_media),
-    SET_AS_WALLPAPER(R.id.action_set_as_wallpaper, R.string.set_picture_as, R.drawable.ic_file_action_set_as_wallpaper),
+    SET_AS_WALLPAPER(R.id.action_set_as_wallpaper, R.string.set_picture_as, R.drawable.ic_wallpaper),
 
     // Encryption
     SET_ENCRYPTED(R.id.action_encrypted, R.string.encrypted, R.drawable.ic_file_action_set_encrypted),
@@ -54,7 +54,10 @@ enum class FileAction(@IdRes val id: Int, @StringRes val title: Int, @DrawableRe
     LOCK_FILE(R.id.action_lock_file, R.string.lock_file, R.drawable.ic_file_action_lock_file),
 
     // Shortcuts
-    PIN_TO_HOMESCREEN(R.id.action_pin_to_homescreen, R.string.pin_home, R.drawable.ic_file_action_pin_to_homescreen);
+    PIN_TO_HOMESCREEN(R.id.action_pin_to_homescreen, R.string.pin_home, R.drawable.add_to_home_screen),
+
+    // Retry for offline operation
+    RETRY(R.id.action_retry, R.string.retry, R.drawable.ic_retry);
 
     companion object {
         /**
@@ -84,7 +87,8 @@ enum class FileAction(@IdRes val id: Int, @StringRes val title: Int, @DrawableRe
             UNSET_ENCRYPTED,
             SET_AS_WALLPAPER,
             REMOVE_FILE,
-            PIN_TO_HOMESCREEN
+            PIN_TO_HOMESCREEN,
+            RETRY
         )
     }
 }

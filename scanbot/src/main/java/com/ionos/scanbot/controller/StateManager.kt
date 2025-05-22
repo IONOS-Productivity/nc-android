@@ -14,6 +14,7 @@ import com.ionos.scanbot.upload.target_provider.UploadTarget
 import com.ionos.scanbot.entity.Picture
 import com.ionos.scanbot.filter.color.ColorFilterType
 import com.ionos.scanbot.util.gson.RuntimeTypeAdapterFactory
+import com.ionos.scanbot.util.logger.LoggerUtil
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.InputStreamReader
@@ -75,6 +76,7 @@ internal class StateManager {
 		writer.use { gson.toJson(pictures, it) }
 		byteArrayOutputStream.toByteArray()
 	} catch (e: Exception) {
+		LoggerUtil.logE(javaClass.simpleName, e)
 		ByteArray(0)
 	}
 
@@ -83,6 +85,7 @@ internal class StateManager {
 		val reader = InputStreamReader(gzipInputStream, Charsets.UTF_8)
 		reader.use { gson.fromJson(it, Array<Picture>::class.java) }
 	} catch (e: Exception) {
+		LoggerUtil.logE(javaClass.simpleName, e)
 		emptyArray()
 	}
 }

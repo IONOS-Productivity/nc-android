@@ -18,11 +18,11 @@ buildscript {
 
 android {
     namespace 'com.ionos.scanbot'
-    compileSdk 34
+    compileSdk 35
 
     defaultConfig {
         minSdk 24
-        targetSdk 34
+        targetSdk 35
 
         final String scanbotLicenseKey = project.findProperty('ionosHidriveNextScanbotLicenseKey') ?: ""
         final String scanbotLicenseKeyUrl = project.findProperty('ionosHidriveNextScanbotLicenseKeyUrl') ?: ""
@@ -64,19 +64,30 @@ android {
     }
 }
 
-dependencies {
-    api "io.scanbot:sdk-package-2:$scanbot_sdk_version"
-    api "io.scanbot:sdk-common-ocr-assets:$scanbot_sdk_version"
-    implementation "com.google.android.material:material:$material_version"
+rootProject.subprojects {
+    repositories {
+        maven { url 'https://nexus.scanbot.io/nexus/content/repositories/releases/' }
+    }
+}
 
-    compileOnly reactivex_rxjava2
-    compileOnly reactivex_rxandroid2
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation "androidx.activity:activity-ktx:$activity_ktx_version"
-    implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
-    implementation "androidx.preference:preference:$preference_version"
-    implementation "androidx.exifinterface:exifinterface:$androidx_exifinterface_version"
+dependencies {
+    def scanbotSdkVersion = "6.2.1"
+    implementation "io.scanbot:sdk-package-2:$scanbotSdkVersion"
+    implementation "io.scanbot:sdk-common-ocr-assets:$scanbotSdkVersion"
+
+    implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
+    implementation "io.reactivex.rxjava2:rxjava:2.2.21"
+
+    implementation "androidx.appcompat:appcompat:$appCompatVersion"
+    implementation "androidx.exifinterface:exifinterface:1.3.7"
+    implementation "androidx.preference:preference-ktx:1.2.1"
+    implementation "androidx.recyclerview:recyclerview:1.3.2"
+
+    implementation "com.google.android.material:material:1.12.0"
 
     implementation "com.google.dagger:dagger:$daggerVersion"
+    implementation "com.google.dagger:dagger-android:$daggerVersion"
+    implementation "com.google.dagger:dagger-android-support:$daggerVersion"
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+    kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
 }

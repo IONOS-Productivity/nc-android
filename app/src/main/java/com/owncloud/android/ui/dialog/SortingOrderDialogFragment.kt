@@ -71,7 +71,6 @@ class SortingOrderDialogFragment : DialogFragment(), Injectable {
         binding.cancel.setOnClickListener { dismiss() }
     }
 
-    @IonosCustomization
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding = SortingOrderFragmentBinding.inflate(requireActivity().layoutInflater, null, false)
         setupDialogElements(binding!!)
@@ -79,7 +78,7 @@ class SortingOrderDialogFragment : DialogFragment(), Injectable {
         val builder = MaterialAlertDialogBuilder(requireContext())
         builder.setView(binding?.root)
 
-        viewThemeUtils?.ionos?.dialog?.colorMaterialAlertDialogBackground(requireContext(), builder)
+        viewThemeUtils?.dialog?.colorMaterialAlertDialogBackground(requireContext(), builder)
 
         return builder.create()
     }

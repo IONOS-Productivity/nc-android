@@ -6,12 +6,15 @@
  */
 package com.owncloud.android.ui.preview
 
+import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowInsets
@@ -54,7 +57,11 @@ import com.owncloud.android.ui.preview.model.PreviewImageActivityState
 import com.owncloud.android.utils.DisplayUtils
 import com.owncloud.android.utils.MimeTypeUtil
 import android.graphics.drawable.ColorDrawable
+import android.view.ViewGroup
 import androidx.activity.enableEdgeToEdge
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
 import java.io.Serializable
 import javax.inject.Inject
@@ -83,11 +90,21 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
     lateinit var localBroadcastManager: LocalBroadcastManager
 
     private var actionBar: ActionBar? = null
+    private var showDirectoryWhenDeletionCompleted = false
 
     @IonosCustomization
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
+
+        val contentContainer = (window.decorView as ViewGroup).getChildAt(0)
+        ViewCompat.setOnApplyWindowInsetsListener(contentContainer) { view, windowInsets ->
+            val insetsType = WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
+            val insets = windowInsets.getInsets(insetsType)
+            val actionBarView = view.findViewById<View>(androidx.appcompat.R.id.action_bar)
+            actionBarView?.updatePadding(left = insets.left, top = insets.top, right = insets.right)
+            WindowInsetsCompat.CONSUMED
+        }
 
         actionBar = supportActionBar
 
@@ -108,7 +125,7 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
         val chosenFile = intent.getParcelableArgument(EXTRA_FILE, OCFile::class.java)
         updateActionBarTitleAndHomeButton(chosenFile)
 
-        viewThemeUtils.ionos.platform.themeSystemBars(this, getColor(R.color.preview_image_system_bars_color))
+        viewThemeUtils.platform.themeStatusBar(this, getColor(R.color.preview_image_system_bars_color))
         if (actionBar != null) {
             viewThemeUtils.files.setWhiteBackButton(this, actionBar!!)
             actionBar?.setBackgroundDrawable(ColorDrawable(getColor(R.color.preview_image_system_bars_color)))
@@ -125,6 +142,13 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
         }
 
         observeWorkerState()
+    }
+
+    @IonosCustomization("Remove default window insets paddings")
+    override fun isDefaultWindowInsetsHandlingEnabled() = false
+
+    fun showDirectoryWhenDeletionCompleted() {
+        showDirectoryWhenDeletionCompleted = true
     }
 
     fun toggleActionBarVisibility(hide: Boolean) {
@@ -189,6 +213,17 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
             // this is necessary because mViewPager.setCurrentItem(0) just after setting the
             // adapter does not result in a call to #onPageSelected(0)
             screenState = PreviewImageActivityState.WaitingForBinder
+        }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun setPreviewImagePagerCurrentItem(position: Int) {
+        if (user.isPresent) {
+            Handler(Looper.getMainLooper()).post {
+                initViewPager(user.get())
+                viewPager?.setCurrentItem(position, false)
+                viewPager?.adapter?.notifyDataSetChanged()
+            }
         }
     }
 
@@ -286,7 +321,7 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
     private fun observeWorkerState() {
         WorkerStateLiveData.instance().observe(this) { state: WorkerState? ->
             when (state) {
-                is WorkerState.Download -> {
+                is WorkerState.DownloadStarted -> {
                     Log_OC.d(TAG, "Download worker started")
                     isDownloadWorkStarted = true
 
@@ -295,7 +330,7 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
                     }
                 }
 
-                is WorkerState.Idle -> {
+                is WorkerState.DownloadFinished -> {
                     Log_OC.d(TAG, "Download worker stopped")
                     isDownloadWorkStarted = false
 
@@ -305,7 +340,7 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
                 }
 
                 else -> {
-                    Log_OC.d(TAG, "Download worker stopped")
+                    Log_OC.d(TAG, "Worker stopped")
                     isDownloadWorkStarted = false
                 }
             }
@@ -364,7 +399,7 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
         }
 
         startActivity(intent)
-        backToDisplayActivity()
+        finish()
     }
 
     override fun showDetails(file: OCFile, activeTab: Int) {

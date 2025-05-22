@@ -16,7 +16,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.di.Injectable
 import com.nextcloud.utils.extensions.getParcelableArgument
 import com.owncloud.android.R
@@ -41,7 +40,6 @@ class RenamePublicShareDialogFragment : DialogFragment(), DialogInterface.OnClic
     private lateinit var binding: EditBoxDialogBinding
     private var publicShare: OCShare? = null
 
-    @IonosCustomization()
     override fun onStart() {
         super.onStart()
 
@@ -51,11 +49,11 @@ class RenamePublicShareDialogFragment : DialogFragment(), DialogInterface.OnClic
         val negativeButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE) as? MaterialButton
 
         positiveButton?.let {
-            viewThemeUtils.ionos.material.colorMaterialButtonPrimaryTonal(positiveButton)
+            viewThemeUtils.material.colorMaterialButtonPrimaryTonal(positiveButton)
         }
 
         negativeButton?.let {
-            viewThemeUtils.ionos.material.colorMaterialButtonPrimaryBorderless(negativeButton)
+            viewThemeUtils.material.colorMaterialButtonPrimaryBorderless(negativeButton)
         }
     }
 
@@ -64,7 +62,6 @@ class RenamePublicShareDialogFragment : DialogFragment(), DialogInterface.OnClic
         keyboardUtils.showKeyboardForEditText(requireDialog().window, binding.userInput)
     }
 
-    @IonosCustomization
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         publicShare = requireArguments().getParcelableArgument(ARG_PUBLIC_SHARE, OCShare::class.java)
 
@@ -72,7 +69,7 @@ class RenamePublicShareDialogFragment : DialogFragment(), DialogInterface.OnClic
         binding = EditBoxDialogBinding.inflate(inflater, null, false)
         val view: View = binding.root
 
-        viewThemeUtils.ionos.material.colorTextInputLayout(binding.userInputContainer)
+        viewThemeUtils.material.colorTextInputLayout(binding.userInputContainer)
         binding.userInput.setText(publicShare?.label)
 
         val builder = MaterialAlertDialogBuilder(view.context)
@@ -81,7 +78,7 @@ class RenamePublicShareDialogFragment : DialogFragment(), DialogInterface.OnClic
             .setNegativeButton(R.string.common_cancel, this)
             .setTitle(R.string.public_share_name)
 
-        viewThemeUtils.ionos.dialog.colorMaterialAlertDialogBackground(binding.userInput.context, builder)
+        viewThemeUtils.dialog.colorMaterialAlertDialogBackground(binding.userInput.context, builder)
 
         return builder.create()
     }

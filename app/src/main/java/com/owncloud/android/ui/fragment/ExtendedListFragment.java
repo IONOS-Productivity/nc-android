@@ -42,10 +42,12 @@ import android.widget.TextView;
 
 import com.google.android.material.button.MaterialButton;
 import com.ionos.annotation.IonosCustomization;
+import com.ionos.utils.IonosBuildHelper;
 import com.nextcloud.client.account.UserAccountManager;
 import com.nextcloud.client.di.Injectable;
 import com.nextcloud.client.preferences.AppPreferences;
 import com.nextcloud.client.preferences.AppPreferencesImpl;
+import com.nextcloud.utils.extensions.FragmentExtensionsKt;
 import com.owncloud.android.MainApp;
 import com.owncloud.android.R;
 import com.owncloud.android.databinding.ListFragmentBinding;
@@ -53,6 +55,7 @@ import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.lib.resources.files.SearchRemoteOperation;
 import com.owncloud.android.lib.resources.status.OwnCloudVersion;
 import com.owncloud.android.ui.EmptyRecyclerView;
+import com.owncloud.android.ui.activity.FileActivity;
 import com.owncloud.android.ui.activity.FileDisplayActivity;
 import com.owncloud.android.ui.activity.FolderPickerActivity;
 import com.owncloud.android.ui.activity.OnEnforceableRefreshListener;
@@ -106,6 +109,7 @@ public class ExtendedListFragment extends Fragment implements
     @Inject UserAccountManager accountManager;
     @Inject ViewThemeUtils viewThemeUtils;
 
+    private ScaleGestureDetector mScaleGestureDetector;
     protected SwipeRefreshLayout mRefreshListLayout;
     protected MaterialButton mSortButton;
     protected MaterialButton mSwitchGridViewButton;
@@ -169,10 +173,10 @@ public class ExtendedListFragment extends Fragment implements
     }
 
     @Override
-    @IonosCustomization
     public void onCreateOptionsMenu(Menu menu, @NonNull MenuInflater inflater) {
         final MenuItem item = menu.findItem(R.id.action_search);
         searchView = (SearchView) MenuItemCompat.getActionView(item);
+        viewThemeUtils.androidx.themeToolbarSearchView(searchView);
         closeButton = searchView.findViewById(androidx.appcompat.R.id.search_close_btn);
         searchView.setOnQueryTextListener(this);
         searchView.setOnCloseListener(this);
@@ -317,7 +321,6 @@ public class ExtendedListFragment extends Fragment implements
     }
 
     @Override
-    @IonosCustomization
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log_OC.d(TAG, "onCreateView");
 
@@ -334,6 +337,18 @@ public class ExtendedListFragment extends Fragment implements
 
         mScale = preferences.getGridColumns();
         setGridViewColumns(1f);
+
+        mScaleGestureDetector = new ScaleGestureDetector(MainApp.getAppContext(), new ScaleListener());
+
+        getRecyclerView().setOnTouchListener((view, motionEvent) -> {
+            mScaleGestureDetector.onTouchEvent(motionEvent);
+
+            if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                view.performClick();
+            }
+
+            return false;
+        });
 
         // Pull-down to refresh layout
         mRefreshListLayout = binding.swipeContainingList;
@@ -358,9 +373,14 @@ public class ExtendedListFragment extends Fragment implements
         binding = null;
     }
 
+    @IonosCustomization
     private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
         @Override
         public boolean onScale(ScaleGestureDetector detector) {
+            if (IonosBuildHelper.isIonosBuild()) {
+                return true;
+            }
+
             setGridViewColumns(detector.getScaleFactor());
 
             preferences.setGridColumns(mScale);
@@ -567,69 +587,67 @@ public class ExtendedListFragment extends Fragment implements
      */
     public void setMessageForEmptyList(@StringRes final int headline, @StringRes final int message,
                                        @DrawableRes final int icon, final boolean tintIcon) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
+        new Handler(Looper.getMainLooper()).post(() -> {
 
-                if (mEmptyListContainer != null && mEmptyListMessage != null) {
-                    mEmptyListHeadline.setText(headline);
-                    mEmptyListMessage.setText(message);
+            if (mEmptyListContainer != null && mEmptyListMessage != null) {
+                mEmptyListHeadline.setText(headline);
+                mEmptyListMessage.setText(message);
 
-                    if (tintIcon) {
-                        if (getContext() != null) {
-                            mEmptyListIcon.setImageDrawable(
-                                viewThemeUtils.platform.tintPrimaryDrawable(getContext(), icon));
-                        }
-                    } else {
-                        mEmptyListIcon.setImageResource(icon);
+                if (tintIcon) {
+                    if (getContext() != null) {
+                        mEmptyListIcon.setImageDrawable(
+                            viewThemeUtils.platform.tintPrimaryDrawable(getContext(), icon));
                     }
-
-                    mEmptyListIcon.setVisibility(View.VISIBLE);
-                    mEmptyListMessage.setVisibility(View.VISIBLE);
+                } else {
+                    mEmptyListIcon.setImageResource(icon);
                 }
+
+                mEmptyListIcon.setVisibility(View.VISIBLE);
+                mEmptyListMessage.setVisibility(View.VISIBLE);
             }
         });
     }
 
     @IonosCustomization
     public void setEmptyListMessage(final SearchType searchType) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-
-                if (searchType == SearchType.NO_SEARCH) {
-                    setMessageForEmptyList(R.string.file_list_empty_headline,
-                                           R.string.file_list_empty,
-                                           R.drawable.ic_list_empty_folder);
-                } else if (searchType == SearchType.FILE_SEARCH) {
-                    setMessageForEmptyList(R.string.file_list_empty_headline_server_search,
-                                           R.string.file_list_empty,
-                                           R.drawable.ic_search);
-                } else if (searchType == SearchType.FAVORITE_SEARCH) {
-                    setMessageForEmptyList(R.string.file_list_empty_favorite_headline,
-                                           R.string.file_list_empty_favorites_filter_list,
-                                           R.drawable.favorite);
-                } else if (searchType == SearchType.RECENTLY_MODIFIED_SEARCH) {
-                    setMessageForEmptyList(R.string.file_list_empty_headline_server_search,
-                                           R.string.file_list_empty_recently_modified,
-                                           R.drawable.ic_list_empty_recent);
-                } else if (searchType == SearchType.REGULAR_FILTER) {
-                    setMessageForEmptyList(R.string.file_list_empty_headline_search,
-                                           R.string.file_list_empty_search,
-                                           R.drawable.ic_search);
-                } else if (searchType == SearchType.SHARED_FILTER) {
-                    setMessageForEmptyList(R.string.file_list_empty_shared_headline,
-                                           R.string.file_list_empty_shared,
-                                           R.drawable.ic_list_empty_shared);
-                } else if (searchType == SearchType.GALLERY_SEARCH) {
-                    setMessageForEmptyList(R.string.file_list_empty_headline_server_search,
-                                           R.string.file_list_empty_gallery,
-                                           R.drawable.file_image);
-                } else if (searchType == SearchType.LOCAL_SEARCH) {
-                    setMessageForEmptyList(R.string.file_list_empty_headline_server_search,
-                                           R.string.file_list_empty_local_search,
-                                           R.drawable.ic_search);
-                }
+        new Handler(Looper.getMainLooper()).post(() -> {
+            if (searchType == SearchType.OFFLINE_MODE) {
+                setMessageForEmptyList(R.string.offline_mode_info_title,
+                                       R.string.offline_mode_info_description,
+                                       R.drawable.ic_cloud_sync,
+                                       true);
+            } else if (searchType == SearchType.NO_SEARCH) {
+                setMessageForEmptyList(R.string.file_list_empty_headline,
+                                       R.string.file_list_empty,
+                                       R.drawable.ic_list_empty_folder);
+            } else if (searchType == SearchType.FILE_SEARCH) {
+                setMessageForEmptyList(R.string.file_list_empty_headline_server_search,
+                                       R.string.file_list_empty,
+                                       R.drawable.ic_search);
+            } else if (searchType == SearchType.FAVORITE_SEARCH) {
+                setMessageForEmptyList(R.string.file_list_empty_favorite_headline,
+                                       R.string.file_list_empty_favorites_filter_list,
+                                       R.drawable.favorite);
+            } else if (searchType == SearchType.RECENTLY_MODIFIED_SEARCH) {
+                setMessageForEmptyList(R.string.file_list_empty_headline_server_search,
+                                       R.string.file_list_empty_recently_modified,
+                                       R.drawable.ic_list_empty_recent);
+            } else if (searchType == SearchType.REGULAR_FILTER) {
+                setMessageForEmptyList(R.string.file_list_empty_headline_search,
+                                       R.string.file_list_empty_search,
+                                       R.drawable.ic_search);
+            } else if (searchType == SearchType.SHARED_FILTER) {
+                setMessageForEmptyList(R.string.file_list_empty_shared_headline,
+                                       R.string.file_list_empty_shared,
+                                       R.drawable.ic_list_empty_shared);
+            } else if (searchType == SearchType.GALLERY_SEARCH) {
+                setMessageForEmptyList(R.string.file_list_empty_headline_server_search,
+                                       R.string.file_list_empty_gallery,
+                                       R.drawable.file_image);
+            } else if (searchType == SearchType.LOCAL_SEARCH) {
+                setMessageForEmptyList(R.string.file_list_empty_headline_server_search,
+                                       R.string.file_list_empty_local_search,
+                                       R.drawable.ic_search);
             }
         });
     }
@@ -639,11 +657,15 @@ public class ExtendedListFragment extends Fragment implements
      */
     public void setEmptyListLoadingMessage() {
         new Handler(Looper.getMainLooper()).post(() -> {
-            if (mEmptyListContainer != null && mEmptyListMessage != null) {
-                mEmptyListHeadline.setText(R.string.file_list_loading);
-                mEmptyListMessage.setText("");
+            FileActivity fileActivity = FragmentExtensionsKt.getTypedActivity(this, FileActivity.class);
+            if (fileActivity != null) {
+                fileActivity.connectivityService.isNetworkAndServerAvailable(result -> {
+                    if (!result || mEmptyListContainer == null || mEmptyListMessage == null) return;
 
-                mEmptyListIcon.setVisibility(View.GONE);
+                    mEmptyListHeadline.setText(R.string.file_list_loading);
+                    mEmptyListMessage.setText("");
+                    mEmptyListIcon.setVisibility(View.GONE);
+                });
             }
         });
     }
@@ -672,8 +694,21 @@ public class ExtendedListFragment extends Fragment implements
     @IonosCustomization
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        mScale = preferences.getGridColumns();
-        setGridViewColumns(1f);
+        if (IonosBuildHelper.isIonosBuild()) {
+            mScale = preferences.getGridColumns();
+            setGridViewColumns(1f);
+            return;
+        }
+
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            maxColumnSize = 10;
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            maxColumnSize = 5;
+        }
+
+        if (isGridEnabled() && getColumnsCount() > maxColumnSize) {
+            ((GridLayoutManager) getRecyclerView().getLayoutManager()).setSpanCount(maxColumnSize);
+        }
     }
 
     protected void setGridSwitchButton() {

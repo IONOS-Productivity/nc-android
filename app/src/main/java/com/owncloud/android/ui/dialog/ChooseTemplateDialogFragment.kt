@@ -24,7 +24,6 @@ import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.ionos.annotation.IonosCustomization
 import com.nextcloud.android.lib.resources.directediting.DirectEditingCreateFileRemoteOperation
 import com.nextcloud.android.lib.resources.directediting.DirectEditingObtainListOfTemplatesRemoteOperation
 import com.nextcloud.client.account.CurrentAccountProvider
@@ -87,19 +86,18 @@ class ChooseTemplateDialogFragment : DialogFragment(), View.OnClickListener, Tem
     private var _binding: ChooseTemplateBinding? = null
     val binding get() = _binding!!
 
-    @IonosCustomization()
     override fun onStart() {
         super.onStart()
         val alertDialog = dialog as AlertDialog
 
         val negativeButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE) as? MaterialButton
         negativeButton?.let {
-            viewThemeUtils.ionos.material.colorMaterialButtonPrimaryBorderless(negativeButton)
+            viewThemeUtils.material.colorMaterialButtonPrimaryBorderless(negativeButton)
         }
 
         val positiveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE) as? MaterialButton
         positiveButton?.let {
-            viewThemeUtils.ionos.material.colorMaterialButtonPrimaryTonal(positiveButton)
+            viewThemeUtils.material.colorMaterialButtonPrimaryTonal(positiveButton)
             positiveButton.setOnClickListener(this)
             positiveButton.isEnabled = false
             positiveButton.isClickable = false
@@ -114,7 +112,6 @@ class ChooseTemplateDialogFragment : DialogFragment(), View.OnClickListener, Tem
         keyboardUtils.showKeyboardForEditText(dialog?.window, binding.filename)
     }
 
-    @IonosCustomization
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val arguments = arguments ?: throw IllegalArgumentException("Arguments may not be null")
         val activity = activity ?: throw IllegalArgumentException("Activity may not be null")
@@ -133,7 +130,7 @@ class ChooseTemplateDialogFragment : DialogFragment(), View.OnClickListener, Tem
         val inflater = requireActivity().layoutInflater
         _binding = ChooseTemplateBinding.inflate(inflater, null, false)
 
-        viewThemeUtils.ionos.material.colorTextInputLayout(
+        viewThemeUtils.material.colorTextInputLayout(
             binding.filenameContainer
         )
 
@@ -165,7 +162,7 @@ class ChooseTemplateDialogFragment : DialogFragment(), View.OnClickListener, Tem
             .setNegativeButton(R.string.common_cancel, null)
             .setTitle(title)
 
-        viewThemeUtils.ionos.dialog.colorMaterialAlertDialogBackground(binding.list.context, builder)
+        viewThemeUtils.dialog.colorMaterialAlertDialogBackground(binding.list.context, builder)
 
         return builder.create()
     }

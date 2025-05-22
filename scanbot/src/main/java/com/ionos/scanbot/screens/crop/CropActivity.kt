@@ -12,20 +12,22 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.addCallback
+import androidx.core.view.WindowInsetsCompat
 import com.ionos.scanbot.R
 import com.ionos.scanbot.databinding.ScanbotActivityCropBinding
-import com.ionos.scanbot.di.inject
 import com.ionos.scanbot.screens.base.BaseActivity
 import com.ionos.scanbot.exception.CreateIntentException
 import com.ionos.scanbot.screens.common.LockProgressDialog
 import com.ionos.scanbot.screens.crop.CropScreen.*
 import com.ionos.scanbot.screens.crop.CropScreen.Event.*
+import com.ionos.scanbot.util.window.getSystemBarsAndDisplayCutoutInsets
+import javax.inject.Inject
 
 internal class CropActivity : BaseActivity<Event, State, ViewModel>() {
 	override val viewModelFactory by lazy { viewModelFactoryAssistant.create(getImageId()) }
 	override val viewBinding by lazy { ScanbotActivityCropBinding.inflate(layoutInflater) }
 
-	private val viewModelFactoryAssistant by inject { cropViewModelFactoryAssistant() }
+    @Inject lateinit var viewModelFactoryAssistant: CropViewModelFactory.Assistant
     private val progressDialog by lazy { LockProgressDialog() }
 
 	companion object {
@@ -50,6 +52,18 @@ internal class CropActivity : BaseActivity<Event, State, ViewModel>() {
 		super.onStart()
 		viewModel.onStart()
 	}
+
+    override fun onApplyWindowInsets(windowInsets: WindowInsetsCompat): WindowInsetsCompat {
+        windowWrapper.setupStatusBar(theme, R.attr.scanbot_app_bar_color, false)
+        windowWrapper.setupNavigationBar(theme, R.attr.scanbot_window_background, true)
+
+        val insets = windowInsets.getSystemBarsAndDisplayCutoutInsets()
+        viewBinding.cropView.setPadding(insets.left, 0, insets.right, 0)
+        viewBinding.toolbar.toolbar.setPadding(insets.left, insets.top, insets.right, 0)
+        viewBinding.bottomBarLayout.setPadding(insets.left, 0, insets.right, insets.bottom)
+
+        return WindowInsetsCompat.CONSUMED
+    }
 
 	private fun initOnBackPressedCallback() {
 		onBackPressedDispatcher.addCallback(this, true) { viewModel.onBackPressed() }

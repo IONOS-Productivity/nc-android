@@ -10,7 +10,6 @@
     <string name="action_edit">Editar</string>
     <string name="action_empty_notifications">Borrar todas las notificaciones</string>
     <string name="action_empty_trashbin">Vaciar la papelera</string>
-    <string name="action_send_share">Enviar/Compartir</string>
     <string name="action_switch_grid_view">Vista de cuadrícula</string>
     <string name="action_switch_list_view">Vista de lista</string>
     <string name="actionbar_calendar_contacts_restore">Restaurar contactos y calendario</string>
@@ -28,26 +27,17 @@
     <string name="activity_chooser_send_file_title">Enviar</string>
     <string name="activity_chooser_title">Enviar Link a…</string>
     <string name="activity_icon">Actividad</string>
-    <string name="add_another_public_share_link">Agregar otro enlace</string>
     <string name="add_new_public_share">Agregar un nuevo enlace publico</string>
     <string name="add_new_secure_file_drop">Agregar nueva carpeta segura de archivos</string>
     <string name="add_to_cloud">Añadir %1$s</string>
-    <string name="advanced_settings">Configuración avanzada</string>
+    <string name="advanced_settings">Configuraciones avanzadas</string>
     <string name="allow_resharing">Permitir volver a compartir</string>
     <string name="app_config_proxy_port_title">Puerto del Proxy</string>
     <string name="app_widget_description">Muestra un widget del panel</string>
     <string name="appbar_search_in">Buscar en %s</string>
-    <string name="assistant_screen_all_task_type">Todos</string>
     <string name="assistant_screen_create_task_alert_dialog_input_field_placeholder">Escriba un texto</string>
     <string name="assistant_screen_delete_task_alert_dialog_description">¿Está seguro que desea eliminar esta tarea?</string>
-    <string name="assistant_screen_delete_task_alert_dialog_title">Eliminar tarea</string>
-    <string name="assistant_screen_failed_task_text">Error</string>
-    <string name="assistant_screen_loading">Las listas de tareas están cargando, por favor espere</string>
-    <string name="assistant_screen_no_task_available_for_all_task_filter_text">No hay tareas disponibles. Seleccione un tipo de tarea para crear una nueva.</string>
     <string name="assistant_screen_no_task_available_text">No hay tareas del tipo %s, puede crear una nueva tarea desde la parte inferior derecha</string>
-    <string name="assistant_screen_running_task_text">En progreso</string>
-    <string name="assistant_screen_scheduled_task_status_text">Programado</string>
-    <string name="assistant_screen_successful_task_text">Completado</string>
     <string name="assistant_screen_task_create_fail_message">Ocurrió un error al crear la tarea</string>
     <string name="assistant_screen_task_create_success_message">Tarea creada exitosamente</string>
     <string name="assistant_screen_task_delete_fail_message">Ocurrió un error al eliminar la tarea</string>
@@ -56,7 +46,6 @@
     <string name="assistant_screen_task_more_actions_bottom_sheet_delete_action">Eliminar tarea</string>
     <string name="assistant_screen_task_types_error_state_message">No se pudieron obtener los tipos de tareas, por favor, revise su conexión a internet.</string>
     <string name="assistant_screen_top_bar_title">Asistente</string>
-    <string name="assistant_screen_unknown_task_status_text">Desconocido</string>
     <string name="assistant_task_detail_screen_input_button_title">Entrada</string>
     <string name="assistant_task_detail_screen_output_button_title">Salida</string>
     <string name="associated_account_not_found">¡Cuenta asociada no encontrada!</string>
@@ -108,7 +97,10 @@
     <string name="battery_optimization_disable">Deshabilitar</string>
     <string name="battery_optimization_message">Su dispositivo puede tener habilitada la optimización de la batería. AutoUpload solo funciona correctamente si excluyes esta aplicación.</string>
     <string name="battery_optimization_title">Optimización de la batería</string>
-    <string name="brute_force_delay">Retrasado debido a demasiados intentos incorrectos</string>
+    <string name="bottom_navigation_menu_assistant_label">Asistente</string>
+    <string name="bottom_navigation_menu_favorites_label">Favoritos</string>
+    <string name="bottom_navigation_menu_files_label">Todos los archivos</string>
+    <string name="bottom_navigation_menu_media_label">Media</string>
     <string name="calendar">Calendario</string>
     <string name="calendars">Calendarios</string>
     <string name="certificate_load_problem">Se presentó un problema al cargar el certificado.</string>
@@ -176,7 +168,6 @@
     <string name="confirmation_remove_folders_alert">¿Realmente desea eliminar los elementos seleccionados y sus contenidos?</string>
     <string name="confirmation_remove_local">Sólo local</string>
     <string name="conflict_dialog_error">El diálogo de resolución de conflictos no puede ser creado</string>
-    <string name="conflict_file_headline">Archivo en conflicto %1$s</string>
     <string name="conflict_local_file">Archivo local</string>
     <string name="conflict_message_description">Si selecciona ambas versiones, se le agregará un número al nombre del archivo copiado.</string>
     <string name="conflict_server_file">Archivo del servidor</string>
@@ -279,17 +270,12 @@
     <string name="e2e_offline">No es posible sin conexión a Internet</string>
     <string name="ecosystem_apps_display_assistant">Asistente</string>
     <string name="ecosystem_apps_display_more">Más</string>
-    <string name="ecosystem_apps_display_notes">Notas</string>
-    <string name="ecosystem_apps_display_talk">Hablar</string>
     <string name="ecosystem_apps_more">Más apps de Nextcloud</string>
-    <string name="ecosystem_apps_notes">Notas de Nextcloud</string>
-    <string name="ecosystem_apps_talk">Nextcloud Talk</string>
     <string name="email_pick_failed">No se pudo seleccionar la dirección de correo electrónico.</string>
     <string name="encrypted">Establecer como cifrado</string>
     <string name="end_to_end_encryption_confirm_button">Configurar cifrado</string>
     <string name="end_to_end_encryption_decrypting">Decifrando…</string>
     <string name="end_to_end_encryption_dialog_close">Cerrar</string>
-    <string name="end_to_end_encryption_enter_password">Por favor, introduzca la contraseña para descifrar la clave privada.</string>
     <string name="end_to_end_encryption_folder_not_empty">Esta carpeta no está vacía.</string>
     <string name="end_to_end_encryption_generating_keys">Generando nuevas claves…</string>
     <string name="end_to_end_encryption_keywords_description">Los 12 dígitos juntos forman una contraseña muy segura, que solo le permite ver y hacer uso de sus archivos cifrados. Por favor escríbelo y guárdalo en un lugar seguro.</string>
@@ -335,7 +321,6 @@
     <string name="etm_background_jobs_stop_test_job">Detener trabajo de prueba</string>
     <string name="etm_migrations">Migraciones (actualización de la aplicación)</string>
     <string name="etm_preferences">Preferencias</string>
-    <string name="etm_title">Modo de prueba de ingeniería</string>
     <string name="etm_transfer">Transferencia de archivos</string>
     <string name="etm_transfer_enqueue_test_download">Test de descarga en cola</string>
     <string name="etm_transfer_enqueue_test_upload">Agregar a la cola la carga de prueba</string>
@@ -466,7 +451,6 @@
     <string name="image_preview_unit_megapixel">%s MP</string>
     <string name="image_preview_unit_millimetres">%s mm</string>
     <string name="image_preview_unit_seconds">%s s</string>
-    <string name="in_folder">en la carpeta %1$s</string>
     <string name="instant_upload_existing">Cargue también archivos existentes</string>
     <string name="instant_upload_on_charging">Cargar archivos sólo con el dispositivo conectado a la toma de corriente</string>
     <string name="instant_upload_path">/SubidasInstantáneas</string>
@@ -539,7 +523,6 @@
     <string name="new_media_folder_detected">Nueva carpeta de medios %1$s detectada</string>
     <string name="new_media_folder_photos">foto</string>
     <string name="new_media_folder_videos">video</string>
-    <string name="new_notification">Nueva notifiación</string>
     <string name="new_version_was_created">Nueva versión fue creada</string>
     <string name="no_actions">No hay acciones para este usuario</string>
     <string name="no_browser_available">No hay aplicación disponible para manejar enlaces</string>
@@ -590,7 +573,6 @@
     <string name="permission_deny">Rechazar</string>
     <string name="permission_storage_access">Se requieren permisos adicionales para cargar y descargar archivos. </string>
     <string name="picture_set_as_no_app">No se encontró ninguna aplicación para establecer una imagen con</string>
-    <string name="pin_home">Anclar a la pantalla de inicio</string>
     <string name="pin_shortcut_label">Abrir %1$s</string>
     <string name="placeholder_fileSize">389 KB</string>
     <string name="placeholder_filename">marcadordeposición.txt</string>
@@ -612,7 +594,6 @@
     <string name="prefs_add_account">Agregar cuenta</string>
     <string name="prefs_calendar_contacts">Sincronizar calendario y contactos</string>
     <string name="prefs_calendar_contacts_no_store_error">Ni F-Droid ni Google Play están instalados</string>
-    <string name="prefs_calendar_contacts_summary">Configurar DAVx5 (anteriormente conocido como DAVdroid) (v1.3.0 +) para la cuenta actual</string>
     <string name="prefs_calendar_contacts_sync_setup_successful">Sincronización de calendario y contactos configurada</string>
     <string name="prefs_category_about">Acerca de</string>
     <string name="prefs_category_details">Detalles</string>
@@ -622,7 +603,6 @@
     <string name="prefs_category_sync">Sincronizar</string>
     <string name="prefs_daily_backup_summary">Respaldo diario de su calendario y contactos</string>
     <string name="prefs_daily_contact_backup_summary">Backup diario de tus contactos</string>
-    <string name="prefs_davx5_setup_error">Error inesperado al configurar DAVx5 (anteriormente conocido como DAVdroid)</string>
     <string name="prefs_e2e_active">¡Se configuró la encriptación de extremo a extremo!</string>
     <string name="prefs_e2e_mnemonic">E2E mnemotécnico</string>
     <string name="prefs_e2e_no_device_credentials">Para mostrar mnemónico por favor habilite las credenciales del dispositivo.</string>
@@ -655,7 +635,6 @@
     <string name="prefs_show_ecosystem_apps_summary">Sugerencias de aplicaciones de Nextcloud en el encabezado de navegación</string>
     <string name="prefs_show_hidden_files">Mostrar archivos ocultos</string>
     <string name="prefs_sourcecode">Obtener el código fuente</string>
-    <string name="prefs_storage_path">Carpeta de almacenamiento de datos</string>
     <string name="prefs_sycned_folders_summary">Administrar carpetas para carga automática</string>
     <string name="prefs_synced_folders_local_path_title">Carpeta local</string>
     <string name="prefs_synced_folders_remote_path_title">Carpeta remota</string>
@@ -681,6 +660,7 @@
     <string name="recommend_subject">¡Prueba %1$s en tu dispositivo!</string>
     <string name="recommend_text">Quiero invitarlo a usar %1$s en su dispositivo.\nDescargue aquí: %2$s</string>
     <string name="recommend_urls">%1$s o %2$s</string>
+    <string name="recommended_files_title">Archivos recomendados</string>
     <string name="refresh_content">Actualizar contenido</string>
     <string name="reload">Volver a cargar</string>
     <string name="remote">(remoto)</string>
@@ -699,10 +679,10 @@
     <string name="request_account_deletion">Solicitar la eliminación de la cuenta</string>
     <string name="request_account_deletion_button">Solicitar eliminación</string>
     <string name="request_account_deletion_details">Solicitar la eliminación permanente de la cuenta al proveedor del servicio</string>
-    <string name="resized_image_not_possible_download">¿No hay imagen redimensionada disponible. Descargar imagen completa?</string>
     <string name="restore">Restaurar archivo</string>
     <string name="restore_backup">Restaurar copia de seguridad</string>
     <string name="restore_button_description">Restaurar archivo borrado</string>
+    <string name="restore_item">Restaurar</string>
     <string name="restore_selected">Restaurar seleccionados</string>
     <string name="retrieving_file">Recuperando archivo...</string>
     <string name="retry">Reintentar</string>
@@ -720,7 +700,6 @@
     <string name="screenshot_05_autoUpload_heading">Subida automática</string>
     <string name="screenshot_05_autoUpload_subline">para sus fotos y videos</string>
     <string name="screenshot_06_davdroid_heading">Calendario y contactos</string>
-    <string name="screenshot_06_davdroid_subline">Sincronizar con DAVx5</string>
     <string name="search_error">Error al obtener los resultados de búsqueda</string>
     <string name="secure_share_not_set_up">Compartir en modo seguro no está configurado para este usuario</string>
     <string name="select_all">Seleccionar todo</string>
@@ -728,16 +707,13 @@
     <string name="select_one_template">Por favor seleccione una plantilla</string>
     <string name="select_template">Seleccionar plantilla</string>
     <string name="send">Enviar</string>
-    <string name="send_share">Enviar recurso compartido</string>
     <string name="sendbutton_description">Icono de botón de enviar</string>
     <string name="set_as">Establecer Como</string>
-    <string name="set_note">Establecer nota</string>
     <string name="set_picture_as">Usar imagen como</string>
     <string name="set_status">Establecer estado</string>
     <string name="set_status_message">Establecer mensaje de estado</string>
     <string name="setup_e2e">Durante la configuración del cifrado de extremo a extremo, recibirá un mnemónico aleatorio de 12 palabras, que necesitará para abrir sus archivos en otros dispositivos. Esto solo se almacenará en este dispositivo y se puede volver a mostrar en esta pantalla. ¡Por favor anótelo en un lugar seguro!</string>
     <string name="share">Compartir</string>
-    <string name="share_copy_link">Compartir y copiar enlace</string>
     <string name="share_dialog_title">Compartiendo</string>
     <string name="share_expiration_date_format">%1$s</string>
     <string name="share_expiration_date_label">Vence %1$s</string>
@@ -763,7 +739,6 @@
     <string name="share_permission_file_drop">Entrega de archivos</string>
     <string name="share_permission_secure_file_drop">Entrega de archivos segura</string>
     <string name="share_permission_view_only">Solo ver</string>
-    <string name="share_permissions">Permisos del recurso compartido</string>
     <string name="share_remote_clarification">%1$s (remoto)</string>
     <string name="share_room_clarification">%1$s (conversación)</string>
     <string name="share_send_new_email">Enviar nuevo correo electrónico</string>
@@ -824,14 +799,12 @@
     <string name="storage_permission_full_access">Acceso completo</string>
     <string name="storage_permission_media_read_only">Sólo lectura de medios</string>
     <string name="storage_pictures">Imágenes</string>
-    <string name="store_full_desc">La plataforma de productividad autoalojada que le permite mantener el control.\n\nCaracterísticas:\n* Interfaz sencilla y moderna, adaptada al tema de su servidor\n* Subir archivos a su servidor Nextcloud\n* Compartirlos con otros\n* Mantener sincronizados sus archivos y carpetas favoritos\n* Buscar en todas las carpetas de su servidor\n* Subir automáticamente fotos y videos tomados por su dispositivo\n* Mantenerse al día con las notificaciones\n* Soporte para múltiples cuentas\n* Acceso seguro a sus datos con huella digital o PIN\n* Integración con DAVx5 (antes conocido como DAVdroid) para una fácil configuración de la sincronización de calendarios y contactos\n\nPor favor, informe todos los problemas en https://github.com/nextcloud/android/issues y discuta esta aplicación en https://help.nextcloud.com/c/clients/android\n\n¿Nuevo en Nextcloud? Nextcloud es un servidor privado de sincronización y uso compartido de archivos y comunicación. Es un software libre, y usted puede alojarlo usted mismo o pagarle a una empresa para que lo haga por usted. De esa manera, usted tiene el control de sus fotos, su calendario y datos de contacto, sus documentos y todo lo demás.\n\nVisite Nextcloud en https://nextcloud.com</string>
     <string name="store_full_dev_desc">La plataforma de productividad autohospedada que lo mantiene en control. \ NEsta es la versión de desarrollo oficial, que presenta una muestra diaria de cualquier funcionalidad nueva no probada, que puede causar inestabilidad y pérdida de datos. La aplicación es para usuarios que deseen probar e informar errores en caso de que ocurran. ¡No lo use para su trabajo productivo! \ N \ nTanto el desarrollador oficial como la versión regular están disponibles en F-droid y se pueden instalar al mismo tiempo.</string>
     <string name="store_short_desc">La plataforma de productividad autohospedada que lo mantiene en control</string>
     <string name="store_short_dev_desc">La plataforma de productividad autohospedada que lo mantiene en control (versión de vista previa del desarrollador)</string>
     <string name="stream">Transmitir con…</string>
     <string name="stream_not_possible_headline">Transmisión interna no es posible</string>
     <string name="stream_not_possible_message">Por favor descargue los medios en su lugar o use una aplicación externa.</string>
-    <string name="strict_mode">Modo estricto: ¡no se permiten conexiones HTTP!</string>
     <string name="sub_folder_rule_day">Año/Mes/Día</string>
     <string name="sub_folder_rule_month">Año/Mes</string>
     <string name="sub_folder_rule_year">Año</string>
@@ -868,6 +841,7 @@
     <string name="synced_folders_type">Escribir</string>
     <string name="synced_icon">Sincronizado</string>
     <string name="tags">Etiquetas</string>
+    <string name="terms_of_service_title">Términos de servicio</string>
     <string name="test_server_button">Testear conexión con el servidor</string>
     <string name="thirtyMinutes">30 minutos</string>
     <string name="thisWeek">Esta semana</string>
@@ -1009,9 +983,6 @@
     <string name="wait_a_moment">Espere un momento…</string>
     <string name="wait_checking_credentials">Verificando credenciales almacenadas</string>
     <string name="wait_for_tmp_copy_from_private_storage">Copiando el archivo desde almacenamiento privado</string>
-    <string name="webview_version_check_alert_dialog_message">Por favor, actualice la aplicación WebView del sistema de Android para iniciar sesión</string>
-    <string name="webview_version_check_alert_dialog_positive_button_title">Actualizar</string>
-    <string name="webview_version_check_alert_dialog_title">Actualice la aplicación WebView del sistema de Android</string>
     <string name="what_s_new_image">Lo que es nueva imagen</string>
     <string name="whats_new_skip">Saltar</string>
     <string name="whats_new_title">Nuevo en %1$s</string>
@@ -1091,4 +1062,4 @@
         <item quantity="many">%d seleccionados</item>
         <item quantity="other">%d seleccionados</item>
     </plurals>
-</resources>
+    </resources>

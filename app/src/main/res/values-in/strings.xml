@@ -10,12 +10,11 @@
     <string name="action_edit">Sunting</string>
     <string name="action_empty_notifications">Hapus semua notifikasi</string>
     <string name="action_empty_trashbin">Kosongkan tempat sampah</string>
-    <string name="action_send_share">Kirim/Bagi</string>
     <string name="action_switch_grid_view">Tampilan kotak</string>
     <string name="action_switch_list_view">Tampilan lis</string>
     <string name="actionbar_calendar_contacts_restore">Pulihkan kontak dan kalender</string>
     <string name="actionbar_mkdir">Folder baru</string>
-    <string name="actionbar_move_or_copy">Pindah atau Salin</string>
+    <string name="actionbar_move_or_copy">Pindah atau salin</string>
     <string name="actionbar_open_with">Buka dengan</string>
     <string name="actionbar_search">Cari</string>
     <string name="actionbar_see_details">Rincian</string>
@@ -28,24 +27,15 @@
     <string name="activity_chooser_send_file_title">Kirim</string>
     <string name="activity_chooser_title">Kirim taukan ke…</string>
     <string name="activity_icon">Aktifitas</string>
-    <string name="add_another_public_share_link">Tambah tautan lain</string>
     <string name="add_new_public_share">Tambahkan tautan berbagi baru</string>
     <string name="add_to_cloud">Tambahkan ke %1$s</string>
-    <string name="advanced_settings">Pengaturan Tambahan</string>
+    <string name="advanced_settings">Pengaturan Lanjutan</string>
     <string name="allow_resharing">Izinkan pembagian ulang</string>
     <string name="app_widget_description">Menampilkan satu gawit dari dasbor</string>
     <string name="appbar_search_in">Cari dalam %s</string>
-    <string name="assistant_screen_all_task_type">Semua</string>
     <string name="assistant_screen_create_task_alert_dialog_input_field_placeholder">Tulis beberapa teks</string>
     <string name="assistant_screen_delete_task_alert_dialog_description">Apakah Anda yakin ingin menghapus tugas ini?</string>
-    <string name="assistant_screen_delete_task_alert_dialog_title">Hapus Tugas</string>
-    <string name="assistant_screen_failed_task_text">Gagal</string>
-    <string name="assistant_screen_loading">Daftar Tugas sedang dimuat, mohon tunggu</string>
-    <string name="assistant_screen_no_task_available_for_all_task_filter_text">Tidak ada tugas yang tersedia. Pilih jenis tugas untuk membuat tugas baru.</string>
     <string name="assistant_screen_no_task_available_text">Tidak ada tugas yang tersedia untuk jenis tugas %s, Anda dapat membuat tugas baru dari pojok kanan bawah.</string>
-    <string name="assistant_screen_running_task_text">Sedang Berlangsung</string>
-    <string name="assistant_screen_scheduled_task_status_text">Dijadwalkan</string>
-    <string name="assistant_screen_successful_task_text">Selesai</string>
     <string name="assistant_screen_task_create_fail_message">Terjadi kesalahan saat membuat tugas</string>
     <string name="assistant_screen_task_create_success_message">Tugas berhasil dibuat</string>
     <string name="assistant_screen_task_delete_fail_message">Terjadi kesalahan saat menghapus tugas</string>
@@ -54,7 +44,6 @@
     <string name="assistant_screen_task_more_actions_bottom_sheet_delete_action">Hapus Tugas</string>
     <string name="assistant_screen_task_types_error_state_message">Tidak dapat memperoleh jenis tugas, mohon periksa koneksi internet Anda.</string>
     <string name="assistant_screen_top_bar_title">Asisten</string>
-    <string name="assistant_screen_unknown_task_status_text">Tidak diketahui</string>
     <string name="assistant_task_detail_screen_input_button_title">Input</string>
     <string name="assistant_task_detail_screen_output_button_title">Output</string>
     <string name="associated_account_not_found">Akun terkait tidak ditemukan!</string>
@@ -104,7 +93,10 @@
     <string name="battery_optimization_message">Optimisasi baterai perangkat Anda mungkin sedang aktif.
 Otomatis unggah hanya bekerja dengan baik apabila Anda mengeluarkan aplikasi ini dari itu.</string>
     <string name="battery_optimization_title">Optimisasi baterai</string>
-    <string name="brute_force_delay">Ditahan karena terlalu banyak percobaan gagal</string>
+    <string name="bottom_navigation_menu_assistant_label">Asisten</string>
+    <string name="bottom_navigation_menu_favorites_label">Disukai</string>
+    <string name="bottom_navigation_menu_files_label">Semua berkas</string>
+    <string name="bottom_navigation_menu_media_label">Media</string>
     <string name="calendar">Kalender</string>
     <string name="calendars">Kalender</string>
     <string name="certificate_load_problem">Terjadi permasalahan memuat sertifikat.</string>
@@ -172,7 +164,6 @@ Otomatis unggah hanya bekerja dengan baik apabila Anda mengeluarkan aplikasi ini
     <string name="confirmation_remove_folders_alert">Apa anda yakin ingin menghapus item yang terpilih beserta isinya?</string>
     <string name="confirmation_remove_local">Lokal saja</string>
     <string name="conflict_dialog_error">Dialog penyelesaian konflik tidak dapat dibuat</string>
-    <string name="conflict_file_headline">File konflik %1$s</string>
     <string name="conflict_local_file">File lokal</string>
     <string name="conflict_message_description">Jika Anda memilih kedua versi, nama dari berkas lokal akan ditambahi angka.</string>
     <string name="conflict_server_file">File server</string>
@@ -269,16 +260,12 @@ Otomatis unggah hanya bekerja dengan baik apabila Anda mengeluarkan aplikasi ini
     <string name="e2e_offline">Tidak bisa dilakukan tanpa koneksi internet</string>
     <string name="ecosystem_apps_display_assistant">Asisten</string>
     <string name="ecosystem_apps_display_more">Lainnya</string>
-    <string name="ecosystem_apps_display_notes">Catatan</string>
-    <string name="ecosystem_apps_display_talk">Talk</string>
     <string name="ecosystem_apps_more">Aplikasi Nextcloud Lainnya</string>
-    <string name="ecosystem_apps_notes">Catatan Nextcloud</string>
     <string name="email_pick_failed">Gagal memilih alamat surel.</string>
     <string name="encrypted">Atur sebagai terenkripsi</string>
     <string name="end_to_end_encryption_confirm_button">Buat enkripsi</string>
     <string name="end_to_end_encryption_decrypting">Mendekripsi...</string>
     <string name="end_to_end_encryption_dialog_close">Tutup</string>
-    <string name="end_to_end_encryption_enter_password">Silakan masukkan password untuk mendekripsi kunci pribadi</string>
     <string name="end_to_end_encryption_folder_not_empty">Folder ini tidak kosong.</string>
     <string name="end_to_end_encryption_generating_keys">Membuat kunci baru...</string>
     <string name="end_to_end_encryption_keywords_description">Seluruh 12 kata menghasilkan sandi yang sangat kuat, memungkinkan Anda melihat dan mempergunakan berkas-berkas Anda yang terenkripsi. Harap tulis sandi tersebut dan simpan di tempat aman.</string>
@@ -429,7 +416,6 @@ Otomatis unggah hanya bekerja dengan baik apabila Anda mengeluarkan aplikasi ini
     <string name="image_editor_unable_to_edit_image">Tidak dapat mengedit gambar.</string>
     <string name="image_preview_filedetails">Detail berkas</string>
     <string name="image_preview_image_taking_conditions">Kondisi pengambilan gambar</string>
-    <string name="in_folder">di folder %1$s</string>
     <string name="instant_upload_existing">Juga unggah berkas yang ada</string>
     <string name="instant_upload_on_charging">Hanya unggah ketika dicas</string>
     <string name="instant_upload_path">/UnggahInstan</string>
@@ -499,7 +485,6 @@ Otomatis unggah hanya bekerja dengan baik apabila Anda mengeluarkan aplikasi ini
     <string name="new_media_folder_detected">Media baru %1$s terdeteksi.</string>
     <string name="new_media_folder_photos">foto</string>
     <string name="new_media_folder_videos">video</string>
-    <string name="new_notification">Notifikasi Baru</string>
     <string name="new_version_was_created">Versi baru telah dibuat</string>
     <string name="no_actions">Tidak ada aksi untuk pengguna ini</string>
     <string name="no_browser_available">Tidak ada aplikasi yang tersedia untuk menangani tautan</string>
@@ -549,7 +534,6 @@ Otomatis unggah hanya bekerja dengan baik apabila Anda mengeluarkan aplikasi ini
     <string name="permission_deny">Tolak</string>
     <string name="permission_storage_access">Diperlukan ijin tambahan untuk mengunggah dan mengunduh berkas.</string>
     <string name="picture_set_as_no_app">Tidak ada aplikasi untuk menyetel gambar yang ditemukan.</string>
-    <string name="pin_home">Sematkan ke layar Beranda</string>
     <string name="pin_shortcut_label">Buka %1$s</string>
     <string name="placeholder_fileSize">389 KB</string>
     <string name="placeholder_filename">placeholder.txt</string>
@@ -569,7 +553,6 @@ Otomatis unggah hanya bekerja dengan baik apabila Anda mengeluarkan aplikasi ini
     <string name="pref_instant_name_collision_policy_title">Apa yang harus dilakukan jika berkas sudah ada?</string>
     <string name="prefs_add_account">Tambah akun</string>
     <string name="prefs_calendar_contacts_no_store_error">F-Droid maupun Google Play tidak terinstal</string>
-    <string name="prefs_calendar_contacts_summary">Siapkan DAVx⁵ (sebelumnya DAVdroid) (v1.3.0+) untuk akun saat ini</string>
     <string name="prefs_category_about">Tentang</string>
     <string name="prefs_category_details">Rincian</string>
     <string name="prefs_category_dev">Pengembang</string>
@@ -577,7 +560,6 @@ Otomatis unggah hanya bekerja dengan baik apabila Anda mengeluarkan aplikasi ini
     <string name="prefs_category_more">Lainnya</string>
     <string name="prefs_category_sync">Sinkron</string>
     <string name="prefs_daily_contact_backup_summary">Cadangkan kontak harian</string>
-    <string name="prefs_davx5_setup_error">Terjadi kesalahan saat menyiapkan DAVx⁵ (sebelumnya DAVdroid)</string>
     <string name="prefs_e2e_active">Enkripsi end-to-end telah disetel!</string>
     <string name="prefs_e2e_mnemonic">E2E mnemonic</string>
     <string name="prefs_e2e_no_device_credentials">Untuk menampilkan mnemonik, harap aktifkan kredensial perangkat.</string>
@@ -608,7 +590,6 @@ Otomatis unggah hanya bekerja dengan baik apabila Anda mengeluarkan aplikasi ini
     <string name="prefs_show_ecosystem_apps_summary">Saran aplikasi Nextcloud dalam judul navigasi</string>
     <string name="prefs_show_hidden_files">Lihat berkas tersembunyi</string>
     <string name="prefs_sourcecode">Dapatkan kode sumber</string>
-    <string name="prefs_storage_path"> Folder penyimpanan data</string>
     <string name="prefs_sycned_folders_summary">Kelola folder untuk pengunggahan otomatis</string>
     <string name="prefs_synced_folders_local_path_title">Berkas lokal</string>
     <string name="prefs_synced_folders_remote_path_title">Folder remot</string>
@@ -629,6 +610,7 @@ Otomatis unggah hanya bekerja dengan baik apabila Anda mengeluarkan aplikasi ini
     <string name="recommend_subject">Coba %1$s di perangkat mu!</string>
     <string name="recommend_text">Saya ingin mengundang anda untuk menggunakan %1$s di perangkat anda. \nUnduh disini %2$s</string>
     <string name="recommend_urls">%1$s atau %2$s</string>
+    <string name="recommended_files_title">Berkas yang direkomendasikan</string>
     <string name="refresh_content">Segarkan konten</string>
     <string name="reload">Muat ulang</string>
     <string name="remote">remote</string>
@@ -647,10 +629,10 @@ Otomatis unggah hanya bekerja dengan baik apabila Anda mengeluarkan aplikasi ini
     <string name="request_account_deletion">Minta penghapusan akun</string>
     <string name="request_account_deletion_button">Minta penghapusan</string>
     <string name="request_account_deletion_details">Minta penghapusan permanen akun oleh penyedia layanan</string>
-    <string name="resized_image_not_possible_download">Tidak ada gambar yang diubah ukurannya tersedia. Unduh gambar penuh?</string>
     <string name="restore">Pulihkan berkas</string>
     <string name="restore_backup">Pulihkan cadangan</string>
     <string name="restore_button_description">Pulihkan berkas yang terhapus</string>
+    <string name="restore_item">Pulihkan</string>
     <string name="restore_selected">Pulihkan yang dipilih</string>
     <string name="retrieving_file">Memperoleh berkas...</string>
     <string name="retry">Ulangi</string>
@@ -665,7 +647,6 @@ Otomatis unggah hanya bekerja dengan baik apabila Anda mengeluarkan aplikasi ini
     <string name="screenshot_04_accounts_heading">Semua akun Anda</string>
     <string name="screenshot_04_accounts_subline">di satu tempat</string>
     <string name="screenshot_05_autoUpload_heading">Unggah otomatis</string>
-    <string name="screenshot_06_davdroid_subline">Sinkronkan dengan DAVx5</string>
     <string name="search_error">Kesalahan saat mendapatkan hasil pencarian</string>
     <string name="select_all">Pilih semua</string>
     <string name="select_media_folder">Setel folder media</string>
@@ -674,7 +655,6 @@ Otomatis unggah hanya bekerja dengan baik apabila Anda mengeluarkan aplikasi ini
     <string name="send">Kirim</string>
     <string name="sendbutton_description">Ikon tombol kirim</string>
     <string name="set_as">Gunakan sebagai</string>
-    <string name="set_note">Setel Catatan</string>
     <string name="set_picture_as">Gunakan gambar sebagai</string>
     <string name="set_status">Tetapkan status</string>
     <string name="set_status_message">Tetapkan status pesan</string>
@@ -700,7 +680,6 @@ Otomatis unggah hanya bekerja dengan baik apabila Anda mengeluarkan aplikasi ini
     <string name="share_password_title">Sandi dilindungi</string>
     <string name="share_permission_can_edit">Can edit</string>
     <string name="share_permission_view_only">Hanya lihat</string>
-    <string name="share_permissions">Bagikan Izin</string>
     <string name="share_remote_clarification">%1$s (remote)</string>
     <string name="share_room_clarification">%1$s (percakapan)</string>
     <string name="share_send_new_email">Kirim surel baru</string>
@@ -761,7 +740,6 @@ Otomatis unggah hanya bekerja dengan baik apabila Anda mengeluarkan aplikasi ini
     <string name="stream">Stream menggunakan…</string>
     <string name="stream_not_possible_headline">Streaming internal tidak memungkinkan</string>
     <string name="stream_not_possible_message">Silakan unduh media atau gunakan aplikasi eksternal.</string>
-    <string name="strict_mode">Mode ketat: tidak ada koneksi HTTP yang diizinkan!</string>
     <string name="sub_folder_rule_day">Tahun/Bulan/Hari</string>
     <string name="sub_folder_rule_month">Tahun/Bulan</string>
     <string name="sub_folder_rule_year">Tahun</string>
@@ -801,6 +779,7 @@ Berikut ini adalah daftar berkas lokal, dan berkas jarak jauh di %5$s yang terhu
     <string name="synced_folders_type">tipe</string>
     <string name="synced_icon">Tersinkronisasi</string>
     <string name="tags">Tag</string>
+    <string name="terms_of_service_title">Ketentuan layanan</string>
     <string name="test_server_button">Tes koneksi server.</string>
     <string name="thirtyMinutes">30 Menit</string>
     <string name="thisWeek">Pekan ini</string>
@@ -922,9 +901,6 @@ Berikut ini adalah daftar berkas lokal, dan berkas jarak jauh di %5$s yang terhu
     <string name="wait_a_moment">Tunggu sebentar…</string>
     <string name="wait_checking_credentials">Mengecek kredensial yang tersimpan</string>
     <string name="wait_for_tmp_copy_from_private_storage">Menyalin berkas dari penyimpanan pribadi</string>
-    <string name="webview_version_check_alert_dialog_message">Harap perbarui aplikasi Android System WebView untuk masuk.</string>
-    <string name="webview_version_check_alert_dialog_positive_button_title">Perbarui</string>
-    <string name="webview_version_check_alert_dialog_title">Perbarui Android System WebView</string>
     <string name="whats_new_skip">Lewat</string>
     <string name="whats_new_title">Apa yang baru di %1$s</string>
     <string name="whats_your_status">Apa status Anda?</string>
@@ -969,4 +945,4 @@ Berikut ini adalah daftar berkas lokal, dan berkas jarak jauh di %5$s yang terhu
     <plurals name="items_selected_count">
         <item quantity="other">%d dipilih</item>
     </plurals>
-</resources>
+    </resources>

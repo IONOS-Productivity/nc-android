@@ -22,6 +22,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import com.google.android.apps.common.testing.accessibility.framework.AccessibilityCheckResultBaseUtils.matchesCheckNames
 import com.google.android.apps.common.testing.accessibility.framework.AccessibilityCheckResultUtils.matchesViews
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.nextcloud.android.lib.resources.files.FileDownloadLimit
 import com.nextcloud.test.RetryTestRule
 import com.nextcloud.test.TestActivity
 import com.owncloud.android.AbstractIT
@@ -89,6 +90,51 @@ class FileDetailSharingFragmentIT : AbstractIT() {
     @ScreenshotTest
     fun listSharesFileResharingNotAllowed() {
         file.permissions = ""
+
+        show(file)
+    }
+
+    @Test
+    @ScreenshotTest
+    fun listSharesDownloadLimit() {
+        OCShare(file.decryptedRemotePath).apply {
+            remoteId = 1
+            shareType = ShareType.PUBLIC_LINK
+            token = "AAAAAAAAAAAAAAA"
+            activity.storageManager.saveShare(this)
+        }
+
+        OCShare(file.decryptedRemotePath).apply {
+            remoteId = 2
+            shareType = ShareType.PUBLIC_LINK
+            token = "BBBBBBBBBBBBBBB"
+            fileDownloadLimit = FileDownloadLimit("BBBBBBBBBBBBBBB", 0, 0)
+            activity.storageManager.saveShare(this)
+        }
+
+        OCShare(file.decryptedRemotePath).apply {
+            remoteId = 3
+            shareType = ShareType.PUBLIC_LINK
+            token = "CCCCCCCCCCCCCCC"
+            fileDownloadLimit = FileDownloadLimit("CCCCCCCCCCCCCCC", 10, 0)
+            activity.storageManager.saveShare(this)
+        }
+
+        OCShare(file.decryptedRemotePath).apply {
+            remoteId = 4
+            shareType = ShareType.PUBLIC_LINK
+            token = "DDDDDDDDDDDDDDD"
+            fileDownloadLimit = FileDownloadLimit("DDDDDDDDDDDDDDD", 10, 5)
+            activity.storageManager.saveShare(this)
+        }
+
+        OCShare(file.decryptedRemotePath).apply {
+            remoteId = 5
+            shareType = ShareType.PUBLIC_LINK
+            token = "FFFFFFFFFFFFFFF"
+            fileDownloadLimit = FileDownloadLimit("FFFFFFFFFFFFFFF", 10, 10)
+            activity.storageManager.saveShare(this)
+        }
 
         show(file)
     }
@@ -242,7 +288,6 @@ class FileDetailSharingFragmentIT : AbstractIT() {
         onView(ViewMatchers.withId(R.id.menu_share_send_new_email)).check(matches(isDisplayed()))
         onView(ViewMatchers.withId(R.id.menu_share_send_link)).check(matches(isDisplayed()))
         onView(ViewMatchers.withId(R.id.menu_share_unshare)).check(matches(isDisplayed()))
-        onView(ViewMatchers.withId(R.id.menu_share_add_another_link)).check(matches(isDisplayed()))
 
         // click event
         onView(ViewMatchers.withId(R.id.menu_share_advanced_permissions)).perform(ViewActions.click())
@@ -370,7 +415,6 @@ class FileDetailSharingFragmentIT : AbstractIT() {
         onView(ViewMatchers.withId(R.id.menu_share_send_new_email)).check(matches(isDisplayed()))
         onView(ViewMatchers.withId(R.id.menu_share_send_link)).check(matches(isDisplayed()))
         onView(ViewMatchers.withId(R.id.menu_share_unshare)).check(matches(isDisplayed()))
-        onView(ViewMatchers.withId(R.id.menu_share_add_another_link)).check(matches(isDisplayed()))
 
         // click event
         onView(ViewMatchers.withId(R.id.menu_share_advanced_permissions)).perform(ViewActions.click())
@@ -485,7 +529,6 @@ class FileDetailSharingFragmentIT : AbstractIT() {
         onView(ViewMatchers.withId(R.id.menu_share_send_new_email)).check(matches(isDisplayed()))
         onView(ViewMatchers.withId(R.id.menu_share_send_link)).check(matches(not(isDisplayed())))
         onView(ViewMatchers.withId(R.id.menu_share_unshare)).check(matches(isDisplayed()))
-        onView(ViewMatchers.withId(R.id.menu_share_add_another_link)).check(matches(not(isDisplayed())))
 
         // click event
         onView(ViewMatchers.withId(R.id.menu_share_advanced_permissions)).perform(ViewActions.click())
@@ -571,6 +614,7 @@ class FileDetailSharingFragmentIT : AbstractIT() {
         sut.refreshCapabilitiesFromDB()
 
         val userShare = OCShare().apply {
+            remoteId = 1001L
             isFolder = false
             shareType = ShareType.USER
             permissions = 17
@@ -610,7 +654,6 @@ class FileDetailSharingFragmentIT : AbstractIT() {
         onView(ViewMatchers.withId(R.id.menu_share_send_new_email)).check(matches(isDisplayed()))
         onView(ViewMatchers.withId(R.id.menu_share_send_link)).check(matches(not(isDisplayed())))
         onView(ViewMatchers.withId(R.id.menu_share_unshare)).check(matches(isDisplayed()))
-        onView(ViewMatchers.withId(R.id.menu_share_add_another_link)).check(matches(not(isDisplayed())))
 
         // click event
         onView(ViewMatchers.withId(R.id.menu_share_advanced_permissions)).perform(ViewActions.click())

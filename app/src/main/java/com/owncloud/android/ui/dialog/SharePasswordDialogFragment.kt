@@ -20,7 +20,6 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.di.Injectable
 import com.nextcloud.utils.extensions.getParcelableArgument
 import com.owncloud.android.R
@@ -54,7 +53,6 @@ class SharePasswordDialogFragment : DialogFragment(), Injectable {
     private var createShare = false
     private var askForPassword = false
 
-    @IonosCustomization()
     override fun onStart() {
         super.onStart()
 
@@ -63,7 +61,7 @@ class SharePasswordDialogFragment : DialogFragment(), Injectable {
         if (alertDialog != null) {
             val positiveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE) as MaterialButton?
             if (positiveButton != null) {
-                viewThemeUtils?.ionos?.material?.colorMaterialButtonPrimaryTonal(positiveButton)
+                viewThemeUtils?.material?.colorMaterialButtonPrimaryTonal(positiveButton)
                 positiveButton.setOnClickListener {
                     val sharePassword = binding?.sharePassword?.text
 
@@ -86,7 +84,7 @@ class SharePasswordDialogFragment : DialogFragment(), Injectable {
 
             val negativeButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE) as MaterialButton?
             if (negativeButton != null) {
-                viewThemeUtils?.ionos?.material?.colorMaterialButtonPrimaryBorderless(negativeButton)
+                viewThemeUtils?.material?.colorMaterialButtonPrimaryBorderless(negativeButton)
             }
 
             val neutralButton = alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL) as MaterialButton?
@@ -102,7 +100,6 @@ class SharePasswordDialogFragment : DialogFragment(), Injectable {
         keyboardUtils?.showKeyboardForEditText(requireDialog().window, binding!!.sharePassword)
     }
 
-    @IonosCustomization
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         file = requireArguments().getParcelableArgument(ARG_FILE, OCFile::class.java)
         share = requireArguments().getParcelableArgument(ARG_SHARE, OCShare::class.java)
@@ -116,7 +113,7 @@ class SharePasswordDialogFragment : DialogFragment(), Injectable {
 
         // Setup layout
         binding?.sharePassword?.setText(R.string.empty)
-        viewThemeUtils?.ionos?.material?.colorTextInputLayout(binding!!.sharePasswordContainer)
+        viewThemeUtils?.material?.colorTextInputLayout(binding!!.sharePasswordContainer)
 
         val neutralButtonTextId: Int
         val title: Int
@@ -140,7 +137,7 @@ class SharePasswordDialogFragment : DialogFragment(), Injectable {
             }
             .setTitle(title)
 
-        viewThemeUtils?.ionos?.dialog?.colorMaterialAlertDialogBackground(requireContext(), builder)
+        viewThemeUtils?.dialog?.colorMaterialAlertDialogBackground(requireContext(), builder)
 
         return builder.create()
     }

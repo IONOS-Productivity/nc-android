@@ -12,6 +12,7 @@ package com.owncloud.android.ui.fragment;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -22,7 +23,9 @@ import android.widget.ProgressBar;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.tabs.TabLayout;
 import com.ionos.annotation.IonosCustomization;
+import com.ionos.utils.IonosBuildHelper;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.account.UserAccountManager;
 import com.nextcloud.client.di.Injectable;
@@ -32,10 +35,13 @@ import com.nextcloud.client.jobs.upload.FileUploadHelper;
 import com.nextcloud.client.network.ClientFactory;
 import com.nextcloud.client.network.ConnectivityService;
 import com.nextcloud.client.preferences.AppPreferences;
+import com.nextcloud.model.WorkerState;
+import com.nextcloud.model.WorkerStateLiveData;
 import com.nextcloud.ui.fileactions.FileActionsBottomSheet;
 import com.nextcloud.utils.MenuUtils;
 import com.nextcloud.utils.extensions.BundleExtensionsKt;
 import com.nextcloud.utils.extensions.FileExtensionsKt;
+import com.nextcloud.utils.mdm.MDMConfig;
 import com.owncloud.android.MainApp;
 import com.owncloud.android.R;
 import com.owncloud.android.databinding.FileDetailsFragmentBinding;
@@ -49,6 +55,8 @@ import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.lib.resources.files.ToggleFavoriteRemoteOperation;
 import com.owncloud.android.lib.resources.shares.OCShare;
 import com.owncloud.android.lib.resources.shares.ShareType;
+import com.owncloud.android.lib.resources.tags.Tag;
+import com.owncloud.android.ui.activity.DrawerActivity;
 import com.owncloud.android.ui.activity.FileDisplayActivity;
 import com.owncloud.android.ui.activity.ToolbarActivity;
 import com.owncloud.android.ui.adapter.FileDetailTabAdapter;
@@ -76,6 +84,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.FragmentManager;
+import androidx.viewpager2.widget.ViewPager2;
 
 /**
  * This Fragment is used to display the details about a file.
@@ -207,6 +216,10 @@ public class FileDetailFragment extends FileFragment implements OnClickListener,
             throw new IllegalArgumentException("Arguments may not be null");
         }
 
+        if (getActivity() instanceof DrawerActivity drawerActivity) {
+            drawerActivity.showBottomNavigationBar(false);
+        }
+
         setFile(BundleExtensionsKt.getParcelableArgument(arguments, ARG_FILE, OCFile.class));
         parentFolder = BundleExtensionsKt.getParcelableArgument(arguments, ARG_PARENT_FOLDER, OCFile.class);
         user = BundleExtensionsKt.getParcelableArgument(arguments, ARG_USER, User.class);
@@ -234,9 +247,9 @@ public class FileDetailFragment extends FileFragment implements OnClickListener,
         if (getFile().getTags().isEmpty()) {
             binding.tagsGroup.setVisibility(View.GONE);
         } else {
-            for (String tag : getFile().getTags()) {
+            for (Tag tag : getFile().getTags()) {
                 Chip chip = new Chip(context);
-                chip.setText(tag);
+                chip.setText(tag.getName());
                 chip.setChipBackgroundColor(ColorStateList.valueOf(getResources().getColor(R.color.bg_default,
                                                                                            context.getTheme())));
                 chip.setShapeAppearanceModel(chip.getShapeAppearanceModel().toBuilder().setAllCornerSizes((100.0f))
@@ -244,6 +257,13 @@ public class FileDetailFragment extends FileFragment implements OnClickListener,
                 chip.setEnsureMinTouchTargetSize(false);
                 chip.setClickable(false);
                 viewThemeUtils.material.themeChipSuggestion(chip);
+
+                if (tag.getColor() != null) {
+                    int color = Color.parseColor(tag.getColor());
+                    chip.setChipStrokeColor(ColorStateList.valueOf(color));
+                    chip.setTextColor(color);
+                }
+
                 binding.tagsGroup.addView(chip);
             }
         }
@@ -264,6 +284,14 @@ public class FileDetailFragment extends FileFragment implements OnClickListener,
 
             updateFileDetails(false, false);
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        if (getActivity() instanceof DrawerActivity drawerActivity) {
+            drawerActivity.showBottomNavigationBar(true);
+        }
+        super.onDestroy();
     }
 
     private void onOverflowIconClicked() {
@@ -297,13 +325,72 @@ public class FileDetailFragment extends FileFragment implements OnClickListener,
 
     @IonosCustomization("Hide tabs in IONOS")
     private void setupViewPager() {
-        binding.tabLayout.setVisibility(View.GONE);
+        if (IonosBuildHelper.isIonosBuild()) {
+            FileDetailTabAdapter adapter = new FileDetailTabAdapter(requireActivity(), getFile(), user, showSharingTab());
+            binding.pager.setAdapter(adapter);
+            binding.tabLayout.setVisibility(View.GONE);
+            return;
+        }
+
+        binding.tabLayout.removeAllTabs();
+
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText(R.string.drawer_item_activities).setIcon(R.drawable.ic_activity));
+
+
+        if (showSharingTab()) {
+            binding.tabLayout.addTab(binding.tabLayout.newTab().setText(R.string.share_dialog_title).setIcon(R.drawable.shared_via_users));
+        }
+
+        if (MimeTypeUtil.isImage(getFile())) {
+            binding.tabLayout.addTab(binding.tabLayout.newTab().setText(R.string.filedetails_details).setIcon(R.drawable.image_32dp));
+        }
+
+        viewThemeUtils.material.themeTabLayout(binding.tabLayout);
 
         final FileDetailTabAdapter adapter = new FileDetailTabAdapter(requireActivity(),
                                                                       getFile(),
                                                                       user,
                                                                       showSharingTab());
         binding.pager.setAdapter(adapter);
+
+        binding.pager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                final FileDetailActivitiesFragment fragment = getFileDetailActivitiesFragment();
+                if (activeTab == 0 && fragment != null) {
+                    fragment.markCommentsAsRead();
+                }
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
+            }
+        });
+        binding.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                binding.pager.setCurrentItem(tab.getPosition());
+                if (tab.getPosition() == 0) {
+                    final FileDetailActivitiesFragment fragment = getFileDetailActivitiesFragment();
+                    if (fragment != null) {
+                        fragment.markCommentsAsRead();
+                    }
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                // unused at the moment
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                // unused at the moment
+            }
+        });
+
+        binding.tabLayout.post(() -> {
+            TabLayout.Tab tab1 = binding.tabLayout.getTabAt(activeTab);
+            if (tab1 == null) return;
+            tab1.select();
+        });
     }
 
     @Override
@@ -400,7 +487,10 @@ public class FileDetailFragment extends FileFragment implements OnClickListener,
                                                                     backgroundJobManager);
         } else if (itemId == R.id.action_set_as_wallpaper) {
             containerActivity.getFileOperationsHelper().setPictureAs(getFile(), getView());
-        } else if (itemId == R.id.action_encrypted) {// TODO implement or remove
+        } else if (itemId == R.id.action_retry) {
+            backgroundJobManager.startOfflineOperations();
+        } else if (itemId == R.id.action_encrypted) {
+            // TODO implement or remove
         } else if (itemId == R.id.action_unset_encrypted) {// TODO implement or remove
         }
     }
@@ -525,8 +615,23 @@ public class FileDetailFragment extends FileFragment implements OnClickListener,
         }
 
         setupViewPager();
+        if (getView() != null) {
+            getView().invalidate();
+        }
 
-        getView().invalidate();
+        observeWorkerState();
+    }
+
+    private void observeWorkerState() {
+        WorkerStateLiveData.Companion.instance().observe(getViewLifecycleOwner(), state -> {
+            if (state instanceof WorkerState.DownloadStarted) {
+                binding.progressText.setText(R.string.downloader_download_in_progress_ticker);
+            } else if (state instanceof WorkerState.UploadStarted) {
+                binding.progressText.setText(R.string.uploader_upload_in_progress_ticker);
+            } else {
+                binding.progressBlock.setVisibility(View.GONE);
+            }
+        });
     }
 
     private void setFileModificationTimestamp(OCFile file, boolean showDetailedTimestamp) {
@@ -541,10 +646,12 @@ public class FileDetailFragment extends FileFragment implements OnClickListener,
     private void setFavoriteIconStatus(boolean isFavorite) {
         if (isFavorite) {
             binding.favorite.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.ic_star, null));
+            binding.favorite.setContentDescription(getString(R.string.unset_favorite));
         } else {
             binding.favorite.setImageDrawable(ResourcesCompat.getDrawable(getResources(),
                                                                           R.drawable.ic_star_outline,
                                                                           null));
+            binding.favorite.setContentDescription(getString(R.string.favorite));
         }
     }
 
@@ -733,6 +840,7 @@ public class FileDetailFragment extends FileFragment implements OnClickListener,
      */
     @IonosCustomization("Hide tabs in IONOS")
     public void showHideFragmentView(boolean isFragmentReplaced) {
+        binding.tabLayout.setVisibility(View.GONE);
         binding.pager.setVisibility(isFragmentReplaced ? View.GONE : View.VISIBLE);
         binding.sharingFrameContainer.setVisibility(isFragmentReplaced ? View.VISIBLE : View.GONE);
         FloatingActionButton mFabMain = requireActivity().findViewById(R.id.fab_main);
@@ -784,6 +892,10 @@ public class FileDetailFragment extends FileFragment implements OnClickListener,
     }
 
     private boolean showSharingTab() {
+         if (!MDMConfig.INSTANCE.shareViaLink(requireContext()) && !MDMConfig.INSTANCE.shareViaUser(requireContext())) {
+            return false;
+        }
+
         if (getFile().isEncrypted()) {
             if (parentFolder == null) {
                 parentFolder = storageManager.getFileById(getFile().getParentId());

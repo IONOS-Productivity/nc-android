@@ -12,7 +12,6 @@ import android.view.Menu;
 
 import com.ionos.annotation.IonosCustomization;
 import com.nextcloud.client.account.User;
-import com.owncloud.android.MainApp;
 import com.owncloud.android.R;
 import com.owncloud.android.lib.resources.status.OCCapability;
 
@@ -82,11 +81,6 @@ public final class DrawerMenuUtil {
     @IonosCustomization
     public static void removePersonalFiles(Menu menu) {
         removeMenuItem(menu, R.id.nav_personal_files);
-    }
-
-    @IonosCustomization
-    public static void removeNotifications(Menu menu) {
-        removeMenuItem(menu, R.id.nav_notifications);
     }
 
     private static void removeMenuItem(Menu menu, int... menuIds) {

@@ -90,6 +90,7 @@ class FileUploadWorker(
         }
     }
 
+    private var currentUploadIndex: Int = 1
     private var lastPercent = 0
     private val notificationManager = UploadNotificationManager(context, viewThemeUtils)
     private val intents = FileUploaderIntents(context)
@@ -102,6 +103,9 @@ class FileUploadWorker(
             val result = retrievePagesBySortingUploadsByID()
             backgroundJobManager.logEndOfWorker(BackgroundJobManagerImpl.formatClassTag(this::class), result)
             notificationManager.dismissNotification()
+            if (result == Result.success()) {
+                setIdleWorkerState()
+            }
             result
         } catch (t: Throwable) {
             Log_OC.e(TAG, "Error caught at FileUploadWorker $t")
@@ -120,11 +124,11 @@ class FileUploadWorker(
     }
 
     private fun setWorkerState(user: User?, uploads: List<OCUpload>) {
-        WorkerStateLiveData.instance().setWorkState(WorkerState.Upload(user, uploads))
+        WorkerStateLiveData.instance().setWorkState(WorkerState.UploadStarted(user, uploads))
     }
 
     private fun setIdleWorkerState() {
-        WorkerStateLiveData.instance().setWorkState(WorkerState.Idle(currentUploadFileOperation?.file))
+        WorkerStateLiveData.instance().setWorkState(WorkerState.UploadFinished(currentUploadFileOperation?.file))
     }
 
     @Suppress("ReturnCount")
@@ -144,6 +148,11 @@ class FileUploadWorker(
                 return Result.success()
             }
 
+            if (canExitEarly()) {
+                notificationManager.showConnectionErrorNotification()
+                return Result.failure()
+            }
+
             Log_OC.d(TAG, "Handling ${uploadsPerPage.size} uploads for account $accountName")
             val lastId = uploadsPerPage.last().uploadId
             uploadFiles(totalUploadSize, uploadsPerPage, accountName)
@@ -159,13 +168,34 @@ class FileUploadWorker(
         return Result.success()
     }
 
+    private fun canExitEarly(): Boolean {
+        val result = !connectivityService.isConnected ||
+            connectivityService.isInternetWalled ||
+            isStopped
+
+        if (result) {
+            Log_OC.d(TAG, "No internet connection, stopping worker.")
+        } else {
+            notificationManager.dismissErrorNotification()
+        }
+
+        return result
+    }
+
+    @Suppress("NestedBlockDepth")
     private fun uploadFiles(totalUploadSize: Int, uploadsPerPage: List<OCUpload>, accountName: String) {
         val user = userAccountManager.getUser(accountName)
         setWorkerState(user.get(), uploadsPerPage)
 
+        if (canExitEarly()) {
+            notificationManager.showConnectionErrorNotification()
+            return
+        }
+
         run uploads@{
-            uploadsPerPage.forEachIndexed { currentUploadIndex, upload ->
-                if (isStopped) {
+            uploadsPerPage.forEach { upload ->
+                if (canExitEarly()) {
+                    notificationManager.showConnectionErrorNotification()
                     return@uploads
                 }
 
@@ -178,11 +208,15 @@ class FileUploadWorker(
                         uploadFileOperation,
                         cancelPendingIntent = intents.startIntent(uploadFileOperation),
                         startIntent = intents.notificationStartIntent(uploadFileOperation),
-                        currentUploadIndex = currentUploadIndex + 1,
+                        currentUploadIndex = currentUploadIndex,
                         totalUploadSize = totalUploadSize
                     )
 
                     val result = upload(uploadFileOperation, user.get())
+
+                    if (result.isSuccess) {
+                        currentUploadIndex += 1
+                    }
 
                     currentUploadFileOperation = null
 

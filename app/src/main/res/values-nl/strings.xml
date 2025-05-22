@@ -10,7 +10,7 @@
     <string name="action_edit">Bewerken</string>
     <string name="action_empty_notifications">Handel alle meldingen af</string>
     <string name="action_empty_trashbin">Prullenbak legen</string>
-    <string name="action_send_share">Versturen/Delen</string>
+    <string name="action_send_share">Versturen/delen</string>
     <string name="action_switch_grid_view">Rasterindeling </string>
     <string name="action_switch_list_view">Lijstindeling</string>
     <string name="actionbar_calendar_contacts_restore">Herstel contacten en kalender</string>
@@ -28,7 +28,6 @@
     <string name="activity_chooser_send_file_title">Versturen</string>
     <string name="activity_chooser_title">Verstuur link naar…</string>
     <string name="activity_icon">Activiteit</string>
-    <string name="add_another_public_share_link">Nog een link toevoegen </string>
     <string name="add_new_public_share">Voeg een nieuwe openbare deellink toe</string>
     <string name="add_new_secure_file_drop">Beveiligde bestands-drop</string>
     <string name="add_to_cloud">Voeg toe aan %1$s</string>
@@ -46,26 +45,22 @@
     <string name="app_config_proxy_port_title">Proxy poort</string>
     <string name="app_widget_description">Toont één widget van dashboard</string>
     <string name="appbar_search_in">Zoeken in %s</string>
-    <string name="assistant_screen_all_task_type">Alle</string>
+    <string name="assistant_screen_add_task_alert_dialog_title">Nieuwe taak toevoegen</string>
     <string name="assistant_screen_create_task_alert_dialog_input_field_placeholder">Geef wat tekst in</string>
     <string name="assistant_screen_delete_task_alert_dialog_description">Bent u zeker dat u deze taak wilt verwijderen?</string>
     <string name="assistant_screen_delete_task_alert_dialog_title">Verwijder taak</string>
-    <string name="assistant_screen_failed_task_text">Mislukt</string>
-    <string name="assistant_screen_loading">Takenlijst wordt geladen, even geduld</string>
-    <string name="assistant_screen_no_task_available_for_all_task_filter_text">Geen taak beschikbaar. Selecteer een taaktype om een nieuwe aan te maken.</string>
+    <string name="assistant_screen_loading">Laden takenlijst...</string>
     <string name="assistant_screen_no_task_available_text">Geen taak beschikbaar voor %s taaktype, u kunt rechts onder een nieuwe taak aanmaken.</string>
-    <string name="assistant_screen_running_task_text">Bezig</string>
-    <string name="assistant_screen_scheduled_task_status_text">Ingepland</string>
-    <string name="assistant_screen_successful_task_text">Voltooid</string>
     <string name="assistant_screen_task_create_fail_message">Er is een fout opgetreden bij het aanmaken van de taak</string>
     <string name="assistant_screen_task_create_success_message">Taak succesvol aangemaakt</string>
     <string name="assistant_screen_task_delete_fail_message">Er is een fout opgetreden bij het verwijderen van de taak</string>
     <string name="assistant_screen_task_delete_success_message">Taak succesvol verwijderd</string>
+    <string name="assistant_screen_task_list_empty_message">Takenlijst is leeg.</string>
     <string name="assistant_screen_task_list_error_state_message">Kan takenlijst niet ophalen. Controleer je internetverbinding.</string>
     <string name="assistant_screen_task_more_actions_bottom_sheet_delete_action">Verwijder taak</string>
+    <string name="assistant_screen_task_output_empty_text">De taakuitvoer is nog niet klaar.</string>
     <string name="assistant_screen_task_types_error_state_message">Kan taken types niet ophalen. Controleer je internetverbinding.</string>
     <string name="assistant_screen_top_bar_title">Assistent</string>
-    <string name="assistant_screen_unknown_task_status_text">Onbekend</string>
     <string name="assistant_task_detail_screen_input_button_title">Input</string>
     <string name="assistant_task_detail_screen_output_button_title">Output</string>
     <string name="associated_account_not_found">Bijbehorend account niet gevonden!</string>
@@ -118,7 +113,10 @@
     <string name="battery_optimization_disable">Uitschakelen</string>
     <string name="battery_optimization_message">Op je toestel kan batterij optimalisatie ingeschakeld zijn. AutoUpload werkt alleen als je dat voor deze app uitschakelt.</string>
     <string name="battery_optimization_title">Batterij-optimalisatie</string>
-    <string name="brute_force_delay">Vertraagd door te veel onjuiste pogingen</string>
+    <string name="bottom_navigation_menu_assistant_label">Assistent</string>
+    <string name="bottom_navigation_menu_favorites_label">Favorieten</string>
+    <string name="bottom_navigation_menu_files_label">Alle bestanden</string>
+    <string name="bottom_navigation_menu_media_label">Media</string>
     <string name="calendar">Agenda</string>
     <string name="calendars">Agenda\'s</string>
     <string name="certificate_load_problem">Er is een probleem met het laden van het certificaat.</string>
@@ -150,6 +148,7 @@
     <string name="common_loading">Laden…</string>
     <string name="common_next">Volgende</string>
     <string name="common_no">Nee</string>
+    <string name="common_now">Nu</string>
     <string name="common_ok">OK</string>
     <string name="common_pending">In behandeling</string>
     <string name="common_remove">Verwijderen</string>
@@ -186,7 +185,6 @@
     <string name="confirmation_remove_folders_alert">Wil je de geselecteerde objecten en hun inhoud echt verwijderen?</string>
     <string name="confirmation_remove_local">Alleen lokaal</string>
     <string name="conflict_dialog_error">Conflictoplossingsvenster kan niet geladen worden</string>
-    <string name="conflict_file_headline">Conflicterend bestand%1$s</string>
     <string name="conflict_folder_headline">Mapconflict</string>
     <string name="conflict_local_file">Lokaal bestand</string>
     <string name="conflict_message_description">Als je beide versies selecteert, zal het lokale bestand een nummer aan de naam toegevoegd krijgen.</string>
@@ -200,6 +198,7 @@
     <string name="contacts_backup_button">Maak nu een backup</string>
     <string name="contacts_preferences_backup_scheduled">Backup ingepland en zal zo starten</string>
     <string name="contacts_preferences_import_scheduled">Import ingepland en zal zo starten</string>
+    <string name="contacts_preferences_import_scheduled_fail">Import kon niet starten. Probeer alstublieft opnieuw</string>
     <string name="contacts_preferences_no_file_found">Geen bestand gevonden</string>
     <string name="contacts_preferences_something_strange_happened">Je laatste backup is niet te vinden!</string>
     <string name="copied_to_clipboard">Gekopieerd naar het klembord</string>
@@ -214,6 +213,7 @@
     <string name="could_not_retrieve_url">Kon URL niet ophalen</string>
     <string name="create">Creëren</string>
     <string name="create_dir_fail_msg">Kan map niet aanmaken</string>
+    <string name="create_link">Link aanmaken</string>
     <string name="create_new">Nieuw</string>
     <string name="create_new_document">Nieuw document</string>
     <string name="create_new_folder">Nieuwe map</string>
@@ -253,6 +253,7 @@
     <string name="download_cannot_create_file">Kan geen lokaal bestand aanmaken</string>
     <string name="download_download_invalid_local_file_name">Ongeldige naam voor lokaal bestand</string>
     <string name="download_latest_dev_version">Downloaden laatste dev versie</string>
+    <string name="download_limit">Downloadlimiet</string>
     <string name="downloader_download_failed_content">Kon %1$s niet downloaden</string>
     <string name="downloader_download_failed_credentials_error">Downloaden mislukt, je moet opnieuw inloggen</string>
     <string name="downloader_download_failed_ticker">Downloaden mislukt</string>
@@ -287,6 +288,7 @@
     <string name="drawer_quota">%1$s van %2$s gebruikt</string>
     <string name="drawer_quota_unlimited">%1$s gebruikt</string>
     <string name="drawer_synced_folders">Automatisch uploaden</string>
+    <string name="due_to_too_many_wrong_attempts">%s vanwege te veel onjuiste pogingen</string>
     <string name="e2e_counter_too_old">Teller is te oud</string>
     <string name="e2e_hash_not_found">Hash niet gevonden</string>
     <string name="e2e_not_yet_setup">E2E is nog niet ingesteld</string>
@@ -294,17 +296,15 @@
     <string name="e2e_signature_does_not_match">Handtekening komt niet overeen</string>
     <string name="ecosystem_apps_display_assistant">Assistent</string>
     <string name="ecosystem_apps_display_more">Meer</string>
-    <string name="ecosystem_apps_display_notes">Notities</string>
-    <string name="ecosystem_apps_display_talk">Talk</string>
     <string name="ecosystem_apps_more">Meer Nextcloud Apps</string>
-    <string name="ecosystem_apps_notes">Nextcloud Notities</string>
-    <string name="ecosystem_apps_talk">Nextcloud Talk</string>
     <string name="email_pick_failed">Email adres ophalen mislukt.</string>
     <string name="encrypted">Instellen als versleuteld</string>
+    <string name="end_to_end_encryption_certificate_unavailable">Kan servercertificaat niet ophalen</string>
+    <string name="end_to_end_encryption_certificate_verification_failed">Kon publieke sleutel niet verifiëren</string>
     <string name="end_to_end_encryption_confirm_button">Instellen versleuteling</string>
     <string name="end_to_end_encryption_decrypting">Ontcijferen…</string>
     <string name="end_to_end_encryption_dialog_close">Sluiten</string>
-    <string name="end_to_end_encryption_enter_password">Voer wachtwoord in om privésleutel te ontgrendelen.</string>
+    <string name="end_to_end_encryption_enter_passphrase_to_access_files">Voer je wachtwoordzin in om toegang te krijgen tot je bestanden</string>
     <string name="end_to_end_encryption_folder_not_empty">Deze map is niet leeg.</string>
     <string name="end_to_end_encryption_generating_keys">Genereren nieuwe sleutels…</string>
     <string name="end_to_end_encryption_keywords_description">Deze zin van 12 woorden is als een heel sterk wachtwoord: het verleent volledige toegang tot je versleutelde bestanden. Schrijf het alsjeblieft op en bewaar het op een veilige plek.</string>
@@ -312,8 +312,11 @@
     <string name="end_to_end_encryption_passphrase_title">Schrijf je encryptie wachtwoord van 12 woorden op</string>
     <string name="end_to_end_encryption_password">Wachtwoord…</string>
     <string name="end_to_end_encryption_retrieving_keys">Ophalen sleutels…</string>
+    <string name="end_to_end_encryption_server_private_key_unavailable">Kon geheime sleutel niet ophalen</string>
+    <string name="end_to_end_encryption_server_public_key_unavailable">Kon publieke sleutel niet ophalen</string>
     <string name="end_to_end_encryption_storing_keys">Opslaan sleutels</string>
     <string name="end_to_end_encryption_title">Instellen versleuteling</string>
+    <string name="end_to_end_encryption_unexpected_error_occurred">Er is een onverwachte fout opgetreden bij het downloaden van de sleutels</string>
     <string name="end_to_end_encryption_unsuccessful">Kon de sleutels niet opslaan, probeer opnieuw a.u.b.</string>
     <string name="end_to_end_encryption_wrong_password">Fout tijdens ontsleutelen. Verkeerd wachtwoord?</string>
     <string name="enter_destination_filename">Voer naam van doelbestand in</string>
@@ -350,7 +353,6 @@
     <string name="etm_background_jobs_stop_test_job">Stop testtaak</string>
     <string name="etm_migrations">Migratie (app upgrade)</string>
     <string name="etm_preferences">Voorkeuren</string>
-    <string name="etm_title">Engineering Testmodus</string>
     <string name="etm_transfer">Gegevenstransport</string>
     <string name="etm_transfer_enqueue_test_download">Testdownload in wachtrij plaatsen</string>
     <string name="etm_transfer_enqueue_test_upload">Testupload in wachtrij plaatsen</string>
@@ -430,6 +432,7 @@
     <string name="file_not_found">Bestand niet gevonden</string>
     <string name="file_not_synced">Synchroniseren van het gewenste bestand mislukt. Laatst beschikbare versie wordt weergegeven.</string>
     <string name="file_rename">Hernoemen</string>
+    <string name="file_upload_worker_error_notification_title">Upload mislukt. Geen internetverbinding</string>
     <string name="file_upload_worker_same_file_already_exists">Hetzelfde bestand bestaat al, geen conflict gevonden</string>
     <string name="file_version_restored_error">Fout bij herstellen bestandsversie!</string>
     <string name="file_version_restored_successfully">Herstellen bestandsversie succesvol</string>
@@ -448,8 +451,10 @@
     <string name="first_run_3_text">Eenvoudig te gebruiken webmail, agenda en contacten</string>
     <string name="first_run_4_text">Schermdelen, online afspraken en web conferenties</string>
     <string name="folder_already_exists">Map bestaat al</string>
+    <string name="folder_best_viewed_in">Deze map kan het beste worden bekeken in %1$s.</string>
     <string name="folder_confirm_create">Aanmaken</string>
     <string name="folder_list_empty_headline">Hier zijn geen bestanden</string>
+    <string name="folder_name_empty">Mapnaam mag niet leeg zijn</string>
     <string name="folder_picker_choose_button_text">Kies</string>
     <string name="folder_picker_choose_caption_text">Kies doelmap…</string>
     <string name="folder_picker_copy_button_text">Kopiëren</string>
@@ -492,10 +497,11 @@
     <string name="image_preview_unit_megapixel">%s MP</string>
     <string name="image_preview_unit_millimetres">%s mm</string>
     <string name="image_preview_unit_seconds">%s s</string>
-    <string name="in_folder">in map %1$s</string>
     <string name="instant_upload_existing">Upload ook bestaande bestanden</string>
     <string name="instant_upload_on_charging">Alleen uploaden bij opladen</string>
     <string name="instant_upload_path">/InstantUpload</string>
+    <string name="internal_two_way_sync_not_yet">Nog niet, binnenkort gesynchroniseerd</string>
+    <string name="internet_connection_required_for_encrypted_folder_setup">Voor het instellen van de versleutelde map is een internetverbinding vereist</string>
     <string name="invalid_url">Ongeldige URL</string>
     <string name="invisible">Verborgen</string>
     <string name="label_empty">Label mag niet leeg zijn</string>
@@ -565,7 +571,7 @@
     <string name="new_media_folder_detected">Nieuwe%1$smedia map gevonden.</string>
     <string name="new_media_folder_photos">foto</string>
     <string name="new_media_folder_videos">video</string>
-    <string name="new_notification">Nieuwe Melding</string>
+    <string name="new_notification">Nieuwe melding</string>
     <string name="new_version_was_created">Nieuwe versie gecreëerd</string>
     <string name="no_actions">Geen acties voor deze gebruiker</string>
     <string name="no_browser_available">Geen app beschikbaar voor het openen van de link</string>
@@ -580,6 +586,7 @@
     <string name="note_could_not_sent">Kon notitie niet versturen</string>
     <string name="note_icon_hint">Notitie icoon</string>
     <string name="notification_action_failed">Niet gelukt om actie uit te voeren</string>
+    <string name="notification_channel_background_operations_name">Achtergrondtaken</string>
     <string name="notification_channel_download_description">Geef download voortgang weer</string>
     <string name="notification_channel_download_name_short">Downloads</string>
     <string name="notification_channel_file_sync_description">Geeft bestand sync voortgang en resultaten weer</string>
@@ -593,12 +600,20 @@
     <string name="notification_channel_upload_description">Geef upload voortgang weer</string>
     <string name="notification_channel_upload_name_short">Uploads</string>
     <string name="notification_icon">Meldingenpictogram</string>
+    <string name="notification_icon_description">Er zijn ongelezen meldingen</string>
     <string name="notifications_no_results_headline">Geen meldingen</string>
     <string name="notifications_no_results_message">Controleer later opnieuw.</string>
     <string name="offline_mode">Geen internet verbinding</string>
+    <string name="offline_mode_info_description">Zelfs zonder internetverbinding kun je je mappen organiseren en bestanden aanmaken. Zodra je weer online bent, worden de wachtende acties automatisch gesynchroniseerd.</string>
+    <string name="offline_operations_worker_notification_conflict_text">Conflicterende map: %s</string>
+    <string name="offline_operations_worker_notification_delete_offline_folder">Offline map verwijderen</string>
+    <string name="offline_operations_worker_notification_error_text">De offline taak kan niet worden voltooid. %s</string>
+    <string name="offline_operations_worker_notification_manager_ticker">Offline Taken</string>
+    <string name="offline_operations_worker_notification_start_text">Starten offline taken</string>
     <string name="oneHour">1 uur</string>
     <string name="online">Online</string>
     <string name="online_status">Online status</string>
+    <string name="open_in_app">Openen in %1$s</string>
     <string name="outdated_server">Deze server is verouderd, graag upgraden!</string>
     <string name="overflow_menu">Meer menu</string>
     <string name="pass_code_configure_your_pass_code">Toegangscode invoeren</string>
@@ -615,8 +630,9 @@
     <string name="permission_allow">Toestaan</string>
     <string name="permission_deny">Weigeren</string>
     <string name="permission_storage_access">Aanvullende machtigingen vereist voor het uploaden en downloaden van bestanden.</string>
+    <string name="pick_contact_to_share_with">Kies contact om mee te delen</string>
     <string name="picture_set_as_no_app">Geen app gevonden om afbeelding in te stellen</string>
-    <string name="pin_home">Toevoegen aan startscherm</string>
+    <string name="pin_home">Vastzetten op startscherm</string>
     <string name="pin_shortcut_label">Open %1$s</string>
     <string name="placeholder_fileSize">389 KB</string>
     <string name="placeholder_filename">plaatshouder.txt</string>
@@ -625,6 +641,7 @@
     <string name="placeholder_timestamp">2012/05/18 12:23</string>
     <string name="player_stop">stop</string>
     <string name="player_toggle">omschakelen</string>
+    <string name="please_select_a_server">Selecteer een server...</string>
     <string name="power_save_check_dialog_message">Uitschakelen stroombesparingscontrole kan resulteren in uploaden van bestanden met lage accustand!</string>
     <string name="pref_behaviour_entries_delete_file">verwijderd worden</string>
     <string name="pref_behaviour_entries_keep_file">bewaard in originele map</string>
@@ -638,7 +655,6 @@
     <string name="prefs_add_account">Account toevoegen</string>
     <string name="prefs_calendar_contacts">Synchroniseer agenda en contactpersonen</string>
     <string name="prefs_calendar_contacts_no_store_error">Noch F-Droid, noch Google Play is geïnstalleerd</string>
-    <string name="prefs_calendar_contacts_summary">DAVx5 (vroeger bekend als DAVdroid) (v1.3.0+) voor het huidige account instellen</string>
     <string name="prefs_calendar_contacts_sync_setup_successful">Agenda en contactpersonen synchronisatie instellingen</string>
     <string name="prefs_category_about">Over</string>
     <string name="prefs_category_details">Details</string>
@@ -648,7 +664,8 @@
     <string name="prefs_category_sync">Synchroniseren</string>
     <string name="prefs_daily_backup_summary">Dagelijkse backup van je agenda en contactpersonen</string>
     <string name="prefs_daily_contact_backup_summary">Dagelijkse back-up van je contactpersonen</string>
-    <string name="prefs_davx5_setup_error">Onverwachte fout bij het instellen van DAVx5 (voorheen bekend als DAVdroid)</string>
+    <string name="prefs_data_storage_location">Gegevensopslaglocatie</string>
+    <string name="prefs_data_storage_location_summary">Beheer gegevensopslaglocatie</string>
     <string name="prefs_e2e_active">End-to-end versleuteling is ingesteld!</string>
     <string name="prefs_e2e_mnemonic">E2E mnemonic</string>
     <string name="prefs_e2e_no_device_credentials">Om de mnemonic te tonen moet je apparaatinloggegevens inschakelen.</string>
@@ -681,11 +698,11 @@
     <string name="prefs_show_ecosystem_apps_summary">Nextcloud app suggesties in navigatiekopregel</string>
     <string name="prefs_show_hidden_files">Verborgen bestanden weergeven</string>
     <string name="prefs_sourcecode">Krijg broncode</string>
-    <string name="prefs_storage_path">Gegevensopslagmap</string>
     <string name="prefs_sycned_folders_summary">Mappen beheren voor automatisch uploaden</string>
     <string name="prefs_synced_folders_local_path_title">Lokale map</string>
     <string name="prefs_synced_folders_remote_path_title">Externe map</string>
     <string name="prefs_theme_title">Thema</string>
+    <string name="prefs_two_way_sync_interval">Interval</string>
     <string name="prefs_value_theme_dark">Donker</string>
     <string name="prefs_value_theme_light">Licht</string>
     <string name="prefs_value_theme_system">Systeem volgen</string>
@@ -703,11 +720,13 @@
     <string name="push_notifications_old_login">Geen push-notificaties als gevolg van de verouderde inlogsessie. Overweeg het opnieuw toevoegen van je account.</string>
     <string name="push_notifications_temp_error">Push notificaties momenteel niet beschikbaar.</string>
     <string name="qr_could_not_be_read">QR code kan niet worden gelezen!</string>
+    <string name="re_enable_auto_upload">Wijzigingen aan auto-upload</string>
     <string name="receive_external_files_activity_start_sync_folder_is_not_exists_message">Map is niet gevonden. Synchronisatie is geannuleerd</string>
     <string name="receive_external_files_activity_unable_to_find_file_to_upload">Kan het bestand voor uploaden niet vinden</string>
     <string name="recommend_subject">Probeer %1$s op je toestel!</string>
     <string name="recommend_text">Ik wil je uitnodigen om %1$s op je smartphone te gebruiken.\nDownload hier: %2$s</string>
     <string name="recommend_urls">%1$s or %2$s</string>
+    <string name="recommended_files_title">Aanbevolen bestanden</string>
     <string name="refresh_content">Inhoud verversen</string>
     <string name="reload">Herladen</string>
     <string name="remote">(remote)</string>
@@ -726,10 +745,10 @@
     <string name="request_account_deletion">Verwijdering van account aanvragen </string>
     <string name="request_account_deletion_button">Verwijdering aanvragen</string>
     <string name="request_account_deletion_details">Vraag permanente verwijdering van het account aan bij de service provider</string>
-    <string name="resized_image_not_possible_download">Geen verkleinde afbeelding beschikbaar. Volledige afbeelding downloaden?</string>
     <string name="restore">Herstellen bestand</string>
     <string name="restore_backup">Herstel backup</string>
     <string name="restore_button_description">Herstel verwijderd bestand</string>
+    <string name="restore_item">Herstellen</string>
     <string name="restore_selected">Herstel geselecteerde</string>
     <string name="retrieving_file">Bestand ophalen…</string>
     <string name="retry">Opnieuw</string>
@@ -747,7 +766,6 @@
     <string name="screenshot_05_autoUpload_heading">Automatisch uploaden</string>
     <string name="screenshot_05_autoUpload_subline">voor foto\'s en video\'s</string>
     <string name="screenshot_06_davdroid_heading">Agenda en contactpersonen</string>
-    <string name="screenshot_06_davdroid_subline">Sync met DAVx5</string>
     <string name="search_error">Fout bij het ophalen van de zoekresultaten</string>
     <string name="secure_share_not_set_up">Veilig delen is niet ingesteld voor deze gebruiker</string>
     <string name="select_all">Alles selecteren</string>
@@ -755,17 +773,17 @@
     <string name="select_one_template">Selecteer een sjabloon</string>
     <string name="select_template">Kies sjabloon</string>
     <string name="send">Versturen</string>
-    <string name="send_share">Stuur share</string>
     <string name="sendbutton_description">Verstuur-knop pictogram</string>
+    <string name="send_share">Delen verzenden</string>
     <string name="set_as">Stel in als</string>
-    <string name="set_note">Instellen notitie</string>
     <string name="set_picture_as">Gebruik afbeelding als</string>
     <string name="set_status">Instellen status</string>
     <string name="set_status_message">Instellen statusbericht</string>
     <string name="setup_e2e">Tijden het instellen van end-to-end versleuteling ontvang je een mnemonic van 12 woorden, die je nodig hebt om bestanden op je apparaat te openen. Dit wordt alleen opgeslagen op dit apparaat en kan in dit scherm opnieuw getoond worden. Noteer het a.u.b. op een veilige plek!</string>
     <string name="share">Delen</string>
-    <string name="share_copy_link">Deel en kopieer link</string>
+    <string name="share_copy_link">Link delen en kopiëren</string>
     <string name="share_dialog_title">Delen</string>
+    <string name="share_download_limit">Stel downloadlimiet in</string>
     <string name="share_expiration_date_format">%1$s</string>
     <string name="share_expiration_date_label">Vervalt op %1$s</string>
     <string name="share_file">Deel %1$s</string>
@@ -788,9 +806,9 @@
     <string name="share_permission_can_edit">Kan bewerken</string>
     <string name="share_permission_file_drop">Bestandsopslag</string>
     <string name="share_permission_view_only">Alleen bekijken</string>
-    <string name="share_permissions">Deelmachtigingen</string>
     <string name="share_remote_clarification">%1$s (extern)</string>
     <string name="share_room_clarification">%1$s (gesprek)</string>
+    <string name="share_search_internal">Voeg gebruikers en teams toe</string>
     <string name="share_send_new_email">Stuur nieuwe e-mail</string>
     <string name="share_send_note">Notitie voor ontvanger</string>
     <string name="share_settings">Instellingen</string>
@@ -806,7 +824,9 @@
     <string name="shared_with_you_by">Gedeeld met u door %1$s</string>
     <string name="sharee_add_failed">Toevoegen ontvanger mislukt</string>
     <string name="sharee_already_added_to_file">Delen is mislukt. Het bestand of map is al gedeeld met deze persoon of groep.</string>
+    <string name="show_all">Toon alles</string>
     <string name="show_images">Toon foto\'s</string>
+    <string name="show_less">Toon minder</string>
     <string name="show_video">Toon video\'s</string>
     <string name="signup_with_provider">Aanmelden bij provider</string>
     <string name="single_sign_on_request_token" formatted="true">Toestaan dat%1$s je Nextcloud account %2$sbenadert?</string>
@@ -884,6 +904,7 @@
     <string name="sync_not_enough_space_dialog_title">Onvoldoende ruimte</string>
     <string name="sync_status_button">Sync status knop</string>
     <string name="sync_string_files">Bestanden</string>
+    <string name="sync_warning_button">Synchroniseer waarschuwingsknop</string>
     <string name="synced_folder_settings_button">Instellingen knop</string>
     <string name="synced_folders_configure_folders">Mappen instellen</string>
     <string name="synced_folders_new_info">Automatisch uploaden is helemaal herzien. Herconfigureer je auto-uploadfunctie in het hoofdmenu.\n\nVeel plezier met de nieuwe en meer uitgebreide auto-upload.</string>
@@ -892,6 +913,7 @@
     <string name="synced_folders_type">Type</string>
     <string name="synced_icon">gesynchroniseerd</string>
     <string name="tags">Labels</string>
+    <string name="terms_of_service_title">Gebruiksvoorwaarden</string>
     <string name="test_server_button">Test server verbinding</string>
     <string name="thirtyMinutes">30 minuten</string>
     <string name="thisWeek">Deze week</string>
@@ -934,8 +956,10 @@
     <string name="upload_cannot_create_file">Kan geen lokaal bestand aanmaken</string>
     <string name="upload_chooser_title">Upload van…</string>
     <string name="upload_content_from_other_apps">Uploaden content vanaf andere apps</string>
+    <string name="upload_direct_camera_photo">Foto</string>
     <string name="upload_direct_camera_promt">Wil je een foto maken of video opnemen?</string>
     <string name="upload_direct_camera_upload">Uploaden vanaf camera</string>
+    <string name="upload_direct_camera_video">Video</string>
     <string name="upload_file_dialog_filename">Bestandsnaam</string>
     <string name="upload_file_dialog_filetype">Bestandstype</string>
     <string name="upload_file_dialog_filetype_googlemap_shortcut">Google Maps-snelkoppelingsbestand(%s)</string>
@@ -1033,15 +1057,25 @@
     <string name="webview_version_check_alert_dialog_message">Update de  Android System WebView app om in te loggen</string>
     <string name="webview_version_check_alert_dialog_positive_button_title">Update</string>
     <string name="webview_version_check_alert_dialog_title">Update Android System WebView</string>
+    <string name="warn_rename_extension">Wijzigen van de extensie kan ertoe leiden dat dit bestand in een andere applicatie wordt geopend</string>
     <string name="what_s_new_image">Wat is nieuw afbeelding</string>
     <string name="whats_new_skip">Overslaan</string>
     <string name="whats_new_title">Nieuw in %1$s</string>
     <string name="whats_your_status">Wat is jouw status?</string>
+    <string name="widgets_not_available">Widgets zijn alleen beschikbaar op %1$s 25 of later wanneer de Dashboard-app is ingeschakeld </string>
     <string name="widgets_not_available_title">Niet beschikbaar</string>
     <string name="worker_download">Downloaden bestanden…</string>
     <string name="write_email">Stuur e-mail</string>
     <string name="wrong_storage_path">Gegevensopslagmap bestaat niet!</string>
     <string name="wrong_storage_path_desc">Dit kan komen door een back-upherstel op een ander apparaat. Standaardinstelling wordt gebruikt. Controleer de instellingen om de gegevensopslagmap aan te passen.</string>
+    <plurals name="hours">
+        <item quantity="one">%d uur</item>
+        <item quantity="other">%d uren</item>
+    </plurals>
+    <plurals name="minutes">
+        <item quantity="one">%d minuut</item>
+        <item quantity="other">%d minuten</item>
+    </plurals>
     <plurals name="sync_fail_in_favourites_content">
         <item quantity="one">Kon bestand %1$dniet synchroniseren (conflicten: %2$d)</item>
         <item quantity="other">Kon bestand %1$d niet synchroniseren (conflicten: %2$d)</item>
@@ -1090,6 +1124,10 @@
         <item quantity="one">%1$d bestanden</item>
         <item quantity="other">%1$d bestanden</item>
     </plurals>
+    <plurals name="trashbin_list__footer__file">
+        <item quantity="one">%1$d object</item>
+        <item quantity="other">%1$d objecten</item>
+    </plurals>
     <plurals name="synced_folders_show_hidden_folders">
         <item quantity="one">Tonen %1$d verborgen map</item>
         <item quantity="other">Tonen %1$d verborgen mappen</item>
@@ -1097,5 +1135,25 @@
     <plurals name="items_selected_count">
         <item quantity="one">%d geselecteerd</item>
         <item quantity="other">%d geselecteerd</item>
+    </plurals>
+    <plurals name="delay_message">
+        <item quantity="one">%d seconde vertraagd vanwege te veel onjuiste pogingen</item>
+        <item quantity="other">%d seconden vertraagd vanwege te veel onjuiste pogingen</item>
+    </plurals>
+    <plurals name="delay_message_minutes">
+        <item quantity="one">%d minuut vertraagt vanwege te veel onjuiste pogingen</item>
+        <item quantity="other">%d minuten vertraagd vanwege te veel onjuiste pogingen</item>
+    </plurals>
+    <plurals name="delay_message_minutes_part">
+        <item quantity="one">%d minuut vertraagd</item>
+        <item quantity="other">%d minuten vertraagd</item>
+    </plurals>
+    <plurals name="delay_message_seconds_part">
+        <item quantity="one">%d seconde</item>
+        <item quantity="other">%d seconden</item>
+    </plurals>
+    <plurals name="share_download_limit_description">
+        <item quantity="one">%1$d download resterend</item>
+        <item quantity="other">%1$d downloads resterend</item>
     </plurals>
 </resources>

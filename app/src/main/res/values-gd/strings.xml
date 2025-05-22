@@ -10,7 +10,6 @@
     <string name="action_edit">Deasaich</string>
     <string name="action_empty_notifications">Falamhaich a h-uile brath</string>
     <string name="action_empty_trashbin">Falamhaich an sgudal</string>
-    <string name="action_send_share">Cuir/Co-roinn</string>
     <string name="action_switch_grid_view">Sealladh griod</string>
     <string name="action_switch_list_view">Sealladh liosta</string>
     <string name="actionbar_mkdir">Pasgan ùr</string>
@@ -26,13 +25,10 @@
     <string name="activity_chooser_send_file_title">Cuir</string>
     <string name="activity_chooser_title">Cuir ceangal gu…</string>
     <string name="activity_icon">Gnìomhachd</string>
-    <string name="add_another_public_share_link">Cuir ceangal eile ris</string>
     <string name="add_new_public_share">Cuir ceangal co-roinnidh poblach ùr ris</string>
     <string name="add_to_cloud">Cuir ri %1$s</string>
     <string name="allow_resharing">Ceadaich co-roinneadh às ùr</string>
     <string name="appbar_search_in">Lorg am broinn %s</string>
-    <string name="assistant_screen_successful_task_text">Coileanta</string>
-    <string name="assistant_screen_unknown_task_status_text">Chan eil fhios</string>
     <string name="associated_account_not_found">Cha deach an cunntas co-cheangailte a lorg!</string>
     <string name="auth_access_failed">Dh’fhàillig leis an inntrigeadh: %1$s</string>
     <string name="auth_account_does_not_exist">Cha deach an cunntas a chur ris air an uidheam seo fhathast</string>
@@ -77,7 +73,9 @@
     <string name="battery_optimization_disable">Cuir à comas</string>
     <string name="battery_optimization_message">Dh’fhaoidte gu bheil piseach a’ bhataraidh an comas air an uidheam agad. Chan obraich an luchdadh suas fèin-obrachail mar bu chòir ach ma bheir thu an aplacaid seo air falbh uaithe.</string>
     <string name="battery_optimization_title">Piseachadh a’ bhataraidh</string>
-    <string name="brute_force_delay">Tha dàil air leis gun deach feuchainn ris ro thric</string>
+    <string name="bottom_navigation_menu_favorites_label">Annsachdan</string>
+    <string name="bottom_navigation_menu_files_label">Na h-uile faidhle</string>
+    <string name="bottom_navigation_menu_media_label">Meadhanan</string>
     <string name="certificate_load_problem">Thachair duilgheadas le luchdadh an teisteanais.</string>
     <string name="changelog_dev_version">Loga nan atharraichean – tionndadh leasachaidh</string>
     <string name="checkbox">Bogsa-cromaige</string>
@@ -137,7 +135,6 @@
     <string name="confirmation_remove_folder_alert">A bheil thu cinnteach gu bheil thu airson %1$s ’s a shusbaint a sguabadh às?</string>
     <string name="confirmation_remove_folders_alert">A bheil thu cinnteach gu bheil thu airson na nithean a thagh thu ’s an susbaint a sguabadh às?</string>
     <string name="confirmation_remove_local">Ionadail a-mhàin</string>
-    <string name="conflict_file_headline">Faidhle %1$s ann an còmhstri</string>
     <string name="conflict_message_description">Ma thaghas tu an dà thionndadh, thèid àireamh a chur ri ainm an fhaidhle ionadail.</string>
     <string name="contactlist_item_icon">Ìomhaigheag a’ chleachdaiche air liosta an luchd-aithne</string>
     <string name="contactlist_no_permission">Cha deach cead a thoirt ’s cha deach càil ion-phortadh.</string>
@@ -206,13 +203,10 @@
     <string name="drawer_quota_unlimited">Tha %1$s ’ga chleachdadh</string>
     <string name="drawer_synced_folders">Luchdaich suas gu fèin-obrachail</string>
     <string name="ecosystem_apps_display_more">Barrachd</string>
-    <string name="ecosystem_apps_display_notes">Nòtaichean</string>
-    <string name="ecosystem_apps_notes">Nòtaichean Nextcloud</string>
     <string name="encrypted">Suidhich crioptachadh air</string>
     <string name="end_to_end_encryption_confirm_button">Suidhich an crioptachadh</string>
     <string name="end_to_end_encryption_decrypting">’Ga dhì-chrioptachadh…</string>
     <string name="end_to_end_encryption_dialog_close">Dùin</string>
-    <string name="end_to_end_encryption_enter_password">Cuir a-steach am facal-faire agus an iuchair phrìobhaideach a dhì-chrioptachadh.</string>
     <string name="end_to_end_encryption_folder_not_empty">Chan eil am pasgan seo falamh.</string>
     <string name="end_to_end_encryption_generating_keys">A’ gintinn nan iuchraichean ùra…</string>
     <string name="end_to_end_encryption_keywords_description">Nì an 12 fhacal còmhla facal-faire glè làidir gus nach seall ’s nach cleachd ach thu fhèin na faidhlichean crioptaichte agad. Sgrìobh sìos e is cùm am badeigin sàbhailte e.</string>
@@ -247,7 +241,6 @@
     <string name="etm_background_jobs_stop_test_job">Cuir stad air an obair dheuchainneach</string>
     <string name="etm_migrations">Imrichean (àrdachadh aplacaide)</string>
     <string name="etm_preferences">Roghainnean</string>
-    <string name="etm_title">Modh deuchainnean innleadaireachd</string>
     <string name="etm_transfer">Tar-chur fhaidhlichean</string>
     <string name="etm_transfer_enqueue_test_download">Cuir luchdadh a-nuas deuchainneach air a’ chiutha</string>
     <string name="etm_transfer_enqueue_test_upload">Cuir luchdadh suas deuchainneach air a’ chiutha</string>
@@ -344,7 +337,6 @@
     <string name="hint_password">Facal-faire</string>
     <string name="host_not_available">Chan eil am frithealaiche ri làimh</string>
     <string name="host_your_own_server">Òstaich am frithealaiche agad fhèin</string>
-    <string name="in_folder">sa phasgan %1$s</string>
     <string name="instant_upload_existing">Luchdaich suas na faidhlichean a tha ann mu thràth cuideachd</string>
     <string name="instant_upload_on_charging">Na luchdaich suas ach nuair a bhios an t-uidheam ’ga theàirrdseadh</string>
     <string name="instant_upload_path">/InstantUpload</string>
@@ -405,7 +397,6 @@
     <string name="new_media_folder_detected">Mhothaich sinn do phasgan mheadhanan ùr le %1$s.</string>
     <string name="new_media_folder_photos">dealbh</string>
     <string name="new_media_folder_videos">video</string>
-    <string name="new_notification">Brath ùr</string>
     <string name="new_version_was_created">Chaidh tionndadh ùr dheth a chruthachadh</string>
     <string name="no_browser_available">Chan eil aplacaid ann a làimhsicheas ceanglaichean</string>
     <string name="no_mutliple_accounts_allowed">Chan eil ach aon chunntas ceadaichte</string>
@@ -466,7 +457,6 @@
     <string name="pref_instant_name_collision_policy_title">Dè nì sinn nuair a bhios faidhle ann mu thràth?</string>
     <string name="prefs_add_account">Cuir cunntas ris</string>
     <string name="prefs_calendar_contacts_no_store_error">Cha deach F-Droid no Google Play a stàladh</string>
-    <string name="prefs_calendar_contacts_summary">Suidhich DAVx5 (air a bhiodh DAVdroid) (v1.3.0+) dhan chunntas làithreach</string>
     <string name="prefs_category_about">Mu dhèidhinn</string>
     <string name="prefs_category_details">Mion-fhiosrachadh</string>
     <string name="prefs_category_dev">Leasachadh</string>
@@ -495,7 +485,6 @@
     <string name="prefs_manage_accounts">Stiùirich cunntasan</string>
     <string name="prefs_show_hidden_files">Seall faidhlichean falaichte</string>
     <string name="prefs_sourcecode">Faigh am bun-tùs</string>
-    <string name="prefs_storage_path">Pasgan stòradh dàta</string>
     <string name="prefs_sycned_folders_summary">Stiùirich pasganan an luchdaidh suas fhèin-obrachail</string>
     <string name="prefs_synced_folders_local_path_title">Pasgan ionadail</string>
     <string name="prefs_synced_folders_remote_path_title">Pasgan cèin</string>
@@ -525,7 +514,6 @@
     <string name="rename_dialog_title">Cuir a-steach ainm ùr</string>
     <string name="rename_local_fail_msg">Cha b’ urrainn dhuinn an t-ainm ùr a thoirt air an lethbhreac ionadail, feuch ainm eile</string>
     <string name="rename_server_fail_msg">Tha ghabh an t-ainm ùr a thoirt air on a tha e ’ga chleachdadh mu thràth</string>
-    <string name="resized_image_not_possible_download">Chan eil dealbh air ath-mheudachadh ri làimh. An luchdaich thu a-nuas an dealbh slàn?</string>
     <string name="restore">Aisig am faidhle</string>
     <string name="restore_button_description">Aisig faidhle a chaidh a sguabadh às</string>
     <string name="retrieving_file">A’ faighinn an fhaidhle…</string>
@@ -540,7 +528,6 @@
     <string name="screenshot_04_accounts_heading">Na cunntasan agad uile</string>
     <string name="screenshot_04_accounts_subline">air an aon àite</string>
     <string name="screenshot_05_autoUpload_heading">Luchdadh suas fèin-obrachail</string>
-    <string name="screenshot_06_davdroid_subline">Sioncronaich le DAVx5</string>
     <string name="select_all">Tagh na h-uile</string>
     <string name="select_one_template">Tagh teamplaid</string>
     <string name="select_template">Tagh teamplaid</string>
@@ -629,7 +616,6 @@
     <string name="stream">Sruthaich le…</string>
     <string name="stream_not_possible_headline">Cha ghabh sruthadh inntearnail a dhèanamh</string>
     <string name="stream_not_possible_message">Luchdaich a-nuas meadhan ’na àite no cleachd aplacaid air an taobh a-muigh.</string>
-    <string name="strict_mode">Modh teann: Chan eil ceangal HTTP ceadaichte!</string>
     <string name="subject_shared_with_you">Chaidh “%1$s” a cho-roinneadh leat</string>
     <string name="subject_user_shared_with_you">Cho-roinn %1$s “%2$s” leat</string>
     <string name="sync">Sioncronaich</string>
@@ -815,4 +801,4 @@
         <item quantity="few">Chaidh %d a thaghadh</item>
         <item quantity="other">Chaidh %d a thaghadh</item>
     </plurals>
-</resources>
+    </resources>
