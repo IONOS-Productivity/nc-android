@@ -5,8 +5,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.ionos.player.model.PlaybackModel
-import com.ionos.player.ui.PlayerScreenEvent.ShowFileActions
-import com.ionos.player.ui.PlayerScreenEvent.ShowFileDetails
+import com.ionos.player.ui.PlayerScreenEvent.*
+import com.nextcloud.client.account.UserAccountManager
+import com.nextcloud.client.jobs.BackgroundJobManager
+import com.nextcloud.client.jobs.download.FileDownloadHelper
 import com.nextcloud.client.logger.Logger
 import com.owncloud.android.R
 import com.owncloud.android.datamodel.FileDataStorageManager
@@ -25,6 +27,8 @@ import kotlin.jvm.optionals.getOrNull
 class PlayerViewModel @Inject constructor(
     private val playbackModel: PlaybackModel,
     private val storageManager: FileDataStorageManager,
+    private val userAccountManager: UserAccountManager,
+    private val backgroundJobManager: BackgroundJobManager,
     private val logger: Logger,
 ) : ViewModel() {
 
@@ -33,17 +37,29 @@ class PlayerViewModel @Inject constructor(
 
     fun onMoreButtonClick() {
         viewModelScope.launch {
-            getCurrentOCFile()?.let { file ->
-                eventChannel.send(ShowFileActions(file))
-            }
+            val file = getCurrentOCFile() ?: return@launch
+            val actionIds = listOf(
+                R.id.action_see_details,
+                R.id.action_download_file,
+                R.id.action_export_file,
+                R.id.action_send_share_file,
+                R.id.action_remove_file,
+                R.id.action_open_file_with,
+                R.id.action_stream_media,
+            )
+            eventChannel.trySend(ShowFileActions(file, actionIds))
         }
     }
 
     fun onFileActionChosen(file: OCFile, actionId: Int) {
-        viewModelScope.launch {
-            when (actionId) {
-                R.id.action_see_details -> eventChannel.send(ShowFileDetails(file))
-            }
+        when (actionId) {
+            R.id.action_see_details -> eventChannel.trySend(ShowFileDetails(file))
+            R.id.action_download_file -> startFileDownloading(file)
+            R.id.action_export_file -> startFileExport(file)
+            R.id.action_send_share_file -> eventChannel.trySend(ShowShareFileDialog(file))
+            R.id.action_remove_file -> eventChannel.trySend(ShowRemoveFileDialog(file))
+            R.id.action_open_file_with -> onOpenFileWithClick(file)
+            R.id.action_stream_media -> onStreamFileClick(file)
         }
     }
 
@@ -64,6 +80,26 @@ class PlayerViewModel @Inject constructor(
             logger.e(PlayerViewModel::class.java.simpleName, "Failed to get file by localId: $localId", e)
             null
         }
+    }
+
+    private fun startFileDownloading(file: OCFile) {
+        val user = userAccountManager.user
+        FileDownloadHelper.instance().downloadFileIfNotStartedBefore(user, file)
+    }
+
+    private fun startFileExport(file: OCFile) {
+        backgroundJobManager.startImmediateFilesExportJob(listOf(file))
+        eventChannel.trySend(ShowFileExportStartedMessage)
+    }
+
+    private fun onOpenFileWithClick(file: OCFile) {
+        playbackModel.pause()
+        eventChannel.trySend(LaunchOpenFileIntent(file))
+    }
+
+    private fun onStreamFileClick(file: OCFile) {
+        playbackModel.pause()
+        eventChannel.trySend(LaunchStreamFileIntent(file))
     }
 
     class Factory @Inject constructor(

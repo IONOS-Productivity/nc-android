@@ -8,8 +8,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.ionos.player.model.PlaybackFileType
-import com.ionos.player.ui.PlayerScreenEvent.ShowFileActions
-import com.ionos.player.ui.PlayerScreenEvent.ShowFileDetails
+import com.ionos.player.ui.PlayerScreenEvent.*
 import com.ionos.player.ui.audio.AudioPlayerView
 import com.ionos.player.ui.video.VideoPlayerView
 import com.ionos.player.ui.video.surface.PlayerCompatible
@@ -22,6 +21,9 @@ import com.owncloud.android.R
 import com.owncloud.android.datamodel.OCFile
 import com.owncloud.android.ui.activity.FileActivity
 import com.owncloud.android.ui.activity.FileDisplayActivity
+import com.owncloud.android.ui.dialog.ConfirmationDialogFragment
+import com.owncloud.android.ui.dialog.RemoveFilesDialogFragment
+import com.owncloud.android.utils.DisplayUtils
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -93,26 +95,24 @@ class PlayerActivity : FileActivity(), PlayerViewContainer, PlayerCompatible, In
 
     private fun handleEvent(event: PlayerScreenEvent) {
         when (event) {
-            is ShowFileActions -> showFileActions(event.file)
+            is ShowFileActions -> showFileActions(event.file, event.actionIds)
             is ShowFileDetails -> showFileDetails(event.file)
+            is ShowFileExportStartedMessage -> showFileExportStartedMessage()
+            is ShowShareFileDialog -> fileOperationsHelper.sendShareFile(event.file)
+            is ShowRemoveFileDialog -> showRemoveFileDialog(event.file)
+            is LaunchOpenFileIntent -> fileOperationsHelper.openFile(event.file)
+            is LaunchStreamFileIntent -> fileOperationsHelper.streamMediaFile(event.file)
         }
     }
 
-    private fun showFileActions(file: OCFile) {
-        val availableActions = listOf(
-            R.id.action_see_details,
-        )
-
-        val actionsToHide = FileAction.SORTED_VALUES
-            .map { it.id }
-            .filter { it !in availableActions }
-
+    private fun showFileActions(file: OCFile, actionIds: List<Int>) {
+        val actionsToHide = FileAction.SORTED_VALUES.map(FileAction::id).filter { it !in actionIds }
         FileActionsBottomSheet.newInstance(file, false, actionsToHide)
             .setResultListener(supportFragmentManager, this) { viewModel.onFileActionChosen(file, it) }
             .show(supportFragmentManager, "actions")
     }
 
-    fun showFileDetails(file: OCFile) {
+    private fun showFileDetails(file: OCFile) {
         val intent = Intent(this, FileDisplayActivity::class.java).apply {
             action = FileDisplayActivity.ACTION_DETAILS
             putExtra(EXTRA_FILE, file)
@@ -120,5 +120,15 @@ class PlayerActivity : FileActivity(), PlayerViewContainer, PlayerCompatible, In
         }
         startActivity(intent)
         finish()
+    }
+
+    private fun showFileExportStartedMessage() {
+        val message = resources.getQuantityString(R.plurals.export_start, 1, 1)
+        DisplayUtils.showSnackMessage(playerView, message)
+    }
+
+    private fun showRemoveFileDialog(file: OCFile) {
+        RemoveFilesDialogFragment.newInstance(file)
+            .show(supportFragmentManager, ConfirmationDialogFragment.FTAG_CONFIRMATION)
     }
 }
