@@ -5,7 +5,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.ionos.player.model.PlaybackModel
-import com.ionos.player.ui.PlayerScreenEvent.*
+import com.ionos.player.ui.PlayerScreenEvent.LaunchOpenFileIntent
+import com.ionos.player.ui.PlayerScreenEvent.LaunchStreamFileIntent
+import com.ionos.player.ui.PlayerScreenEvent.ShowFileActions
+import com.ionos.player.ui.PlayerScreenEvent.ShowFileDetails
+import com.ionos.player.ui.PlayerScreenEvent.ShowFileExportStartedMessage
+import com.ionos.player.ui.PlayerScreenEvent.ShowRemoveFileDialog
+import com.ionos.player.ui.PlayerScreenEvent.ShowShareFileDialog
 import com.nextcloud.client.account.UserAccountManager
 import com.nextcloud.client.jobs.BackgroundJobManager
 import com.nextcloud.client.jobs.download.FileDownloadHelper

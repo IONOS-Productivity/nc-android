@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="player_media_controls_close_action_title">Close</string>
-    <string name="player_last_change_date">Modified on:</string>
-    <string name="player_casting_to_text">Connected to</string>
-    <string name="player_files_are_processing_alert_message">Some of the selected files are currently being processed, some operations could be disabled temporily.</string>
-
-</resources>

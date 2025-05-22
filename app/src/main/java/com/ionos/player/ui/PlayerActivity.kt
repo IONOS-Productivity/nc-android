@@ -8,7 +8,13 @@ import androidx.activity.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.ionos.player.model.PlaybackFileType
-import com.ionos.player.ui.PlayerScreenEvent.*
+import com.ionos.player.ui.PlayerScreenEvent.LaunchOpenFileIntent
+import com.ionos.player.ui.PlayerScreenEvent.LaunchStreamFileIntent
+import com.ionos.player.ui.PlayerScreenEvent.ShowFileActions
+import com.ionos.player.ui.PlayerScreenEvent.ShowFileDetails
+import com.ionos.player.ui.PlayerScreenEvent.ShowFileExportStartedMessage
+import com.ionos.player.ui.PlayerScreenEvent.ShowRemoveFileDialog
+import com.ionos.player.ui.PlayerScreenEvent.ShowShareFileDialog
 import com.ionos.player.ui.audio.AudioPlayerView
 import com.ionos.player.ui.video.VideoPlayerView
 import com.ionos.player.ui.video.surface.PlayerCompatible

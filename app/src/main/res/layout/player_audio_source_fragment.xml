@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:custom="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/player_full_screen_audio_player_background">
+
+    <RelativeLayout android:id="@+id/songContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/album_cover"
+            android:layout_width="@dimen/player_full_screen_audio_player_album_cover_width"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/player_full_screen_audio_player_album_photo_margin_top"
+            android:src="@drawable/player_ic_album_cover_audio"/>
+
+        <com.ionos.player.ui.common.FileTextDetailView
+            android:id="@+id/fileDetailView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/player_full_screen_audio_player_track_name_margin_bottom"
+            android:gravity="center"
+            custom:subtitle_text_color="@color/player_full_screen_audio_detail_view_subtitle_text_color"
+            custom:title_text_color="@color/player_full_screen_audio_detail_view_title_text_color"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout android:id="@+id/videoContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="invisible">
+
+        <SurfaceView
+            android:id="@+id/surfaceView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            tools:visibility="invisible"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>
