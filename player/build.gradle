@@ -19,12 +19,6 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    buildTypes {
-        release {
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            consumerProguardFiles "proguard-rules.pro"
-        }
-    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
@@ -36,19 +30,12 @@ android {
     buildFeatures {
         viewBinding true
     }
-
-    sourceSets.main {
-        jniLibs.srcDir "src/main/libs"
-        jni.srcDirs = []
-    }
 }
 
 dependencies {
     api "androidx.media3:media3-common:$androidxMediaVersion"
     api "androidx.media3:media3-session:$androidxMediaVersion"
     api "androidx.media3:media3-exoplayer:$androidxMediaVersion"
-
-    compileOnly "org.checkerframework:checker-qual:$qual"
 
     implementation "androidx.core:core-ktx:$androidx_core"
     implementation "androidx.appcompat:appcompat:$appCompatVersion"
