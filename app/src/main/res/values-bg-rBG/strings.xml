@@ -10,10 +10,10 @@
     <string name="action_edit">Променяне</string>
     <string name="action_empty_notifications">Премахнете известията</string>
     <string name="action_empty_trashbin">Изпразване на кошчето</string>
-    <string name="action_send_share">Изпрати/Сподели</string>
     <string name="action_switch_grid_view">Решетъчен изглед</string>
     <string name="action_switch_list_view">Списъчен изглед</string>
     <string name="actionbar_mkdir">Нова папка</string>
+    <string name="actionbar_move_or_copy">Премести или копирай</string>
     <string name="actionbar_open_with">Отвори с</string>
     <string name="actionbar_search">Търсене</string>
     <string name="actionbar_see_details">Подробности</string>
@@ -26,7 +26,6 @@
     <string name="activity_chooser_send_file_title">Изпращане</string>
     <string name="activity_chooser_title">Изпращане на връзка чрез…</string>
     <string name="activity_icon">Активност</string>
-    <string name="add_another_public_share_link">Добави още една връзка</string>
     <string name="add_new_public_share">Добавете нова връзка за публично споделяне</string>
     <string name="add_new_secure_file_drop">Добавяне на ново, защитено пускане на файлове</string>
     <string name="add_to_cloud">Добави към %1$s</string>
@@ -36,12 +35,8 @@
     <string name="app_config_proxy_port_title">Порт на прокси сървъра</string>
     <string name="app_widget_description">Показва един изпълним модул от таблото за управление</string>
     <string name="appbar_search_in">Търсене в %s</string>
-    <string name="assistant_screen_all_task_type">Всички</string>
-    <string name="assistant_screen_failed_task_text">Неуспешно</string>
-    <string name="assistant_screen_scheduled_task_status_text">Планирано</string>
-    <string name="assistant_screen_successful_task_text">Завършен</string>
+    <string name="assistant_screen_delete_task_alert_dialog_title">Изтрива задача</string>
     <string name="assistant_screen_task_delete_success_message">Задачата е успешно изтрита</string>
-    <string name="assistant_screen_unknown_task_status_text">Неизвестен</string>
     <string name="associated_account_not_found">Свързания профил не е намерен!</string>
     <string name="auth_access_failed">Достъп неуспешен: %1$s</string>
     <string name="auth_account_does_not_exist">Профилът все още не съществува на устройството</string>
@@ -87,7 +82,8 @@
     <string name="battery_optimization_disable">Изключване</string>
     <string name="battery_optimization_message">Възможно е устройството ви да има активирана оптимизация на батерията. AutoUpload работи правилно само, ако изключите това приложение от него.</string>
     <string name="battery_optimization_title">Оптимизация на батерията</string>
-    <string name="brute_force_delay">Забавяне, поради твърде много грешни опити</string>
+    <string name="bottom_navigation_menu_favorites_label">Любими</string>
+    <string name="bottom_navigation_menu_files_label">Всички файлове</string>
     <string name="calendar">Kалендар</string>
     <string name="calendars">Kалендари</string>
     <string name="certificate_load_problem">Проблем при зареждане на сертификата.</string>
@@ -119,6 +115,7 @@
     <string name="common_loading">Зареждане…</string>
     <string name="common_next">Следващ</string>
     <string name="common_no">Не</string>
+    <string name="common_now">Сега</string>
     <string name="common_ok">ОК</string>
     <string name="common_pending">В очакване</string>
     <string name="common_remove">Изтриване</string>
@@ -154,7 +151,6 @@
     <string name="confirmation_remove_folder_alert">Наистина ли желаете %1$s и съдържанието ѝ да бъдат изтрито?</string>
     <string name="confirmation_remove_folders_alert">Наистина ли желаете избраните елементи и съдържанието им да бъдат премахнати?</string>
     <string name="confirmation_remove_local">Само локално</string>
-    <string name="conflict_file_headline">Несъвместим файл %1$s</string>
     <string name="conflict_local_file">Локален файл</string>
     <string name="conflict_message_description">Ако изберете и двете версии, ще бъде добавен номер към името на локалния файл.</string>
     <string name="conflict_server_file">Файл на сървъра</string>
@@ -179,6 +175,7 @@
     <string name="could_not_retrieve_url">URL адресът не може да бъде извлечен</string>
     <string name="create">Създай</string>
     <string name="create_dir_fail_msg">Не може да се създаде папка</string>
+    <string name="create_link">Създаване на връзка</string>
     <string name="create_new">Нов</string>
     <string name="create_new_document">Нов документ</string>
     <string name="create_new_folder">Нова папка</string>
@@ -215,6 +212,7 @@
     <string name="download_cannot_create_file">Не е възможно създаването на локален файл</string>
     <string name="download_download_invalid_local_file_name">Невалидно име на локален файл</string>
     <string name="download_latest_dev_version">Сваляне на най-новата dev версия</string>
+    <string name="download_limit">Лимит за изтегляне</string>
     <string name="downloader_download_failed_content">%1$sне може да бъде изтеглен</string>
     <string name="downloader_download_failed_credentials_error">Неуспешно качване, нужно е да се впишете отново</string>
     <string name="downloader_download_failed_ticker">Изтеглянето е неуспешно.</string>
@@ -245,14 +243,10 @@
     <string name="drawer_synced_folders">Автоматично качване</string>
     <string name="e2e_not_yet_setup">E2E все още няма настройки</string>
     <string name="ecosystem_apps_display_more">Повече </string>
-    <string name="ecosystem_apps_display_notes">Бележки</string>
-    <string name="ecosystem_apps_display_talk">Разговор</string>
-    <string name="ecosystem_apps_notes">Nextcloud Бележки</string>
     <string name="encrypted">Включване на криптиране</string>
     <string name="end_to_end_encryption_confirm_button">Настройки за криптиране</string>
     <string name="end_to_end_encryption_decrypting">Декриптиране...</string>
     <string name="end_to_end_encryption_dialog_close">Затваряне</string>
-    <string name="end_to_end_encryption_enter_password">Моля въведете парола за декриптиране на личния ключ.</string>
     <string name="end_to_end_encryption_folder_not_empty">Папката не е празна.</string>
     <string name="end_to_end_encryption_generating_keys">Генериране на нови ключове...</string>
     <string name="end_to_end_encryption_keywords_description">Всички 12 думи заедно правят много силна парола, позволявайки само Вие да преглеждате и използвате вашите криптирани файлове. Моля запишете я и я пазете на сигурно място.</string>
@@ -295,7 +289,6 @@
     <string name="etm_background_jobs_stop_test_job">Спри тестов процес</string>
     <string name="etm_migrations">Миграции (обновяване на приложение)</string>
     <string name="etm_preferences">Предпочитания</string>
-    <string name="etm_title">Режим на инженерно изпитване</string>
     <string name="etm_transfer">Прехвърляне на файл</string>
     <string name="etm_transfer_enqueue_test_download">Изтегляне на тест поставен в опашка</string>
     <string name="etm_transfer_enqueue_test_upload">Поставяне в опашка на тестово качване</string>
@@ -405,7 +398,6 @@
     <string name="icon_for_empty_list">Икона за празен списък</string>
     <string name="icon_of_dashboard_widget">Икона на изпълним модул на табло за управление</string>
     <string name="icon_of_widget_entry">Икона на вход на изпълним модул</string>
-    <string name="in_folder">в папка %1$s</string>
     <string name="instant_upload_existing">Качете и съществуващи файлове</string>
     <string name="instant_upload_on_charging">Качване само при зареждане</string>
     <string name="instant_upload_path">/InstantUpload</string>
@@ -476,7 +468,6 @@
     <string name="new_media_folder_detected">Намерена е нова папка съдържаща %1$s.</string>
     <string name="new_media_folder_photos">снимки</string>
     <string name="new_media_folder_videos">видео</string>
-    <string name="new_notification">Ново известие</string>
     <string name="new_version_was_created">Създадена е нова версия</string>
     <string name="no_actions">Няма действия за този потребител</string>
     <string name="no_browser_available">Няма налично приложение за обработка на връзките</string>
@@ -525,7 +516,6 @@
     <string name="permission_deny">Не</string>
     <string name="permission_storage_access">Изискват се допълнителни права за изтегляне и сваляне на файлове.</string>
     <string name="picture_set_as_no_app">Няма намерени приложения за задаване на снимка</string>
-    <string name="pin_home">Фиксиране към началния екран</string>
     <string name="pin_shortcut_label">Отваряне на %1$s</string>
     <string name="placeholder_fileSize">389 KB</string>
     <string name="placeholder_filename">placeholder.txt</string>
@@ -546,7 +536,6 @@
     <string name="pref_instant_name_collision_policy_title">Какво да направите, ако файлът вече съществува?</string>
     <string name="prefs_add_account">Добавяне на профил</string>
     <string name="prefs_calendar_contacts_no_store_error">Нито F-Droid, нито Google play са инсталирани</string>
-    <string name="prefs_calendar_contacts_summary">Настройка на DAVx5 (преди известен като DAVdroid) (v1.3.0+) за текущ профил</string>
     <string name="prefs_category_about">Относно</string>
     <string name="prefs_category_details">Подробности</string>
     <string name="prefs_category_dev">Разработка</string>
@@ -554,7 +543,6 @@
     <string name="prefs_category_more">Още</string>
     <string name="prefs_category_sync">Синхронизиране</string>
     <string name="prefs_daily_contact_backup_summary">Дневно копие на вашите контакти</string>
-    <string name="prefs_davx5_setup_error">Възникна неочаквана грешка при настройката на DAVx5 (известен преди, като DAVdroid)</string>
     <string name="prefs_e2e_active">Настроено е цялостно криптиране!</string>
     <string name="prefs_e2e_mnemonic">E2E мнемоника </string>
     <string name="prefs_e2e_no_device_credentials">Моля, да активирате идентификационните данни на устройството, за да се покаже мнемоника.</string>
@@ -581,7 +569,6 @@
     <string name="prefs_setup_e2e">Настройка на цялостно криптиране</string>
     <string name="prefs_show_hidden_files">Показване и на скрити файлове</string>
     <string name="prefs_sourcecode">Получаване на изходния код</string>
-    <string name="prefs_storage_path">Папка за съхранение на данни</string>
     <string name="prefs_sycned_folders_summary">Управление на папки за автоматично качване</string>
     <string name="prefs_synced_folders_local_path_title">Локална папка</string>
     <string name="prefs_synced_folders_remote_path_title">Отдалечена папка</string>
@@ -603,6 +590,7 @@
     <string name="recommend_subject">Пробвайте%1$sна вашето устройство</string>
     <string name="recommend_text">Каня Ви да използвате %1$s на вашето device.\nDownload тук %2$s</string>
     <string name="recommend_urls">%1$s или %2$s</string>
+    <string name="recommended_files_title">Препоръчани файлове</string>
     <string name="refresh_content">Обновяване на съдържанието</string>
     <string name="reload">Презареди</string>
     <string name="remote">(отдалечен)</string>
@@ -617,10 +605,10 @@
     <string name="rename_local_fail_msg">Локалното копие не може да бъде преименувано; опитайте с друго име</string>
     <string name="rename_server_fail_msg">Сървърът не може да бъде преименуван</string>
     <string name="request_account_deletion">Заявка за изтриване на профил</string>
-    <string name="resized_image_not_possible_download">Няма налично оразмерено изображение. Да се свали ли изображението?</string>
     <string name="restore">Възстанови файл</string>
     <string name="restore_backup">Възстановяване на архив</string>
     <string name="restore_button_description">Възстанови изтрития файл</string>
+    <string name="restore_item">Възстановяне</string>
     <string name="restore_selected">Възстановяване на избраните</string>
     <string name="retrieving_file">Извличане на файл...</string>
     <string name="retry">Опитай отново</string>
@@ -636,23 +624,21 @@
     <string name="screenshot_04_accounts_heading">Всичките ви профили</string>
     <string name="screenshot_04_accounts_subline">на едно място</string>
     <string name="screenshot_05_autoUpload_heading">Автоматично качване</string>
-    <string name="screenshot_06_davdroid_subline">Синхронизиране с DAVx5</string>
     <string name="search_error">Грешка при получаване на резултатите от търсенето</string>
     <string name="select_all">Избери всички</string>
     <string name="select_media_folder">Задаване на медийна папка</string>
     <string name="select_one_template">Моля, изберете един шаблон </string>
     <string name="select_template">Изберете шаблон</string>
     <string name="send">Изпрати</string>
-    <string name="send_share">Изпращане на Споделяне</string>
     <string name="sendbutton_description">Икона на бутон за изпращане</string>
     <string name="set_as">Задай като</string>
-    <string name="set_note">Задаване на Бележка</string>
     <string name="set_picture_as">Задай като</string>
     <string name="set_status">Задайте състояние</string>
     <string name="set_status_message">Задайте съобщение за състояние</string>
     <string name="setup_e2e">По време на настройката на цялостното криптиране ще получите мнемоника от 12 произволни думи , която ще ви е необходима, за да отваряте файловете си на други устройства. Тя ще бъде съхранена само на това устройство и може да бъде показана отново на този екран. Моля, запишете я на сигурно място!</string>
     <string name="share">Сподели</string>
     <string name="share_dialog_title">Споделяне</string>
+    <string name="share_download_limit">Задаване на ограничение за изтегляне</string>
     <string name="share_expiration_date_format">%1$s</string>
     <string name="share_expiration_date_label">Изтича %1$s</string>
     <string name="share_file">Споделяне на %1$s</string>
@@ -676,7 +662,6 @@
     <string name="share_permission_file_drop">Пускане/Преместване/ на файл</string>
     <string name="share_permission_secure_file_drop">Защитено пускане на файлове</string>
     <string name="share_permission_view_only">Само изглед</string>
-    <string name="share_permissions">Права за споделяне</string>
     <string name="share_remote_clarification">%1$s (отдалечен)</string>
     <string name="share_room_clarification">%1$s (разговор)</string>
     <string name="share_send_new_email">Изпращане на нов имейл</string>
@@ -693,7 +678,9 @@
     <string name="shared_icon_shared_via_link">споделено с връзка</string>
     <string name="shared_with_you_by">Споделено с Вас от %1$s</string>
     <string name="sharee_add_failed">Неуспешно добавяне на споделянето</string>
+    <string name="show_all">Показване на всички</string>
     <string name="show_images">Показване на снимките</string>
+    <string name="show_less">Покажи по-малко</string>
     <string name="show_video">Показване на видеата</string>
     <string name="signup_with_provider">Абониране при доставчик</string>
     <string name="single_sign_on_request_token" formatted="true">Разрешавате ли на %1$s да достъпва вашия Nextcloud профил %2$s?</string>
@@ -742,7 +729,6 @@
     <string name="stream">Стрийм с...</string>
     <string name="stream_not_possible_headline">Вътрешен стрийм не невъзможен</string>
     <string name="stream_not_possible_message">Моля свалете медиа файла или използвайте външно приложение</string>
-    <string name="strict_mode">Строг режим: не е разрешена HTTP връзка!</string>
     <string name="sub_folder_rule_year">Година</string>
     <string name="subject_shared_with_you">\"%1$s\" бе споделено с вас</string>
     <string name="subject_user_shared_with_you">%1$s сподели с вас \"%2$s\"</string>
@@ -776,6 +762,7 @@
     <string name="synced_folders_type">Тип</string>
     <string name="synced_icon">Синхронизиран</string>
     <string name="tags">Етикети</string>
+    <string name="terms_of_service_title">Условия за ползване</string>
     <string name="test_server_button">Тестване на връзката със сървъра</string>
     <string name="thirtyMinutes">30 минути</string>
     <string name="thisWeek">Тази седмица</string>
@@ -897,7 +884,6 @@
     <string name="wait_a_moment">Моля изчакайте…</string>
     <string name="wait_checking_credentials">Проверка на съхранените пълномощия</string>
     <string name="wait_for_tmp_copy_from_private_storage">Копиране на файла от личното хранилище</string>
-    <string name="webview_version_check_alert_dialog_positive_button_title">Обновяване</string>
     <string name="what_s_new_image">Какво ново</string>
     <string name="whats_new_skip">Пропусни</string>
     <string name="whats_new_title">Ново в %1$s</string>
@@ -963,4 +949,4 @@
         <item quantity="one">%d избран</item>
         <item quantity="other">%d избрани</item>
     </plurals>
-</resources>
+    </resources>

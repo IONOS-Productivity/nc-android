@@ -14,6 +14,7 @@ import androidx.core.view.updatePadding
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.materialswitch.MaterialSwitch
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
@@ -128,5 +129,9 @@ class IonosMaterialViewThemeUtils(
 
     fun themeTabLayout(tabLayout: TabLayout) {
         delegate.themeTabLayout(tabLayout)
+    }
+
+    fun colorMaterialSwitch(materialSwitch: MaterialSwitch) {
+        delegate.colorMaterialSwitch(materialSwitch)
     }
 }

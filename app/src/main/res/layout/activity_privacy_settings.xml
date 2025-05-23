@@ -25,12 +25,18 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:padding="@dimen/ionos_data_protection_screen_padding">
+        android:fillViewport="true">
 
-        <include
-            android:id="@+id/switchers"
-            layout="@layout/settings_privacy_switchers" />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/ionos_data_protection_screen_padding">
+
+            <include
+                android:id="@+id/switchers"
+                layout="@layout/settings_privacy_switchers" />
+
+        </FrameLayout>
 
     </ScrollView>
 

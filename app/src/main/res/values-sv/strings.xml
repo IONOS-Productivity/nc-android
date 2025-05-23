@@ -10,7 +10,7 @@
     <string name="action_edit">Redigera</string>
     <string name="action_empty_notifications">Rensa alla aviseringar</string>
     <string name="action_empty_trashbin">Töm papperskorgen</string>
-    <string name="action_send_share">Skicka/Dela</string>
+    <string name="action_send_share">Skicka/dela</string>
     <string name="action_switch_grid_view">Rutnätsvy</string>
     <string name="action_switch_list_view">Listvy</string>
     <string name="actionbar_calendar_contacts_restore">Återställ kontakter och kalender</string>
@@ -28,9 +28,8 @@
     <string name="activity_chooser_send_file_title">Skicka</string>
     <string name="activity_chooser_title">Skicka länk till…</string>
     <string name="activity_icon">Aktivitet</string>
-    <string name="add_another_public_share_link">Lägg till en annan länk</string>
     <string name="add_new_public_share">Lägg till en ny publik delad länk</string>
-    <string name="add_new_secure_file_drop">Lägg till ny säker gömd fillista</string>
+    <string name="add_new_secure_file_drop">Lägg till ett nytt säkert filinkast</string>
     <string name="add_to_cloud">Lägg till %1$s</string>
     <string name="advanced_settings">Avancerade inställningar</string>
     <string name="allow_resharing">Tillåt dela vidare</string>
@@ -46,27 +45,23 @@
     <string name="app_config_proxy_port_title">Proxyport</string>
     <string name="app_widget_description">Visa en widget från dashboard</string>
     <string name="appbar_search_in">Sök i %s</string>
-    <string name="assistant_screen_all_task_type">Alla</string>
+    <string name="assistant_screen_add_task_alert_dialog_title">Lägg till ny uppgift</string>
+    <string name="assistant_screen_create_a_new_task_from_bottom_right_text">Skapa en ny uppgift från nedre högra hörnet</string>
     <string name="assistant_screen_create_task_alert_dialog_input_field_placeholder">Skriv någon text</string>
     <string name="assistant_screen_delete_task_alert_dialog_description">Är du säker på att du vill ta bort den här uppgiften?</string>
     <string name="assistant_screen_delete_task_alert_dialog_title">Ta bort uppgift</string>
-    <string name="assistant_screen_failed_task_text">Misslyckades</string>
-    <string name="assistant_screen_loading">Uppgiftslistan laddas, vänta</string>
-    <string name="assistant_screen_no_task_available_for_all_task_filter_text">Ingen uppgift tillgänglig. Välj en uppgiftstyp för att skapa en ny uppgift.</string>
+    <string name="assistant_screen_loading">Laddar uppgiftslista…</string>
     <string name="assistant_screen_no_task_available_text">Ingen uppgift tillgänglig för uppgiftstyp %s, du kan skapa en ny uppgift längst ner till höger.</string>
-    <string name="assistant_screen_running_task_text">Pågående</string>
-    <string name="assistant_screen_scheduled_task_status_text">Schemalagd</string>
-    <string name="assistant_screen_successful_task_text">Slutförd</string>
     <string name="assistant_screen_task_create_fail_message">Ett fel uppstod när uppgiften skapades</string>
     <string name="assistant_screen_task_create_success_message">Uppgiften har skapats</string>
     <string name="assistant_screen_task_delete_fail_message">Ett fel uppstod när uppgiften skulle tas bort</string>
     <string name="assistant_screen_task_delete_success_message">Uppgiften har raderats</string>
+    <string name="assistant_screen_task_list_empty_message">Uppgiftslistan är tom.</string>
     <string name="assistant_screen_task_list_error_state_message">Det går inte att hämta uppgiftslistan, kontrollera din internetanslutning.</string>
     <string name="assistant_screen_task_more_actions_bottom_sheet_delete_action">Ta bort uppgift</string>
     <string name="assistant_screen_task_output_empty_text">Uppgiftens resultat är inte redo än.</string>
     <string name="assistant_screen_task_types_error_state_message">Det går inte att hämta uppgiftstyper, kontrollera din internetanslutning.</string>
     <string name="assistant_screen_top_bar_title">Assistent</string>
-    <string name="assistant_screen_unknown_task_status_text">Okänd</string>
     <string name="assistant_task_detail_screen_input_button_title">Inmatning</string>
     <string name="assistant_task_detail_screen_output_button_title">Utdata</string>
     <string name="associated_account_not_found">Associerat konto kunde inte hittas!</string>
@@ -105,8 +100,10 @@
     <string name="auto_upload_file_behaviour_kept_in_folder">behålls i originalmappen, eftersom den är skrivskyddad</string>
     <string name="auto_upload_gplay">Beteendet för automatisk uppladdning har ändrats</string>
     <string name="auto_upload_gplay_desc">På grund av nya begränsningar från Google kommer funktionen för automatisk uppladdning inte längre att kunna ta bort uppladdade filer automatiskt.</string>
+    <string name="auto_upload_gplay_desc2">På grund av nya begränsningar införda av Google har vi tvingats ta bort en viktig behörighet. Som en följd av detta kommer automatisk uppladdning endast att kunna ladda upp bild- och videofiler.\nDessutom krävs en ny behörighet för att få åtkomst till platsinformation för uppladdade bilder.\nSe till att medieåtkomst är inställd på “Tillåt alltid allt”.</string>
     <string name="auto_upload_on_wifi">Ladda bara upp via obelastad Wi-Fi</string>
     <string name="auto_upload_path">/AutomatiskUppladdning</string>
+    <string name="auto_upload_sub_folder_warning">Denna mapp ingår redan i synkroniseringen av den överordnade mappen, vilket kan orsaka dubbla uppladdningar</string>
     <string name="autoupload_configure">Konfigurera</string>
     <string name="autoupload_create_new_custom_folder">Skapa en ny anpassad mappkonfiguration </string>
     <string name="autoupload_custom_folder">Skapa en anpassad mapp</string>
@@ -120,7 +117,10 @@
     <string name="battery_optimization_disable">Inaktivera</string>
     <string name="battery_optimization_message">Din enhet kan ha batterioptimering aktiverad. För att auto-uppladdning ska fungera måste du utesluta denna app från batterioptimering.</string>
     <string name="battery_optimization_title">Batterioptimering</string>
-    <string name="brute_force_delay">Fördröjd på grund av för många misslyckade försök</string>
+    <string name="bottom_navigation_menu_assistant_label">Assistent</string>
+    <string name="bottom_navigation_menu_favorites_label">Favoriter</string>
+    <string name="bottom_navigation_menu_files_label">Alla filer</string>
+    <string name="bottom_navigation_menu_media_label">Media</string>
     <string name="calendar">Kalender</string>
     <string name="calendars">Kalendrar</string>
     <string name="certificate_load_problem">Det uppstod ett problem med att läsa in certifikatet.</string>
@@ -135,6 +135,7 @@
     <string name="clear_notifications_failed">Kunde inte rensa aviseringar.</string>
     <string name="clear_status_message">Rensa statusmeddelande</string>
     <string name="clear_status_message_after">Rensa statusmeddelande efter</string>
+    <string name="click_to_learn_how_to_re_enable_auto_uploads">Manuell åtgärd krävs för att återaktivera automatisk uppladdning</string>
     <string name="clipboard_label">Text kopierad från %1$s</string>
     <string name="clipboard_no_text_to_copy">Mottog ingen text att kopiera</string>
     <string name="clipboard_text_copied">Länk kopierad</string>
@@ -152,6 +153,7 @@
     <string name="common_loading">Läser in…</string>
     <string name="common_next">Nästa</string>
     <string name="common_no">Nej</string>
+    <string name="common_now">Nu</string>
     <string name="common_ok">OK</string>
     <string name="common_pending">Väntar</string>
     <string name="common_remove">Ta bort</string>
@@ -188,7 +190,6 @@
     <string name="confirmation_remove_folders_alert">Vill du verkligen radera de valda objekten och dess innehåll?</string>
     <string name="confirmation_remove_local">Endast lokalt</string>
     <string name="conflict_dialog_error">Dialogrutan för konfliktlösning kan inte skapas</string>
-    <string name="conflict_file_headline">Konfliktande fil %1$s</string>
     <string name="conflict_folder_headline">Mappkonflikt</string>
     <string name="conflict_local_file">Lokal fil</string>
     <string name="conflict_message_description">Om du väljer båda versionerna kommer den lokala filen få ett nummer tillagt i filnamnet.</string>
@@ -202,6 +203,7 @@
     <string name="contacts_backup_button">Gör backup nu</string>
     <string name="contacts_preferences_backup_scheduled">Backup schemalagt och kommer starta inom kort</string>
     <string name="contacts_preferences_import_scheduled">Importering schemalagt och kommer starta inom kort</string>
+    <string name="contacts_preferences_import_scheduled_fail">Importen kunde inte startas. Försök igen</string>
     <string name="contacts_preferences_no_file_found">Ingen fil funnen</string>
     <string name="contacts_preferences_something_strange_happened">Vi kunde inte hitta din senaste backup!</string>
     <string name="copied_to_clipboard">Kopierat till urklipp</string>
@@ -216,6 +218,7 @@
     <string name="could_not_retrieve_url">Kunde inte hämta URL</string>
     <string name="create">Skapa</string>
     <string name="create_dir_fail_msg">Kunde inte skapa mapp</string>
+    <string name="create_link">Skapa länk</string>
     <string name="create_new">Ny</string>
     <string name="create_new_document">Nytt dokument</string>
     <string name="create_new_folder">Ny mapp</string>
@@ -255,6 +258,7 @@
     <string name="download_cannot_create_file">Kan inte skapa lokal fil</string>
     <string name="download_download_invalid_local_file_name">Ogiltigt filnamn för lokal fil</string>
     <string name="download_latest_dev_version">Hämta senaste utvecklingsversionen</string>
+    <string name="download_limit">Hämtningsbegränsning</string>
     <string name="downloader_download_failed_content">Kunde inte hämta %1$s</string>
     <string name="downloader_download_failed_credentials_error">Hämtningen misslyckades, logga in igen</string>
     <string name="downloader_download_failed_ticker">Hämtning misslyckades</string>
@@ -289,6 +293,7 @@
     <string name="drawer_quota">%1$s av %2$s använt</string>
     <string name="drawer_quota_unlimited">%1$s använt</string>
     <string name="drawer_synced_folders">Automatisk uppladdning</string>
+    <string name="due_to_too_many_wrong_attempts">%s på grund av för många felaktiga försök</string>
     <string name="e2e_counter_too_old">Räknaren är för gammal</string>
     <string name="e2e_hash_not_found">Hash kunde inte hittas</string>
     <string name="e2e_not_yet_setup">E2E ej inställt än</string>
@@ -296,17 +301,15 @@
     <string name="e2e_signature_does_not_match">Signaturen matchar inte</string>
     <string name="ecosystem_apps_display_assistant">Assistent</string>
     <string name="ecosystem_apps_display_more">Mer</string>
-    <string name="ecosystem_apps_display_notes">Anteckning</string>
-    <string name="ecosystem_apps_display_talk">Talk</string>
     <string name="ecosystem_apps_more">Fler Nextcloud-appar</string>
-    <string name="ecosystem_apps_notes">Nextcloud anteckningar</string>
-    <string name="ecosystem_apps_talk">Nextcloud Talk</string>
     <string name="email_pick_failed">Det gick inte att välja e-postadress.</string>
     <string name="encrypted">Sätt som krypterad</string>
+    <string name="end_to_end_encryption_certificate_unavailable">Kunde inte hämta servercertifikatet</string>
+    <string name="end_to_end_encryption_certificate_verification_failed">Kunde inte verifiera den publika nyckeln</string>
     <string name="end_to_end_encryption_confirm_button">Aktivera kryptering</string>
     <string name="end_to_end_encryption_decrypting">Dekrypterar…</string>
     <string name="end_to_end_encryption_dialog_close">Stäng</string>
-    <string name="end_to_end_encryption_enter_password">Ange lösenord för att dekryptera privat nyckel.</string>
+    <string name="end_to_end_encryption_enter_passphrase_to_access_files">Ange din lösenfras för att komma åt dina filer</string>
     <string name="end_to_end_encryption_folder_not_empty">Den här mappen är inte tom.</string>
     <string name="end_to_end_encryption_generating_keys">Generera nya nycklar…</string>
     <string name="end_to_end_encryption_keywords_description">Alla 12 ord tillsammans utgör ett mycket starkt lösenord, så att bara du kan visa och använda dina krypterade filer. Vänligen spara det och förvara det på ett säkert sätt. </string>
@@ -314,8 +317,11 @@
     <string name="end_to_end_encryption_passphrase_title">Notera ditt 12 ord långa krypteringslösenord</string>
     <string name="end_to_end_encryption_password">Lösenord…</string>
     <string name="end_to_end_encryption_retrieving_keys">Hämta nycklar…</string>
+    <string name="end_to_end_encryption_server_private_key_unavailable">Kunde inte hämta den privata nyckeln</string>
+    <string name="end_to_end_encryption_server_public_key_unavailable">Kunde inte hämta den publika nyckeln</string>
     <string name="end_to_end_encryption_storing_keys">Lagrar nycklar</string>
     <string name="end_to_end_encryption_title">Aktivera kryptering</string>
+    <string name="end_to_end_encryption_unexpected_error_occurred">Ett oväntat fel inträffade vid nedladdning av nycklarna</string>
     <string name="end_to_end_encryption_unsuccessful">Kunde inte spara nycklar, försök igen.</string>
     <string name="end_to_end_encryption_wrong_password">Fel vid dekryptering. Fel lösenord?</string>
     <string name="enter_destination_filename">Välj fjärrfilnamn</string>
@@ -360,6 +366,7 @@
     <string name="etm_transfer_type">Överför</string>
     <string name="etm_transfer_type_download">Ladda ner</string>
     <string name="etm_transfer_type_upload">Ladda upp</string>
+    <string name="external_shares">Externa delningar</string>
     <string name="fab_label">Lägg till eller ladda upp</string>
     <string name="failed_to_download">Misslyckades skicka filen till hämtningshanteraren</string>
     <string name="failed_to_print">Kunde inte skriva ut filen</string>
@@ -410,6 +417,7 @@
     <string name="file_migration_failed_not_writable">Kunde inte skriva till destinationsfilen</string>
     <string name="file_migration_failed_while_coping">Misslyckades under migrationen</string>
     <string name="file_migration_failed_while_updating_index">Misslyckades med indexuppdatering</string>
+    <string name="file_migration_free_space">%1$s\n(%2$s / %3$s)</string>
     <string name="file_migration_migrating">Flyttar data…</string>
     <string name="file_migration_ok_finished">Slutförd</string>
     <string name="file_migration_override_data_folder">Ersätt</string>
@@ -428,10 +436,10 @@
     <string name="file_name_validator_error_invalid_character">Namnet innehåller ogiltiga tecken: %s</string>
     <string name="file_name_validator_error_reserved_names">%s är ett förbjudet namn</string>
     <string name="file_name_validator_rename_before_move_or_copy">%s. Byt namn på filen innan du flyttar eller kopierar</string>
-    <string name="file_name_validator_upload_content_error">En del innehåll kan inte laddas upp eftersom det innehåller reserverade namn eller ogiltiga tecken</string>
     <string name="file_not_found">Filen hittades inte</string>
     <string name="file_not_synced">Filen kunde inte synkroniseras. Visar senaste tillgängliga versionen.</string>
     <string name="file_rename">Byt namn</string>
+    <string name="file_upload_worker_error_notification_title">Uppladdning misslyckades. Ingen internetanslutning</string>
     <string name="file_upload_worker_same_file_already_exists">Samma fil finns redan, ingen konflikt upptäckt</string>
     <string name="file_version_restored_error">Fel vid återställning av filversion!</string>
     <string name="file_version_restored_successfully">Lyckades återställa filversion.</string>
@@ -450,6 +458,7 @@
     <string name="first_run_3_text">Lättanvänd webmail, kalender och kontakter</string>
     <string name="first_run_4_text">Skärmdelning, onlinemöten och webbkonferenser</string>
     <string name="folder_already_exists">Mapp finns redan</string>
+    <string name="folder_best_viewed_in">Denna mapp visas bäst i %1$s.</string>
     <string name="folder_confirm_create">Skapa</string>
     <string name="folder_list_empty_headline">Inga mappar här</string>
     <string name="folder_name_empty">Mappnamnet får inte vara tomt</string>
@@ -495,10 +504,10 @@
     <string name="image_preview_unit_megapixel">%s MP</string>
     <string name="image_preview_unit_millimetres">%s mm</string>
     <string name="image_preview_unit_seconds">%s s</string>
-    <string name="in_folder">i mapp %1$s</string>
     <string name="instant_upload_existing">Ladda även upp befintliga filer</string>
     <string name="instant_upload_on_charging">Ladda enbart upp när enheten laddas</string>
     <string name="instant_upload_path">/AutomatiskUppladdning</string>
+    <string name="internal_shares">Interna delningar</string>
     <string name="internal_two_way_sync">Intern tvåvägssynk</string>
     <string name="internal_two_way_sync_not_yet">Inte än, synkroniseras snart</string>
     <string name="internet_connection_required_for_encrypted_folder_setup">En internetanslutning krävs för att konfigurera den krypterade mappen</string>
@@ -510,7 +519,7 @@
     <string name="link_name">Länknamn</string>
     <string name="link_share_allow_upload_and_editing">Tillåt uppladdning och redigering</string>
     <string name="link_share_editing">Ändrar</string>
-    <string name="link_share_file_drop">Göm fillista (endast uppladdning)</string>
+    <string name="link_share_file_drop">Filinkast (endast uppladdning)</string>
     <string name="link_share_view_only">Skrivskyddad</string>
     <string name="list_layout">Listad layout</string>
     <string name="load_more_results">Visa fler resultat</string>
@@ -571,7 +580,7 @@
     <string name="new_media_folder_detected">Ny %1$s media-mapp upptäckt.</string>
     <string name="new_media_folder_photos">bild</string>
     <string name="new_media_folder_videos">video</string>
-    <string name="new_notification">Nytt meddelande</string>
+    <string name="new_notification">Ny avisering</string>
     <string name="new_version_was_created">Ny version skapades</string>
     <string name="no_actions">Inga tillgängliga åtgärder för användaren</string>
     <string name="no_browser_available">Ingen app tillgänglig för att hantera länkar</string>
@@ -618,6 +627,7 @@
     <string name="oneHour">1 timme</string>
     <string name="online">Online</string>
     <string name="online_status">Online-status</string>
+    <string name="open_in_app">Öpnns i %1$s</string>
     <string name="outdated_server">Servern har nått slutet av livet, vänligen uppgradera!</string>
     <string name="overflow_menu">Mer Meny</string>
     <string name="pass_code_configure_your_pass_code">Skriv in ditt lösenord</string>
@@ -634,8 +644,9 @@
     <string name="permission_allow">Tillåt</string>
     <string name="permission_deny">Neka</string>
     <string name="permission_storage_access">Ytterligare rättigheter krävs för att ladda upp eller hämta filer</string>
+    <string name="pick_contact_to_share_with">Välj kontakt att dela med</string>
     <string name="picture_set_as_no_app">Ingen app hittades för att ställa in en bild med</string>
-    <string name="pin_home">Fäst upp på hemskärmen</string>
+    <string name="pin_home">Fäst på hemskärmen</string>
     <string name="pin_shortcut_label">Öppna %1$s</string>
     <string name="placeholder_fileSize">389 KB</string>
     <string name="placeholder_filename">placeholder.txt</string>
@@ -658,7 +669,7 @@
     <string name="prefs_add_account">Lägg till konto</string>
     <string name="prefs_calendar_contacts">Synkronisera kalender och kontakter</string>
     <string name="prefs_calendar_contacts_no_store_error">Varken F-Droid eller Google Play är installerad</string>
-    <string name="prefs_calendar_contacts_summary">Sätt upp DAVx5 (tidigare DAVdroid) (v1.3.0 +) för nuvarande konto</string>
+    <string name="prefs_calendar_contacts_summary">Sätt upp DAVx⁵ (tidigare DAVdroid) (v1.3.0 +) för nuvarande konto</string>
     <string name="prefs_calendar_contacts_sync_setup_successful">Synkronisera kalender och kontakter</string>
     <string name="prefs_category_about">Om</string>
     <string name="prefs_category_details">Detaljer</string>
@@ -670,7 +681,7 @@
     <string name="prefs_daily_contact_backup_summary">Daglig backup av dina kontakter</string>
     <string name="prefs_data_storage_location">Datalagringsplats</string>
     <string name="prefs_data_storage_location_summary">Hantera plats för datalagring</string>
-    <string name="prefs_davx5_setup_error">Oväntat fel vid installation av DAVx5 (tidigare känd som DAVdroid)</string>
+    <string name="prefs_davx5_setup_error">Oväntat fel vid installation av DAVx⁵ (tidigare känd som DAVdroid)</string>
     <string name="prefs_e2e_active">End-to-end-kryptering är inställd!</string>
     <string name="prefs_e2e_mnemonic">E2E krypteringsord</string>
     <string name="prefs_e2e_no_device_credentials">För att visa krypteringsord vänligen aktivera enhetsuppgifter.</string>
@@ -704,7 +715,6 @@
     <string name="prefs_show_ecosystem_apps_summary">Nextcloud-appförslag i navigeringsrubriken</string>
     <string name="prefs_show_hidden_files">Visa dolda filer</string>
     <string name="prefs_sourcecode">Hämta källkod</string>
-    <string name="prefs_storage_path">Datalagringsmapp</string>
     <string name="prefs_sycned_folders_summary">Hantera mappar för automatiskt uppladdning</string>
     <string name="prefs_synced_folders_local_path_title">Lokal mapp</string>
     <string name="prefs_synced_folders_remote_path_title">Extern mapp</string>
@@ -729,11 +739,14 @@
     <string name="push_notifications_old_login">Inga push-aviseringar på grund av utgången inloggningssession. Överväg att lägga till ditt konto på nytt.</string>
     <string name="push_notifications_temp_error">Push-aviseringar är inte tillgängligt för tillfället.</string>
     <string name="qr_could_not_be_read">QR-koden kunde inte läsas!</string>
+    <string name="re_enable_auto_upload">Ändringar för automatisk uppladdning</string>
+    <string name="re_enable_auto_upload_desc">På grund av nya begränsningar införda av Google har vi tvingats ta bort en viktig behörighet. Vi arbetar för närvarande med Google för att lösa detta problem och återställa full funktionalitet.\n\nFör att återaktivera automatisk uppladdning för nya bilder och videor:\n:Välj “Tillåt alltid” i den följande dialogrutan eller i systeminställningarna.\nTillåt åtkomst till medieplats när du blir ombedd, eftersom detta gör att Nextcloud kan lagra platsdata vid uppladdning av bilder.\n\nBehörighetsdialogen visas endast vid behov. Om du är osäker, kontrollera gärna en extra gång i systeminställningarna.\n\nAutomatisk uppladdning kommer endast att kunna ladda upp bild- och videofiler när du använder Google Play-versionen av Nextcloud-appen.\n\nVänligen kontrollera om det finns några filer som inte har laddats upp sedan december 2024.</string>
     <string name="receive_external_files_activity_start_sync_folder_is_not_exists_message">Mappen kan inte hittas, synkroniseringen avbryts</string>
     <string name="receive_external_files_activity_unable_to_find_file_to_upload">Kan inte hitta filen att ladda upp</string>
     <string name="recommend_subject">Försök%1$s på din enhet!</string>
     <string name="recommend_text">Jag vill bjuda in dig att använda %1$s på din enhet.\nHämta här: %2$s</string>
     <string name="recommend_urls">%1$s eller %2$s</string>
+    <string name="recommended_files_title">Rekommenderade filer</string>
     <string name="refresh_content">Återinläs innhåll</string>
     <string name="reload">Uppdatera</string>
     <string name="remote">(avlägsen)</string>
@@ -753,10 +766,10 @@
     <string name="request_account_deletion_button">Begäran om radering</string>
     <string name="request_account_deletion_details">Begär permanent borttagning av konto av tjänsteleverantör</string>
     <string name="resharing_is_not_allowed">Policy eller behörigheter förhindrar vidaredelning</string>
-    <string name="resized_image_not_possible_download">Ingen storleksändrad bild tillgänglig. Hämta hela bilden?</string>
     <string name="restore">Återställ fil</string>
     <string name="restore_backup">Återställ säkerhetskopiering</string>
     <string name="restore_button_description">Återställ raderad fil</string>
+    <string name="restore_item">Återställ</string>
     <string name="restore_selected">Återställ vald</string>
     <string name="retrieving_file">Tar emot fil…</string>
     <string name="retry">Försök igen</string>
@@ -774,7 +787,7 @@
     <string name="screenshot_05_autoUpload_heading">Automatisk uppladdning</string>
     <string name="screenshot_05_autoUpload_subline">för dina bilder och videor</string>
     <string name="screenshot_06_davdroid_heading">Kalender och kontakter</string>
-    <string name="screenshot_06_davdroid_subline">Synka med DAVx5</string>
+    <string name="screenshot_06_davdroid_subline">Synka med DAVx⁵</string>
     <string name="search_error">Ett fel uppstod vid sökning</string>
     <string name="secure_share_not_set_up">Säker delning är inte konfigurerad för denna användare</string>
     <string name="secure_share_search">Säker delning...</string>
@@ -794,6 +807,7 @@
     <string name="share">Dela</string>
     <string name="share_copy_link">Dela och kopiera länk</string>
     <string name="share_dialog_title">Dela</string>
+    <string name="share_download_limit">Ställ in nedladdningsgräns</string>
     <string name="share_expiration_date_format">%1$s</string>
     <string name="share_expiration_date_label">Gick ut %1$s</string>
     <string name="share_file">Dela %1$s</string>
@@ -812,16 +826,17 @@
     <string name="share_link_with_label">Dela länk (%1$s)</string>
     <string name="share_no_expiration_date_label">Välj utgångsdatum</string>
     <string name="share_no_password_title">Sätt lösenord</string>
-    <string name="share_not_allowed_when_file_drop">Återdelning är inte tillåtet under säker gömd fillista</string>
+    <string name="share_not_allowed_when_file_drop">Återdelning är inte tillåtet inuti ett säkert filinkast</string>
     <string name="share_password_title">Lösenordsskyddad</string>
     <string name="share_permission_can_edit">Kan ändra</string>
-    <string name="share_permission_file_drop">Göm fillista</string>
-    <string name="share_permission_secure_file_drop">Säker gömd fillista</string>
+    <string name="share_permission_file_drop">Filinkast</string>
+    <string name="share_permission_secure_file_drop">Säkert filinkast</string>
     <string name="share_permission_view_only">Skrivskyddat läge</string>
-    <string name="share_permissions">Dela behörigheter</string>
+    <string name="share_permissions">Delningsbehörigheter</string>
     <string name="share_remote_clarification">%1$s (extern)</string>
     <string name="share_room_clarification">%1$s (konversation)</string>
     <string name="share_search">Namn, federerat moln-ID eller e-postadress...</string>
+    <string name="share_search_internal">Lägg till användare och team</string>
     <string name="share_send_new_email">Skicka nytt mail</string>
     <string name="share_send_note">Notering till mottagare</string>
     <string name="share_settings">Inställningar</string>
@@ -837,8 +852,11 @@
     <string name="shared_with_you_by">Delad med dig av %1$s</string>
     <string name="sharee_add_failed">Misslyckades lägga till delning</string>
     <string name="sharee_already_added_to_file">Det gick inte att lägga till delning. Den här filen eller mappen har redan delats med den här personen eller gruppen.</string>
+    <string name="show_all">Visa alla</string>
     <string name="show_images">Visa bilder</string>
+    <string name="show_less">Visa mindre</string>
     <string name="show_video">Visa video</string>
+    <string name="sign_tos_failed">Vänligen kontrollera användarvillkoren manuellt!</string>
     <string name="signup_with_provider">Registrera hos en leverantör</string>
     <string name="single_sign_on_request_token" formatted="true">Tillåt %1$s att komma åt ditt Nextcloud-konto %2$s?</string>
     <string name="sort_by">Sortera efter</string>
@@ -880,14 +898,12 @@
     <string name="storage_permission_full_access">Fullständig åtkomst</string>
     <string name="storage_permission_media_read_only">En läsåtkomst till media</string>
     <string name="storage_pictures">Bilder</string>
-    <string name="store_full_desc">En produktivitetsplattform du kan driva själv och som ger dig kontroll.\n\nFunktioner:\n* Enkelt, modernt gränssnitt, anpassat till temat på din server\n* Ladda upp filer till din Nextcloud-server\n* Dela dem med andra\n* Håll dina favoritfiler och mappar synkade\n* Sök i alla mappar på din server\n* Automatisk uppladdning av foton och videor från enheten\n* Håll dig uppdaterad med aviseringar\n* Stöd för flera konton\n* Säker åtkomst till ditt data med fingeravtryck eller PIN-kod\n* Integration med DAVx5 (tidigare känd som DAVdroid) för att enkelt synkronisering av kalender och kontakter\n\nRapportera gärna de problem du upplever på https://github.com/nextcloud/android/issues och diskutera den här appen på https://help.nextcloud.com/c/clients/android\n\nNy på Nextcloud? Nextcloud ger integritet på egen server för synkronisering och delning av filer samt kommunikation. Den är fri programvara och du kan driva den själv eller betala ett företag för att göra det åt dig. På så sätt har du kontroll över dina foton, din kalender och dina kontaktuppgifter, dina dokument och allt annat.\n\nKolla in Nextcloud på https://nextcloud.com</string>
     <string name="store_full_dev_desc">Produktivitetsplattformen där du är din egen värd och håller dig i kontroll.\nDetta är den officiella utvecklingsversionen, med ett dagligt urval av någon ny otestad funktionalitet, vilket kan orsaka instabilitet och dataförlust. Appen är för användare som är villiga att testa, och rapportera fel om de inträffar. Använd inte det för ditt produktiva arbete!\n\nBåde den officiella dev och regelbunden versionen finns på F-droid, och kan installeras samtidigt.</string>
     <string name="store_short_desc">Produktivitetsplattformen där du är din egen värd och håller dig i kontroll</string>
     <string name="store_short_dev_desc">Produktivitetsplattformen där du är din egen värd och håller dig i kontroll (dev förhandsversion)</string>
     <string name="stream">Streama med…</string>
     <string name="stream_not_possible_headline">Intern streaming är inte möjlig</string>
     <string name="stream_not_possible_message">Vänligen hämta media istället eller använd en extern app.</string>
-    <string name="strict_mode">Strikt läge: inga HTTP-anslutningar tillåtna!</string>
     <string name="sub_folder_rule_day">År/Månad/Dag</string>
     <string name="sub_folder_rule_month">År/Månad</string>
     <string name="sub_folder_rule_year">År</string>
@@ -898,8 +914,10 @@
     <string name="subtitle_videos_only">Endast videos</string>
     <string name="suggest">Föreslå</string>
     <string name="sync">Synkronisera</string>
+    <string name="sync_anyway">Synkronisera ändå</string>
     <string name="sync_conflicts_in_favourites_ticker">Konflikter uppstod</string>
     <string name="sync_current_folder_was_removed">Mappen %1$s finns inte längre</string>
+    <string name="sync_duplication">Synkroniseringsduplicering</string>
     <string name="sync_fail_content">Kunde inte synkronisera %1$s</string>
     <string name="sync_fail_content_unauthorized">Fel lösenord för %1$s</string>
     <string name="sync_fail_in_favourites_ticker">Filer flaggade som Håll-filen-uppdaterad misslyckades</string>
@@ -916,6 +934,7 @@
     <string name="sync_not_enough_space_dialog_title">Inte tillräckligt med utrymme</string>
     <string name="sync_status_button">Knappen Synkroniseringsstatus</string>
     <string name="sync_string_files">Filer</string>
+    <string name="sync_warning_button">Synkvarningsknapp</string>
     <string name="synced_folder_settings_button">Inställningar-knapp</string>
     <string name="synced_folders_configure_folders">Konfigurera mappar</string>
     <string name="synced_folders_new_info">Direktuppladdning heter numera Automatisk uppladdning och har blivit totalt omgjort. Vänligen se huvudmenyn för att konfigurera Automatisk uppladdning igen. Ledsen för besväret.\n\nNjut av de nya och förbättrade uppladdningsmöjligheterna!</string>
@@ -924,6 +943,8 @@
     <string name="synced_folders_type">Typ</string>
     <string name="synced_icon">Synkroniserad</string>
     <string name="tags">Taggar</string>
+    <string name="terms_of_service_title">Användarvillkor</string>
+    <string name="terms_of_services_agree">Jag godkänner ovanstående användarvillkor</string>
     <string name="test_server_button">Testa serveranslutning</string>
     <string name="thirtyMinutes">30 minuter</string>
     <string name="thisWeek">Denna vecka</string>
@@ -984,6 +1005,8 @@
     <string name="upload_file_dialog_title">Mata in filnamn och filtyp att ladda upp</string>
     <string name="upload_files">Ladda upp filer</string>
     <string name="upload_global_pause_title">Alla uppladdningar är pausade</string>
+    <string name="upload_gplay">Ändringar av behörighet</string>
+    <string name="upload_gplay_desc">En ny behörighet krävs för att få åtkomst till platsinformation för uppladdade bilder.\nSe till att medieåtkomst är inställd på “Tillåt alltid allt”.</string>
     <string name="upload_item_action_button">Ladda upp objekthändelse-knapp</string>
     <string name="upload_list_delete">Ta bort</string>
     <string name="upload_list_empty_headline">Inga uppladdningar tillgängliga</string>
@@ -1072,9 +1095,6 @@
     <string name="wait_checking_credentials">Kontrollerar lagrade inloggningsuppgifter</string>
     <string name="wait_for_tmp_copy_from_private_storage">Kopierar fil från privat lagring</string>
     <string name="warn_rename_extension">Att ändra tillägg kan göra att filen öppnas i en annan app</string>
-    <string name="webview_version_check_alert_dialog_message">Uppdatera Android System WebView-appen för inloggning</string>
-    <string name="webview_version_check_alert_dialog_positive_button_title">Uppdatera</string>
-    <string name="webview_version_check_alert_dialog_title">Uppdatera Android System WebView</string>
     <string name="what_s_new_image">Vad är nytt-bild</string>
     <string name="whats_new_skip">Hoppa över</string>
     <string name="whats_new_title">Ny i %1$s</string>
@@ -1092,6 +1112,18 @@
     <plurals name="minutes">
         <item quantity="one">%d minut</item>
         <item quantity="other">%d minuter</item>
+    </plurals>
+    <plurals name="time_seconds_ago">
+        <item quantity="one">%d sekund sedan</item>
+        <item quantity="other">%d sekunder sedan</item>
+    </plurals>
+    <plurals name="time_minutes_ago">
+        <item quantity="one">%d minut sedan</item>
+        <item quantity="other">%d minuter sedan</item>
+    </plurals>
+    <plurals name="time_hours_ago">
+        <item quantity="one">%d timme sedan</item>
+        <item quantity="other">%d timmar sedan</item>
     </plurals>
     <plurals name="sync_fail_in_favourites_content">
         <item quantity="one">Kunde inte synkronisera %1$d fil (konflikter: %2$d)</item>
@@ -1141,6 +1173,10 @@
         <item quantity="one">%1$d fil</item>
         <item quantity="other">%1$d filer</item>
     </plurals>
+    <plurals name="trashbin_list__footer__file">
+        <item quantity="one">%1$d objekt</item>
+        <item quantity="other">%1$d objekt</item>
+    </plurals>
     <plurals name="synced_folders_show_hidden_folders">
         <item quantity="one">Visa %1$d dold mapp</item>
         <item quantity="other">Visa %1$d dolda mappar</item>
@@ -1148,5 +1184,25 @@
     <plurals name="items_selected_count">
         <item quantity="one">%d vald</item>
         <item quantity="other">%d vald</item>
+    </plurals>
+    <plurals name="delay_message">
+        <item quantity="one">Fördröjd %d sekund på grund av för många felaktiga försök</item>
+        <item quantity="other">Fördröjd %d sekunder på grund av för många felaktiga försök</item>
+    </plurals>
+    <plurals name="delay_message_minutes">
+        <item quantity="one">Fördröjd %d minut på grund av för många felaktiga försök</item>
+        <item quantity="other">Fördröjd %d minuter på grund av för många felaktiga försök</item>
+    </plurals>
+    <plurals name="delay_message_minutes_part">
+        <item quantity="one">Fördröjd %d minut</item>
+        <item quantity="other">Fördröjd %d minuter</item>
+    </plurals>
+    <plurals name="delay_message_seconds_part">
+        <item quantity="one">%d sekund</item>
+        <item quantity="other">%d sekunder</item>
+    </plurals>
+    <plurals name="share_download_limit_description">
+        <item quantity="one">%1$d återstående nedladdning</item>
+        <item quantity="other">%1$d återstående nedladdningar</item>
     </plurals>
 </resources>

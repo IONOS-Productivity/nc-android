@@ -132,8 +132,7 @@
             android:layout_height="@dimen/bottom_sheet_default_icon_height"
             android:layout_gravity="center_vertical"
             android:contentDescription="@null"
-            android:src="@drawable/ic_delete"
-            app:tint="@color/ionos_default_icon_color" />
+            android:src="@drawable/ic_unshare" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -141,39 +140,6 @@
             android:layout_gravity="center_vertical"
             android:layout_marginHorizontal="@dimen/bottom_sheet_default_text_horizontal_margin"
             android:text="@string/delete_link"
-            android:textColor="@color/ionos_default_text_color"
-            android:textSize="@dimen/dialog_default_text_size"
-            android:textStyle="bold" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/menu_share_add_another_link"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/bottom_sheet_default_item_height"
-        android:layout_marginHorizontal="@dimen/bottom_sheet_default_item_horizontal_margin"
-        android:paddingHorizontal="@dimen/bottom_sheet_default_item_horizontal_padding"
-        android:background="@drawable/dialog_item_background"
-        android:orientation="horizontal"
-        android:visibility="gone"
-        tools:ignore="UseCompoundDrawables"
-        tools:visibility="visible">
-
-        <ImageView
-            android:id="@+id/menu_icon_add_another_link"
-            android:layout_width="@dimen/bottom_sheet_default_icon_width"
-            android:layout_height="@dimen/bottom_sheet_default_icon_height"
-            android:layout_gravity="center_vertical"
-            android:contentDescription="@null"
-            android:src="@drawable/ic_plus"
-            app:tint="@color/ionos_default_icon_color" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginHorizontal="@dimen/bottom_sheet_default_text_horizontal_margin"
-            android:text="@string/add_another_public_share_link"
             android:textColor="@color/ionos_default_text_color"
             android:textSize="@dimen/dialog_default_text_size"
             android:textStyle="bold" />

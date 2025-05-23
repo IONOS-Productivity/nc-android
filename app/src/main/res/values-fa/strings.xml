@@ -10,7 +10,6 @@
     <string name="action_edit">ویرایش</string>
     <string name="action_empty_notifications">پاک کردن تمام اعلانها</string>
     <string name="action_empty_trashbin">خالی کردن سطل زباله</string>
-    <string name="action_send_share">ارسال/اشتراک گذاری</string>
     <string name="action_switch_grid_view">نمایش گرید</string>
     <string name="action_switch_list_view">نمایش لیست</string>
     <string name="actionbar_calendar_contacts_restore">بازیابی مخاطب‌ها و تقویم</string>
@@ -28,23 +27,18 @@
     <string name="activity_chooser_send_file_title">ارسال</string>
     <string name="activity_chooser_title">ارسال لینک به ....</string>
     <string name="activity_icon">فعّالیت</string>
-    <string name="add_another_public_share_link">افزودن پیوندی دیگر</string>
     <string name="add_new_public_share">افزودن پیوند هم‌رسانی عمومی جدید</string>
     <string name="add_new_secure_file_drop">دراپ فایل امن جدید اضافه کنید.</string>
     <string name="add_to_cloud">افزودن به %1$s</string>
-    <string name="advanced_settings">تنظمیات پیش‌رفته</string>
+    <string name="advanced_settings">تنظیمات پیشرفته</string>
     <string name="allow_resharing">مجاز به اشتراک گذاری مجدد</string>
     <string name="app_config_base_url_title">Base URL</string>
     <string name="app_config_proxy_port_title">پورت پروکسی</string>
     <string name="app_widget_description">نمایش یک ابزارک از پیشخوان</string>
     <string name="appbar_search_in">جستجو در %s</string>
-    <string name="assistant_screen_all_task_type">همه</string>
     <string name="assistant_screen_create_task_alert_dialog_input_field_placeholder">مقداری متن را تایپ کنید</string>
-    <string name="assistant_screen_failed_task_text">Failed</string>
-    <string name="assistant_screen_scheduled_task_status_text">Scheduled</string>
-    <string name="assistant_screen_successful_task_text">نکمیل شده</string>
+    <string name="assistant_screen_delete_task_alert_dialog_title">وظیفه را حذف کنید</string>
     <string name="assistant_screen_task_delete_success_message">Task successfully deleted</string>
-    <string name="assistant_screen_unknown_task_status_text">ناشناخته</string>
     <string name="associated_account_not_found">حساب مرتبط یافت نشد!</string>
     <string name="auth_access_failed">دسترسی خطای  %1$s</string>
     <string name="auth_account_does_not_exist">حساب به این وسیله اضافه نشده است</string>
@@ -91,7 +85,9 @@
     <string name="battery_optimization_disable">غیرفعال کردن</string>
     <string name="battery_optimization_message">ممکن است وسیله شما بهینه ساز باطری را فعال کرده باشد.  بارگذاری خودکار به درستی کار می کند اگر این برنامه را از آن حذف کنید.</string>
     <string name="battery_optimization_title">بهینه سازی باتری</string>
-    <string name="brute_force_delay">به دلیل تلاش‌های نادرست متعدد، به تاخیر افتاد</string>
+    <string name="bottom_navigation_menu_favorites_label">مورد علاقه‌ها</string>
+    <string name="bottom_navigation_menu_files_label">تمامی فایل‌ها</string>
+    <string name="bottom_navigation_menu_media_label">رسانه‌ها</string>
     <string name="calendar">تقویم</string>
     <string name="calendars">تقویم‌ها</string>
     <string name="certificate_load_problem">در حال بارگذاری گواهینامه، یک مشکل وجود دارد.</string>
@@ -123,6 +119,7 @@
     <string name="common_loading">بار کردن…</string>
     <string name="common_next">بعدی</string>
     <string name="common_no">نه</string>
+    <string name="common_now">Now</string>
     <string name="common_ok">تایید</string>
     <string name="common_pending">در انتظار</string>
     <string name="common_remove">حذف</string>
@@ -158,7 +155,6 @@
     <string name="confirmation_remove_folder_alert">آیا واقعا می خواهید %1$s و محتویات آن را حذف کنید؟</string>
     <string name="confirmation_remove_folders_alert">آیا واقعاً می‌خواهید موارد انتخاب شده و محتوای آنها حذف شود؟</string>
     <string name="confirmation_remove_local">فقط محلی</string>
-    <string name="conflict_file_headline">فایل متناقض %1$s</string>
     <string name="conflict_local_file">پروندهٔ محلّی</string>
     <string name="conflict_message_description">اگر هردو نسخه را انتخاب کنید، یک شماره به نام فایل محلی اضافه خواهد شد.</string>
     <string name="conflict_server_file">پروندهٔ کارساز</string>
@@ -184,6 +180,7 @@
     <string name="could_not_retrieve_url">امکان بازیابی URL وجود ندارد</string>
     <string name="create">ساخت</string>
     <string name="create_dir_fail_msg">امکان ساخت پوشه وجود ندارد</string>
+    <string name="create_link">Create link</string>
     <string name="create_new">جدید</string>
     <string name="create_new_document">سند جدید</string>
     <string name="create_new_folder">پوشه جدید</string>
@@ -257,17 +254,12 @@
     <string name="e2e_not_yet_setup">E2E هنوز راه اندازی نشده است.</string>
     <string name="e2e_offline">بدون اتصال به اینترنت امکان پذیر نیست.</string>
     <string name="ecosystem_apps_display_more">بیشتر</string>
-    <string name="ecosystem_apps_display_notes">یادداشت‌ها</string>
-    <string name="ecosystem_apps_display_talk">گفتگو</string>
     <string name="ecosystem_apps_more">More Nextcloud Apps</string>
-    <string name="ecosystem_apps_notes">یادداشت‌های نکست کلود</string>
-    <string name="ecosystem_apps_talk">Nextcloud Talk</string>
     <string name="email_pick_failed">خطا در گرفتن نشانی رایانامه</string>
     <string name="encrypted">به صورت رمزگذاری شده تنظیم شده است</string>
     <string name="end_to_end_encryption_confirm_button">رمزگذاری را تنظیم کنید</string>
     <string name="end_to_end_encryption_decrypting">رمزگشایی...</string>
     <string name="end_to_end_encryption_dialog_close">بستن</string>
-    <string name="end_to_end_encryption_enter_password">لطفا رمز عبور را برای رمزگشایی کلید خصوصی وارد کنید.</string>
     <string name="end_to_end_encryption_folder_not_empty">این پوشه خالی نیست.</string>
     <string name="end_to_end_encryption_generating_keys">ایجاد کلیدهای جدید...</string>
     <string name="end_to_end_encryption_keywords_description">همه 12 کلمه در کنار هم یک رمزعبور بسیار قوی ایجاد می کنند و به شما امکان می‌دهد پرونده های رمزگذاری شده خود را مشاهده کرده و از آنها استفاده کنید. لطفاً آن را بنویسید و در جایی امن نگه دارید.</string>
@@ -312,7 +304,6 @@
     <string name="etm_background_jobs_stop_test_job">کار آزمایشی را متوقف کن</string>
     <string name="etm_migrations">مهاجرت ها (ارتقا برنامک)</string>
     <string name="etm_preferences">اولویت ها</string>
-    <string name="etm_title">حالت تست مهندسی</string>
     <string name="etm_transfer">انتقال پرونده</string>
     <string name="etm_transfer_enqueue_test_download">صف‌گذاری بارگیری امتحانی</string>
     <string name="etm_transfer_enqueue_test_upload">صف‌گذاری بارگذاری امتحانی</string>
@@ -440,7 +431,6 @@
     <string name="image_preview_unit_megapixel">%s مگاپیکسل</string>
     <string name="image_preview_unit_millimetres">%s میلی‌متر</string>
     <string name="image_preview_unit_seconds">%s ثانیه</string>
-    <string name="in_folder">در پوشه %1$s</string>
     <string name="instant_upload_existing">فایل های موجود را نیز بارگذاری کنید</string>
     <string name="instant_upload_on_charging">فقط هنگامی که گوشی شارژ می شود آپلود کنید</string>
     <string name="instant_upload_path">آپلود فوری</string>
@@ -512,7 +502,6 @@
     <string name="new_media_folder_detected">  پوشه رسانه جدید %1$sشناسایی شد.</string>
     <string name="new_media_folder_photos">عکس</string>
     <string name="new_media_folder_videos">فیلم</string>
-    <string name="new_notification">اعلان جدید</string>
     <string name="new_version_was_created">نسخه جدید ایجاد شد</string>
     <string name="no_actions">هیچ اقدامی برای این کاربر وجود ندارد</string>
     <string name="no_browser_available">هیچ برنامه ای برای کنترل لینک ها در دسترس نیست</string>
@@ -563,7 +552,6 @@
     <string name="permission_deny">غیر مجاز</string>
     <string name="permission_storage_access">نیاز به مجوزهای اضافی برای بارگذاری و دریافت پرونده‌ها می باشد.</string>
     <string name="picture_set_as_no_app">هیچ برنامه ای برای تنظیم عکس یافت نشد</string>
-    <string name="pin_home">به صفحه اصلی پین کنید</string>
     <string name="pin_shortcut_label">باز کنید %1$s</string>
     <string name="placeholder_fileSize">۳۸۹ کیلو بایت</string>
     <string name="placeholder_filename">placeholder.txt</string>
@@ -585,7 +573,6 @@
     <string name="prefs_add_account">ایحاد حساب کاربری</string>
     <string name="prefs_calendar_contacts">همگام‌سازی مخاطب‌ها و تقویم</string>
     <string name="prefs_calendar_contacts_no_store_error">" هیچ‌کدام از برنامک‌های F-Droid و Google Play نصب نشده‌اند."</string>
-    <string name="prefs_calendar_contacts_summary">" تنظیم DAVx5 برای حساب جاری(که قبلاً با نام DAVdroid شناخته می‌شد) (v1.3.0 +) "</string>
     <string name="prefs_calendar_contacts_sync_setup_successful">تنظیم همگام‌سازی تقویم و مخاطب‌ها</string>
     <string name="prefs_category_about">درباره</string>
     <string name="prefs_category_details">جزئیات</string>
@@ -595,8 +582,7 @@
     <string name="prefs_category_sync">همگام‌سازی</string>
     <string name="prefs_daily_backup_summary">پشتیبان‌گیری روزانه از مخاطب‌ها و تقویم شما</string>
     <string name="prefs_daily_contact_backup_summary">پشتیبان گیری روزانه از مخاطبین شما</string>
-    <string name="prefs_davx5_setup_error">خطای غیرمنتظره هنگام راه‌اندازی DAVx5 (که قبلاً DAVdroid نامیده می‌شد)</string>
-    <string name="prefs_e2e_active">رمزگذاری انتها به انتها راه اندازی شد!</string>
+    <string name="prefs_e2e_active">رمزگذاری سرتاسری  راه اندازی شد!</string>
     <string name="prefs_e2e_mnemonic">E2E حفظی</string>
     <string name="prefs_e2e_no_device_credentials">برای نمایش mnemonic ، مجوز دستگاه را فعال کنید.</string>
     <string name="prefs_enable_media_scan_notifications">نمایش اعلان‌های مربوط به اسکن رسانه</string>
@@ -611,7 +597,7 @@
     <string name="prefs_instant_upload_path_use_date_subfolders_summary">ذخیره در زیر پوشه‌ها بر اساس تاریخ</string>
     <string name="prefs_instant_upload_path_use_subfolders_title">استفاده از زیر پوشه</string>
     <string name="prefs_instant_upload_subfolder_rule_title">گزینه‌های زیر پوشه</string>
-    <string name="prefs_keys_exist">رمزگذاری سرتاسر را به این سرویس گیرنده اضافه کنید.</string>
+    <string name="prefs_keys_exist">رمزگذاری سرتاسری را به این سرویس گیرنده اضافه کنید.</string>
     <string name="prefs_license">مجوز</string>
     <string name="prefs_lock">کد عبور برنامک</string>
     <string name="prefs_lock_device_credentials_enabled">اعتبارنامه‌های دستگاه فعال شد.</string>
@@ -623,12 +609,11 @@
     <string name="prefs_manage_accounts">مدیریت حساب ها </string>
     <string name="prefs_recommend">به یک دوست توصیه کنید</string>
     <string name="prefs_remove_e2e">رمزگذاری را به صورت محلی حذف کنید.</string>
-    <string name="prefs_setup_e2e">رمزگذاری انتها به انتها را تنظیم کنید.</string>
+    <string name="prefs_setup_e2e">رمزگذاری سرتاسری را تنظیم کنید.</string>
     <string name="prefs_show_ecosystem_apps">Show app switcher</string>
     <string name="prefs_show_ecosystem_apps_summary">Nextcloud app suggestions in navigation heading</string>
     <string name="prefs_show_hidden_files">فایل های مخفی را نشان بده </string>
     <string name="prefs_sourcecode">دریافت کد منبع</string>
-    <string name="prefs_storage_path">مسیر ذخیره‌سازی</string>
     <string name="prefs_sycned_folders_summary">مدیریت پوشه‌ها جهت آپلود خودکار</string>
     <string name="prefs_synced_folders_local_path_title">پوشه محلی</string>
     <string name="prefs_synced_folders_remote_path_title">پوشه از راه دور</string>
@@ -650,12 +635,13 @@
     <string name="recommend_subject">امتحان کردن %1$s روی دستگاه شما</string>
     <string name="recommend_text">می خواهم از شما دعوت کنم تا از %1$s در دستگاه خود استفاده کنید. بارگیری در اینجا: %2$s</string>
     <string name="recommend_urls">آدرس %1$s یا %2$s</string>
+    <string name="recommended_files_title">Recommended files</string>
     <string name="refresh_content">مطالب را به روز کنید</string>
     <string name="reload">بارگیری مجدد</string>
     <string name="remote">(از راه دور)</string>
     <string name="remote_file_fetch_failed">یافتن پرونده انجام نشد</string>
-    <string name="remove_e2e">می‌توانید رمزگذاری انتها به انتها را به صورت محلی در این سرویس گیرنده حذف کنید.</string>
-    <string name="remove_e2e_message">می‌توانید رمزگذاری انتها به انتها را به صورت محلی در این سرویس گیرنده حذف کنید. فایل‌های رمزگذاری‌شده روی سرور باقی می‌مانند، اما دیگر با این رایانه همگام‌سازی نمی‌شوند.</string>
+    <string name="remove_e2e">می‌توانید رمزگذاری سرتاسری را به صورت محلی در این سرویس گیرنده حذف کنید.</string>
+    <string name="remove_e2e_message">می‌توانید رمزگذاری سرتاسری را به صورت محلی در این سرویس گیرنده حذف کنید. فایل‌های رمزگذاری‌شده روی سرور باقی می‌مانند، اما دیگر با این رایانه همگام‌سازی نمی‌شوند.</string>
     <string name="remove_fail_msg">حذف انجام نشد</string>
     <string name="remove_local_account">حذف حساب محلی</string>
     <string name="remove_local_account_details">حذف حساب از روی دستگاه و پاکسازی همه فایل‌های محلی</string>
@@ -668,10 +654,10 @@
     <string name="request_account_deletion">درخواست حذف اکانت</string>
     <string name="request_account_deletion_button">درخواست حذف</string>
     <string name="request_account_deletion_details">درخواست حذف دائمی حساب از ارائه‌دهنده خدمت</string>
-    <string name="resized_image_not_possible_download">هیچ تصویری تغییر اندازه شده‌ای در دسترس نیست. تصویر کامل را بارگیری می کنید؟</string>
     <string name="restore">بازیابی پرونده</string>
     <string name="restore_backup">بازیابی نسخه پشتیبان</string>
     <string name="restore_button_description">بازیابی پرونده حذف شده</string>
+    <string name="restore_item">بازیابی</string>
     <string name="restore_selected">بازیابی انتخاب شده</string>
     <string name="retrieving_file">در حال بازیابی پرونده ...</string>
     <string name="retry">تلاش دوباره</string>
@@ -689,7 +675,6 @@
     <string name="screenshot_05_autoUpload_heading">بارگذاری خودکار</string>
     <string name="screenshot_05_autoUpload_subline">برای تصاویر و ویدیوهای شما</string>
     <string name="screenshot_06_davdroid_heading">تقویم و مخاطب‌ها</string>
-    <string name="screenshot_06_davdroid_subline">همگام سازی با DAVx5</string>
     <string name="search_error">خطا در دریافت نتایج جستجو</string>
     <string name="secure_share_not_set_up">اشتراک‌گذاری امن برای این حساب تنظیم نشده است</string>
     <string name="select_all">انتخاب همه</string>
@@ -697,17 +682,15 @@
     <string name="select_one_template">لطفا یک قالب را انتخاب کنید</string>
     <string name="select_template">الگو را انتخاب کنید</string>
     <string name="send">ارسال</string>
-    <string name="send_share">ارسال اشتراک</string>
     <string name="sendbutton_description">ایکون دکمه ارسال</string>
     <string name="set_as">تنظیم به عنوان</string>
-    <string name="set_note">تنظیم یادداشت</string>
     <string name="set_picture_as">استفاده از تصویر به عنوان</string>
     <string name="set_status">تنظیم وضعیت</string>
     <string name="set_status_message">تنظیم پیام وضعیت</string>
-    <string name="setup_e2e">در طول راه اندازی رمزگذاری انتها به انتها، یک یادگاری تصادفی 12 کلمه ای دریافت خواهید کرد که باید فایل های خود را در دستگاه های دیگر باز کنید. این فقط در این دستگاه ذخیره می شود و می تواند دوباره در این صفحه نمایش داده شود. لطفا آن را در یک مکان امن یادداشت کنید!</string>
+    <string name="setup_e2e">در طول راه اندازی رمزگذاری سرتاسری، یک یادگاری تصادفی 12 کلمه ای دریافت خواهید کرد که باید فایل های خود را در دستگاه های دیگر باز کنید. این فقط در این دستگاه ذخیره می شود و می تواند دوباره در این صفحه نمایش داده شود. لطفا آن را در یک مکان امن یادداشت کنید!</string>
     <string name="share">هم‌رسانی</string>
-    <string name="share_copy_link">اشتراک‌گذاری و رونوشت پیوند</string>
     <string name="share_dialog_title">اشتراک گذاری</string>
+    <string name="share_download_limit">Set download limit</string>
     <string name="share_expiration_date_format">%1$s</string>
     <string name="share_expiration_date_label">منقضی در%1$s</string>
     <string name="share_file">هم‌رسانی %1$s</string>
@@ -732,7 +715,6 @@
     <string name="share_permission_file_drop">انداختن پرونده</string>
     <string name="share_permission_secure_file_drop">Secure file drop</string>
     <string name="share_permission_view_only">تنها مشاهده</string>
-    <string name="share_permissions">اجازه‌های هم‌رسانی</string>
     <string name="share_remote_clarification">%1$s (دوردست)</string>
     <string name="share_room_clarification">%1$s (گفت‌وگو)</string>
     <string name="share_send_new_email">فرستادن رایانامهٔ جدید</string>
@@ -749,7 +731,9 @@
     <string name="shared_icon_shared_via_link">هم‌رسانده با پیوند</string>
     <string name="shared_with_you_by">هم‌رسانده با شما به دست %1$s</string>
     <string name="sharee_add_failed">شکست در افزودن هم‌رسانی</string>
+    <string name="show_all">نمایش همه</string>
     <string name="show_images">نمایش عکس‌ها</string>
+    <string name="show_less">Show less</string>
     <string name="show_video">نمایش ویدیوها</string>
     <string name="signup_with_provider">ثبت‌نام با ارائه دهنده</string>
     <string name="single_sign_on_request_token" formatted="true">اجازه به %1$s برای دسترسی به حساب نکست‌کلود %2$s؟</string>
@@ -798,7 +782,6 @@
     <string name="stream">جریان با…</string>
     <string name="stream_not_possible_headline">جریان داخلی امکان پذیر نیست</string>
     <string name="stream_not_possible_message">لطفاً به جای آن رسانه را دریافت کنید یا از برنامه خارجی استفاده کنید.</string>
-    <string name="strict_mode">حالت سخت‌گیر: اتصال HTTP مجاز نیست!</string>
     <string name="sub_folder_rule_day">سال/ماه/روز</string>
     <string name="sub_folder_rule_month">سال/ماه</string>
     <string name="sub_folder_rule_year">سال</string>
@@ -835,6 +818,7 @@
     <string name="synced_folders_type">نوع</string>
     <string name="synced_icon">همگام‌سازی</string>
     <string name="tags">برچسب‌ها</string>
+    <string name="terms_of_service_title">شرایط و قوانین</string>
     <string name="test_server_button">آزمایش اتصال به سرور</string>
     <string name="thirtyMinutes">۳۰ دقیقه</string>
     <string name="thisWeek">این هفته</string>
@@ -968,9 +952,6 @@
     <string name="wait_a_moment">یک لحظه صبر کنید...</string>
     <string name="wait_checking_credentials">بررسی اعتبارنامه‌های ذخیره شده</string>
     <string name="wait_for_tmp_copy_from_private_storage">کپی کردن فایل از حافظه خصوصی</string>
-    <string name="webview_version_check_alert_dialog_message">لطفا جهت ورود به حساب، برنامه سیستمی Android WebView را به‌روزرسانی کنید</string>
-    <string name="webview_version_check_alert_dialog_positive_button_title">به‌روز رسانی</string>
-    <string name="webview_version_check_alert_dialog_title">به‌روزرسانی برنامه سیستمی Android WebView</string>
     <string name="what_s_new_image">چه تصویر جدیدی است</string>
     <string name="whats_new_skip">رد شدن</string>
     <string name="whats_new_title">جدید در %1$s</string>
@@ -1036,4 +1017,4 @@
         <item quantity="one">%d انتخاب شده</item>
         <item quantity="other">%d انتخاب شده</item>
     </plurals>
-</resources>
+    </resources>

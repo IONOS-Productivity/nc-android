@@ -59,7 +59,7 @@
 
     <color name="filelist_file_icon_color">@color/curious_blue</color>
     <color name="filelist_default_action_icon_color">@color/curious_blue</color>
-    <color name="filelist_shared_icon_color">@color/midnight_blue2</color>
+    <color name="filelist_shared_icon_color">@color/ghost_white</color>
     <color name="filelist_shared_icon_background_color">@color/curious_blue</color>
     <color name="filelist_text_color">@color/geyser</color>
     <color name="filelist_secondary_text_color">@color/metallic_silver</color>
@@ -102,4 +102,9 @@
 
     <color name="checkbox_fill_color">@color/curious_blue</color>
     <color name="checkbox_stroke_color">@color/white</color>
+
+    <color name="file_details_search_border_color">@color/ghost_white</color>
+    <color name="file_details_search_icon_color">@color/ghost_white</color>
+    <color name="file_details_contact_icon_color">@color/gull_grayapprox</color>
+    <color name="file_details_search_hint_color">@color/ghost_white</color>
 </resources>

@@ -14,7 +14,8 @@
     android:layout_height="match_parent"
     android:layout_alignParentTop="true"
     android:orientation="horizontal"
-    android:padding="@dimen/standard_padding">
+    android:padding="@dimen/standard_padding"
+    android:visibility="invisible">
 
     <ImageView
         android:id="@+id/thumbnail"
@@ -63,7 +64,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="top"
-                        android:importantForAutofill="no"
                         android:inputType="textUri|textNoSuggestions|textEmailAddress"
                         android:lines="1"
                         android:minLines="1"

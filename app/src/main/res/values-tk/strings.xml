@@ -9,9 +9,10 @@
     <string name="account_not_found">Hasap tapylmady</string>
     <string name="action_edit">Redaktirläň</string>
     <string name="action_empty_notifications">ähli bildirişleri arassala</string>
-    <string name="action_send_share">Iber / Paýlaş</string>
+    <string name="action_empty_trashbin">Boşadylan zibil</string>
     <string name="action_switch_grid_view">Gözenegiň görnüşi</string>
     <string name="action_switch_list_view">Sanaw görnüşi</string>
+    <string name="actionbar_calendar_contacts_restore">Aragatnaşyklary we senenamany dikelt</string>
     <string name="actionbar_mkdir">Täze papka döretmek</string>
     <string name="actionbar_open_with">Şunyň bilen açyň</string>
     <string name="actionbar_search">Gözlemek</string>
@@ -25,13 +26,10 @@
     <string name="activity_chooser_send_file_title">Iber</string>
     <string name="activity_chooser_title">Baglanyşyk iberiň ...</string>
     <string name="activity_icon">işjeňlik we hereket</string>
-    <string name="add_another_public_share_link">Başga bir baglanyşyk goşuň</string>
     <string name="add_new_public_share">Täze köpçülikleýin paýlaşma baglanyşygyny goşuň</string>
     <string name="add_to_cloud">Goşuň%1$s</string>
     <string name="allow_resharing">Täzeden paýlaşmaga rugsat beriň</string>
     <string name="appbar_search_in">Gözlemek%siçinde</string>
-    <string name="assistant_screen_successful_task_text">Tamamlanan</string>
-    <string name="assistant_screen_unknown_task_status_text">Näbelli</string>
     <string name="associated_account_not_found">Baglanyşyk hasaby tapylmady!</string>
     <string name="auth_access_failed">Şowsuz Giriş%1$s:</string>
     <string name="auth_account_does_not_exist">Akaunt entek bu enjamda goşulmaýar</string>
@@ -76,7 +74,9 @@
     <string name="battery_optimization_disable">Öçüriň</string>
     <string name="battery_optimization_message">Enjamyňyzda batareýa optimizasiýasy açyk bolup biler. “AutoUpload” diňe bu programmany ondan aýyrsaňyz dogry işleýär.</string>
     <string name="battery_optimization_title">Batareýany optimizasiýa</string>
-    <string name="brute_force_delay">Gaty ýalňyş synanyşyklar sebäpli gijä galdy</string>
+    <string name="bottom_navigation_menu_favorites_label">Halanýanlar</string>
+    <string name="bottom_navigation_menu_files_label">Ähli faýllar</string>
+    <string name="bottom_navigation_menu_media_label">Mediýa</string>
     <string name="certificate_load_problem">Şahadatnamany ýüklemekde näsazlyk bar.</string>
     <string name="changelog_dev_version">Özgeriş žurnalynyň gowlaşdyrmak döwri</string>
     <string name="checkbox">Bellik gutusy</string>
@@ -136,7 +136,6 @@
     <string name="confirmation_remove_folder_alert">Hakykatdan hem %1$sonuň mazmuny hem pozmak isleýärsiňizmi?</string>
     <string name="confirmation_remove_folders_alert">Saýlanan elementleri we olaryň mazmunyny hakykatdanam pozmak isleýärsiňizmi?</string>
     <string name="confirmation_remove_local">Diňe ýerli</string>
-    <string name="conflict_file_headline">Jedelli faýl%1$s</string>
     <string name="conflict_message_description">Eger siz iki wersiýasyny hem saýlasaňyz, ýerli faýlyň adyna san goşular.</string>
     <string name="contactlist_item_icon">Aragatnaşyk sanawy üçin ulanyjy nyşany</string>
     <string name="contactlist_no_permission">Rugsat berilmedi, import edilmedi.</string>
@@ -209,7 +208,6 @@
     <string name="end_to_end_encryption_confirm_button">Şifrlemäni gurnamak</string>
     <string name="end_to_end_encryption_decrypting">Şifri açmak...</string>
     <string name="end_to_end_encryption_dialog_close">Ýapmak</string>
-    <string name="end_to_end_encryption_enter_password">Şahsy açary açmak üçin parol giriziň.</string>
     <string name="end_to_end_encryption_folder_not_empty">Bu bukja boş däl</string>
     <string name="end_to_end_encryption_generating_keys">Täze düwmeler döretmek ...</string>
     <string name="end_to_end_encryption_keywords_description">12 sözüň hemmesi bilelikde şifrlenen faýllaryňyzy diňe size görmäge we ulanmaga mümkinçilik berýän gaty güýçli parol ýasaýar. Muny ýazyp alyň we howpsuz ýerde saklaň.</string>
@@ -244,7 +242,6 @@
     <string name="etm_background_jobs_stop_test_job">Synag işini bes ediň</string>
     <string name="etm_migrations">Migrasiýa (programmany täzelemek)</string>
     <string name="etm_preferences">Saýlamalar</string>
-    <string name="etm_title">Inženerçilik synag tertibi</string>
     <string name="etm_transfer_enqueue_test_download">Synagy göçürip al</string>
     <string name="etm_transfer_remote_path">Uzak ýol</string>
     <string name="etm_transfer_type_download">Göçürip almak</string>
@@ -338,7 +335,6 @@
     <string name="hint_password">Açarsöz</string>
     <string name="host_not_available">Serwer elýeterli däl</string>
     <string name="host_your_own_server">Öz serweriňizi ýerleşdiriň</string>
-    <string name="in_folder">%1$s bukjada</string>
     <string name="instant_upload_existing">Bar bolan faýllary hem ýükläň</string>
     <string name="instant_upload_on_charging">Diňe zarýad berlende ýükläň</string>
     <string name="instant_upload_path">/ Çaltýüklemek</string>
@@ -395,7 +391,6 @@
     <string name="new_media_folder_detected">Täze %1$smedia bukjasy tapyldy.</string>
     <string name="new_media_folder_photos">Surat</string>
     <string name="new_media_folder_videos">wideo</string>
-    <string name="new_notification">Täze Bildiriş</string>
     <string name="new_version_was_created">Täze wersiýa döredildi</string>
     <string name="no_browser_available">Salgylary dolandyrmak üçin programma ýok</string>
     <string name="no_mutliple_accounts_allowed">Diňe bir hasabyňyza rugsat berildi</string>
@@ -456,7 +451,6 @@
     <string name="pref_instant_name_collision_policy_title">Faýl eýýäm bar bolsa näme etmeli?</string>
     <string name="prefs_add_account">Hasap goşuň</string>
     <string name="prefs_calendar_contacts_no_store_error">Ne F-Droid, ne-de Google Play ýüklenmedik</string>
-    <string name="prefs_calendar_contacts_summary">Häzirki hasap üçin DAVx5 (öň DAVdroid ady bilen tanalýardy) (v1.3.0 +) guruň</string>
     <string name="prefs_category_about">Hakynda</string>
     <string name="prefs_category_details">Jikme-jiklikler</string>
     <string name="prefs_category_dev">Dev</string>
@@ -485,7 +479,6 @@
     <string name="prefs_manage_accounts">Hasabyňyzy dolandyrmak</string>
     <string name="prefs_show_hidden_files">Gizlin faýllary görkez</string>
     <string name="prefs_sourcecode">Çeşme koduny alyň</string>
-    <string name="prefs_storage_path">Maglumat saklaýyş bukjasy</string>
     <string name="prefs_sycned_folders_summary">Awtomatik ýüklemek üçin bukjalary dolandyrmak</string>
     <string name="prefs_synced_folders_local_path_title">ýerli bukjasy</string>
     <string name="prefs_synced_folders_remote_path_title">Uzakdaky bukja</string>
@@ -514,7 +507,6 @@
     <string name="rename_dialog_title">Täze at giriziň</string>
     <string name="rename_local_fail_msg">Ýerli göçürmäniň adyny üýtgedip bilmedim, başga bir at synap görüň</string>
     <string name="rename_server_fail_msg">Adyny üýtgetmek mümkin däl, at eýýäm alyndy</string>
-    <string name="resized_image_not_possible_download">Ölçegli surat ýok. Doly suraty göçürip alyň?</string>
     <string name="restore">Faýly dikelt</string>
     <string name="restore_button_description">Pozulan faýly yzyna dikelt</string>
     <string name="retrieving_file">Faýl alýas ...</string>
@@ -529,7 +521,6 @@
     <string name="screenshot_04_accounts_heading">Siziň ähli hasaplaryňyz</string>
     <string name="screenshot_04_accounts_subline">bir ýerde</string>
     <string name="screenshot_05_autoUpload_heading">Awtomatiki ýüklemek</string>
-    <string name="screenshot_06_davdroid_subline">DAVx5 bilen sinhronlaň</string>
     <string name="select_all">Hemmesini saýlaň</string>
     <string name="select_one_template">Bir şablon saýlaň</string>
     <string name="select_template">Şablon saýlaň</string>
@@ -758,10 +749,13 @@
     <string name="wait_a_moment">Biraz garaşyň ...</string>
     <string name="wait_checking_credentials">Saklanan şahsyýet maglumatlaryny barlamak</string>
     <string name="wait_for_tmp_copy_from_private_storage">Şahsy ammardan faýly göçürmek</string>
+    <string name="warn_rename_extension">Giňeltmäni üýtgetmek, bu faýlyň başga bir programmada açylmagyna sebäp bolup biler</string>
     <string name="what_s_new_image">Täze şekil näme</string>
     <string name="whats_new_skip">Geçmek</string>
     <string name="whats_new_title">Täze%1$s-da</string>
+    <string name="widgets_not_available_title">Elýeterli däl</string>
     <string name="worker_download">Faýllary göçürip almaklyk...</string>
+    <string name="write_email">E-poçta iber</string>
     <string name="wrong_storage_path">Maglumat saklaýyş bukjasy ýok!</string>
     <string name="wrong_storage_path_desc">Bu başga bir enjamda ätiýaçlyk dikeldişi sebäpli bolup biler. Asyl görnüşine gaýdyp gelmek. Maglumat saklaýyş bukjasyny sazlamak üçin sazlamalary barlaň.</string>
     </resources>

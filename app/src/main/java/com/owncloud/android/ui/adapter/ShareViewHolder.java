@@ -18,6 +18,8 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.ionos.annotation.IonosCustomization;
+import com.ionos.utils.IonosBuildHelper;
 import com.nextcloud.client.account.User;
 import com.owncloud.android.R;
 import com.owncloud.android.databinding.FileDetailsShareShareItemBinding;
@@ -60,6 +62,11 @@ class ShareViewHolder extends RecyclerView.ViewHolder {
                      float avatarRadiusDimension) {
         this.avatarRadiusDimension = avatarRadiusDimension;
         String name = share.getSharedWithDisplayName();
+        
+        if ("".equals(name) && !"".equals(share.getShareWith())) {
+            name = share.getShareWith();
+        }
+        
         binding.icon.setTag(null);
 
         switch (share.getShareType()) {
@@ -121,7 +128,12 @@ class ShareViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
+    @IonosCustomization
     private void setImage(ImageView avatar, String name, @DrawableRes int fallback) {
+        if (IonosBuildHelper.isIonosBuild()) {
+            avatar.setImageResource(R.drawable.account_circle_white);
+            return;
+        }
         try {
             avatar.setImageDrawable(TextDrawable.createNamedAvatar(name, avatarRadiusDimension));
         } catch (StringIndexOutOfBoundsException e) {

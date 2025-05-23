@@ -10,10 +10,10 @@
     <string name="action_edit">Chỉnh sửa</string>
     <string name="action_empty_notifications">Xoá tất cả thông báo</string>
     <string name="action_empty_trashbin">Dọn sạch thùng rác</string>
-    <string name="action_send_share">Gửi/Chia sẽ</string>
     <string name="action_switch_grid_view">Xem dạng Lưới</string>
     <string name="action_switch_list_view">Xem dạng Danh sách</string>
     <string name="actionbar_mkdir">Tạo thư mục</string>
+    <string name="actionbar_move_or_copy">Di chuyển hoặc sao chép</string>
     <string name="actionbar_open_with">Mở với</string>
     <string name="actionbar_search">Tìm</string>
     <string name="actionbar_see_details">Chi tiết</string>
@@ -26,17 +26,13 @@
     <string name="activity_chooser_send_file_title">Gởi</string>
     <string name="activity_chooser_title">Gửi liên kết đến…</string>
     <string name="activity_icon">Hoạt động</string>
-    <string name="add_another_public_share_link">Thêm một liên kết khác</string>
     <string name="add_new_public_share">Thêm liên kết chia sẻ công khai mới</string>
     <string name="add_to_cloud">Thêm vào %1$s</string>
     <string name="advanced_settings">Cài đặt nâng cao</string>
     <string name="allow_resharing">Cho phép chia sẻ lại</string>
     <string name="app_widget_description">Hiện thị lối tắt từ dashboard</string>
     <string name="appbar_search_in">Tìm kiếm trong %s</string>
-    <string name="assistant_screen_all_task_type">Tất cả</string>
-    <string name="assistant_screen_scheduled_task_status_text">Lên kế hoạch</string>
-    <string name="assistant_screen_successful_task_text">Hoàn thành</string>
-    <string name="assistant_screen_unknown_task_status_text">Không xác định</string>
+    <string name="assistant_screen_delete_task_alert_dialog_title">Xóa nhiệm vụ</string>
     <string name="associated_account_not_found">Không tìm thấy tài khoản được liên kết!</string>
     <string name="auth_access_failed">Lỗi truy cập: %1$s</string>
     <string name="auth_account_does_not_exist">Tài khoản chưa được thêm vào thiết bị này.</string>
@@ -82,7 +78,9 @@
     <string name="battery_optimization_disable">Tắt</string>
     <string name="battery_optimization_message">Thiết bị của bạn có thể đã bật tính năng tối ưu hóa pin. AutoUpload chỉ hoạt động bình thường nếu bạn loại trừ ứng dụng này khỏi nó.</string>
     <string name="battery_optimization_title">Tối ưu hoá pin</string>
-    <string name="brute_force_delay">Đã bị trì hoãn vì quá nhiều lần thử sai</string>
+    <string name="bottom_navigation_menu_favorites_label">Ưa thích</string>
+    <string name="bottom_navigation_menu_files_label">Tất cả tệp tin</string>
+    <string name="bottom_navigation_menu_media_label">Phương tiện</string>
     <string name="calendar">Lịch</string>
     <string name="calendars">Lịch</string>
     <string name="certificate_load_problem">Có vấn đề khi tải chứng chỉ.</string>
@@ -146,7 +144,6 @@
     <string name="confirmation_remove_folder_alert">Bạn có thực sự muốn xóa %1$s và nội dung của nó?</string>
     <string name="confirmation_remove_folders_alert">Bạn có thực sự muốn xóa các mục đã chọn và nội dung của chúng không?</string>
     <string name="confirmation_remove_local">Chỉ cục bộ</string>
-    <string name="conflict_file_headline">Tập tin xung đột %1$s</string>
     <string name="conflict_local_file">Tệp cục bộ</string>
     <string name="conflict_message_description">Nếu bạn chọn cả hai phiên bản, tệp trên máy sẽ có một số được thêm vào tên của nó.</string>
     <string name="conflict_server_file">Tệp trên máy chủ</string>
@@ -235,14 +232,10 @@
     <string name="drawer_synced_folders">Tự động tải lên</string>
     <string name="e2e_not_yet_setup">E2E chưa được thiết lập</string>
     <string name="ecosystem_apps_display_more">Thêm</string>
-    <string name="ecosystem_apps_display_notes">Ghi chú</string>
-    <string name="ecosystem_apps_display_talk">Nói chuyện</string>
-    <string name="ecosystem_apps_notes">Nextcloud Ghi chú</string>
     <string name="encrypted">Đặt mã hóa</string>
     <string name="end_to_end_encryption_confirm_button">Thiết lập mã hóa</string>
     <string name="end_to_end_encryption_decrypting">Đang giải mã…</string>
     <string name="end_to_end_encryption_dialog_close">Đóng</string>
-    <string name="end_to_end_encryption_enter_password">Vui lòng nhập mật khẩu để giải mã mã khóa riêng.</string>
     <string name="end_to_end_encryption_folder_not_empty">Thư mục này rỗng</string>
     <string name="end_to_end_encryption_generating_keys">Đang tạo các mã khóa mới...</string>
     <string name="end_to_end_encryption_keywords_description">Tất cả 12 từ này tạo nên một mật khẩu rất manh, để đảm bảo rằng chỉ mình bạn xem và sử dụng những tệp đã mã hóa. Vui lòng ghi xuống và giữ thông tin này ở nơi nào an toàn.</string>
@@ -281,7 +274,6 @@
     <string name="etm_background_jobs_stop_test_job">Kết thúc công việc kiểm tra</string>
     <string name="etm_migrations">Di cư (nâng cấp ứng dụng)</string>
     <string name="etm_preferences">Cài đặt</string>
-    <string name="etm_title">Chế độ kiểm tra kỹ thuật</string>
     <string name="etm_transfer">Truyền tệp</string>
     <string name="etm_transfer_enqueue_test_download">Cho mục tải xuống thử nghiệm vào hàng chờ</string>
     <string name="etm_transfer_enqueue_test_upload">Cho mục tải lên thử nghiệm vào hàng chờ</string>
@@ -387,7 +379,6 @@
     <string name="hint_password">Mật khẩu</string>
     <string name="host_not_available">Máy chủ không khả dụng</string>
     <string name="host_your_own_server">Host máy chủ của riêng bạn</string>
-    <string name="in_folder">trong thư mục %1$s</string>
     <string name="instant_upload_existing">Cũng tải lên các tệp hiện có</string>
     <string name="instant_upload_on_charging">Chỉ tải lên khi đang sạc pin</string>
     <string name="instant_upload_path">/Upload tức thì</string>
@@ -455,7 +446,6 @@
     <string name="new_media_folder_detected">Đã phát hiện thư mục media %1$s mới.</string>
     <string name="new_media_folder_photos">photo</string>
     <string name="new_media_folder_videos">video</string>
-    <string name="new_notification">Thông báo mới</string>
     <string name="new_version_was_created">Phiên bản mới đã được tạo</string>
     <string name="no_actions">Không có hành động nào cho người dùng này</string>
     <string name="no_browser_available">Không có ứng dụng để xử lý các liên kết</string>
@@ -523,7 +513,6 @@
     <string name="pref_instant_name_collision_policy_title">Làm gì nếu tập tin đã tồn tại?</string>
     <string name="prefs_add_account">Thêm tài khoản</string>
     <string name="prefs_calendar_contacts_no_store_error">Không có F-Droid hoặc Google Play nào được cài đặt</string>
-    <string name="prefs_calendar_contacts_summary">Thiết lập DAVx5 (trước kia được biết đến là DAVdroid) (phiên bản 1.3.0+) cho tài khoản hiện tại</string>
     <string name="prefs_category_about">Thông tin</string>
     <string name="prefs_category_details">Chi tiết</string>
     <string name="prefs_category_dev">Phát triển</string>
@@ -556,7 +545,6 @@
     <string name="prefs_setup_e2e">Thiết lập mã hoá đầu cuối</string>
     <string name="prefs_show_hidden_files">Hiển thị các tệp ẩn</string>
     <string name="prefs_sourcecode">Lấy mã nguồn</string>
-    <string name="prefs_storage_path">Thư mục lưu trữ dữ liệu</string>
     <string name="prefs_sycned_folders_summary">Quản lý các thư mục để tự động tải lên</string>
     <string name="prefs_synced_folders_local_path_title">Thư mục cục bộ</string>
     <string name="prefs_synced_folders_remote_path_title">Thư mục từ xa</string>
@@ -577,6 +565,7 @@
     <string name="recommend_subject">Thử %1$s trên điện thoại của bạn!</string>
     <string name="recommend_text">Tôi muốn mời bạn sử dụng %1$s trên điện thoại của bạn.\nTải về: %2$s</string>
     <string name="recommend_urls">%1$s hoặc %2$s</string>
+    <string name="recommended_files_title">Tệp được đề xuất</string>
     <string name="refresh_content">Làm mới nội dung</string>
     <string name="reload">Tải lại</string>
     <string name="remote">(từ xa)</string>
@@ -588,10 +577,10 @@
     <string name="rename_dialog_title">Nhập tên mới</string>
     <string name="rename_local_fail_msg">Không thể đổi tên bản sao cục bộ, hãy thử một tên khác</string>
     <string name="rename_server_fail_msg">Không thể đổi tên, tên đã được sử dụng</string>
-    <string name="resized_image_not_possible_download">Không có hình ảnh thay đổi kích thước có sẵn. Tải xuống hình ảnh đầy đủ?</string>
     <string name="restore">Khôi phục tệp</string>
     <string name="restore_backup">Khôi phục bản sao lưu</string>
     <string name="restore_button_description">Khôi phục tệp đã xóa</string>
+    <string name="restore_item">Khôi phục</string>
     <string name="restore_selected">Khôi phục mục đã chọn</string>
     <string name="retrieving_file">Đang truy xuất tệp…</string>
     <string name="retry">Thử lại</string>
@@ -606,16 +595,13 @@
     <string name="screenshot_04_accounts_heading">Tất cả các tài khoản của bạn</string>
     <string name="screenshot_04_accounts_subline">ở một nơi</string>
     <string name="screenshot_05_autoUpload_heading">Tải lên tự động</string>
-    <string name="screenshot_06_davdroid_subline">Đồng bộ với DAVx5</string>
     <string name="search_error">Lỗi khi lấy kết quả tìm kiếm</string>
     <string name="select_all">Chọn tất cả</string>
     <string name="select_one_template">Vui lòng chọn một mẫu</string>
     <string name="select_template">Chon mẫu</string>
     <string name="send">Gửi</string>
-    <string name="send_share">Gửi kho</string>
     <string name="sendbutton_description">Biểu tượng nút gửi</string>
     <string name="set_as">Đặt như</string>
-    <string name="set_note">Đặt ghi chú</string>
     <string name="set_picture_as">Dùng hình ảnh như</string>
     <string name="set_status">Đặt trạng thái</string>
     <string name="set_status_message">Đặt thông báo trạng thái</string>
@@ -643,7 +629,6 @@
     <string name="share_permission_can_edit">Có thể chỉnh sửa</string>
     <string name="share_permission_file_drop">Thả file</string>
     <string name="share_permission_view_only">Chỉ xem</string>
-    <string name="share_permissions">Quyền kho</string>
     <string name="share_remote_clarification">%1$s (từ xa)</string>
     <string name="share_room_clarification">%1$s (cuộc hội thoại)</string>
     <string name="share_send_new_email">Gửi email mới</string>
@@ -708,7 +693,6 @@
     <string name="stream">Phát trực tiếp với…</string>
     <string name="stream_not_possible_headline">Không thể phát trực tuyến nội bộ</string>
     <string name="stream_not_possible_message">Vui lòng tải xuống media thay thế hoặc sử dụng ứng dụng bên ngoài.</string>
-    <string name="strict_mode">Chế độ nghiêm ngặt: Kết nối HTTP không được cho phép!</string>
     <string name="sub_folder_rule_year">Năm</string>
     <string name="subject_shared_with_you">\"%1$s\" đã chia sẽ với bạn</string>
     <string name="subject_user_shared_with_you">%1$s đã chia sẽ \"%2$s\" với bạn</string>
@@ -742,6 +726,7 @@
     <string name="synced_folders_type">Loại</string>
     <string name="synced_icon">Đã đồng bộ</string>
     <string name="tags">Thẻ</string>
+    <string name="terms_of_service_title">Điều khoản dịch vụ</string>
     <string name="test_server_button">Kiểm tra kết nối máy chủ</string>
     <string name="thirtyMinutes">30 phút</string>
     <string name="thisWeek">Tuần này</string>
@@ -861,7 +846,6 @@
     <string name="wait_a_moment">Đợi một chút…</string>
     <string name="wait_checking_credentials">Kiểm tra thông tin đăng nhập đã lưu trữ</string>
     <string name="wait_for_tmp_copy_from_private_storage">Sao chép tệp từ bộ nhớ riêng</string>
-    <string name="webview_version_check_alert_dialog_positive_button_title">Cập nhật</string>
     <string name="what_s_new_image">Hình ảnh mới là gì</string>
     <string name="whats_new_skip">Bỏ qua</string>
     <string name="whats_new_title">Mới trong %1$s</string>
@@ -901,4 +885,4 @@
     <plurals name="items_selected_count">
         <item quantity="other">Đã chọn %d </item>
     </plurals>
-</resources>
+    </resources>

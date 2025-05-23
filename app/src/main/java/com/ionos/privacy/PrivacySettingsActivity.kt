@@ -11,6 +11,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.owncloud.android.databinding.ActivityPrivacySettingsBinding
@@ -43,11 +45,20 @@ class PrivacySettingsActivity : BaseActivity() {
             viewModel.onAnalyticsCheckedChange(isChecked)
         }
 
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, windowInsets ->
+            val insetsType = WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
+            val insets = windowInsets.getInsets(insetsType)
+            binding.root.setPadding(insets.left, insets.top, insets.right, insets.bottom)
+            WindowInsetsCompat.CONSUMED
+        }
+
         viewModel.stateFlow
             .flowWithLifecycle(lifecycle)
             .onEach(::updateState)
             .launchIn(lifecycleScope)
     }
+
+    override fun isDefaultWindowInsetsHandlingEnabled() = false
 
     override fun onStart() {
         super.onStart()

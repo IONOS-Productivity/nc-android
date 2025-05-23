@@ -392,6 +392,7 @@ public class DialogFragmentIT extends AbstractIT {
 
         DeviceInfo info = new DeviceInfo();
         OCFile ocFile = new OCFile("/test.md");
+        ocFile.setRemoteId("00000001");
 
         Intent intent = new Intent(targetContext, FileDisplayActivity.class);
         FileDisplayActivity fda = activityRule.launchActivity(intent);
@@ -586,6 +587,7 @@ public class DialogFragmentIT extends AbstractIT {
         }
 
         OCFile ocFile = new OCFile("/test.md");
+        ocFile.setRemoteId("0001");
         final FileActionsBottomSheet sut = FileActionsBottomSheet.newInstance(ocFile, false);
         showDialog(sut);
     }

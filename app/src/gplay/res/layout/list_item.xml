@@ -84,7 +84,6 @@
                 android:id="@+id/Filename"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
                 android:ellipsize="middle"
                 android:singleLine="true"
                 android:textColor="@color/filelist_text_color"
@@ -255,7 +254,7 @@
                 android:contentDescription="@string/shared_icon_share"
                 android:focusable="true"
                 android:scaleType="centerInside"
-                android:src="@drawable/ic_filelist_unshared"
+                android:src="@drawable/ic_unshared"
                 tools:visibility="visible" />
 
             <com.owncloud.android.ui.AvatarGroupLayout

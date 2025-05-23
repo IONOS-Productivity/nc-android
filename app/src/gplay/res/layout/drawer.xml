@@ -18,7 +18,6 @@
         android:layout_gravity="start"
         android:layout_weight="1"
         android:background="@color/ionos_drawer_background"
-        android:fitsSystemWindows="true"
         android:theme="@style/NavigationView_ItemTextAppearance"
         app:headerLayout="@layout/drawer_header"
         app:itemVerticalPadding="16dp"

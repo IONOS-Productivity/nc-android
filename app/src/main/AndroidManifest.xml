@@ -9,7 +9,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />
     <uses-permission android:name="android.permission.READ_CALENDAR" />
@@ -48,12 +47,12 @@
     <uses-permission
         android:name="com.android.launcher.permission.INSTALL_SHORTCUT"
         android:maxSdkVersion="25" />
+    <uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION" />
     <!--
  Apps that target Android 9 (API level 28) or higher and use foreground services
     must request the FOREGROUND_SERVICE permission
     -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" /> <!-- Runtime permissions introduced in Android 13 (API level 33) -->
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" /> <!-- Needed for Android 14 (API level 34) -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
@@ -265,7 +264,14 @@
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.canhub.cropper.CropImageActivity"
+            android:exported="false"
+            tools:replace="android:exported" />
 
+        <receiver
+            android:name="com.nextcloud.receiver.OfflineOperationActionReceiver"
+            android:exported="false" />
         <receiver
             android:name="com.nextcloud.client.jobs.MediaFoldersDetectionWork$NotificationReceiver"
             android:exported="false" />
@@ -313,6 +319,11 @@
             android:exported="false"
             android:launchMode="singleInstance" />
         <activity
+            android:name=".ui.activity.ChooseStorageLocationActivity"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+            android:exported="false"
+            android:theme="@style/Theme.NoBackground" />
+        <activity
             android:name=".ui.activity.ReceiveExternalFilesActivity"
             android:excludeFromRecents="true"
             android:exported="true"
@@ -349,6 +360,16 @@
         <activity
             android:name="com.ionos.player.ui.PlayerActivity"
             android:launchMode="singleTask" />
+
+        <service
+            android:name="com.nextcloud.client.media.BackgroundPlayerService"
+            android:foregroundServiceType="mediaPlayback"
+            android:exported="true"
+            tools:ignore="ExportedService">
+            <intent-filter>
+                <action android:name="androidx.media3.session.MediaSessionService"/>
+            </intent-filter>
+        </service>
 
         <service
             android:name=".authentication.AccountAuthenticatorService"

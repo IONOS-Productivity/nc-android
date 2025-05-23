@@ -17,6 +17,7 @@ import android.net.Uri;
 import android.webkit.MimeTypeMap;
 
 import com.ionos.annotation.IonosCustomization;
+import com.nextcloud.android.common.ui.theme.utils.ColorRole;
 import com.owncloud.android.R;
 import com.owncloud.android.datamodel.OCFile;
 import com.owncloud.android.lib.resources.files.model.ServerFileInterface;
@@ -96,15 +97,33 @@ public final class MimeTypeUtil {
         if (context != null) {
             int iconId = MimeTypeUtil.getFileTypeIconId(mimetype, filename);
             Drawable icon = ContextCompat.getDrawable(context, iconId);
-
-            if (icon != null) {
-                icon.setTint(context.getColor(R.color.filelist_file_icon_color));
+            if (icon == null) {
+                return null;
             }
+
+           icon.setTint(context.getColor(R.color.filelist_file_icon_color));
 
             return icon;
         } else {
             return null;
         }
+    }
+
+    public static Drawable getIcon(String localPath, Context context, ViewThemeUtils viewThemeUtils) {
+        if (context == null) return null;
+
+        String mimeType = getMimeTypeFromPath(localPath);
+        List<String> possibleMimeTypes = Collections.singletonList(mimeType);
+        int iconId = determineIconIdByMimeTypeList(possibleMimeTypes);
+
+        Drawable result = ContextCompat.getDrawable(context, iconId);
+        if (result == null) return null;
+
+        if (R.drawable.file_zip == iconId) {
+            viewThemeUtils.platform.tintDrawable(context, result, ColorRole.PRIMARY);
+        }
+
+        return result;
     }
 
     /**
@@ -135,7 +154,7 @@ public final class MimeTypeUtil {
     }
 
     @IonosCustomization("Remove custom overlay color for dark mode")
-    public static LayerDrawable getFileIcon(Boolean isDarkModeActive, Integer overlayIconId, Context context, ViewThemeUtils viewThemeUtils) {
+    public static LayerDrawable getFolderIcon(boolean isDarkModeActive, Integer overlayIconId, Context context, ViewThemeUtils viewThemeUtils) {
         Drawable folderDrawable = getDefaultFolderIcon(context, viewThemeUtils);
         assert(folderDrawable != null);
 
@@ -145,12 +164,10 @@ public final class MimeTypeUtil {
             return folderLayerDrawable;
         }
 
-        DrawableUtil drawableUtil = new DrawableUtil();
-
         Drawable overlayDrawable = ContextCompat.getDrawable(context, overlayIconId);
         assert(overlayDrawable != null);
 
-        return drawableUtil.addDrawableAsOverlay(folderDrawable, overlayDrawable);
+        return DrawableUtil.INSTANCE.addDrawableAsOverlay(folderDrawable, overlayDrawable);
     }
 
     /**
