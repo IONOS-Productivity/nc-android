@@ -2255,10 +2255,6 @@ public class FileDisplayActivity extends FileActivity
         playerLauncher.launch(this, file, searchType);
     }
 
-    @IonosCustomization
-    private void currentFileChanged(@Nullable OCFile file) {
-    }
-
     public void configureToolbarForPreview(OCFile file) {
         lockScrolling();
         super.updateActionBarTitleAndHomeButton(file);
