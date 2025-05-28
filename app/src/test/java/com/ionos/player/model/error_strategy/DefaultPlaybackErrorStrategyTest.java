@@ -5,7 +5,7 @@
  * SPDX-License-Identifier: GPL-2.0
  */
 
-package com.ionos.player.model.strategy.error;
+package com.ionos.player.model.error_strategy;
 
 import com.ionos.player.model.PlaybackFile;
 import com.ionos.player.model.state.PlaybackState;

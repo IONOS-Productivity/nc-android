@@ -11,7 +11,6 @@ import android.content.Context
 import androidx.media3.session.MediaController
 import com.ionos.player.media3.common.MediaItemFactory
 import com.ionos.player.media3.controller.MediaControllerFactory
-import com.ionos.player.media3.controller.MediaControllerProvider
 import com.ionos.player.media3.controller.indexOfFirst
 import com.ionos.player.media3.controller.setRepeatMode
 import com.ionos.player.media3.controller.updateMediaItems
@@ -24,14 +23,18 @@ import com.ionos.player.model.VideoViewSetter
 import com.ionos.player.model.file_store.PlaybackFileStore
 import com.ionos.player.model.state.PlaybackState
 import com.ionos.player.model.state.RepeatMode
-import com.ionos.player.model.strategy.error.PlaybackErrorStrategy
-import com.ionos.player.model.strategy.release.PlaybackReleaseStrategy
+import com.ionos.player.model.error_strategy.PlaybackErrorStrategy
 import com.ionos.player.util.PeriodicAction
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import java.util.Optional
 import javax.inject.Inject
-import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
-import kotlin.coroutines.suspendCoroutine
 
 class PlaybackModelImpl @Inject constructor(
 	private val context: Context,
@@ -40,7 +43,6 @@ class PlaybackModelImpl @Inject constructor(
 	private val playbackFileStore: PlaybackFileStore,
 	private val playbackSettings: PlaybackSettings,
 	private val playbackErrorStrategy: PlaybackErrorStrategy,
-    private val playbackReleaseStrategy: PlaybackReleaseStrategy,
 ) : PlaybackModel {
 
 	companion object {
@@ -63,6 +65,7 @@ class PlaybackModelImpl @Inject constructor(
 	private val controllerListener = object : MediaController.Listener {
 		override fun onDisconnected(controller: MediaController) {
 			controller.removeListener(playerListener)
+			controllerScope?.cancel()
 			playbackFileStore.clear()
 			checkProgressPeriodicAction.stop()
 			state.ifPresent(compositeListener::onUpdate)
@@ -70,58 +73,43 @@ class PlaybackModelImpl @Inject constructor(
 	}
 
 	private val controllerFactory = MediaControllerFactory(controllerListener)
-	private val controllerProvider = MediaControllerProvider(controllerFactory)
-	private val controller: MediaController? by controllerProvider
+	private var controllerScope: CoroutineScope? = null
+	private var controller: MediaController? = null
 
     override val state: Optional<PlaybackState> get() {
         return stateFactory.create(controller)
     }
 
-    override suspend fun start() = suspendCoroutine { continuation ->
-		if (controllerProvider.isInitialized) {
-			continuation.resume(Unit)
-
-		} else if (controllerProvider.isInitializing) {
-			controllerProvider.addInitializeListener { result ->
-				result.onSuccess { continuation.resume(Unit) }
-				result.onFailure { continuation.resumeWithException(it) }
-			}
-
-		} else {
-			controllerProvider.initialize(context) { result ->
-				result.onSuccess {
-					it.addListener(playerListener)
-					it.setRepeatMode(playbackSettings.repeatMode)
-					it.shuffleModeEnabled = playbackSettings.isShuffle
-					continuation.resume(Unit)
-				}
-				result.onFailure { continuation.resumeWithException(it) }
-			}
+	override suspend fun start() {
+		controller = controllerFactory.create(context).apply {
+			addListener(playerListener)
+			setRepeatMode(playbackSettings.repeatMode)
+			shuffleModeEnabled = playbackSettings.isShuffle
+			controllerScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 		}
 	}
 
-	override fun setFiles(files: List<PlaybackFile>) {
-		val releaseCurrentPlayback = controller
-			?.currentMediaItem
-			?.let { playbackFileStore.getFile(it.mediaId) }
-			?.let { playbackReleaseStrategy.releaseCurrentPlayback(files, it) }
-			?: true
+	override fun setFilesFlow(filesFlow: Flow<List<PlaybackFile>>) {
+		controllerScope?.launch {
+			filesFlow
+				.catch {
+					compositeListener.onError(it)
+					release()
+				}
+				.collectLatest { setFiles(it) }
+		}
+	}
 
+	private fun setFiles(files: List<PlaybackFile>) {
 		playbackFileStore.setFiles(files)
-
 		controller?.let {
 			val mediaItems = files.map(mediaItemFactory::create)
-			if (releaseCurrentPlayback) {
-				it.setMediaItems(mediaItems)
-			} else {
-				it.updateMediaItems(mediaItems)
-			}
+			it.updateMediaItems(mediaItems)
 			it.prepare()
 		}
 	}
 
 	override fun release() {
-		controllerProvider.release()
 		mediaSessionHolder.release()
 	}
 

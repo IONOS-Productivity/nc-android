@@ -1,4 +1,4 @@
-package com.ionos.player.model.strategy.error
+package com.ionos.player.model.error_strategy
 
 import com.ionos.player.model.state.PlaybackState
 import javax.inject.Inject

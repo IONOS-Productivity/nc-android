@@ -2,18 +2,19 @@ package com.ionos.player.model
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.ionos.player.media3.resumption.PlaybackResumptionRepository
+import com.ionos.player.media3.resumption.PlaybackResumptionConfigStore
 import com.ionos.player.ui.PlayerActivity
 import com.nextcloud.client.logger.Logger
 import com.owncloud.android.datamodel.OCFile
 import com.owncloud.android.ui.fragment.SearchType
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import java.util.concurrent.CancellationException
 import javax.inject.Inject
 
 class PlayerLauncher @Inject constructor(
-	private val playbackResumptionRepository: PlaybackResumptionRepository,
+	private val playbackResumptionConfigStore: PlaybackResumptionConfigStore,
 	private val playbackFilesRepository: PlaybackFilesRepository,
 	private val playbackModel: PlaybackModel,
 	private val logger: Logger,
@@ -25,21 +26,20 @@ class PlayerLauncher @Inject constructor(
 		currentLaunchJob = activity.lifecycleScope.launch {
 			try {
 				val fileType = file.getPlaybackFileType()
-				playbackResumptionRepository.saveConfig(file.localId.toString(), file.parentId, fileType, searchType)
+				playbackResumptionConfigStore.saveConfig(file.localId.toString(), file.parentId, fileType, searchType)
 
 				val currentPlaybackFile = file.toPlaybackFile()
+
+				val playbackFilesFlow = playbackFilesRepository.observe(file.parentId, fileType, searchType)
+					.onStart { emit(listOf(currentPlaybackFile)) }
+
 				playbackModel.start()
-				playbackModel.setFiles(listOf(currentPlaybackFile))
+				playbackModel.setFilesFlow(playbackFilesFlow)
 				playbackModel.switchToFile(currentPlaybackFile)
 				playbackModel.play()
 
 				val intent = PlayerActivity.createIntent(activity, fileType)
 				activity.startActivity(intent)
-
-				val playbackFiles = playbackFilesRepository.load(file.parentId, fileType, searchType)
-				playbackModel.state.ifPresent {
-					playbackModel.setFiles(playbackFiles)
-				}
 			} catch (t: Throwable) {
 				if (t is CancellationException) throw t
 				logger.e(PlayerLauncher::class.java.simpleName, "Error launching player", t)

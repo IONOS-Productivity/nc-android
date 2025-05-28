@@ -2,6 +2,7 @@ package com.ionos.player.model
 
 import com.ionos.player.model.state.PlaybackState
 import com.ionos.player.model.state.RepeatMode
+import kotlinx.coroutines.flow.Flow
 import java.util.Optional
 
 interface PlaybackModel {
@@ -10,7 +11,7 @@ interface PlaybackModel {
 
     suspend fun start()
 
-    fun setFiles(files: List<PlaybackFile>)
+    fun setFilesFlow(filesFlow: Flow<List<PlaybackFile>>)
 
     fun release()
 

@@ -5,10 +5,10 @@ import androidx.media3.common.Player
 import javax.inject.Inject
 
 class PlaybackResumptionPlayerListener @Inject constructor(
-	private val playbackResumptionRepository: PlaybackResumptionRepository,
+	private val playbackResumptionConfigStore: PlaybackResumptionConfigStore,
 ) : Player.Listener {
 
 	override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
-		mediaItem?.let { playbackResumptionRepository.updateCurrentFileId(it.mediaId) }
+		mediaItem?.let { playbackResumptionConfigStore.updateCurrentFileId(it.mediaId) }
 	}
 }

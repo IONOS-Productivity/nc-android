@@ -12,10 +12,8 @@ import com.ionos.player.media3.exoplayer.ExoPlayerFactory
 import com.ionos.player.model.PlaybackModel
 import com.ionos.player.model.file_store.InMemoryPlaybackFileStore
 import com.ionos.player.model.file_store.PlaybackFileStore
-import com.ionos.player.model.strategy.error.DefaultPlaybackErrorStrategy
-import com.ionos.player.model.strategy.error.PlaybackErrorStrategy
-import com.ionos.player.model.strategy.release.DefaultPlaybackReleaseStrategy
-import com.ionos.player.model.strategy.release.PlaybackReleaseStrategy
+import com.ionos.player.model.error_strategy.DefaultPlaybackErrorStrategy
+import com.ionos.player.model.error_strategy.PlaybackErrorStrategy
 import com.ionos.player.ui.PlayerActivity
 import com.ionos.player.ui.audio.AudioPlayerSourceFragment
 import com.ionos.player.ui.audio.AudioPlayerView
@@ -69,11 +67,6 @@ abstract class PlayerModule {
 	abstract fun bindPlaybackErrorStrategy(
 		strategy: DefaultPlaybackErrorStrategy,
 	): PlaybackErrorStrategy
-
-    @Binds
-    abstract fun bindPlaybackReleaseStrategy(
-        strategy: DefaultPlaybackReleaseStrategy,
-    ): PlaybackReleaseStrategy
 
     @ContributesAndroidInjector
     abstract fun playbackService(): PlaybackService

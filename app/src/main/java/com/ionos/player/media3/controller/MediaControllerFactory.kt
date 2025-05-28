@@ -11,18 +11,19 @@ import android.content.ComponentName
 import android.content.Context
 import androidx.media3.session.MediaController
 import androidx.media3.session.SessionToken
-import com.google.common.util.concurrent.ListenableFuture
 import com.ionos.player.media3.PlaybackService
+import kotlinx.coroutines.guava.await
 
 class MediaControllerFactory(
 	private val controllerListener: MediaController.Listener,
 ) {
 
-	fun create(context: Context): ListenableFuture<MediaController> {
+	suspend fun create(context: Context): MediaController {
 		val token = SessionToken(context, ComponentName(context, PlaybackService::class.java))
 		return MediaController
 			.Builder(context, token)
 			.setListener(controllerListener)
 			.buildAsync()
+			.await()
 	}
 }

@@ -11,6 +11,7 @@ import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.session.MediaController
 import com.ionos.player.model.state.RepeatMode
+import kotlin.collections.indexOfFirst
 
 fun MediaController.indexOfFirst(satisfies: (MediaItem) -> Boolean): Int {
 	for (index in 0 ..< mediaItemCount) {
@@ -49,7 +50,13 @@ fun MediaController.updateMediaItems(newMediaItems: List<MediaItem>) {
 		replaceMediaItem(newCurrentMediaItemIndex, newMediaItems[newCurrentMediaItemIndex])
 
 	} else {
-		setMediaItems(newMediaItems)
+		val nextMediaItemIndex = oldCurrentMediaItemIndex
+			?.takeIf { it < mediaItemCount - 1 }
+			?.let { getMediaItemAt(it + 1) }
+			?.let { nextMediaItem -> newMediaItems.indexOfFirst { it.mediaId == nextMediaItem.mediaId } }
+			?.takeIf { it >= 0 }
+			?: 0
+		setMediaItems(newMediaItems, nextMediaItemIndex, 0)
 	}
 }
 

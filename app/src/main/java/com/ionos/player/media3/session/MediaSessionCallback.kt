@@ -9,17 +9,27 @@ import androidx.media3.session.SessionCommand
 import androidx.media3.session.SessionResult
 import com.google.common.util.concurrent.Futures
 import com.google.common.util.concurrent.ListenableFuture
-import com.google.common.util.concurrent.SettableFuture
-import com.ionos.player.media3.resumption.PlaybackResumptionRepository
+import com.ionos.player.media3.common.MediaItemFactory
+import com.ionos.player.media3.resumption.PlaybackResumptionConfigStore
+import com.ionos.player.model.PlaybackFile
+import com.ionos.player.model.PlaybackFilesRepository
 import com.ionos.player.model.PlaybackModel
 import com.ionos.player.model.file_store.PlaybackFileStore
+import com.ionos.player.model.getPlaybackUri
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.drop
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.guava.future
+import kotlinx.coroutines.withContext
+import java.util.concurrent.CancellationException
 import javax.inject.Inject
 
 class MediaSessionCallback @Inject constructor(
 	private val sessionHolder: MediaSessionHolder,
-	private val playbackResumptionRepository: PlaybackResumptionRepository,
+	private val playbackResumptionConfigStore: PlaybackResumptionConfigStore,
+	private val playbackFilesRepository: PlaybackFilesRepository,
+	private val mediaItemFactory: MediaItemFactory,
 	private val playbackFileStore: PlaybackFileStore,
 	private val playbackModel: PlaybackModel,
 ) : MediaSession.Callback {
@@ -56,17 +66,49 @@ class MediaSessionCallback @Inject constructor(
 		mediaSession: MediaSession,
 		controller: MediaSession.ControllerInfo
 	): ListenableFuture<MediaItemsWithStartPosition> {
-		val future = SettableFuture.create<MediaItemsWithStartPosition>()
-		GlobalScope.launch {
+		return GlobalScope.future {
 			try {
-				val playlist = playbackResumptionRepository.restorePlaylist()
-				playbackFileStore.setFiles(playlist.playbackFiles)
-				playbackModel.start()
-				future.set(playlist.mediaItemsWithStartPosition)
+				val (currentFileId, folderId, fileType, searchType) = playbackResumptionConfigStore.loadConfig()
+					?: throw IllegalStateException("Playback resumption config is null")
+				val playbackFilesFlow = playbackFilesRepository.observe(folderId, fileType, searchType)
+				val playbackFiles = playbackFilesFlow.first().ifEmpty {
+					throw IllegalStateException("Playback files are empty")
+				}
+				withContext(Dispatchers.Main) {
+					playbackFileStore.setFiles(playbackFiles)
+					playbackModel.start()
+					playbackModel.setFilesFlow(playbackFilesFlow.drop(1))
+				}
+				playbackFiles.toMediaItemsWithStartPosition(currentFileId)
 			} catch (t: Throwable) {
-				future.setException(t)
+				if (t is CancellationException) throw t
+				val stubPlaybackFile = getStubPlaybackFile()
+				val stubPlaybackFiles = listOf(stubPlaybackFile)
+				withContext(Dispatchers.Main) {
+					playbackFileStore.setFiles(stubPlaybackFiles)
+					playbackModel.start()
+				}
+				stubPlaybackFiles.toMediaItemsWithStartPosition(stubPlaybackFile.id)
 			}
 		}
-		return future
 	}
+
+	@UnstableApi
+	private fun List<PlaybackFile>.toMediaItemsWithStartPosition(currentFileId: String) = MediaItemsWithStartPosition(
+		map { mediaItemFactory.create(it) },
+		indexOfFirst { it.id == currentFileId },
+		0,
+	)
+
+	/**
+	 * Workaround to avoid internal media3 crash
+	 */
+	private fun getStubPlaybackFile() = PlaybackFile(
+		id = "0",
+		uri = getPlaybackUri(0L).toString(),
+		name = "",
+		mimeType = "audio/mpeg",
+		contentLength = 0L,
+		lastModified = 0L,
+	)
 }
