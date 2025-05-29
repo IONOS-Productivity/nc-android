@@ -7,7 +7,6 @@ import com.ionos.player.util.observeContentChanges
 import com.nextcloud.client.preferences.AppPreferences
 import com.owncloud.android.MainApp
 import com.owncloud.android.datamodel.FileDataStorageManager
-import com.owncloud.android.datamodel.VirtualFolderType
 import com.owncloud.android.db.ProviderMeta.ProviderTableMeta
 import com.owncloud.android.ui.fragment.SearchType
 import com.owncloud.android.utils.FileSortOrder
@@ -50,15 +49,15 @@ class PlaybackFilesRepository @Inject constructor(
 	}
 
 	private fun observeFavoritePlaybackFiles(fileType: PlaybackFileType): Flow<PlaybackFiles> {
-		val uri = ProviderTableMeta.CONTENT_URI_VIRTUAL
-		return observeData(uri, false) {
+		val uri = ProviderTableMeta.CONTENT_URI
+		return observeData(uri, true) {
 			getFavoritePlaybackFiles(fileType)
 		}
 	}
 
 	private suspend fun getFavoritePlaybackFiles(fileType: PlaybackFileType): PlaybackFiles {
 		return withContext(Dispatchers.IO) {
-			storageManager.getVirtualFolderContent(VirtualFolderType.FAVORITE, false)
+			storageManager.favoriteFiles
 				.filter { it.mimeType.startsWith(fileType.value, ignoreCase = true) }
 				.map { it.toPlaybackFile() }
 				.sortedWith(PlaybackFilesComparator.FAVORITE)

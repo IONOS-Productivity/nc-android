@@ -2724,6 +2724,18 @@ public class FileDataStorageManager {
         return folderContent;
     }
 
+    @IonosCustomization
+    public List<OCFile> getFavoriteFiles() {
+        List<FileEntity> fileEntities = fileDao.getFavoriteFiles(user.getAccountName());
+        List<OCFile> favoriteFiles = new ArrayList<>(fileEntities.size());
+
+        for (FileEntity fileEntity : fileEntities) {
+            favoriteFiles.add(createFileInstance(fileEntity));
+        }
+
+        return favoriteFiles;
+    }
+
     private String getString(Cursor cursor, String columnName) {
         return cursor.getString(cursor.getColumnIndexOrThrow(columnName));
     }
