@@ -22,7 +22,7 @@ class MediaItemFactory @Inject constructor() {
 			.Builder()
 			.setMediaId(file.id)
 			// remove to allow ExoPlayer to extract the title from the tags
-			.setTitle(file.name)
+			.setTitle(file.getNameWithoutExtension())
 			// remove to allow ExoPlayer to extract the artist from the tags
 			.setArtist("")
 			.build()

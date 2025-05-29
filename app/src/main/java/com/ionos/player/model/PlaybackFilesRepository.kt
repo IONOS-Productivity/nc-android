@@ -11,7 +11,6 @@ import com.owncloud.android.datamodel.VirtualFolderType
 import com.owncloud.android.db.ProviderMeta.ProviderTableMeta
 import com.owncloud.android.ui.fragment.SearchType
 import com.owncloud.android.utils.FileSortOrder
-import com.owncloud.android.utils.FileStorageUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.debounce
@@ -32,7 +31,7 @@ class PlaybackFilesRepository @Inject constructor(
 		private const val FETCH_DATA_DEBOUNCE_MS = 250L
 	}
 
-	fun observe(folderId: Long, fileType: PlaybackFileType, searchType: SearchType?): Flow<List<PlaybackFile>> {
+	fun observe(folderId: Long, fileType: PlaybackFileType, searchType: SearchType?): Flow<PlaybackFiles> {
 		return when (searchType) {
 			SearchType.FAVORITE_SEARCH -> observeFavoritePlaybackFiles(fileType)
 			SearchType.GALLERY_SEARCH -> observeGalleryPlaybackFiles(fileType)
@@ -41,7 +40,7 @@ class PlaybackFilesRepository @Inject constructor(
 		}
 	}
 
-	suspend fun get(folderId: Long, fileType: PlaybackFileType, searchType: SearchType?): List<PlaybackFile> {
+	suspend fun get(folderId: Long, fileType: PlaybackFileType, searchType: SearchType?): PlaybackFiles {
 		return when (searchType) {
 			SearchType.FAVORITE_SEARCH -> getFavoritePlaybackFiles(fileType)
 			SearchType.GALLERY_SEARCH -> getGalleryPlaybackFiles(fileType)
@@ -50,51 +49,55 @@ class PlaybackFilesRepository @Inject constructor(
 		}
 	}
 
-	private fun observeFavoritePlaybackFiles(fileType: PlaybackFileType): Flow<List<PlaybackFile>> {
+	private fun observeFavoritePlaybackFiles(fileType: PlaybackFileType): Flow<PlaybackFiles> {
 		val uri = ProviderTableMeta.CONTENT_URI_VIRTUAL
 		return observeData(uri, false) {
 			getFavoritePlaybackFiles(fileType)
 		}
 	}
 
-	private suspend fun getFavoritePlaybackFiles(fileType: PlaybackFileType): List<PlaybackFile> {
+	private suspend fun getFavoritePlaybackFiles(fileType: PlaybackFileType): PlaybackFiles {
 		return withContext(Dispatchers.IO) {
 			storageManager.getVirtualFolderContent(VirtualFolderType.FAVORITE, false)
 				.filter { it.mimeType.startsWith(fileType.value, ignoreCase = true) }
 				.map { it.toPlaybackFile() }
+				.sortedWith(PlaybackFilesComparator.FAVORITE)
+				.let { PlaybackFiles(it, PlaybackFilesComparator.FAVORITE) }
 		}
 	}
 
-	private fun observeGalleryPlaybackFiles(fileType: PlaybackFileType): Flow<List<PlaybackFile>> {
+	private fun observeGalleryPlaybackFiles(fileType: PlaybackFileType): Flow<PlaybackFiles> {
 		val uri = ProviderTableMeta.CONTENT_URI
 		return observeData(uri, true) {
 			getGalleryPlaybackFiles(fileType)
 		}
 	}
 
-	private suspend fun getGalleryPlaybackFiles(fileType: PlaybackFileType): List<PlaybackFile> {
+	private suspend fun getGalleryPlaybackFiles(fileType: PlaybackFileType): PlaybackFiles {
 		return withContext(Dispatchers.IO) {
 			storageManager.allGalleryItems
 				.filter { it.mimeType.startsWith(fileType.value, ignoreCase = true) }
-				.let { FileStorageUtils.sortOcFolderDescDateModifiedWithoutFavoritesFirst(it) }
 				.map { it.toPlaybackFile() }
+				.sortedWith(PlaybackFilesComparator.GALLERY)
+				.let { PlaybackFiles(it, PlaybackFilesComparator.GALLERY) }
 		}
 	}
 
-	private fun observeSharedPlaybackFiles(fileType: PlaybackFileType): Flow<List<PlaybackFile>> {
+	private fun observeSharedPlaybackFiles(fileType: PlaybackFileType): Flow<PlaybackFiles> {
 		val uri = ProviderTableMeta.CONTENT_URI_SHARE
 		return observeData(uri, false) {
 			getSharedPlaybackFiles(fileType)
 		}
 	}
 
-	private suspend fun getSharedPlaybackFiles(fileType: PlaybackFileType): List<PlaybackFile> {
+	private suspend fun getSharedPlaybackFiles(fileType: PlaybackFileType): PlaybackFiles {
 		return withContext(Dispatchers.IO) {
 			storageManager.shares
-				.sortedByDescending { it.sharedDate }
 				.distinctBy { it.fileSource }
 				.map { it.toPlaybackFile() }
 				.filter { it.mimeType.startsWith(fileType.value, ignoreCase = true) }
+				.sortedWith(PlaybackFilesComparator.SHARED)
+				.let { PlaybackFiles(it, PlaybackFilesComparator.SHARED) }
 		}
 	}
 
@@ -102,14 +105,15 @@ class PlaybackFilesRepository @Inject constructor(
 		folderId: Long,
 		fileType: PlaybackFileType,
 		onDeviceOnly: Boolean,
-	): Flow<List<PlaybackFile>> {
+	): Flow<PlaybackFiles> {
 		val uri = ContentUris.withAppendedId(ProviderTableMeta.CONTENT_URI_DIR, folderId)
 		val sortOrderFlow = flow {
 			emit(getFolderSortOrder(folderId))
 		}
 		return sortOrderFlow.flatMapConcat { sortOrder ->
+			val comparator = sortOrder.toPlaybackFilesComparator()
 			observeData(uri, false) {
-				getFolderPlaybackFiles(folderId, fileType, onDeviceOnly, sortOrder)
+				getFolderPlaybackFiles(folderId, fileType, onDeviceOnly, comparator)
 			}
 		}
 	}
@@ -118,15 +122,16 @@ class PlaybackFilesRepository @Inject constructor(
 		folderId: Long,
 		fileType: PlaybackFileType,
 		onDeviceOnly: Boolean,
-		sortOrder: FileSortOrder? = null,
-	): List<PlaybackFile> {
+		comparator: PlaybackFilesComparator? = null,
+	): PlaybackFiles {
 		return withContext(Dispatchers.IO) {
 			val folder = storageManager.getFileById(folderId) ?: throw IllegalStateException("Folder not found")
-			val sortOrder = sortOrder ?: preferences.getSortOrderByFolder(folder)
+			val comparator = comparator ?: preferences.getSortOrderByFolder(folder).toPlaybackFilesComparator()
 			storageManager.getFolderContent(folder, onDeviceOnly)
 				.filter { it.mimeType.startsWith(fileType.value, ignoreCase = true) }
-				.let { sortOrder.sortCloudFiles(it.toMutableList()) }
 				.map { it.toPlaybackFile() }
+				.sortedWith(comparator)
+				.let { PlaybackFiles(it, comparator) }
 		}
 	}
 

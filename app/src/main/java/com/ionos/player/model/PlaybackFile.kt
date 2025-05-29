@@ -9,4 +9,9 @@ data class PlaybackFile(
 	val mimeType: String,
 	val contentLength: Long,
 	val lastModified: Long,
-): Serializable
+	val isFavorite: Boolean,
+) : Serializable {
+	fun getNameWithoutExtension(): String {
+		return name.substringBeforeLast(".")
+	}
+}

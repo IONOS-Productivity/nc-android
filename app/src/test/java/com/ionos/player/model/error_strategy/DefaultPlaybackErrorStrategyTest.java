@@ -75,7 +75,8 @@ public class DefaultPlaybackErrorStrategyTest {
 			"fakeUri:///" + name,
 			"audio/mp3",
 			0,
-			0
+			0,
+			false
 		);
 	}
 }

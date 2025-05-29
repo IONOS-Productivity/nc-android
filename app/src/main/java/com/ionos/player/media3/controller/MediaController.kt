@@ -50,13 +50,7 @@ fun MediaController.updateMediaItems(newMediaItems: List<MediaItem>) {
 		replaceMediaItem(newCurrentMediaItemIndex, newMediaItems[newCurrentMediaItemIndex])
 
 	} else {
-		val nextMediaItemIndex = oldCurrentMediaItemIndex
-			?.takeIf { it < mediaItemCount - 1 }
-			?.let { getMediaItemAt(it + 1) }
-			?.let { nextMediaItem -> newMediaItems.indexOfFirst { it.mediaId == nextMediaItem.mediaId } }
-			?.takeIf { it >= 0 }
-			?: 0
-		setMediaItems(newMediaItems, nextMediaItemIndex, 0)
+		setMediaItems(newMediaItems)
 	}
 }
 

@@ -57,7 +57,7 @@ public class FileTextDetailView extends LinearLayout {
 	}
 
 	public void displayFile(PlaybackFile file) {
-		showData(file.getName(), createSubtitleText(file));
+		showData(file.getNameWithoutExtension(), createSubtitleText(file));
 	}
 
 	private void showData(String title, String subtitle) {

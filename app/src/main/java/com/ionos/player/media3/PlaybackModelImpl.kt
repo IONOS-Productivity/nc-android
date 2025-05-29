@@ -16,14 +16,15 @@ import com.ionos.player.media3.controller.setRepeatMode
 import com.ionos.player.media3.controller.updateMediaItems
 import com.ionos.player.media3.session.MediaSessionHolder
 import com.ionos.player.model.PlaybackFile
+import com.ionos.player.model.PlaybackFiles
 import com.ionos.player.model.PlaybackModel
 import com.ionos.player.model.PlaybackModelCompositeListener
 import com.ionos.player.model.PlaybackSettings
 import com.ionos.player.model.VideoViewSetter
+import com.ionos.player.model.error_strategy.PlaybackErrorStrategy
 import com.ionos.player.model.file_store.PlaybackFileStore
 import com.ionos.player.model.state.PlaybackState
 import com.ionos.player.model.state.RepeatMode
-import com.ionos.player.model.error_strategy.PlaybackErrorStrategy
 import com.ionos.player.util.PeriodicAction
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -89,7 +90,7 @@ class PlaybackModelImpl @Inject constructor(
 		}
 	}
 
-	override fun setFilesFlow(filesFlow: Flow<List<PlaybackFile>>) {
+	override fun setFilesFlow(filesFlow: Flow<PlaybackFiles>) {
 		controllerScope?.launch {
 			filesFlow
 				.catch {
@@ -100,12 +101,27 @@ class PlaybackModelImpl @Inject constructor(
 		}
 	}
 
-	private fun setFiles(files: List<PlaybackFile>) {
-		playbackFileStore.setFiles(files)
-		controller?.let {
-			val mediaItems = files.map(mediaItemFactory::create)
-			it.updateMediaItems(mediaItems)
-			it.prepare()
+	private fun setFiles(files: PlaybackFiles) {
+		val currentFile = controller?.currentMediaItem?.let { playbackFileStore.getFile(it.mediaId) }
+
+		playbackFileStore.setFiles(files.list)
+
+		controller?.let { controller ->
+			val mediaItems = files.list.map(mediaItemFactory::create)
+
+			if (currentFile == null) {
+				controller.setMediaItems(mediaItems)
+			} else if (files.list.any { it.id == currentFile.id }) {
+				controller.updateMediaItems(mediaItems)
+			} else {
+				val nextFileIndex = (files.list + currentFile)
+					.sortedWith(files.comparator)
+					.indexOfFirst { it.id == currentFile.id }
+					.let { if (it in 0..files.list.lastIndex) it else 0 }
+				controller.setMediaItems(mediaItems, nextFileIndex, 0)
+			}
+
+			controller.prepare()
 		}
 	}
 

@@ -180,7 +180,7 @@ public class VideoPlayerView extends PlayerView {
 				currentFileListener.fileChanged(file);
 			}
 			showMessageThatSelectedFilesAreBeingProcessing(file);
-			this.tvTitle.setText(file.getName());
+			this.tvTitle.setText(file.getNameWithoutExtension());
 		} else {
             this.tvTitle.setText("");
 		}

@@ -11,7 +11,7 @@ interface PlaybackModel {
 
     suspend fun start()
 
-    fun setFilesFlow(filesFlow: Flow<List<PlaybackFile>>)
+    fun setFilesFlow(filesFlow: Flow<PlaybackFiles>)
 
     fun release()
 

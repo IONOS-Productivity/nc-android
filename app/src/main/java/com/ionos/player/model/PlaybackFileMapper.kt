@@ -8,19 +8,21 @@ import java.io.File
 fun OCFile.toPlaybackFile() = PlaybackFile(
     id = localId.toString(),
     uri = getPlaybackUri().toString(),
-    name = fileName.substringBeforeLast("."),
+    name = fileName,
     mimeType = mimeType,
     contentLength = fileLength,
     lastModified = modificationTimestamp,
+    isFavorite = isFavorite,
 )
 
 fun OCShare.toPlaybackFile() = PlaybackFile(
     id = fileSource.toString(),
     uri = getPlaybackUri().toString(),
-    name = path?.let { File(it).name.substringBeforeLast(".") } ?: "",
+    name = path?.let { File(it).name } ?: "",
     mimeType = getMimeType(),
     contentLength = -1L,
-    lastModified = -1L,
+    lastModified = sharedDate,
+    isFavorite = isFavorite,
 )
 
 private fun OCShare.getMimeType(): String {

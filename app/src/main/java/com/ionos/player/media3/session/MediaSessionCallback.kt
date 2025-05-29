@@ -71,7 +71,7 @@ class MediaSessionCallback @Inject constructor(
 				val (currentFileId, folderId, fileType, searchType) = playbackResumptionConfigStore.loadConfig()
 					?: throw IllegalStateException("Playback resumption config is null")
 				val playbackFilesFlow = playbackFilesRepository.observe(folderId, fileType, searchType)
-				val playbackFiles = playbackFilesFlow.first().ifEmpty {
+				val playbackFiles = playbackFilesFlow.first().list.ifEmpty {
 					throw IllegalStateException("Playback files are empty")
 				}
 				withContext(Dispatchers.Main) {
@@ -110,5 +110,6 @@ class MediaSessionCallback @Inject constructor(
 		mimeType = "audio/mpeg",
 		contentLength = 0L,
 		lastModified = 0L,
+		isFavorite = false,
 	)
 }
