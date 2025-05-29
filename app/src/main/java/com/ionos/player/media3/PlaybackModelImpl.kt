@@ -102,6 +102,11 @@ class PlaybackModelImpl @Inject constructor(
 	}
 
 	private fun setFiles(files: PlaybackFiles) {
+		if (files.list.isEmpty()) {
+			release()
+			return
+		}
+
 		val currentFile = controller?.currentMediaItem?.let { playbackFileStore.getFile(it.mediaId) }
 
 		playbackFileStore.setFiles(files.list)
