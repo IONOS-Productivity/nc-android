@@ -33,6 +33,7 @@ class PlayerLauncher @Inject constructor(
 				val playbackFilesFlow = playbackFilesRepository.observe(file.parentId, fileType, searchType)
 					.onStart { emit(PlaybackFiles(listOf(currentPlaybackFile), PlaybackFilesComparator.NONE)) }
 
+				playbackModel.release()
 				playbackModel.start()
 				playbackModel.setFilesFlow(playbackFilesFlow)
 				playbackModel.switchToFile(currentPlaybackFile)
