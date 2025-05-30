@@ -8,7 +8,6 @@ import android.widget.LinearLayout;
 import com.ionos.player.model.PlaybackFile;
 import com.ionos.player.model.PlaybackModel;
 import com.ionos.player.ui.MultiplePlayer;
-import com.ionos.player.ui.message.PlayerExceptionMessageProvider;
 import com.ionos.player.ui.pager.InfiniteViewPager;
 import com.ionos.player.ui.pager.Mode;
 import com.ionos.player.ui.pager.ViewPagerFragmentFactory;
@@ -32,8 +31,6 @@ public class PlayerSourcesView extends LinearLayout {
 
 	@Inject
     PlaybackModel playerModel;
-	@Inject
-	PlayerExceptionMessageProvider playerExceptionMessageProvider;
 
 	private MultiplePlayer.SourcesPresenter presenter;
 	private final InfiniteViewPager<PlaybackFile> infiniteViewPager;
@@ -57,8 +54,7 @@ public class PlayerSourcesView extends LinearLayout {
         ((HasAndroidInjector) context.getApplicationContext()).androidInjector().inject(this);
 		this.presenter = new MultiplePlayerSourcesPresenter(
 				this.playerModel,
-				new DoNothingMultiplePlayerPresenterDestroyStrategy(),
-				playerExceptionMessageProvider
+				new DoNothingMultiplePlayerPresenterDestroyStrategy()
 		);
 
 		this.activity = Cast.castOrError(context, FragmentActivity.class);

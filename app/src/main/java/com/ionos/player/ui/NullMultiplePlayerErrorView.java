@@ -24,7 +24,8 @@ public class NullMultiplePlayerErrorView implements  MultiplePlayer.ErrorView {
 
 
 	@Override
-	public void showError(String message) {
+	public void showError(int messageId) {
+		// No operation, this is a null object pattern implementation
 
 	}
 }

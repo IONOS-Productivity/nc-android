@@ -33,7 +33,7 @@ public interface MultiplePlayer {
 	}
 
 	interface ErrorView {
-		void showError(String message);
+		void showError(int messageId);
 	}
 
 	interface ErrorPresenter extends BasePresenter {

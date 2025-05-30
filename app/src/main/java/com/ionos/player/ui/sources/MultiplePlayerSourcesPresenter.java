@@ -12,8 +12,6 @@ import com.ionos.player.model.PlaybackModel;
 import com.ionos.player.model.state.PlaybackItemState;
 import com.ionos.player.model.state.PlaybackState;
 import com.ionos.player.ui.MultiplePlayer;
-import com.ionos.player.ui.message.ExceptionToMessageTransformation;
-import com.ionos.player.ui.message.PlayerExceptionMessageProvider;
 import com.ionos.player.ui.sources.destroy_strategy.MultiplePlayerPresenterDestroyStrategy;
 
 import java.util.ArrayList;
@@ -27,18 +25,15 @@ import java.util.Optional;
 public class MultiplePlayerSourcesPresenter implements MultiplePlayer.SourcesPresenter {
 
 	private final PlaybackModel model;
-	private final ExceptionToMessageTransformation exceptionToMessageTransformation;
     private MultiplePlayer.SourcesView view = NullMultiplePlayerSourcesView.getInstance();
 
 	private final MultiplePlayerPresenterDestroyStrategy destroyStrategy;
 
 	public MultiplePlayerSourcesPresenter(
 			PlaybackModel model,
-            MultiplePlayerPresenterDestroyStrategy destroyStrategy,
-			PlayerExceptionMessageProvider exceptionMessageProvider) {
+            MultiplePlayerPresenterDestroyStrategy destroyStrategy) {
 		this.model = model;
 		this.destroyStrategy = destroyStrategy;
-		this.exceptionToMessageTransformation = new ExceptionToMessageTransformation(exceptionMessageProvider);
 	}
 
 	@Override

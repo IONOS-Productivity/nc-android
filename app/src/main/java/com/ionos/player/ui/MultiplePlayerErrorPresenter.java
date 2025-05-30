@@ -9,8 +9,9 @@ package com.ionos.player.ui;
 
 import com.ionos.player.model.PlaybackFile;
 import com.ionos.player.model.PlaybackModel;
+import com.ionos.player.model.SourceException;
 import com.ionos.player.model.state.PlaybackState;
-import com.ionos.player.ui.message.ExceptionToMessageTransformation;
+import com.owncloud.android.R;
 
 import java.util.List;
 
@@ -21,13 +22,9 @@ import java.util.List;
 public class MultiplePlayerErrorPresenter implements MultiplePlayer.ErrorPresenter {
 	private MultiplePlayer.ErrorView errorView = NullMultiplePlayerErrorView.getInstance();
 	private final PlaybackModel model;
-	private final ExceptionToMessageTransformation exceptionToMessageTransformation;
 
-	public MultiplePlayerErrorPresenter(
-			PlaybackModel model,
-            ExceptionToMessageTransformation exceptionToMessageTransformation) {
+	public MultiplePlayerErrorPresenter(PlaybackModel model) {
 		this.model = model;
-		this.exceptionToMessageTransformation = exceptionToMessageTransformation;
 	}
 
 	@Override
@@ -63,7 +60,11 @@ public class MultiplePlayerErrorPresenter implements MultiplePlayer.ErrorPresent
 
 		@Override
 		public void onError(Throwable error) {
-			errorView.showError(exceptionToMessageTransformation.transform(error));
+			if (error instanceof SourceException) {
+				errorView.showError(R.string.player_error_source_not_found);
+			} else {
+				errorView.showError(R.string.player_error_unknown);
+			}
 		}
 
 		@Override

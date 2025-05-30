@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.ionos.player.model.PlaybackFile;
 import com.ionos.player.model.PlaybackModel;
 import com.ionos.player.model.predicate.FileBeingProcessedPredicate;
@@ -19,7 +20,6 @@ import com.ionos.player.ui.MultiplePlayerHidingPresenter;
 import com.ionos.player.ui.PlayerView;
 import com.ionos.player.ui.PlayerViewContainer;
 import com.ionos.player.ui.control.PlayerControlView;
-import com.ionos.player.ui.message.PlayerMessageBuilderFactory;
 import com.ionos.player.ui.sources.PlayerSourcesView;
 import com.ionos.player.util.Action;
 import com.ionos.player.util.AsyncTimer;
@@ -45,8 +45,6 @@ public class VideoPlayerView extends PlayerView {
 
 	@Inject
 	PlaybackModel playerModel;
-	@Inject
-	PlayerMessageBuilderFactory messageBuilderFactory;
 	@Inject
 	FileBeingProcessedPredicate fileBeingProcessedPredicate;
 
@@ -190,11 +188,7 @@ public class VideoPlayerView extends PlayerView {
 		boolean hasCurrentlyProcessingFiles = fileBeingProcessedPredicate.satisfied(selectedFile);
 
 		if (hasCurrentlyProcessingFiles) {
-			messageBuilderFactory.
-					show(
-							getContext(),
-							getContext().getString(R.string.player_files_are_processing_alert_message)
-					);
+			Snackbar.make(this, R.string.player_files_are_processing_alert_message, Snackbar.LENGTH_LONG).show();
 		}
 	}
 
