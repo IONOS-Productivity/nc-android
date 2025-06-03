@@ -542,9 +542,10 @@ public class OCFileListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
     }
 
-    @IonosCustomization
+    @IonosCustomization("Custom grid view, Show current playback progress")
     private void bindListGridItemViewHolder(ListGridItemViewHolder holder, OCFile file) {
         holder.getFileName().setText(mStorageManager.getFilenameConsideringOfflineOperation(file));
+        holder.getPlayerProgressIndicator().onBind(file);
 
         if (IonosBuildHelper.isIonosBuild()) {
             return;
@@ -1113,11 +1114,15 @@ public class OCFileListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     @Override
+    @IonosCustomization("Show current playback progress")
     public void onViewRecycled(@NonNull RecyclerView.ViewHolder holder) {
         super.onViewRecycled(holder);
         if (holder instanceof ListViewHolder listGridImageViewHolder) {
             LoaderImageView thumbnailShimmer = listGridImageViewHolder.getShimmerThumbnail();
             DisplayUtils.stopShimmer(thumbnailShimmer,  listGridImageViewHolder.getThumbnail());
+        }
+        if (holder instanceof ListGridItemViewHolder listGridItemViewHolder) {
+            listGridItemViewHolder.getPlayerProgressIndicator().onRecycled();
         }
     }
 

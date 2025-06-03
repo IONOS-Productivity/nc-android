@@ -40,22 +40,6 @@ public interface MultiplePlayer {
 		void setView(ErrorView errorView);
 	}
 
-	interface ActiveSourceView {
-
-		void displayAsActiveSource();
-
-		void displayAsInactiveSource();
-
-		void setProgress(int currentTimeInMilliseconds, int totalTimeInMilliseconds);
-	}
-
-	interface ActiveSourcePresenter extends BasePresenter {
-
-		void setView(ActiveSourceView view);
-
-		void setFile(PlaybackFile file);
-	}
-
 	interface ControlView {
 		void repeat();
 

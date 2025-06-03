@@ -17,6 +17,7 @@ import com.ionos.player.model.error_strategy.PlaybackErrorStrategy
 import com.ionos.player.ui.PlayerActivity
 import com.ionos.player.ui.audio.AudioPlayerSourceFragment
 import com.ionos.player.ui.audio.AudioPlayerView
+import com.ionos.player.ui.common.PlayerProgressIndicator
 import com.ionos.player.ui.control.PlayerControlView
 import com.ionos.player.ui.sources.PlayerSourcesView
 import com.ionos.player.ui.video.VideoPlayerSourceFragment
@@ -85,6 +86,9 @@ abstract class PlayerModule {
 
     @ContributesAndroidInjector
     abstract fun playerSourcesView(): PlayerSourcesView
+
+    @ContributesAndroidInjector
+    abstract fun playerProgressIndicator(): PlayerProgressIndicator
 
     @ContributesAndroidInjector
     abstract fun audioPlayerSourceFragment(): AudioPlayerSourceFragment

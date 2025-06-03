@@ -16,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.elyeproj.loaderviewlibrary.LoaderImageView
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
+import com.ionos.annotation.IonosCustomization
+import com.ionos.player.ui.common.PlayerProgressIndicator
 import com.owncloud.android.databinding.ListItemBinding
 import com.owncloud.android.ui.AvatarGroupLayout
 
@@ -55,6 +57,9 @@ internal class OCFileListItemViewHolder(private var binding: ListItemBinding) :
         get() = binding.tagMore
     override val fileDetailGroup: LinearLayout
         get() = binding.fileDetailGroup
+    @IonosCustomization("Show current playback progress")
+    override val playerProgressIndicator: PlayerProgressIndicator
+        get() = binding.playerProgressIndicator
 
     override fun showVideoOverlay() {
         binding.thumbnailLayout.videoOverlay.visibility = View.VISIBLE
