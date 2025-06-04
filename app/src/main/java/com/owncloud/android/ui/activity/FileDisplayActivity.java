@@ -1368,7 +1368,6 @@ public class FileDisplayActivity extends FileActivity
          * {@link BroadcastReceiver} to enable syncing feedback in UI
          */
         @SuppressLint("VisibleForTests")
-        @IonosCustomization("Current folder removed message hotfix")
         @Override
         public void onReceive(Context context, Intent intent) {
             try {
@@ -1391,9 +1390,8 @@ public class FileDisplayActivity extends FileActivity
 
                         if (currentDir == null) {
                             // current folder was removed from the server
-                            if (synchFolderRemotePath != null && !synchFolderRemotePath.equals(OCFile.ROOT_PATH)){
-                                DisplayUtils.showSnackMessage(getActivity(), R.string.sync_current_folder_was_removed, synchFolderRemotePath);
-                            }
+                            DisplayUtils.showSnackMessage(getActivity(), R.string.sync_current_folder_was_removed, synchFolderRemotePath);
+
                             browseToRoot();
 
                         } else {
@@ -1662,7 +1660,7 @@ public class FileDisplayActivity extends FileActivity
         if (listOfFiles != null) {  // should never be null, indeed
             OCFile root = getStorageManager().getFileByPath(OCFile.ROOT_PATH);
             listOfFiles.listDirectory(root, MainApp.isOnlyOnDevice(), false);
-            setFile(listOfFiles.getCurrentFile());
+            setFile(root);
             startSyncFolderOperation(root, false);
         }
         binding.fabMain.setImageResource(R.drawable.ic_plus);
