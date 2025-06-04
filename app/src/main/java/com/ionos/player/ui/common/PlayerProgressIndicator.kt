@@ -34,17 +34,22 @@ class PlayerProgressIndicator @JvmOverloads constructor(
         }
     }
 
-    fun onBind(file: OCFile) {
-        playbackFile = file.toPlaybackFile()
-        val itemState = playbackModel.state.flatMap(PlaybackState::currentItemState).getOrNull()
-        render(itemState)
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
         playbackModel.addListener(playbackModelListener)
     }
 
-    fun onRecycled() {
+    override fun onDetachedFromWindow() {
         playbackModel.removeListener(playbackModelListener)
         visibility = GONE
         playbackFile = null
+        super.onDetachedFromWindow()
+    }
+
+    fun setFile(file: OCFile) {
+        playbackFile = file.toPlaybackFile()
+        val itemState = playbackModel.state.flatMap(PlaybackState::currentItemState).getOrNull()
+        render(itemState)
     }
 
     private fun render(itemState: PlaybackItemState?) {
