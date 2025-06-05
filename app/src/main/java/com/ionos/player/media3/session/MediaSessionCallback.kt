@@ -24,15 +24,16 @@ import kotlinx.coroutines.guava.future
 import kotlinx.coroutines.withContext
 import java.util.concurrent.CancellationException
 import javax.inject.Inject
+import javax.inject.Provider
 
 class MediaSessionCallback @Inject constructor(
-	private val sessionHolder: MediaSessionHolder,
 	private val playbackResumptionConfigStore: PlaybackResumptionConfigStore,
 	private val playbackFilesRepository: PlaybackFilesRepository,
 	private val mediaItemFactory: MediaItemFactory,
 	private val playbackFileStore: PlaybackFileStore,
-	private val playbackModel: PlaybackModel,
+	private val playbackModelProvider: Provider<PlaybackModel>,
 ) : MediaSession.Callback {
+    private val playbackModel get() = playbackModelProvider.get()
 
 	companion object {
 		const val CLOSE_ACTION = "CLOSE_ACTION"
@@ -56,7 +57,7 @@ class MediaSessionCallback @Inject constructor(
 		args: Bundle
 	): ListenableFuture<SessionResult> {
 		if (customCommand.customAction == CLOSE_ACTION) {
-			sessionHolder.release()
+			playbackModel.release()
 		}
 		return Futures.immediateFuture(SessionResult(SessionResult.RESULT_SUCCESS))
 	}

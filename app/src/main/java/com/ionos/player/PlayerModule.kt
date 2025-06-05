@@ -9,6 +9,7 @@ import com.ionos.player.media3.PlaybackModelImpl
 import com.ionos.player.media3.PlaybackService
 import com.ionos.player.media3.common.PlayerFactory
 import com.ionos.player.media3.exoplayer.ExoPlayerFactory
+import com.ionos.player.media3.session.MediaSessionHolder
 import com.ionos.player.model.PlaybackModel
 import com.ionos.player.model.file_store.InMemoryPlaybackFileStore
 import com.ionos.player.model.file_store.PlaybackFileStore
@@ -52,6 +53,12 @@ abstract class PlayerModule {
 	abstract fun bindPlaybackModel(
 		model: PlaybackModelImpl,
 	): PlaybackModel
+
+    @Binds
+    @Singleton
+    abstract fun mediaSessionHolder(
+        playbackModel: PlaybackModelImpl,
+    ): MediaSessionHolder
 
 	@Singleton
 	@Binds

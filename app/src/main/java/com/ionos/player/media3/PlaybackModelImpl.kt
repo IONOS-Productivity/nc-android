@@ -8,12 +8,15 @@
 package com.ionos.player.media3
 
 import android.content.Context
+import androidx.media3.common.util.UnstableApi
 import androidx.media3.session.MediaController
+import androidx.media3.session.MediaSession
 import com.ionos.player.media3.common.MediaItemFactory
 import com.ionos.player.media3.controller.MediaControllerFactory
 import com.ionos.player.media3.controller.indexOfFirst
 import com.ionos.player.media3.controller.setRepeatMode
 import com.ionos.player.media3.controller.updateMediaItems
+import com.ionos.player.media3.session.MediaSessionFactory
 import com.ionos.player.media3.session.MediaSessionHolder
 import com.ionos.player.model.PlaybackFile
 import com.ionos.player.model.PlaybackFiles
@@ -36,15 +39,17 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.util.Optional
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class PlaybackModelImpl @Inject constructor(
 	private val context: Context,
-	private val mediaSessionHolder: MediaSessionHolder,
+    private val mediaSessionFactory: MediaSessionFactory,
 	private val mediaItemFactory: MediaItemFactory,
 	private val playbackFileStore: PlaybackFileStore,
 	private val playbackSettings: PlaybackSettings,
 	private val playbackErrorStrategy: PlaybackErrorStrategy,
-) : PlaybackModel {
+) : PlaybackModel, MediaSessionHolder {
 
 	companion object {
 		private const val CHECK_PROGRESS_INTERVAL = 1000
@@ -77,8 +82,17 @@ class PlaybackModelImpl @Inject constructor(
 	private var controllerScope: CoroutineScope? = null
 	private var controller: MediaController? = null
 
+	private var mediaSession: MediaSession? = null
+
     override val state: Optional<PlaybackState> get() {
         return stateFactory.create(controller)
+    }
+
+	@UnstableApi
+	override fun getMediaSession(): MediaSession {
+		return mediaSession ?: mediaSessionFactory.create().also {
+			mediaSession = it
+		}
     }
 
 	override suspend fun start() {
@@ -131,7 +145,10 @@ class PlaybackModelImpl @Inject constructor(
 	}
 
 	override fun release() {
-		mediaSessionHolder.release()
+		controller?.release()
+		mediaSession?.player?.release()
+		mediaSession?.release()
+		mediaSession = null
 	}
 
     override fun videoViewSetter(success: (VideoViewSetter) -> Unit) {

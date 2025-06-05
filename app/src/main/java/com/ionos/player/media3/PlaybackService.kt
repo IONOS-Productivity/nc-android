@@ -14,7 +14,6 @@ import androidx.media3.session.MediaSession
 import androidx.media3.session.MediaSession.ControllerInfo
 import androidx.media3.session.MediaSessionService
 import com.ionos.player.media3.session.MediaSessionActivityFactory
-import com.ionos.player.media3.session.MediaSessionFactory
 import com.ionos.player.media3.session.MediaSessionHolder
 import dagger.android.AndroidInjection
 import javax.inject.Inject
@@ -23,9 +22,6 @@ class PlaybackService : MediaSessionService() {
 
 	@Inject
 	lateinit var mediaSessionHolder: MediaSessionHolder
-
-	@Inject
-	lateinit var mediaSessionFactory: MediaSessionFactory
 
 	@Inject
 	lateinit var mediaSessionActivityFactory: MediaSessionActivityFactory
@@ -39,9 +35,7 @@ class PlaybackService : MediaSessionService() {
 
     @UnstableApi
 	override fun onGetSession(controllerInfo: ControllerInfo): MediaSession? {
-		return mediaSessionHolder.get() ?: mediaSessionFactory
-			.create()
-			.also(mediaSessionHolder::init)
+		return mediaSessionHolder.getMediaSession()
 	}
 
 	@UnstableApi
