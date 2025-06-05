@@ -1,13 +1,20 @@
 package com.ionos.player.ui
 
+import android.app.PictureInPictureParams
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import androidx.activity.addCallback
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.ionos.player.model.PlaybackFileType
+import com.ionos.player.model.PlaybackModel
 import com.ionos.player.ui.PlayerScreenEvent.LaunchOpenFileIntent
 import com.ionos.player.ui.PlayerScreenEvent.LaunchStreamFileIntent
 import com.ionos.player.ui.PlayerScreenEvent.ShowFileActions
@@ -47,6 +54,9 @@ class PlayerActivity : FileActivity(), PlayerViewContainer, PlayerCompatible, In
     }
 
     @Inject
+    lateinit var playbackModel: PlaybackModel
+
+    @Inject
     lateinit var viewModelFactory: PlayerViewModel.Factory
     private val viewModel by viewModels<PlayerViewModel> { viewModelFactory }
 
@@ -56,10 +66,7 @@ class PlayerActivity : FileActivity(), PlayerViewContainer, PlayerCompatible, In
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        playerView = when (getPlaybackFileType()) {
-            PlaybackFileType.AUDIO -> AudioPlayerView(this)
-            PlaybackFileType.VIDEO -> VideoPlayerView(this)
-        }
+        playerView = createPlayerView()
         setContentView(playerView)
 
         val moreButton = findViewById<View>(R.id.more)
@@ -69,6 +76,17 @@ class PlayerActivity : FileActivity(), PlayerViewContainer, PlayerCompatible, In
             .flowWithLifecycle(lifecycle)
             .onEach { handleEvent(it) }
             .launchIn(lifecycleScope)
+
+        if (getPlaybackFileType() == PlaybackFileType.VIDEO) {
+            onBackPressedDispatcher.addCallback(this) {
+                tryToMinimize()
+            }
+        }
+    }
+
+    private fun createPlayerView(): PlayerView = when (getPlaybackFileType()) {
+        PlaybackFileType.AUDIO -> AudioPlayerView(this)
+        PlaybackFileType.VIDEO -> VideoPlayerView(this)
     }
 
     @Suppress("Deprecation")
@@ -88,7 +106,40 @@ class PlayerActivity : FileActivity(), PlayerViewContainer, PlayerCompatible, In
 
     override fun onStop() {
         playerView.onStop()
+        if (getPlaybackFileType() == PlaybackFileType.VIDEO) {
+            playbackModel.release()
+        }
         super.onStop()
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        playerView.onStop()
+        playerView = createPlayerView()
+        if (isInPictureInPictureMode) {
+            (playerView as? VideoPlayerView)?.hideControls()
+        }
+        setContentView(playerView)
+        playerView.onStart()
+    }
+
+    override fun onUserLeaveHint() {
+        super.onUserLeaveHint()
+        tryToMinimize()
+    }
+
+    private fun tryToMinimize() {
+        val isFeatureAvailable = packageManager.hasSystemFeature(PackageManager.FEATURE_PICTURE_IN_PICTURE)
+        if (isFeatureAvailable && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            minimize()
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun minimize() {
+        val params = PictureInPictureParams.Builder()
+            .build()
+        enterPictureInPictureMode(params)
     }
 
     override fun onPlayerViewClose() {

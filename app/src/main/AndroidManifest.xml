@@ -359,7 +359,9 @@
             android:theme="@style/Theme.ownCloud.Media" />
         <activity
             android:name="com.ionos.player.ui.PlayerActivity"
-            android:launchMode="singleTask" />
+            android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
+            android:launchMode="singleTask"
+            android:supportsPictureInPicture="true" />
 
         <service
             android:name="com.ionos.player.media3.PlaybackService"

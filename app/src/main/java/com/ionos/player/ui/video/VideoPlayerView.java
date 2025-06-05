@@ -252,12 +252,12 @@ public class VideoPlayerView extends PlayerView {
 
 	private final AsyncTimer.TimerCallbackListener timerCallbackListener = this::hideControls;
 
-	private void showControls() {
+	public void showControls() {
 		playerControlView.setVisibility(VISIBLE);
 		topBar.setVisibility(VISIBLE);
 	}
 
-	private void hideControls() {
+	public void hideControls() {
 		topBar.setVisibility(GONE);
 		playerControlView.setVisibility(INVISIBLE);
 	}
