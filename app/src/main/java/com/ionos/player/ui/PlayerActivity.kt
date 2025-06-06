@@ -3,7 +3,6 @@ package com.ionos.player.ui
 import android.app.PictureInPictureParams
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
@@ -27,6 +26,7 @@ import com.ionos.player.ui.video.VideoPlayerView
 import com.ionos.player.ui.video.surface.PlayerCompatible
 import com.ionos.player.ui.video.surface.SurfaceInvalidator
 import com.ionos.player.util.SystemVersion
+import com.ionos.player.util.isPictureInPictureAllowed
 import com.nextcloud.client.di.Injectable
 import com.nextcloud.ui.fileactions.FileAction
 import com.nextcloud.ui.fileactions.FileActionsBottomSheet
@@ -61,11 +61,14 @@ class PlayerActivity : FileActivity(), PlayerViewContainer, PlayerCompatible, In
     private val viewModel by viewModels<PlayerViewModel> { viewModelFactory }
 
     private val surfaceInvalidator = SurfaceInvalidator()
+
+    private lateinit var playbackFileType: PlaybackFileType
     private lateinit var playerView: PlayerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        playbackFileType = getPlaybackFileType()
         playerView = createPlayerView()
         setContentView(playerView)
 
@@ -77,14 +80,15 @@ class PlayerActivity : FileActivity(), PlayerViewContainer, PlayerCompatible, In
             .onEach { handleEvent(it) }
             .launchIn(lifecycleScope)
 
-        if (getPlaybackFileType() == PlaybackFileType.VIDEO) {
+        if (canUsePictureInPictureMode()) {
+            setPictureInPictureParams(createPictureInPictureParams())
             onBackPressedDispatcher.addCallback(this) {
-                tryToMinimize()
+                switchToPictureInPictureMode()
             }
         }
     }
 
-    private fun createPlayerView(): PlayerView = when (getPlaybackFileType()) {
+    private fun createPlayerView(): PlayerView = when (playbackFileType) {
         PlaybackFileType.AUDIO -> AudioPlayerView(this)
         PlaybackFileType.VIDEO -> VideoPlayerView(this)
     }
@@ -106,7 +110,7 @@ class PlayerActivity : FileActivity(), PlayerViewContainer, PlayerCompatible, In
 
     override fun onStop() {
         playerView.onStop()
-        if (getPlaybackFileType() == PlaybackFileType.VIDEO) {
+        if (playbackFileType == PlaybackFileType.VIDEO) {
             playbackModel.release()
         }
         super.onStop()
@@ -125,21 +129,29 @@ class PlayerActivity : FileActivity(), PlayerViewContainer, PlayerCompatible, In
 
     override fun onUserLeaveHint() {
         super.onUserLeaveHint()
-        tryToMinimize()
-    }
-
-    private fun tryToMinimize() {
-        val isFeatureAvailable = packageManager.hasSystemFeature(PackageManager.FEATURE_PICTURE_IN_PICTURE)
-        if (isFeatureAvailable && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            minimize()
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S && canUsePictureInPictureMode()) {
+            switchToPictureInPictureMode()
         }
     }
 
+    private fun canUsePictureInPictureMode(): Boolean {
+        return playbackFileType == PlaybackFileType.VIDEO && isPictureInPictureAllowed()
+    }
+
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun minimize() {
-        val params = PictureInPictureParams.Builder()
-            .build()
+    private fun switchToPictureInPictureMode() {
+        val params = createPictureInPictureParams()
         enterPictureInPictureMode(params)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun createPictureInPictureParams(): PictureInPictureParams {
+        return PictureInPictureParams.Builder().let {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                it.setAutoEnterEnabled(true)
+            }
+            it.build()
+        }
     }
 
     override fun onPlayerViewClose() {
