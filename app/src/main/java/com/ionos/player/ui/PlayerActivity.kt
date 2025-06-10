@@ -4,8 +4,10 @@ import android.app.PictureInPictureParams
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
+import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
+import android.util.Rational
 import android.view.View
 import androidx.activity.addCallback
 import androidx.activity.viewModels
@@ -64,6 +66,8 @@ class PlayerActivity : FileActivity(), PlayerViewContainer, PlayerCompatible, In
 
     private lateinit var playbackFileType: PlaybackFileType
     private lateinit var playerView: PlayerView
+
+    private val pipAspectRatio = Rational(16, 9)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -147,11 +151,25 @@ class PlayerActivity : FileActivity(), PlayerViewContainer, PlayerCompatible, In
     @RequiresApi(Build.VERSION_CODES.O)
     private fun createPictureInPictureParams(): PictureInPictureParams {
         return PictureInPictureParams.Builder().let {
+            it.setAspectRatio(pipAspectRatio)
+            getSourceRectHint().let(it::setSourceRectHint)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 it.setAutoEnterEnabled(true)
             }
             it.build()
         }
+    }
+
+    private fun getSourceRectHint(): Rect? {
+        val containerRect = Rect()
+        playerView.getGlobalVisibleRect(containerRect)
+        val sourceHeightHint = (containerRect.width() / pipAspectRatio.toFloat()).toInt()
+        return Rect(
+            containerRect.left,
+            containerRect.top + (containerRect.height() - sourceHeightHint) / 2,
+            containerRect.right,
+            containerRect.top + (containerRect.height() + sourceHeightHint) / 2,
+        )
     }
 
     override fun onPlayerViewClose() {
