@@ -3,6 +3,8 @@ package com.ionos.player.ui.audio;
 import android.app.Activity;
 import android.content.Context;
 import android.media.AudioManager;
+import android.view.ViewGroup;
+import android.view.WindowInsets;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,6 +21,7 @@ import com.ionos.player.ui.PlayerViewContainer;
 import com.ionos.player.ui.control.PlayerControlView;
 import com.ionos.player.ui.sources.PlayerSourcesView;
 import com.ionos.player.util.Cast;
+import com.ionos.player.util.WindowWrapper;
 import com.owncloud.android.R;
 
 import java.util.List;
@@ -27,7 +30,8 @@ import javax.inject.Inject;
 
 import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
-import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.core.graphics.Insets;
+import androidx.core.view.WindowInsetsCompat;
 import dagger.android.HasAndroidInjector;
 
 /**
@@ -40,10 +44,10 @@ public class AudioPlayerView extends PlayerView {
 	@Inject
 	FileBeingProcessedPredicate fileBeingProcessedPredicate;
 
+    private final ViewGroup topBar;
 	private final TextView tvTitle;
 	private final PlayerSourcesView playerSourcesView;
 	private final PlayerControlView playerControlView;
-	private final DrawerLayout drawerLayout;
 	private PlayerViewContainer playerViewContainer;
 	private MultiplePlayer.HidingPresenter hidingPresenter;
 
@@ -51,9 +55,9 @@ public class AudioPlayerView extends PlayerView {
 		super(context);
 		inflate(context, R.layout.player_audio_view, this);
 
+        this.topBar = findViewById(R.id.topBar);
 		this.playerSourcesView = findViewById(R.id.playerSourcesView);
 		this.playerControlView = findViewById(R.id.playerControlView);
-		this.drawerLayout = findViewById(R.id.drawer_layout);
 		this.tvTitle = findViewById(R.id.tvTitle);
 
 		ImageView ivBack = findViewById(R.id.ivBack);
@@ -80,6 +84,24 @@ public class AudioPlayerView extends PlayerView {
 	protected void inject(@NonNull Context context) {
         ((HasAndroidInjector) context.getApplicationContext()).androidInjector().inject(this);
 	}
+
+    @Override
+    public WindowInsets onApplyWindowInsets(WindowInsets windowInsets) {
+        WindowInsetsCompat windowInsetsCompat = WindowInsetsCompat.toWindowInsetsCompat(windowInsets);
+        Insets insets = windowInsetsCompat.getInsets(WindowInsetsCompat.Type.systemBars() | WindowInsetsCompat.Type.displayCutout());
+        this.topBar.setPadding(insets.left, insets.top, insets.right, 0);
+        this.playerSourcesView.setPadding(insets.left, 0, insets.right, 0);
+        this.playerControlView.setPadding(insets.left, 0, insets.right, insets.bottom);
+
+        Activity activity = Cast.castOrError(getContext(), Activity.class);
+        if (activity != null) {
+            WindowWrapper windowWrapper = new WindowWrapper(activity.getWindow());
+            windowWrapper.setupStatusBar(R.color.player_full_screen_audio_player_bar, false);
+            windowWrapper.setupNavigationBar(R.color.player_full_screen_audio_player_background, true);
+        }
+
+        return WindowInsetsCompat.CONSUMED.toWindowInsets();
+    }
 
 	@Override
 	protected void onAttachedToWindow() {

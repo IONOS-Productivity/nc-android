@@ -5,6 +5,7 @@ import android.content.Context;
 import android.media.AudioManager;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowInsets;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -34,7 +35,8 @@ import javax.inject.Inject;
 
 import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
-import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.core.graphics.Insets;
+import androidx.core.view.WindowInsetsCompat;
 import dagger.android.HasAndroidInjector;
 
 /**
@@ -52,8 +54,8 @@ public class VideoPlayerView extends PlayerView {
 	private final LinearLayout topBar;
 	private final PlayerSourcesView playerSourcesView;
 	private final PlayerControlView playerControlView;
-	private final DrawerLayout drawerLayout;
 	private Activity activity;
+    private WindowWrapper windowWrapper;
 	private PlayerViewContainer playerViewContainer;
 	private MultiplePlayer.HidingPresenter hidingPresenter;
 	private AsyncTimer timer;
@@ -65,7 +67,6 @@ public class VideoPlayerView extends PlayerView {
 
 		this.playerSourcesView = findViewById(R.id.playerSourcesView);
 		this.playerControlView = findViewById(R.id.playerControlView);
-		this.drawerLayout = findViewById(R.id.drawer_layout);
 		this.tvTitle = findViewById(R.id.tvTitle);
 		this.topBar = findViewById(R.id.topBar);
 
@@ -78,11 +79,10 @@ public class VideoPlayerView extends PlayerView {
 		inject(context);
 
 		this.activity = Cast.castOrError(context, Activity.class);
+        this.windowWrapper = new WindowWrapper(this.activity.getWindow());
 		this.playerViewContainer = Cast.castOrError(context, PlayerViewContainer.class);
 
 		ivBack.setOnClickListener(this.backButtonClickListener);
-
-		this.drawerLayout.addDrawerListener(this.drawerListener);
 
 		this.hidingPresenter = new MultiplePlayerHidingPresenter(this.playerModel);
 
@@ -97,6 +97,19 @@ public class VideoPlayerView extends PlayerView {
 	protected void inject(@NonNull Context context){
         ((HasAndroidInjector) context.getApplicationContext()).androidInjector().inject(this);
 	}
+
+    @Override
+    public WindowInsets onApplyWindowInsets(WindowInsets windowInsets) {
+        WindowInsetsCompat windowInsetsCompat = WindowInsetsCompat.toWindowInsetsCompat(windowInsets);
+        Insets insets = windowInsetsCompat.getInsets(WindowInsetsCompat.Type.systemBars() | WindowInsetsCompat.Type.displayCutout());
+        this.topBar.setPadding(insets.left, insets.top, insets.right, 0);
+        this.playerControlView.setPadding(insets.left, 0, insets.right, insets.bottom);
+
+        windowWrapper.setupStatusBar(R.color.player_transparent_dark, false);
+        windowWrapper.setupNavigationBar(R.color.player_transparent_dark, false);
+
+        return WindowInsetsCompat.CONSUMED.toWindowInsets();
+    }
 
 	@Override
 	public boolean dispatchTouchEvent(final MotionEvent ev) {
@@ -199,29 +212,6 @@ public class VideoPlayerView extends PlayerView {
 		}
 	};
 
-	private final DrawerLayout.SimpleDrawerListener drawerListener =  new DrawerLayout.SimpleDrawerListener() {
-		@Override
-		public void onDrawerSlide(View drawerView, float slideOffset) {
-			if (slideOffset != 0) {
-				onDrawerOpened(drawerView);
-			} else {
-				onDrawerClosed(drawerView);
-			}
-		}
-
-		@Override
-		public void onDrawerOpened(View drawerView) {
-			WindowWrapper windowWrapper = new WindowWrapper(activity.getWindow());
-			windowWrapper.clearFullScreenFlags();
-		}
-
-		@Override
-		public void onDrawerClosed(View drawerView) {
-			WindowWrapper windowWrapper = new WindowWrapper(activity.getWindow());
-			windowWrapper.setFullScreenFlags();
-		}
-	};
-
 	private final PlaybackModel.Listener playerModelListener = new PlaybackModel.Listener() {
 		@Override
 		public void onUpdate(PlaybackState state) {
@@ -253,11 +243,13 @@ public class VideoPlayerView extends PlayerView {
 	private final AsyncTimer.TimerCallbackListener timerCallbackListener = this::hideControls;
 
 	public void showControls() {
+        windowWrapper.showSystemBars();
 		playerControlView.setVisibility(VISIBLE);
 		topBar.setVisibility(VISIBLE);
 	}
 
 	public void hideControls() {
+        windowWrapper.hideSystemBars();
 		topBar.setVisibility(GONE);
 		playerControlView.setVisibility(INVISIBLE);
 	}

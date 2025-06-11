@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.util.Rational
 import android.view.View
 import androidx.activity.addCallback
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.flowWithLifecycle
@@ -69,7 +70,10 @@ class PlayerActivity : FileActivity(), PlayerViewContainer, PlayerCompatible, In
 
     private val pipAspectRatio = Rational(16, 9)
 
+    override fun isDefaultWindowInsetsHandlingEnabled(): Boolean = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
         playbackFileType = getPlaybackFileType()
