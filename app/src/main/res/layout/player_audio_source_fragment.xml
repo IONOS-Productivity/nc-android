@@ -20,16 +20,33 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/player_file_text_detail_view_title_margin_bottom"
         android:alpha="@dimen/player_account_view_alpha"
         android:ellipsize="end"
         android:singleLine="true"
         android:textColor="@color/player_full_screen_audio_detail_view_title_text_color"
-        android:textSize="@dimen/player_file_text_detail_view_title_text_size"
+        android:textSize="@dimen/player_full_screen_audio_player_title_text_size"
+        custom:layout_constraintBottom_toTopOf="@id/artist"
+        custom:layout_constraintEnd_toEndOf="parent"
+        custom:layout_constraintStart_toStartOf="parent"
+        custom:layout_goneMarginBottom="@dimen/player_full_screen_audio_player_title_and_artist_margin_bottom"
+        tools:text="Whatever It Takes" />
+
+    <TextView
+        android:id="@+id/artist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/player_full_screen_audio_player_title_and_artist_margin_bottom"
+        android:alpha="@dimen/player_account_view_alpha"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textColor="@color/player_full_screen_audio_detail_view_title_text_color"
+        android:textSize="@dimen/player_full_screen_audio_player_artist_text_size"
+        android:visibility="gone"
         custom:layout_constraintBottom_toTopOf="@id/file_details"
         custom:layout_constraintEnd_toEndOf="parent"
         custom:layout_constraintStart_toStartOf="parent"
-        tools:text="Whatever It Takes" />
+        tools:text="Imagine Dragons"
+        tools:visibility="visible" />
 
     <TextView
         android:id="@+id/file_details"
@@ -40,7 +57,7 @@
         android:ellipsize="end"
         android:singleLine="true"
         android:textColor="@color/player_full_screen_audio_detail_view_subtitle_text_color"
-        android:textSize="@dimen/player_file_text_detail_view_subtitle_text_size"
+        android:textSize="@dimen/player_full_screen_audio_player_file_details_text_size"
         custom:layout_constraintBottom_toBottomOf="parent"
         custom:layout_constraintEnd_toEndOf="parent"
         custom:layout_constraintStart_toStartOf="parent"
