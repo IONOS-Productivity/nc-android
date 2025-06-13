@@ -2,12 +2,13 @@ package com.ionos.player.media3.common
 
 import android.os.Bundle
 import androidx.media3.common.MediaMetadata
+import com.ionos.player.model.PlaybackFile
 
-private const val MEDIA_ID_KEY = "mediaId"
+private const val PLAYBACK_FILE_KEY = "playback_file"
 
-fun MediaMetadata.Builder.setMediaId(mediaId: String): MediaMetadata.Builder {
-	return setExtras(Bundle().apply { putString(MEDIA_ID_KEY, mediaId) })
+fun MediaMetadata.Builder.setExtras(playbackFile: PlaybackFile): MediaMetadata.Builder {
+	return setExtras(Bundle().apply { putSerializable(PLAYBACK_FILE_KEY, playbackFile) })
 }
 
-val MediaMetadata.mediaId: String?
-	get() = extras?.getString(MEDIA_ID_KEY)
+val MediaMetadata.playbackFile: PlaybackFile?
+	get() = extras?.getSerializable(PLAYBACK_FILE_KEY) as? PlaybackFile

@@ -20,11 +20,7 @@ class MediaItemFactory @Inject constructor() {
 	private fun createMetadata(file: PlaybackFile): MediaMetadata {
 		return MediaMetadata
 			.Builder()
-			.setMediaId(file.id)
-			// remove to allow ExoPlayer to extract the title from the tags
-			.setTitle(file.getNameWithoutExtension())
-			// remove to allow ExoPlayer to extract the artist from the tags
-			.setArtist("")
+			.setExtras(file)
 			.build()
 	}
 }

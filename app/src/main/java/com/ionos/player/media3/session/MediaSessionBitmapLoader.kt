@@ -12,7 +12,7 @@ import androidx.media3.datasource.DataSourceBitmapLoader
 import com.google.common.util.concurrent.ListenableFuture
 import com.google.common.util.concurrent.ListeningExecutorService
 import com.google.common.util.concurrent.MoreExecutors
-import com.ionos.player.media3.common.mediaId
+import com.ionos.player.media3.common.playbackFile
 import com.ionos.player.model.PlaybackFile
 import com.ionos.player.model.ThumbnailLoader
 import com.ionos.player.model.file_store.PlaybackFileStore
@@ -43,7 +43,7 @@ class MediaSessionBitmapLoader(
 	private var previousRequest: BitmapRequest? = null
 
 	override fun loadBitmapFromMetadata(metadata: MediaMetadata): ListenableFuture<Bitmap>? {
-		val mediaId = metadata.mediaId
+		val mediaId = metadata.playbackFile?.id
 		val previousRequest = this.previousRequest
 
 		if (previousRequest != null &&
