@@ -1,47 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:custom="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/player_full_screen_audio_player_background">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/player_full_screen_audio_player_background">
 
-    <RelativeLayout android:id="@+id/songContainer"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/album_cover"
+        android:layout_width="@dimen/player_full_screen_audio_player_album_cover_width"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/player_full_screen_audio_player_album_photo_margin_top"
+        android:src="@drawable/player_ic_album_cover_audio"
+        custom:layout_constraintEnd_toEndOf="parent"
+        custom:layout_constraintStart_toStartOf="parent"
+        custom:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/album_cover"
-            android:layout_width="@dimen/player_full_screen_audio_player_album_cover_width"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/player_full_screen_audio_player_album_photo_margin_top"
-            android:src="@drawable/player_ic_album_cover_audio"/>
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/player_file_text_detail_view_title_margin_bottom"
+        android:alpha="@dimen/player_account_view_alpha"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textColor="@color/player_full_screen_audio_detail_view_title_text_color"
+        android:textSize="@dimen/player_file_text_detail_view_title_text_size"
+        custom:layout_constraintBottom_toTopOf="@id/file_details"
+        custom:layout_constraintEnd_toEndOf="parent"
+        custom:layout_constraintStart_toStartOf="parent"
+        tools:text="Whatever It Takes" />
 
-        <com.ionos.player.ui.common.FileTextDetailView
-            android:id="@+id/fileDetailView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="@dimen/player_full_screen_audio_player_track_name_margin_bottom"
-            android:gravity="center"
-            custom:subtitle_text_color="@color/player_full_screen_audio_detail_view_subtitle_text_color"
-            custom:title_text_color="@color/player_full_screen_audio_detail_view_title_text_color"/>
+    <TextView
+        android:id="@+id/file_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/player_full_screen_audio_player_track_name_margin_bottom"
+        android:alpha="@dimen/player_account_view_alpha"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textColor="@color/player_full_screen_audio_detail_view_subtitle_text_color"
+        android:textSize="@dimen/player_file_text_detail_view_subtitle_text_size"
+        custom:layout_constraintBottom_toBottomOf="parent"
+        custom:layout_constraintEnd_toEndOf="parent"
+        custom:layout_constraintStart_toStartOf="parent"
+        tools:text="8.08MB, Modified on: 6/13/24" />
 
-    </RelativeLayout>
-
-    <RelativeLayout android:id="@+id/videoContainer"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="invisible">
-
-        <SurfaceView
-            android:id="@+id/surfaceView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            tools:visibility="invisible"/>
-
-    </RelativeLayout>
-
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,14 +1,19 @@
 package com.ionos.player.ui.audio;
 
 import android.os.Bundle;
+import android.text.format.DateFormat;
+import android.text.format.Formatter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.ionos.player.model.PlaybackFile;
-import com.ionos.player.ui.common.FileTextDetailView;
 import com.owncloud.android.R;
+import com.owncloud.android.databinding.PlayerAudioSourceFragmentBinding;
 
+import java.util.Date;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import dagger.android.support.AndroidSupportInjection;
@@ -22,9 +27,6 @@ public class AudioPlayerSourceFragment extends Fragment {
 	private final static String ARGUMENT_FILE = "ARGUMENT_FILE";
 
 	private PlaybackFile file;
-
-	private View coverContainer;
-	private View mediaContainer;
 
 	public static Fragment createInstance(PlaybackFile file) {
 		AudioPlayerSourceFragment fragment = new AudioPlayerSourceFragment();
@@ -42,21 +44,27 @@ public class AudioPlayerSourceFragment extends Fragment {
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		View content = inflater.inflate(R.layout.player_audio_source_fragment, container, false);
-
-		this.coverContainer = content.findViewById(R.id.songContainer);
-		this.mediaContainer = content.findViewById(R.id.videoContainer);
-		FileTextDetailView fileTextDetailView = content.findViewById(R.id.fileDetailView);
-
-		fileTextDetailView.displayFile(this.file);
-		switchToSongContainer();
-
-		return content;
+	public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        PlayerAudioSourceFragmentBinding binding = PlayerAudioSourceFragmentBinding.inflate(inflater, container, false);
+		binding.title.setText(file.getNameWithoutExtension());
+		binding.fileDetails.setText(getFileDetailsText());
+		return binding.getRoot();
 	}
 
-	private void switchToSongContainer() {
-		this.coverContainer.setVisibility(View.VISIBLE);
-		this.mediaContainer.setVisibility(View.INVISIBLE);
-	}
+    private String getFileDetailsText() {
+        StringBuilder stringBuilder = new StringBuilder();
+        if (file.getContentLength() > 0) {
+            stringBuilder.append(Formatter.formatFileSize(getContext(), file.getContentLength()));
+        }
+        if (file.getLastModified() > 0) {
+            if (!stringBuilder.isEmpty()) {
+                stringBuilder.append(", ");
+            }
+            stringBuilder
+                .append(getResources().getString(R.string.player_last_change_date))
+                .append(" ")
+                .append(DateFormat.getDateFormat(getContext()).format(new Date(file.getLastModified())));
+        }
+        return stringBuilder.toString();
+    }
 }

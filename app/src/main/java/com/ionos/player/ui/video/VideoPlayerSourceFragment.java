@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 
 import com.ionos.player.model.PlaybackFile;
 import com.ionos.player.model.PlaybackModel;
@@ -15,7 +14,6 @@ import com.ionos.player.model.VideoViewSetter;
 import com.ionos.player.model.predicate.IsVideoPredicate;
 import com.ionos.player.model.state.VideoSize;
 import com.ionos.player.ui.MultiplePlayer;
-import com.ionos.player.ui.common.FileTextDetailView;
 import com.ionos.player.ui.video.surface.PlayerCompatible;
 import com.ionos.player.ui.video.surface.SurfaceInvalidator;
 import com.ionos.player.ui.video.surface.SurfaceVideoView;
@@ -49,10 +47,7 @@ public class VideoPlayerSourceFragment extends Fragment {
 	private PlaybackFile file;
 	private MultiplePlayer.VideoPresenter videoPresenter;
 
-	private View coverContainer;
-	private View videoContainer;
 	private SurfaceView surfaceView;
-	private ProgressBar progressBar;
 	private SurfaceVideoView surfaceVideoView;
 	private VideoSize previousVideoSize;
 
@@ -77,16 +72,10 @@ public class VideoPlayerSourceFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		View content = inflater.inflate(R.layout.player_video_source_fragment, container, false);
-		this.coverContainer = content.findViewById(R.id.album_cover_container);
-		this.videoContainer = content.findViewById(R.id.videoContainer);
 		this.surfaceView = content.findViewById(R.id.surfaceView);
-		this.progressBar = content.findViewById(R.id.progressBar);
-		FileTextDetailView fileTextDetailView = content.findViewById(R.id.fileDetailView);
 		MultiplePlayerVideoPresenter surfaceVideoViewPresenter = new MultiplePlayerVideoPresenter(this.playerModel, this.file);
 		this.surfaceVideoView = new SurfaceVideoView(this.surfaceView, surfaceVideoViewPresenter);
 		surfaceVideoViewPresenter.setView(this.surfaceVideoView);
-		fileTextDetailView.displayFile(this.file);
-		switchToCoverContainer();
 		return content;
 	}
 
@@ -145,24 +134,10 @@ public class VideoPlayerSourceFragment extends Fragment {
 		super.onStop();
 	}
 
-	private void switchToCoverContainer() {
-		setContainersVisibility(true, false);
-	}
-
-	private void switchToVideoContainer() {
-		setContainersVisibility(false, true);
-	}
-
-	private void setContainersVisibility(boolean songContainerVisible, boolean videoContainerVisible) {
-		this.coverContainer.setVisibility(songContainerVisible ? View.VISIBLE : View.INVISIBLE);
-		this.videoContainer.setVisibility(videoContainerVisible ? View.VISIBLE : View.INVISIBLE);
-		this.surfaceView.setVisibility(videoContainerVisible ? View.VISIBLE : View.INVISIBLE);
-	}
-
 	private final MultiplePlayer.VideoView videoView = new MultiplePlayer.VideoView() {
 		@Override
 		public void setVideoViewAvailable() {
-            switchToVideoContainer();
+            surfaceView.setVisibility(View.VISIBLE);
             final VideoSize videoSize = playerModel.getState().get().currentItemState.get().videoSize;
             if (videoSize != null && !Objects.equals(previousVideoSize, videoSize)) {
                 previousVideoSize = videoSize;
@@ -172,7 +147,7 @@ public class VideoPlayerSourceFragment extends Fragment {
 
 		@Override
 		public void setVideoViewUnavailable() {
-			switchToCoverContainer();
+			surfaceView.setVisibility(View.INVISIBLE);
 		}
 
 		@Override
