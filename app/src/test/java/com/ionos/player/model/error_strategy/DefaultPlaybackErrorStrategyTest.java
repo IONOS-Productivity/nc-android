@@ -8,6 +8,7 @@
 package com.ionos.player.model.error_strategy;
 
 import com.ionos.player.model.PlaybackFile;
+import com.ionos.player.model.state.PlaybackItemMetadata;
 import com.ionos.player.model.state.PlaybackState;
 import com.ionos.player.model.state.PlaybackItemState;
 import com.ionos.player.model.state.PlayerState;
@@ -59,7 +60,7 @@ public class DefaultPlaybackErrorStrategyTest {
 
 	private PlaybackState createState(Optional<PlaybackFile> currentFile, PlaybackFile... files) {
 		Optional<PlaybackItemState> current = currentFile
-				.map(input -> new PlaybackItemState(input, PlayerState.NONE, Optional.empty(), 0, 0));
+				.map(input -> new PlaybackItemState(input, PlayerState.NONE, new PlaybackItemMetadata(input.getName()), null, 0, 0));
 		return new PlaybackState(
 				Arrays.asList(files),
 				current,

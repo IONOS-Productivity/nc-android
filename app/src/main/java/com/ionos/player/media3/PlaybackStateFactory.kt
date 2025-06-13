@@ -10,6 +10,7 @@ package com.ionos.player.media3
 import androidx.media3.common.Player
 import com.ionos.player.model.PlaybackFile
 import com.ionos.player.model.file_store.PlaybackFileStore
+import com.ionos.player.model.state.PlaybackItemMetadata
 import com.ionos.player.model.state.PlaybackItemState
 import com.ionos.player.model.state.PlaybackState
 import com.ionos.player.model.state.PlayerState
@@ -43,6 +44,7 @@ class PlaybackStateFactory(
 	private fun Player.getCurrentItemState(currentFile: PlaybackFile) = PlaybackItemState(
 		currentFile,
         mapPlayerState(),
+        mapMetadata(currentFile),
 		mapVideoSize(),
 		currentPosition.toInt(),
 		duration.toInt(),
@@ -59,11 +61,21 @@ class PlaybackStateFactory(
 		else -> PlayerState.NONE
 	}
 
-	private fun Player.mapVideoSize(): Optional<VideoSize> {
+    private fun Player.mapMetadata(currentFile: PlaybackFile) = PlaybackItemMetadata(
+        title = mediaMetadata.title ?: currentFile.getNameWithoutExtension(),
+        artist = mediaMetadata.artist,
+        album = mediaMetadata.albumTitle,
+        genre = mediaMetadata.genre,
+        year = mediaMetadata.recordingYear,
+        description = mediaMetadata.description,
+        artworkData = mediaMetadata.artworkData,
+        artworkUri = mediaMetadata.artworkUri?.toString(),
+    )
+
+	private fun Player.mapVideoSize(): VideoSize? {
 		return videoSize
 			.takeIf { it.width > 0 && it.height > 0 }
 			?.let { VideoSize(width = it.width, height = it.height) }
-			.let { Optional.ofNullable(it) }
 	}
 
     private fun Player?.mapRepeatMode(): RepeatMode = when (this?.repeatMode) {

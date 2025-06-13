@@ -7,6 +7,7 @@
 
 package com.ionos.player.media3
 
+import androidx.media3.common.MediaMetadata
 import androidx.media3.common.PlaybackException
 import androidx.media3.common.Player
 import androidx.media3.common.Timeline
@@ -28,6 +29,10 @@ class PlaybackModelPlayerListener(
 	companion object {
 		private const val BROKEN_SOURCE_ERROR_CODE: Int = 416
 	}
+
+    override fun onMediaMetadataChanged(mediaMetadata: MediaMetadata) {
+        onPlaybackUpdate()
+    }
 
 	override fun onTimelineChanged(timeline: Timeline, reason: Int) {
 		onPlaybackUpdate()

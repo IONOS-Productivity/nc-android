@@ -23,7 +23,7 @@ import com.ionos.player.util.ScreenUtils;
 import com.ionos.player.util.SystemVersion;
 import com.owncloud.android.R;
 
-import java.util.Optional;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -54,7 +54,7 @@ public class VideoPlayerSourceFragment extends Fragment {
 	private SurfaceView surfaceView;
 	private ProgressBar progressBar;
 	private SurfaceVideoView surfaceVideoView;
-	private Optional<VideoSize> previousVideoSize = Optional.empty();
+	private VideoSize previousVideoSize;
 
 	public static Fragment createInstance(PlaybackFile file) {
 		VideoPlayerSourceFragment fragment = new VideoPlayerSourceFragment();
@@ -163,12 +163,10 @@ public class VideoPlayerSourceFragment extends Fragment {
 		@Override
 		public void setVideoViewAvailable() {
             switchToVideoContainer();
-            final Optional<VideoSize> videoSize = playerModel.getState().get().currentItemState.get().videoSize;
-            if (videoSize.isPresent()) {
-                if (!previousVideoSize.equals(videoSize)) {
-                    previousVideoSize = videoSize;
-                    setVideoSize(videoSize.get().getWidth(), videoSize.get().getHeight());
-                }
+            final VideoSize videoSize = playerModel.getState().get().currentItemState.get().videoSize;
+            if (videoSize != null && !Objects.equals(previousVideoSize, videoSize)) {
+                previousVideoSize = videoSize;
+                setVideoSize(videoSize.getWidth(), videoSize.getHeight());
             }
 		}
 
