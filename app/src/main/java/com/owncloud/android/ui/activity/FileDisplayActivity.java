@@ -287,9 +287,6 @@ public class FileDisplayActivity extends FileActivity
         mPlayerConnection = new PlayerServiceConnection(this);
 
         checkStoragePath();
-        notifyGPlayPermissionChanges();
-        showAutoUploadWarningForGPlayFlavour();
-
         initSyncBroadcastReceiver();
         observeWorkerState();
         registerRefreshFolderEventReceiver();
@@ -1762,7 +1759,7 @@ public class FileDisplayActivity extends FileActivity
             (ActivityExtensionsKt.lastFragment(this) instanceof OCFileListFragment fragment) ? fragment : getListOfFilesFragment();
 
         if (fileListFragment != null) {
-            fileListFragment.listDirectory(currentDir, false, false);
+            fileListFragment.listDirectory(currentDir, MainApp.isOnlyOnDevice(), false);
         }
     }
 
@@ -2407,7 +2404,7 @@ public class FileDisplayActivity extends FileActivity
 
         startSyncFolderOperation(folder, ignoreETag, ignoreFocus);
 
-        if (getCapabilities().getRecommendations().isTrue() && folder.isRootDirectory()) {
+        if (getCapabilities() != null && getCapabilities().getRecommendations().isTrue() && folder.isRootDirectory()) {
             listOfFiles.fetchRecommendedFiles();
         }
     }

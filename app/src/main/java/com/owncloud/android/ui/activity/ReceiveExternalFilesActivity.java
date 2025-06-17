@@ -101,6 +101,8 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Stack;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.inject.Inject;
 
@@ -168,6 +170,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
     private ImageView mEmptyListIcon;
     private MaterialButton sortButton;
     private ReceiveExternalFilesBinding binding;
+    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     @Override
     @IonosCustomization
@@ -296,6 +299,8 @@ public class ReceiveExternalFilesActivity extends FileActivity
         if (mSyncBroadcastReceiver != null) {
             localBroadcastManager.unregisterReceiver(mSyncBroadcastReceiver);
         }
+
+        executorService.shutdown();
         super.onDestroy();
     }
 
@@ -855,20 +860,32 @@ public class ReceiveExternalFilesActivity extends FileActivity
             return;
         }
 
-        long currentSyncTime = System.currentTimeMillis();
+        final var context = this;
 
-        mSyncInProgress = true;
+        executorService.execute(() -> {
+            long currentSyncTime = System.currentTimeMillis();
+            mSyncInProgress = true;
+            final var optionalUser = getUser();
+            if (optionalUser.isEmpty()) {
+                DisplayUtils.showSnackMessage(this, R.string.user_information_retrieval_error);
+                return;
+            }
 
-        // perform folder synchronization
-        RemoteOperation syncFolderOp = new RefreshFolderOperation(folder,
-                                                                  currentSyncTime,
-                                                                  false,
-                                                                  false,
-                                                                  getStorageManager(),
-                                                                  getUser().orElseThrow(RuntimeException::new),
-                                                                  getApplicationContext()
-        );
-        syncFolderOp.execute(getAccount(), this, null, null);
+            final var operation = new RefreshFolderOperation(folder,
+                                                             currentSyncTime,
+                                                             false,
+                                                             false,
+                                                             getStorageManager(),
+                                                             optionalUser.get(),
+                                                             context
+            );
+
+            try {
+                operation.execute(getAccount(), context, null, null);
+            } catch (Exception e) {
+                Log_OC.d(TAG, "Exception startSyncFolderOperation: " + e);
+            }
+        });
     }
 
     private List<OCFile> sortFileList(List<OCFile> files) {
