@@ -24,7 +24,6 @@ import com.ionos.annotation.IonosCustomization;
 import com.nextcloud.utils.BuildHelper;
 import com.owncloud.android.R;
 import com.owncloud.android.lib.common.network.WebdavEntry;
-import com.owncloud.android.lib.common.network.WebdavUtils;
 import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.lib.resources.files.model.FileLockType;
 import com.owncloud.android.lib.resources.files.model.GeoLocation;
@@ -162,6 +161,7 @@ public class OCFile implements Parcelable, Comparable<OCFile>, ServerFileInterfa
         fileId = source.readLong();
         parentId = source.readLong();
         fileLength = source.readLong();
+        uploadTimestamp = source.readLong();
         creationTimestamp = source.readLong();
         modificationTimestamp = source.readLong();
         modificationTimestampAtLastSyncForData = source.readLong();
@@ -207,6 +207,7 @@ public class OCFile implements Parcelable, Comparable<OCFile>, ServerFileInterfa
         dest.writeLong(fileId);
         dest.writeLong(parentId);
         dest.writeLong(fileLength);
+        dest.writeLong(uploadTimestamp);
         dest.writeLong(creationTimestamp);
         dest.writeLong(modificationTimestamp);
         dest.writeLong(modificationTimestampAtLastSyncForData);
@@ -385,26 +386,11 @@ public class OCFile implements Parcelable, Comparable<OCFile>, ServerFileInterfa
         return localUri;
     }
 
-
-    public Uri getLegacyExposedFileUri() {
-        if (TextUtils.isEmpty(localPath)) {
-            return null;
-        }
-
-        if (exposedFileUri == null) {
-            return Uri.parse(ContentResolver.SCHEME_FILE + "://" + WebdavUtils.encodePath(localPath));
-        }
-
-        return exposedFileUri;
-
-    }
-    /*
-        Partly disabled because not all apps understand paths that we get via this method for now
-     */
     public Uri getExposedFileUri(Context context) {
         if (TextUtils.isEmpty(localPath)) {
             return null;
         }
+
         if (exposedFileUri == null) {
             try {
                 exposedFileUri = FileProvider.getUriForFile(
@@ -412,9 +398,7 @@ public class OCFile implements Parcelable, Comparable<OCFile>, ServerFileInterfa
                         context.getString(R.string.file_provider_authority),
                         new File(localPath));
             } catch (IllegalArgumentException ex) {
-                // Could not share file using FileProvider URI scheme.
-                // Fall back to legacy URI parsing.
-                getLegacyExposedFileUri();
+                Log_OC.d(TAG, "Given File is outside the paths supported by the provider");
             }
         }
 
@@ -501,6 +485,7 @@ public class OCFile implements Parcelable, Comparable<OCFile>, ServerFileInterfa
         localPath = null;
         mimeType = null;
         fileLength = 0;
+        uploadTimestamp = 0;
         creationTimestamp = 0;
         modificationTimestamp = 0;
         modificationTimestampAtLastSyncForData = 0;
@@ -723,10 +708,6 @@ public class OCFile implements Parcelable, Comparable<OCFile>, ServerFileInterfa
      */
     public long getModificationTimestamp() {
         return this.modificationTimestamp;
-    }
-
-    public long getUploadTimestamp() {
-        return this.uploadTimestamp;
     }
 
     public long getModificationTimestampAtLastSyncForData() {
@@ -1102,5 +1083,13 @@ public class OCFile implements Parcelable, Comparable<OCFile>, ServerFileInterfa
         } else {
             return false;
         }
+    }
+
+    public long getUploadTimestamp() {
+        return uploadTimestamp;
+    }
+
+    public void setUploadTimestamp(long uploadTimestamp) {
+        this.uploadTimestamp = uploadTimestamp;
     }
 }

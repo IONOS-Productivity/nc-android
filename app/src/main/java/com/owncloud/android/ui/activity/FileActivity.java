@@ -93,6 +93,7 @@ import com.owncloud.android.ui.fragment.FileDetailSharingFragment;
 import com.owncloud.android.ui.fragment.OCFileListFragment;
 import com.owncloud.android.ui.helpers.FileOperationsHelper;
 import com.owncloud.android.ui.preview.PreviewImageActivity;
+import com.owncloud.android.ui.preview.PreviewMediaActivity;
 import com.owncloud.android.utils.ClipboardUtil;
 import com.owncloud.android.utils.DisplayUtils;
 import com.owncloud.android.utils.ErrorMessageAdapter;
@@ -251,7 +252,11 @@ public abstract class FileActivity extends DrawerActivity
             hideInfoBox();
             refreshList();
         } else {
-            showInfoBox(R.string.offline_mode);
+            if (this instanceof PreviewMediaActivity) {
+                hideInfoBox();
+            } else {
+                showInfoBox(R.string.offline_mode);
+            }
         }
     }
 
