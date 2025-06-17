@@ -60,7 +60,7 @@ public class DefaultPlaybackErrorStrategyTest {
 
 	private PlaybackState createState(Optional<PlaybackFile> currentFile, PlaybackFile... files) {
 		Optional<PlaybackItemState> current = currentFile
-				.map(input -> new PlaybackItemState(input, PlayerState.NONE, new PlaybackItemMetadata(input.getName()), null, 0, 0));
+				.map(input -> new PlaybackItemState(input, PlayerState.NONE, null, null, 0, 0));
 		return new PlaybackState(
 				Arrays.asList(files),
 				current,

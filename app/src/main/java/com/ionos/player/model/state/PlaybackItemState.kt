@@ -6,7 +6,7 @@ import java.io.Serializable
 data class PlaybackItemState(
     @JvmField val file: PlaybackFile,
     @JvmField val playerState: PlayerState,
-    @JvmField val metadata: PlaybackItemMetadata,
+    @JvmField val metadata: PlaybackItemMetadata?,
     @JvmField val videoSize: VideoSize?,
     @JvmField val currentTimeInMilliseconds: Int,
     @JvmField val maxTimeInMilliseconds: Int,

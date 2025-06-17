@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <dimen name="player_video_fragment_padding_top">200dp</dimen>
-    <dimen name="player_video_fragment_file_details_view_margin_bottom">250dp</dimen>
-
-</resources>

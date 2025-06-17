@@ -8,6 +8,7 @@
 package com.ionos.player.media3
 
 import androidx.media3.common.Player
+import com.ionos.player.media3.common.playbackFile
 import com.ionos.player.model.PlaybackFile
 import com.ionos.player.model.file_store.PlaybackFileStore
 import com.ionos.player.model.state.PlaybackItemMetadata
@@ -42,12 +43,12 @@ class PlaybackStateFactory(
 	}
 
 	private fun Player.getCurrentItemState(currentFile: PlaybackFile) = PlaybackItemState(
-		currentFile,
-        mapPlayerState(),
-        mapMetadata(currentFile),
-		mapVideoSize(),
-		currentPosition.toInt(),
-		duration.toInt(),
+		file = currentFile,
+        playerState = mapPlayerState(),
+        metadata = if (mediaMetadata.playbackFile?.id == currentFile.id) mapMetadata(currentFile) else null,
+		videoSize = mapVideoSize(),
+		currentTimeInMilliseconds = currentPosition.toInt(),
+		maxTimeInMilliseconds = duration.toInt(),
 	)
 
 	private fun Player.currentFile(): PlaybackFile? {

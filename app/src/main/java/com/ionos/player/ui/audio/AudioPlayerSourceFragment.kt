@@ -8,13 +8,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.ionos.player.model.PlaybackFile
 import com.ionos.player.model.PlaybackModel
-import com.ionos.player.model.state.PlaybackItemState
+import com.ionos.player.model.ThumbnailLoader
+import com.ionos.player.model.state.PlaybackItemMetadata
 import com.ionos.player.model.state.PlaybackState
 import com.owncloud.android.R
 import com.owncloud.android.databinding.PlayerAudioSourceFragmentBinding
 import dagger.android.support.AndroidSupportInjection
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.async
 import java.util.Date
 import javax.inject.Inject
 
@@ -34,8 +40,13 @@ class AudioPlayerSourceFragment : Fragment() {
     @Inject
     lateinit var playbackModel: PlaybackModel
 
+    @Inject
+    lateinit var thumbnailLoader: ThumbnailLoader
+
     private lateinit var binding: PlayerAudioSourceFragmentBinding
     private lateinit var file: PlaybackFile
+    private lateinit var loadFileThumbnailJob: Deferred<Result<Unit>>
+    private var metadata: PlaybackItemMetadata? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,8 +56,10 @@ class AudioPlayerSourceFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = PlayerAudioSourceFragmentBinding.inflate(inflater, container, false)
+        binding.title.isSelected = true
         binding.title.text = file.getNameWithoutExtension()
         binding.fileDetails.text = file.getDetailsText()
+        loadFileThumbnailJob = loadFileThumbnail()
         return binding.getRoot()
     }
 
@@ -60,6 +73,49 @@ class AudioPlayerSourceFragment : Fragment() {
         super.onStop()
     }
 
+    private fun onPlaybackStateUpdate(state: PlaybackState) {
+        state.currentItemState.ifPresent {
+            if (it.file.id == file.id && it.metadata != null && it.metadata != metadata) {
+                onMetadataUpdate(it.metadata)
+            }
+        }
+    }
+
+    private fun onMetadataUpdate(metadata: PlaybackItemMetadata) {
+        this.metadata = metadata
+        if (loadFileThumbnailJob.isCompleted && loadFileThumbnailJob.getCompleted().isFailure) {
+            loadMetadataArtwork(metadata)
+        }
+        binding.title.text = if (metadata.artist.isNullOrEmpty()) {
+            metadata.title
+        } else {
+            getString(R.string.player_audio_source_artist_and_title, metadata.artist, metadata.title)
+        }
+    }
+
+    private fun loadFileThumbnail(): Deferred<Result<Unit>> {
+        return viewLifecycleOwner.lifecycleScope.async {
+            val thumbnailSize = resources.getDimension(R.dimen.player_full_screen_audio_player_album_cover_width)
+            val thumbnail = thumbnailLoader.await(requireContext(), file, thumbnailSize.toInt(), thumbnailSize.toInt())
+            if (thumbnail != null) {
+                binding.albumCover.setImageBitmap(thumbnail)
+                Result.success(Unit)
+            } else {
+                Result.failure(Exception("Thumbnail not found"))
+            }
+        }
+    }
+
+    private fun loadMetadataArtwork(metadata: PlaybackItemMetadata) {
+        val source = metadata.artworkData ?: metadata.artworkUri ?: return
+        Glide.with(requireContext())
+            .load(source)
+            .diskCacheStrategy(DiskCacheStrategy.NONE)
+            .skipMemoryCache(true)
+            .error(R.drawable.player_ic_album_cover_audio)
+            .into(binding.albumCover)
+    }
+
     private fun PlaybackFile.getDetailsText(): String {
         fun formatDate(timestamp: Long) = DateFormat.getDateFormat(context).format(Date(timestamp))
         val size = if (contentLength > 0) Formatter.formatFileSize(context, contentLength) else ""
@@ -69,11 +125,7 @@ class AudioPlayerSourceFragment : Fragment() {
 
     private val playbackModelListener = object : PlaybackModel.Listener {
         override fun onUpdate(state: PlaybackState) {
-            state.currentItemState.map(PlaybackItemState::metadata).ifPresent { metadata ->
-                binding.title.text = metadata.title
-                binding.artist.text = metadata.artist
-                binding.artist.visibility = if (metadata.artist.isNullOrEmpty()) View.GONE else View.VISIBLE
-            }
+            onPlaybackStateUpdate(state)
         }
 
         override fun onError(error: Throwable) {}

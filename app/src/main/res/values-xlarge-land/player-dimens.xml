@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <dimen name="player_full_screen_audio_player_album_photo_margin_top">100dp</dimen>
-    <dimen name="player_full_screen_audio_player_album_cover_width">550dp</dimen>
-
-</resources>

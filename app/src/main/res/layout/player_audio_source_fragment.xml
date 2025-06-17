@@ -4,55 +4,45 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/player_full_screen_audio_player_background">
+    android:background="@color/player_full_screen_audio_player_background"
+    android:paddingHorizontal="@dimen/player_full_screen_audio_player_source_horizontal_padding">
 
     <ImageView
         android:id="@+id/album_cover"
-        android:layout_width="@dimen/player_full_screen_audio_player_album_cover_width"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginTop="@dimen/player_full_screen_audio_player_album_photo_margin_top"
+        android:layout_marginBottom="@dimen/player_full_screen_audio_player_album_photo_margin_bottom"
         android:src="@drawable/player_ic_album_cover_audio"
+        custom:layout_constraintBottom_toTopOf="@id/title"
+        custom:layout_constraintDimensionRatio="1:1"
         custom:layout_constraintEnd_toEndOf="parent"
         custom:layout_constraintStart_toStartOf="parent"
-        custom:layout_constraintTop_toTopOf="parent" />
+        custom:layout_constraintTop_toTopOf="parent"
+        custom:layout_constraintWidth_max="@dimen/player_full_screen_audio_player_album_cover_width" />
 
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/player_full_screen_audio_player_title_margin_bottom"
         android:alpha="@dimen/player_account_view_alpha"
-        android:ellipsize="end"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:scrollHorizontally="true"
         android:singleLine="true"
         android:textColor="@color/player_full_screen_audio_detail_view_title_text_color"
         android:textSize="@dimen/player_full_screen_audio_player_title_text_size"
-        custom:layout_constraintBottom_toTopOf="@id/artist"
-        custom:layout_constraintEnd_toEndOf="parent"
-        custom:layout_constraintStart_toStartOf="parent"
-        custom:layout_goneMarginBottom="@dimen/player_full_screen_audio_player_title_and_artist_margin_bottom"
-        tools:text="Whatever It Takes" />
-
-    <TextView
-        android:id="@+id/artist"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/player_full_screen_audio_player_title_and_artist_margin_bottom"
-        android:alpha="@dimen/player_account_view_alpha"
-        android:ellipsize="end"
-        android:singleLine="true"
-        android:textColor="@color/player_full_screen_audio_detail_view_title_text_color"
-        android:textSize="@dimen/player_full_screen_audio_player_artist_text_size"
-        android:visibility="gone"
         custom:layout_constraintBottom_toTopOf="@id/file_details"
         custom:layout_constraintEnd_toEndOf="parent"
         custom:layout_constraintStart_toStartOf="parent"
-        tools:text="Imagine Dragons"
-        tools:visibility="visible" />
+        tools:text="Imagine Dragons • Whatever It Takes" />
 
     <TextView
         android:id="@+id/file_details"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/player_full_screen_audio_player_track_name_margin_bottom"
+        android:layout_marginBottom="@dimen/player_full_screen_audio_player_file_details_margin_bottom"
         android:alpha="@dimen/player_account_view_alpha"
         android:ellipsize="end"
         android:singleLine="true"

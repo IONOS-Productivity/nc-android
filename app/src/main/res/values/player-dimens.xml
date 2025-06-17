@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="player_account_view_alpha" type="dimen">0.54</item>
-    <dimen name="player_full_screen_audio_player_title_text_size">18sp</dimen>
-    <dimen name="player_full_screen_audio_player_artist_text_size">14sp</dimen>
-    <dimen name="player_full_screen_audio_player_file_details_text_size">12sp</dimen>
-    <dimen name="player_full_screen_audio_player_title_and_artist_margin_bottom">8dp</dimen>
-    <dimen name="player_full_screen_audio_player_track_name_margin_bottom">32dp</dimen>
-    <dimen name="player_full_screen_audio_player_album_photo_margin_top">64dp</dimen>
+    <dimen name="player_full_screen_audio_player_source_horizontal_padding">16dp</dimen>
+    <dimen name="player_full_screen_audio_player_album_photo_margin_top">16dp</dimen>
+    <dimen name="player_full_screen_audio_player_album_photo_margin_bottom">16dp</dimen>
     <dimen name="player_full_screen_audio_player_album_cover_width">350dp</dimen>
+    <dimen name="player_full_screen_audio_player_title_text_size">16sp</dimen>
+    <dimen name="player_full_screen_audio_player_title_margin_bottom">8dp</dimen>
+    <dimen name="player_full_screen_audio_player_file_details_text_size">12sp</dimen>
+    <dimen name="player_full_screen_audio_player_file_details_margin_bottom">32dp</dimen>
     <dimen name="player_full_screen_audio_player_time_text_view_font_size">15sp</dimen>
     <dimen name="player_full_screen_audio_player_time_text_view_large_width">60dp</dimen>
     <dimen name="player_full_screen_audio_player_progress_height">2dp</dimen>
