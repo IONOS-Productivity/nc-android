@@ -19,7 +19,6 @@
         android:layout_height="match_parent"
         android:id="@+id/login_webview" />
 
-    <!-- Login Flow V2 -->
     <include
         tools:visibility="visible"
         android:visibility="gone"
@@ -33,4 +32,5 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:indeterminate="true" />
+
 </FrameLayout>
