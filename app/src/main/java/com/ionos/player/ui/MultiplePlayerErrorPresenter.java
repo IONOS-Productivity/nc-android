@@ -15,10 +15,6 @@ import com.owncloud.android.R;
 
 import java.util.List;
 
-/**
- * User: zuzik
- * Date: 6/4/16
- */
 public class MultiplePlayerErrorPresenter implements MultiplePlayer.ErrorPresenter {
 	private MultiplePlayer.ErrorView errorView = NullMultiplePlayerErrorView.getInstance();
 	private final PlaybackModel model;

@@ -9,10 +9,6 @@ package com.ionos.player.ui.control;
 
 import com.ionos.player.ui.MultiplePlayer;
 
-/**
- * User: zuzik
- * Date: 8/24/16
- */
 public class NullMultiplePlayerControlView implements MultiplePlayer.ControlView {
 
 	private static final NullMultiplePlayerControlView INSTANCE = new NullMultiplePlayerControlView();

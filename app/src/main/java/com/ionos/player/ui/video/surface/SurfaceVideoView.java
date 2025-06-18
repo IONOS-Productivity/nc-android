@@ -14,10 +14,6 @@ import com.ionos.player.model.PlaybackFile;
 import com.ionos.player.model.VideoViewSetter;
 import com.ionos.player.ui.MultiplePlayer;
 
-/**
- * User: zuzik
- * Date: 8/13/16
- */
 public class SurfaceVideoView implements MultiplePlayer.VideoView {
 
 	private final SurfaceHolder holder;

@@ -7,10 +7,6 @@
 
 package com.ionos.player.ui;
 
-/**
- * User: zuzik
- * Date: 7/12/16
- */
 public class NullMultiplePlayerHidingView implements MultiplePlayer.HidingView {
 
 	private static final NullMultiplePlayerHidingView INSTANCE = new NullMultiplePlayerHidingView();

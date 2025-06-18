@@ -7,10 +7,6 @@
 
 package com.ionos.player.ui;
 
-/**
- * Created by Anton Shevchuk on 18.01.2017.
- */
-
 public class NullMultiplePlayerErrorView implements  MultiplePlayer.ErrorView {
 
 	private static final NullMultiplePlayerErrorView INSTANCE = new NullMultiplePlayerErrorView();

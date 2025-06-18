@@ -18,10 +18,6 @@ import java.util.List;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 
-/**
- * Created by yaz on 1/17/17.
- */
-
 public class InfiniteViewPager<T> extends LinearLayout {
 
 	private final ViewPager viewPager;

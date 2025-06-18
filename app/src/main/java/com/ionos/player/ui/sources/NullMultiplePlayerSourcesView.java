@@ -12,10 +12,6 @@ import com.ionos.player.ui.MultiplePlayer;
 
 import java.util.List;
 
-/**
- * User: zuzik
- * Date: 7/12/16
- */
 public class NullMultiplePlayerSourcesView implements MultiplePlayer.SourcesView {
 
 	private static final NullMultiplePlayerSourcesView INSTANCE = new NullMultiplePlayerSourcesView();

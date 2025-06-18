@@ -19,10 +19,6 @@ import com.ionos.player.ui.control.availability_strategy.ControlAvailabilityStra
 import java.util.List;
 import java.util.Optional;
 
-/**
- * User: zuzik
- * Date: 6/4/16
- */
 public class MultiplePlayerControlPresenter implements MultiplePlayer.ControlPresenter {
 
 	private final PlaybackModel model;

@@ -18,10 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * User: zuzik
- * Date: 6/4/16
- */
 public class MultiplePlayerSourcesPresenter implements MultiplePlayer.SourcesPresenter {
 
 	private final PlaybackModel model;

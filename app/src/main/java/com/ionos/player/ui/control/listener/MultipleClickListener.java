@@ -5,11 +5,6 @@ import android.view.View;
 
 import java.util.Optional;
 
-
-/**
- * Created by yaz on 1/25/17.
- */
-
 public abstract class MultipleClickListener implements View.OnClickListener {
 
 	private static final int TIME_WINDOW_FOR_CLICK_DETERMINATION_IN_MILLISECONDS = 250;

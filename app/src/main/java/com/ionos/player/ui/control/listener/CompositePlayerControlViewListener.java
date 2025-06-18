@@ -3,10 +3,6 @@ package com.ionos.player.ui.control.listener;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Created by yaz on 1/18/17.
- */
-
 public class CompositePlayerControlViewListener implements PlayerControlViewListener {
 
 	private final Set<PlayerControlViewListener> listeners = new HashSet<>();

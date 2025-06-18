@@ -8,10 +8,6 @@ import com.ionos.player.model.PlaybackFile;
 
 import androidx.annotation.Nullable;
 
-/**
- * Created by Anton Shevchuk on 28.12.2016.
- */
-
 public abstract class PlayerView extends LinearLayout {
 
 	public interface CurrentFileListener{

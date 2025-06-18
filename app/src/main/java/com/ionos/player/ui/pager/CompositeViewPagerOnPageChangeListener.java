@@ -5,10 +5,6 @@ import java.util.Set;
 
 import androidx.viewpager.widget.ViewPager;
 
-/**
- * Created by yaz on 1/18/17.
- */
-
 public class CompositeViewPagerOnPageChangeListener implements ViewPager.OnPageChangeListener {
 
 	private final Set<ViewPager.OnPageChangeListener> listeners = new HashSet<>();

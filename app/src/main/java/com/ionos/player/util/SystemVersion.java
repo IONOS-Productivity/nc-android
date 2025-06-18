@@ -4,10 +4,6 @@ import android.os.Build;
 
 import androidx.annotation.ChecksSdkIntAtLeast;
 
-/**
- * Created by yaz on 7/13/16.
- */
-
 public class SystemVersion {
 
 	/**

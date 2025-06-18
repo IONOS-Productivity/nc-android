@@ -9,10 +9,6 @@ package com.ionos.player.util;
 
 import android.os.Handler;
 
-/**
- * User: zuzik
- * Date: 8/20/16
- */
 public class PeriodicAction {
 
 	private final Handler handler = new Handler();

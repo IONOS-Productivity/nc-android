@@ -37,9 +37,6 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.WindowInsetsCompat;
 import dagger.android.HasAndroidInjector;
 
-/**
- * Created by yaz on 9/20/16.
- */
 public class VideoPlayerView extends PlayerView {
 	protected static final long ANIMATION_TIMER_DURATION = 5000;
 

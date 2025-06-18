@@ -11,10 +11,6 @@ import com.ionos.player.model.PlaybackFile;
 
 import java.util.List;
 
-/**
- * User: zuzik
- * Date: 6/18/16
- */
 public interface ControlAvailabilityStrategy {
 	boolean available(List<PlaybackFile> files, PlaybackFile file, boolean shuffle);
 }

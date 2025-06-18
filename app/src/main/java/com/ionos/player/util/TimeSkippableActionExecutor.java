@@ -1,10 +1,5 @@
 package com.ionos.player.util;
 
-
-/**
- * Created by Anton Shevchuk on 19.08.2016.
- */
-
 public class TimeSkippableActionExecutor {
 
 	private static final int DEFAULT_ALLOWED_REPEAT_DELAY = 1000;

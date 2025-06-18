@@ -27,10 +27,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import dagger.android.support.AndroidSupportInjection;
 
-/**
- * Created by Sergey Shandyuk on 4/15/2016.
- */
-
 public class VideoPlayerSourceFragment extends Fragment {
 
 	private final static String ARGUMENT_FILE = "ARGUMENT_FILE";

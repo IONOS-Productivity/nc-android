@@ -32,9 +32,6 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.WindowInsetsCompat;
 import dagger.android.HasAndroidInjector;
 
-/**
- * Created by yaz on 9/20/16.
- */
 public class AudioPlayerView extends PlayerView {
 
 	@Inject

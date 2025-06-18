@@ -31,9 +31,6 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.disposables.Disposables;
 import io.reactivex.subjects.PublishSubject;
 
-/**
- * Created by yaz on 9/20/16.
- */
 public class PlayerControlView extends LinearLayout {
 
 	private static final String INDETERMINATE_TIME = "--:--";

@@ -17,10 +17,6 @@ import java.util.List;
 
 import kotlin.Unit;
 
-/**
- * User: zuzik
- * Date: 6/4/16
- */
 public class MultiplePlayerVideoPresenter implements MultiplePlayer.VideoPresenter {
 
 	private final PlaybackModel model;

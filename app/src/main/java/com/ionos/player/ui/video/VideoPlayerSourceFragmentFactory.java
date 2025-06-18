@@ -5,10 +5,6 @@ import com.ionos.player.ui.pager.ViewPagerFragmentFactory;
 
 import androidx.fragment.app.Fragment;
 
-/**
- * Created by Anton Shevchuk on 31.10.2016.
- */
-
 public class VideoPlayerSourceFragmentFactory implements ViewPagerFragmentFactory<PlaybackFile> {
 
 	@Override

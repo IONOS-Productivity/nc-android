@@ -10,10 +10,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-/**
- * Created by Anton Shevchuk on 28.10.2016.
- */
-
 public abstract class AbstractFragmentPagerAdapter<T> extends FragmentStatePagerAdapter {
 
 	protected List<T> items = new ArrayList<>();

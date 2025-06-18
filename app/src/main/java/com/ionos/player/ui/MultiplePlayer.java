@@ -12,10 +12,6 @@ import com.ionos.player.model.VideoViewSetter;
 
 import java.util.List;
 
-/**
- * User: zuzik
- * Date: 6/4/16
- */
 public interface MultiplePlayer {
 
 	interface SourcesView {

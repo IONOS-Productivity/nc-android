@@ -11,10 +11,6 @@ import com.ionos.player.model.PlaybackFile;
 import com.ionos.player.model.VideoViewSetter;
 import com.ionos.player.ui.MultiplePlayer;
 
-/**
- * User: zuzik
- * Date: 7/12/16
- */
 public class NullMultiplePlayerVideoView implements MultiplePlayer.VideoView {
 
 	private static final NullMultiplePlayerVideoView INSTANCE = new NullMultiplePlayerVideoView();

@@ -13,10 +13,6 @@ import com.ionos.player.model.state.PlaybackState;
 
 import java.util.List;
 
-/**
- * User: zuzik
- * Date: 6/4/16
- */
 public class MultiplePlayerHidingPresenter implements MultiplePlayer.HidingPresenter {
 
 	private final PlaybackModel model;

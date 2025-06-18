@@ -24,9 +24,6 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager.widget.ViewPager;
 import dagger.android.HasAndroidInjector;
 
-/**
- * Created by yaz on 9/20/16.
- */
 public class PlayerSourcesView extends LinearLayout {
 
 	@Inject

@@ -8,9 +8,6 @@ import java.util.List;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-/**
- * Created by yaz on 9/20/16.
- */
 public class InfinityFragmentViewPagerAdapter<T> extends AbstractFragmentPagerAdapter<T> {
 
 	private final ViewPagerFragmentFactory<T> playerSourceFragmentFactory;

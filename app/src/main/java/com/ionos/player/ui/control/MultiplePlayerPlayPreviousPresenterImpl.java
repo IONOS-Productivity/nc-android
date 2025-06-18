@@ -8,10 +8,6 @@ import com.ionos.player.ui.MultiplePlayer;
 
 import java.util.Optional;
 
-/**
- * Created by yaz on 1/25/17.
- */
-
 public class MultiplePlayerPlayPreviousPresenterImpl implements MultiplePlayerPlayPreviousPresenter {
 
 	private final PlaybackModel playerModel;
