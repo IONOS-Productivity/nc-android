@@ -12,6 +12,7 @@ import androidx.media3.common.util.UnstableApi
 import androidx.media3.session.MediaController
 import androidx.media3.session.MediaSession
 import com.ionos.player.media3.common.MediaItemFactory
+import com.ionos.player.media3.common.playbackFile
 import com.ionos.player.media3.controller.MediaControllerFactory
 import com.ionos.player.media3.controller.indexOfFirst
 import com.ionos.player.media3.controller.setRepeatMode
@@ -25,7 +26,6 @@ import com.ionos.player.model.PlaybackModelCompositeListener
 import com.ionos.player.model.PlaybackSettings
 import com.ionos.player.model.VideoViewSetter
 import com.ionos.player.model.error_strategy.PlaybackErrorStrategy
-import com.ionos.player.model.file_store.PlaybackFileStore
 import com.ionos.player.model.state.PlaybackState
 import com.ionos.player.model.state.RepeatMode
 import com.ionos.player.util.PeriodicAction
@@ -46,7 +46,6 @@ class PlaybackModelImpl @Inject constructor(
 	private val context: Context,
     private val mediaSessionFactory: MediaSessionFactory,
 	private val mediaItemFactory: MediaItemFactory,
-	private val playbackFileStore: PlaybackFileStore,
 	private val playbackSettings: PlaybackSettings,
 	private val playbackErrorStrategy: PlaybackErrorStrategy,
 ) : PlaybackModel, MediaSessionHolder {
@@ -55,7 +54,7 @@ class PlaybackModelImpl @Inject constructor(
 		private const val CHECK_PROGRESS_INTERVAL = 1000
 	}
 
-	private val stateFactory = PlaybackStateFactory(playbackFileStore)
+	private val stateFactory = PlaybackStateFactory()
 	private val compositeListener = PlaybackModelCompositeListener()
 
 	private val checkProgressPeriodicAction = PeriodicAction(CHECK_PROGRESS_INTERVAL) {
@@ -72,7 +71,6 @@ class PlaybackModelImpl @Inject constructor(
 		override fun onDisconnected(controller: MediaController) {
 			controller.removeListener(playerListener)
 			controllerScope?.cancel()
-			playbackFileStore.clear()
 			checkProgressPeriodicAction.stop()
 			state.ifPresent(compositeListener::onUpdate)
 		}
@@ -121,9 +119,7 @@ class PlaybackModelImpl @Inject constructor(
 			return
 		}
 
-		val currentFile = controller?.currentMediaItem?.let { playbackFileStore.getFile(it.mediaId) }
-
-		playbackFileStore.setFiles(files.list)
+		val currentFile = controller?.currentMediaItem?.mediaMetadata?.playbackFile
 
 		controller?.let { controller ->
 			val mediaItems = files.list.map(mediaItemFactory::create)

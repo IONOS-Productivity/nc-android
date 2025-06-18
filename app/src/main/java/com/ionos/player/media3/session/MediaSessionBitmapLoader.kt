@@ -15,7 +15,6 @@ import com.google.common.util.concurrent.MoreExecutors
 import com.ionos.player.media3.common.playbackFile
 import com.ionos.player.model.PlaybackFile
 import com.ionos.player.model.ThumbnailLoader
-import com.ionos.player.model.file_store.PlaybackFileStore
 import com.ionos.player.util.SystemVersion
 import com.owncloud.android.R
 import com.owncloud.android.utils.MimeTypeUtil
@@ -25,7 +24,6 @@ import java.util.concurrent.Executors
 @UnstableApi
 class MediaSessionBitmapLoader(
 	private val context: Context,
-	private val playbackFileStore: PlaybackFileStore,
 	private val thumbnailLoader: ThumbnailLoader,
 	private val delegate: BitmapLoader = DataSourceBitmapLoader(context),
 ) : BitmapLoader by delegate {
@@ -42,11 +40,11 @@ class MediaSessionBitmapLoader(
 	private var previousRequest: BitmapRequest? = null
 
 	override fun loadBitmapFromMetadata(metadata: MediaMetadata): ListenableFuture<Bitmap>? {
-		val mediaId = metadata.playbackFile?.id
+		val file = metadata.playbackFile
 		val previousRequest = this.previousRequest
 
 		if (previousRequest != null &&
-			previousRequest.mediaId == mediaId &&
+			previousRequest.mediaId == file?.id &&
 			previousRequest.artworkData.contentEquals(metadata.artworkData) &&
 			previousRequest.artworkUri == metadata.artworkUri
 		) {
@@ -55,13 +53,12 @@ class MediaSessionBitmapLoader(
 
 		val bitmapFuture = executorService.submit(Callable {
 			getBitmapFromMetadata(metadata) ?: run {
-				val file = mediaId?.let(playbackFileStore::getFile)
 				file?.let(::getBitmapForFile) ?: getDefaultBitmap(file)
 			}
 		})
 
 		this.previousRequest = BitmapRequest(
-			mediaId,
+			file?.id,
 			metadata.artworkData,
 			metadata.artworkUri,
 			bitmapFuture,

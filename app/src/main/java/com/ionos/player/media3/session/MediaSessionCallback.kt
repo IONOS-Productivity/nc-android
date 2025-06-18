@@ -14,7 +14,6 @@ import com.ionos.player.media3.resumption.PlaybackResumptionConfigStore
 import com.ionos.player.model.PlaybackFile
 import com.ionos.player.model.PlaybackFilesRepository
 import com.ionos.player.model.PlaybackModel
-import com.ionos.player.model.file_store.PlaybackFileStore
 import com.ionos.player.model.getPlaybackUri
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -30,7 +29,6 @@ class MediaSessionCallback @Inject constructor(
 	private val playbackResumptionConfigStore: PlaybackResumptionConfigStore,
 	private val playbackFilesRepository: PlaybackFilesRepository,
 	private val mediaItemFactory: MediaItemFactory,
-	private val playbackFileStore: PlaybackFileStore,
 	private val playbackModelProvider: Provider<PlaybackModel>,
 ) : MediaSession.Callback {
     private val playbackModel get() = playbackModelProvider.get()
@@ -76,7 +74,6 @@ class MediaSessionCallback @Inject constructor(
 					throw IllegalStateException("Playback files are empty")
 				}
 				withContext(Dispatchers.Main) {
-					playbackFileStore.setFiles(playbackFiles)
 					playbackModel.start()
 					playbackModel.setFilesFlow(playbackFilesFlow.drop(1))
 				}
@@ -86,7 +83,6 @@ class MediaSessionCallback @Inject constructor(
 				val stubPlaybackFile = getStubPlaybackFile()
 				val stubPlaybackFiles = listOf(stubPlaybackFile)
 				withContext(Dispatchers.Main) {
-					playbackFileStore.setFiles(stubPlaybackFiles)
 					playbackModel.start()
 				}
 				stubPlaybackFiles.toMediaItemsWithStartPosition(stubPlaybackFile.id)

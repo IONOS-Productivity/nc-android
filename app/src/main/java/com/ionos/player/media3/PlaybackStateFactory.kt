@@ -10,7 +10,6 @@ package com.ionos.player.media3
 import androidx.media3.common.Player
 import com.ionos.player.media3.common.playbackFile
 import com.ionos.player.model.PlaybackFile
-import com.ionos.player.model.file_store.PlaybackFileStore
 import com.ionos.player.model.state.PlaybackItemMetadata
 import com.ionos.player.model.state.PlaybackItemState
 import com.ionos.player.model.state.PlaybackState
@@ -19,24 +18,35 @@ import com.ionos.player.model.state.RepeatMode
 import com.ionos.player.model.state.VideoSize
 import java.util.Optional
 
-class PlaybackStateFactory(
-	private val playbackFileStore: PlaybackFileStore,
-) {
+class PlaybackStateFactory() {
 
 	fun create(player: Player?): Optional<PlaybackState> {
+        if (player == null) {
+            return Optional.empty()
+        }
 		val state = PlaybackState(
-            playbackFileStore.getFiles(),
-			getCurrentItemState(player),
-			player.mapRepeatMode(),
-			player?.shuffleModeEnabled == true,
+            currentFiles = player.getCurrentFiles(),
+			currentItemState = player.getCurrentItemState(),
+			repeatMode = player.mapRepeatMode(),
+			shuffle = player.shuffleModeEnabled,
 		)
 		return Optional.of(state)
 	}
 
-	private fun getCurrentItemState(player: Player?): Optional<PlaybackItemState> {
-		val currentFile = player?.currentFile()
+    private fun Player.getCurrentFiles(): List<PlaybackFile> {
+        return buildList {
+            for (i in 0 until mediaItemCount) {
+                val mediaItem = getMediaItemAt(i)
+                val playbackFile = mediaItem.mediaMetadata.playbackFile
+                playbackFile?.let(::add)
+            }
+        }
+    }
+
+	private fun Player.getCurrentItemState(): Optional<PlaybackItemState> {
+		val currentFile = currentMediaItem?.mediaMetadata?.playbackFile
 		return if (currentFile != null) {
-			Optional.of(player.getCurrentItemState(currentFile))
+			Optional.of(getCurrentItemState(currentFile))
 		} else {
 			Optional.empty()
 		}
@@ -50,10 +60,6 @@ class PlaybackStateFactory(
 		currentTimeInMilliseconds = currentPosition.toInt(),
 		maxTimeInMilliseconds = duration.toInt(),
 	)
-
-	private fun Player.currentFile(): PlaybackFile? {
-		return currentMediaItem?.let { playbackFileStore.getFile(it.mediaId) }
-	}
 
 	private fun Player.mapPlayerState(): PlayerState = when (playbackState) {
 		Player.STATE_IDLE -> PlayerState.IDLE
@@ -79,7 +85,7 @@ class PlaybackStateFactory(
 			?.let { VideoSize(width = it.width, height = it.height) }
 	}
 
-    private fun Player?.mapRepeatMode(): RepeatMode = when (this?.repeatMode) {
+    private fun Player.mapRepeatMode(): RepeatMode = when (repeatMode) {
         Player.REPEAT_MODE_ONE -> RepeatMode.SINGLE
         Player.REPEAT_MODE_ALL -> RepeatMode.ALL
         else -> RepeatMode.OFF

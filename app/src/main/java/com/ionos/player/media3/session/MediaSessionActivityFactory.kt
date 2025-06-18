@@ -3,19 +3,19 @@ package com.ionos.player.media3.session
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import androidx.media3.common.MediaItem
+import com.ionos.player.media3.common.playbackFile
 import com.ionos.player.model.PlaybackFileType
-import com.ionos.player.model.file_store.PlaybackFileStore
 import com.ionos.player.ui.PlayerActivity
 import com.ionos.player.util.SystemVersion
 import javax.inject.Inject
 
 class MediaSessionActivityFactory @Inject constructor(
 	private val context: Context,
-	private val playbackFileStore: PlaybackFileStore,
 ) {
 
-	fun create(currentMediaId: String?): PendingIntent? {
-		val currentFile = currentMediaId?.let(playbackFileStore::getFile) ?: return null
+	fun create(currentMediaItem: MediaItem?): PendingIntent? {
+		val currentFile = currentMediaItem?.mediaMetadata?.playbackFile ?: return null
 		val fileType = PlaybackFileType.entries
 			.firstOrNull { currentFile.mimeType.startsWith(it.value, ignoreCase = true) }
 			?: throw IllegalArgumentException("Unsupported file type: ${currentFile.mimeType}")

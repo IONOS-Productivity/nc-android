@@ -46,8 +46,8 @@ class PlaybackService : MediaSessionService() {
 
 	@UnstableApi
 	override fun onUpdateNotification(session: MediaSession, startInForegroundRequired: Boolean) {
-		val currentMediaId = session.player.currentMediaItem?.mediaId
-		mediaSessionActivityFactory.create(currentMediaId)?.let(session::setSessionActivity)
+		val currentMediaItem = session.player.currentMediaItem
+		mediaSessionActivityFactory.create(currentMediaItem)?.let(session::setSessionActivity)
 		super.onUpdateNotification(session, startInForegroundRequired)
 	}
 

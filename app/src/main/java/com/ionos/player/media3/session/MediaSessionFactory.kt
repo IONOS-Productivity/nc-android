@@ -10,7 +10,6 @@ import androidx.media3.session.SessionCommand
 import com.ionos.player.media3.common.PlayerFactory
 import com.ionos.player.media3.resumption.PlaybackResumptionPlayerListener
 import com.ionos.player.model.ThumbnailLoader
-import com.ionos.player.model.file_store.PlaybackFileStore
 import com.owncloud.android.R
 import javax.inject.Inject
 
@@ -19,7 +18,6 @@ class MediaSessionFactory @Inject constructor(
 	private val playerFactory: PlayerFactory,
 	private val sessionCallback: MediaSessionCallback,
 	private val resumptionPlayerListener: PlaybackResumptionPlayerListener,
-	private val playbackFileStore: PlaybackFileStore,
 	private val thumbnailLoader: ThumbnailLoader,
 ) {
 
@@ -48,10 +46,6 @@ class MediaSessionFactory @Inject constructor(
 
 	@UnstableApi
 	private fun provideBitmapLoader(): BitmapLoader {
-		return MediaSessionBitmapLoader(
-			context,
-			playbackFileStore,
-			thumbnailLoader,
-		)
+		return MediaSessionBitmapLoader(context, thumbnailLoader)
 	}
 }
