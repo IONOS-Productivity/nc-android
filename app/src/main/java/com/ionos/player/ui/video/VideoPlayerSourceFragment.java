@@ -11,7 +11,6 @@ import com.ionos.player.model.PlaybackFile;
 import com.ionos.player.model.PlaybackModel;
 import com.ionos.player.model.ThumbnailLoader;
 import com.ionos.player.model.VideoViewSetter;
-import com.ionos.player.model.predicate.IsVideoPredicate;
 import com.ionos.player.model.state.VideoSize;
 import com.ionos.player.ui.MultiplePlayer;
 import com.ionos.player.ui.video.surface.PlayerCompatible;
@@ -41,8 +40,6 @@ public class VideoPlayerSourceFragment extends Fragment {
     PlaybackModel playerModel;
 	@Inject
     ThumbnailLoader thumbnailLoader;
-	@Inject
-	IsVideoPredicate isVideoPredicate;
 
 	private PlaybackFile file;
 	private MultiplePlayer.VideoPresenter videoPresenter;
@@ -64,9 +61,7 @@ public class VideoPlayerSourceFragment extends Fragment {
 		super.onCreate(savedInstanceState);
 		AndroidSupportInjection.inject(this);
 		this.file = (PlaybackFile) getArguments().getSerializable(ARGUMENT_FILE);
-		this.videoPresenter = isVideoPredicate.satisfied(file)
-				? new MultiplePlayerVideoPresenter(this.playerModel, this.file)
-				: NullMultiplePlayerVideoPresenter.getInstance();
+		this.videoPresenter = new MultiplePlayerVideoPresenter(this.playerModel, this.file);
 	}
 
 	@Override

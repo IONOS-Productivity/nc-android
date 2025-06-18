@@ -11,7 +11,6 @@ import com.ionos.player.media3.common.PlayerFactory
 import com.ionos.player.media3.resumption.PlaybackResumptionPlayerListener
 import com.ionos.player.model.ThumbnailLoader
 import com.ionos.player.model.file_store.PlaybackFileStore
-import com.ionos.player.model.predicate.IsVideoPredicate
 import com.owncloud.android.R
 import javax.inject.Inject
 
@@ -22,7 +21,6 @@ class MediaSessionFactory @Inject constructor(
 	private val resumptionPlayerListener: PlaybackResumptionPlayerListener,
 	private val playbackFileStore: PlaybackFileStore,
 	private val thumbnailLoader: ThumbnailLoader,
-	private val isVideoPredicate: IsVideoPredicate,
 ) {
 
 	@UnstableApi
@@ -54,7 +52,6 @@ class MediaSessionFactory @Inject constructor(
 			context,
 			playbackFileStore,
 			thumbnailLoader,
-			isVideoPredicate,
 		)
 	}
 }

@@ -16,9 +16,9 @@ import com.ionos.player.media3.common.playbackFile
 import com.ionos.player.model.PlaybackFile
 import com.ionos.player.model.ThumbnailLoader
 import com.ionos.player.model.file_store.PlaybackFileStore
-import com.ionos.player.model.predicate.IsVideoPredicate
 import com.ionos.player.util.SystemVersion
 import com.owncloud.android.R
+import com.owncloud.android.utils.MimeTypeUtil
 import java.util.concurrent.Callable
 import java.util.concurrent.Executors
 
@@ -27,7 +27,6 @@ class MediaSessionBitmapLoader(
 	private val context: Context,
 	private val playbackFileStore: PlaybackFileStore,
 	private val thumbnailLoader: ThumbnailLoader,
-	private val isVideoPredicate: IsVideoPredicate,
 	private val delegate: BitmapLoader = DataSourceBitmapLoader(context),
 ) : BitmapLoader by delegate {
 
@@ -94,7 +93,7 @@ class MediaSessionBitmapLoader(
 	}
 
 	private fun getDefaultBitmap(file: PlaybackFile?): Bitmap {
-		val drawable = if (file != null && isVideoPredicate.satisfied(file)) {
+		val drawable = if (file != null && MimeTypeUtil.isVideo(file.mimeType)) {
 			ContextCompat.getDrawable(context, R.drawable.player_ic_notification_video)
 		} else {
 			ContextCompat.getDrawable(context, R.drawable.player_ic_notification_audio)

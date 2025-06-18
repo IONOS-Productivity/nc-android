@@ -8,10 +8,8 @@ import android.view.WindowInsets;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.ionos.player.model.PlaybackFile;
 import com.ionos.player.model.PlaybackModel;
-import com.ionos.player.model.predicate.FileBeingProcessedPredicate;
 import com.ionos.player.model.state.PlaybackItemState;
 import com.ionos.player.model.state.PlaybackState;
 import com.ionos.player.ui.MultiplePlayer;
@@ -41,8 +39,6 @@ public class AudioPlayerView extends PlayerView {
 
 	@Inject
     PlaybackModel playerModel;
-	@Inject
-	FileBeingProcessedPredicate fileBeingProcessedPredicate;
 
     private final ViewGroup topBar;
 	private final TextView tvTitle;
@@ -153,18 +149,9 @@ public class AudioPlayerView extends PlayerView {
 			if (currentFileListener != null) {
 				currentFileListener.fileChanged(file);
 			}
-			showMessageThatSelectedFilesAreBeingProcessing(file);
 			this.tvTitle.setText(file.getNameWithoutExtension());
 		} else {
 			this.tvTitle.setText("");
-		}
-	}
-
-	private void showMessageThatSelectedFilesAreBeingProcessing(PlaybackFile selectedFile) {
-		boolean hasCurrentlyProcessingFiles = fileBeingProcessedPredicate.satisfied(selectedFile);
-
-		if (hasCurrentlyProcessingFiles) {
-			Snackbar.make(this, R.string.player_files_are_processing_alert_message, Snackbar.LENGTH_LONG).show();
 		}
 	}
 
