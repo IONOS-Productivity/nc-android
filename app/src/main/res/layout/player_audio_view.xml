@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:background="@color/player_full_screen_audio_player_bar"
         android:gravity="center_vertical"
+        android:minHeight="@dimen/player_full_screen_audio_player_top_bar_height"
         android:orientation="horizontal">
 
         <ImageView

@@ -2,7 +2,6 @@
 <resources>
 	<color name="player_transparent_dark">#21000000</color>
 	<color name="player_silver3">#cccccc</color>
-	<color name="player_boulder">#777777</color>
 	<color name="player_cod_gray5">#111111</color>
 	<color name="player_dusty_gray2">#979797</color>
 	<color name="player_gray">#888888</color>
