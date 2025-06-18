@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.signature.StringSignature
 import com.ionos.player.model.PlaybackFile
 import com.ionos.player.model.PlaybackModel
 import com.ionos.player.model.ThumbnailLoader
@@ -108,12 +109,14 @@ class AudioPlayerSourceFragment : Fragment() {
 
     private fun loadMetadataArtwork(metadata: PlaybackItemMetadata) {
         val source = metadata.artworkData ?: metadata.artworkUri ?: return
-        Glide.with(requireContext())
-            .load(source)
-            .diskCacheStrategy(DiskCacheStrategy.NONE)
-            .skipMemoryCache(true)
-            .error(R.drawable.player_ic_album_cover_audio)
-            .into(binding.albumCover)
+        Glide.with(requireContext()).load(source).run {
+            if (source is ByteArray) {
+                diskCacheStrategy(DiskCacheStrategy.NONE)
+                signature(StringSignature(file.id))
+            }
+            error(R.drawable.player_ic_album_cover_audio)
+            into(binding.albumCover)
+        }
     }
 
     private fun PlaybackFile.getDetailsText(): String {
