@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 
 import com.ionos.player.model.PlaybackFile;
 import com.ionos.player.model.PlaybackModel;
-import com.ionos.player.model.ThumbnailLoader;
 import com.ionos.player.model.VideoViewSetter;
 import com.ionos.player.model.state.VideoSize;
 import com.ionos.player.ui.MultiplePlayer;
@@ -38,8 +37,6 @@ public class VideoPlayerSourceFragment extends Fragment {
 
 	@Inject
     PlaybackModel playerModel;
-	@Inject
-    ThumbnailLoader thumbnailLoader;
 
 	private PlaybackFile file;
 	private MultiplePlayer.VideoPresenter videoPresenter;
