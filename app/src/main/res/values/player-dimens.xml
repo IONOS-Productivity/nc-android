@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ IONOS HiDrive Next - Android Client
+  ~
+  ~ SPDX-FileCopyrightText: 2025 STRATO GmbH.
+  ~ SPDX-License-Identifier: GPL-2.0
+  -->
+
 <resources>
     <item name="player_account_view_alpha" type="dimen">0.54</item>
     <dimen name="player_full_screen_audio_player_source_horizontal_padding">16dp</dimen>
