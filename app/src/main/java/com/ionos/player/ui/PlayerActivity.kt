@@ -8,6 +8,7 @@
 package com.ionos.player.ui
 
 import android.app.PictureInPictureParams
+import android.app.PictureInPictureUiState
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
@@ -16,10 +17,12 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Rational
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.ionos.player.model.PlaybackFileType
@@ -77,43 +80,60 @@ class PlayerActivity : FileActivity(), PlayerViewContainer, PlayerCompatible, In
 
     private val pipAspectRatio = Rational(16, 9)
 
+    private var onBackPressedCallback: OnBackPressedCallback? = null
+
     override fun isDefaultWindowInsetsHandlingEnabled(): Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
-        playbackFileType = getPlaybackFileType()
-        playerView = createPlayerView()
-        setContentView(playerView)
-
-        val moreButton = findViewById<View>(R.id.more)
-        moreButton.setOnClickListener { viewModel.onMoreButtonClick() }
+        playbackFileType = intent.getPlaybackFileType()
+        createPlayerView()
 
         viewModel.eventFlow
             .flowWithLifecycle(lifecycle)
             .onEach { handleEvent(it) }
             .launchIn(lifecycleScope)
 
-        if (canUsePictureInPictureMode()) {
+        if (isPictureInPictureAllowed()) {
             setPictureInPictureParams(createPictureInPictureParams())
-            onBackPressedDispatcher.addCallback(this) {
+            val isVideoPlayback = playbackFileType == PlaybackFileType.VIDEO
+            onBackPressedCallback = onBackPressedDispatcher.addCallback(this, enabled = isVideoPlayback) {
                 switchToPictureInPictureMode()
             }
         }
     }
 
-    private fun createPlayerView(): PlayerView = when (playbackFileType) {
-        PlaybackFileType.AUDIO -> AudioPlayerView(this)
-        PlaybackFileType.VIDEO -> VideoPlayerView(this)
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        playbackFileType = intent.getPlaybackFileType()
+        recreatePlayerView()
+        onBackPressedCallback?.isEnabled = canUsePictureInPictureMode()
     }
 
-    @Suppress("Deprecation")
-    private fun getPlaybackFileType(): PlaybackFileType {
+    private fun createPlayerView() {
+        playerView = when (playbackFileType) {
+            PlaybackFileType.AUDIO -> AudioPlayerView(this)
+            PlaybackFileType.VIDEO -> VideoPlayerView(this)
+        }
+        val moreButton = playerView.findViewById<View>(R.id.more)
+        moreButton.setOnClickListener { viewModel.onMoreButtonClick() }
+        setContentView(playerView)
+    }
+
+    private fun recreatePlayerView() {
+        playerView.onStop()
+        createPlayerView()
+        playerView.onStart()
+    }
+
+    @Suppress("DEPRECATION")
+    private fun Intent.getPlaybackFileType(): PlaybackFileType {
         val playbackFileType = if (SystemVersion.greaterOrEqualToTiramisu()) {
-            intent.getSerializableExtra(PLAYBACK_FILE_TYPE, PlaybackFileType::class.java)
+            getSerializableExtra(PLAYBACK_FILE_TYPE, PlaybackFileType::class.java)
         } else {
-            intent.getSerializableExtra(PLAYBACK_FILE_TYPE) as PlaybackFileType?
+            getSerializableExtra(PLAYBACK_FILE_TYPE) as PlaybackFileType?
         }
         return playbackFileType ?: throw IllegalStateException("Playback file type was not defined")
     }
@@ -133,19 +153,32 @@ class PlayerActivity : FileActivity(), PlayerViewContainer, PlayerCompatible, In
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        playerView.onStop()
-        playerView = createPlayerView()
+        recreatePlayerView()
         if (isInPictureInPictureMode) {
             (playerView as? VideoPlayerView)?.hideControls()
+        } else {
+            (playerView as? VideoPlayerView)?.showControls()
         }
-        setContentView(playerView)
-        playerView.onStart()
     }
 
     override fun onUserLeaveHint() {
         super.onUserLeaveHint()
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S && canUsePictureInPictureMode()) {
             switchToPictureInPictureMode()
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.VANILLA_ICE_CREAM)
+    override fun onPictureInPictureUiStateChanged(pipState: PictureInPictureUiState) {
+        if (pipState.isTransitioningToPip) {
+            (playerView as? VideoPlayerView)?.hideControls()
+        }
+    }
+
+    override fun onPictureInPictureModeChanged(isInPictureInPictureMode: Boolean, newConfig: Configuration) {
+        super.onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig)
+        if (!isInPictureInPictureMode && lifecycle.currentState == Lifecycle.State.CREATED) {
+            finish() // Finish the activity if the user closes the PIP window
         }
     }
 
