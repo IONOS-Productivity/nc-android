@@ -20,61 +20,61 @@ import javax.inject.Inject
 
 class PlaybackService : MediaSessionService() {
 
-	@Inject
-	lateinit var mediaSessionHolder: MediaSessionHolder
+    @Inject
+    lateinit var mediaSessionHolder: MediaSessionHolder
 
-	@Inject
-	lateinit var mediaSessionActivityFactory: MediaSessionActivityFactory
+    @Inject
+    lateinit var mediaSessionActivityFactory: MediaSessionActivityFactory
 
     @Inject
     @UnstableApi
     lateinit var mediaNotificationProvider: MediaNotificationProvider
 
-	private var bindingCount: Int = 0
+    private var bindingCount: Int = 0
 
     @UnstableApi
-	override fun onCreate() {
-		super.onCreate()
+    override fun onCreate() {
+        super.onCreate()
         AndroidInjection.inject(this)
         setMediaNotificationProvider(mediaNotificationProvider)
-	}
+    }
 
     @UnstableApi
-	override fun onGetSession(controllerInfo: ControllerInfo): MediaSession? {
-		return mediaSessionHolder.getMediaSession()
-	}
+    override fun onGetSession(controllerInfo: ControllerInfo): MediaSession? {
+        return mediaSessionHolder.getMediaSession()
+    }
 
-	@UnstableApi
-	override fun onUpdateNotification(session: MediaSession, startInForegroundRequired: Boolean) {
-		val currentMediaItem = session.player.currentMediaItem
-		mediaSessionActivityFactory.create(currentMediaItem)?.let(session::setSessionActivity)
-		super.onUpdateNotification(session, startInForegroundRequired)
-	}
+    @UnstableApi
+    override fun onUpdateNotification(session: MediaSession, startInForegroundRequired: Boolean) {
+        val currentMediaItem = session.player.currentMediaItem
+        mediaSessionActivityFactory.create(currentMediaItem)?.let(session::setSessionActivity)
+        super.onUpdateNotification(session, startInForegroundRequired)
+    }
 
-	override fun onBind(intent: Intent?): IBinder? {
-		val result = super.onBind(intent)
-		if (result != null) {
-			bindingCount++
-		}
-		return result
-	}
+    override fun onBind(intent: Intent?): IBinder? {
+        val result = super.onBind(intent)
+        if (result != null) {
+            bindingCount++
+        }
+        return result
+    }
 
-	override fun onUnbind(intent: Intent?): Boolean {
-		bindingCount--
-		if (bindingCount == 0) {
-			stopSelf()
-		}
-		return super.onUnbind(intent)
-	}
+    override fun onUnbind(intent: Intent?): Boolean {
+        bindingCount--
+        if (bindingCount == 0) {
+            stopSelf()
+        }
+        return super.onUnbind(intent)
+    }
 
-	override fun onTaskRemoved(rootIntent: Intent?) {
-		super.onTaskRemoved(rootIntent)
-		mediaSessionHolder.release()
-		stopSelf()
-	}
+    override fun onTaskRemoved(rootIntent: Intent?) {
+        super.onTaskRemoved(rootIntent)
+        mediaSessionHolder.release()
+        stopSelf()
+    }
 
-	override fun onDestroy() {
-		mediaSessionHolder.release()
-		super.onDestroy()
-	}
+    override fun onDestroy() {
+        mediaSessionHolder.release()
+        super.onDestroy()
+    }
 }

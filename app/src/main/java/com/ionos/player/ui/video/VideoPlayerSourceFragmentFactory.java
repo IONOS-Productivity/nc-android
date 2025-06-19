@@ -14,8 +14,8 @@ import androidx.fragment.app.Fragment;
 
 public class VideoPlayerSourceFragmentFactory implements ViewPagerFragmentFactory<PlaybackFile> {
 
-	@Override
-	public Fragment create(PlaybackFile item) {
-		return VideoPlayerSourceFragment.createInstance(item);
-	}
+    @Override
+    public Fragment create(PlaybackFile item) {
+        return VideoPlayerSourceFragment.createInstance(item);
+    }
 }

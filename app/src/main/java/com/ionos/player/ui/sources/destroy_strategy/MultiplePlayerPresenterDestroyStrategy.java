@@ -10,5 +10,5 @@ package com.ionos.player.ui.sources.destroy_strategy;
 import com.ionos.player.model.PlaybackModel;
 
 public interface MultiplePlayerPresenterDestroyStrategy {
-	void onDestroy(PlaybackModel model);
+    void onDestroy(PlaybackModel model);
 }

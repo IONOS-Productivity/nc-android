@@ -15,15 +15,15 @@ import com.ionos.player.media3.PlaybackService
 import kotlinx.coroutines.guava.await
 
 class MediaControllerFactory(
-	private val controllerListener: MediaController.Listener,
+    private val controllerListener: MediaController.Listener,
 ) {
 
-	suspend fun create(context: Context): MediaController {
-		val token = SessionToken(context, ComponentName(context, PlaybackService::class.java))
-		return MediaController
-			.Builder(context, token)
-			.setListener(controllerListener)
-			.buildAsync()
-			.await()
-	}
+    suspend fun create(context: Context): MediaController {
+        val token = SessionToken(context, ComponentName(context, PlaybackService::class.java))
+        return MediaController
+            .Builder(context, token)
+            .setListener(controllerListener)
+            .buildAsync()
+            .await()
+    }
 }

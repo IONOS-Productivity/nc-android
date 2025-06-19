@@ -14,8 +14,8 @@ import androidx.fragment.app.Fragment;
 
 public class AudioPlayerSourceFragmentFactory implements ViewPagerFragmentFactory<PlaybackFile> {
 
-	@Override
-	public Fragment create(PlaybackFile item) {
-		return AudioPlayerSourceFragment.createInstance(item);
-	}
+    @Override
+    public Fragment create(PlaybackFile item) {
+        return AudioPlayerSourceFragment.createInstance(item);
+    }
 }

@@ -11,29 +11,29 @@ import android.os.Handler;
 
 public class PeriodicAction {
 
-	private final Handler handler = new Handler();
-	private final int periodicIntervalInMilliseconds;
-	private final Action action;
+    private final Handler handler = new Handler();
+    private final int periodicIntervalInMilliseconds;
+    private final Action action;
 
-	public PeriodicAction(int periodicIntervalInMilliseconds, Action action) {
-		this.periodicIntervalInMilliseconds = periodicIntervalInMilliseconds;
-		this.action = action;
-	}
+    public PeriodicAction(int periodicIntervalInMilliseconds, Action action) {
+        this.periodicIntervalInMilliseconds = periodicIntervalInMilliseconds;
+        this.action = action;
+    }
 
-	public void start() {
-		stop();
-		this.handler.postDelayed(this.runnable, this.periodicIntervalInMilliseconds);
-	}
+    public void start() {
+        stop();
+        this.handler.postDelayed(this.runnable, this.periodicIntervalInMilliseconds);
+    }
 
-	public void stop() {
-		this.handler.removeCallbacks(this.runnable);
-	}
+    public void stop() {
+        this.handler.removeCallbacks(this.runnable);
+    }
 
-	private final Runnable runnable = new Runnable() {
-		@Override
-		public void run() {
-			action.execute();
-			start();
-		}
-	};
+    private final Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            action.execute();
+            start();
+        }
+    };
 }

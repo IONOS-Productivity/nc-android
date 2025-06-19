@@ -1,13 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ IONOS HiDrive Next - Android Client
   ~
   ~ SPDX-FileCopyrightText: 2025 STRATO GmbH.
   ~ SPDX-License-Identifier: GPL-2.0
   -->
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -42,7 +40,7 @@
             android:gravity="center_vertical"
             android:singleLine="true"
             android:textColor="@color/player_full_screen_audio_player_text_color"
-            android:textSize="@dimen/player_full_screen_audio_player_nav_bar_text_view_size"/>
+            android:textSize="@dimen/player_full_screen_audio_player_nav_bar_text_view_size" />
 
         <ImageView
             android:id="@+id/more"
@@ -60,7 +58,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:paddingLeft="@dimen/player_padding_normal"
-        android:paddingRight="@dimen/player_padding_normal"/>
+        android:paddingRight="@dimen/player_padding_normal" />
 
     <com.ionos.player.ui.control.PlayerControlView
         android:id="@+id/playerControlView"
@@ -68,6 +66,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         custom:type="audio"
-        android:background="@color/player_full_screen_audio_player_background"/>
+        android:background="@color/player_full_screen_audio_player_background" />
 
 </LinearLayout>

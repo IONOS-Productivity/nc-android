@@ -16,117 +16,117 @@ import com.ionos.player.ui.MultiplePlayer;
 
 public class SurfaceVideoView implements MultiplePlayer.VideoView {
 
-	private final SurfaceHolder holder;
-	private final MultiplePlayer.VideoPresenter presenter;
-	private Strategy strategy = new UnavailableHolderStrategy();
+    private final SurfaceHolder holder;
+    private final MultiplePlayer.VideoPresenter presenter;
+    private Strategy strategy = new UnavailableHolderStrategy();
 
-	public SurfaceVideoView(SurfaceView view, MultiplePlayer.VideoPresenter presenter) {
-		this.holder = view.getHolder();
-		this.presenter = presenter;
-	}
+    public SurfaceVideoView(SurfaceView view, MultiplePlayer.VideoPresenter presenter) {
+        this.holder = view.getHolder();
+        this.presenter = presenter;
+    }
 
-	public void onCreate() {
-		this.holder.addCallback(this.surfaceHolderCallback);
-		this.presenter.onCreate();
-	}
+    public void onCreate() {
+        this.holder.addCallback(this.surfaceHolderCallback);
+        this.presenter.onCreate();
+    }
 
-	public void onDestroy() {
-		this.holder.removeCallback(this.surfaceHolderCallback);
-		this.presenter.onDestroy();
-	}
+    public void onDestroy() {
+        this.holder.removeCallback(this.surfaceHolderCallback);
+        this.presenter.onDestroy();
+    }
 
-	public void onAppear() {
-		this.presenter.onAppear();
-	}
+    public void onAppear() {
+        this.presenter.onAppear();
+    }
 
-	public void onDisappear() {
-		this.presenter.onDisappear();
-	}
+    public void onDisappear() {
+        this.presenter.onDisappear();
+    }
 
-	private final SurfaceHolder.Callback surfaceHolderCallback = new SurfaceHolder.Callback() {
-		@Override
-		public void surfaceCreated(SurfaceHolder surfaceHolder) {
-			strategy = new AvailableHolderStrategy();
-			presenter.onVideoViewCreated();
-		}
+    private final SurfaceHolder.Callback surfaceHolderCallback = new SurfaceHolder.Callback() {
+        @Override
+        public void surfaceCreated(SurfaceHolder surfaceHolder) {
+            strategy = new AvailableHolderStrategy();
+            presenter.onVideoViewCreated();
+        }
 
-		@Override
-		public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
-		}
+        @Override
+        public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
+        }
 
-		@Override
-		public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
-			strategy = new UnavailableHolderStrategy();
-			presenter.onVideoViewDestroyed();
-		}
-	};
+        @Override
+        public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
+            strategy = new UnavailableHolderStrategy();
+            presenter.onVideoViewDestroyed();
+        }
+    };
 
-	//region MultiplePlayer.VideoView
+    //region MultiplePlayer.VideoView
 
-	@Override
-	public void setVideoViewAvailable() {
-		this.strategy.setVideoViewAvailable();
-	}
+    @Override
+    public void setVideoViewAvailable() {
+        this.strategy.setVideoViewAvailable();
+    }
 
-	@Override
-	public void setVideoViewUnavailable() {
-		this.strategy.setVideoViewUnavailable();
-	}
+    @Override
+    public void setVideoViewUnavailable() {
+        this.strategy.setVideoViewUnavailable();
+    }
 
-	@Override
-	public void setVideoView(VideoViewSetter setter, PlaybackFile file) {
-		this.strategy.setVideoView(setter, file);
-	}
+    @Override
+    public void setVideoView(VideoViewSetter setter, PlaybackFile file) {
+        this.strategy.setVideoView(setter, file);
+    }
 
-	@Override
-	public void clearVideoView(VideoViewSetter setter) {
-		setter.setVideoView(null);
-	}
+    @Override
+    public void clearVideoView(VideoViewSetter setter) {
+        setter.setVideoView(null);
+    }
 
-	//endregion
+    //endregion
 
-	//region Strategy
+    //region Strategy
 
-	private interface Strategy {
-		void setVideoView(VideoViewSetter setter, PlaybackFile file);
+    private interface Strategy {
+        void setVideoView(VideoViewSetter setter, PlaybackFile file);
 
-		void setVideoViewAvailable();
+        void setVideoViewAvailable();
 
-		void setVideoViewUnavailable();
-	}
+        void setVideoViewUnavailable();
+    }
 
-	private class AvailableHolderStrategy implements Strategy {
+    private class AvailableHolderStrategy implements Strategy {
 
-		@Override
-		public void setVideoView(VideoViewSetter setter, PlaybackFile file) {
-			setter.setVideoView(holder);
-		}
+        @Override
+        public void setVideoView(VideoViewSetter setter, PlaybackFile file) {
+            setter.setVideoView(holder);
+        }
 
-		@Override
-		public void setVideoViewAvailable() {
-		}
+        @Override
+        public void setVideoViewAvailable() {
+        }
 
-		@Override
-		public void setVideoViewUnavailable() {
+        @Override
+        public void setVideoViewUnavailable() {
 
-		}
-	}
+        }
+    }
 
-	private class UnavailableHolderStrategy implements Strategy {
-		@Override
-		public void setVideoView(VideoViewSetter setter, PlaybackFile file) {
-		}
+    private class UnavailableHolderStrategy implements Strategy {
+        @Override
+        public void setVideoView(VideoViewSetter setter, PlaybackFile file) {
+        }
 
-		@Override
-		public void setVideoViewAvailable() {
+        @Override
+        public void setVideoViewAvailable() {
 
-		}
+        }
 
-		@Override
-		public void setVideoViewUnavailable() {
+        @Override
+        public void setVideoViewUnavailable() {
 
-		}
-	}
+        }
+    }
 
-	//endregion
+    //endregion
 }

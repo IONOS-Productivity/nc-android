@@ -9,22 +9,22 @@ package com.ionos.player.ui;
 
 public class NullMultiplePlayerHidingView implements MultiplePlayer.HidingView {
 
-	private static final NullMultiplePlayerHidingView INSTANCE = new NullMultiplePlayerHidingView();
+    private static final NullMultiplePlayerHidingView INSTANCE = new NullMultiplePlayerHidingView();
 
-	public static NullMultiplePlayerHidingView getInstance() {
-		return INSTANCE;
-	}
+    public static NullMultiplePlayerHidingView getInstance() {
+        return INSTANCE;
+    }
 
-	private NullMultiplePlayerHidingView() {
-	}
+    private NullMultiplePlayerHidingView() {
+    }
 
-	@Override
-	public void displayPlayerView() {
+    @Override
+    public void displayPlayerView() {
 
-	}
+    }
 
-	@Override
-	public void doNotDisplayPlayerView() {
+    @Override
+    public void doNotDisplayPlayerView() {
 
-	}
+    }
 }

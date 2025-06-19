@@ -12,8 +12,8 @@ import com.ionos.player.model.PlaybackFile;
 import java.util.List;
 
 public class HiDriveCyclicPreviousControlAvailabilityStrategy implements ControlAvailabilityStrategy {
-	@Override
-	public boolean available(List<PlaybackFile> files, PlaybackFile file, boolean shuffle) {
-		return !(files.isEmpty());
-	}
+    @Override
+    public boolean available(List<PlaybackFile> files, PlaybackFile file, boolean shuffle) {
+        return !(files.isEmpty());
+    }
 }

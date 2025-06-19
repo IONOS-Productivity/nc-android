@@ -11,7 +11,7 @@ import androidx.media3.session.MediaSession
 
 interface MediaSessionHolder {
 
-	fun getMediaSession(): MediaSession
+    fun getMediaSession(): MediaSession
 
-	fun release()
+    fun release()
 }

@@ -20,18 +20,18 @@ import java.util.Optional
 
 class PlaybackStateFactory() {
 
-	fun create(player: Player?): Optional<PlaybackState> {
+    fun create(player: Player?): Optional<PlaybackState> {
         if (player == null) {
             return Optional.empty()
         }
-		val state = PlaybackState(
+        val state = PlaybackState(
             currentFiles = player.getCurrentFiles(),
-			currentItemState = player.getCurrentItemState(),
-			repeatMode = player.mapRepeatMode(),
-			shuffle = player.shuffleModeEnabled,
-		)
-		return Optional.of(state)
-	}
+            currentItemState = player.getCurrentItemState(),
+            repeatMode = player.mapRepeatMode(),
+            shuffle = player.shuffleModeEnabled,
+        )
+        return Optional.of(state)
+    }
 
     private fun Player.getCurrentFiles(): List<PlaybackFile> {
         return buildList {
@@ -43,30 +43,30 @@ class PlaybackStateFactory() {
         }
     }
 
-	private fun Player.getCurrentItemState(): Optional<PlaybackItemState> {
-		val currentFile = currentMediaItem?.mediaMetadata?.playbackFile
-		return if (currentFile != null) {
-			Optional.of(getCurrentItemState(currentFile))
-		} else {
-			Optional.empty()
-		}
-	}
+    private fun Player.getCurrentItemState(): Optional<PlaybackItemState> {
+        val currentFile = currentMediaItem?.mediaMetadata?.playbackFile
+        return if (currentFile != null) {
+            Optional.of(getCurrentItemState(currentFile))
+        } else {
+            Optional.empty()
+        }
+    }
 
-	private fun Player.getCurrentItemState(currentFile: PlaybackFile) = PlaybackItemState(
-		file = currentFile,
+    private fun Player.getCurrentItemState(currentFile: PlaybackFile) = PlaybackItemState(
+        file = currentFile,
         playerState = mapPlayerState(),
         metadata = if (mediaMetadata.playbackFile?.id == currentFile.id) mapMetadata(currentFile) else null,
-		videoSize = mapVideoSize(),
-		currentTimeInMilliseconds = currentPosition.toInt(),
-		maxTimeInMilliseconds = duration.toInt(),
-	)
+        videoSize = mapVideoSize(),
+        currentTimeInMilliseconds = currentPosition.toInt(),
+        maxTimeInMilliseconds = duration.toInt(),
+    )
 
-	private fun Player.mapPlayerState(): PlayerState = when (playbackState) {
-		Player.STATE_IDLE -> PlayerState.IDLE
-		Player.STATE_ENDED -> PlayerState.COMPLETED
-		Player.STATE_BUFFERING, Player.STATE_READY -> if (playWhenReady) PlayerState.PLAYING else PlayerState.PAUSED
-		else -> PlayerState.NONE
-	}
+    private fun Player.mapPlayerState(): PlayerState = when (playbackState) {
+        Player.STATE_IDLE -> PlayerState.IDLE
+        Player.STATE_ENDED -> PlayerState.COMPLETED
+        Player.STATE_BUFFERING, Player.STATE_READY -> if (playWhenReady) PlayerState.PLAYING else PlayerState.PAUSED
+        else -> PlayerState.NONE
+    }
 
     private fun Player.mapMetadata(currentFile: PlaybackFile) = PlaybackItemMetadata(
         title = mediaMetadata.title ?: currentFile.getNameWithoutExtension(),
@@ -79,11 +79,11 @@ class PlaybackStateFactory() {
         artworkUri = mediaMetadata.artworkUri?.toString(),
     )
 
-	private fun Player.mapVideoSize(): VideoSize? {
-		return videoSize
-			.takeIf { it.width > 0 && it.height > 0 }
-			?.let { VideoSize(width = it.width, height = it.height) }
-	}
+    private fun Player.mapVideoSize(): VideoSize? {
+        return videoSize
+            .takeIf { it.width > 0 && it.height > 0 }
+            ?.let { VideoSize(width = it.width, height = it.height) }
+    }
 
     private fun Player.mapRepeatMode(): RepeatMode = when (repeatMode) {
         Player.REPEAT_MODE_ONE -> RepeatMode.SINGLE

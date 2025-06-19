@@ -17,31 +17,31 @@ import androidx.annotation.Nullable;
 
 public abstract class PlayerView extends LinearLayout {
 
-	public interface CurrentFileListener{
-		void fileChanged(PlaybackFile file);
-	}
+    public interface CurrentFileListener {
+        void fileChanged(PlaybackFile file);
+    }
 
-	@Nullable
-	protected CurrentFileListener currentFileListener;
+    @Nullable
+    protected CurrentFileListener currentFileListener;
 
-	public PlayerView(Context context) {
-		super(context);
-	}
+    public PlayerView(Context context) {
+        super(context);
+    }
 
-	public PlayerView(Context context, AttributeSet attrs) {
-		this(context, attrs, 0);
-	}
+    public PlayerView(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
 
-	public PlayerView(Context context, AttributeSet attrs, int defStyleAttr) {
-		super(context, attrs, defStyleAttr);
-	}
+    public PlayerView(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+    }
 
-	public abstract void onStart();
+    public abstract void onStart();
 
-	public abstract void onStop();
+    public abstract void onStop();
 
-	public void setCurrentFileListener(@Nullable CurrentFileListener listener){
-		this.currentFileListener = listener;
-	}
+    public void setCurrentFileListener(@Nullable CurrentFileListener listener) {
+        this.currentFileListener = listener;
+    }
 
 }

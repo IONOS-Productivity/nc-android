@@ -10,8 +10,8 @@ package com.ionos.player.ui.sources.destroy_strategy;
 import com.ionos.player.model.PlaybackModel;
 
 public class DoNothingMultiplePlayerPresenterDestroyStrategy implements MultiplePlayerPresenterDestroyStrategy {
-	@Override
-	public void onDestroy(PlaybackModel model) {
+    @Override
+    public void onDestroy(PlaybackModel model) {
 
-	}
+    }
 }

@@ -76,5 +76,5 @@ internal class StreamDataSource(
         return buildUpon()
             .setUri(uri)
             .build()
-	}
+    }
 }

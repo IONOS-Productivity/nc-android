@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ IONOS HiDrive Next - Android Client
   ~
   ~ SPDX-FileCopyrightText: 2025 STRATO GmbH.
@@ -7,14 +6,14 @@
   -->
 
 <resources>
-	<color name="player_transparent_dark">#21000000</color>
-	<color name="player_silver3">#cccccc</color>
-	<color name="player_cod_gray5">#111111</color>
-	<color name="player_dusty_gray2">#979797</color>
-	<color name="player_gray">#888888</color>
-	<color name="player_bahama_blue">#00659F</color>
-	<color name="player_lochmara">#0077BB</color>
-	<color name="player_cod_gray_dark">#171717</color>
-	<color name="player_azure_radiance_dark">#0A84FF</color>
+    <color name="player_transparent_dark">#21000000</color>
+    <color name="player_silver3">#cccccc</color>
+    <color name="player_cod_gray5">#111111</color>
+    <color name="player_dusty_gray2">#979797</color>
+    <color name="player_gray">#888888</color>
+    <color name="player_bahama_blue">#00659F</color>
+    <color name="player_lochmara">#0077BB</color>
+    <color name="player_cod_gray_dark">#171717</color>
+    <color name="player_azure_radiance_dark">#0A84FF</color>
 
 </resources>

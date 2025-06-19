@@ -18,24 +18,24 @@ import com.ionos.player.util.SystemVersion
 import javax.inject.Inject
 
 class MediaSessionActivityFactory @Inject constructor(
-	private val context: Context,
+    private val context: Context,
 ) {
 
-	fun create(currentMediaItem: MediaItem?): PendingIntent? {
-		val currentFile = currentMediaItem?.mediaMetadata?.playbackFile ?: return null
-		val fileType = PlaybackFileType.entries
-			.firstOrNull { currentFile.mimeType.startsWith(it.value, ignoreCase = true) }
-			?: throw IllegalArgumentException("Unsupported file type: ${currentFile.mimeType}")
+    fun create(currentMediaItem: MediaItem?): PendingIntent? {
+        val currentFile = currentMediaItem?.mediaMetadata?.playbackFile ?: return null
+        val fileType = PlaybackFileType.entries
+            .firstOrNull { currentFile.mimeType.startsWith(it.value, ignoreCase = true) }
+            ?: throw IllegalArgumentException("Unsupported file type: ${currentFile.mimeType}")
 
-		val intent = PlayerActivity.createIntent(context, fileType)
-			.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+        val intent = PlayerActivity.createIntent(context, fileType)
+            .addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
 
-		val requestCode = System.currentTimeMillis().toInt()
+        val requestCode = System.currentTimeMillis().toInt()
 
-		return if (SystemVersion.greaterOrEqualToS()) {
-			PendingIntent.getActivity(context, requestCode, intent, PendingIntent.FLAG_IMMUTABLE)
-		} else {
-			PendingIntent.getActivity(context, requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT)
-		}
-	}
+        return if (SystemVersion.greaterOrEqualToS()) {
+            PendingIntent.getActivity(context, requestCode, intent, PendingIntent.FLAG_IMMUTABLE)
+        } else {
+            PendingIntent.getActivity(context, requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        }
+    }
 }

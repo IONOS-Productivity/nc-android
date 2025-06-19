@@ -38,26 +38,26 @@ import javax.inject.Singleton
 @Module
 abstract class PlayerModule {
 
-	companion object{
+    companion object {
         private const val PLAYER_CACHE_DIR_NAME = "player"
         private const val PLAYER_CACHE_SIZE = 300 * 1024 * 1024L
 
-		@UnstableApi
-		@Singleton
-		@Provides
-		fun provideCache(context: Context): Cache {
-			return SimpleCache(
+        @UnstableApi
+        @Singleton
+        @Provides
+        fun provideCache(context: Context): Cache {
+            return SimpleCache(
                 File(context.cacheDir, PLAYER_CACHE_DIR_NAME),
-				LeastRecentlyUsedCacheEvictor(PLAYER_CACHE_SIZE)
-			)
-		}
-	}
+                LeastRecentlyUsedCacheEvictor(PLAYER_CACHE_SIZE)
+            )
+        }
+    }
 
-	@Binds
-	@Singleton
-	abstract fun bindPlaybackModel(
-		model: PlaybackModelImpl,
-	): PlaybackModel
+    @Binds
+    @Singleton
+    abstract fun bindPlaybackModel(
+        model: PlaybackModelImpl,
+    ): PlaybackModel
 
     @Binds
     @Singleton
@@ -65,15 +65,15 @@ abstract class PlayerModule {
         playbackModel: PlaybackModelImpl,
     ): MediaSessionHolder
 
-	@Binds
+    @Binds
     abstract fun bindPlayerFactory(
         playerFactory: ExoPlayerFactory,
     ): PlayerFactory
 
-	@Binds
-	abstract fun bindPlaybackErrorStrategy(
-		strategy: DefaultPlaybackErrorStrategy,
-	): PlaybackErrorStrategy
+    @Binds
+    abstract fun bindPlaybackErrorStrategy(
+        strategy: DefaultPlaybackErrorStrategy,
+    ): PlaybackErrorStrategy
 
     @ContributesAndroidInjector
     abstract fun playbackService(): PlaybackService

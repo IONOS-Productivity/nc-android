@@ -1,79 +1,77 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ IONOS HiDrive Next - Android Client
   ~
   ~ SPDX-FileCopyrightText: 2025 STRATO GmbH.
   ~ SPDX-License-Identifier: GPL-2.0
   -->
 
-<FrameLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:custom="http://schemas.android.com/apk/res-auto"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/player_full_screen_audio_player_background">
 
-	<com.ionos.player.ui.sources.PlayerSourcesView
-		android:id="@+id/playerSourcesView"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent" />
+    <com.ionos.player.ui.sources.PlayerSourcesView
+        android:id="@+id/playerSourcesView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
-	<RelativeLayout
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-		<LinearLayout
-			android:id="@+id/topBar"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:background="@color/player_transparent_dark"
-			android:gravity="center_vertical"
+        <LinearLayout
+            android:id="@+id/topBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/player_transparent_dark"
+            android:gravity="center_vertical"
             android:minHeight="@dimen/player_full_screen_audio_player_top_bar_height"
-			android:orientation="horizontal">
+            android:orientation="horizontal">
 
-			<ImageView
-				android:id="@+id/ivBack"
-				android:layout_width="wrap_content"
-				android:layout_height="48dp"
-				android:layout_marginLeft="@dimen/player_header_left_padding"
-				android:layout_marginRight="@dimen/player_full_screen_audio_player_back_button_margin"
+            <ImageView
+                android:id="@+id/ivBack"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_marginLeft="@dimen/player_header_left_padding"
+                android:layout_marginRight="@dimen/player_full_screen_audio_player_back_button_margin"
                 android:layout_marginVertical="4dp"
                 android:src="@drawable/ic_arrow_back"
                 custom:tint="@color/white" />
 
-			<TextView
-				android:id="@+id/tvTitle"
-				android:layout_width="0dp"
-				android:layout_height="match_parent"
-				android:layout_weight="1"
-				android:ellipsize="end"
-				android:gravity="center_vertical"
-				android:singleLine="true"
-				android:textColor="@color/player_full_screen_audio_player_text_color"
-				android:textSize="@dimen/player_full_screen_audio_player_nav_bar_text_view_size"/>
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                android:textColor="@color/player_full_screen_audio_player_text_color"
+                android:textSize="@dimen/player_full_screen_audio_player_nav_bar_text_view_size" />
 
-			<ImageView
-				android:id="@+id/more"
-				android:layout_width="48dp"
-				android:layout_height="48dp"
-				android:scaleType="centerInside"
+            <ImageView
+                android:id="@+id/more"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:scaleType="centerInside"
                 android:src="@drawable/ic_dots_vertical"
                 custom:tint="@color/white" />
 
-		</LinearLayout>
+        </LinearLayout>
 
-		<com.ionos.player.ui.control.PlayerControlView
-			android:id="@+id/playerControlView"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_alignParentBottom="true"
-			android:layout_alignParentLeft="true"
-			android:layout_alignParentStart="true"
-			android:layout_gravity="bottom"
-			android:background="@color/player_transparent_dark"
-			custom:type="video"/>
+        <com.ionos.player.ui.control.PlayerControlView
+            android:id="@+id/playerControlView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_gravity="bottom"
+            android:background="@color/player_transparent_dark"
+            custom:type="video" />
 
-	</RelativeLayout>
+    </RelativeLayout>
 
 </FrameLayout>

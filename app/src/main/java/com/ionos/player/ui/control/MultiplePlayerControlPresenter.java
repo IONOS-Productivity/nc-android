@@ -21,169 +21,169 @@ import java.util.Optional;
 
 public class MultiplePlayerControlPresenter implements MultiplePlayer.ControlPresenter {
 
-	private final PlaybackModel model;
-	private final ControlAvailabilityStrategy nextControlAvailabilityStrategy;
-	private final ControlAvailabilityStrategy previousControlAvailabilityStrategy;
-	private MultiplePlayer.ControlView view = NullMultiplePlayerControlView.getInstance();
+    private final PlaybackModel model;
+    private final ControlAvailabilityStrategy nextControlAvailabilityStrategy;
+    private final ControlAvailabilityStrategy previousControlAvailabilityStrategy;
+    private MultiplePlayer.ControlView view = NullMultiplePlayerControlView.getInstance();
 
-	public MultiplePlayerControlPresenter(
-			PlaybackModel model,
-			ControlAvailabilityStrategy nextControlAvailabilityStrategy,
-			ControlAvailabilityStrategy previousControlAvailabilityStrategy) {
-		this.model = model;
-		this.nextControlAvailabilityStrategy = nextControlAvailabilityStrategy;
-		this.previousControlAvailabilityStrategy = previousControlAvailabilityStrategy;
-	}
+    public MultiplePlayerControlPresenter(
+        PlaybackModel model,
+        ControlAvailabilityStrategy nextControlAvailabilityStrategy,
+        ControlAvailabilityStrategy previousControlAvailabilityStrategy) {
+        this.model = model;
+        this.nextControlAvailabilityStrategy = nextControlAvailabilityStrategy;
+        this.previousControlAvailabilityStrategy = previousControlAvailabilityStrategy;
+    }
 
-	@Override
-	public void setView(MultiplePlayer.ControlView view) {
-		this.view = view != null ? view : NullMultiplePlayerControlView.getInstance();
-	}
+    @Override
+    public void setView(MultiplePlayer.ControlView view) {
+        this.view = view != null ? view : NullMultiplePlayerControlView.getInstance();
+    }
 
-	@Override
-	public void onCreate() {
-		updateView();
-	}
+    @Override
+    public void onCreate() {
+        updateView();
+    }
 
-	@Override
-	public void onDestroy() {
-		this.view = NullMultiplePlayerControlView.getInstance();
-	}
+    @Override
+    public void onDestroy() {
+        this.view = NullMultiplePlayerControlView.getInstance();
+    }
 
-	@Override
-	public void onAppear() {
-		updateView();
-		this.model.addListener(this.listener);
-	}
+    @Override
+    public void onAppear() {
+        updateView();
+        this.model.addListener(this.listener);
+    }
 
-	@Override
-	public void onDisappear() {
-		this.model.removeListener(this.listener);
-	}
+    @Override
+    public void onDisappear() {
+        this.model.removeListener(this.listener);
+    }
 
-	@Override
-	public void onPlay() {
-		this.model.play();
-	}
+    @Override
+    public void onPlay() {
+        this.model.play();
+    }
 
-	@Override
-	public void onPause() {
-		this.model.pause();
-	}
+    @Override
+    public void onPause() {
+        this.model.pause();
+    }
 
-	@Override
-	public void onStop() {
-		this.model.stop();
-	}
+    @Override
+    public void onStop() {
+        this.model.stop();
+    }
 
-	@Override
-	public void onPlayNext() {
-		this.model.playNext();
-	}
+    @Override
+    public void onPlayNext() {
+        this.model.playNext();
+    }
 
-	@Override
-	public void onPlayPrevious() {
-		this.model.playPrevious();
-	}
+    @Override
+    public void onPlayPrevious() {
+        this.model.playPrevious();
+    }
 
-	@Override
-	public void onSeekToPosition(int positionInMilliseconds) {
-		this.model.seekToPosition(positionInMilliseconds);
-	}
+    @Override
+    public void onSeekToPosition(int positionInMilliseconds) {
+        this.model.seekToPosition(positionInMilliseconds);
+    }
 
-	@Override
-	public void onRepeat() {
-		this.model.setRepeatMode(RepeatMode.SINGLE);
-	}
+    @Override
+    public void onRepeat() {
+        this.model.setRepeatMode(RepeatMode.SINGLE);
+    }
 
-	@Override
-	public void onDoNotRepeat() {
-		this.model.setRepeatMode(RepeatMode.ALL);
-	}
+    @Override
+    public void onDoNotRepeat() {
+        this.model.setRepeatMode(RepeatMode.ALL);
+    }
 
-	@Override
-	public void onShuffle() {
-		this.model.setShuffle(true);
-	}
+    @Override
+    public void onShuffle() {
+        this.model.setShuffle(true);
+    }
 
-	@Override
-	public void onDoNotShuffle() {
-		this.model.setShuffle(false);
-	}
+    @Override
+    public void onDoNotShuffle() {
+        this.model.setShuffle(false);
+    }
 
-	private void updateView() {
-		updateView(this.model.getState());
-	}
+    private void updateView() {
+        updateView(this.model.getState());
+    }
 
-	private void updateView(Optional<PlaybackState> state) {
-		boolean repeatSingle = false;
-		boolean shuffle = false;
+    private void updateView(Optional<PlaybackState> state) {
+        boolean repeatSingle = false;
+        boolean shuffle = false;
 
-		if (state.isPresent()) {
-			repeatSingle = state.get().repeatMode == RepeatMode.SINGLE;
-			shuffle = state.get().shuffle;
-		}
+        if (state.isPresent()) {
+            repeatSingle = state.get().repeatMode == RepeatMode.SINGLE;
+            shuffle = state.get().shuffle;
+        }
 
-		if (repeatSingle) {
-			this.view.repeat();
-		} else {
-			this.view.doNotRepeat();
-		}
+        if (repeatSingle) {
+            this.view.repeat();
+        } else {
+            this.view.doNotRepeat();
+        }
 
-		if (shuffle) {
-			this.view.shuffle();
-		} else {
-			this.view.doNotShuffle();
-		}
+        if (shuffle) {
+            this.view.shuffle();
+        } else {
+            this.view.doNotShuffle();
+        }
 
-		if (state
-				.map(input -> input.currentItemState.isPresent())
-				.orElse(false)) {
-			PlaybackItemState playbackItemState = state.get().currentItemState.get();
-			PlayerStateAnalyzer analyzer = new PlayerStateAnalyzer(playbackItemState.playerState);
+        if (state
+            .map(input -> input.currentItemState.isPresent())
+            .orElse(false)) {
+            PlaybackItemState playbackItemState = state.get().currentItemState.get();
+            PlayerStateAnalyzer analyzer = new PlayerStateAnalyzer(playbackItemState.playerState);
 
-			this.view.enablePlayControls(
-					analyzer.playAvailable(),
-					analyzer.pauseAvailable(),
-					analyzer.stopAvailable());
-			this.view.enableSwitchControls(
-					this.nextControlAvailabilityStrategy.available(
-							state.get().currentFiles,
-							state.get().currentItemState.get().file,
-							state.get().shuffle),
-					this.previousControlAvailabilityStrategy.available(
-							state.get().currentFiles,
-							state.get().currentItemState.get().file,
-							state.get().shuffle));
+            this.view.enablePlayControls(
+                analyzer.playAvailable(),
+                analyzer.pauseAvailable(),
+                analyzer.stopAvailable());
+            this.view.enableSwitchControls(
+                this.nextControlAvailabilityStrategy.available(
+                    state.get().currentFiles,
+                    state.get().currentItemState.get().file,
+                    state.get().shuffle),
+                this.previousControlAvailabilityStrategy.available(
+                    state.get().currentFiles,
+                    state.get().currentItemState.get().file,
+                    state.get().shuffle));
 
-			if (playbackItemState.maxTimeInMilliseconds > 0) {
-				int currentTime = playbackItemState.currentTimeInMilliseconds;
-				int maxTime = playbackItemState.maxTimeInMilliseconds;
-				this.view.setProgressAvailable();
-				this.view.setProgress(currentTime, maxTime);
-			} else {
-				this.view.setProgressNotAvailable();
-			}
-		} else {
-			this.view.enablePlayControls(false, false, false);
-			this.view.enableSwitchControls(false, false);
-			this.view.setProgressNotAvailable();
-		}
-	}
+            if (playbackItemState.maxTimeInMilliseconds > 0) {
+                int currentTime = playbackItemState.currentTimeInMilliseconds;
+                int maxTime = playbackItemState.maxTimeInMilliseconds;
+                this.view.setProgressAvailable();
+                this.view.setProgress(currentTime, maxTime);
+            } else {
+                this.view.setProgressNotAvailable();
+            }
+        } else {
+            this.view.enablePlayControls(false, false, false);
+            this.view.enableSwitchControls(false, false);
+            this.view.setProgressNotAvailable();
+        }
+    }
 
-	private final PlaybackModel.Listener listener = new PlaybackModel.Listener() {
-		@Override
-		public void onUpdate(PlaybackState state) {
-			updateView();
-		}
+    private final PlaybackModel.Listener listener = new PlaybackModel.Listener() {
+        @Override
+        public void onUpdate(PlaybackState state) {
+            updateView();
+        }
 
-		@Override
-		public void onError(Throwable error) {
-		}
+        @Override
+        public void onError(Throwable error) {
+        }
 
-		@Override
-		public void onFilesChanged(List<PlaybackFile> originalFiles, List<PlaybackFile> currentFiles) {
+        @Override
+        public void onFilesChanged(List<PlaybackFile> originalFiles, List<PlaybackFile> currentFiles) {
 
-		}
-	};
+        }
+    };
 }

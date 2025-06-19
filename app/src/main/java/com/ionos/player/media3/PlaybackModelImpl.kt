@@ -43,187 +43,188 @@ import javax.inject.Singleton
 
 @Singleton
 class PlaybackModelImpl @Inject constructor(
-	private val context: Context,
+    private val context: Context,
     private val mediaSessionFactory: MediaSessionFactory,
-	private val mediaItemFactory: MediaItemFactory,
-	private val playbackSettings: PlaybackSettings,
-	private val playbackErrorStrategy: PlaybackErrorStrategy,
+    private val mediaItemFactory: MediaItemFactory,
+    private val playbackSettings: PlaybackSettings,
+    private val playbackErrorStrategy: PlaybackErrorStrategy,
 ) : PlaybackModel, MediaSessionHolder {
 
-	companion object {
-		private const val CHECK_PROGRESS_INTERVAL = 1000
-	}
-
-	private val stateFactory = PlaybackStateFactory()
-	private val compositeListener = PlaybackModelCompositeListener()
-
-	private val checkProgressPeriodicAction = PeriodicAction(CHECK_PROGRESS_INTERVAL) {
-		state.ifPresent(compositeListener::onUpdate)
-	}
-
-	private val playerListener = PlaybackModelPlayerListener(
-		checkProgressPeriodicAction,
-		this::onPlaybackUpdate,
-		this::onPlaybackError,
-	)
-
-	private val controllerListener = object : MediaController.Listener {
-		override fun onDisconnected(controller: MediaController) {
-			controller.removeListener(playerListener)
-			controllerScope?.cancel()
-			checkProgressPeriodicAction.stop()
-			state.ifPresent(compositeListener::onUpdate)
-		}
-	}
-
-	private val controllerFactory = MediaControllerFactory(controllerListener)
-	private var controllerScope: CoroutineScope? = null
-	private var controller: MediaController? = null
-
-	private var mediaSession: MediaSession? = null
-
-    override val state: Optional<PlaybackState> get() {
-        return stateFactory.create(controller)
+    companion object {
+        private const val CHECK_PROGRESS_INTERVAL = 1000
     }
 
-	@UnstableApi
-	override fun getMediaSession(): MediaSession {
-		return mediaSession ?: mediaSessionFactory.create().also {
-			mediaSession = it
-		}
+    private val stateFactory = PlaybackStateFactory()
+    private val compositeListener = PlaybackModelCompositeListener()
+
+    private val checkProgressPeriodicAction = PeriodicAction(CHECK_PROGRESS_INTERVAL) {
+        state.ifPresent(compositeListener::onUpdate)
     }
 
-	override suspend fun start() {
-		controller = controllerFactory.create(context).apply {
-			addListener(playerListener)
-			setRepeatMode(playbackSettings.repeatMode)
-			shuffleModeEnabled = playbackSettings.isShuffle
-			controllerScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
-		}
-	}
+    private val playerListener = PlaybackModelPlayerListener(
+        checkProgressPeriodicAction,
+        this::onPlaybackUpdate,
+        this::onPlaybackError,
+    )
 
-	override fun setFilesFlow(filesFlow: Flow<PlaybackFiles>) {
-		controllerScope?.launch {
-			filesFlow
-				.catch {
-					compositeListener.onError(it)
-					release()
-				}
-				.collectLatest { setFiles(it) }
-		}
-	}
+    private val controllerListener = object : MediaController.Listener {
+        override fun onDisconnected(controller: MediaController) {
+            controller.removeListener(playerListener)
+            controllerScope?.cancel()
+            checkProgressPeriodicAction.stop()
+            state.ifPresent(compositeListener::onUpdate)
+        }
+    }
 
-	private fun setFiles(files: PlaybackFiles) {
-		if (files.list.isEmpty()) {
-			release()
-			return
-		}
+    private val controllerFactory = MediaControllerFactory(controllerListener)
+    private var controllerScope: CoroutineScope? = null
+    private var controller: MediaController? = null
 
-		val currentFile = controller?.currentMediaItem?.mediaMetadata?.playbackFile
+    private var mediaSession: MediaSession? = null
 
-		controller?.let { controller ->
-			val mediaItems = files.list.map(mediaItemFactory::create)
+    override val state: Optional<PlaybackState>
+        get() {
+            return stateFactory.create(controller)
+        }
 
-			if (currentFile == null) {
-				controller.setMediaItems(mediaItems)
-			} else if (files.list.any { it.id == currentFile.id }) {
-				controller.updateMediaItems(mediaItems)
-			} else {
-				val nextFileIndex = (files.list + currentFile)
-					.sortedWith(files.comparator)
-					.indexOfFirst { it.id == currentFile.id }
-					.let { if (it in 0..files.list.lastIndex) it else 0 }
-				controller.setMediaItems(mediaItems, nextFileIndex, 0)
-			}
+    @UnstableApi
+    override fun getMediaSession(): MediaSession {
+        return mediaSession ?: mediaSessionFactory.create().also {
+            mediaSession = it
+        }
+    }
 
-			controller.prepare()
-		}
-	}
+    override suspend fun start() {
+        controller = controllerFactory.create(context).apply {
+            addListener(playerListener)
+            setRepeatMode(playbackSettings.repeatMode)
+            shuffleModeEnabled = playbackSettings.isShuffle
+            controllerScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
+        }
+    }
 
-	override fun release() {
-		controller?.release()
-		mediaSession?.player?.release()
-		mediaSession?.release()
-		mediaSession = null
-	}
+    override fun setFilesFlow(filesFlow: Flow<PlaybackFiles>) {
+        controllerScope?.launch {
+            filesFlow
+                .catch {
+                    compositeListener.onError(it)
+                    release()
+                }
+                .collectLatest { setFiles(it) }
+        }
+    }
+
+    private fun setFiles(files: PlaybackFiles) {
+        if (files.list.isEmpty()) {
+            release()
+            return
+        }
+
+        val currentFile = controller?.currentMediaItem?.mediaMetadata?.playbackFile
+
+        controller?.let { controller ->
+            val mediaItems = files.list.map(mediaItemFactory::create)
+
+            if (currentFile == null) {
+                controller.setMediaItems(mediaItems)
+            } else if (files.list.any { it.id == currentFile.id }) {
+                controller.updateMediaItems(mediaItems)
+            } else {
+                val nextFileIndex = (files.list + currentFile)
+                    .sortedWith(files.comparator)
+                    .indexOfFirst { it.id == currentFile.id }
+                    .let { if (it in 0..files.list.lastIndex) it else 0 }
+                controller.setMediaItems(mediaItems, nextFileIndex, 0)
+            }
+
+            controller.prepare()
+        }
+    }
+
+    override fun release() {
+        controller?.release()
+        mediaSession?.player?.release()
+        mediaSession?.release()
+        mediaSession = null
+    }
 
     override fun videoViewSetter(success: (VideoViewSetter) -> Unit) {
-		success {
-			controller?.setVideoSurfaceHolder(it)
-		}
-	}
+        success {
+            controller?.setVideoSurfaceHolder(it)
+        }
+    }
 
-	override fun addListener(listener: PlaybackModel.Listener) {
-		compositeListener.addListener(listener)
-	}
+    override fun addListener(listener: PlaybackModel.Listener) {
+        compositeListener.addListener(listener)
+    }
 
-	override fun removeListener(listener: PlaybackModel.Listener) {
-		compositeListener.removeListener(listener)
-	}
+    override fun removeListener(listener: PlaybackModel.Listener) {
+        compositeListener.removeListener(listener)
+    }
 
-	override fun play() {
-		controller?.run {
-			prepare()
-			play()
-		}
-	}
+    override fun play() {
+        controller?.run {
+            prepare()
+            play()
+        }
+    }
 
-	override fun pause() {
-		controller?.pause()
-	}
+    override fun pause() {
+        controller?.pause()
+    }
 
-	override fun stop() {
-		controller?.stop()
-	}
+    override fun stop() {
+        controller?.stop()
+    }
 
-	override fun playNext() {
-		controller?.run {
-			seekToNextMediaItem()
-			prepare()
-		}
-	}
+    override fun playNext() {
+        controller?.run {
+            seekToNextMediaItem()
+            prepare()
+        }
+    }
 
-	override fun playPrevious() {
-		controller?.run {
-			seekToPreviousMediaItem()
-			prepare()
-		}
-	}
+    override fun playPrevious() {
+        controller?.run {
+            seekToPreviousMediaItem()
+            prepare()
+        }
+    }
 
-	override fun seekToPosition(positionInMilliseconds: Int) {
-		controller?.seekTo(positionInMilliseconds.toLong())
-	}
+    override fun seekToPosition(positionInMilliseconds: Int) {
+        controller?.seekTo(positionInMilliseconds.toLong())
+    }
 
-	override fun setRepeatMode(repeatMode: RepeatMode) {
-		playbackSettings.setRepeatMode(repeatMode)
-		controller?.setRepeatMode(repeatMode)
-	}
+    override fun setRepeatMode(repeatMode: RepeatMode) {
+        playbackSettings.setRepeatMode(repeatMode)
+        controller?.setRepeatMode(repeatMode)
+    }
 
-	override fun setShuffle(shuffle: Boolean) {
-		playbackSettings.setShuffle(shuffle)
-		controller?.shuffleModeEnabled = shuffle
-	}
+    override fun setShuffle(shuffle: Boolean) {
+        playbackSettings.setShuffle(shuffle)
+        controller?.shuffleModeEnabled = shuffle
+    }
 
-	override fun switchToFile(file: PlaybackFile) {
-		controller?.run {
-			val mediaItemIndex = indexOfFirst { it.mediaId == file.id }
-			if (mediaItemIndex >= 0 && mediaItemIndex != currentMediaItemIndex) {
-				seekToDefaultPosition(mediaItemIndex)
-				prepare()
-			}
-		}
-	}
+    override fun switchToFile(file: PlaybackFile) {
+        controller?.run {
+            val mediaItemIndex = indexOfFirst { it.mediaId == file.id }
+            if (mediaItemIndex >= 0 && mediaItemIndex != currentMediaItemIndex) {
+                seekToDefaultPosition(mediaItemIndex)
+                prepare()
+            }
+        }
+    }
 
-	private fun onPlaybackUpdate() {
-		state.ifPresent(compositeListener::onUpdate)
-	}
+    private fun onPlaybackUpdate() {
+        state.ifPresent(compositeListener::onUpdate)
+    }
 
-	private fun onPlaybackError(error: Throwable) {
-		compositeListener.onError(error)
-		state.ifPresent { state ->
-			if (playbackErrorStrategy.switchToNextSource(error, state)) {
-				playNext()
-			}
-		}
-	}
+    private fun onPlaybackError(error: Throwable) {
+        compositeListener.onError(error)
+        state.ifPresent { state ->
+            if (playbackErrorStrategy.switchToNextSource(error, state)) {
+                playNext()
+            }
+        }
+    }
 }

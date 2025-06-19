@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ IONOS HiDrive Next - Android Client
   ~
   ~ SPDX-FileCopyrightText: 2025 STRATO GmbH.
@@ -10,8 +9,8 @@
 
     <declare-styleable name="PlayerControlView">
         <attr name="type" format="enum">
-            <enum name="video" value="0"/>
-            <enum name="audio" value="1"/>
+            <enum name="video" value="0" />
+            <enum name="audio" value="1" />
         </attr>
     </declare-styleable>
 

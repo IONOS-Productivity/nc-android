@@ -45,58 +45,58 @@ import androidx.core.view.WindowInsetsCompat;
 import dagger.android.HasAndroidInjector;
 
 public class VideoPlayerView extends PlayerView {
-	protected static final long ANIMATION_TIMER_DURATION = 5000;
+    protected static final long ANIMATION_TIMER_DURATION = 5000;
 
-	@Inject
-	PlaybackModel playerModel;
+    @Inject
+    PlaybackModel playerModel;
 
-	private final TextView tvTitle;
-	private final LinearLayout topBar;
-	private final PlayerSourcesView playerSourcesView;
-	private final PlayerControlView playerControlView;
-	private Activity activity;
+    private final TextView tvTitle;
+    private final LinearLayout topBar;
+    private final PlayerSourcesView playerSourcesView;
+    private final PlayerControlView playerControlView;
+    private Activity activity;
     private WindowWrapper windowWrapper;
-	private PlayerViewContainer playerViewContainer;
-	private MultiplePlayer.HidingPresenter hidingPresenter;
-	private AsyncTimer timer;
-	private final TimeSkippableActionExecutor timeSkipableActionExecutor = new TimeSkippableActionExecutor();
+    private PlayerViewContainer playerViewContainer;
+    private MultiplePlayer.HidingPresenter hidingPresenter;
+    private AsyncTimer timer;
+    private final TimeSkippableActionExecutor timeSkipableActionExecutor = new TimeSkippableActionExecutor();
 
-	public VideoPlayerView(Context context) {
-		super(context);
-		inflate(context, R.layout.player_video_view, this);
+    public VideoPlayerView(Context context) {
+        super(context);
+        inflate(context, R.layout.player_video_view, this);
 
-		this.playerSourcesView = findViewById(R.id.playerSourcesView);
-		this.playerControlView = findViewById(R.id.playerControlView);
-		this.tvTitle = findViewById(R.id.tvTitle);
-		this.topBar = findViewById(R.id.topBar);
+        this.playerSourcesView = findViewById(R.id.playerSourcesView);
+        this.playerControlView = findViewById(R.id.playerControlView);
+        this.tvTitle = findViewById(R.id.tvTitle);
+        this.topBar = findViewById(R.id.topBar);
 
-		ImageView ivBack = findViewById(R.id.ivBack);
+        ImageView ivBack = findViewById(R.id.ivBack);
 
-		if (isInEditMode()) {
-			return;
-		}
+        if (isInEditMode()) {
+            return;
+        }
 
-		inject(context);
+        inject(context);
 
-		this.activity = Cast.castOrError(context, Activity.class);
+        this.activity = Cast.castOrError(context, Activity.class);
         this.windowWrapper = new WindowWrapper(this.activity.getWindow());
-		this.playerViewContainer = Cast.castOrError(context, PlayerViewContainer.class);
+        this.playerViewContainer = Cast.castOrError(context, PlayerViewContainer.class);
 
-		ivBack.setOnClickListener(this.backButtonClickListener);
+        ivBack.setOnClickListener(this.backButtonClickListener);
 
-		this.hidingPresenter = new MultiplePlayerHidingPresenter(this.playerModel);
+        this.hidingPresenter = new MultiplePlayerHidingPresenter(this.playerModel);
 
-		this.playerSourcesView.init(new VideoPlayerSourceFragmentFactory());
+        this.playerSourcesView.init(new VideoPlayerSourceFragmentFactory());
 
         this.activity.setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
-		this.timer = new AsyncTimer(ANIMATION_TIMER_DURATION);
-		this.timer.start();
-	}
+        this.timer = new AsyncTimer(ANIMATION_TIMER_DURATION);
+        this.timer.start();
+    }
 
-	protected void inject(@NonNull Context context){
+    protected void inject(@NonNull Context context) {
         ((HasAndroidInjector) context.getApplicationContext()).androidInjector().inject(this);
-	}
+    }
 
     @Override
     public WindowInsets onApplyWindowInsets(WindowInsets windowInsets) {
@@ -111,138 +111,138 @@ public class VideoPlayerView extends PlayerView {
         return WindowInsetsCompat.CONSUMED.toWindowInsets();
     }
 
-	@Override
-	public boolean dispatchTouchEvent(final MotionEvent ev) {
-		timeSkipableActionExecutor.execute(new Action() {
-			@Override
-			public void execute() {
-				if (playerControlView.getVisibility() == INVISIBLE) {
-					showControls();
-					startTimer();
-				} else {
-					final boolean touchOutsideControls = ev.getY() < playerControlView.getY() && ev.getY() > topBar.getHeight();
-					if (touchOutsideControls) {
-						hideControls();
-					} else {
-						startTimer();
-					}
-				}
-			}
-		}, 500);
-		return super.dispatchTouchEvent(ev);
-	}
+    @Override
+    public boolean dispatchTouchEvent(final MotionEvent ev) {
+        timeSkipableActionExecutor.execute(new Action() {
+            @Override
+            public void execute() {
+                if (playerControlView.getVisibility() == INVISIBLE) {
+                    showControls();
+                    startTimer();
+                } else {
+                    final boolean touchOutsideControls = ev.getY() < playerControlView.getY() && ev.getY() > topBar.getHeight();
+                    if (touchOutsideControls) {
+                        hideControls();
+                    } else {
+                        startTimer();
+                    }
+                }
+            }
+        }, 500);
+        return super.dispatchTouchEvent(ev);
+    }
 
-	private void startTimer() {
-		timer.stop();
-		timer.start();
-	}
+    private void startTimer() {
+        timer.stop();
+        timer.start();
+    }
 
-	@Override
-	protected void onAttachedToWindow() {
-		super.onAttachedToWindow();
-		if (isInEditMode()) {
-			return;
-		}
-		this.hidingPresenter.setView(this.hidingView);
-		this.hidingPresenter.onCreate();
-	}
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        if (isInEditMode()) {
+            return;
+        }
+        this.hidingPresenter.setView(this.hidingView);
+        this.hidingPresenter.onCreate();
+    }
 
-	@Override
-	protected void onDetachedFromWindow() {
-		if (isInEditMode()) {
-			return;
-		}
-		this.hidingPresenter.setView(null);
-		this.hidingPresenter.onDestroy();
-		super.onDetachedFromWindow();
-	}
+    @Override
+    protected void onDetachedFromWindow() {
+        if (isInEditMode()) {
+            return;
+        }
+        this.hidingPresenter.setView(null);
+        this.hidingPresenter.onDestroy();
+        super.onDetachedFromWindow();
+    }
 
-	@CallSuper
-	@Override
-	public void onStart() {
-		this.playerSourcesView.onStart();
-		this.playerControlView.onStart();
-		this.hidingPresenter.onAppear();
-		this.playerModel.addListener(this.playerModelListener);
-		this.timer.subscribe(this.timerCallbackListener);
-	}
+    @CallSuper
+    @Override
+    public void onStart() {
+        this.playerSourcesView.onStart();
+        this.playerControlView.onStart();
+        this.hidingPresenter.onAppear();
+        this.playerModel.addListener(this.playerModelListener);
+        this.timer.subscribe(this.timerCallbackListener);
+    }
 
-	@CallSuper
-	@Override
-	public void onStop() {
-		this.playerSourcesView.onStop();
-		this.playerControlView.onStop();
-		this.hidingPresenter.onDisappear();
-		this.playerModel.removeListener(this.playerModelListener);
-		this.timer.unSubscribe();
-	}
+    @CallSuper
+    @Override
+    public void onStop() {
+        this.playerSourcesView.onStop();
+        this.playerControlView.onStop();
+        this.hidingPresenter.onDisappear();
+        this.playerModel.removeListener(this.playerModelListener);
+        this.timer.unSubscribe();
+    }
 
-	protected void updateState() {
-		if (!this.playerModel.getState().isPresent()) {
-			playerViewContainer.onPlayerViewClose();
-			return;
-		}
-		PlaybackState state = this.playerModel.getState().get();
+    protected void updateState() {
+        if (!this.playerModel.getState().isPresent()) {
+            playerViewContainer.onPlayerViewClose();
+            return;
+        }
+        PlaybackState state = this.playerModel.getState().get();
 
-		if (state.currentItemState.isPresent()) {
-			PlaybackItemState playbackItemState = state.currentItemState.get();
-			PlaybackFile file = playbackItemState.file;
-			if (currentFileListener != null){
-				currentFileListener.fileChanged(file);
-			}
-			this.tvTitle.setText(file.getNameWithoutExtension());
-		} else {
+        if (state.currentItemState.isPresent()) {
+            PlaybackItemState playbackItemState = state.currentItemState.get();
+            PlaybackFile file = playbackItemState.file;
+            if (currentFileListener != null) {
+                currentFileListener.fileChanged(file);
+            }
+            this.tvTitle.setText(file.getNameWithoutExtension());
+        } else {
             this.tvTitle.setText("");
-		}
-	}
+        }
+    }
 
-	private final OnClickListener backButtonClickListener = new OnClickListener() {
-		@Override
-		public void onClick(View view) {
-			playerViewContainer.onPlayerViewClose();
-		}
-	};
+    private final OnClickListener backButtonClickListener = new OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            playerViewContainer.onPlayerViewClose();
+        }
+    };
 
-	private final PlaybackModel.Listener playerModelListener = new PlaybackModel.Listener() {
-		@Override
-		public void onUpdate(PlaybackState state) {
-			updateState();
-		}
+    private final PlaybackModel.Listener playerModelListener = new PlaybackModel.Listener() {
+        @Override
+        public void onUpdate(PlaybackState state) {
+            updateState();
+        }
 
-		@Override
-		public void onError(Throwable error) {
-		}
+        @Override
+        public void onError(Throwable error) {
+        }
 
-		@Override
-		public void onFilesChanged(List<PlaybackFile> originalFiles, List<PlaybackFile> currentFiles) {
+        @Override
+        public void onFilesChanged(List<PlaybackFile> originalFiles, List<PlaybackFile> currentFiles) {
 
-		}
-	};
+        }
+    };
 
-	private final MultiplePlayer.HidingView hidingView = new MultiplePlayer.HidingView() {
-		@Override
-		public void displayPlayerView() {
+    private final MultiplePlayer.HidingView hidingView = new MultiplePlayer.HidingView() {
+        @Override
+        public void displayPlayerView() {
 
-		}
+        }
 
-		@Override
-		public void doNotDisplayPlayerView() {
-			playerViewContainer.onPlayerViewClose();
-		}
-	};
+        @Override
+        public void doNotDisplayPlayerView() {
+            playerViewContainer.onPlayerViewClose();
+        }
+    };
 
-	private final AsyncTimer.TimerCallbackListener timerCallbackListener = this::hideControls;
+    private final AsyncTimer.TimerCallbackListener timerCallbackListener = this::hideControls;
 
-	public void showControls() {
+    public void showControls() {
         windowWrapper.showSystemBars();
-		playerControlView.setVisibility(VISIBLE);
-		topBar.setVisibility(VISIBLE);
-	}
+        playerControlView.setVisibility(VISIBLE);
+        topBar.setVisibility(VISIBLE);
+    }
 
-	public void hideControls() {
+    public void hideControls() {
         windowWrapper.hideSystemBars();
-		topBar.setVisibility(GONE);
-		playerControlView.setVisibility(INVISIBLE);
-	}
+        topBar.setVisibility(GONE);
+        playerControlView.setVisibility(INVISIBLE);
+    }
 }
 

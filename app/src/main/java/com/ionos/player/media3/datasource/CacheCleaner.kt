@@ -19,14 +19,13 @@ class CacheCleaner @Inject constructor(
     @UnstableApi private val cache: Cache,
 ) {
 
-	@WorkerThread
+    @WorkerThread
     @UnstableApi
-	fun clean(file: PlaybackFile) {
-		val dataSpec = DataSpec.Builder()
-			.setUri(file.uri)
-			.build()
-		val cacheKey = CacheKeyFactory.DEFAULT.buildCacheKey(dataSpec)
-		cache.removeResource(cacheKey)
-	}
-
+    fun clean(file: PlaybackFile) {
+        val dataSpec = DataSpec.Builder()
+            .setUri(file.uri)
+            .build()
+        val cacheKey = CacheKeyFactory.DEFAULT.buildCacheKey(dataSpec)
+        cache.removeResource(cacheKey)
+    }
 }

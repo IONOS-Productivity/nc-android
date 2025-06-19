@@ -14,8 +14,8 @@ import com.ionos.player.model.PlaybackFile
 private const val PLAYBACK_FILE_KEY = "playback_file"
 
 fun MediaMetadata.Builder.setExtras(playbackFile: PlaybackFile): MediaMetadata.Builder {
-	return setExtras(Bundle().apply { putSerializable(PLAYBACK_FILE_KEY, playbackFile) })
+    return setExtras(Bundle().apply { putSerializable(PLAYBACK_FILE_KEY, playbackFile) })
 }
 
 val MediaMetadata.playbackFile: PlaybackFile?
-	get() = extras?.getSerializable(PLAYBACK_FILE_KEY) as? PlaybackFile
+    get() = extras?.getSerializable(PLAYBACK_FILE_KEY) as? PlaybackFile

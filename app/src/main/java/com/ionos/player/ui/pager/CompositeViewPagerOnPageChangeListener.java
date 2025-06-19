@@ -14,34 +14,34 @@ import androidx.viewpager.widget.ViewPager;
 
 public class CompositeViewPagerOnPageChangeListener implements ViewPager.OnPageChangeListener {
 
-	private final Set<ViewPager.OnPageChangeListener> listeners = new HashSet<>();
+    private final Set<ViewPager.OnPageChangeListener> listeners = new HashSet<>();
 
-	public void addListener(ViewPager.OnPageChangeListener listener) {
-		this.listeners.add(listener);
-	}
+    public void addListener(ViewPager.OnPageChangeListener listener) {
+        this.listeners.add(listener);
+    }
 
-	public void removeListener(ViewPager.OnPageChangeListener listener) {
-		this.listeners.remove(listener);
-	}
+    public void removeListener(ViewPager.OnPageChangeListener listener) {
+        this.listeners.remove(listener);
+    }
 
-	@Override
-	public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-		for (ViewPager.OnPageChangeListener listener : new HashSet<>(this.listeners)) {
-			listener.onPageScrolled(position, positionOffset, positionOffsetPixels);
-		}
-	}
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        for (ViewPager.OnPageChangeListener listener : new HashSet<>(this.listeners)) {
+            listener.onPageScrolled(position, positionOffset, positionOffsetPixels);
+        }
+    }
 
-	@Override
-	public void onPageSelected(int position) {
-		for (ViewPager.OnPageChangeListener listener : new HashSet<>(this.listeners)) {
-			listener.onPageSelected(position);
-		}
-	}
+    @Override
+    public void onPageSelected(int position) {
+        for (ViewPager.OnPageChangeListener listener : new HashSet<>(this.listeners)) {
+            listener.onPageSelected(position);
+        }
+    }
 
-	@Override
-	public void onPageScrollStateChanged(int state) {
-		for (ViewPager.OnPageChangeListener listener : new HashSet<>(this.listeners)) {
-			listener.onPageScrollStateChanged(state);
-		}
-	}
+    @Override
+    public void onPageScrollStateChanged(int state) {
+        for (ViewPager.OnPageChangeListener listener : new HashSet<>(this.listeners)) {
+            listener.onPageScrollStateChanged(state);
+        }
+    }
 }

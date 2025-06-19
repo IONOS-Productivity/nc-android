@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ IONOS HiDrive Next - Android Client
   ~
   ~ SPDX-FileCopyrightText: 2025 STRATO GmbH.
@@ -7,6 +6,7 @@
   -->
 
 <resources>
+
     <style name="FullScreenAudioPlayerTimeTextViewStyle">
         <item name="android:layout_width">@dimen/player_full_screen_audio_player_time_text_view_large_width
         </item>
@@ -34,8 +34,10 @@
     <style name="FullScreenAudioPlayerSmallButtonStyle">
         <item name="android:layout_width">@dimen/player_full_screen_audio_player_small_button_size</item>
         <item name="android:layout_height">@dimen/player_full_screen_audio_player_small_button_size</item>
-        <item name="android:layout_marginTop">@dimen/player_full_screen_audio_player_small_button_bottom_top_margin</item>
-        <item name="android:layout_marginBottom">@dimen/player_full_screen_audio_player_small_button_bottom_top_margin</item>
+        <item name="android:layout_marginTop">@dimen/player_full_screen_audio_player_small_button_bottom_top_margin
+        </item>
+        <item name="android:layout_marginBottom">@dimen/player_full_screen_audio_player_small_button_bottom_top_margin
+        </item>
     </style>
 
     <style name="FullScreenAudioPlayerBigButtonWithRightMarginStyle" parent="FullScreenAudioPlayerBigButtonStyle">
@@ -46,6 +48,7 @@
         <item name="android:layout_width">@dimen/player_full_screen_audio_player_big_button_size</item>
         <item name="android:layout_height">@dimen/player_full_screen_audio_player_big_button_size</item>
         <item name="android:layout_marginTop">@dimen/player_full_screen_audio_player_big_button_bottom_top_margin</item>
-        <item name="android:layout_marginBottom">@dimen/player_full_screen_audio_player_big_button_bottom_top_margin</item>
+        <item name="android:layout_marginBottom">@dimen/player_full_screen_audio_player_big_button_bottom_top_margin
+        </item>
     </style>
 </resources>

@@ -9,23 +9,23 @@ package com.ionos.player.ui.control.listener;
 
 public interface PlayerControlViewListener {
 
-	void onNextClicked();
+    void onNextClicked();
 
-	void onPreviousClicked();
+    void onPreviousClicked();
 
-	void onPlayClicked();
+    void onPlayClicked();
 
-	void onPauseClicked();
+    void onPauseClicked();
 
-	void onRepeatClicked();
+    void onRepeatClicked();
 
-	void onDoNotRepeatClicked();
+    void onDoNotRepeatClicked();
 
-	void onShuffleClicked();
+    void onShuffleClicked();
 
-	void onDoNotShuffleClicked();
+    void onDoNotShuffleClicked();
 
-	void onProgressChangedByUser(int progress);
+    void onProgressChangedByUser(int progress);
 
-	void onProgressStopTrackingTouch();
+    void onProgressStopTrackingTouch();
 }

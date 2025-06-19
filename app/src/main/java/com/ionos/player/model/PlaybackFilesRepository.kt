@@ -29,130 +29,130 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class PlaybackFilesRepository @Inject constructor(
-	private val context: Context,
-	private val storageManager: FileDataStorageManager,
-	private val preferences: AppPreferences,
+    private val context: Context,
+    private val storageManager: FileDataStorageManager,
+    private val preferences: AppPreferences,
 ) {
-	companion object {
-		private const val FETCH_DATA_DEBOUNCE_MS = 250L
-	}
+    companion object {
+        private const val FETCH_DATA_DEBOUNCE_MS = 250L
+    }
 
-	fun observe(folderId: Long, fileType: PlaybackFileType, searchType: SearchType?): Flow<PlaybackFiles> {
-		return when (searchType) {
-			SearchType.FAVORITE_SEARCH -> observeFavoritePlaybackFiles(fileType)
-			SearchType.GALLERY_SEARCH -> observeGalleryPlaybackFiles(fileType)
-			SearchType.SHARED_FILTER -> observeSharedPlaybackFiles(fileType)
-			else -> observeFolderPlaybackFiles(folderId, fileType, MainApp.isOnlyOnDevice())
-		}
-	}
+    fun observe(folderId: Long, fileType: PlaybackFileType, searchType: SearchType?): Flow<PlaybackFiles> {
+        return when (searchType) {
+            SearchType.FAVORITE_SEARCH -> observeFavoritePlaybackFiles(fileType)
+            SearchType.GALLERY_SEARCH -> observeGalleryPlaybackFiles(fileType)
+            SearchType.SHARED_FILTER -> observeSharedPlaybackFiles(fileType)
+            else -> observeFolderPlaybackFiles(folderId, fileType, MainApp.isOnlyOnDevice())
+        }
+    }
 
-	suspend fun get(folderId: Long, fileType: PlaybackFileType, searchType: SearchType?): PlaybackFiles {
-		return when (searchType) {
-			SearchType.FAVORITE_SEARCH -> getFavoritePlaybackFiles(fileType)
-			SearchType.GALLERY_SEARCH -> getGalleryPlaybackFiles(fileType)
-			SearchType.SHARED_FILTER -> getSharedPlaybackFiles(fileType)
-			else -> getFolderPlaybackFiles(folderId, fileType, MainApp.isOnlyOnDevice())
-		}
-	}
+    suspend fun get(folderId: Long, fileType: PlaybackFileType, searchType: SearchType?): PlaybackFiles {
+        return when (searchType) {
+            SearchType.FAVORITE_SEARCH -> getFavoritePlaybackFiles(fileType)
+            SearchType.GALLERY_SEARCH -> getGalleryPlaybackFiles(fileType)
+            SearchType.SHARED_FILTER -> getSharedPlaybackFiles(fileType)
+            else -> getFolderPlaybackFiles(folderId, fileType, MainApp.isOnlyOnDevice())
+        }
+    }
 
-	private fun observeFavoritePlaybackFiles(fileType: PlaybackFileType): Flow<PlaybackFiles> {
-		val uri = ProviderTableMeta.CONTENT_URI
-		return observeData(uri, true) {
-			getFavoritePlaybackFiles(fileType)
-		}
-	}
+    private fun observeFavoritePlaybackFiles(fileType: PlaybackFileType): Flow<PlaybackFiles> {
+        val uri = ProviderTableMeta.CONTENT_URI
+        return observeData(uri, true) {
+            getFavoritePlaybackFiles(fileType)
+        }
+    }
 
-	private suspend fun getFavoritePlaybackFiles(fileType: PlaybackFileType): PlaybackFiles {
-		return withContext(Dispatchers.IO) {
-			storageManager.favoriteFiles
-				.filter { it.mimeType.startsWith(fileType.value, ignoreCase = true) }
-				.map { it.toPlaybackFile() }
-				.sortedWith(PlaybackFilesComparator.FAVORITE)
-				.let { PlaybackFiles(it, PlaybackFilesComparator.FAVORITE) }
-		}
-	}
+    private suspend fun getFavoritePlaybackFiles(fileType: PlaybackFileType): PlaybackFiles {
+        return withContext(Dispatchers.IO) {
+            storageManager.favoriteFiles
+                .filter { it.mimeType.startsWith(fileType.value, ignoreCase = true) }
+                .map { it.toPlaybackFile() }
+                .sortedWith(PlaybackFilesComparator.FAVORITE)
+                .let { PlaybackFiles(it, PlaybackFilesComparator.FAVORITE) }
+        }
+    }
 
-	private fun observeGalleryPlaybackFiles(fileType: PlaybackFileType): Flow<PlaybackFiles> {
-		val uri = ProviderTableMeta.CONTENT_URI
-		return observeData(uri, true) {
-			getGalleryPlaybackFiles(fileType)
-		}
-	}
+    private fun observeGalleryPlaybackFiles(fileType: PlaybackFileType): Flow<PlaybackFiles> {
+        val uri = ProviderTableMeta.CONTENT_URI
+        return observeData(uri, true) {
+            getGalleryPlaybackFiles(fileType)
+        }
+    }
 
-	private suspend fun getGalleryPlaybackFiles(fileType: PlaybackFileType): PlaybackFiles {
-		return withContext(Dispatchers.IO) {
-			storageManager.allGalleryItems
-				.filter { it.mimeType.startsWith(fileType.value, ignoreCase = true) }
-				.map { it.toPlaybackFile() }
-				.sortedWith(PlaybackFilesComparator.GALLERY)
-				.let { PlaybackFiles(it, PlaybackFilesComparator.GALLERY) }
-		}
-	}
+    private suspend fun getGalleryPlaybackFiles(fileType: PlaybackFileType): PlaybackFiles {
+        return withContext(Dispatchers.IO) {
+            storageManager.allGalleryItems
+                .filter { it.mimeType.startsWith(fileType.value, ignoreCase = true) }
+                .map { it.toPlaybackFile() }
+                .sortedWith(PlaybackFilesComparator.GALLERY)
+                .let { PlaybackFiles(it, PlaybackFilesComparator.GALLERY) }
+        }
+    }
 
-	private fun observeSharedPlaybackFiles(fileType: PlaybackFileType): Flow<PlaybackFiles> {
-		val uri = ProviderTableMeta.CONTENT_URI_SHARE
-		return observeData(uri, false) {
-			getSharedPlaybackFiles(fileType)
-		}
-	}
+    private fun observeSharedPlaybackFiles(fileType: PlaybackFileType): Flow<PlaybackFiles> {
+        val uri = ProviderTableMeta.CONTENT_URI_SHARE
+        return observeData(uri, false) {
+            getSharedPlaybackFiles(fileType)
+        }
+    }
 
-	private suspend fun getSharedPlaybackFiles(fileType: PlaybackFileType): PlaybackFiles {
-		return withContext(Dispatchers.IO) {
-			storageManager.shares
-				.distinctBy { it.fileSource }
-				.map { it.toPlaybackFile() }
-				.filter { it.mimeType.startsWith(fileType.value, ignoreCase = true) }
-				.sortedWith(PlaybackFilesComparator.SHARED)
-				.let { PlaybackFiles(it, PlaybackFilesComparator.SHARED) }
-		}
-	}
+    private suspend fun getSharedPlaybackFiles(fileType: PlaybackFileType): PlaybackFiles {
+        return withContext(Dispatchers.IO) {
+            storageManager.shares
+                .distinctBy { it.fileSource }
+                .map { it.toPlaybackFile() }
+                .filter { it.mimeType.startsWith(fileType.value, ignoreCase = true) }
+                .sortedWith(PlaybackFilesComparator.SHARED)
+                .let { PlaybackFiles(it, PlaybackFilesComparator.SHARED) }
+        }
+    }
 
-	private fun observeFolderPlaybackFiles(
-		folderId: Long,
-		fileType: PlaybackFileType,
-		onDeviceOnly: Boolean,
-	): Flow<PlaybackFiles> {
-		val uri = ContentUris.withAppendedId(ProviderTableMeta.CONTENT_URI_DIR, folderId)
-		val sortOrderFlow = flow {
-			emit(getFolderSortOrder(folderId))
-		}
-		return sortOrderFlow.flatMapConcat { sortOrder ->
-			val comparator = sortOrder.toPlaybackFilesComparator()
-			observeData(uri, false) {
-				getFolderPlaybackFiles(folderId, fileType, onDeviceOnly, comparator)
-			}
-		}
-	}
+    private fun observeFolderPlaybackFiles(
+        folderId: Long,
+        fileType: PlaybackFileType,
+        onDeviceOnly: Boolean,
+    ): Flow<PlaybackFiles> {
+        val uri = ContentUris.withAppendedId(ProviderTableMeta.CONTENT_URI_DIR, folderId)
+        val sortOrderFlow = flow {
+            emit(getFolderSortOrder(folderId))
+        }
+        return sortOrderFlow.flatMapConcat { sortOrder ->
+            val comparator = sortOrder.toPlaybackFilesComparator()
+            observeData(uri, false) {
+                getFolderPlaybackFiles(folderId, fileType, onDeviceOnly, comparator)
+            }
+        }
+    }
 
-	private suspend fun getFolderPlaybackFiles(
-		folderId: Long,
-		fileType: PlaybackFileType,
-		onDeviceOnly: Boolean,
-		comparator: PlaybackFilesComparator? = null,
-	): PlaybackFiles {
-		return withContext(Dispatchers.IO) {
-			val folder = storageManager.getFileById(folderId) ?: throw IllegalStateException("Folder not found")
-			val comparator = comparator ?: preferences.getSortOrderByFolder(folder).toPlaybackFilesComparator()
-			storageManager.getFolderContent(folder, onDeviceOnly)
-				.filter { it.mimeType.startsWith(fileType.value, ignoreCase = true) }
-				.map { it.toPlaybackFile() }
-				.sortedWith(comparator)
-				.let { PlaybackFiles(it, comparator) }
-		}
-	}
+    private suspend fun getFolderPlaybackFiles(
+        folderId: Long,
+        fileType: PlaybackFileType,
+        onDeviceOnly: Boolean,
+        comparator: PlaybackFilesComparator? = null,
+    ): PlaybackFiles {
+        return withContext(Dispatchers.IO) {
+            val folder = storageManager.getFileById(folderId) ?: throw IllegalStateException("Folder not found")
+            val comparator = comparator ?: preferences.getSortOrderByFolder(folder).toPlaybackFilesComparator()
+            storageManager.getFolderContent(folder, onDeviceOnly)
+                .filter { it.mimeType.startsWith(fileType.value, ignoreCase = true) }
+                .map { it.toPlaybackFile() }
+                .sortedWith(comparator)
+                .let { PlaybackFiles(it, comparator) }
+        }
+    }
 
-	private suspend fun getFolderSortOrder(folderId: Long): FileSortOrder {
-		return withContext(Dispatchers.IO) {
-			val folder = storageManager.getFileById(folderId) ?: throw IllegalStateException("Folder not found")
-			preferences.getSortOrderByFolder(folder)
-		}
-	}
+    private suspend fun getFolderSortOrder(folderId: Long): FileSortOrder {
+        return withContext(Dispatchers.IO) {
+            val folder = storageManager.getFileById(folderId) ?: throw IllegalStateException("Folder not found")
+            preferences.getSortOrderByFolder(folder)
+        }
+    }
 
-	private fun <T> observeData(uri: Uri, notifyForDescendants: Boolean, fetchData: suspend () -> T): Flow<T> {
-		return context.contentResolver.observeContentChanges(uri, notifyForDescendants)
-			.debounce(FETCH_DATA_DEBOUNCE_MS) // Debounce to avoid too frequent data fetching for batch updates
-			.map { fetchData() }
-			.onStart { emit(fetchData()) }
-			.distinctUntilChanged()
-	}
+    private fun <T> observeData(uri: Uri, notifyForDescendants: Boolean, fetchData: suspend () -> T): Flow<T> {
+        return context.contentResolver.observeContentChanges(uri, notifyForDescendants)
+            .debounce(FETCH_DATA_DEBOUNCE_MS) // Debounce to avoid too frequent data fetching for batch updates
+            .map { fetchData() }
+            .onStart { emit(fetchData()) }
+            .distinctUntilChanged()
+    }
 }

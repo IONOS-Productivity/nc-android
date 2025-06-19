@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ IONOS HiDrive Next - Android Client
   ~
   ~ SPDX-FileCopyrightText: 2025 STRATO GmbH.
@@ -7,14 +6,14 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-			  android:layout_width="match_parent"
-			  android:layout_height="match_parent"
-			  android:background="@color/player_full_screen_audio_player_background"
-			  android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/player_full_screen_audio_player_background"
+    android:orientation="vertical">
 
-	<com.ionos.player.ui.pager.InfiniteViewPager
-		android:id="@+id/infiniteViewPager"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"/>
+    <com.ionos.player.ui.pager.InfiniteViewPager
+        android:id="@+id/infiniteViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>

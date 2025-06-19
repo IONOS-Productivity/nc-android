@@ -14,116 +14,116 @@ import java.util.List;
 
 public interface MultiplePlayer {
 
-	interface SourcesView {
+    interface SourcesView {
 
-		void displayCurrentFile(PlaybackFile file);
+        void displayCurrentFile(PlaybackFile file);
 
-		void displayFiles(List<PlaybackFile> files);
-	}
+        void displayFiles(List<PlaybackFile> files);
+    }
 
-	interface SourcesPresenter extends BasePresenter {
+    interface SourcesPresenter extends BasePresenter {
 
-		void setView(SourcesView view);
+        void setView(SourcesView view);
 
-		void onSwitchToFile(PlaybackFile file);
-	}
+        void onSwitchToFile(PlaybackFile file);
+    }
 
-	interface ErrorView {
-		void showError(int messageId);
-	}
+    interface ErrorView {
+        void showError(int messageId);
+    }
 
-	interface ErrorPresenter extends BasePresenter {
-		void setView(ErrorView errorView);
-	}
+    interface ErrorPresenter extends BasePresenter {
+        void setView(ErrorView errorView);
+    }
 
-	interface ControlView {
-		void repeat();
+    interface ControlView {
+        void repeat();
 
-		void doNotRepeat();
+        void doNotRepeat();
 
-		void shuffle();
+        void shuffle();
 
-		void doNotShuffle();
+        void doNotShuffle();
 
-		void setProgress(int currentTimeInMilliseconds, int totalTimeInMilliseconds);
+        void setProgress(int currentTimeInMilliseconds, int totalTimeInMilliseconds);
 
-		void setProgressAvailable();
+        void setProgressAvailable();
 
-		void setProgressNotAvailable();
+        void setProgressNotAvailable();
 
-		void enablePlayControls(boolean play, boolean pause, boolean stop);
+        void enablePlayControls(boolean play, boolean pause, boolean stop);
 
-		void enableSwitchControls(boolean next, boolean previous);
-	}
+        void enableSwitchControls(boolean next, boolean previous);
+    }
 
-	interface ControlPresenter extends BasePresenter {
+    interface ControlPresenter extends BasePresenter {
 
-		void setView(ControlView view);
+        void setView(ControlView view);
 
-		void onPlay();
+        void onPlay();
 
-		void onPause();
+        void onPause();
 
-		void onStop();
+        void onStop();
 
-		void onPlayNext();
+        void onPlayNext();
 
-		void onPlayPrevious();
+        void onPlayPrevious();
 
-		void onSeekToPosition(int positionInMilliseconds);
+        void onSeekToPosition(int positionInMilliseconds);
 
-		void onRepeat();
+        void onRepeat();
 
-		void onDoNotRepeat();
+        void onDoNotRepeat();
 
-		void onShuffle();
+        void onShuffle();
 
-		void onDoNotShuffle();
+        void onDoNotShuffle();
 
-	}
+    }
 
-	interface VideoView {
+    interface VideoView {
 
-		void setVideoViewAvailable();
+        void setVideoViewAvailable();
 
-		void setVideoViewUnavailable();
+        void setVideoViewUnavailable();
 
-		void setVideoView(VideoViewSetter setter, PlaybackFile file);
+        void setVideoView(VideoViewSetter setter, PlaybackFile file);
 
-		void clearVideoView(VideoViewSetter setter);
-	}
+        void clearVideoView(VideoViewSetter setter);
+    }
 
-	interface VideoPresenter extends BasePresenter {
+    interface VideoPresenter extends BasePresenter {
 
-		void setView(VideoView view);
+        void setView(VideoView view);
 
-		void onVideoViewCreated();
+        void onVideoViewCreated();
 
-		void onVideoViewDestroyed();
-	}
+        void onVideoViewDestroyed();
+    }
 
-	interface HidingView {
+    interface HidingView {
 
-		void displayPlayerView();
+        void displayPlayerView();
 
-		void doNotDisplayPlayerView();
+        void doNotDisplayPlayerView();
 
-	}
+    }
 
-	interface HidingPresenter extends BasePresenter {
+    interface HidingPresenter extends BasePresenter {
 
-		void setView(HidingView view);
+        void setView(HidingView view);
 
-	}
+    }
 
-	interface BasePresenter {
+    interface BasePresenter {
 
-		void onCreate();
+        void onCreate();
 
-		void onDestroy();
+        void onDestroy();
 
-		void onAppear();
+        void onAppear();
 
-		void onDisappear();
-	}
+        void onDisappear();
+    }
 }

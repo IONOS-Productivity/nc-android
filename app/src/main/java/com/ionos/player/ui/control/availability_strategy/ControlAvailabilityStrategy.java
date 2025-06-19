@@ -12,5 +12,5 @@ import com.ionos.player.model.PlaybackFile;
 import java.util.List;
 
 public interface ControlAvailabilityStrategy {
-	boolean available(List<PlaybackFile> files, PlaybackFile file, boolean shuffle);
+    boolean available(List<PlaybackFile> files, PlaybackFile file, boolean shuffle);
 }

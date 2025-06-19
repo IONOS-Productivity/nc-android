@@ -33,96 +33,96 @@ import dagger.android.HasAndroidInjector;
 
 public class PlayerSourcesView extends LinearLayout {
 
-	@Inject
+    @Inject
     PlaybackModel playerModel;
 
-	private MultiplePlayer.SourcesPresenter presenter;
-	private final InfiniteViewPager<PlaybackFile> infiniteViewPager;
-	private FragmentActivity activity;
+    private MultiplePlayer.SourcesPresenter presenter;
+    private final InfiniteViewPager<PlaybackFile> infiniteViewPager;
+    private FragmentActivity activity;
 
-	public PlayerSourcesView(Context context) {
-		this(context, null);
-	}
+    public PlayerSourcesView(Context context) {
+        this(context, null);
+    }
 
-	public PlayerSourcesView(Context context, AttributeSet attrs) {
-		this(context, attrs, 0);
-	}
+    public PlayerSourcesView(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
 
-	public PlayerSourcesView(Context context, AttributeSet attrs, int defStyleAttr) {
-		super(context, attrs, defStyleAttr);
-		inflate(context, R.layout.player_sources_view, this);
-		this.infiniteViewPager = findViewById(R.id.infiniteViewPager);
-		if (isInEditMode()) {
-			return;
-		}
+    public PlayerSourcesView(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        inflate(context, R.layout.player_sources_view, this);
+        this.infiniteViewPager = findViewById(R.id.infiniteViewPager);
+        if (isInEditMode()) {
+            return;
+        }
         ((HasAndroidInjector) context.getApplicationContext()).androidInjector().inject(this);
-		this.presenter = new MultiplePlayerSourcesPresenter(
-				this.playerModel,
-				new DoNothingMultiplePlayerPresenterDestroyStrategy()
-		);
+        this.presenter = new MultiplePlayerSourcesPresenter(
+            this.playerModel,
+            new DoNothingMultiplePlayerPresenterDestroyStrategy()
+        );
 
-		this.activity = Cast.castOrError(context, FragmentActivity.class);
-		this.infiniteViewPager.setInfiniteViewPagerListener(item -> presenter.onSwitchToFile(item));
-	}
+        this.activity = Cast.castOrError(context, FragmentActivity.class);
+        this.infiniteViewPager.setInfiniteViewPagerListener(item -> presenter.onSwitchToFile(item));
+    }
 
-	public void addViewPagerOnPageChangeListener(ViewPager.OnPageChangeListener listener) {
-		this.infiniteViewPager.addViewPagerOnPageChangeListener(listener);
-	}
+    public void addViewPagerOnPageChangeListener(ViewPager.OnPageChangeListener listener) {
+        this.infiniteViewPager.addViewPagerOnPageChangeListener(listener);
+    }
 
-	public void removeViewPagerOnPageChangeListener(ViewPager.OnPageChangeListener listener) {
-		this.infiniteViewPager.addViewPagerOnPageChangeListener(listener);
-	}
+    public void removeViewPagerOnPageChangeListener(ViewPager.OnPageChangeListener listener) {
+        this.infiniteViewPager.addViewPagerOnPageChangeListener(listener);
+    }
 
-	public void init(ViewPagerFragmentFactory<PlaybackFile> fragmentFactory) {
-		this.infiniteViewPager.init(activity.getSupportFragmentManager(), Mode.INFINITE, fragmentFactory);
-	}
+    public void init(ViewPagerFragmentFactory<PlaybackFile> fragmentFactory) {
+        this.infiniteViewPager.init(activity.getSupportFragmentManager(), Mode.INFINITE, fragmentFactory);
+    }
 
-	@Override
-	protected void onAttachedToWindow() {
-		super.onAttachedToWindow();
-		if (isInEditMode()) {
-			return;
-		}
-		this.presenter.setView(this.view);
-		this.presenter.onCreate();
-	}
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        if (isInEditMode()) {
+            return;
+        }
+        this.presenter.setView(this.view);
+        this.presenter.onCreate();
+    }
 
-	@Override
-	protected void onDetachedFromWindow() {
-		if (isInEditMode()) {
-			return;
-		}
-		this.presenter.onDestroy();
-		this.presenter.setView(null);
-		super.onDetachedFromWindow();
-	}
+    @Override
+    protected void onDetachedFromWindow() {
+        if (isInEditMode()) {
+            return;
+        }
+        this.presenter.onDestroy();
+        this.presenter.setView(null);
+        super.onDetachedFromWindow();
+    }
 
-	public void onStart() {
-		this.presenter.onAppear();
-	}
+    public void onStart() {
+        this.presenter.onAppear();
+    }
 
-	public void onStop() {
-		this.presenter.onDisappear();
-	}
+    public void onStop() {
+        this.presenter.onDisappear();
+    }
 
-	@Override
-	public WindowInsets onApplyWindowInsets(WindowInsets insets) {
-		return WindowInsetsCompat.CONSUMED.toWindowInsets();
-	}
+    @Override
+    public WindowInsets onApplyWindowInsets(WindowInsets insets) {
+        return WindowInsetsCompat.CONSUMED.toWindowInsets();
+    }
 
-	private final MultiplePlayer.SourcesView view = new MultiplePlayer.SourcesView() {
+    private final MultiplePlayer.SourcesView view = new MultiplePlayer.SourcesView() {
 
-		@Override
-		public void displayCurrentFile(PlaybackFile file) {
-			infiniteViewPager.setCurrentItem(file);
-		}
+        @Override
+        public void displayCurrentFile(PlaybackFile file) {
+            infiniteViewPager.setCurrentItem(file);
+        }
 
-		@Override
-		public void displayFiles(List<PlaybackFile> files) {
-			if (!infiniteViewPager.getItems().equals(files)) {
-				infiniteViewPager.setItems(files);
-			}
-		}
-	};
+        @Override
+        public void displayFiles(List<PlaybackFile> files) {
+            if (!infiniteViewPager.getItems().equals(files)) {
+                infiniteViewPager.setItems(files);
+            }
+        }
+    };
 }
 

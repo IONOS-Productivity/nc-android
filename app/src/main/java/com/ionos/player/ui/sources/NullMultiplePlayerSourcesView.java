@@ -14,23 +14,23 @@ import java.util.List;
 
 public class NullMultiplePlayerSourcesView implements MultiplePlayer.SourcesView {
 
-	private static final NullMultiplePlayerSourcesView INSTANCE = new NullMultiplePlayerSourcesView();
+    private static final NullMultiplePlayerSourcesView INSTANCE = new NullMultiplePlayerSourcesView();
 
-	public static NullMultiplePlayerSourcesView getInstance() {
-		return INSTANCE;
-	}
+    public static NullMultiplePlayerSourcesView getInstance() {
+        return INSTANCE;
+    }
 
-	private NullMultiplePlayerSourcesView() {
-	}
+    private NullMultiplePlayerSourcesView() {
+    }
 
 
-	@Override
-	public void displayCurrentFile(PlaybackFile file) {
+    @Override
+    public void displayCurrentFile(PlaybackFile file) {
 
-	}
+    }
 
-	@Override
-	public void displayFiles(List<PlaybackFile> files) {
+    @Override
+    public void displayFiles(List<PlaybackFile> files) {
 
-	}
+    }
 }

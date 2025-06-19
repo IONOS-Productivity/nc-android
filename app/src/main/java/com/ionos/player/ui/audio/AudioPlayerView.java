@@ -41,49 +41,49 @@ import dagger.android.HasAndroidInjector;
 
 public class AudioPlayerView extends PlayerView {
 
-	@Inject
+    @Inject
     PlaybackModel playerModel;
 
     private final ViewGroup topBar;
-	private final TextView tvTitle;
-	private final PlayerSourcesView playerSourcesView;
-	private final PlayerControlView playerControlView;
-	private PlayerViewContainer playerViewContainer;
-	private MultiplePlayer.HidingPresenter hidingPresenter;
+    private final TextView tvTitle;
+    private final PlayerSourcesView playerSourcesView;
+    private final PlayerControlView playerControlView;
+    private PlayerViewContainer playerViewContainer;
+    private MultiplePlayer.HidingPresenter hidingPresenter;
 
-	public AudioPlayerView(Context context) {
-		super(context);
-		inflate(context, R.layout.player_audio_view, this);
+    public AudioPlayerView(Context context) {
+        super(context);
+        inflate(context, R.layout.player_audio_view, this);
 
         this.topBar = findViewById(R.id.topBar);
-		this.playerSourcesView = findViewById(R.id.playerSourcesView);
-		this.playerControlView = findViewById(R.id.playerControlView);
-		this.tvTitle = findViewById(R.id.tvTitle);
+        this.playerSourcesView = findViewById(R.id.playerSourcesView);
+        this.playerControlView = findViewById(R.id.playerControlView);
+        this.tvTitle = findViewById(R.id.tvTitle);
 
-		ImageView ivBack = findViewById(R.id.ivBack);
+        ImageView ivBack = findViewById(R.id.ivBack);
 
-		if (isInEditMode()) {
-			return;
-		}
+        if (isInEditMode()) {
+            return;
+        }
 
-		inject(context);
+        inject(context);
 
-		this.playerViewContainer = Cast.castOrError(context, PlayerViewContainer.class);
+        this.playerViewContainer = Cast.castOrError(context, PlayerViewContainer.class);
 
-		ivBack.setOnClickListener(view -> {
-			playerViewContainer.onPlayerViewClose();
-		});
+        ivBack.setOnClickListener(view -> {
+            playerViewContainer.onPlayerViewClose();
+        });
 
-		this.hidingPresenter = new MultiplePlayerHidingPresenter(this.playerModel);
+        this.hidingPresenter = new MultiplePlayerHidingPresenter(this.playerModel);
 
-		this.playerSourcesView.init(new AudioPlayerSourceFragmentFactory());
+        this.playerSourcesView.init(new AudioPlayerSourceFragmentFactory());
 
-		Cast.castOrError(context, Activity.class).setVolumeControlStream(AudioManager.STREAM_MUSIC);
-	}
+        Cast.castOrError(context, Activity.class).setVolumeControlStream(AudioManager.STREAM_MUSIC);
+    }
 
-	protected void inject(@NonNull Context context) {
+    protected void inject(@NonNull Context context) {
         ((HasAndroidInjector) context.getApplicationContext()).androidInjector().inject(this);
-	}
+    }
 
     @Override
     public WindowInsets onApplyWindowInsets(WindowInsets windowInsets) {
@@ -103,82 +103,82 @@ public class AudioPlayerView extends PlayerView {
         return WindowInsetsCompat.CONSUMED.toWindowInsets();
     }
 
-	@Override
-	protected void onAttachedToWindow() {
-		super.onAttachedToWindow();
-		if (isInEditMode()) {
-			return;
-		}
-		this.hidingPresenter.setView(this.hidingView);
-		this.hidingPresenter.onCreate();
-	}
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        if (isInEditMode()) {
+            return;
+        }
+        this.hidingPresenter.setView(this.hidingView);
+        this.hidingPresenter.onCreate();
+    }
 
-	@Override
-	protected void onDetachedFromWindow() {
-		if (isInEditMode()) {
-			return;
-		}
-		this.hidingPresenter.setView(null);
-		this.hidingPresenter.onDestroy();
-		super.onDetachedFromWindow();
-	}
+    @Override
+    protected void onDetachedFromWindow() {
+        if (isInEditMode()) {
+            return;
+        }
+        this.hidingPresenter.setView(null);
+        this.hidingPresenter.onDestroy();
+        super.onDetachedFromWindow();
+    }
 
-	@CallSuper
-	@Override
-	public void onStart() {
-		this.playerSourcesView.onStart();
-		this.playerControlView.onStart();
-		this.hidingPresenter.onAppear();
-		this.playerModel.addListener(this.playerModelListener);
-	}
+    @CallSuper
+    @Override
+    public void onStart() {
+        this.playerSourcesView.onStart();
+        this.playerControlView.onStart();
+        this.hidingPresenter.onAppear();
+        this.playerModel.addListener(this.playerModelListener);
+    }
 
-	@CallSuper
-	@Override
-	public void onStop() {
-		this.playerSourcesView.onStop();
-		this.playerControlView.onStop();
-		this.hidingPresenter.onDisappear();
-		this.playerModel.removeListener(this.playerModelListener);
-	}
+    @CallSuper
+    @Override
+    public void onStop() {
+        this.playerSourcesView.onStop();
+        this.playerControlView.onStop();
+        this.hidingPresenter.onDisappear();
+        this.playerModel.removeListener(this.playerModelListener);
+    }
 
-	protected void updateState() {
-		if (!this.playerModel.getState().isPresent()) {
-			playerViewContainer.onPlayerViewClose();
-			return;
-		}
-		PlaybackState state = this.playerModel.getState().get();
-		if (state.currentItemState.isPresent()) {
-			PlaybackItemState playbackItemState = state.currentItemState.get();
-			PlaybackFile file = playbackItemState.file;
-			if (currentFileListener != null) {
-				currentFileListener.fileChanged(file);
-			}
-			this.tvTitle.setText(file.getNameWithoutExtension());
-		} else {
-			this.tvTitle.setText("");
-		}
-	}
+    protected void updateState() {
+        if (!this.playerModel.getState().isPresent()) {
+            playerViewContainer.onPlayerViewClose();
+            return;
+        }
+        PlaybackState state = this.playerModel.getState().get();
+        if (state.currentItemState.isPresent()) {
+            PlaybackItemState playbackItemState = state.currentItemState.get();
+            PlaybackFile file = playbackItemState.file;
+            if (currentFileListener != null) {
+                currentFileListener.fileChanged(file);
+            }
+            this.tvTitle.setText(file.getNameWithoutExtension());
+        } else {
+            this.tvTitle.setText("");
+        }
+    }
 
-	private final PlaybackModel.Listener playerModelListener = new PlaybackModel.Listener() {
-		@Override
-		public void onUpdate(PlaybackState state) {
-			updateState();
-		}
+    private final PlaybackModel.Listener playerModelListener = new PlaybackModel.Listener() {
+        @Override
+        public void onUpdate(PlaybackState state) {
+            updateState();
+        }
 
-		@Override
-		public void onError(Throwable error) { /**/ }
+        @Override
+        public void onError(Throwable error) { /**/ }
 
-		@Override
-		public void onFilesChanged(List<PlaybackFile> originalFiles, List<PlaybackFile> currentFiles) { /**/ }
-	};
+        @Override
+        public void onFilesChanged(List<PlaybackFile> originalFiles, List<PlaybackFile> currentFiles) { /**/ }
+    };
 
-	private final MultiplePlayer.HidingView hidingView = new MultiplePlayer.HidingView() {
-		@Override
-		public void displayPlayerView() { /**/ }
+    private final MultiplePlayer.HidingView hidingView = new MultiplePlayer.HidingView() {
+        @Override
+        public void displayPlayerView() { /**/ }
 
-		@Override
-		public void doNotDisplayPlayerView() {
-			playerViewContainer.onPlayerViewClose();
-		}
-	};
+        @Override
+        public void doNotDisplayPlayerView() {
+            playerViewContainer.onPlayerViewClose();
+        }
+    };
 }

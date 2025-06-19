@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ IONOS HiDrive Next - Android Client
   ~
   ~ SPDX-FileCopyrightText: 2025 STRATO GmbH.
@@ -7,82 +6,82 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-			  android:layout_width="match_parent"
-			  android:layout_height="wrap_content"
-			  android:background="@color/transparent"
-			  android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/transparent"
+    android:orientation="vertical">
 
-	<LinearLayout
-		android:id="@+id/progressPanel"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_marginBottom="@dimen/player_full_screen_audio_player_progress_panel_margin_bottom"
-		android:gravity="center_vertical"
-		android:orientation="horizontal"
-		android:paddingLeft="@dimen/player_full_screen_audio_player_progress_panel_padding"
-		android:paddingRight="@dimen/player_full_screen_audio_player_progress_panel_padding">
+    <LinearLayout
+        android:id="@+id/progressPanel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/player_full_screen_audio_player_progress_panel_margin_bottom"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/player_full_screen_audio_player_progress_panel_padding"
+        android:paddingRight="@dimen/player_full_screen_audio_player_progress_panel_padding">
 
-		<TextView
-			android:id="@+id/tvElapsed"
-			style="@style/FullScreenAudioPlayerTimeTextViewStyle"/>
+        <TextView
+            android:id="@+id/tvElapsed"
+            style="@style/FullScreenAudioPlayerTimeTextViewStyle" />
 
-		<SeekBar
-			android:id="@+id/progressBar"
-			style="@style/FullScreenAudioPlayerSeekBarStyle"
-			android:layout_width="0dp"
-			android:layout_height="@dimen/player_full_screen_audio_player_progressbar_height"
-			android:layout_weight="1"
-			android:indeterminate="false"
-			android:longClickable="false"
-			android:max="100"
-			android:progress="0"/>
+        <SeekBar
+            android:id="@+id/progressBar"
+            style="@style/FullScreenAudioPlayerSeekBarStyle"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/player_full_screen_audio_player_progressbar_height"
+            android:layout_weight="1"
+            android:indeterminate="false"
+            android:longClickable="false"
+            android:max="100"
+            android:progress="0" />
 
-		<TextView
-			android:id="@+id/tvTotalTime"
-			style="@style/FullScreenAudioPlayerTimeTextViewStyle"/>
+        <TextView
+            android:id="@+id/tvTotalTime"
+            style="@style/FullScreenAudioPlayerTimeTextViewStyle" />
 
-	</LinearLayout>
+    </LinearLayout>
 
-	<LinearLayout
-		android:id="@+id/bottomBar"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_marginBottom="@dimen/player_full_screen_audio_player_bottom_bar_margin_bottom"
-		android:gravity="center"
-		android:orientation="horizontal">
+    <LinearLayout
+        android:id="@+id/bottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/player_full_screen_audio_player_bottom_bar_margin_bottom"
+        android:gravity="center"
+        android:orientation="horizontal">
 
-		<ImageView
-			android:id="@+id/ivRepeat"
-			style="@style/FullScreenAudioPlayerSmallButtonWithRightMarginStyle"
-			android:layout_marginLeft="@dimen/player_full_screen_audio_player_button_margin_right"
-			android:src="@drawable/player_ic_repeat"/>
+        <ImageView
+            android:id="@+id/ivRepeat"
+            style="@style/FullScreenAudioPlayerSmallButtonWithRightMarginStyle"
+            android:layout_marginLeft="@dimen/player_full_screen_audio_player_button_margin_right"
+            android:src="@drawable/player_ic_repeat" />
 
-		<ImageView
-			android:id="@+id/ivPrevious"
-			style="@style/FullScreenAudioPlayerBigButtonWithRightMarginStyle"
-			android:src="@drawable/player_ic_skip_previous"/>
+        <ImageView
+            android:id="@+id/ivPrevious"
+            style="@style/FullScreenAudioPlayerBigButtonWithRightMarginStyle"
+            android:src="@drawable/player_ic_skip_previous" />
 
-		<ImageView
-			android:id="@+id/ivPlayPause"
-			style="@style/FullScreenAudioPlayerBigButtonWithRightMarginStyle"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginBottom="0dp"
-			android:layout_marginTop="0dp"
-			android:background="@drawable/player_audio_player_play_btn_style"
-			android:padding="@dimen/player_full_screen_audio_player_pause_btn_padding"
-			android:src="@drawable/player_ic_play"/>
+        <ImageView
+            android:id="@+id/ivPlayPause"
+            style="@style/FullScreenAudioPlayerBigButtonWithRightMarginStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="0dp"
+            android:layout_marginTop="0dp"
+            android:background="@drawable/player_audio_player_play_btn_style"
+            android:padding="@dimen/player_full_screen_audio_player_pause_btn_padding"
+            android:src="@drawable/player_ic_play" />
 
-		<ImageView
-			android:id="@+id/ivNext"
-			style="@style/FullScreenAudioPlayerBigButtonWithRightMarginStyle"
-			android:src="@drawable/player_ic_skip_next"/>
+        <ImageView
+            android:id="@+id/ivNext"
+            style="@style/FullScreenAudioPlayerBigButtonWithRightMarginStyle"
+            android:src="@drawable/player_ic_skip_next" />
 
-		<ImageView
-			android:id="@+id/ivRandom"
-			style="@style/FullScreenAudioPlayerSmallButtonStyle"
-			android:layout_marginRight="@dimen/player_full_screen_audio_player_button_margin_right"
-			android:src="@drawable/player_ic_shuffle"/>
-	</LinearLayout>
+        <ImageView
+            android:id="@+id/ivRandom"
+            style="@style/FullScreenAudioPlayerSmallButtonStyle"
+            android:layout_marginRight="@dimen/player_full_screen_audio_player_button_margin_right"
+            android:src="@drawable/player_ic_shuffle" />
+    </LinearLayout>
 
 </LinearLayout>

@@ -23,25 +23,24 @@ class MediaSourceFactory @Inject constructor(
 ) : MediaSource.Factory {
 
     @UnstableApi
-	override fun setDrmSessionManagerProvider(drmSessionManagerProvider: DrmSessionManagerProvider): MediaSource.Factory {
-		return this
-	}
+    override fun setDrmSessionManagerProvider(drmSessionManagerProvider: DrmSessionManagerProvider): MediaSource.Factory {
+        return this
+    }
 
     @UnstableApi
-	override fun setLoadErrorHandlingPolicy(loadErrorHandlingPolicy: LoadErrorHandlingPolicy): MediaSource.Factory {
-		return this
-	}
+    override fun setLoadErrorHandlingPolicy(loadErrorHandlingPolicy: LoadErrorHandlingPolicy): MediaSource.Factory {
+        return this
+    }
 
     @UnstableApi
-	override fun getSupportedTypes(): IntArray {
-		return intArrayOf(C.CONTENT_TYPE_OTHER)
-	}
+    override fun getSupportedTypes(): IntArray {
+        return intArrayOf(C.CONTENT_TYPE_OTHER)
+    }
 
     @UnstableApi
-	override fun createMediaSource(mediaItem: MediaItem): MediaSource {
-		return ProgressiveMediaSource
-			.Factory(dataSourceFactory, DefaultExtractorsFactory())
-			.createMediaSource(mediaItem)
-	}
-
+    override fun createMediaSource(mediaItem: MediaItem): MediaSource {
+        return ProgressiveMediaSource
+            .Factory(dataSourceFactory, DefaultExtractorsFactory())
+            .createMediaSource(mediaItem)
+    }
 }

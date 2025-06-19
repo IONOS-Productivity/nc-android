@@ -11,54 +11,54 @@ import com.ionos.player.ui.MultiplePlayer;
 
 public class NullMultiplePlayerControlView implements MultiplePlayer.ControlView {
 
-	private static final NullMultiplePlayerControlView INSTANCE = new NullMultiplePlayerControlView();
+    private static final NullMultiplePlayerControlView INSTANCE = new NullMultiplePlayerControlView();
 
-	public static NullMultiplePlayerControlView getInstance() {
-		return INSTANCE;
-	}
+    public static NullMultiplePlayerControlView getInstance() {
+        return INSTANCE;
+    }
 
-	@Override
-	public void repeat() {
+    @Override
+    public void repeat() {
 
-	}
+    }
 
-	@Override
-	public void doNotRepeat() {
+    @Override
+    public void doNotRepeat() {
 
-	}
+    }
 
-	@Override
-	public void shuffle() {
+    @Override
+    public void shuffle() {
 
-	}
+    }
 
-	@Override
-	public void doNotShuffle() {
+    @Override
+    public void doNotShuffle() {
 
-	}
+    }
 
-	@Override
-	public void setProgress(int currentTimeInMilliseconds, int totalTimeInMilliseconds) {
+    @Override
+    public void setProgress(int currentTimeInMilliseconds, int totalTimeInMilliseconds) {
 
-	}
+    }
 
-	@Override
-	public void setProgressAvailable() {
+    @Override
+    public void setProgressAvailable() {
 
-	}
+    }
 
-	@Override
-	public void setProgressNotAvailable() {
+    @Override
+    public void setProgressNotAvailable() {
 
-	}
+    }
 
-	@Override
-	public void enablePlayControls(boolean play, boolean pause, boolean stop) {
+    @Override
+    public void enablePlayControls(boolean play, boolean pause, boolean stop) {
 
-	}
+    }
 
-	@Override
-	public void enableSwitchControls(boolean next, boolean previous) {
+    @Override
+    public void enableSwitchControls(boolean next, boolean previous) {
 
-	}
+    }
 }

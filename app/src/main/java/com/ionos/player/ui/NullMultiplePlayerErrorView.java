@@ -7,21 +7,21 @@
 
 package com.ionos.player.ui;
 
-public class NullMultiplePlayerErrorView implements  MultiplePlayer.ErrorView {
+public class NullMultiplePlayerErrorView implements MultiplePlayer.ErrorView {
 
-	private static final NullMultiplePlayerErrorView INSTANCE = new NullMultiplePlayerErrorView();
+    private static final NullMultiplePlayerErrorView INSTANCE = new NullMultiplePlayerErrorView();
 
-	public static NullMultiplePlayerErrorView getInstance() {
-			return INSTANCE;
-	}
+    public static NullMultiplePlayerErrorView getInstance() {
+        return INSTANCE;
+    }
 
-	private NullMultiplePlayerErrorView() {
-	}
+    private NullMultiplePlayerErrorView() {
+    }
 
 
-	@Override
-	public void showError(int messageId) {
-		// No operation, this is a null object pattern implementation
+    @Override
+    public void showError(int messageId) {
+        // No operation, this is a null object pattern implementation
 
-	}
+    }
 }

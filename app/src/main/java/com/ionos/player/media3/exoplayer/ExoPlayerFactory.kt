@@ -18,19 +18,19 @@ import com.ionos.player.media3.common.PlayerFactory
 import javax.inject.Inject
 
 class ExoPlayerFactory @Inject constructor(
-	private val context: Context,
-	private val mediaSourceFactory: MediaSourceFactory,
+    private val context: Context,
+    private val mediaSourceFactory: MediaSourceFactory,
 ) : PlayerFactory {
 
     @UnstableApi
-	override fun create(): Player {
-		val renderersFactory = DefaultRenderersFactory(context)
-			.setExtensionRendererMode(DefaultRenderersFactory.EXTENSION_RENDERER_MODE_ON)
-		return ExoPlayer
-			.Builder(context, renderersFactory)
-			.setAudioAttributes(AudioAttributes.DEFAULT, true)
-			.setTrackSelector(DefaultTrackSelector(context))
-			.setMediaSourceFactory(mediaSourceFactory)
-			.build()
-	}
+    override fun create(): Player {
+        val renderersFactory = DefaultRenderersFactory(context)
+            .setExtensionRendererMode(DefaultRenderersFactory.EXTENSION_RENDERER_MODE_ON)
+        return ExoPlayer
+            .Builder(context, renderersFactory)
+            .setAudioAttributes(AudioAttributes.DEFAULT, true)
+            .setTrackSelector(DefaultTrackSelector(context))
+            .setMediaSourceFactory(mediaSourceFactory)
+            .build()
+    }
 }

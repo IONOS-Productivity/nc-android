@@ -14,38 +14,39 @@ import java.util.Optional;
 
 public abstract class MultipleClickListener implements View.OnClickListener {
 
-	private static final int TIME_WINDOW_FOR_CLICK_DETERMINATION_IN_MILLISECONDS = 250;
+    private static final int TIME_WINDOW_FOR_CLICK_DETERMINATION_IN_MILLISECONDS = 250;
 
-	private final Handler handler = new Handler();
-	private Optional<Integer> clicksCount = Optional.empty();
+    private final Handler handler = new Handler();
+    private Optional<Integer> clicksCount = Optional.empty();
 
-	protected abstract void onSingleClick(View view);
-	protected abstract void onDoubleClick(View view);
+    protected abstract void onSingleClick(View view);
 
-	@Override
-	public final void onClick(final View view) {
-		boolean interactionIsBegan = clicksCount.isPresent();
+    protected abstract void onDoubleClick(View view);
 
-		if (interactionIsBegan) {
-			clicksCount = Optional.of(clicksCount.get() + 1);
-		} else {
-			clicksCount = Optional.of(1);
-			handler.postDelayed(new Runnable() {
-				@Override
-				public void run() {
-					int count = clicksCount.get();
-					clicksCount = Optional.empty();
-					callSubscriber(view, count);
-				}
-			}, TIME_WINDOW_FOR_CLICK_DETERMINATION_IN_MILLISECONDS);
-		}
-	}
+    @Override
+    public final void onClick(final View view) {
+        boolean interactionIsBegan = clicksCount.isPresent();
 
-	private void callSubscriber(View view, int clicksCount) {
-		if (clicksCount == 1) {
-			onSingleClick(view);
-		} else {
-			onDoubleClick(view);
-		}
-	}
+        if (interactionIsBegan) {
+            clicksCount = Optional.of(clicksCount.get() + 1);
+        } else {
+            clicksCount = Optional.of(1);
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    int count = clicksCount.get();
+                    clicksCount = Optional.empty();
+                    callSubscriber(view, count);
+                }
+            }, TIME_WINDOW_FOR_CLICK_DETERMINATION_IN_MILLISECONDS);
+        }
+    }
+
+    private void callSubscriber(View view, int clicksCount) {
+        if (clicksCount == 1) {
+            onSingleClick(view);
+        } else {
+            onDoubleClick(view);
+        }
+    }
 }
