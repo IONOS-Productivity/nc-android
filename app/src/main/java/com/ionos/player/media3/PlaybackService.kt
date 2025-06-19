@@ -26,20 +26,15 @@ class PlaybackService : MediaSessionService() {
     @Inject
     lateinit var mediaSessionActivityFactory: MediaSessionActivityFactory
 
-    @Inject
-    @UnstableApi
-    lateinit var mediaNotificationProvider: MediaNotificationProvider
-
     private var bindingCount: Int = 0
 
     @UnstableApi
     override fun onCreate() {
         super.onCreate()
         AndroidInjection.inject(this)
-        setMediaNotificationProvider(mediaNotificationProvider)
+        setMediaNotificationProvider(MediaNotificationProvider(this))
     }
 
-    @UnstableApi
     override fun onGetSession(controllerInfo: ControllerInfo): MediaSession? {
         return mediaSessionHolder.getMediaSession()
     }
