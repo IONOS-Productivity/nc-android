@@ -65,10 +65,11 @@ class PlaybackFilesRepository @Inject constructor(
     private suspend fun getFavoritePlaybackFiles(fileType: PlaybackFileType): PlaybackFiles {
         return withContext(Dispatchers.IO) {
             storageManager.favoriteFiles
+                .asSequence()
                 .filter { it.mimeType.startsWith(fileType.value, ignoreCase = true) }
                 .map { it.toPlaybackFile() }
                 .sortedWith(PlaybackFilesComparator.FAVORITE)
-                .let { PlaybackFiles(it, PlaybackFilesComparator.FAVORITE) }
+                .let { PlaybackFiles(it.toList(), PlaybackFilesComparator.FAVORITE) }
         }
     }
 
@@ -82,10 +83,11 @@ class PlaybackFilesRepository @Inject constructor(
     private suspend fun getGalleryPlaybackFiles(fileType: PlaybackFileType): PlaybackFiles {
         return withContext(Dispatchers.IO) {
             storageManager.allGalleryItems
+                .asSequence()
                 .filter { it.mimeType.startsWith(fileType.value, ignoreCase = true) }
                 .map { it.toPlaybackFile() }
                 .sortedWith(PlaybackFilesComparator.GALLERY)
-                .let { PlaybackFiles(it, PlaybackFilesComparator.GALLERY) }
+                .let { PlaybackFiles(it.toList(), PlaybackFilesComparator.GALLERY) }
         }
     }
 
@@ -99,11 +101,12 @@ class PlaybackFilesRepository @Inject constructor(
     private suspend fun getSharedPlaybackFiles(fileType: PlaybackFileType): PlaybackFiles {
         return withContext(Dispatchers.IO) {
             storageManager.shares
+                .asSequence()
                 .distinctBy { it.fileSource }
                 .map { it.toPlaybackFile() }
                 .filter { it.mimeType.startsWith(fileType.value, ignoreCase = true) }
                 .sortedWith(PlaybackFilesComparator.SHARED)
-                .let { PlaybackFiles(it, PlaybackFilesComparator.SHARED) }
+                .let { PlaybackFiles(it.toList(), PlaybackFilesComparator.SHARED) }
         }
     }
 
@@ -134,10 +137,11 @@ class PlaybackFilesRepository @Inject constructor(
             val folder = storageManager.getFileById(folderId) ?: throw IllegalStateException("Folder not found")
             val comparator = comparator ?: preferences.getSortOrderByFolder(folder).toPlaybackFilesComparator()
             storageManager.getFolderContent(folder, onDeviceOnly)
+                .asSequence()
                 .filter { it.mimeType.startsWith(fileType.value, ignoreCase = true) }
                 .map { it.toPlaybackFile() }
                 .sortedWith(comparator)
-                .let { PlaybackFiles(it, comparator) }
+                .let { PlaybackFiles(it.toList(), comparator) }
         }
     }
 
