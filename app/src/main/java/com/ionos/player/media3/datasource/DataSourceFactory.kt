@@ -32,6 +32,7 @@ class DataSourceFactory @Inject constructor(
         val fileDataSource = FileDataSource.Factory().createDataSource()
 
         val nextcloudClient = clientFactory.createNextcloudClient(accountManager.user)
+        val ownCloudClient = clientFactory.create(accountManager.user)
 
         val httpDataSourceFactory = OkHttpDataSource.Factory(nextcloudClient.client)
         httpDataSourceFactory.setUserAgent(MainApp.getUserAgent())
@@ -44,7 +45,7 @@ class DataSourceFactory @Inject constructor(
 
         return StreamDataSource(
             fileDataStorageManager,
-            nextcloudClient,
+            ownCloudClient,
             fileDataSource,
             cachedHttpDataSource,
         )
