@@ -13,14 +13,14 @@ import androidx.media3.datasource.DataSource
 import androidx.media3.datasource.DataSpec
 import androidx.media3.datasource.TransferListener
 import com.ionos.player.model.getRemoteFileId
+import com.nextcloud.common.NextcloudClient
 import com.owncloud.android.datamodel.FileDataStorageManager
 import com.owncloud.android.files.StreamMediaFileOperation
-import com.owncloud.android.lib.common.OwnCloudClient
 import java.io.IOException
 
 internal class StreamDataSource(
     private val fileDataStorageManager: FileDataStorageManager,
-    private val ownCloudClient: OwnCloudClient,
+    private val nextcloudClient: NextcloudClient,
     private val fileDataSource: DataSource,
     private val httpDataSource: DataSource,
 ) : DataSource {
@@ -43,7 +43,7 @@ internal class StreamDataSource(
             fileDataSource.open(dataSpec.buildUpon(uri))
         } else {
             val sfo = StreamMediaFileOperation(fileId)
-            val result = sfo.execute(ownCloudClient)
+            val result = sfo.execute(nextcloudClient)
             if (result.isSuccess) {
                 val uri = Uri.parse(result.data[0] as String)
                 currentDataSource = httpDataSource
