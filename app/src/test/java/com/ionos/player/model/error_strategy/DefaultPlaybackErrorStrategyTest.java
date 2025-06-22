@@ -24,9 +24,6 @@ import androidx.annotation.NonNull;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 
-/**
- * Created by yaz on 1/23/17.
- */
 public class DefaultPlaybackErrorStrategyTest {
 
 	private final DefaultPlaybackErrorStrategy strategy = new DefaultPlaybackErrorStrategy();
