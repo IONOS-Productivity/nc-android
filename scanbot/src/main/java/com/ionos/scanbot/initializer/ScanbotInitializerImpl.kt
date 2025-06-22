@@ -16,10 +16,6 @@ import io.scanbot.sdk.ScanbotSDKInitializer
 import javax.inject.Inject
 import javax.inject.Singleton
 
-/**
- * User: Dima Muravyov
- * Date: 07.02.2020
- */
 @Singleton
 class ScanbotInitializerImpl @Inject internal constructor(
     private val licenseKeyStore: LicenseKeyStore,

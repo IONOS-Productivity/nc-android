@@ -12,10 +12,6 @@ import com.ionos.scanbot.R
 import java.util.Calendar
 import javax.inject.Inject
 
-/**
- * User: Dima Muravyov
- * Date: 08.12.2017
- */
 internal class DocumentNameProvider(
 	private val calendar: Calendar,
 	private val formattedName: String,

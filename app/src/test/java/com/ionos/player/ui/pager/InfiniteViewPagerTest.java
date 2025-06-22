@@ -16,10 +16,6 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-/**
- * User: Anton Shevchuk
- * Date: 03.02.2017
- */
 public class InfiniteViewPagerTest {
 	private final List<Integer> inputList = new ArrayList<>();
 
