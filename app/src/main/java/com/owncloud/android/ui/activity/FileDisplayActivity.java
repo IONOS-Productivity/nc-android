@@ -48,7 +48,7 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 import com.ionos.annotation.IonosCustomization;
-import com.ionos.player.model.PlayerLauncher;
+import com.ionos.player.ui.PlayerLauncher;
 import com.nextcloud.appReview.InAppReviewHelper;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.appinfo.AppInfo;

@@ -13,6 +13,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.Rect
+import android.media.AudioManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Rational
@@ -36,8 +37,6 @@ import com.ionos.player.ui.PlayerScreenEvent.ShowRemoveFileDialog
 import com.ionos.player.ui.PlayerScreenEvent.ShowShareFileDialog
 import com.ionos.player.ui.audio.AudioPlayerView
 import com.ionos.player.ui.video.VideoPlayerView
-import com.ionos.player.ui.video.surface.PlayerCompatible
-import com.ionos.player.ui.video.surface.SurfaceInvalidator
 import com.ionos.player.util.SystemVersion
 import com.ionos.player.util.isPictureInPictureAllowed
 import com.nextcloud.client.di.Injectable
@@ -54,7 +53,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
-class PlayerActivity : FileActivity(), PlayerViewContainer, PlayerCompatible, Injectable {
+class PlayerActivity : FileActivity(), Injectable {
 
     companion object {
         private const val PLAYBACK_FILE_TYPE: String = "PLAYBACK_FILE_TYPE"
@@ -71,11 +70,11 @@ class PlayerActivity : FileActivity(), PlayerViewContainer, PlayerCompatible, In
 
     @Inject
     lateinit var viewModelFactory: PlayerViewModel.Factory
+
     private val viewModel by viewModels<PlayerViewModel> { viewModelFactory }
 
-    private val surfaceInvalidator = SurfaceInvalidator()
-
     private lateinit var playbackFileType: PlaybackFileType
+
     private lateinit var playerView: PlayerView
 
     private val pipAspectRatio = Rational(16, 9)
@@ -103,6 +102,8 @@ class PlayerActivity : FileActivity(), PlayerViewContainer, PlayerCompatible, In
                 switchToPictureInPictureMode()
             }
         }
+
+        volumeControlStream = AudioManager.STREAM_MUSIC
     }
 
     override fun onNewIntent(intent: Intent) {
@@ -214,14 +215,6 @@ class PlayerActivity : FileActivity(), PlayerViewContainer, PlayerCompatible, In
             containerRect.right,
             containerRect.top + (containerRect.height() + sourceHeightHint) / 2,
         )
-    }
-
-    override fun onPlayerViewClose() {
-        finish()
-    }
-
-    override fun getSurfaceInvalidator(): SurfaceInvalidator {
-        return surfaceInvalidator
     }
 
     private fun handleEvent(event: PlayerScreenEvent) {

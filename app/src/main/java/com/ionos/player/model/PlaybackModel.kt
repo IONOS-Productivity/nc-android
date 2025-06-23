@@ -7,6 +7,7 @@
 
 package com.ionos.player.model
 
+import android.view.SurfaceView
 import com.ionos.player.model.state.PlaybackState
 import com.ionos.player.model.state.RepeatMode
 import kotlinx.coroutines.flow.Flow
@@ -22,7 +23,7 @@ interface PlaybackModel {
 
     fun release()
 
-    fun videoViewSetter(success: (VideoViewSetter) -> Unit)
+    fun setVideoSurfaceView(surfaceView: SurfaceView?)
 
     fun addListener(listener: Listener)
 
@@ -48,10 +49,8 @@ interface PlaybackModel {
 
     interface Listener {
 
-        fun onUpdate(state: PlaybackState)
+        fun onPlaybackUpdate(state: PlaybackState)
 
-        fun onError(error: Throwable)
-
-        fun onFilesChanged(originalFiles: List<PlaybackFile>, currentFiles: List<PlaybackFile>)
+        fun onPlaybackError(error: Throwable)
     }
 }

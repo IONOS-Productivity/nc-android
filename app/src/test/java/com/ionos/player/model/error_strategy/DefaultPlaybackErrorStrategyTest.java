@@ -60,7 +60,7 @@ public class DefaultPlaybackErrorStrategyTest {
 				.map(input -> new PlaybackItemState(input, PlayerState.NONE, null, null, 0, 0));
 		return new PlaybackState(
 				Arrays.asList(files),
-				current,
+				current.orElse(null),
 				RepeatMode.OFF,
 				false);
 	}

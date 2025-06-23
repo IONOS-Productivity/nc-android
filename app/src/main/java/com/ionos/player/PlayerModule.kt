@@ -21,12 +21,11 @@ import com.ionos.player.model.PlaybackModel
 import com.ionos.player.model.error_strategy.DefaultPlaybackErrorStrategy
 import com.ionos.player.model.error_strategy.PlaybackErrorStrategy
 import com.ionos.player.ui.PlayerActivity
-import com.ionos.player.ui.audio.AudioPlayerSourceFragment
+import com.ionos.player.ui.audio.AudioFileFragment
 import com.ionos.player.ui.audio.AudioPlayerView
 import com.ionos.player.ui.common.PlayerProgressIndicator
 import com.ionos.player.ui.control.PlayerControlView
-import com.ionos.player.ui.sources.PlayerSourcesView
-import com.ionos.player.ui.video.VideoPlayerSourceFragment
+import com.ionos.player.ui.video.VideoFileFragment
 import com.ionos.player.ui.video.VideoPlayerView
 import dagger.Binds
 import dagger.Module
@@ -91,14 +90,11 @@ abstract class PlayerModule {
     abstract fun playerControlView(): PlayerControlView
 
     @ContributesAndroidInjector
-    abstract fun playerSourcesView(): PlayerSourcesView
-
-    @ContributesAndroidInjector
     abstract fun playerProgressIndicator(): PlayerProgressIndicator
 
     @ContributesAndroidInjector
-    abstract fun audioPlayerSourceFragment(): AudioPlayerSourceFragment
+    abstract fun audioFileFragment(): AudioFileFragment
 
     @ContributesAndroidInjector
-    abstract fun videoPlayerSourceFragment(): VideoPlayerSourceFragment
+    abstract fun videoFileFragment(): VideoFileFragment
 }

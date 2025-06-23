@@ -18,11 +18,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.ionos.player.model.PlaybackModel;
-import com.ionos.player.ui.MultiplePlayer;
-import com.ionos.player.ui.control.availability_strategy.HiDriveCyclicNextControlAvailabilityStrategy;
-import com.ionos.player.ui.control.availability_strategy.HiDriveCyclicPreviousControlAvailabilityStrategy;
-import com.ionos.player.ui.control.listener.CompositePlayerControlViewListener;
 import com.ionos.player.ui.control.listener.MultipleClickListener;
+import com.ionos.player.ui.control.listener.PlayerControlViewCompositeListener;
 import com.ionos.player.ui.control.listener.PlayerControlViewListener;
 import com.owncloud.android.R;
 
@@ -38,7 +35,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.disposables.Disposables;
 import io.reactivex.subjects.PublishSubject;
 
-public class PlayerControlView extends LinearLayout {
+public class PlayerControlView extends LinearLayout implements PlayerControl.View {
 
     private static final String INDETERMINATE_TIME = "--:--";
 
@@ -56,8 +53,7 @@ public class PlayerControlView extends LinearLayout {
     @Inject
     PlaybackModel playerModel;
 
-    private MultiplePlayer.ControlPresenter controlPresenter;
-    private MultiplePlayerPlayPreviousPresenter playPreviousPresenter;
+    private PlayerControl.Presenter controlPresenter;
     private final PublishSubject<Integer> seekBarProgressChangePublishSubject = PublishSubject.create();
     private Disposable seekBarProgressChangeDisposable = Disposables.disposed();
 
@@ -76,7 +72,7 @@ public class PlayerControlView extends LinearLayout {
         AUDIO
     }
 
-    private final CompositePlayerControlViewListener compositeListener = new CompositePlayerControlViewListener();
+    private final PlayerControlViewCompositeListener compositeListener = new PlayerControlViewCompositeListener();
 
     public PlayerControlView(Context context) {
         this(context, null);
@@ -105,11 +101,8 @@ public class PlayerControlView extends LinearLayout {
         ((HasAndroidInjector) context.getApplicationContext()).androidInjector().inject(this);
         readAttributes(attrs);
         setViewsWidthByMode();
-        this.controlPresenter = new MultiplePlayerControlPresenter(
-            this.playerModel,
-            new HiDriveCyclicNextControlAvailabilityStrategy(),
-            new HiDriveCyclicPreviousControlAvailabilityStrategy());
-        this.playPreviousPresenter = new MultiplePlayerPlayPreviousPresenterImpl(this.playerModel, this.controlPresenter);
+
+        this.controlPresenter = new PlayerControlPresenter(this.playerModel);
 
         setDefaultTags();
         setListeners();
@@ -161,19 +154,19 @@ public class PlayerControlView extends LinearLayout {
     private void setListeners() {
         this.ivPlayPause.setOnClickListener(view -> handlePlayPauseClick());
         this.ivNext.setOnClickListener(view -> {
-            controlPresenter.onPlayNext();
+            controlPresenter.onNextClicked();
             compositeListener.onNextClicked();
         });
         this.ivPrevious.setOnClickListener(new MultipleClickListener() {
             @Override
             protected void onSingleClick(View view) {
-                playPreviousPresenter.onPreviousClicked();
+                controlPresenter.onPreviousClicked();
                 compositeListener.onPreviousClicked();
             }
 
             @Override
             protected void onDoubleClick(View view) {
-                playPreviousPresenter.onPreviousDoubleClicked();
+                controlPresenter.onPreviousDoubleClicked();
                 compositeListener.onPreviousClicked();
             }
         });
@@ -203,7 +196,7 @@ public class PlayerControlView extends LinearLayout {
         if (isInEditMode()) {
             return;
         }
-        this.controlPresenter.setView(this.controlView);
+        this.controlPresenter.setView(this);
         this.controlPresenter.onCreate();
     }
 
@@ -283,86 +276,84 @@ public class PlayerControlView extends LinearLayout {
         }
     }
 
-    private final MultiplePlayer.ControlView controlView = new MultiplePlayer.ControlView() {
-        @Override
-        public void repeat() {
-            ivRepeat.setImageResource(R.drawable.player_ic_repeat_active);
-            ivRepeat.setTag(TAG_CLICK_COMMAND_DO_NOT_REPEAT);
-        }
+    @Override
+    public void repeat() {
+        ivRepeat.setImageResource(R.drawable.player_ic_repeat_active);
+        ivRepeat.setTag(TAG_CLICK_COMMAND_DO_NOT_REPEAT);
+    }
 
-        @Override
-        public void doNotRepeat() {
-            ivRepeat.setImageResource(R.drawable.player_ic_repeat);
-            ivRepeat.setTag(TAG_CLICK_COMMAND_REPEAT);
-        }
+    @Override
+    public void doNotRepeat() {
+        ivRepeat.setImageResource(R.drawable.player_ic_repeat);
+        ivRepeat.setTag(TAG_CLICK_COMMAND_REPEAT);
+    }
 
-        @Override
-        public void shuffle() {
-            ivRandom.setImageResource(R.drawable.player_ic_shuffle_active);
-            ivRandom.setTag(TAG_CLICK_COMMAND_DO_NOT_SHUFFLE);
-        }
+    @Override
+    public void shuffle() {
+        ivRandom.setImageResource(R.drawable.player_ic_shuffle_active);
+        ivRandom.setTag(TAG_CLICK_COMMAND_DO_NOT_SHUFFLE);
+    }
 
-        @Override
-        public void doNotShuffle() {
-            ivRandom.setImageResource(R.drawable.player_ic_shuffle);
-            ivRandom.setTag(TAG_CLICK_COMMAND_SHUFFLE);
-        }
+    @Override
+    public void doNotShuffle() {
+        ivRandom.setImageResource(R.drawable.player_ic_shuffle);
+        ivRandom.setTag(TAG_CLICK_COMMAND_SHUFFLE);
+    }
 
-        @Override
-        public void setProgress(int currentTimeInMilliseconds, int totalTimeInMilliseconds) {
-            progressBar.setMax(totalTimeInMilliseconds);
-            progressBar.setProgress(currentTimeInMilliseconds);
-            tvElapsed.setText(formatTime(currentTimeInMilliseconds));
-            tvTotalTime.setText(formatTime(totalTimeInMilliseconds));
-        }
+    @Override
+    public void setProgress(int currentTimeInMilliseconds, int totalTimeInMilliseconds) {
+        progressBar.setMax(totalTimeInMilliseconds);
+        progressBar.setProgress(currentTimeInMilliseconds);
+        tvElapsed.setText(formatTime(currentTimeInMilliseconds));
+        tvTotalTime.setText(formatTime(totalTimeInMilliseconds));
+    }
 
-        @Override
-        public void setProgressAvailable() {
-            progressBar.setEnabled(true);
-        }
+    @Override
+    public void setProgressAvailable() {
+        progressBar.setEnabled(true);
+    }
 
-        @Override
-        public void setProgressNotAvailable() {
-            progressBar.setEnabled(false);
-            progressBar.setMax(100);
-            progressBar.setProgress(0);
-            tvElapsed.setText(INDETERMINATE_TIME);
-            tvTotalTime.setText(INDETERMINATE_TIME);
-        }
+    @Override
+    public void setProgressNotAvailable() {
+        progressBar.setEnabled(false);
+        progressBar.setMax(100);
+        progressBar.setProgress(0);
+        tvElapsed.setText(INDETERMINATE_TIME);
+        tvTotalTime.setText(INDETERMINATE_TIME);
+    }
 
-        @Override
-        public void enablePlayControls(boolean play, boolean pause, boolean stop) {
-            if (pause) {
-                configurePlayPauseButton(R.drawable.player_ic_pause, TAG_CLICK_COMMAND_PAUSE);
-            } else {
-                configurePlayPauseButton(R.drawable.player_ic_play, TAG_CLICK_COMMAND_PLAY);
-            }
+    @Override
+    public void enablePlayControls(boolean play, boolean pause, boolean stop) {
+        if (pause) {
+            configurePlayPauseButton(R.drawable.player_ic_pause, TAG_CLICK_COMMAND_PAUSE);
+        } else {
+            configurePlayPauseButton(R.drawable.player_ic_play, TAG_CLICK_COMMAND_PLAY);
         }
+    }
 
-        @Override
-        public void enableSwitchControls(boolean next, boolean previous) {
-            ivNext.setEnabled(next);
-            ivPrevious.setEnabled(previous);
-        }
+    @Override
+    public void enableSwitchControls(boolean next, boolean previous) {
+        ivNext.setEnabled(next);
+        ivPrevious.setEnabled(previous);
+    }
 
-        private void configurePlayPauseButton(@DrawableRes int imageResource, String tagState) {
-            ivPlayPause.setImageResource(imageResource);
-            ivPlayPause.setTag(tagState);
-        }
+    private void configurePlayPauseButton(@DrawableRes int imageResource, String tagState) {
+        ivPlayPause.setImageResource(imageResource);
+        ivPlayPause.setTag(tagState);
+    }
 
-        private String formatTime(int timeMillis) {
-            int timeSeconds = timeMillis / 1000;
-            int seconds = timeSeconds % 60;
-            int minutes = timeSeconds / 60;
-            int hours = minutes / 60;
-            if (hours > 0) {
-                minutes = minutes % 60;
-            }
-            if (mode == Mode.VIDEO) {
-                return String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, seconds);
-            } else {
-                return String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
-            }
+    private String formatTime(int timeMillis) {
+        int timeSeconds = timeMillis / 1000;
+        int seconds = timeSeconds % 60;
+        int minutes = timeSeconds / 60;
+        int hours = minutes / 60;
+        if (hours > 0) {
+            minutes = minutes % 60;
         }
-    };
+        if (mode == Mode.VIDEO) {
+            return String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, seconds);
+        } else {
+            return String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
+        }
+    }
 }

@@ -11,8 +11,8 @@
     android:layout_height="match_parent"
     android:background="@color/player_full_screen_audio_player_background">
 
-    <com.ionos.player.ui.sources.PlayerSourcesView
-        android:id="@+id/playerSourcesView"
+    <com.ionos.player.ui.pager.PlayerPager
+        android:id="@+id/playerPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

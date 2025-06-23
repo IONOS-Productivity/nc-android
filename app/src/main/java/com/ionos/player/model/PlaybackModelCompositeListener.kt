@@ -22,21 +22,15 @@ class PlaybackModelCompositeListener : PlaybackModel.Listener {
         listeners.remove(listener)
     }
 
-    override fun onUpdate(state: PlaybackState) {
+    override fun onPlaybackUpdate(state: PlaybackState) {
         for (i in 0 until listeners.size) {
-            listeners.getOrNull(i)?.onUpdate(state)
+            listeners.getOrNull(i)?.onPlaybackUpdate(state)
         }
     }
 
-    override fun onError(error: Throwable) {
+    override fun onPlaybackError(error: Throwable) {
         for (i in 0 until listeners.size) {
-            listeners.getOrNull(i)?.onError(error)
-        }
-    }
-
-    override fun onFilesChanged(originalFiles: List<PlaybackFile>, currentFiles: List<PlaybackFile>) {
-        for (i in 0 until listeners.size) {
-            listeners.getOrNull(i)?.onFilesChanged(originalFiles, currentFiles)
+            listeners.getOrNull(i)?.onPlaybackError(error)
         }
     }
 }

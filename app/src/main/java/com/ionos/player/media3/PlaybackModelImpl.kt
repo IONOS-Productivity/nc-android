@@ -8,6 +8,7 @@
 package com.ionos.player.media3
 
 import android.content.Context
+import android.view.SurfaceView
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.session.MediaController
 import androidx.media3.session.MediaSession
@@ -24,7 +25,6 @@ import com.ionos.player.model.PlaybackFiles
 import com.ionos.player.model.PlaybackModel
 import com.ionos.player.model.PlaybackModelCompositeListener
 import com.ionos.player.model.PlaybackSettings
-import com.ionos.player.model.VideoViewSetter
 import com.ionos.player.model.error_strategy.PlaybackErrorStrategy
 import com.ionos.player.model.state.PlaybackState
 import com.ionos.player.model.state.RepeatMode
@@ -58,7 +58,7 @@ class PlaybackModelImpl @Inject constructor(
     private val compositeListener = PlaybackModelCompositeListener()
 
     private val checkProgressPeriodicAction = PeriodicAction(CHECK_PROGRESS_INTERVAL) {
-        state.ifPresent(compositeListener::onUpdate)
+        state.ifPresent(compositeListener::onPlaybackUpdate)
     }
 
     private val playerListener = PlaybackModelPlayerListener(
@@ -72,7 +72,7 @@ class PlaybackModelImpl @Inject constructor(
             controller.removeListener(playerListener)
             controllerScope?.cancel()
             checkProgressPeriodicAction.stop()
-            state.ifPresent(compositeListener::onUpdate)
+            state.ifPresent(compositeListener::onPlaybackUpdate)
         }
     }
 
@@ -107,7 +107,7 @@ class PlaybackModelImpl @Inject constructor(
         controllerScope?.launch {
             filesFlow
                 .catch {
-                    compositeListener.onError(it)
+                    compositeListener.onPlaybackError(it)
                     release()
                 }
                 .collectLatest { setFiles(it) }
@@ -148,10 +148,8 @@ class PlaybackModelImpl @Inject constructor(
         mediaSession = null
     }
 
-    override fun videoViewSetter(success: (VideoViewSetter) -> Unit) {
-        success {
-            controller?.setVideoSurfaceHolder(it)
-        }
+    override fun setVideoSurfaceView(surfaceView: SurfaceView?) {
+        controller?.setVideoSurfaceView(surfaceView)
     }
 
     override fun addListener(listener: PlaybackModel.Listener) {
@@ -216,11 +214,11 @@ class PlaybackModelImpl @Inject constructor(
     }
 
     private fun onPlaybackUpdate() {
-        state.ifPresent(compositeListener::onUpdate)
+        state.ifPresent(compositeListener::onPlaybackUpdate)
     }
 
     private fun onPlaybackError(error: Throwable) {
-        compositeListener.onError(error)
+        compositeListener.onPlaybackError(error)
         state.ifPresent { state ->
             if (playbackErrorStrategy.switchToNextSource(error, state)) {
                 playNext()

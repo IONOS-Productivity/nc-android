@@ -43,13 +43,9 @@ class PlaybackStateFactory() {
         }
     }
 
-    private fun Player.getCurrentItemState(): Optional<PlaybackItemState> {
+    private fun Player.getCurrentItemState(): PlaybackItemState? {
         val currentFile = currentMediaItem?.mediaMetadata?.playbackFile
-        return if (currentFile != null) {
-            Optional.of(getCurrentItemState(currentFile))
-        } else {
-            Optional.empty()
-        }
+        return currentFile?.let { getCurrentItemState(it) }
     }
 
     private fun Player.getCurrentItemState(currentFile: PlaybackFile) = PlaybackItemState(

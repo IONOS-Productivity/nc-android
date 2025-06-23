@@ -26,7 +26,8 @@ class PlayerProgressIndicator @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     @AttrRes defStyleAttr: Int = 0,
-) : LinearProgressIndicator(context, attrs, defStyleAttr) {
+) : LinearProgressIndicator(context, attrs, defStyleAttr),
+    PlaybackModel.Listener {
 
     @Inject
     lateinit var playbackModel: PlaybackModel
@@ -43,19 +44,27 @@ class PlayerProgressIndicator @JvmOverloads constructor(
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        playbackModel.addListener(playbackModelListener)
+        playbackModel.addListener(this)
     }
 
     override fun onDetachedFromWindow() {
-        playbackModel.removeListener(playbackModelListener)
+        playbackModel.removeListener(this)
         visibility = GONE
         playbackFile = null
         super.onDetachedFromWindow()
     }
 
+    override fun onPlaybackUpdate(state: PlaybackState) {
+        val itemState = state.currentItemState
+        render(itemState)
+    }
+
+    override fun onPlaybackError(error: Throwable) {
+    }
+
     fun setFile(file: OCFile) {
         playbackFile = file.toPlaybackFile()
-        val itemState = playbackModel.state.flatMap(PlaybackState::currentItemState).getOrNull()
+        val itemState = playbackModel.state.getOrNull()?.currentItemState
         render(itemState)
     }
 
@@ -66,20 +75,6 @@ class PlayerProgressIndicator @JvmOverloads constructor(
             visibility = VISIBLE
         } else {
             visibility = GONE
-        }
-    }
-
-    private val playbackModelListener = object : PlaybackModel.Listener {
-
-        override fun onUpdate(state: PlaybackState) {
-            val itemState = state.currentItemState.getOrNull()
-            render(itemState)
-        }
-
-        override fun onError(error: Throwable) {
-        }
-
-        override fun onFilesChanged(originalFiles: List<PlaybackFile>, currentFiles: List<PlaybackFile>) {
         }
     }
 }

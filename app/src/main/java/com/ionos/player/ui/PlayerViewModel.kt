@@ -77,10 +77,8 @@ class PlayerViewModel @Inject constructor(
     }
 
     private suspend fun getCurrentOCFile(): OCFile? {
-        return playbackModel.state
-            .flatMap { it.currentItemState }
-            .map { it.file.id }
-            .getOrNull()
+        val currentFileId = playbackModel.state.getOrNull()?.currentItemState?.file?.id
+        return currentFileId
             ?.takeIf { it.isDigitsOnly() }
             ?.let { getOCFile(it.toLong()) }
     }

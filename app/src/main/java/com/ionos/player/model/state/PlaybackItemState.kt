@@ -11,10 +11,10 @@ import com.ionos.player.model.PlaybackFile
 import java.io.Serializable
 
 data class PlaybackItemState(
-    @JvmField val file: PlaybackFile,
-    @JvmField val playerState: PlayerState,
-    @JvmField val metadata: PlaybackItemMetadata?,
-    @JvmField val videoSize: VideoSize?,
-    @JvmField val currentTimeInMilliseconds: Int,
-    @JvmField val maxTimeInMilliseconds: Int,
+    val file: PlaybackFile,
+    val playerState: PlayerState,
+    val metadata: PlaybackItemMetadata?,
+    val videoSize: VideoSize?,
+    val currentTimeInMilliseconds: Int,
+    val maxTimeInMilliseconds: Int,
 ) : Serializable
