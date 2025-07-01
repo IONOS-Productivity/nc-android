@@ -8,7 +8,6 @@
 package com.ionos.player.ui
 
 import android.app.PictureInPictureParams
-import android.app.PictureInPictureUiState
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
@@ -166,13 +165,6 @@ class PlayerActivity : FileActivity(), Injectable {
         super.onUserLeaveHint()
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S && canUsePictureInPictureMode()) {
             switchToPictureInPictureMode()
-        }
-    }
-
-    @RequiresApi(Build.VERSION_CODES.VANILLA_ICE_CREAM)
-    override fun onPictureInPictureUiStateChanged(pipState: PictureInPictureUiState) {
-        if (pipState.isTransitioningToPip) {
-            (playerView as? VideoPlayerView)?.hideControls()
         }
     }
 
