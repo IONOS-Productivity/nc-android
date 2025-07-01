@@ -65,7 +65,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        custom:type="audio"
         android:background="@color/player_full_screen_audio_player_background" />
 
 </LinearLayout>

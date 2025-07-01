@@ -69,8 +69,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_gravity="bottom"
-            android:background="@color/player_transparent_dark"
-            custom:type="video" />
+            android:background="@color/player_transparent_dark" />
 
     </RelativeLayout>
 

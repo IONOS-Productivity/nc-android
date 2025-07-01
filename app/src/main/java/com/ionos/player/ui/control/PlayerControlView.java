@@ -8,7 +8,6 @@
 package com.ionos.player.ui.control;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -65,12 +64,6 @@ public class PlayerControlView extends LinearLayout implements PlayerControl.Vie
     private final ImageView ivPrevious;
     private final ImageView ivNext;
     private final ImageView ivPlayPause;
-    private Mode mode = Mode.AUDIO;
-
-    private enum Mode {
-        VIDEO,
-        AUDIO
-    }
 
     private final PlayerControlViewCompositeListener compositeListener = new PlayerControlViewCompositeListener();
 
@@ -94,47 +87,18 @@ public class PlayerControlView extends LinearLayout implements PlayerControl.Vie
         this.ivNext = findViewById(R.id.ivNext);
         this.ivPlayPause = findViewById(R.id.ivPlayPause);
 
+        setProgress(0, 0);
+
         if (isInEditMode()) {
             return;
         }
 
         ((HasAndroidInjector) context.getApplicationContext()).androidInjector().inject(this);
-        readAttributes(attrs);
-        setViewsWidthByMode();
 
         this.controlPresenter = new PlayerControlPresenter(this.playerModel);
 
         setDefaultTags();
         setListeners();
-    }
-
-    private void setViewsWidthByMode() {
-        switch (mode) {
-            case VIDEO:
-                this.tvElapsed.setWidth(getResources().getDimensionPixelOffset(R.dimen.player_full_screen_audio_player_time_text_view_large_width));
-                break;
-            case AUDIO:
-                this.tvElapsed.setWidth(getResources().getDimensionPixelOffset(R.dimen.player_full_screen_audio_player_time_text_view_small_width));
-                break;
-        }
-    }
-
-    private void readAttributes(AttributeSet attrs) {
-        TypedArray types = getContext().getTheme().obtainStyledAttributes(
-            attrs,
-            R.styleable.PlayerControlView,
-            0,
-            0);
-        try {
-            int typeInteger = types.getInteger(R.styleable.PlayerControlView_type, 0);
-            if (typeInteger == Mode.VIDEO.ordinal()) {
-                this.mode = Mode.VIDEO;
-            } else {
-                this.mode = Mode.AUDIO;
-            }
-        } finally {
-            types.recycle();
-        }
     }
 
     public void addListener(PlayerControlViewListener listener) {
@@ -348,10 +312,7 @@ public class PlayerControlView extends LinearLayout implements PlayerControl.Vie
         int minutes = timeSeconds / 60;
         int hours = minutes / 60;
         if (hours > 0) {
-            minutes = minutes % 60;
-        }
-        if (mode == Mode.VIDEO) {
-            return String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, seconds);
+            return String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes % 60, seconds);
         } else {
             return String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
         }
