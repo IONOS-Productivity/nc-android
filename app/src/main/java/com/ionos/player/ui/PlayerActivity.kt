@@ -60,6 +60,7 @@ class PlayerActivity : FileActivity(), Injectable {
         fun createIntent(context: Context, playbackFileType: PlaybackFileType): Intent {
             return Intent(context, PlayerActivity::class.java).apply {
                 putExtra(PLAYBACK_FILE_TYPE, playbackFileType)
+                addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
             }
         }
     }

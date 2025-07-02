@@ -9,7 +9,6 @@ package com.ionos.player.media3.session
 
 import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
 import androidx.media3.common.MediaItem
 import com.ionos.player.media3.common.playbackFile
 import com.ionos.player.model.PlaybackFileType
@@ -28,7 +27,6 @@ class MediaSessionActivityFactory @Inject constructor(
             ?: throw IllegalArgumentException("Unsupported file type: ${currentFile.mimeType}")
 
         val intent = PlayerActivity.createIntent(context, fileType)
-            .addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
 
         val requestCode = System.currentTimeMillis().toInt()
 
