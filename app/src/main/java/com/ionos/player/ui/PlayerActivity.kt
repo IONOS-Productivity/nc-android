@@ -96,7 +96,6 @@ class PlayerActivity : FileActivity(), Injectable {
             .launchIn(lifecycleScope)
 
         if (isPictureInPictureAllowed()) {
-            setPictureInPictureParams(createPictureInPictureParams())
             val isVideoPlayback = playbackFileType == PlaybackFileType.VIDEO
             onBackPressedCallback = onBackPressedDispatcher.addCallback(this, enabled = isVideoPlayback) {
                 switchToPictureInPictureMode()
@@ -164,7 +163,7 @@ class PlayerActivity : FileActivity(), Injectable {
 
     override fun onUserLeaveHint() {
         super.onUserLeaveHint()
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S && canUsePictureInPictureMode()) {
+        if (canUsePictureInPictureMode()) {
             switchToPictureInPictureMode()
         }
     }
@@ -191,9 +190,6 @@ class PlayerActivity : FileActivity(), Injectable {
         return PictureInPictureParams.Builder().let {
             it.setAspectRatio(pipAspectRatio)
             getSourceRectHint().let(it::setSourceRectHint)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                it.setAutoEnterEnabled(true)
-            }
             it.build()
         }
     }
