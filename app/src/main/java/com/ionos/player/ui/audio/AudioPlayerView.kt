@@ -25,6 +25,11 @@ class AudioPlayerView(context: Context) : PlayerView(context) {
         (context.applicationContext as HasAndroidInjector).androidInjector().inject(this)
     }
 
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        windowWrapper.showSystemBars()
+    }
+
     override fun onApplyWindowInsets(windowInsets: WindowInsets): WindowInsets? {
         val windowInsetsCompat = WindowInsetsCompat.toWindowInsetsCompat(windowInsets)
         val insets = windowInsetsCompat.getInsets(Type.systemBars() or Type.displayCutout())

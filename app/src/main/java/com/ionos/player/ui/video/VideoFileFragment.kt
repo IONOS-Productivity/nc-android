@@ -82,8 +82,9 @@ class VideoFileFragment : Fragment(), PlaybackModel.Listener {
 
     private fun loadFileThumbnail() {
         viewLifecycleOwner.lifecycleScope.launch {
-            val thumbnailSize = resources.getDimension(R.dimen.player_full_screen_audio_player_album_cover_width)
-            val thumbnail = thumbnailLoader.await(requireContext(), file, thumbnailSize.toInt(), thumbnailSize.toInt())
+            val context = context ?: return@launch
+            val thumbnailSize = context.resources.getDimension(R.dimen.player_full_screen_audio_player_album_cover_width)
+            val thumbnail = thumbnailLoader.await(context, file, thumbnailSize.toInt(), thumbnailSize.toInt())
             thumbnail?.let(binding.thumbnail::setImageBitmap)
         }
     }

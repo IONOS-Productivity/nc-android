@@ -33,14 +33,18 @@ class VideoPlayerView(context: Context) : PlayerView(context) {
 
     private var hideControlsTimerJob: Job? = null
 
-    init {
-        if (!isInEditMode) {
-            startHideControlsTimer()
-        }
-    }
-
     override fun inject(context: Context) {
         (context.applicationContext as HasAndroidInjector).androidInjector().inject(this)
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        showControls()
+    }
+
+    override fun onDetachedFromWindow() {
+        cancelHideControlsTimer()
+        super.onDetachedFromWindow()
     }
 
     override fun onApplyWindowInsets(windowInsets: WindowInsets): WindowInsets? {
@@ -62,7 +66,7 @@ class VideoPlayerView(context: Context) : PlayerView(context) {
             when {
                 !playerControlView.isVisible -> showControls()
                 isTouchOutsideControls -> hideControls()
-                else -> startHideControlsTimer()
+                else -> restartHideControlsTimer()
             }
         }
         return super.dispatchTouchEvent(event)
@@ -72,20 +76,26 @@ class VideoPlayerView(context: Context) : PlayerView(context) {
         windowWrapper.showSystemBars()
         topBar.visibility = VISIBLE
         playerControlView.visibility = VISIBLE
-        startHideControlsTimer()
+        restartHideControlsTimer()
     }
 
     fun hideControls() {
         windowWrapper.hideSystemBars()
         topBar.visibility = GONE
         playerControlView.visibility = GONE
+        cancelHideControlsTimer()
     }
 
-    private fun startHideControlsTimer() {
+    private fun restartHideControlsTimer() {
         hideControlsTimerJob?.cancel()
         hideControlsTimerJob = activity.lifecycleScope.launch {
             delay(HIDE_CONTROLS_DELAY)
             hideControls()
         }
+    }
+
+    private fun cancelHideControlsTimer() {
+        hideControlsTimerJob?.cancel()
+        hideControlsTimerJob = null
     }
 }
