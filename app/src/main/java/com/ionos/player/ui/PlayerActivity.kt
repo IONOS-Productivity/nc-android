@@ -144,11 +144,15 @@ class PlayerActivity : FileActivity(), Injectable {
     }
 
     override fun onStop() {
+        super.onStop()
         playerView.onStop()
-        if (playbackFileType == PlaybackFileType.VIDEO) {
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (isFinishing && playbackFileType == PlaybackFileType.VIDEO) {
             playbackModel.release()
         }
-        super.onStop()
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {

@@ -25,8 +25,8 @@ class AudioPlayerView(context: Context) : PlayerView(context) {
         (context.applicationContext as HasAndroidInjector).androidInjector().inject(this)
     }
 
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
+    override fun onStart() {
+        super.onStart()
         windowWrapper.showSystemBars()
     }
 

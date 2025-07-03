@@ -37,14 +37,15 @@ class VideoPlayerView(context: Context) : PlayerView(context) {
         (context.applicationContext as HasAndroidInjector).androidInjector().inject(this)
     }
 
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
+    override fun onStart() {
+        super.onStart()
         showControls()
     }
 
-    override fun onDetachedFromWindow() {
+    override fun onStop() {
+        super.onStop()
         cancelHideControlsTimer()
-        super.onDetachedFromWindow()
+        playbackModel.setVideoSurfaceView(null)
     }
 
     override fun onApplyWindowInsets(windowInsets: WindowInsets): WindowInsets? {
