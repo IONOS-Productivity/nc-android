@@ -69,7 +69,7 @@ class PlayerProgressIndicator @JvmOverloads constructor(
     }
 
     private fun render(itemState: PlaybackItemState?) {
-        if (itemState != null && itemState.playerState != PlayerState.COMPLETED && itemState.file == playbackFile) {
+        if (itemState != null && itemState.playerState != PlayerState.COMPLETED && itemState.file.id == playbackFile?.id) {
             max = itemState.maxTimeInMilliseconds
             progress = itemState.currentTimeInMilliseconds
             visibility = VISIBLE
