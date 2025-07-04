@@ -21,6 +21,8 @@ interface PlaybackModel {
 
     fun setFilesFlow(filesFlow: Flow<PlaybackFiles>)
 
+    fun setFiles(files: PlaybackFiles)
+
     fun release()
 
     fun setVideoSurfaceView(surfaceView: SurfaceView?)

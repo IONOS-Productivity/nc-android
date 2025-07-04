@@ -20,7 +20,6 @@ import com.nextcloud.client.logger.Logger
 import com.owncloud.android.datamodel.OCFile
 import com.owncloud.android.ui.fragment.SearchType
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import java.util.concurrent.CancellationException
 import javax.inject.Inject
@@ -42,12 +41,9 @@ class PlayerLauncher @Inject constructor(
 
                 val currentPlaybackFile = file.toPlaybackFile()
 
-                val playbackFilesFlow = playbackFilesRepository.observe(file.parentId, fileType, searchType)
-                    .onStart { emit(PlaybackFiles(listOf(currentPlaybackFile), PlaybackFilesComparator.NONE)) }
-
                 playbackModel.start()
-                playbackModel.setFilesFlow(playbackFilesFlow)
-                playbackModel.switchToFile(currentPlaybackFile)
+                playbackModel.setFiles(PlaybackFiles(listOf(currentPlaybackFile), PlaybackFilesComparator.NONE))
+                playbackModel.setFilesFlow(playbackFilesRepository.observe(file.parentId, fileType, searchType))
                 playbackModel.play()
 
                 val intent = PlayerActivity.createIntent(activity, fileType)

@@ -114,7 +114,7 @@ class PlaybackModelImpl @Inject constructor(
         }
     }
 
-    private fun setFiles(files: PlaybackFiles) {
+    override fun setFiles(files: PlaybackFiles) {
         if (files.list.isEmpty()) {
             release()
             return
