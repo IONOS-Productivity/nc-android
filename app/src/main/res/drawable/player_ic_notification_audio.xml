@@ -8,7 +8,7 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape>
-            <solid android:color="@color/player_cod_gray_dark" />
+            <solid android:color="@color/player_cod_gray_light" />
         </shape>
     </item>
     <item android:drawable="@drawable/player_ic_notification_audio_foreground" />

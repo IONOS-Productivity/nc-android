@@ -11,6 +11,6 @@
     android:viewportWidth="960"
     android:viewportHeight="960">
     <path
-        android:fillColor="#FFFFFF"
+        android:fillColor="@color/player_default_icon_color"
         android:pathData="M673.33,720v-480L740,240v480h-66.67ZM220,720v-480l350.67,240L220,720Z" />
 </vector>

@@ -15,21 +15,21 @@
         android:id="@+id/progressPanel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/player_full_screen_audio_player_progress_panel_margin_bottom"
+        android:layout_marginBottom="@dimen/player_progress_panel_margin_bottom"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/player_full_screen_audio_player_progress_panel_padding"
-        android:paddingRight="@dimen/player_full_screen_audio_player_progress_panel_padding">
+        android:paddingStart="@dimen/player_progress_panel_padding_horizontal"
+        android:paddingEnd="@dimen/player_progress_panel_padding_horizontal">
 
         <TextView
             android:id="@+id/tvElapsed"
-            style="@style/FullScreenAudioPlayerTimeTextViewStyle" />
+            style="@style/PlayerTimeTextViewStyle" />
 
         <SeekBar
             android:id="@+id/progressBar"
-            style="@style/FullScreenAudioPlayerSeekBarStyle"
+            style="@style/PlayerSeekBarStyle"
             android:layout_width="0dp"
-            android:layout_height="@dimen/player_full_screen_audio_player_progressbar_height"
+            android:layout_height="@dimen/player_progressbar_height"
             android:layout_weight="1"
             android:indeterminate="false"
             android:longClickable="false"
@@ -38,7 +38,7 @@
 
         <TextView
             android:id="@+id/tvTotalTime"
-            style="@style/FullScreenAudioPlayerTimeTextViewStyle" />
+            style="@style/PlayerTimeTextViewStyle" />
 
     </LinearLayout>
 
@@ -46,41 +46,33 @@
         android:id="@+id/bottomBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/player_full_screen_audio_player_bottom_bar_margin_bottom"
+        android:layout_marginBottom="@dimen/player_bottom_bar_margin_bottom"
         android:gravity="center"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/ivRepeat"
-            style="@style/FullScreenAudioPlayerSmallButtonWithRightMarginStyle"
-            android:layout_marginLeft="@dimen/player_full_screen_audio_player_button_margin_right"
+            style="@style/PlayerButtonStyle"
             android:src="@drawable/player_ic_repeat" />
 
         <ImageView
             android:id="@+id/ivPrevious"
-            style="@style/FullScreenAudioPlayerBigButtonWithRightMarginStyle"
+            style="@style/PlayerButtonStyle"
             android:src="@drawable/player_ic_skip_previous" />
 
         <ImageView
             android:id="@+id/ivPlayPause"
-            style="@style/FullScreenAudioPlayerBigButtonWithRightMarginStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="0dp"
-            android:layout_marginTop="0dp"
-            android:background="@drawable/player_audio_player_play_btn_style"
-            android:padding="@dimen/player_full_screen_audio_player_pause_btn_padding"
+            style="@style/PlayerButtonStyle"
             android:src="@drawable/player_ic_play" />
 
         <ImageView
             android:id="@+id/ivNext"
-            style="@style/FullScreenAudioPlayerBigButtonWithRightMarginStyle"
+            style="@style/PlayerButtonStyle"
             android:src="@drawable/player_ic_skip_next" />
 
         <ImageView
             android:id="@+id/ivRandom"
-            style="@style/FullScreenAudioPlayerSmallButtonStyle"
-            android:layout_marginRight="@dimen/player_full_screen_audio_player_button_margin_right"
+            style="@style/PlayerButtonStyle"
             android:src="@drawable/player_ic_shuffle" />
     </LinearLayout>
 

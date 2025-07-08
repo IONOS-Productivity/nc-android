@@ -9,27 +9,27 @@
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/player_full_screen_audio_player_background"
+    android:background="@color/player_background_color"
     android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/topBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/player_full_screen_audio_player_bar"
+        android:background="@color/player_audio_toolbar_background_color"
         android:gravity="center_vertical"
-        android:minHeight="@dimen/player_full_screen_audio_player_top_bar_height"
+        android:minHeight="@dimen/player_toolbar_height"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/ivBack"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
-            android:layout_marginLeft="@dimen/player_header_left_padding"
-            android:layout_marginRight="@dimen/player_full_screen_audio_player_back_button_margin"
+            android:layout_marginStart="@dimen/player_back_button_margin_start"
+            android:layout_marginEnd="@dimen/player_back_button_margin_end"
             android:layout_marginVertical="4dp"
             android:src="@drawable/ic_arrow_back"
-            custom:tint="@color/white" />
+            custom:tint="@color/player_toolbar_icon_color" />
 
         <TextView
             android:id="@+id/tvTitle"
@@ -39,8 +39,8 @@
             android:ellipsize="end"
             android:gravity="center_vertical"
             android:singleLine="true"
-            android:textColor="@color/player_full_screen_audio_player_text_color"
-            android:textSize="@dimen/player_full_screen_audio_player_nav_bar_text_view_size" />
+            android:textColor="@color/player_toolbar_text_color"
+            android:textSize="@dimen/player_toolbar_text_size" />
 
         <ImageView
             android:id="@+id/more"
@@ -48,7 +48,7 @@
             android:layout_height="48dp"
             android:scaleType="centerInside"
             android:src="@drawable/ic_dots_vertical"
-            custom:tint="@color/white" />
+            custom:tint="@color/player_toolbar_icon_color" />
 
     </LinearLayout>
 
@@ -56,15 +56,13 @@
         android:id="@+id/playerPager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:paddingLeft="@dimen/player_padding_normal"
-        android:paddingRight="@dimen/player_padding_normal" />
+        android:layout_weight="1" />
 
     <com.ionos.player.ui.control.PlayerControlView
         android:id="@+id/playerControlView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="@color/player_full_screen_audio_player_background" />
+        android:background="@color/player_background_color" />
 
 </LinearLayout>

@@ -55,8 +55,8 @@ class VideoPlayerView(context: Context) : PlayerView(context) {
         topBar.setPadding(insets.left, insets.top, insets.right, 0)
         playerControlView.setPadding(insets.left, 0, insets.right, insets.bottom)
 
-        windowWrapper.setupStatusBar(R.color.player_transparent_dark, false)
-        windowWrapper.setupNavigationBar(R.color.player_transparent_dark, false)
+        windowWrapper.setupStatusBar(R.color.player_video_toolbar_background_color, false)
+        windowWrapper.setupNavigationBar(R.color.player_video_control_view_background_color, false)
 
         return WindowInsetsCompat.CONSUMED.toWindowInsets()
     }

@@ -6,16 +6,5 @@
   -->
 
 <resources>
-    <color name="player_full_screen_audio_player_background">@color/player_cod_gray5</color>
-    <color name="player_full_screen_audio_detail_view_subtitle_text_color">@color/white</color>
-    <color name="player_full_screen_audio_detail_view_title_text_color">@color/white</color>
-    <color name="player_full_screen_audio_player_time_text_view_color">
-        @color/player_full_screen_audio_player_text_color
-    </color>
-    <color name="player_full_screen_audio_player_text_color">@color/white</color>
-    <color name="player_full_screen_audio_player_progress_background">@color/player_dusty_gray2</color>
-    <color name="player_full_screen_audio_player_bar">@color/player_cod_gray_dark</color>
-    <color name="player_accent_dark_color">@color/player_bahama_blue</color>
-    <color name="player_accent_color">@color/player_azure_radiance_dark</color>
-
+    <color name="player_audio_toolbar_background_color">@color/player_cod_gray_light</color>
 </resources>

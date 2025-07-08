@@ -6,14 +6,16 @@
   -->
 
 <resources>
-    <dimen name="player_full_screen_audio_player_source_horizontal_padding">24dp</dimen>
-    <dimen name="player_full_screen_audio_player_album_photo_margin_top">24dp</dimen>
-    <dimen name="player_full_screen_audio_player_album_photo_margin_bottom">24dp</dimen>
-    <dimen name="player_full_screen_audio_player_file_details_margin_bottom">48dp</dimen>
-    <dimen name="player_full_screen_audio_player_button_margin_right">80dp</dimen>
-    <dimen name="player_full_screen_audio_player_progress_panel_margin_bottom">48dp</dimen>
-    <dimen name="player_full_screen_audio_player_bottom_bar_margin_bottom">72dp</dimen>
-    <dimen name="player_full_screen_audio_player_top_bar_height">64dp</dimen>
-    <dimen name="player_header_left_padding">24dp</dimen>
+    <dimen name="player_toolbar_height">64dp</dimen>
+    <dimen name="player_back_button_margin_start">24dp</dimen>
 
+    <dimen name="player_audio_file_fragment_padding_horizontal">24dp</dimen>
+    <dimen name="player_audio_album_cover_margin_vertical">24dp</dimen>
+    <dimen name="player_audio_file_details_margin_bottom">48dp</dimen>
+
+    <dimen name="player_progress_panel_margin_bottom">48dp</dimen>
+
+    <dimen name="player_button_margin_horizontal">40dp</dimen>
+
+    <dimen name="player_bottom_bar_margin_bottom">72dp</dimen>
 </resources>

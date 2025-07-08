@@ -8,6 +8,7 @@
 package com.ionos.player.ui.control;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -27,7 +28,10 @@ import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
+import androidx.annotation.ColorRes;
 import androidx.annotation.DrawableRes;
+import androidx.core.content.ContextCompat;
+import androidx.core.widget.ImageViewCompat;
 import dagger.android.HasAndroidInjector;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -242,25 +246,25 @@ public class PlayerControlView extends LinearLayout implements PlayerControl.Vie
 
     @Override
     public void repeat() {
-        ivRepeat.setImageResource(R.drawable.player_ic_repeat_active);
+        setImageTint(ivRepeat, R.color.player_accent_color);
         ivRepeat.setTag(TAG_CLICK_COMMAND_DO_NOT_REPEAT);
     }
 
     @Override
     public void doNotRepeat() {
-        ivRepeat.setImageResource(R.drawable.player_ic_repeat);
+        setImageTint(ivRepeat, R.color.player_default_icon_color);
         ivRepeat.setTag(TAG_CLICK_COMMAND_REPEAT);
     }
 
     @Override
     public void shuffle() {
-        ivRandom.setImageResource(R.drawable.player_ic_shuffle_active);
+        setImageTint(ivRandom, R.color.player_accent_color);
         ivRandom.setTag(TAG_CLICK_COMMAND_DO_NOT_SHUFFLE);
     }
 
     @Override
     public void doNotShuffle() {
-        ivRandom.setImageResource(R.drawable.player_ic_shuffle);
+        setImageTint(ivRandom, R.color.player_default_icon_color);
         ivRandom.setTag(TAG_CLICK_COMMAND_SHUFFLE);
     }
 
@@ -304,6 +308,11 @@ public class PlayerControlView extends LinearLayout implements PlayerControl.Vie
     private void configurePlayPauseButton(@DrawableRes int imageResource, String tagState) {
         ivPlayPause.setImageResource(imageResource);
         ivPlayPause.setTag(tagState);
+    }
+
+    private void setImageTint(ImageView imageView, @ColorRes int colorRes) {
+        int color = ContextCompat.getColor(getContext(), colorRes);
+        ImageViewCompat.setImageTintList(imageView, ColorStateList.valueOf(color));
     }
 
     private String formatTime(int timeMillis) {

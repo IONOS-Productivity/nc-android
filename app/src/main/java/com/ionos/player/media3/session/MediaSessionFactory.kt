@@ -45,7 +45,7 @@ class MediaSessionFactory @Inject constructor(
             CommandButton
                 .Builder()
                 .setDisplayName(context.getString(R.string.player_media_controls_close_action_title))
-                .setIconResId(R.drawable.player_ic_close_white)
+                .setIconResId(R.drawable.player_ic_close)
                 .setSessionCommand(SessionCommand(MediaSessionCallback.CLOSE_ACTION, Bundle.EMPTY))
                 .build(),
         )

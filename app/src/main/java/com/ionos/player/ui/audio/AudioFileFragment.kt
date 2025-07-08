@@ -103,7 +103,7 @@ class AudioFileFragment : Fragment(), PlaybackModel.Listener {
 
     private fun loadFileThumbnail(): Deferred<Result<Unit>> {
         return viewLifecycleOwner.lifecycleScope.async {
-            val thumbnailSize = resources.getDimension(R.dimen.player_full_screen_audio_player_album_cover_width)
+            val thumbnailSize = resources.getDimension(R.dimen.player_audio_album_cover_width)
             val thumbnail = thumbnailLoader.await(requireContext(), file, thumbnailSize.toInt(), thumbnailSize.toInt())
             if (thumbnail != null) {
                 binding.albumCover.setImageBitmap(thumbnail)
