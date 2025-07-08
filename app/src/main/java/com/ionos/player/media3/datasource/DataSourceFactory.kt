@@ -29,25 +29,26 @@ class DataSourceFactory @Inject constructor(
 
     @UnstableApi
     override fun createDataSource(): DataSource {
-        val fileDataSource = FileDataSource.Factory().createDataSource()
-
-        val nextcloudClient = clientFactory.createNextcloudClient(accountManager.user)
-        val ownCloudClient = clientFactory.create(accountManager.user)
-
-        val httpDataSourceFactory = OkHttpDataSource.Factory(nextcloudClient.client)
-        httpDataSourceFactory.setUserAgent(MainApp.getUserAgent())
-
-        val cachedHttpDataSource = CacheDataSource.Factory()
-            .setUpstreamDataSourceFactory(httpDataSourceFactory)
+        return CacheDataSource.Factory()
+            .setUpstreamDataSourceFactory(createStreamDataSourceFactory())
             .setCache(cache)
             .setCacheKeyFactory(CacheKeyFactory.DEFAULT)
             .createDataSource()
+    }
 
-        return StreamDataSource(
-            fileDataStorageManager,
-            ownCloudClient,
-            fileDataSource,
-            cachedHttpDataSource,
+    @UnstableApi
+    private fun createStreamDataSourceFactory() = DataSource.Factory {
+        StreamDataSource(
+            fileDataStorageManager = fileDataStorageManager,
+            ownCloudClient = clientFactory.create(accountManager.user),
+            fileDataSource = FileDataSource.Factory().createDataSource(),
+            httpDataSource = createHttpDataSource(),
         )
     }
+
+    @UnstableApi
+    private fun createHttpDataSource() = OkHttpDataSource
+        .Factory(clientFactory.createNextcloudClient(accountManager.user).client)
+        .setUserAgent(MainApp.getUserAgent())
+        .createDataSource()
 }
