@@ -10,6 +10,7 @@ package com.ionos.player.media3.session
 import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Build
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.media3.common.MediaMetadata
@@ -22,7 +23,6 @@ import com.google.common.util.concurrent.MoreExecutors
 import com.ionos.player.media3.common.playbackFile
 import com.ionos.player.model.PlaybackFile
 import com.ionos.player.model.ThumbnailLoader
-import com.ionos.player.util.SystemVersion
 import com.owncloud.android.R
 import com.owncloud.android.utils.MimeTypeUtil
 import java.util.concurrent.Callable
@@ -39,6 +39,10 @@ class MediaSessionBitmapLoader(
         private const val THUMBNAIL_TARGET_SIZE = 160
         private const val LARGE_THUMBNAIL_TARGET_SIZE = 320
     }
+
+    private val thumbnailSize: Int =
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) LARGE_THUMBNAIL_TARGET_SIZE
+        else THUMBNAIL_TARGET_SIZE
 
     private val executorService: ListeningExecutorService by lazy {
         MoreExecutors.listeningDecorator(Executors.newSingleThreadExecutor())
@@ -59,7 +63,7 @@ class MediaSessionBitmapLoader(
         }
 
         val bitmapFuture = executorService.submit(Callable {
-            getBitmapFromMetadata(metadata) ?: run {
+            getBitmapFromMetadata(metadata, file?.id) ?: run {
                 file?.let(::getBitmapForFile) ?: getDefaultBitmap(file)
             }
         })
@@ -74,23 +78,18 @@ class MediaSessionBitmapLoader(
         return bitmapFuture
     }
 
-    private fun getBitmapFromMetadata(metadata: MediaMetadata): Bitmap? {
+    private fun getBitmapFromMetadata(metadata: MediaMetadata, fileId: String?): Bitmap? {
+        val model = metadata.artworkData ?: metadata.artworkUri ?: return null
         return try {
-            delegate.loadBitmapFromMetadata(metadata)?.get()
+            thumbnailLoader.load(context, model, fileId, thumbnailSize, thumbnailSize).get()
         } catch (e: Exception) {
             null
         }
     }
 
     private fun getBitmapForFile(file: PlaybackFile): Bitmap? {
-        val request = if (SystemVersion.greaterOrEqualToTiramisu()) {
-            thumbnailLoader.load(context, file, LARGE_THUMBNAIL_TARGET_SIZE, LARGE_THUMBNAIL_TARGET_SIZE)
-        } else {
-            thumbnailLoader.load(context, file, THUMBNAIL_TARGET_SIZE, THUMBNAIL_TARGET_SIZE)
-        }
-
         return try {
-            request.get()
+            thumbnailLoader.load(context, file, thumbnailSize, thumbnailSize).get()
         } catch (e: Exception) {
             null
         }

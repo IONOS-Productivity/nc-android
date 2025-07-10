@@ -16,9 +16,6 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.signature.StringSignature
 import com.ionos.player.model.PlaybackFile
 import com.ionos.player.model.PlaybackModel
 import com.ionos.player.model.ThumbnailLoader
@@ -27,8 +24,8 @@ import com.ionos.player.model.state.PlaybackState
 import com.owncloud.android.R
 import com.owncloud.android.databinding.PlayerAudioFileFragmentBinding
 import dagger.android.support.AndroidSupportInjection
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.async
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import java.util.Date
 import javax.inject.Inject
 
@@ -50,7 +47,8 @@ class AudioFileFragment : Fragment(), PlaybackModel.Listener {
 
     private lateinit var binding: PlayerAudioFileFragmentBinding
     private lateinit var file: PlaybackFile
-    private lateinit var loadFileThumbnailJob: Deferred<Result<Unit>>
+    private lateinit var loadFileThumbnailJob: Job
+    private var isFileThumbnailLoaded = false
     private var metadata: PlaybackItemMetadata? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,6 +68,7 @@ class AudioFileFragment : Fragment(), PlaybackModel.Listener {
 
     override fun onStart() {
         super.onStart()
+        playbackModel.state.ifPresent(::onPlaybackUpdate)
         playbackModel.addListener(this)
     }
 
@@ -91,7 +90,8 @@ class AudioFileFragment : Fragment(), PlaybackModel.Listener {
 
     private fun onMetadataUpdate(metadata: PlaybackItemMetadata) {
         this.metadata = metadata
-        if (loadFileThumbnailJob.isCompleted && loadFileThumbnailJob.getCompleted().isFailure) {
+        if (!isFileThumbnailLoaded && (metadata.artworkData != null || metadata.artworkUri != null)) {
+            loadFileThumbnailJob.takeIf { it.isActive }?.cancel()
             loadMetadataArtwork(metadata)
         }
         binding.title.text = if (metadata.artist.isNullOrEmpty()) {
@@ -101,29 +101,20 @@ class AudioFileFragment : Fragment(), PlaybackModel.Listener {
         }
     }
 
-    private fun loadFileThumbnail(): Deferred<Result<Unit>> {
-        return viewLifecycleOwner.lifecycleScope.async {
-            val thumbnailSize = resources.getDimension(R.dimen.player_audio_album_cover_width)
-            val thumbnail = thumbnailLoader.await(requireContext(), file, thumbnailSize.toInt(), thumbnailSize.toInt())
+    private fun loadFileThumbnail(): Job {
+        return viewLifecycleOwner.lifecycleScope.launch {
+            val thumbnailSize = resources.getDimension(R.dimen.player_audio_album_cover_width).toInt()
+            val thumbnail = thumbnailLoader.await(requireContext(), file, thumbnailSize, thumbnailSize)
             if (thumbnail != null) {
                 binding.albumCover.setImageBitmap(thumbnail)
-                Result.success(Unit)
-            } else {
-                Result.failure(Exception("Thumbnail not found"))
+                isFileThumbnailLoaded = true
             }
         }
     }
 
     private fun loadMetadataArtwork(metadata: PlaybackItemMetadata) {
         val source = metadata.artworkData ?: metadata.artworkUri ?: return
-        Glide.with(requireContext()).load(source).run {
-            if (source is ByteArray) {
-                diskCacheStrategy(DiskCacheStrategy.NONE)
-                signature(StringSignature(file.id))
-            }
-            error(R.drawable.player_ic_album_cover_audio)
-            into(binding.albumCover)
-        }
+        thumbnailLoader.load(binding.albumCover, source, file.id)
     }
 
     private fun PlaybackFile.getDetailsText(): String {

@@ -9,16 +9,19 @@ package com.ionos.player.model
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.widget.ImageView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.signature.StringSignature
 import com.nextcloud.client.account.UserAccountManager
 import com.nextcloud.client.network.ClientFactory
 import com.owncloud.android.utils.glide.CustomGlideStreamLoader
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
 import java.util.concurrent.Future
 import javax.inject.Inject
 import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 
 class ThumbnailLoader @Inject constructor(
     userAccountManager: UserAccountManager,
@@ -30,11 +33,13 @@ class ThumbnailLoader @Inject constructor(
 
     suspend fun await(context: Context, file: PlaybackFile, width: Int, height: Int): Bitmap? {
         return withContext(Dispatchers.IO) {
-            suspendCoroutine { continuation ->
+            suspendCancellableCoroutine { continuation ->
                 try {
-                    val thumbnail = load(context, file, width, height).get()
-                    continuation.resume(thumbnail)
+                    val future = load(context, file, width, height)
+                    continuation.invokeOnCancellation { future.cancel(true) }
+                    continuation.resume(future.get())
                 } catch (e: Exception) {
+                    if (e is CancellationException) throw e
                     continuation.resume(null)
                 }
             }
@@ -47,6 +52,24 @@ class ThumbnailLoader @Inject constructor(
             .using(modelLoader)
             .load("$getThumbnailUrl?fileId=${file.id}&x=$width&y=$height&a=1&mode=cover&forceIcon=0")
             .asBitmap()
+            .signature(StringSignature(file.id))
             .into(width, height)
+    }
+
+    fun load(context: Context, model: Any, fileId: String?, width: Int, height: Int): Future<Bitmap> {
+        return Glide
+            .with(context)
+            .load(model)
+            .asBitmap()
+            .signature(StringSignature(fileId ?: model.toString()))
+            .into(width, height)
+    }
+
+    fun load(imageView: ImageView, model: Any, fileId: String) {
+        Glide
+            .with(imageView.context)
+            .load(model)
+            .signature(StringSignature(fileId))
+            .into(imageView)
     }
 }
