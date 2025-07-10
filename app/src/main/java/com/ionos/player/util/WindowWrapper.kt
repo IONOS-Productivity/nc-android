@@ -32,18 +32,6 @@ class WindowWrapper(
         insetsController.hide(WindowInsetsCompat.Type.systemBars())
     }
 
-    fun setStatusBarColor(@ColorInt colorInt: Int) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.VANILLA_ICE_CREAM) {
-            window.statusBarColor = colorInt
-        }
-    }
-
-    fun setStatusBarColorRes(@ColorRes colorRes: Int) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.VANILLA_ICE_CREAM) {
-            setStatusBarColor(ContextCompat.getColor(context, colorRes))
-        }
-    }
-
     fun setupStatusBar(@ColorRes backgroundColorRes: Int, contrastEnforced: Boolean) {
         val backgroundColor = ContextCompat.getColor(context, backgroundColorRes)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {

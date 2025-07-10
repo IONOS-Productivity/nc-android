@@ -9,6 +9,6 @@
     <color name="player_transparent_black">#21000000</color>
     <color name="player_cod_gray">#111111</color>
     <color name="player_cod_gray_light">#171717</color>
-    <color name="player_gray">#888888</color>
+    <color name="player_dusty_gray">#979797</color>
     <color name="player_silver">#CCCCCC</color>
 </resources>

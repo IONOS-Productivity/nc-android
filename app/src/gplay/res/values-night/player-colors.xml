@@ -6,5 +6,6 @@
   -->
 
 <resources>
-    <color name="player_audio_toolbar_background_color">@color/player_cod_gray_light</color>
+    <color name="player_accent_color">@color/curious_blue</color>
+    <color name="player_background_color">@color/midnight_blue2</color>
 </resources>

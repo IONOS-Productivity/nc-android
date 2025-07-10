@@ -48,7 +48,7 @@ abstract class PlayerView @JvmOverloads constructor(
     protected val windowWrapper: WindowWrapper by lazy { WindowWrapper(activity.window) }
 
     protected val topBar: View by lazy { findViewById(R.id.topBar) }
-    protected val titleTextView: TextView by lazy { findViewById(R.id.tvTitle) }
+    protected val titleTextView: TextView by lazy { findViewById(R.id.title) }
     protected val playerPager: PlayerPager<PlaybackFile> by lazy { findViewById(R.id.playerPager) }
     protected val playerControlView: PlayerControlView by lazy { findViewById(R.id.playerControlView) }
 
@@ -58,7 +58,7 @@ abstract class PlayerView @JvmOverloads constructor(
             inject(context)
             playerPager.init(activity.supportFragmentManager, PlayerPagerMode.INFINITE, fragmentFactory)
             playerPager.setPlayerPagerListener { playbackModel.switchToFile(it) }
-            findViewById<View>(R.id.ivBack).setOnClickListener { activity.onBackPressedDispatcher.onBackPressed() }
+            findViewById<View>(R.id.back).setOnClickListener { activity.onBackPressedDispatcher.onBackPressed() }
         }
     }
 
