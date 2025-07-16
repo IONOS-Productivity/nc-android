@@ -8,8 +8,6 @@
 package com.ionos.player.ui.audio
 
 import android.os.Bundle
-import android.text.format.DateFormat
-import android.text.format.Formatter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,10 +21,10 @@ import com.ionos.player.model.state.PlaybackItemMetadata
 import com.ionos.player.model.state.PlaybackState
 import com.owncloud.android.R
 import com.owncloud.android.databinding.PlayerAudioFileFragmentBinding
+import com.owncloud.android.utils.DisplayUtils
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import java.util.Date
 import javax.inject.Inject
 
 class AudioFileFragment : Fragment(), PlaybackModel.Listener {
@@ -118,9 +116,13 @@ class AudioFileFragment : Fragment(), PlaybackModel.Listener {
     }
 
     private fun PlaybackFile.getDetailsText(): String {
-        fun formatDate(timestamp: Long) = DateFormat.getDateFormat(context).format(Date(timestamp))
-        val size = if (contentLength > 0) Formatter.formatFileSize(context, contentLength) else ""
-        val date = if (lastModified > 0) getString(R.string.player_last_change_date, formatDate(lastModified)) else ""
+        val size = if (contentLength > 0) DisplayUtils.bytesToHumanReadable(contentLength) else ""
+        val date = if (lastModified > 0) getLastModifiedText(lastModified) else ""
         return if (size.isNotEmpty() && date.isNotEmpty()) "$size, $date" else size + date
+    }
+
+    private fun getLastModifiedText(lastModified: Long): String {
+        val relativeTimestamp = DisplayUtils.getRelativeTimestamp(context, lastModified)
+        return getString(R.string.player_last_modified, relativeTimestamp)
     }
 }

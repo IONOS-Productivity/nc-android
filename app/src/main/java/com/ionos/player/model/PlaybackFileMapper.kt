@@ -28,7 +28,7 @@ fun OCShare.toPlaybackFile() = PlaybackFile(
     name = path?.let { File(it).name } ?: "",
     mimeType = getMimeType(),
     contentLength = -1L,
-    lastModified = sharedDate,
+    lastModified = sharedDate * 1000L,
     isFavorite = isFavorite,
 )
 
