@@ -69,12 +69,12 @@ class DataProtectionActivity : BaseActivity() {
             viewModel.onAnalyticsCheckedChange(isChecked)
         }
 
-        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { rootView, windowInsets ->
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, windowInsets ->
             val insetsType = WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
             val insets = windowInsets.getInsets(insetsType)
             binding.overviewPage.root.setPadding(insets.left, insets.top, insets.right, insets.bottom)
             binding.detailPage.root.setPadding(insets.left, insets.top, insets.right, insets.bottom)
-            ViewCompat.onApplyWindowInsets(rootView, windowInsets)
+            WindowInsetsCompat.CONSUMED
         }
 
         viewModel.stateFlow
@@ -82,6 +82,8 @@ class DataProtectionActivity : BaseActivity() {
             .onEach(::updateState)
             .launchIn(lifecycleScope)
     }
+
+    override fun isDefaultWindowInsetsHandlingEnabled() = false
 
     private fun handleLink(type: String) {
         when (type) {
@@ -96,7 +98,6 @@ class DataProtectionActivity : BaseActivity() {
         externalWebViewIntent.putExtra(ExternalSiteWebView.EXTRA_TITLE, getString(R.string.privacy))
         externalWebViewIntent.putExtra(ExternalSiteWebView.EXTRA_URL, getString(R.string.privacy_url))
         externalWebViewIntent.putExtra(ExternalSiteWebView.EXTRA_SHOW_SIDEBAR, false)
-        externalWebViewIntent.putExtra(ExternalSiteWebView.EXTRA_MENU_ITEM_ID, -1)
         startActivity(externalWebViewIntent)
     }
 

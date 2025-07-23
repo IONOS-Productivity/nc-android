@@ -15,6 +15,8 @@
     <color name="filelist_file_icon_color">@color/primary</color>
     <color name="filelist_default_action_icon_color">@color/white</color>
 
+    <color name="file_details_accent_color">@color/curious_blue</color>
+
     <color name="default_icon_color">@color/primary</color>
 
     <color name="ionos_default_button_bg_color">@color/dodger_blue</color>
@@ -38,4 +40,9 @@
     <color name="ionos_text_button_default_text_color">@color/curious_blue</color>
     <color name="ionos_text_button_pressed_text_color">@color/cornflower</color>
     <color name="ionos_text_button_disabled_text_color">@color/dusk</color>
+
+    <color name="ionos_bottom_navigation_background_color">@color/dark_slate_grey</color>
+    <color name="ionos_bottom_navigation_icon_color">@color/metallic_silver</color>
+    <color name="ionos_bottom_navigation_active_indicator_color">@color/dusk</color>
+    <color name="ionos_bottom_navigation_ripple_color">@color/deep_koamaru</color>
 </resources>

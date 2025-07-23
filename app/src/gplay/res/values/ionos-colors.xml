@@ -7,7 +7,7 @@
   -->
 
 <resources>
-    <color name="ic_launcher_background">#003D8F</color>
+    <color name="ic_launcher_background">@color/madison</color>
 
     <color name="text_color">@color/ionos_default_text_color</color>
     <color name="secondary_text_color">@color/dusk</color>
@@ -117,4 +117,9 @@
     <color name="checkbox_stroke_color">@color/white</color>
 
     <color name="preview_image_system_bars_color">@color/semitransparent_black</color>
+
+    <color name="file_details_search_border_color">@color/deep_koamaru</color>
+    <color name="file_details_search_icon_color">@color/dusk</color>
+    <color name="file_details_contact_icon_color">@color/marble_blue</color>
+    <color name="file_details_search_hint_color">@color/dusk</color>
 </resources>

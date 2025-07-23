@@ -101,6 +101,8 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Stack;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.inject.Inject;
 
@@ -168,6 +170,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
     private ImageView mEmptyListIcon;
     private MaterialButton sortButton;
     private ReceiveExternalFilesBinding binding;
+    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     @Override
     @IonosCustomization
@@ -247,7 +250,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
     public void onAccountChosen(@NonNull User user) {
         setAccount(user.toPlatformAccount(), false);
         initTargetFolder();
-        populateDirectoryList();
+        populateDirectoryList(null);
     }
 
     @Override
@@ -271,7 +274,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
         final OCFile fileByPath = getStorageManager().getFileByPath(full_path);
         if (fileByPath != null) {
             startSyncFolderOperation(fileByPath);
-            populateDirectoryList();
+            populateDirectoryList(null);
         } else {
             browseToRoot();
             preferences.setLastUploadPath(OCFile.ROOT_PATH);
@@ -296,6 +299,8 @@ public class ReceiveExternalFilesActivity extends FileActivity
         if (mSyncBroadcastReceiver != null) {
             localBroadcastManager.unregisterReceiver(mSyncBroadcastReceiver);
         }
+
+        executorService.shutdown();
         super.onDestroy();
     }
 
@@ -304,7 +309,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
     public void onSortingOrderChosen(FileSortOrder newSortOrder) {
         preferences.setSortOrder(mFile, newSortOrder);
         sortButton.setIconResource(DisplayUtils.getSortOrderIconRes(newSortOrder));
-        populateDirectoryList();
+        populateDirectoryList(null);
     }
 
     @Override
@@ -324,8 +329,10 @@ public class ReceiveExternalFilesActivity extends FileActivity
             }
 
             startSyncFolderOperation(file);
-            mParents.push(file.getFileName());
-            populateDirectoryList();
+
+            String filename = fileDataStorageManager.getFileNameBasedOnEncryptionStatus(file);
+            mParents.push(filename);
+            populateDirectoryList(file);
         }
     }
 
@@ -689,12 +696,6 @@ public class ReceiveExternalFilesActivity extends FileActivity
             }
             mUploadPath = stringBuilder.toString();
 
-            boolean isPathValid = FileNameValidator.INSTANCE.checkFolderPath(mUploadPath, getCapabilities(), this);
-            if (!isPathValid) {
-                DisplayUtils.showSnackMessage(this, R.string.file_name_validator_error_contains_reserved_names_or_invalid_characters);
-                return;
-            }
-
             if (mUploadFromTmpFile) {
                 DialogInputUploadFilename dialog = DialogInputUploadFilename.newInstance(mSubjectText, mExtraText);
                 dialog.show(getSupportFragmentManager(), null);
@@ -726,7 +727,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
                 // account at this point
                 // since account setup can set only one account at time
                 setAccount(accounts[0], false);
-                populateDirectoryList();
+                populateDirectoryList(null);
             }
         }
     }
@@ -742,7 +743,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
     }
 
     @IonosCustomization
-    private void populateDirectoryList() {
+    private void populateDirectoryList(OCFile file) {
         setupEmptyList();
         setupToolbar();
         ActionBar actionBar = getSupportActionBar();
@@ -758,7 +759,11 @@ public class ReceiveExternalFilesActivity extends FileActivity
             if (TextUtils.isEmpty(current_dir)) {
                 viewThemeUtils.files.themeActionBar(this, actionBar, R.string.uploader_top_message);
             } else {
-                viewThemeUtils.files.themeActionBar(this, actionBar, current_dir);
+                if (file != null) {
+                    viewThemeUtils.files.themeActionBar(this, actionBar, file.getFileName());
+                } else {
+                    viewThemeUtils.files.themeActionBar(this, actionBar, current_dir);
+                }
             }
 
             actionBar.setDisplayHomeAsUpEnabled(notRoot);
@@ -769,37 +774,44 @@ public class ReceiveExternalFilesActivity extends FileActivity
 
         Log_OC.d(TAG, "Populating view with content of : " + full_path);
 
-        mFile = getStorageManager().getFileByPath(full_path);
-        if (mFile != null) {
-            List<OCFile> files = getStorageManager().getFolderContent(mFile, false);
-
-            if (files.isEmpty()) {
-                setMessageForEmptyList(R.string.file_list_empty_headline, R.string.empty,
-                                       R.drawable.uploads);
-                mEmptyListContainer.setVisibility(View.VISIBLE);
-                binding.list.setVisibility(View.GONE);
-            } else {
-                mEmptyListContainer.setVisibility(View.GONE);
-                files = sortFileList(files);
-                setupReceiveExternalFilesAdapter(files);
-            }
-
-            MaterialButton btnChooseFolder = binding.uploaderChooseFolder;
-            viewThemeUtils.material.colorMaterialButtonPrimaryFilled(btnChooseFolder);
-            btnChooseFolder.setOnClickListener(this);
-
-            btnChooseFolder.setEnabled(mFile.canWrite());
-
-            viewThemeUtils.platform.themeStatusBar(this);
-
-            viewThemeUtils.material.colorMaterialButtonPrimaryOutlined(binding.uploaderCancel);
-            binding.uploaderCancel.setOnClickListener(this);
-
-            sortButton = binding.toolbarLayout.sortButton;
-            FileSortOrder sortOrder = preferences.getSortOrderByFolder(mFile);
-            sortButton.setIconResource(DisplayUtils.getSortOrderIconRes(sortOrder));
-            sortButton.setOnClickListener(l -> openSortingOrderDialogFragment(getSupportFragmentManager(), sortOrder));
+        if (file != null) {
+            mFile = file;
+        } else {
+            mFile = getStorageManager().getFileByPath(full_path);
         }
+
+        if (mFile == null) {
+            return;
+        }
+
+        List<OCFile> files = getStorageManager().getFolderContent(mFile, false);
+
+        if (files.isEmpty()) {
+            setMessageForEmptyList(R.string.file_list_empty_headline, R.string.empty,
+                                   R.drawable.uploads);
+            mEmptyListContainer.setVisibility(View.VISIBLE);
+            binding.list.setVisibility(View.GONE);
+        } else {
+            mEmptyListContainer.setVisibility(View.GONE);
+            files = sortFileList(files);
+            setupReceiveExternalFilesAdapter(files);
+        }
+
+        MaterialButton btnChooseFolder = binding.uploaderChooseFolder;
+        viewThemeUtils.material.colorMaterialButtonPrimaryFilled(btnChooseFolder);
+        btnChooseFolder.setOnClickListener(this);
+
+        btnChooseFolder.setEnabled(mFile.canWrite());
+
+        viewThemeUtils.platform.themeStatusBar(this);
+
+        viewThemeUtils.material.colorMaterialButtonPrimaryOutlined(binding.uploaderCancel);
+        binding.uploaderCancel.setOnClickListener(this);
+
+        sortButton = binding.toolbarLayout.sortButton;
+        FileSortOrder sortOrder = preferences.getSortOrderByFolder(mFile);
+        sortButton.setIconResource(DisplayUtils.getSortOrderIconRes(sortOrder));
+        sortButton.setOnClickListener(l -> openSortingOrderDialogFragment(getSupportFragmentManager(), sortOrder));
     }
 
     private void setupReceiveExternalFilesAdapter(List<OCFile> files) {
@@ -848,20 +860,32 @@ public class ReceiveExternalFilesActivity extends FileActivity
             return;
         }
 
-        long currentSyncTime = System.currentTimeMillis();
+        final var context = this;
 
-        mSyncInProgress = true;
+        executorService.execute(() -> {
+            long currentSyncTime = System.currentTimeMillis();
+            mSyncInProgress = true;
+            final var optionalUser = getUser();
+            if (optionalUser.isEmpty()) {
+                DisplayUtils.showSnackMessage(this, R.string.user_information_retrieval_error);
+                return;
+            }
 
-        // perform folder synchronization
-        RemoteOperation syncFolderOp = new RefreshFolderOperation(folder,
-                                                                  currentSyncTime,
-                                                                  false,
-                                                                  false,
-                                                                  getStorageManager(),
-                                                                  getUser().orElseThrow(RuntimeException::new),
-                                                                  getApplicationContext()
-        );
-        syncFolderOp.execute(getAccount(), this, null, null);
+            final var operation = new RefreshFolderOperation(folder,
+                                                             currentSyncTime,
+                                                             false,
+                                                             false,
+                                                             getStorageManager(),
+                                                             optionalUser.get(),
+                                                             context
+            );
+
+            try {
+                operation.execute(getAccount(), context, null, null);
+            } catch (Exception e) {
+                Log_OC.d(TAG, "Exception startSyncFolderOperation: " + e);
+            }
+        });
     }
 
     private List<OCFile> sortFileList(List<OCFile> files) {
@@ -967,10 +991,6 @@ public class ReceiveExternalFilesActivity extends FileActivity
                 messageResTitle = R.string.uploader_error_title_no_file_to_upload;
             } else if (resultCode == UriUploader.UriUploaderResultCode.ERROR_READ_PERMISSION_NOT_GRANTED) {
                 messageResId = R.string.uploader_error_message_read_permission_not_granted;
-            } else if (resultCode == UriUploader.UriUploaderResultCode.ERROR_UNKNOWN) {
-                messageResId = R.string.common_error_unknown;
-            } else if (resultCode == UriUploader.UriUploaderResultCode.INVALID_FILE_NAME) {
-                messageResId = R.string.file_name_validator_upload_content_error;
             }
 
             showErrorDialog(messageResId, messageResTitle);
@@ -994,19 +1014,15 @@ public class ReceiveExternalFilesActivity extends FileActivity
      * @param operation Creation operation performed.
      * @param result    Result of the creation.
      */
-    private void onCreateFolderOperationFinish(CreateFolderOperation operation,
-                                               RemoteOperationResult result) {
+    private void onCreateFolderOperationFinish(CreateFolderOperation operation, RemoteOperationResult result) {
         if (result.isSuccess()) {
             String remotePath = operation.getRemotePath().substring(0, operation.getRemotePath().length() - 1);
             String newFolder = remotePath.substring(remotePath.lastIndexOf('/') + 1);
             mParents.push(newFolder);
-            populateDirectoryList();
+            populateDirectoryList(null);
         } else {
             try {
-                DisplayUtils.showSnackMessage(
-                    this, ErrorMessageAdapter.getErrorCauseMessage(result, operation, getResources())
-                                             );
-
+                DisplayUtils.showSnackMessage(this, ErrorMessageAdapter.getErrorCauseMessage(result, operation, getResources()));
             } catch (NotFoundException e) {
                 Log_OC.e(TAG, "Error while trying to show fail message ", e);
             }
@@ -1058,8 +1074,10 @@ public class ReceiveExternalFilesActivity extends FileActivity
 
         setupSearchView(menu);
 
-        MenuItem newFolderMenuItem = menu.findItem(R.id.action_create_dir);
-        newFolderMenuItem.setEnabled(mFile.canWrite());
+        if (mFile != null) {
+            MenuItem newFolderMenuItem = menu.findItem(R.id.action_create_dir);
+            newFolderMenuItem.setEnabled(mFile.canWrite());
+        }
 
         return true;
     }
@@ -1170,9 +1188,8 @@ public class ReceiveExternalFilesActivity extends FileActivity
                             }
 
                             if (currentDir.getRemotePath().equals(syncFolderRemotePath)) {
-                                populateDirectoryList();
+                                populateDirectoryList(currentFile);
                             }
-                            mFile = currentFile;
                         }
 
                         mSyncInProgress = !FileSyncAdapter.EVENT_FULL_SYNC_END.equals(event) &&
@@ -1186,7 +1203,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
                                 (syncResult.isException() && syncResult.getException()
                                     instanceof AuthenticatorException)) {
 
-                                requestCredentialsUpdate(context);
+                                requestCredentialsUpdate();
 
                             } else if (ResultCode.SSL_RECOVERABLE_PEER_UNVERIFIED == syncResult.getCode()) {
 

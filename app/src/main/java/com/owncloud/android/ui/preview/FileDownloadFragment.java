@@ -52,6 +52,7 @@ public class FileDownloadFragment extends FileFragment implements OnClickListene
     private static final String ARG_FILE = "FILE";
     private static final String ARG_IGNORE_FIRST = "IGNORE_FIRST";
     private static final String ARG_USER = "USER";
+    private static final String ARG_FILE_POSITION = "FILE_POSITION";
 
     private View mView;
     private User user;
@@ -68,12 +69,12 @@ public class FileDownloadFragment extends FileFragment implements OnClickListene
 
     /**
      * Public factory method to create a new fragment that shows the progress of a file download.
-     *
+     * <p>
      * Android strongly recommends keep the empty constructor of fragments as the only public constructor, and
      * use {@link #setArguments(Bundle)} to set the needed arguments.
-     *
+     * <p>
      * This method hides to client objects the need of doing the construction in two steps.
-     *
+     * <p>
      * When 'file' is null creates a dummy layout (useful when a file wasn't tapped before).
      *
      * @param file                      An {@link OCFile} to show in the fragment
@@ -118,7 +119,6 @@ public class FileDownloadFragment extends FileFragment implements OnClickListene
         user = BundleExtensionsKt.getParcelableArgument(args, ARG_USER, User.class);
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -159,7 +159,6 @@ public class FileDownloadFragment extends FileFragment implements OnClickListene
 
         return mView;
     }
-
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {

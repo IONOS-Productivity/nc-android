@@ -12,12 +12,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/scanbotRearrangeToolbar"
-        android:layout_width="0dp"
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/scanbot_view_common_toolbar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?scanbot_app_bar_color"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -30,7 +29,7 @@
         android:layout_marginTop="@dimen/scanbot_rearrange_margin"
         android:src="@drawable/scanbot_ic_touch"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scanbotRearrangeToolbar"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
         app:tint="?scanbot_rearrange_icon_color"
         tools:ignore="ContentDescription" />
 
@@ -71,7 +70,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/rvScanbotRearrange"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scanbotRearrangeToolbar"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
         tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

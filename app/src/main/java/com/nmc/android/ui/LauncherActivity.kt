@@ -3,7 +3,7 @@
  *
  * SPDX-FileCopyrightText: 2023 Alper Ozturk <alper.ozturk@nextcloud.com>
  * SPDX-FileCopyrightText: 2023 Andy Scherzinger <info@andy-scherzinger.de>
- * SPDX-FileCopyrightText: 2023 TSI-mc
+ * SPDX-FileCopyrightText: 2023-2024 TSI-mc <surinder.kumar@t-systems.com>
  * SPDX-License-Identifier: AGPL-3.0-or-later OR GPL-2.0-only
  */
 package com.nmc.android.ui
@@ -17,9 +17,9 @@ import android.view.View
 import androidx.annotation.VisibleForTesting
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.ionos.annotation.IonosCustomization
+import com.ionos.authorization_method.AuthorizationMethodActivity
 import com.ionos.privacy.DataProtectionActivity
 import com.ionos.privacy.PrivacyPreferences
-import com.nextcloud.client.account.UserAccountManager
 import com.nextcloud.client.preferences.AppPreferences
 import com.owncloud.android.R
 import com.owncloud.android.databinding.ActivitySplashBinding
@@ -50,6 +50,9 @@ class LauncherActivity : BaseActivity() {
         scheduleSplashScreen()
     }
 
+    @IonosCustomization("Remove window insets paddings")
+    override fun isDefaultWindowInsetsHandlingEnabled() = false
+
     @VisibleForTesting
     fun setSplashTitles(boldText: String, normalText: String) {
         binding.splashScreenBold.visibility = View.VISIBLE
@@ -78,6 +81,8 @@ class LauncherActivity : BaseActivity() {
                 } else {
                     startActivity(DataProtectionActivity.createIntent(this, intent))
                 }
+            } else {
+                startActivity(AuthorizationMethodActivity.createInstance(this))
             }
             finish()
         }, SPLASH_DURATION)

@@ -54,7 +54,11 @@ import com.owncloud.android.ui.preview.model.PreviewImageActivityState
 import com.owncloud.android.utils.DisplayUtils
 import com.owncloud.android.utils.MimeTypeUtil
 import android.graphics.drawable.ColorDrawable
+import android.view.ViewGroup
 import androidx.activity.enableEdgeToEdge
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
 import java.io.Serializable
 import javax.inject.Inject
@@ -68,8 +72,7 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
     private var livePhotoFile: OCFile? = null
     private var viewPager: ViewPager2? = null
     private var previewImagePagerAdapter: PreviewImagePagerAdapter? = null
-    private var savedPosition = 0
-    private var hasSavedPosition = false
+    private var savedPosition: Int? = null
     private var downloadFinishReceiver: DownloadFinishReceiver? = null
     private var fullScreenAnchorView: View? = null
 
@@ -83,11 +86,21 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
     lateinit var localBroadcastManager: LocalBroadcastManager
 
     private var actionBar: ActionBar? = null
+    private var showDirectoryWhenDeletionCompleted = false
 
     @IonosCustomization
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
+
+        val contentContainer = (window.decorView as ViewGroup).getChildAt(0)
+        ViewCompat.setOnApplyWindowInsetsListener(contentContainer) { view, windowInsets ->
+            val insetsType = WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
+            val insets = windowInsets.getInsets(insetsType)
+            val actionBarView = view.findViewById<View>(androidx.appcompat.R.id.action_bar)
+            actionBarView?.updatePadding(left = insets.left, top = insets.top, right = insets.right)
+            WindowInsetsCompat.CONSUMED
+        }
 
         actionBar = supportActionBar
 
@@ -125,6 +138,13 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
         }
 
         observeWorkerState()
+    }
+
+    @IonosCustomization("Remove default window insets paddings")
+    override fun isDefaultWindowInsetsHandlingEnabled() = false
+
+    fun showDirectoryWhenDeletionCompleted() {
+        showDirectoryWhenDeletionCompleted = true
     }
 
     fun toggleActionBarVisibility(hide: Boolean) {
@@ -172,10 +192,10 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
 
         viewPager = findViewById(R.id.fragmentPager)
 
-        var position = if (hasSavedPosition) savedPosition else previewImagePagerAdapter?.getFilePosition(file)
+        var position = if (savedPosition != null) savedPosition else previewImagePagerAdapter?.getFilePosition(file)
         position = position?.toDouble()?.let { max(it, 0.0).toInt() }
 
-        viewPager?.setAdapter(previewImagePagerAdapter)
+        viewPager?.adapter = previewImagePagerAdapter
         viewPager?.registerOnPageChangeCallback(object : OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 selectPage(position)
@@ -286,7 +306,7 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
     private fun observeWorkerState() {
         WorkerStateLiveData.instance().observe(this) { state: WorkerState? ->
             when (state) {
-                is WorkerState.Download -> {
+                is WorkerState.DownloadStarted -> {
                     Log_OC.d(TAG, "Download worker started")
                     isDownloadWorkStarted = true
 
@@ -295,19 +315,36 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
                     }
                 }
 
-                is WorkerState.Idle -> {
+                is WorkerState.DownloadFinished -> {
                     Log_OC.d(TAG, "Download worker stopped")
                     isDownloadWorkStarted = false
 
                     if (screenState == PreviewImageActivityState.Edit) {
                         onImageDownloadComplete(state.currentFile)
+                    } else {
+                        setDownloadedItem()
                     }
                 }
 
                 else -> {
-                    Log_OC.d(TAG, "Download worker stopped")
+                    Log_OC.d(TAG, "Worker stopped")
                     isDownloadWorkStarted = false
                 }
+            }
+        }
+    }
+
+    private fun setDownloadedItem() {
+        savedPosition?.let { position ->
+
+            previewImagePagerAdapter?.run {
+                updateFile(position, file)
+                notifyItemChanged(position)
+            }
+
+            if (user.isPresent) {
+                initViewPager(user.get())
+                viewPager?.currentItem = position
             }
         }
     }
@@ -364,7 +401,7 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
         }
 
         startActivity(intent)
-        backToDisplayActivity()
+        finish()
     }
 
     override fun showDetails(file: OCFile, activeTab: Int) {
@@ -387,7 +424,6 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
     fun selectPage(position: Int?) {
         if (position == null) return
         savedPosition = position
-        hasSavedPosition = true
 
         val currentFile = previewImagePagerAdapter?.getFileAt(position)
 
