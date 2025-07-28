@@ -98,7 +98,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.nextcloud.client"
+        applicationId 'fr.ionos.storage.prelive'
         minSdk = 26
         targetSdk = 35
         compileSdk = 35
@@ -152,29 +152,29 @@ android {
         productFlavors {
             // used for f-droid
             generic {
-                applicationId "com.nextcloud.client"
+                applicationId 'fr.ionos.storage.prelive'
                 dimension "default"
             }
 
             gplay {
-                applicationId "com.nextcloud.client"
+                applicationId 'fr.ionos.storage.prelive'
                 dimension "default"
             }
 
             huawei {
-                applicationId "com.nextcloud.client"
+                applicationId 'fr.ionos.storage.prelive'
                 dimension "default"
             }
 
             versionDev {
-                applicationId "com.nextcloud.android.beta"
+                applicationId 'fr.ionos.storage.prelive'
                 dimension "default"
                 versionCode 20220322
                 versionName "20220322"
             }
 
             qa {
-                applicationId "com.nextcloud.android.qa"
+                applicationId 'fr.ionos.storage.prelive'
                 dimension "default"
                 versionCode 1
                 versionName "1"
