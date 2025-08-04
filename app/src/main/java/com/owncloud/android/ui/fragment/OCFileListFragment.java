@@ -284,6 +284,10 @@ public class OCFileListFragment extends ExtendedListFragment implements
             handleSearchEvent(searchEvent);
         }
 
+        if (getActivity() instanceof FileDisplayActivity fda) {
+            fda.startSyncFolderOperation(getCurrentFile(), true);
+        }
+
         super.onResume();
     }
 
