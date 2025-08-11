@@ -13,13 +13,13 @@
 
     <dimen name="player_audio_file_fragment_padding_horizontal">16dp</dimen>
     <dimen name="player_audio_album_cover_margin_vertical">16dp</dimen>
-    <dimen name="player_audio_album_cover_width">350dp</dimen>
     <dimen name="player_audio_title_text_size">16sp</dimen>
     <dimen name="player_audio_title_margin_bottom">8dp</dimen>
     <dimen name="player_audio_file_details_text_size">12sp</dimen>
     <dimen name="player_audio_file_details_margin_bottom">32dp</dimen>
 
-    <dimen name="player_text_alpha">0.54</dimen>
+    <dimen name="player_album_cover_size">350dp</dimen>
+    <dimen name="player_file_icon_size">96dp</dimen>
 
     <dimen name="player_progressbar_height">20dp</dimen>
     <dimen name="player_progress_panel_padding_horizontal">8dp</dimen>

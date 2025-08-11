@@ -101,7 +101,7 @@ class AudioFileFragment : Fragment(), PlaybackModel.Listener {
 
     private fun loadFileThumbnail(): Job {
         return viewLifecycleOwner.lifecycleScope.launch {
-            val thumbnailSize = resources.getDimension(R.dimen.player_audio_album_cover_width).toInt()
+            val thumbnailSize = resources.getDimension(R.dimen.player_album_cover_size).toInt()
             val thumbnail = thumbnailLoader.await(requireContext(), file, thumbnailSize, thumbnailSize)
             if (thumbnail != null) {
                 binding.albumCover.setImageBitmap(thumbnail)

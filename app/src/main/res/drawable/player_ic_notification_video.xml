@@ -8,8 +8,8 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape>
-            <solid android:color="@color/player_cod_gray_light" />
+            <solid android:color="@color/player_background_color" />
         </shape>
     </item>
-    <item android:drawable="@drawable/player_ic_notification_video_foreground" />
+    <item android:drawable="@drawable/player_ic_video" />
 </layer-list>
