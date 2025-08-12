@@ -44,13 +44,13 @@ class PlayerProgressIndicator @JvmOverloads constructor(
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
+        renderCurrentState()
         playbackModel.addListener(this)
     }
 
     override fun onDetachedFromWindow() {
         playbackModel.removeListener(this)
         visibility = GONE
-        playbackFile = null
         super.onDetachedFromWindow()
     }
 
@@ -64,6 +64,10 @@ class PlayerProgressIndicator @JvmOverloads constructor(
 
     fun setFile(file: OCFile) {
         playbackFile = file.toPlaybackFile()
+        renderCurrentState()
+    }
+
+    private fun renderCurrentState() {
         val itemState = playbackModel.state.getOrNull()?.currentItemState
         render(itemState)
     }
