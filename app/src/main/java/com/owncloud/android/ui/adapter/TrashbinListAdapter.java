@@ -12,6 +12,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ import com.owncloud.android.datamodel.ThumbnailsCacheManager;
 import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.lib.resources.trashbin.model.TrashbinFile;
 import com.owncloud.android.ui.interfaces.TrashbinActivityInterface;
+import com.owncloud.android.utils.BitmapUtils;
 import com.owncloud.android.utils.DisplayUtils;
 import com.owncloud.android.utils.FileSortOrder;
 import com.owncloud.android.utils.MimeTypeUtil;
@@ -250,6 +252,7 @@ public class TrashbinListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         return output;
     }
 
+    @IonosCustomization("Async thumbnail fix")
     private void setThumbnail(TrashbinFile file, ImageView thumbnailView) {
         if (file.isFolder()) {
             thumbnailView.setImageDrawable(MimeTypeUtil.getDefaultFolderIcon(context, viewThemeUtils));
@@ -276,6 +279,12 @@ public class TrashbinListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     // generate new thumbnail
                     if (ThumbnailsCacheManager.cancelPotentialThumbnailWork(file, thumbnailView)) {
                         try {
+                            Drawable drawable = thumbnailView.getDrawable();
+                            if (drawable != null) {
+                                int px = ThumbnailsCacheManager.getThumbnailDimension();
+                                thumbnail = BitmapUtils.drawableToBitmap(drawable, px, px);
+                            }
+
                             final ThumbnailsCacheManager.ThumbnailGenerationTask task =
                                 new ThumbnailsCacheManager.ThumbnailGenerationTask(thumbnailView,
                                                                                    storageManager,
