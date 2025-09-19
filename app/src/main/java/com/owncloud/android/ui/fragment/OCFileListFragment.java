@@ -1487,6 +1487,11 @@ public class OCFileListFragment extends ExtendedListFragment implements
         return mFile;
     }
 
+    @IonosCustomization
+    public SearchType getCurrentSearchType() {
+        return currentSearchType;
+    }
+
     /**
      * Calls {@link OCFileListFragment#listDirectory(OCFile, boolean, boolean)} with a null parameter
      */
