@@ -7,10 +7,6 @@
 
 package com.ionos.scanbot.license
 
-/**
- * User: Dima Muravyov
- * Date: 06.02.2020
- */
 internal class LicenseResponseTransformer {
 
 	companion object {

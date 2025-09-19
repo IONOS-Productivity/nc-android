@@ -14,6 +14,8 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.elyeproj.loaderviewlibrary.LoaderImageView
+import com.ionos.annotation.IonosCustomization
+import com.ionos.player.ui.common.PlayerProgressIndicator
 import com.owncloud.android.databinding.GridItemBinding
 
 internal class OCFileListGridItemViewHolder(var binding: GridItemBinding) :
@@ -25,6 +27,9 @@ internal class OCFileListGridItemViewHolder(var binding: GridItemBinding) :
         get() = binding.Filename
     override val thumbnail: ImageView
         get() = binding.thumbnail
+    @IonosCustomization("Show current playback progress")
+    override val playerProgressIndicator: PlayerProgressIndicator
+        get() = binding.playerProgressIndicator
 
     override fun showVideoOverlay() {
         binding.videoOverlay.visibility = View.VISIBLE

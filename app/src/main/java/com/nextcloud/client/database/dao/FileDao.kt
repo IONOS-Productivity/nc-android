@@ -9,6 +9,7 @@ package com.nextcloud.client.database.dao
 
 import androidx.room.Dao
 import androidx.room.Query
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.database.entity.FileEntity
 import com.owncloud.android.db.ProviderMeta.ProviderTableMeta
 
@@ -46,6 +47,14 @@ interface FileDao {
 
     @Query("SELECT * FROM filelist WHERE file_owner = :fileOwner ORDER BY ${ProviderTableMeta.FILE_DEFAULT_SORT_ORDER}")
     fun getAllFiles(fileOwner: String): List<FileEntity>
+
+    @IonosCustomization
+    @Query(
+        "SELECT * FROM filelist WHERE favorite = 1" +
+            " AND file_owner = :fileOwner" +
+            " ORDER BY ${ProviderTableMeta.FILE_DEFAULT_SORT_ORDER}"
+    )
+    fun getFavoriteFiles(fileOwner: String): List<FileEntity>
 
     @Query("SELECT * FROM filelist WHERE path LIKE :pathPattern AND file_owner = :fileOwner ORDER BY path ASC")
     fun getFolderWithDescendants(pathPattern: String, fileOwner: String): List<FileEntity>
