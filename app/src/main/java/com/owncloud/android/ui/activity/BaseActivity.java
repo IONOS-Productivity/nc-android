@@ -21,11 +21,14 @@ import com.nextcloud.client.mixins.MixinRegistry;
 import com.nextcloud.client.mixins.SessionMixin;
 import com.nextcloud.client.preferences.AppPreferences;
 import com.nextcloud.client.preferences.DarkMode;
+import com.nextcloud.repository.ClientRepository;
+import com.nextcloud.repository.RemoteClientRepository;
 import com.nextcloud.utils.extensions.WindowExtensionsKt;
 import com.owncloud.android.datamodel.FileDataStorageManager;
 import com.owncloud.android.datamodel.OCFile;
 import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.lib.resources.status.OCCapability;
+import com.owncloud.android.ui.fragment.filesRepository.FilesRepository;
 
 import java.util.Optional;
 
@@ -68,6 +71,8 @@ public abstract class BaseActivity extends AppCompatActivity implements Injectab
         return accountManager;
     }
 
+    private ClientRepository clientRepository;
+
     @Override
     @IonosCustomization("Window insets handling")
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -85,6 +90,8 @@ public abstract class BaseActivity extends AppCompatActivity implements Injectab
         if (enableAccountHandling) {
             mixinRegistry.onCreate(savedInstanceState);
         }
+
+        clientRepository = new RemoteClientRepository(accountManager.getUser(), this, this);
     }
 
     @IonosCustomization("Window insets handling")
@@ -202,4 +209,9 @@ public abstract class BaseActivity extends AppCompatActivity implements Injectab
     public FileDataStorageManager getStorageManager() {
         return fileDataStorageManager;
     }
+
+    public ClientRepository getClientRepository() {
+        return clientRepository;
+    }
+
 }

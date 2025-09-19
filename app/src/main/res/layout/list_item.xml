@@ -212,6 +212,13 @@
 
         </LinearLayout>
 
+        <com.ionos.player.ui.common.PlayerProgressIndicator
+            android:id="@+id/player_progress_indicator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/scanbot_padding_micro"
+            android:visibility="gone" />
+
     </LinearLayout>
 
     <LinearLayout

@@ -97,6 +97,9 @@
             android:name="com.ionos.privacy.PrivacySettingsActivity"
             android:exported="false" />
 
+        <activity android:name=".ui.activity.ShareActivity"
+            tools:remove="android:theme" />
+
         <provider
             android:name="androidx.startup.InitializationProvider"
             android:authorities="${applicationId}.androidx-startup"
