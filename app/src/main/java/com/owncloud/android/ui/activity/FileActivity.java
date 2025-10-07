@@ -32,6 +32,8 @@ import android.os.IBinder;
 import android.text.TextUtils;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.ionos.annotation.IonosCustomization;
+import com.ionos.utils.IonosBuildHelper;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.account.UserAccountManager;
 import com.nextcloud.client.jobs.BackgroundJobManager;
@@ -89,6 +91,8 @@ import com.owncloud.android.ui.dialog.SslUntrustedCertDialog;
 import com.owncloud.android.ui.fragment.FileDetailFragment;
 import com.owncloud.android.ui.fragment.FileDetailSharingFragment;
 import com.owncloud.android.ui.fragment.OCFileListFragment;
+import com.owncloud.android.ui.fragment.filesRepository.FilesRepository;
+import com.owncloud.android.ui.fragment.filesRepository.RemoteFilesRepository;
 import com.owncloud.android.ui.helpers.FileOperationsHelper;
 import com.owncloud.android.ui.preview.PreviewImageActivity;
 import com.owncloud.android.ui.preview.PreviewMediaActivity;
@@ -184,6 +188,8 @@ public abstract class FileActivity extends DrawerActivity
 
     private NetworkChangeReceiver networkChangeReceiver;
 
+    private FilesRepository filesRepository;
+
     private void registerNetworkChangeReceiver() {
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         registerReceiver(networkChangeReceiver, filter);
@@ -242,6 +248,8 @@ public abstract class FileActivity extends DrawerActivity
         bindService(new Intent(this, OperationsService.class), mOperationsServiceConnection,
                     Context.BIND_AUTO_CREATE);
         registerNetworkChangeReceiver();
+
+        filesRepository = new RemoteFilesRepository(getClientRepository(), this);
     }
 
     @Override
@@ -457,7 +465,14 @@ public abstract class FileActivity extends DrawerActivity
         new CheckRemoteWipeTask(backgroundJobManager, account, new WeakReference<>(this)).execute();
     }
 
+    @IonosCustomization("Remove account with invalid token on Ionos build")
     public void performCredentialsUpdate(Account account, Context context) {
+        if (IonosBuildHelper.isIonosBuild()) {
+            /// Remove account and allow SessionMixin to handle switching to another account
+            /// or requesting new account creation
+            backgroundJobManager.startAccountRemovalJob(account.name, false);
+            return;
+        }
         try {
             /// step 1 - invalidate credentials of current account
             OwnCloudAccount ocAccount = new OwnCloudAccount(account, context);
@@ -981,5 +996,9 @@ public abstract class FileActivity extends DrawerActivity
             return (FileDetailFragment) fragment;
         }
         return null;
+    }
+
+    public FilesRepository getFilesRepository() {
+        return filesRepository;
     }
 }

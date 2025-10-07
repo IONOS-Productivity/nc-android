@@ -795,8 +795,8 @@
     <string name="select_one_template">Por favor, selecciona una plantilla</string>
     <string name="select_template">Escoge plantilla</string>
     <string name="send">Mandar</string>
-    <string name="send_share">Enviar recurso compartido</string>
     <string name="sendbutton_description">Icono del botón de enviar</string>
+    <string name="send_share">Enviar compartir</string>
     <string name="set_as">Establecer como</string>
     <string name="set_note">Establecer nota</string>
     <string name="set_picture_as">Usar imagen como</string>
@@ -911,6 +911,7 @@
     <string name="stream">Retransmisión con...</string>
     <string name="stream_not_possible_headline">La retransmisión interna no es posible</string>
     <string name="stream_not_possible_message">Por favor, descarga el medio o usa una app externa</string>
+    <string name="strict_mode">Modo estricto: ¡ninguna conexión HTTP permitida!</string>
     <string name="sub_folder_rule_day">Año/Mes/Día</string>
     <string name="sub_folder_rule_month">Año/Mes</string>
     <string name="sub_folder_rule_year">Año</string>
@@ -1101,6 +1102,9 @@
     <string name="wait_a_moment">Espera un momento…</string>
     <string name="wait_checking_credentials">Comprobando las credenciales guardadas</string>
     <string name="wait_for_tmp_copy_from_private_storage">Copiando el archivo desde el almacenamiento privado.</string>
+    <string name="webview_version_check_alert_dialog_message">Por favor actualiza la aplicación WebView de Sistema Android para iniciar sesión</string>
+    <string name="webview_version_check_alert_dialog_positive_button_title">Actualizar</string>
+    <string name="webview_version_check_alert_dialog_title">Actualiza WebView del Sistema Android</string>
     <string name="warn_rename_extension">Cambiar la extensión puede hacer que este archivo se abra con otra aplicación</string>
     <string name="what_s_new_image">Imagen de Qué hay de nuevo</string>
     <string name="whats_new_skip">Omitir</string>

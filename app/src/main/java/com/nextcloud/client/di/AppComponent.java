@@ -9,6 +9,8 @@ package com.nextcloud.client.di;
 
 import android.app.Application;
 
+import com.ionos.annotation.IonosCustomization;
+import com.ionos.di.StratoModule;
 import com.nextcloud.appReview.InAppReviewModule;
 import com.nextcloud.client.appinfo.AppInfoModule;
 import com.nextcloud.client.database.DatabaseModule;
@@ -34,6 +36,7 @@ import dagger.BindsInstance;
 import dagger.Component;
 import dagger.android.support.AndroidSupportInjectionModule;
 
+@IonosCustomization
 @Component(modules = {
     AndroidSupportInjectionModule.class,
     AppModule.class,
@@ -50,6 +53,7 @@ import dagger.android.support.AndroidSupportInjectionModule;
     DatabaseModule.class,
     DispatcherModule.class,
     VariantModule.class,
+    StratoModule.class,
 })
 @Singleton
 public interface AppComponent {
