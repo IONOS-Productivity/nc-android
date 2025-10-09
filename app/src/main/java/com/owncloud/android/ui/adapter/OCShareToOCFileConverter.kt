@@ -7,6 +7,7 @@
  */
 package com.owncloud.android.ui.adapter
 
+import com.ionos.annotation.IonosCustomization
 import com.owncloud.android.datamodel.OCFile
 import com.owncloud.android.lib.resources.shares.OCShare
 import com.owncloud.android.lib.resources.shares.ShareType
@@ -36,6 +37,7 @@ object OCShareToOCFileConverter {
             .sortedByDescending { it.firstShareTimestamp }
     }
 
+    @IonosCustomization("Set share fileSource as file localId")
     private fun buildOcFile(path: String, shares: List<OCShare>): OCFile {
         require(shares.all { it.path == path })
         // common attributes
@@ -49,6 +51,7 @@ object OCShareToOCFileConverter {
             note = firstShare.note
             fileId = firstShare.fileSource
             remoteId = firstShare.remoteId.toString()
+            localId = firstShare.fileSource
             // use first share timestamp as timestamp
             firstShareTimestamp = shares.minOf { it.sharedDate * MILLIS_PER_SECOND }
             // don't have file length or mod timestamp
@@ -63,7 +66,13 @@ object OCShareToOCFileConverter {
             file.isSharedWithSharee = true
             file.sharees = shares
                 .filter { it.shareType != ShareType.PUBLIC_LINK && it.shareType != ShareType.EMAIL }
-                .map { ShareeUser(it.shareWith, it.sharedWithDisplayName, it.shareType) }
+                .map {
+                    ShareeUser(
+                        userId = it.userId,
+                        displayName = it.sharedWithDisplayName,
+                        shareType = it.shareType
+                    )
+                }
         }
         return file
     }

@@ -47,6 +47,8 @@ import android.view.WindowManager;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
+import com.ionos.annotation.IonosCustomization;
+import com.ionos.player.ui.PlayerLauncher;
 import com.nextcloud.appReview.InAppReviewHelper;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.appinfo.AppInfo;
@@ -253,6 +255,9 @@ public class FileDisplayActivity extends FileActivity
     @Inject Clock clock;
     @Inject SyncedFolderProvider syncedFolderProvider;
 
+    @IonosCustomization
+    @Inject PlayerLauncher playerLauncher;
+
     public static Intent openFileIntent(Context context, User user, OCFile file) {
         final Intent intent = new Intent(context, PreviewImageActivity.class);
         intent.putExtra(FileActivity.EXTRA_FILE, file);
@@ -455,6 +460,7 @@ public class FileDisplayActivity extends FileActivity
     }
 
     @Override
+    @IonosCustomization("Hide account id")
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
 
@@ -480,7 +486,7 @@ public class FileDisplayActivity extends FileActivity
             onOpenFileIntent(getIntent());
         } else if (RESTART.equals(getIntent().getAction())) {
             // most likely switched to different account
-            DisplayUtils.showSnackMessage(this, String.format(getString(R.string.logged_in_as), accountManager.getUser().getAccountName()));
+            DisplayUtils.showSnackMessage(this, String.format(getString(R.string.logged_in_as), accountManager.getUser().toOwnCloudAccount().getDisplayName()));
         }
 
         upgradeNotificationForInstantUpload();
@@ -1495,6 +1501,7 @@ public class FileDisplayActivity extends FileActivity
     /**
      * Show a text message on screen view for notifying user if content is loading or folder is empty
      */
+    @IonosCustomization
     private void setBackgroundText() {
         final OCFileListFragment ocFileListFragment = getListOfFilesFragment();
         if (ocFileListFragment != null) {
@@ -1502,7 +1509,7 @@ public class FileDisplayActivity extends FileActivity
                 ocFileListFragment.setEmptyListLoadingMessage();
             } else {
                 if (MainApp.isOnlyOnDevice()) {
-                    ocFileListFragment.setMessageForEmptyList(R.string.file_list_empty_headline, R.string.file_list_empty_on_device, R.drawable.ic_list_empty_folder, true);
+                    ocFileListFragment.setMessageForEmptyList(R.string.file_list_empty_headline, R.string.file_list_empty_on_device, R.drawable.ic_list_empty_folder);
                 } else {
                     connectivityService.isNetworkAndServerAvailable(result -> {
                         if (result) {
@@ -1654,7 +1661,7 @@ public class FileDisplayActivity extends FileActivity
         if (listOfFiles != null) {  // should never be null, indeed
             OCFile root = getStorageManager().getFileByPath(OCFile.ROOT_PATH);
             listOfFiles.listDirectory(root, MainApp.isOnlyOnDevice(), false);
-            setFile(listOfFiles.getCurrentFile());
+            setFile(root);
             startSyncFolderOperation(root, false);
         }
         binding.fabMain.setImageResource(R.drawable.ic_plus);
@@ -2238,13 +2245,11 @@ public class FileDisplayActivity extends FileActivity
         }
     }
 
+    @IonosCustomization("Launch of custom player")
     private void startMediaActivity(OCFile file, long startPlaybackPosition, boolean autoplay, Optional<User> user) {
-        Intent previewMediaIntent = new Intent(this, PreviewMediaActivity.class);
-        previewMediaIntent.putExtra(PreviewMediaActivity.EXTRA_FILE, file);
-        previewMediaIntent.putExtra(PreviewMediaActivity.EXTRA_USER, user.get());
-        previewMediaIntent.putExtra(PreviewMediaActivity.EXTRA_START_POSITION, startPlaybackPosition);
-        previewMediaIntent.putExtra(PreviewMediaActivity.EXTRA_AUTOPLAY, autoplay);
-        startActivity(previewMediaIntent);
+        OCFileListFragment listOfFiles = getListOfFilesFragment();
+        SearchType searchType = listOfFiles != null ? listOfFiles.getCurrentSearchType() : null;
+        playerLauncher.launch(this, file, searchType);
     }
 
     public void configureToolbarForPreview(OCFile file) {

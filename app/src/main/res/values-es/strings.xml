@@ -669,6 +669,7 @@
     <string name="prefs_add_account">Agregar cuenta</string>
     <string name="prefs_calendar_contacts">Sincronizar calendario y contactos</string>
     <string name="prefs_calendar_contacts_no_store_error">Ni F-Droid ni Google Play están instalados</string>
+    <string name="prefs_calendar_contacts_summary">Configurar DAVx⁵ (antes conocido como DAVdroid) (v1.3.0+) para la cuenta actual</string>
     <string name="prefs_calendar_contacts_sync_setup_successful">Sincronización de calendario y contactos configurada</string>
     <string name="prefs_category_about">Acerca de</string>
     <string name="prefs_category_details">Detalles</string>
@@ -680,6 +681,7 @@
     <string name="prefs_daily_contact_backup_summary">Respaldo diario de sus contactos</string>
     <string name="prefs_data_storage_location">Ubicación donde guardar los datos</string>
     <string name="prefs_data_storage_location_summary">Gestionar ubicación de almacenamiento de datos</string>
+    <string name="prefs_davx5_setup_error">Error inesperado al configurar DAVx⁵ (anteriormente conocido como DAVdroid)</string>
     <string name="prefs_e2e_active">¡Se ha configurado el cifrado de extremo a extremo!</string>
     <string name="prefs_e2e_mnemonic">Regla mnemotécnica del cifrado E2E</string>
     <string name="prefs_e2e_no_device_credentials">Para mostrar la regla mnemotécnica, habilite las credenciales del dispositivo</string>
@@ -784,6 +786,7 @@
     <string name="screenshot_05_autoUpload_heading">Subida automática</string>
     <string name="screenshot_05_autoUpload_subline">para sus fotos y videos</string>
     <string name="screenshot_06_davdroid_heading">Calendario y contactos</string>
+    <string name="screenshot_06_davdroid_subline">Sincronizar con DAVx⁵</string>
     <string name="search_error">Error al cargar resultados de búsqueda</string>
     <string name="secure_share_not_set_up">Compartir en modo seguro no está configurado para este usuario</string>
     <string name="secure_share_search">Compartir de forma segura...</string>
@@ -792,8 +795,8 @@
     <string name="select_one_template">Por favor, selecciona una plantilla</string>
     <string name="select_template">Escoge plantilla</string>
     <string name="send">Mandar</string>
-    <string name="send_share">Enviar recurso compartido</string>
     <string name="sendbutton_description">Icono del botón de enviar</string>
+    <string name="send_share">Enviar compartir</string>
     <string name="set_as">Establecer como</string>
     <string name="set_note">Establecer nota</string>
     <string name="set_picture_as">Usar imagen como</string>
@@ -801,9 +804,14 @@
     <string name="set_status_message">Ajustar el mensaje de estado</string>
     <string name="setup_e2e">Durante la configuración del cifrado de extremo a extremo, recibirá un mnemónico aleatorio de 12 palabras, que necesitará para abrir sus archivos en otros dispositivos. Esto solo se almacenará en este dispositivo y se puede volver a mostrar en esta pantalla. ¡Por favor anótelo en un lugar seguro!</string>
     <string name="share">Compartir</string>
+    <string name="share_allow_download_and_sync_permission">Permitir descarga y sincronización</string>
     <string name="share_copy_link">Compartir y copiar enlace</string>
+    <string name="share_create_permission">Crear</string>
+    <string name="share_custom_permission">Permisos personalizados</string>
+    <string name="share_delete_permission">Eliminar</string>
     <string name="share_dialog_title">Compartir</string>
     <string name="share_download_limit">Establecer el límite de descarga</string>
+    <string name="share_edit_permission">Editar</string>
     <string name="share_expiration_date_format">%1$s</string>
     <string name="share_expiration_date_label">Caduca el %1$s</string>
     <string name="share_file">Compartir %1$s</string>
@@ -826,9 +834,12 @@
     <string name="share_password_title">Protegido con contraseña</string>
     <string name="share_permission_can_edit">Puede editar</string>
     <string name="share_permission_file_drop">Entrega de archivos</string>
+    <string name="share_permission_file_request">Solicitud de archivo</string>
     <string name="share_permission_secure_file_drop">Entrega de archivos segura</string>
     <string name="share_permission_view_only">Solo lectura</string>
     <string name="share_permissions">Permisos del recurso compartido</string>
+    <string name="share_re_share_permission">Compartir</string>
+    <string name="share_read_permission">Leer</string>
     <string name="share_remote_clarification">%1$s (remoto)</string>
     <string name="share_room_clarification">%1$s (conversación)</string>
     <string name="share_search">Nombre, ID de nube federada o dirección de correo electrónico...</string>
@@ -900,6 +911,7 @@
     <string name="stream">Retransmisión con...</string>
     <string name="stream_not_possible_headline">La retransmisión interna no es posible</string>
     <string name="stream_not_possible_message">Por favor, descarga el medio o usa una app externa</string>
+    <string name="strict_mode">Modo estricto: ¡ninguna conexión HTTP permitida!</string>
     <string name="sub_folder_rule_day">Año/Mes/Día</string>
     <string name="sub_folder_rule_month">Año/Mes</string>
     <string name="sub_folder_rule_year">Año</string>
@@ -1090,6 +1102,9 @@
     <string name="wait_a_moment">Espera un momento…</string>
     <string name="wait_checking_credentials">Comprobando las credenciales guardadas</string>
     <string name="wait_for_tmp_copy_from_private_storage">Copiando el archivo desde el almacenamiento privado.</string>
+    <string name="webview_version_check_alert_dialog_message">Por favor actualiza la aplicación WebView de Sistema Android para iniciar sesión</string>
+    <string name="webview_version_check_alert_dialog_positive_button_title">Actualizar</string>
+    <string name="webview_version_check_alert_dialog_title">Actualiza WebView del Sistema Android</string>
     <string name="warn_rename_extension">Cambiar la extensión puede hacer que este archivo se abra con otra aplicación</string>
     <string name="what_s_new_image">Imagen de Qué hay de nuevo</string>
     <string name="whats_new_skip">Omitir</string>
@@ -1110,6 +1125,21 @@
         <item quantity="one">%d minuto</item>
         <item quantity="many">%d minutos</item>
         <item quantity="other">%d minutos</item>
+    </plurals>
+    <plurals name="time_seconds_ago">
+        <item quantity="one">Hace %d segundo</item>
+        <item quantity="many">Hace %d segundos</item>
+        <item quantity="other">Hace %d segundos</item>
+    </plurals>
+    <plurals name="time_minutes_ago">
+        <item quantity="one">Hace %d minuto</item>
+        <item quantity="many">Hace %d minutos</item>
+        <item quantity="other">Hace %d minutos</item>
+    </plurals>
+    <plurals name="time_hours_ago">
+        <item quantity="one">Hace %d hora</item>
+        <item quantity="many">Hace %d horas</item>
+        <item quantity="other">Hace %d horas</item>
     </plurals>
     <plurals name="sync_fail_in_favourites_content">
         <item quantity="one">No se ha podido sincronizar %1$d archivo (conflicto con %2$d)</item>
