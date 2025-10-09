@@ -796,58 +796,6 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
         }
     }
 
-    @SuppressFBWarnings("ANDROID_WEB_VIEW_JAVASCRIPT")
-    @SuppressLint("SetJavaScriptEnabled")
-    private void initSimpleSignupLogin() {
-        viewThemeUtils.platform.colorCircularProgressBar(accountSetupWebviewBinding.loginWebviewProgressBar, ColorRole.ON_PRIMARY_CONTAINER);
-        accountSetupWebviewBinding.loginWebview.setVisibility(View.GONE);
-        new WebViewUtil(getApplicationContext()).setProxyKKPlus(accountSetupWebviewBinding.loginWebview);
-
-        accountSetupWebviewBinding.loginWebview.getSettings().setAllowFileAccess(false);
-        accountSetupWebviewBinding.loginWebview.getSettings().setJavaScriptEnabled(true);
-        accountSetupWebviewBinding.loginWebview.getSettings().setDomStorageEnabled(true);
-
-        accountSetupWebviewBinding.loginWebview.getSettings().setUserAgentString(MainApp.getUserAgent());
-        accountSetupWebviewBinding.loginWebview.getSettings().setSaveFormData(false);
-        accountSetupWebviewBinding.loginWebview.getSettings().setSavePassword(false);
-
-        Map<String, String> headers = new HashMap<>();
-        headers.put(RemoteOperation.OCS_API_HEADER, RemoteOperation.OCS_API_HEADER_VALUE);
-
-        new WebViewUtil(getApplicationContext()).setProxyKKPlus(accountSetupWebviewBinding.loginWebview);
-
-        accountSetupWebviewBinding.loginWebview.loadUrl(getString(R.string.provider_registration_server), headers);
-        accountSetupWebviewBinding.loginFlowV2.loginFlowInfoV2.setVisibility(View.GONE);
-
-        setClient();
-    }
-
-    @SuppressFBWarnings("ANDROID_WEB_VIEW_JAVASCRIPT")
-    @SuppressLint("SetJavaScriptEnabled")
-    private void initSimpleSignupLogin() {
-        viewThemeUtils.platform.colorCircularProgressBar(accountSetupWebviewBinding.loginWebviewProgressBar, ColorRole.ON_PRIMARY_CONTAINER);
-        accountSetupWebviewBinding.loginWebview.setVisibility(View.GONE);
-        new WebViewUtil().setProxyKKPlus(accountSetupWebviewBinding.loginWebview);
-
-        accountSetupWebviewBinding.loginWebview.getSettings().setAllowFileAccess(false);
-        accountSetupWebviewBinding.loginWebview.getSettings().setJavaScriptEnabled(true);
-        accountSetupWebviewBinding.loginWebview.getSettings().setDomStorageEnabled(true);
-
-        accountSetupWebviewBinding.loginWebview.getSettings().setUserAgentString(MainApp.getUserAgent());
-        accountSetupWebviewBinding.loginWebview.getSettings().setSaveFormData(false);
-        accountSetupWebviewBinding.loginWebview.getSettings().setSavePassword(false);
-
-        Map<String, String> headers = new HashMap<>();
-        headers.put(RemoteOperation.OCS_API_HEADER, RemoteOperation.OCS_API_HEADER_VALUE);
-
-        new WebViewUtil().setProxyKKPlus(accountSetupWebviewBinding.loginWebview);
-
-        accountSetupWebviewBinding.loginWebview.loadUrl(getString(R.string.provider_registration_server), headers);
-        accountSetupWebviewBinding.loginFlowV2.loginFlowInfoV2.setVisibility(View.GONE);
-
-        setClient();
-    }
-
     private boolean checkIfViaSSO(Intent intent) {
         Bundle extras = intent.getExtras();
         if (extras == null) {
