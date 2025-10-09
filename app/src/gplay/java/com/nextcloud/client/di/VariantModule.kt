@@ -12,6 +12,10 @@ import com.ionos.scanbot.availability.Availability
 import com.ionos.scanbot.di.qualifiers.Scanbot
 import com.ionos.scanbot.di.qualifiers.ScanbotLicense
 import com.nextcloud.appscan.ScanPageContract
+import androidx.activity.result.contract.ActivityResultContract
+import com.ionos.scanbot.availability.Availability
+import com.ionos.scanbot.di.qualifiers.Scanbot
+import com.ionos.scanbot.di.qualifiers.ScanbotLicense
 import com.nextcloud.client.documentscan.AppScanOptionalFeature
 import dagger.Module
 import dagger.Provides
@@ -27,6 +31,9 @@ internal class VariantModule {
     ): AppScanOptionalFeature {
         return object : AppScanOptionalFeature() {
             override fun getScanContract() = ScanPageContract()
+            override fun getScanContract(): ActivityResultContract<Unit, String?> {
+                throw UnsupportedOperationException("Document scan is not available")
+            }
             override val isAvailable: Boolean = featureAvailability.available() && licenseAvailability.available()
         }
     }

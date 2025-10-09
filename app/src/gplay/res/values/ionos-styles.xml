@@ -37,6 +37,11 @@
     </style>
 
     <style name="Theme.ownCloud.Dialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+    <style name="Theme.ownCloud.Dialog" parent="@style/Theme.Material3.DayNight.Dialog.Alert">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.ownCloud.Dialog</item>
+    </style>
+
+    <style name="ThemeOverlay.ownCloud.Dialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
         <item name="alertDialogStyle">@style/MaterialAlertDialogStyle</item>
         <item name="materialAlertDialogTitleTextStyle">@style/MaterialAlertDialog.App.Title.Text</item>
         <item name="materialAlertDialogBodyTextStyle">@style/MaterialAlertDialog.App.Body.Text</item>

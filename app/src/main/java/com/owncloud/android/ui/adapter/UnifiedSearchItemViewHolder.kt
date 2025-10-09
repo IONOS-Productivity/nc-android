@@ -113,6 +113,7 @@ class UnifiedSearchItemViewHolder(
     }
 
     @IonosCustomization
+    @IonosCustomization("Custom drawable tinting. Use mimetype icon for unknown entry types.")
     private fun getPlaceholder(
         entry: SearchResultEntry,
         entryType: SearchResultEntryType,
@@ -123,6 +124,11 @@ class UnifiedSearchItemViewHolder(
         }
 
         val defaultDrawable = MimeTypeUtil.getFileTypeIcon(mimetype, entry.title, context, viewThemeUtils)
+
+        if (entryType == SearchResultEntryType.Unknown && defaultDrawable != null) {
+            return defaultDrawable
+        }
+
         val drawable: Drawable = ResourcesCompat.getDrawable(context.resources, iconId, null) ?: defaultDrawable
         val color = ContextCompat.getColor(context, R.color.filelist_file_icon_color)
         return viewThemeUtils.platform.colorDrawable(drawable, color)

@@ -48,6 +48,7 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 import com.ionos.annotation.IonosCustomization;
+import com.ionos.player.ui.PlayerLauncher;
 import com.nextcloud.appReview.InAppReviewHelper;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.appinfo.AppInfo;
@@ -253,6 +254,9 @@ public class FileDisplayActivity extends FileActivity
     @Inject AsyncRunner asyncRunner;
     @Inject Clock clock;
     @Inject SyncedFolderProvider syncedFolderProvider;
+
+    @IonosCustomization
+    @Inject PlayerLauncher playerLauncher;
 
     public static Intent openFileIntent(Context context, User user, OCFile file) {
         final Intent intent = new Intent(context, PreviewImageActivity.class);
@@ -2241,13 +2245,11 @@ public class FileDisplayActivity extends FileActivity
         }
     }
 
+    @IonosCustomization("Launch of custom player")
     private void startMediaActivity(OCFile file, long startPlaybackPosition, boolean autoplay, Optional<User> user) {
-        Intent previewMediaIntent = new Intent(this, PreviewMediaActivity.class);
-        previewMediaIntent.putExtra(PreviewMediaActivity.EXTRA_FILE, file);
-        previewMediaIntent.putExtra(PreviewMediaActivity.EXTRA_USER, user.get());
-        previewMediaIntent.putExtra(PreviewMediaActivity.EXTRA_START_POSITION, startPlaybackPosition);
-        previewMediaIntent.putExtra(PreviewMediaActivity.EXTRA_AUTOPLAY, autoplay);
-        startActivity(previewMediaIntent);
+        OCFileListFragment listOfFiles = getListOfFilesFragment();
+        SearchType searchType = listOfFiles != null ? listOfFiles.getCurrentSearchType() : null;
+        playerLauncher.launch(this, file, searchType);
     }
 
     public void configureToolbarForPreview(OCFile file) {

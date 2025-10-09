@@ -102,6 +102,9 @@ public final class MimeTypeUtil {
             }
 
            icon.setTint(context.getColor(R.color.filelist_file_icon_color));
+            if (R.drawable.file_image != iconId && R.drawable.file_movie != iconId && R.drawable.file_sound != iconId) {
+                icon.setTint(context.getColor(R.color.filelist_file_icon_color));
+            }
 
             return icon;
         } else {

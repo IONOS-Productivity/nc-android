@@ -543,8 +543,14 @@ public class OCFileListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     @IonosCustomization
+    @IonosCustomization("Custom grid view, Show current playback progress")
     private void bindListGridItemViewHolder(ListGridItemViewHolder holder, OCFile file) {
         holder.getFileName().setText(mStorageManager.getFilenameConsideringOfflineOperation(file));
+        holder.getPlayerProgressIndicator().setFile(file);
+
+        if (IonosBuildHelper.isIonosBuild()) {
+            return;
+        }
 
         if (IonosBuildHelper.isIonosBuild()) {
             return;

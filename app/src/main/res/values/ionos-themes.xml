@@ -8,6 +8,7 @@
 <resources>
     <style name="BaseTheme.Ionos.Toolbar" parent="BaseTheme.ownCloud.Toolbar">
         <item name="materialAlertDialogTheme">@style/Theme.ownCloud.Dialog</item>
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.ownCloud.Dialog</item>
         <item name="popupMenuStyle">@style/Generic.Nextcloud.Widget.PopupMenu</item>
         <item name="bottomSheetDialogTheme">@style/Generic.ThemeOverlay.App.BottomSheetDialog</item>
         <item name="snackbarStyle">@style/Widget.App.Snackbar</item>
