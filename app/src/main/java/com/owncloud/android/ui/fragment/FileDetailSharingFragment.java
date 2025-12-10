@@ -162,7 +162,7 @@ public class FileDetailSharingFragment extends Fragment implements ShareeListAda
 
     private void fetchSharees() {
         final var activity = fileActivity;
-        if (activity == null) {
+        if (activity == null || !isAdded()) {
             return;
         }
 
@@ -556,6 +556,10 @@ public class FileDetailSharingFragment extends Fragment implements ShareeListAda
      */
     @SuppressFBWarnings("PSC")
     public void refreshSharesFromDB() {
+        if (binding == null) {
+            return;
+        }
+
         OCFile newFile = fileDataStorageManager.getFileById(file.getFileId());
         if (newFile != null) {
             file = newFile;
