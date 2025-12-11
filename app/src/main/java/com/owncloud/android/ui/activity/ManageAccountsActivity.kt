@@ -241,6 +241,7 @@ class ManageAccountsActivity :
 
     @IonosCustomization
     override fun showFirstRunActivity() {
+        stopMediaPlayerAndHidePip()
         val intent = AuthorizationMethodActivity.createInstance(applicationContext);
         startActivity(intent)
     }
@@ -248,6 +249,7 @@ class ManageAccountsActivity :
     @Suppress("TooGenericExceptionCaught")
     @SuppressLint("NotifyDataSetChanged")
     override fun startAccountCreation() {
+        stopMediaPlayerAndHidePip()
         val am = AccountManager.get(applicationContext)
         am.addAccount(
             MainApp.getAccountType(this),
