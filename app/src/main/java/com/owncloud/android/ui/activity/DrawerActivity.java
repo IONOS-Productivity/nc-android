@@ -52,6 +52,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.ionos.annotation.IonosCustomization;
 import com.ionos.authorization_method.AuthorizationMethodActivity;
+import com.ionos.player.model.PlaybackModel;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.di.Injectable;
 import com.nextcloud.client.files.DeepLinkConstants;
@@ -208,6 +209,9 @@ public abstract class DrawerActivity extends ToolbarActivity
 
     @Inject
     ClientFactory clientFactory;
+
+    @Inject
+    PlaybackModel playbackModel;
 
     /**
      * Initializes the drawer and its content. This method needs to be called after the content view has been set.
@@ -660,12 +664,17 @@ public abstract class DrawerActivity extends ToolbarActivity
 
     @IonosCustomization
     public void openAddAccount() {
+        stopMediaPlayerAndHidePip();
         if (MDMConfig.INSTANCE.showIntro(this)) {
             Intent firstRunIntent = AuthorizationMethodActivity.createInstance(getApplicationContext());
             startActivity(firstRunIntent);
         } else {
             startAccountCreation();
         }
+    }
+
+    protected void stopMediaPlayerAndHidePip() {
+        playbackModel.release();
     }
 
     private void startSharedSearch(MenuItem menuItem) {
