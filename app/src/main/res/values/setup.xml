@@ -87,6 +87,7 @@
     <bool name="davdroid_integration_enabled">true</bool>
     <bool name="help_enabled">true</bool>
     <string name="url_help">https://help.ionos.de</string>
+    <string name="url_help">https://wl.hidrive.com/easy/0118</string>
     <bool name="privacy_enabled">true</bool>
     <string name="privacy_url">https://privacy.ionos.de</string>
     <bool name="imprint_enabled">false</bool>
@@ -158,6 +159,7 @@
     <string name="buildNumber" translatable="false">30949</string>
     <string name="buildNumber" translatable="false">31575</string>
     <string name="buildNumber" translatable="false">34292</string>
+    <string name="buildNumber" translatable="false">36202</string>
 </resources>
 
 
