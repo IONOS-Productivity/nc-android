@@ -21,6 +21,7 @@ import android.view.ViewGroup
 import android.widget.CompoundButton
 import android.widget.DatePicker
 import androidx.core.app.ActivityCompat
+import com.ionos.annotation.IonosCustomization
 import androidx.lifecycle.lifecycleScope
 import com.nextcloud.client.account.User
 import com.nextcloud.client.di.Injectable
@@ -233,16 +234,8 @@ class BackupFragment :
         }
     }
 
+    @IonosCustomization
     private fun applyUserColor() {
-        viewThemeUtils.androidx.colorSwitchCompat(binding.contacts)
-        viewThemeUtils.androidx.colorSwitchCompat(binding.calendar)
-        viewThemeUtils.androidx.colorSwitchCompat(binding.dailyBackup)
-
-        viewThemeUtils.material.colorMaterialButtonPrimaryFilled(binding.backupNow)
-        viewThemeUtils.material.colorMaterialButtonPrimaryOutlined(binding.contactsDatepicker)
-
-        viewThemeUtils.platform.colorTextView(binding.dataToBackUpTitle)
-        viewThemeUtils.platform.colorTextView(binding.backupSettingsTitle)
     }
 
     override fun onResume() {
@@ -517,6 +510,7 @@ class BackupFragment :
         }
     }
 
+    @IonosCustomization
     private fun openDate(savedDate: Calendar?) {
         val contactsPreferenceActivity = activity as ContactsPreferenceActivity?
         if (contactsPreferenceActivity == null) {
@@ -548,10 +542,6 @@ class BackupFragment :
                 show()
             }
 
-            viewThemeUtils.platform.colorTextButtons(
-                datePickerDialog!!.getButton(DatePickerDialog.BUTTON_NEGATIVE),
-                datePickerDialog!!.getButton(DatePickerDialog.BUTTON_POSITIVE)
-            )
         } else {
             DisplayUtils.showSnackMessage(
                 requireView().findViewById<View>(R.id.contacts_linear_layout),

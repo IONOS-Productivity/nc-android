@@ -35,6 +35,8 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.ionos.annotation.IonosCustomization;
+import com.ionos.utils.IonosBuildHelper;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.network.ConnectivityService;
 import com.nextcloud.utils.BitmapExtensionsKt;
@@ -530,6 +532,7 @@ public final class ThumbnailsCacheManager {
             return thumbnail;
         }
 
+        @IonosCustomization
         protected void onPostExecute(Bitmap bitmap) {
             if (bitmap != null && mImageViewReference != null) {
                 final ImageView imageView = mImageViewReference.get();
@@ -545,7 +548,9 @@ public final class ThumbnailsCacheManager {
                         tagId = String.valueOf(((TrashbinFile) mFile).getRemoteId());
                     }
                     if (String.valueOf(imageView.getTag()).equals(tagId)) {
-                        if (gridViewEnabled) {
+                        if (IonosBuildHelper.isIonosBuild()) {
+                            imageView.setImageBitmap(bitmap);
+                        } else if (gridViewEnabled) {
                             BitmapUtils.setRoundedBitmapForGridMode(bitmap, imageView);
                         } else {
                             BitmapUtils.setRoundedBitmap(bitmap, imageView);
@@ -1071,7 +1076,11 @@ public final class ThumbnailsCacheManager {
         return null;
     }
 
+     @IonosCustomization("Use layout overlay instead of bitmap overlay")
     public static Bitmap addVideoOverlay(Bitmap thumbnail, Context context) {
+        if (IonosBuildHelper.isIonosBuild()) {
+            return thumbnail;
+        }
 
         Drawable playButtonDrawable = ResourcesCompat.getDrawable(MainApp.getAppContext().getResources(),
                                                                   R.drawable.video_white,

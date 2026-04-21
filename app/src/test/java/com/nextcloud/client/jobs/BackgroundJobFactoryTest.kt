@@ -13,6 +13,8 @@ import android.content.res.Resources
 import android.os.Build
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.work.WorkerParameters
+import com.ionos.privacy.PrivacyPreferences
+import com.ionos.scanbot.license.ScanbotLicenseJobFactory
 import com.nextcloud.client.account.UserAccountManager
 import com.nextcloud.client.core.Clock
 import com.nextcloud.client.database.NextcloudDatabase
@@ -106,6 +108,12 @@ class BackgroundJobFactoryTest {
     private lateinit var syncedFolderProvider: SyncedFolderProvider
 
     @Mock
+    private lateinit var scanbotLicenseJobFactory: ScanbotLicenseJobFactory
+
+    @Mock
+    private lateinit var privacyPreferences: PrivacyPreferences
+
+    @Mock
     private lateinit var db: NextcloudDatabase
 
     @Mock private lateinit var fileSystemDao: FileSystemDao
@@ -143,6 +151,8 @@ class BackgroundJobFactoryTest {
             { localBroadcastManager },
             generatePDFUseCase,
             syncedFolderProvider,
+            scanbotLicenseJobFactory,
+            privacyPreferences,
             db
         )
     }

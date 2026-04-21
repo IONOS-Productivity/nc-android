@@ -22,6 +22,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.ionos.annotation.IonosCustomization;
+import com.ionos.player.model.ThumbnailLoader;
 import com.nextcloud.utils.extensions.IntentExtensionsKt;
 import com.owncloud.android.BuildConfig;
 import com.owncloud.android.R;
@@ -35,6 +37,7 @@ import com.owncloud.android.ui.activity.FolderPickerActivity;
 import com.owncloud.android.ui.activity.ToolbarActivity;
 import com.owncloud.android.ui.adapter.CommonOCFileListAdapterInterface;
 import com.owncloud.android.ui.adapter.GalleryAdapter;
+import com.owncloud.android.ui.adapter.GallerySimpleAdapter;
 import com.owncloud.android.ui.asynctasks.GallerySearchTask;
 import com.owncloud.android.ui.events.ChangeMenuEvent;
 
@@ -42,9 +45,11 @@ import javax.inject.Inject;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.LifecycleOwnerKt;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import kotlinx.coroutines.CoroutineScope;
 
 /**
  * A Fragment that lists all files and folders in a given path
@@ -60,14 +65,19 @@ public class GalleryFragment extends OCFileListFragment implements GalleryFragme
     private AsyncTask<Void, Void, GallerySearchTask.Result> photoSearchTask;
     private long endDate;
     private int limit = 150;
-    private GalleryAdapter mAdapter;
+    @IonosCustomization("Custom adapter")
+    private GallerySimpleAdapter mAdapter;
+
+    @Inject
+    ThumbnailLoader thumbnailLoader;
 
     private static final int SELECT_LOCATION_REQUEST_CODE = 212;
     private GalleryFragmentBottomSheetDialog galleryFragmentBottomSheetDialog;
 
     @Inject FileDataStorageManager fileDataStorageManager;
     private final static int maxColumnSizeLandscape = 5;
-    private final static int maxColumnSizePortrait = 2;
+    @IonosCustomization("increased quantity")
+    private final static int maxColumnSizePortrait = 3;
     private int columnSize;
 
     protected void setPhotoSearchQueryRunning(boolean value) {
@@ -169,15 +179,19 @@ public class GalleryFragment extends OCFileListFragment implements GalleryFragme
     }
 
     @Override
+    @IonosCustomization("Custom adapter")
     protected void setAdapter(Bundle args) {
-        mAdapter = new GalleryAdapter(requireContext(),
-                                      accountManager.getUser(),
-                                      this,
-                                      preferences,
-                                      mContainerActivity,
-                                      viewThemeUtils,
-                                      columnSize,
-                                      ThumbnailsCacheManager.getThumbnailDimension());
+        CoroutineScope lifecycleScope = LifecycleOwnerKt.getLifecycleScope(getViewLifecycleOwner());
+        mAdapter = new GallerySimpleAdapter(requireContext(),
+                                            accountManager.getUser(),
+                                            this,
+                                            preferences,
+                                            mContainerActivity,
+                                            viewThemeUtils,
+                                            columnSize,
+                                            ThumbnailsCacheManager.getThumbnailDimension(),
+                                            thumbnailLoader,
+                                            lifecycleScope);
         mAdapter.setHasStableIds(true);
         setRecyclerViewAdapter(mAdapter);
 

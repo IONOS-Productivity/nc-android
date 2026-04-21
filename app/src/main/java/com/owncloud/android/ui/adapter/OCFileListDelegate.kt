@@ -12,6 +12,7 @@ import android.view.View
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import com.elyeproj.loaderviewlibrary.LoaderImageView
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.android.common.ui.theme.utils.ColorRole
 import com.nextcloud.client.account.User
 import com.nextcloud.client.jobs.download.FileDownloadHelper
@@ -200,6 +201,7 @@ class OCFileListDelegate(
     }
 
     @Suppress("MagicNumber")
+    @IonosCustomization
     fun bindViewHolder(
         viewHolder: ListViewHolder,
         file: OCFile,
@@ -210,7 +212,18 @@ class OCFileListDelegate(
         // thumbnail
         viewHolder.imageFileName?.text = file.fileName
         viewHolder.thumbnail.tag = file.fileId
-        setThumbnail(viewHolder.thumbnail, viewHolder.shimmerThumbnail, file, overlayManager)
+        OCFileListThumbnailLoader(
+            file,
+            viewHolder,
+            user,
+            storageManager,
+            asyncTasks,
+            gridView,
+            context,
+            preferences,
+            viewThemeUtils,
+            syncFolderProvider
+        ).load()
 
         // item layout + click listeners
         bindGridItemLayout(file, viewHolder)
@@ -262,8 +275,9 @@ class OCFileListDelegate(
         }
     }
 
+    @IonosCustomization
     private fun bindGridItemLayout(file: OCFile, gridViewHolder: ListViewHolder) {
-        setItemLayoutBackgroundColor(file, gridViewHolder)
+        setItemLayoutBackground(file, gridViewHolder)
         setCheckBoxImage(file, gridViewHolder)
         setItemLayoutOnClickListeners(file, gridViewHolder)
 
@@ -284,6 +298,26 @@ class OCFileListDelegate(
                     )
                 }
             }
+        }
+    }
+
+    @IonosCustomization
+    private fun setItemLayoutBackground(file: OCFile, gridViewHolder: ListViewHolder) {
+        val isSelected = file.fileId == highlightedItem?.fileId || isCheckedFile(file)
+        if (gridViewHolder is OCFileListGridItemViewHolder) {
+            val itemLayoutBackgroundResId = if (isSelected) {
+                R.drawable.grid_mode_selected_item_background
+            } else {
+                R.drawable.grid_mode_item_background
+            }
+            gridViewHolder.itemLayout.setBackgroundResource(itemLayoutBackgroundResId)
+        } else {
+            val itemLayoutBackgroundColor = if (isSelected) {
+                ContextCompat.getColor(context, R.color.selected_item_background)
+            } else {
+                ContextCompat.getColor(context, R.color.bg_default)
+            }
+            gridViewHolder.itemLayout.setBackgroundColor(itemLayoutBackgroundColor)
         }
     }
 
@@ -309,11 +343,10 @@ class OCFileListDelegate(
         }
     }
 
+    @IonosCustomization
     private fun setCheckBoxImage(file: OCFile, gridViewHolder: ListViewHolder) {
         if (isCheckedFile(file)) {
-            gridViewHolder.checkbox.setImageDrawable(
-                viewThemeUtils.platform.tintDrawable(context, R.drawable.ic_checkbox_marked, ColorRole.PRIMARY)
-            )
+            gridViewHolder.checkbox.setImageResource(R.drawable.ic_checkbox_marked)
         } else {
             gridViewHolder.checkbox.setImageResource(R.drawable.ic_checkbox_blank_outline)
         }
