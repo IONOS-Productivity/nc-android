@@ -56,6 +56,8 @@ import com.bumptech.glide.request.target.Target;
 import com.caverock.androidsvg.SVG;
 import com.elyeproj.loaderviewlibrary.LoaderImageView;
 import com.google.android.material.snackbar.Snackbar;
+import com.ionos.annotation.IonosCustomization;
+import com.ionos.utils.IonosBuildHelper;
 import com.nextcloud.client.account.CurrentAccountProvider;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.network.ClientFactory;
@@ -102,6 +104,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 
+import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
@@ -478,6 +481,7 @@ public final class DisplayUtils {
      * @param resources    reference for density information
      * @param callContext  which context is called to set the generated avatar
      */
+    @IonosCustomization
     public static void setAvatar(@NonNull User user,
                                  @NonNull String userId,
                                  String displayName,
@@ -486,30 +490,45 @@ public final class DisplayUtils {
                                  Resources resources,
                                  Object callContext,
                                  Context context) {
-        if (callContext instanceof View) {
-            ((View) callContext).setContentDescription(String.valueOf(user.toPlatformAccount().hashCode()));
+        if (callContext instanceof View v) {
+            v.setContentDescription(String.valueOf(user.toPlatformAccount().hashCode()));
         }
 
-        ArbitraryDataProvider arbitraryDataProvider = new ArbitraryDataProviderImpl(context);
+        if (IonosBuildHelper.isIonosBuild()) {
+            Drawable avatar = ResourcesCompat.getDrawable(resources, R.drawable.account_circle_white, null);
+            listener.avatarGenerated(avatar, callContext);
+            return;
+        }
 
         final String accountName = user.getAccountName();
         String serverName = accountName.substring(accountName.lastIndexOf('@') + 1);
-        String eTag = arbitraryDataProvider.getValue(userId + "@" + serverName, ThumbnailsCacheManager.AVATAR);
-        String avatarKey = "a_" + userId + "_" + serverName + "_" + eTag;
+        Drawable avatar;
 
-        // first show old one
-        Drawable avatar = BitmapUtils.bitmapToCircularBitmapDrawable(resources,
-                                                                     ThumbnailsCacheManager.getBitmapFromDiskCache(avatarKey));
+        if (userId.isEmpty()) {
+            avatar = ContextCompat.getDrawable(context, R.drawable.ic_link);
+            if (avatar != null) {
+                int tintColor = ContextCompat.getColor(context, R.color.icon_on_nc_grey);
+                avatar.setTint(tintColor);
+            }
+        } else {
+            ArbitraryDataProvider arbitraryDataProvider = new ArbitraryDataProviderImpl(context);
+            String eTag = arbitraryDataProvider.getValue(userId + "@" + serverName, ThumbnailsCacheManager.AVATAR);
+            String avatarKey = "a_" + userId + "_" + serverName + "_" + eTag;
 
-        // if no one exists, show colored icon with initial char
-        if (avatar == null) {
-            try {
-                avatar = TextDrawable.createAvatarByUserId(displayName, avatarRadius);
-            } catch (Exception e) {
-                Log_OC.e(TAG, "Error calculating RGB value for active account icon.", e);
-                avatar = ResourcesCompat.getDrawable(resources,
-                                                     R.drawable.account_circle_white,
-                                                     null);
+            // first show old one
+            avatar = BitmapUtils.bitmapToCircularBitmapDrawable(resources,
+                                                                ThumbnailsCacheManager.getBitmapFromDiskCache(avatarKey));
+
+            // if no one exists, show colored icon with initial char
+            if (avatar == null) {
+                try {
+                    avatar = TextDrawable.createAvatarByUserId(displayName, avatarRadius);
+                } catch (Exception e) {
+                    Log_OC.e(TAG, "Error calculating RGB value for active account icon.", e);
+                    avatar = ResourcesCompat.getDrawable(resources,
+                                                         R.drawable.account_circle_white,
+                                                         null);
+                }
             }
         }
 
@@ -834,6 +853,25 @@ public final class DisplayUtils {
             case SORT_A_TO_Z_ID:
             default:
                 return R.string.menu_item_sort_by_name_a_z;
+        }
+    }
+
+    @IonosCustomization
+    public static @DrawableRes int getSortOrderIconRes(FileSortOrder sortOrder) {
+        switch (sortOrder.name) {
+            case SORT_Z_TO_A_ID:
+                return R.drawable.ic_alphabetical_desc;
+            case SORT_NEW_TO_OLD_ID:
+                return R.drawable.ic_modification_desc;
+            case SORT_OLD_TO_NEW_ID:
+                return R.drawable.ic_modification_asc;
+            case SORT_BIG_TO_SMALL_ID:
+                return R.drawable.ic_size_desc;
+            case SORT_SMALL_TO_BIG_ID:
+                return R.drawable.ic_size_asc;
+            case SORT_A_TO_Z_ID:
+            default:
+                return R.drawable.ic_alphabetical_asc;
         }
     }
 

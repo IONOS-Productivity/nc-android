@@ -30,7 +30,11 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.LinearLayout;
 
+import com.ionos.annotation.IonosCustomization;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.account.UserAccountManager;
 import com.nextcloud.client.di.Injectable;
@@ -59,6 +63,8 @@ import com.owncloud.android.ui.adapter.ShareeListAdapter;
 import com.owncloud.android.ui.adapter.ShareeListAdapterListener;
 import com.owncloud.android.ui.asynctasks.RetrieveHoverCardAsyncTask;
 import com.owncloud.android.ui.dialog.SharePasswordDialogFragment;
+import com.owncloud.android.ui.fragment.share.RemoteShareRepository;
+import com.owncloud.android.ui.fragment.share.ShareRepository;
 import com.owncloud.android.ui.fragment.util.FileDetailSharingFragmentHelper;
 import com.owncloud.android.ui.helpers.FileOperationsHelper;
 import com.owncloud.android.utils.ClipboardUtil;
@@ -80,6 +86,7 @@ import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import kotlin.Unit;
 
 public class FileDetailSharingFragment extends Fragment implements ShareeListAdapterListener,
     DisplayUtils.AvatarGenerationListener,
@@ -148,22 +155,60 @@ public class FileDetailSharingFragment extends Fragment implements ShareeListAda
         if (fileActivity == null) {
             throw new IllegalArgumentException("FileActivity may not be null");
         }
+
+        fileDataStorageManager = fileActivity.getStorageManager();
+        fetchSharees();
     }
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    private void fetchSharees() {
+        final var activity = fileActivity;
+        if (activity == null || !isAdded()) {
+            return;
+        }
 
-        refreshCapabilitiesFromDB();
-        refreshSharesFromDB();
+        final var clientRepository = activity.getClientRepository();
+        if (clientRepository == null) {
+            return;
+        }
+
+        final var storageManager = fileDataStorageManager;
+        if (storageManager == null) {
+            return;
+        }
+
+        ShareRepository shareRepository = new RemoteShareRepository(clientRepository, activity, storageManager);
+        shareRepository.fetchSharees(file.getRemotePath(), () -> {
+            refreshCapabilitiesFromDB();
+            refreshSharesFromDB();
+            showShareContainer();
+            return Unit.INSTANCE;
+        }, () -> {
+            showShareContainer();
+            DisplayUtils.showSnackMessage(getView(), R.string.error_fetching_sharees);
+            return Unit.INSTANCE;
+        });
+    }
+
+    private void showShareContainer() {
+        if (binding == null) {
+            return;
+        }
+
+        final LinearLayout shimmerLayout = binding.shimmerLayout.getRoot();
+        shimmerLayout.clearAnimation();
+        shimmerLayout.setVisibility(View.GONE);
+
+        binding.shareContainer.setVisibility(View.VISIBLE);
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FileDetailsSharingFragmentBinding.inflate(inflater, container, false);
 
+        final Animation blinkAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.blink);
+        binding.shimmerLayout.getRoot().startAnimation(blinkAnimation);
+
         fileOperationsHelper = fileActivity.getFileOperationsHelper();
-        fileDataStorageManager = fileActivity.getStorageManager();
 
         AccountManager accountManager = AccountManager.get(requireContext());
         String userId = accountManager.getUserData(user.toPlatformAccount(),
@@ -190,7 +235,9 @@ public class FileDetailSharingFragment extends Fragment implements ShareeListAda
                               viewThemeUtils,
                               file.isEncrypted(),
                               SharesType.EXTERNAL);
-        
+
+        externalShareeListAdapter.setHasStableIds(true);
+
         binding.sharesListExternal.setAdapter(externalShareeListAdapter);
 
         binding.sharesListExternal.setLayoutManager(new LinearLayoutManager(requireContext()));
@@ -233,6 +280,7 @@ public class FileDetailSharingFragment extends Fragment implements ShareeListAda
         searchConfig.reset();
     }
 
+    @IonosCustomization
     private void setupView() {
         setShareWithYou();
 
@@ -284,7 +332,7 @@ public class FileDetailSharingFragment extends Fragment implements ShareeListAda
                 }
             } else {
                 binding.createLink.setText(R.string.create_link);
-                binding.searchView.setQueryHint(getResources().getString(R.string.share_search_internal));
+                binding.searchView.setQueryHint(getResources().getString(R.string.ionos_share_search));
             }
 
             binding.createLink.setOnClickListener(v -> createPublicShareLink());
@@ -508,6 +556,10 @@ public class FileDetailSharingFragment extends Fragment implements ShareeListAda
      */
     @SuppressFBWarnings("PSC")
     public void refreshSharesFromDB() {
+        if (binding == null) {
+            return;
+        }
+
         OCFile newFile = fileDataStorageManager.getFileById(file.getFileId());
         if (newFile != null) {
             file = newFile;

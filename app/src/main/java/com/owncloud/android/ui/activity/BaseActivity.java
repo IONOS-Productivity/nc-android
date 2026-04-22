@@ -13,6 +13,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 
+import com.ionos.annotation.IonosCustomization;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.account.UserAccountManager;
 import com.nextcloud.client.di.Injectable;
@@ -20,11 +21,14 @@ import com.nextcloud.client.mixins.MixinRegistry;
 import com.nextcloud.client.mixins.SessionMixin;
 import com.nextcloud.client.preferences.AppPreferences;
 import com.nextcloud.client.preferences.DarkMode;
+import com.nextcloud.repository.ClientRepository;
+import com.nextcloud.repository.RemoteClientRepository;
 import com.nextcloud.utils.extensions.WindowExtensionsKt;
 import com.owncloud.android.datamodel.FileDataStorageManager;
 import com.owncloud.android.datamodel.OCFile;
 import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.lib.resources.status.OCCapability;
+import com.owncloud.android.ui.fragment.filesRepository.FilesRepository;
 
 import java.util.Optional;
 
@@ -67,11 +71,14 @@ public abstract class BaseActivity extends AppCompatActivity implements Injectab
         return accountManager;
     }
 
+    private ClientRepository clientRepository;
+
     @Override
+    @IonosCustomization("Window insets handling")
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         boolean isApiLevel35OrHigher = (Build.VERSION.SDK_INT >= 35);
 
-        if (isApiLevel35OrHigher) {
+        if (isApiLevel35OrHigher && isDefaultWindowInsetsHandlingEnabled()) {
             enableEdgeToEdge();
             WindowExtensionsKt.addSystemBarPaddings(getWindow());
         }
@@ -83,6 +90,13 @@ public abstract class BaseActivity extends AppCompatActivity implements Injectab
         if (enableAccountHandling) {
             mixinRegistry.onCreate(savedInstanceState);
         }
+
+        clientRepository = new RemoteClientRepository(accountManager.getUser(), this, this);
+    }
+
+    @IonosCustomization("Window insets handling")
+    protected boolean isDefaultWindowInsetsHandlingEnabled() {
+        return true;
     }
 
     private void enableEdgeToEdge() {
@@ -195,4 +209,9 @@ public abstract class BaseActivity extends AppCompatActivity implements Injectab
     public FileDataStorageManager getStorageManager() {
         return fileDataStorageManager;
     }
+
+    public ClientRepository getClientRepository() {
+        return clientRepository;
+    }
+
 }
