@@ -8,6 +8,9 @@
 package com.owncloud.android.ui.adapter
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.LayerDrawable
 import android.view.View
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
@@ -47,6 +50,8 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import androidx.core.graphics.drawable.toDrawable
+import com.owncloud.android.utils.MimeTypeUtil
 
 @Suppress("LongParameterList", "TooManyFunctions")
 class OCFileListDelegate(
@@ -122,7 +127,8 @@ class OCFileListDelegate(
         if (cached != null) {
             imageView.setImageBitmap(cached)
         } else {
-            imageView.setImageDrawable(OCFileUtils.getMediaPlaceholder(file, imageDimension))
+            @IonosCustomization("Custom placeholder for gallery images while loading")
+            imageView.setImageDrawable(Color.LTGRAY.toDrawable())
         }
 
         val job = ioScope.launch {
@@ -146,10 +152,21 @@ class OCFileListDelegate(
                             }
                         }
 
+                        @IonosCustomization("image post processing - custom placeholder for failed image loading")
                         override fun onError() {
                             if (imageView.tag == file.fileId) {
                                 Log_OC.d(tag, "setGalleryImage.onError()")
                                 DisplayUtils.stopShimmer(shimmer, imageView)
+                                imageView.post {
+                                    imageView.scaleType = ImageView.ScaleType.FIT_CENTER
+                                    val inset = (imageDimension.first * 0.45f).toInt()
+                                    val icon = OCFileUtils.getMediaPlaceholder(file, imageDimension)
+                                    val backgroundColor = context.getColor(R.color.ionos_gallery_item_background_color)
+                                    val layered = LayerDrawable(arrayOf(backgroundColor.toDrawable(), icon)).apply {
+                                        setLayerInset(1, inset, inset, inset, inset)
+                                    }
+                                    imageView.setImageDrawable(layered)
+                                }
                             }
                         }
                     }

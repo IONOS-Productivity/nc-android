@@ -68,4 +68,5 @@
     <color name="ionos_bottom_navigation_icon_color">@color/dusk</color>
     <color name="ionos_bottom_navigation_active_indicator_color">@color/metallic_silver</color>
     <color name="ionos_bottom_navigation_ripple_color">@color/geyser</color>
+    <color name="ionos_gallery_item_background_color">@color/ghost_white</color>
 </resources>
