@@ -17,6 +17,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 
+import com.ionos.annotation.IonosCustomization;
 import com.nextcloud.client.account.User;
 import com.owncloud.android.R;
 import com.owncloud.android.databinding.ShareActivityBinding;
@@ -40,6 +41,7 @@ import java.util.Optional;
 
 import javax.inject.Inject;
 
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -56,11 +58,19 @@ public class ShareActivity extends FileActivity {
     SyncedFolderProvider syncedFolderProvider;
 
     @Override
+    @IonosCustomization("Setup toolbar if available")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         ShareActivityBinding binding = ShareActivityBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            toolbar.setNavigationOnClickListener(v -> finish());
+        }
 
         OCFile file = getFile();
         Optional<User> optionalUser = getUser();

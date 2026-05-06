@@ -146,8 +146,11 @@ android {
             }
 
             register("gplay") {
-                applicationId = "com.nextcloud.client"
+                applicationId = "com.ionos.hidrivenext"
                 dimension = "default"
+                versionCode = 17
+                isDefault = true
+                resConfigs("en", "de", "es", "fr", "nl", "it")
             }
 
             register("huawei") {
@@ -423,9 +426,9 @@ dependencies {
     // endregion
 
     // region AppScan, document scanner not available on FDroid (generic) due to OpenCV binaries
-    "gplayImplementation"(project(":appscan"))
     "huaweiImplementation"(project(":appscan"))
     "qaImplementation"(project(":appscan"))
+    "implementation"(project(":scanbot"))
     // endregion
 
     // region SpotBugs
@@ -515,4 +518,9 @@ dependencies {
 
     // kotlinx.serialization
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.kotlinx.coroutines.guava)
+
+    // reactivex
+    implementation(libs.rxjava)
+    implementation(libs.rxandroid)
 }

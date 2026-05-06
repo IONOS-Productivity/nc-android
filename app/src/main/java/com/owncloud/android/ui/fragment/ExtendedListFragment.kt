@@ -50,6 +50,8 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import com.google.android.material.button.MaterialButton
+import com.ionos.annotation.IonosCustomization
+import com.ionos.utils.IonosBuildHelper
 import com.nextcloud.android.common.ui.theme.utils.ColorRole
 import com.nextcloud.client.account.UserAccountManager
 import com.nextcloud.client.di.Injectable
@@ -353,9 +355,14 @@ open class ExtendedListFragment :
         binding = null
     }
 
+    @IonosCustomization
     private inner class ScaleListener : SimpleOnScaleGestureListener() {
         @SuppressLint("NotifyDataSetChanged")
         override fun onScale(detector: ScaleGestureDetector): Boolean {
+            if (IonosBuildHelper.isIonosBuild()) {
+                return true;
+            }
+
             setGridViewColumns(detector.getScaleFactor())
 
             preferences.setGridColumns(mScale)
@@ -550,6 +557,17 @@ open class ExtendedListFragment :
     }
 
     /**
+     * displays an empty list information with a headline, a message and a not to be tinted icon.
+     *
+     * @param headline the headline
+     * @param message  the message
+     * @param icon     the icon to be shown
+     */
+    fun setMessageForEmptyList(@StringRes headline: Int, @StringRes message: Int, @DrawableRes icon: Int) {
+        setMessageForEmptyList(headline, message, icon, false)
+    }
+
+    /**
      * displays an empty list information with a headline, a message and an icon.
      *
      * @param headline the headline
@@ -599,6 +617,7 @@ open class ExtendedListFragment :
     }
 
     @Suppress("LongMethod")
+    @IonosCustomization("disabled icon tinting")
     fun setEmptyListMessage(state: Parcelable?) {
         when (state) {
             SearchType.NO_SEARCH -> {
@@ -606,21 +625,21 @@ open class ExtendedListFragment :
                     R.string.file_list_empty_headline,
                     getEmptyListViewTextId(),
                     R.drawable.ic_list_empty_folder,
-                    true
+                    false
                 )
             }
             SearchType.FILE_SEARCH -> {
                 setMessageForEmptyList(
                     R.string.file_list_empty_headline_server_search,
                     R.string.file_list_empty,
-                    R.drawable.ic_search_light_grey
+                    R.drawable.ic_search
                 )
             }
             SearchType.FAVORITE_SEARCH -> {
                 setMessageForEmptyList(
                     R.string.file_list_empty_favorite_headline,
                     R.string.file_list_empty_favorites_filter_list,
-                    R.drawable.ic_star_light_yellow
+                    R.drawable.favorite
                 )
             }
             SearchType.RECENTLY_MODIFIED_SEARCH -> {
@@ -634,7 +653,7 @@ open class ExtendedListFragment :
                 setMessageForEmptyList(
                     R.string.file_list_empty_headline_search,
                     R.string.file_list_empty_search,
-                    R.drawable.ic_search_light_grey
+                    R.drawable.ic_search
                 )
             }
             SearchType.SHARED_FILTER -> {
@@ -655,7 +674,7 @@ open class ExtendedListFragment :
                 setMessageForEmptyList(
                     R.string.file_list_empty_headline_server_search,
                     R.string.file_list_empty_local_search,
-                    R.drawable.ic_search_light_grey
+                    R.drawable.ic_search
                 )
             }
             EmptyListState.OFFLINE_MODE -> {
@@ -663,7 +682,7 @@ open class ExtendedListFragment :
                     R.string.offline_mode_info_title,
                     R.string.offline_mode_info_description,
                     R.drawable.ic_cloud_sync,
-                    true
+                    false
                 )
             }
             EmptyListState.LOADING -> {
@@ -678,7 +697,7 @@ open class ExtendedListFragment :
                     R.string.folder_list_empty_headline,
                     R.string.file_list_empty_moving,
                     R.drawable.ic_list_empty_create_folder,
-                    true
+                    false
                 )
             }
             EmptyListState.ONLY_ON_DEVICE -> {
@@ -686,15 +705,15 @@ open class ExtendedListFragment :
                     R.string.file_list_empty_headline,
                     R.string.file_list_empty_on_device,
                     R.drawable.ic_list_empty_folder,
-                    true
+                    false
                 )
             }
             EmptyListState.LOCAL_FILE_LIST_EMPTY_FILE -> {
                 setMessageForEmptyList(
                     R.string.file_list_empty_headline,
                     R.string.local_file_list_empty,
-                    R.drawable.ic_list_empty_folder,
-                    true
+                    R.drawable.ic_list_empty_create_folder,
+                    false
                 )
             }
             EmptyListState.LOCAL_FILE_LIST_EMPTY_FOLDER -> {
@@ -702,7 +721,7 @@ open class ExtendedListFragment :
                     R.string.folder_list_empty_headline,
                     R.string.local_folder_list_empty,
                     R.drawable.ic_list_empty_folder,
-                    true
+                    false
                 )
             }
             EmptyListState.ERROR -> {
@@ -718,7 +737,7 @@ open class ExtendedListFragment :
                     R.string.file_list_empty_headline,
                     getEmptyListViewTextId(),
                     R.drawable.ic_list_empty_folder,
-                    true
+                    false
                 )
             }
         }.also {
@@ -753,6 +772,11 @@ open class ExtendedListFragment :
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
+        if (IonosBuildHelper.isIonosBuild()) {
+            mScale = preferences.getGridColumns();
+            setGridViewColumns(1f);
+            return;
+        }
 
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             maxColumnSize = 10

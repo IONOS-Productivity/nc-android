@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.ionos.annotation.IonosCustomization;
 import com.nextcloud.android.common.ui.theme.utils.ColorRole;
 import com.nextcloud.client.preferences.AppPreferences;
 import com.nextcloud.utils.FileHelper;
@@ -191,6 +192,7 @@ public class LocalFileListAdapter extends RecyclerView.Adapter<RecyclerView.View
     }
 
     @Override
+    @IonosCustomization("ic_checkbox_marked")
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         boolean headerVisible = shouldShowHeader();
         int headerOffset = headerVisible ? 1 : 0;
@@ -231,9 +233,7 @@ public class LocalFileListAdapter extends RecyclerView.Adapter<RecyclerView.View
                 grid.itemLayout.setBackgroundColor(
                     ContextCompat.getColor(mContext, R.color.selected_item_background)
                                                   );
-                grid.checkbox.setImageDrawable(
-                    viewThemeUtils.platform.tintDrawable(mContext, R.drawable.ic_checkbox_marked, ColorRole.PRIMARY)
-                                              );
+                grid.checkbox.setImageResource(R.drawable.ic_checkbox_marked);
             } else {
                 grid.itemLayout.setBackgroundColor(
                     mContext.getResources().getColor(R.color.bg_default)

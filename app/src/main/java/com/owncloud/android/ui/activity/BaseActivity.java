@@ -11,6 +11,7 @@ import android.accounts.Account;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.ionos.annotation.IonosCustomization;
 import com.nextcloud.android.common.ui.util.extensions.AppCompatActivityExtensionsKt;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.account.UserAccountManager;
@@ -25,6 +26,7 @@ import com.owncloud.android.datamodel.FileDataStorageManager;
 import com.owncloud.android.datamodel.OCFile;
 import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.lib.resources.status.OCCapability;
+import com.owncloud.android.ui.fragment.filesRepository.FilesRepository;
 
 import java.util.Optional;
 
@@ -68,8 +70,11 @@ public abstract class BaseActivity extends AppCompatActivity implements Injectab
     private ClientRepository clientRepository;
 
     @Override
+    @IonosCustomization("Window insets handling, status bar color")
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        AppCompatActivityExtensionsKt.applyEdgeToEdgeWithSystemBarPadding(this);
+        if(isDefaultWindowInsetsHandlingEnabled()) {
+            AppCompatActivityExtensionsKt.applyEdgeToEdgeWithSystemBarPadding(this);
+        }
         super.onCreate(savedInstanceState);
         sessionMixin = new SessionMixin(this, accountManager);
         mixinRegistry.add(sessionMixin);
@@ -79,6 +84,11 @@ public abstract class BaseActivity extends AppCompatActivity implements Injectab
         }
 
         clientRepository = new RemoteClientRepository(accountManager.getUser(), this, this);
+    }
+
+    @IonosCustomization("Window insets handling")
+    protected boolean isDefaultWindowInsetsHandlingEnabled() {
+        return true;
     }
 
     @Override
