@@ -38,16 +38,18 @@
     <string name="assistant_screen_create_task_alert_dialog_input_field_placeholder">Escriba un texto</string>
     <string name="assistant_screen_delete_task_alert_dialog_description">¿Está seguro que desea eliminar esta tarea?</string>
     <string name="assistant_screen_no_task_available_text">No hay tareas del tipo %s, puede crear una nueva tarea desde la parte inferior derecha</string>
+    <string name="app_config_proxy_port_title">Puerto del Proxy</string>
+    <string name="app_widget_description">Muestra un widget del panel</string>
+    <string name="appbar_search_in">Buscar en %s</string>
+    <string name="assistant_screen_delete_task_alert_dialog_description">¿Está seguro que desea eliminar esta tarea?</string>
     <string name="assistant_screen_task_create_fail_message">Ocurrió un error al crear la tarea</string>
-    <string name="assistant_screen_task_create_success_message">Tarea creada exitosamente</string>
     <string name="assistant_screen_task_delete_fail_message">Ocurrió un error al eliminar la tarea</string>
-    <string name="assistant_screen_task_delete_success_message">Tarea eliminada exitosamente</string>
     <string name="assistant_screen_task_list_error_state_message">No se pudo obtener la lista de tareas, por favor revise su conexión a internet.</string>
     <string name="assistant_screen_task_more_actions_bottom_sheet_delete_action">Eliminar tarea</string>
-    <string name="assistant_screen_task_types_error_state_message">No se pudieron obtener los tipos de tareas, por favor, revise su conexión a internet.</string>
     <string name="assistant_screen_top_bar_title">Asistente</string>
     <string name="assistant_task_detail_screen_input_button_title">Entrada</string>
     <string name="assistant_task_detail_screen_output_button_title">Salida</string>
+    <string name="assistant_task_status_unknown">desconocido</string>
     <string name="associated_account_not_found">¡Cuenta asociada no encontrada!</string>
     <string name="auth_access_failed">Acceso fallido: %1$s</string>
     <string name="auth_account_does_not_exist">La cuenta aún no se ha agregado a este dispositivo.</string>
@@ -103,6 +105,7 @@
     <string name="bottom_navigation_menu_media_label">Media</string>
     <string name="calendar">Calendario</string>
     <string name="calendars">Calendarios</string>
+    <string name="cancel_upload">Cancel</string>
     <string name="certificate_load_problem">Se presentó un problema al cargar el certificado.</string>
     <string name="changelog_dev_version">Registro de cambios versión de desarrollo</string>
     <string name="check_back_later_or_reload">Volvé a intentarlo más tarde o recargá.</string>
@@ -112,9 +115,8 @@
     <string name="choose_template_helper_text">Por favor elegí una plantilla e introducí un nombre de archivo.</string>
     <string name="choose_which_file">Elija que archivo guardar!</string>
     <string name="choose_widget">Elegí un widget</string>
+    <string name="clear">Borrar</string>
     <string name="clear_notifications_failed">Error al borrar las notificaciones.</string>
-    <string name="clear_status_message">Limpiar mensaje de estado</string>
-    <string name="clear_status_message_after">Limpiar mensaje de estado después</string>
     <string name="clipboard_label">Texto copiado desde %1$s</string>
     <string name="clipboard_no_text_to_copy">No se ha recibido texto para copiar al portapapeles</string>
     <string name="clipboard_text_copied">Link copiado</string>
@@ -160,6 +162,7 @@
     <string name="community_testing_bug_text">¿Encontró una falla? ¿Hay algo raro?</string>
     <string name="community_testing_headline">Ayúdenos probando</string>
     <string name="community_testing_report_text">Reportar un error en GitHub</string>
+    <string name="compose_activity_label">Asistente de Nextcloud</string>
     <string name="configure_new_media_folder_detection_notifications">Configurar</string>
     <string name="confirm_removal">Eliminar encriptación local</string>
     <string name="confirmation_remove_file_alert">¿Realmente quieres eliminar %1$s?</string>
@@ -181,7 +184,6 @@
     <string name="contacts_preferences_import_scheduled">La importación está calendarizada y deberá iniciar en breve</string>
     <string name="contacts_preferences_no_file_found">No se encontraron archivos</string>
     <string name="contacts_preferences_something_strange_happened">No se pudo encontrar su última copia de seguridad!</string>
-    <string name="copied_to_clipboard">Copiado al portapapeles</string>
     <string name="copy_file_error">Se presentó un error al intentar copiar este archivo o carpeta</string>
     <string name="copy_file_invalid_into_descendent">No es posible copiar una carpeta dentro de una de sus sub carpetas</string>
     <string name="copy_file_invalid_overwrite">El archivo ya existe en la carpeta destino</string>
@@ -252,7 +254,6 @@
     <string name="drawer_item_assistant">Asistente</string>
     <string name="drawer_item_favorites">Favoritos</string>
     <string name="drawer_item_gallery">Media</string>
-    <string name="drawer_item_groupfolders">Grupos de carpetas</string>
     <string name="drawer_item_home">Inicio</string>
     <string name="drawer_item_notifications">Notificaciones</string>
     <string name="drawer_item_on_device">Disponibles sin conexión</string>
@@ -335,6 +336,7 @@
     <string name="failed_update_ui">Fallo al actualizar la IU</string>
     <string name="favorite">Agregar a favoritos</string>
     <string name="favorite_icon">Favorito</string>
+    <string name="fifteenMinutes">15 minutos</string>
     <string name="file_activity_shared_file_cannot_be_updated">No se puede actualizar el archivo compartido</string>
     <string name="file_already_exists">El nombre de archivo ya existe</string>
     <string name="file_delete">Borrar</string>
@@ -351,7 +353,6 @@
     <string name="file_list_empty_headline_server_search">No hay resultados</string>
     <string name="file_list_empty_moving">No hay nada aquí. Puede agregar una carpeta.</string>
     <string name="file_list_empty_on_device">Los archivos y carpetas descargados se mostrarán aquí.</string>
-    <string name="file_list_empty_recently_modified">No se encontraron archivos modificados en los últimos 7 días.</string>
     <string name="file_list_empty_search">¿Tal vez está dentro de una carpeta diferente?</string>
     <string name="file_list_empty_shared">Los archivos y carpetas que comparta se mostrarán aquí. </string>
     <string name="file_list_empty_shared_headline">Aún no hay nada compartido</string>
@@ -361,10 +362,8 @@
     <string name="file_list_loading">Cargando…</string>
     <string name="file_list_no_app_for_file_type">No se cuenta con una aplicación que maneje este tipo de archivo. </string>
     <string name="file_list_seconds_ago">hace algunos segundos</string>
-    <string name="file_management_permission">Permisos necesarios</string>
     <string name="file_management_permission_optional">Permisos de almacenamiento</string>
     <string name="file_management_permission_optional_text">%1$s funciona mejor con permisos para acceder al almacenamiento. Puedes elegir acceso completo a todos los archivos o acceso de solo lectura a fotos y videos.</string>
-    <string name="file_management_permission_text">%1$s necesita permisos de gestión de archivos para cargar archivos. Puedes elegir acceso completo a todos los archivos o acceso de solo lectura a fotos y videos.</string>
     <string name="file_migration_checking_destination">Verificando destino…</string>
     <string name="file_migration_cleaning">Limpiando…</string>
     <string name="file_migration_dialog_title">Actualización de la carpeta de almacenamiento de datos</string>
@@ -389,9 +388,7 @@
     <string name="file_not_found">Archivo no encontrado</string>
     <string name="file_not_synced">No se pudo sincronizar el archivo. Mostrando la última versión disponible.</string>
     <string name="file_rename">Renombrar</string>
-    <string name="file_upload_worker_same_file_already_exists">Ya existe el mismo archivo, no se detectaron conflictos</string>
     <string name="file_version_restored_error">Error al restaurar la versión del archivo!</string>
-    <string name="file_version_restored_successfully">Versión de archivo restaurada con éxito.</string>
     <string name="filedetails_details">Detalles</string>
     <string name="filedetails_download">Descargar</string>
     <string name="filedetails_export">Exportar</string>
@@ -424,7 +421,6 @@
     <string name="foreign_files_local_text">Local: %1$s</string>
     <string name="foreign_files_move">Mover todo</string>
     <string name="foreign_files_remote_text">Remoto: %1$s</string>
-    <string name="foreign_files_success">Todos los archivos fueron movidos</string>
     <string name="forward">Reenviar</string>
     <string name="fourHours">4 horas</string>
     <string name="gplay_restriction">¡Google restringió la descarga de archivos APK/AAB!</string>
@@ -460,10 +456,7 @@
     <string name="last_backup">Última copia de seguridad: %1$s</string>
     <string name="link">Link</string>
     <string name="link_name">Nombre del enlace</string>
-    <string name="link_share_allow_upload_and_editing">Permitir cargar y editar</string>
     <string name="link_share_editing">Editando</string>
-    <string name="link_share_file_drop">Soltar archivo (solo para carga)</string>
-    <string name="link_share_view_only">Solo ver</string>
     <string name="list_layout">Vista enlistada</string>
     <string name="load_more_results">Cargar más resultados</string>
     <string name="local_file_list_empty">No hay archivos en esta carpeta</string>
@@ -477,7 +470,6 @@
     <string name="locked_by_app">Bloqueado por la aplicación %1$s</string>
     <string name="log_send_mail_subject"> %1$s bitácora de aplicación Android</string>
     <string name="log_send_no_mail_app">No se encontró una app para enviar los logs. Por favor, instalá un cliente de correo electrónico.</string>
-    <string name="logged_in_as">Logueado como %1$s</string>
     <string name="login">Iniciar sesión</string>
     <string name="login_url_helper_text">El enlace a tu interfaz web %1$s cuando lo abras en el navegador.</string>
     <string name="logs_menu_delete">Eliminar registros</string>
@@ -492,7 +484,6 @@
     <string name="manage_space_clear_data">Borrar datos</string>
     <string name="manage_space_description">Las configuraciones , base de datos y certificados del servidor de los datos de %1$s serán borrados permanentemente.\n\nLos archivos descargados se mantendrán sin cambios.\n\nEste proceso puede tomar algo de tiempo. </string>
     <string name="manage_space_title">Administrar espacio</string>
-    <string name="max_file_count_warning_message">Ha alcanzado el límite de carga máxima de archivos. Por favor, cargue menos de 500 archivos a la vez.</string>
     <string name="media_err_invalid_progressive_playback">No se puede transmitir el archivo multimedia</string>
     <string name="media_err_io">No fue posible leer el archivo de medios</string>
     <string name="media_err_malformed">El archivo de medios tiene una codificacion incorrecta</string>
@@ -502,6 +493,8 @@
     <string name="media_forward_description">Botón de avanzar rápido</string>
     <string name="media_notif_ticker">%1$s reproductor de música</string>
     <string name="media_play_pause_description">Botón de reproducir o pausar</string>
+    <string name="media_player_pause">Pausar</string>
+    <string name="media_player_play">Reproducir</string>
     <string name="media_rewind_description">Botón de rebobinar</string>
     <string name="media_state_playing">%1$s (reproduciendo)</string>
     <string name="menu_item_sort_by_date_newest_first">Más reciente primero</string>
@@ -559,7 +552,6 @@
     <string name="outdated_server">El servidor ha llegado al final de su vida útil, por favor actualice!</string>
     <string name="overflow_menu">Más menú</string>
     <string name="pass_code_configure_your_pass_code">Ingrese su código de seguridad</string>
-    <string name="pass_code_configure_your_pass_code_explanation">El código de seguridad será solicitado cada vez que inicie la aplicación</string>
     <string name="pass_code_enter_pass_code">Favor de ingresar su código de seguridad</string>
     <string name="pass_code_mismatch">Los códigos de seguridad no son iguales</string>
     <string name="pass_code_reenter_your_pass_code">Favor de reingresar el código de seguridad</string>
@@ -567,18 +559,12 @@
     <string name="pass_code_removed">Contraseña eliminada</string>
     <string name="pass_code_stored">Código de seguridad almacenado</string>
     <string name="pass_code_wrong">Código de seguridad incorrecto</string>
+    <string name="pause_upload">Pausar</string>
     <string name="pdf_password_protected">No es posible abrir archivos PDF protegidos por contraseñas. Por favor, use un visor PDF externo.</string>
-    <string name="pdf_zoom_tip">Toca una página para hacer zoom</string>
     <string name="permission_allow">Permitir</string>
     <string name="permission_deny">Rechazar</string>
-    <string name="permission_storage_access">Se requieren permisos adicionales para cargar y descargar archivos. </string>
     <string name="picture_set_as_no_app">No se encontró ninguna aplicación para establecer una imagen con</string>
     <string name="pin_shortcut_label">Abrir %1$s</string>
-    <string name="placeholder_fileSize">389 KB</string>
-    <string name="placeholder_filename">marcadordeposición.txt</string>
-    <string name="placeholder_media_time">12:23:45</string>
-    <string name="placeholder_sentence">Este es un marcador de posición</string>
-    <string name="placeholder_timestamp">2012/05/18 12:23 PM</string>
     <string name="player_stop">detener</string>
     <string name="player_toggle">cambiar</string>
     <string name="power_save_check_dialog_message">¡La desactivación de la verificación de ahorro de energía puede provocar la carga de archivos cuando la batería está baja!</string>
@@ -598,6 +584,7 @@
     <string name="prefs_category_about">Acerca de</string>
     <string name="prefs_category_details">Detalles</string>
     <string name="prefs_category_dev">Dev</string>
+    <string name="prefs_category_files">Archivo</string>
     <string name="prefs_category_general">General</string>
     <string name="prefs_category_more">Más</string>
     <string name="prefs_category_sync">Sincronizar</string>
@@ -650,7 +637,6 @@
     <string name="preview_media_unhandled_http_code_message">El archivo se encuentra bloqueado actualmente por otro usuario o proceso y, por lo tanto, no es posible eliminarlo. Por favor, intente de nuevo más tarde.</string>
     <string name="preview_sorry">Disculpe</string>
     <string name="privacy">Privacidad</string>
-    <string name="public_share_name">Nuevo nombre</string>
     <string name="push_notifications_not_implemented">Notificaciones push deshabilitadas debido a dependencias en servicios propietarios de Google Play.</string>
     <string name="push_notifications_old_login">No hay notificaciones push debido a la sesión de inicio de sesión obsoleta. Por favor considere volver a agregar su cuenta.</string>
     <string name="push_notifications_temp_error">Notificaciones push actualmente no disponibles.</string>
@@ -709,16 +695,14 @@
     <string name="send">Enviar</string>
     <string name="sendbutton_description">Icono de botón de enviar</string>
     <string name="set_as">Establecer Como</string>
+    <string name="set_online_status">Estado en línea</string>
     <string name="set_picture_as">Usar imagen como</string>
-    <string name="set_status">Establecer estado</string>
-    <string name="set_status_message">Establecer mensaje de estado</string>
     <string name="setup_e2e">Durante la configuración del cifrado de extremo a extremo, recibirá un mnemónico aleatorio de 12 palabras, que necesitará para abrir sus archivos en otros dispositivos. Esto solo se almacenará en este dispositivo y se puede volver a mostrar en esta pantalla. ¡Por favor anótelo en un lugar seguro!</string>
     <string name="share">Compartir</string>
     <string name="share_delete_permission">Eliminar</string>
     <string name="share_dialog_title">Compartiendo</string>
     <string name="share_edit_permission">Editar</string>
     <string name="share_expiration_date_format">%1$s</string>
-    <string name="share_expiration_date_label">Vence %1$s</string>
     <string name="share_file">Compartir %1$s</string>
     <string name="share_group_clarification">%1$s (grupo)</string>
     <string name="share_internal_link">Compartir enlace interno</string>
@@ -736,9 +720,7 @@
     <string name="share_no_expiration_date_label">Establecer fecha de caducidad</string>
     <string name="share_no_password_title">Configurar contraseña</string>
     <string name="share_not_allowed_when_file_drop">No se permite volver a compartir durante la entrega segura de archivos</string>
-    <string name="share_password_title">Contraseña protegida</string>
     <string name="share_permission_can_edit">Puede editar</string>
-    <string name="share_permission_file_drop">Entrega de archivos</string>
     <string name="share_permission_secure_file_drop">Entrega de archivos segura</string>
     <string name="share_permission_view_only">Solo ver</string>
     <string name="share_read_permission">Leer</string>
@@ -751,7 +733,6 @@
     <string name="share_via_link_section_title">Compartir link</string>
     <string name="share_via_link_send_link_label">Enviar Link</string>
     <string name="share_via_link_unset_password">Desconectado</string>
-    <string name="share_with_title">Compartir con…</string>
     <string name="shared_avatar_desc">Avatar de usuario compartido</string>
     <string name="shared_icon_share">compartir</string>
     <string name="shared_icon_shared">compartido</string>
@@ -799,7 +780,6 @@
     <string name="storage_internal_storage">Almacenamiento interno</string>
     <string name="storage_movies">Películas</string>
     <string name="storage_music">Música</string>
-    <string name="storage_permission_full_access">Acceso completo</string>
     <string name="storage_permission_media_read_only">Sólo lectura de medios</string>
     <string name="storage_pictures">Imágenes</string>
     <string name="store_full_dev_desc">La plataforma de productividad autohospedada que lo mantiene en control. \ NEsta es la versión de desarrollo oficial, que presenta una muestra diaria de cualquier funcionalidad nueva no probada, que puede causar inestabilidad y pérdida de datos. La aplicación es para usuarios que deseen probar e informar errores en caso de que ocurran. ¡No lo use para su trabajo productivo! \ N \ nTanto el desarrollador oficial como la versión regular están disponibles en F-droid y se pueden instalar al mismo tiempo.</string>
@@ -864,6 +844,7 @@
     <string name="unified_search_fragment_calendar_event_not_found">Evento no encontrado, puede sincronizar para actualizar. Redirigiendo a la web...</string>
     <string name="unified_search_fragment_contact_not_found">Contacto no encontrado, puede sincronizar para actualizar. Redirigiendo a la web...</string>
     <string name="unified_search_fragment_permission_needed">Se requieren permisos para abrir los resultados de búsqueda, de lo contrario se redirigirá a la web...</string>
+    <string name="unknown">Desconocido</string>
     <string name="unlock_file">Desbloquear archivo</string>
     <string name="unread_comments">Existen comentarios no leídos</string>
     <string name="unset_encrypted">Cifrado no establecido</string>
@@ -927,7 +908,6 @@
     <string name="uploader_file_not_found_message">Archivo no encontrado. ¿Está seguro que este archivo existe o tiene un conflicto previo que no ha sido resuelto?</string>
     <string name="uploader_file_not_found_on_server_message">No se pudo ubicar el archivo en el servidor. Otro usuario pudo haber eliminado el archivo</string>
     <string name="uploader_info_dirname">Nombre de la carpeta</string>
-    <string name="uploader_local_files_uploaded">Reintentar la carga de archivos locales fallidos</string>
     <string name="uploader_top_message">Seleccione la carpeta de cargas</string>
     <string name="uploader_upload_failed_content_single">No fue posible cargar %1$s</string>
     <string name="uploader_upload_failed_credentials_error">Falló la carga, vuelve a iniciar sesión</string>
@@ -947,9 +927,9 @@
     <string name="uploader_wrn_no_account_setup_btn_text">Ajustes</string>
     <string name="uploader_wrn_no_account_text">No existen cuentas  %1$s en su dispositivo. Favor de configurar una cuenta primero.</string>
     <string name="uploader_wrn_no_account_title">No se encontró la cuenta</string>
+    <string name="uploads_view_group_completed_uploads">Completado</string>
     <string name="uploads_view_group_current_uploads">Actual</string>
     <string name="uploads_view_group_failed_uploads">Reinicio fallido/pendiente</string>
-    <string name="uploads_view_group_finished_uploads">Cargado</string>
     <string name="uploads_view_group_manually_cancelled_uploads">Cancelado</string>
     <string name="uploads_view_later_waiting_to_upload">Esperando para cargar</string>
     <string name="uploads_view_title">Cargas</string>
@@ -974,6 +954,7 @@
     <string name="user_icon">Usuario</string>
     <string name="user_info_address">Dirección</string>
     <string name="user_info_email">Correo electrónico</string>
+    <string name="user_info_groups">Grupos</string>
     <string name="user_info_phone">Número telefónico</string>
     <string name="user_info_twitter">Twitter</string>
     <string name="user_info_website">Sitio web</string>
@@ -1039,11 +1020,6 @@
         <item quantity="one">Se exportó %d archivo, se omitió el resto debido a un error</item>
         <item quantity="many">Se exportaron %d archivos, se omitió el resto debido a un error</item>
         <item quantity="other">Se exportaron %d archivos, se omitió el resto debido a un error</item>
-    </plurals>
-    <plurals name="export_start">
-        <item quantity="one">Se va a exportar %d archivo. Vea la notificación para más detalles.</item>
-        <item quantity="many">Se van a exportar %d archivos. Vea la notificación para más detalles.</item>
-        <item quantity="other">Se van a exportar %d archivos. Vea la notificación para más detalles.</item>
     </plurals>
     <plurals name="file_list__footer__folder">
         <item quantity="one">%1$d carpeta</item>

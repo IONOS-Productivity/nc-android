@@ -13,6 +13,7 @@ import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 
@@ -70,6 +71,7 @@ class ConnectivityServiceImpl implements ConnectivityService {
             if (hasInternet) {
                 result = !isInternetWalled();
             } else {
+                Log_OC.e(TAG, "network and server not available");
                 result = false;
             }
 
@@ -83,19 +85,36 @@ class ConnectivityServiceImpl implements ConnectivityService {
         NetworkCapabilities actNw = platformConnectivityManager.getNetworkCapabilities(nw);
 
         if (actNw == null) {
+            Log_OC.e(TAG, "network capabilities is null");
             return false;
         }
 
-        return actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
+        if (actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
             actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ||
             actNw.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) ||
-            actNw.hasTransport(NetworkCapabilities.TRANSPORT_BLUETOOTH);
+            actNw.hasTransport(NetworkCapabilities.TRANSPORT_VPN) ||
+            actNw.hasTransport(NetworkCapabilities.TRANSPORT_BLUETOOTH) ||
+            actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI_AWARE)) {
+            return true;
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S &&
+            actNw.hasTransport(NetworkCapabilities.TRANSPORT_USB)) {
+            return true;
+        }
+
+        Log_OC.e(TAG, "network is not connected");
+        return false;
     }
 
     @Override
     public boolean isInternetWalled() {
         final Boolean cachedValue = walledCheckCache.getValue();
         if (cachedValue != null) {
+            if (cachedValue) {
+                Log_OC.e(TAG, "network is walled, cached value is used");
+            }
+
             return cachedValue;
         } else {
             Server server = accountManager.getUser().getServer();
@@ -103,7 +122,9 @@ class ConnectivityServiceImpl implements ConnectivityService {
 
             boolean result;
             Connectivity c = getConnectivity();
-            if (c.isConnected() && c.isWifi() && !c.isMetered() && !baseServerAddress.isEmpty()) {
+            if (c != null && c.isConnected() && c.isWifi() && !c.isMetered() && !baseServerAddress.isEmpty()) {
+                Log_OC.d(TAG, "checking network status");
+
                 GetMethod get = requestBuilder.invoke(baseServerAddress + CONNECTIVITY_CHECK_ROUTE);
                 PlainClient client = clientFactory.createPlainClient();
 
@@ -117,7 +138,27 @@ class ConnectivityServiceImpl implements ConnectivityService {
                         " assuming connectivity is impaired");
                 }
             } else {
-                result = !c.isConnected();
+                Log_OC.e(TAG, "cannot check network status, connectivity is not eligible");
+
+                if (c != null) {
+                    if (c.isMetered()) {
+                        Log_OC.e(TAG, "network is metered");
+                    }
+
+                    if (!c.isWifi()) {
+                        Log_OC.e(TAG, "network is not connected to wi-fi");
+                    }
+
+                    if (!c.isConnected()) {
+                        Log_OC.e(TAG, "network is not connected");
+                    }
+                }
+
+                result = (c != null && !c.isConnected());
+            }
+
+            if (result) {
+                Log_OC.e(TAG, "network is walled");
             }
 
             walledCheckCache.setValue(result);
@@ -131,7 +172,8 @@ class ConnectivityServiceImpl implements ConnectivityService {
         try {
             networkInfo = platformConnectivityManager.getActiveNetworkInfo();
         } catch (Throwable t) {
-            networkInfo = null; // no network available or no information (permission denied?)
+            Log_OC.e(TAG, "no network available or no information: ", t);
+            networkInfo = null;
         }
 
         if (networkInfo != null) {
@@ -140,6 +182,19 @@ class ConnectivityServiceImpl implements ConnectivityService {
             boolean isMetered;
             isMetered = isNetworkMetered();
             boolean isWifi = networkInfo.getType() == ConnectivityManager.TYPE_WIFI || hasNonCellularConnectivity();
+
+            if (isMetered) {
+                Log_OC.w(TAG, "getConnectivity(): network is metered");
+            }
+
+            if (!isWifi) {
+                Log_OC.w(TAG, "getConnectivity(): network is not wi-fi");
+            }
+
+            if (!isConnected) {
+                Log_OC.e(TAG, "getConnectivity(): network is not connected");
+            }
+
             return new Connectivity(isConnected, isMetered, isWifi, null);
         } else {
             return Connectivity.DISCONNECTED;

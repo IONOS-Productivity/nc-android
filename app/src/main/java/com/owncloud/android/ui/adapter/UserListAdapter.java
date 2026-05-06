@@ -12,6 +12,7 @@
  */
 package com.owncloud.android.ui.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
@@ -163,6 +164,7 @@ public class UserListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
      *
      * @param items The item list to be added
      */
+    @SuppressLint("NotifyDataSetChanged")
     public void addAll(List<UserListItem> items){
         if(values == null){
             values = new ArrayList<>();
@@ -283,7 +285,7 @@ public class UserListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             } catch (Exception e) {
                 Log_OC.e(TAG, "Error calculating RGB value for account list item.", e);
                 // use user icon as a fallback
-                binding.userIcon.setImageResource(R.drawable.ic_user);
+                binding.userIcon.setImageResource(R.drawable.ic_user_outline);
             }
         }
 

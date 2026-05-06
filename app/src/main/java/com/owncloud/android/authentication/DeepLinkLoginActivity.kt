@@ -9,17 +9,19 @@ package com.owncloud.android.authentication
 
 import android.os.Bundle
 import android.widget.TextView
-import android.widget.Toast
 import com.nextcloud.client.di.Injectable
 import com.nextcloud.utils.mdm.MDMConfig
 import com.owncloud.android.R
+import com.owncloud.android.utils.DisplayUtils
 
-class DeepLinkLoginActivity : AuthenticatorActivity(), Injectable {
+class DeepLinkLoginActivity :
+    AuthenticatorActivity(),
+    Injectable {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (!MDMConfig.multiAccountSupport(this) && accountManager.accounts.size == 1) {
-            Toast.makeText(this, R.string.no_mutliple_accounts_allowed, Toast.LENGTH_LONG).show()
+            DisplayUtils.showSnackMessage(this, R.string.no_mutliple_accounts_allowed)
             return
         }
 
@@ -32,11 +34,11 @@ class DeepLinkLoginActivity : AuthenticatorActivity(), Injectable {
                 val loginText = findViewById<TextView>(R.id.loginInfo)
                 loginText.text = String.format(
                     getString(R.string.direct_login_text),
-                    loginUrlInfo.username,
-                    loginUrlInfo.serverAddress
+                    loginUrlInfo.loginName,
+                    loginUrlInfo.server
                 )
-            } catch (e: IllegalArgumentException) {
-                Toast.makeText(this, R.string.direct_login_failed, Toast.LENGTH_LONG).show()
+            } catch (_: IllegalArgumentException) {
+                DisplayUtils.showSnackMessage(this, R.string.direct_login_failed)
             }
         }
     }

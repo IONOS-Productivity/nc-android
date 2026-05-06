@@ -8,8 +8,6 @@
 package com.owncloud.android.ui.adapter
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
@@ -18,66 +16,148 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.ionos.annotation.IonosCustomization
+import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.core.widget.ImageViewCompat
+import com.afollestad.sectionedrecyclerview.SectionedViewHolder
+import com.bumptech.glide.Glide
+import com.ionos.annotation.IonosCustomization
+import com.nextcloud.android.common.ui.theme.utils.ColorRole
 import com.nextcloud.client.account.User
-import com.nextcloud.client.network.ClientFactory
+import com.nextcloud.client.preferences.AppPreferences
+import com.nextcloud.common.NextcloudClient
 import com.nextcloud.model.SearchResultEntryType
 import com.nextcloud.utils.CalendarEventManager
 import com.nextcloud.utils.ContactManager
+import com.nextcloud.utils.GlideHelper
 import com.nextcloud.utils.extensions.getType
+import com.nextcloud.utils.extensions.setVisibleIf
 import com.owncloud.android.R
 import com.owncloud.android.databinding.UnifiedSearchItemBinding
 import com.owncloud.android.datamodel.FileDataStorageManager
+import com.owncloud.android.datamodel.OCFile
 import com.owncloud.android.lib.common.SearchResultEntry
 import com.owncloud.android.ui.interfaces.UnifiedSearchListInterface
-import com.owncloud.android.utils.BitmapUtils
+import com.owncloud.android.utils.DisplayUtils
 import com.owncloud.android.utils.MimeTypeUtil
-import com.owncloud.android.utils.glide.CustomGlideStreamLoader
+import com.owncloud.android.utils.overlay.OverlayManager
 import com.owncloud.android.utils.theme.ViewThemeUtils
 
 @Suppress("LongParameterList")
 class UnifiedSearchItemViewHolder(
     private val supportsOpeningCalendarContactsLocally: Boolean,
     val binding: UnifiedSearchItemBinding,
-    val user: User,
-    val clientFactory: ClientFactory,
     private val storageManager: FileDataStorageManager,
     private val listInterface: UnifiedSearchListInterface,
     private val filesAction: FilesAction,
     val context: Context,
-    private val viewThemeUtils: ViewThemeUtils
+    private val viewThemeUtils: ViewThemeUtils,
+    private val overlayManager: OverlayManager,
+    private val user: User,
+    private val preferences: AppPreferences
 ) : SectionedViewHolder(binding.root) {
 
     interface FilesAction {
         fun showFilesAction(searchResultEntry: SearchResultEntry)
+        fun loadFileThumbnail(searchResultEntry: SearchResultEntry, onClientReady: (NextcloudClient) -> Unit)
     }
 
     private val contactManager = ContactManager(context)
     private val calendarEventManager = CalendarEventManager(context)
 
     fun bind(entry: SearchResultEntry) {
-        binding.title.text = entry.title
-        binding.subline.text = entry.subline
-
-        if (entry.isFile && storageManager.getFileByDecryptedRemotePath(entry.remotePath()) != null) {
-            binding.localFileIndicator.visibility = View.VISIBLE
-        } else {
-            binding.localFileIndicator.visibility = View.GONE
-        }
-
-        val mimetype = MimeTypeUtil.getBestMimeTypeByFilename(entry.title)
+        bindTextView(binding.title, entry.title)
+        bindTextView(binding.subline, entry.subline)
+        bindLocalFileIndicator(entry)
 
         val entryType = entry.getType()
-        val placeholder = getPlaceholder(entry, entryType, mimetype)
+        bindThumbnail(entry, entryType)
+        bindMoreButton(entry)
+        binding.unifiedSearchItemLayout.setOnClickListener {
+            searchEntryOnClick(entry, entryType)
+        }
+    }
 
-        Glide.with(context).using(CustomGlideStreamLoader(user, clientFactory))
-            .load(entry.thumbnailUrl)
-            .asBitmap()
-            .placeholder(placeholder)
-            .error(placeholder)
-            .animate(android.R.anim.fade_in)
-            .listener(RoundIfNeededListener(entry))
-            .into(binding.thumbnail)
+    private fun bindTextView(view: TextView, text: String?) {
+        if (text.isNullOrEmpty()) {
+            view.visibility = View.GONE
+        } else {
+            view.visibility = View.VISIBLE
+            view.text = text
+        }
+    }
 
+    private fun bindLocalFileIndicator(entry: SearchResultEntry) {
+        val showLocalFileIndicator =
+            (entry.isFile && storageManager.getFileByDecryptedRemotePath(entry.remotePath()) != null)
+        binding.localFileIndicator.setVisibleIf(showLocalFileIndicator)
+    }
+
+    private fun bindThumbnail(entry: SearchResultEntry, entryType: SearchResultEntryType) {
+        val file = storageManager.getFileByRemotePath(entry.remotePath())
+        Glide.with(context).clear(binding.thumbnail)
+        binding.thumbnailOverlayIcon.setVisibleIf(false)
+
+        when {
+            file != null && file.isFolder -> bindFolderThumbnail(file)
+            file != null && !file.isFolder -> bindLocalFileThumbnail(file)
+            else -> bindRemoteThumbnail(entry, entryType)
+        }
+    }
+
+    @IonosCustomization("Overlay size fix")
+    private fun bindFolderThumbnail(file: OCFile) {
+        overlayManager.setFolderThumbnail(file, binding.thumbnail, binding.thumbnailShimmer)
+        binding.thumbnailOverlayIcon.setVisibleIf(false)
+    }
+
+    private fun bindLocalFileThumbnail(file: OCFile) {
+        if (file.remoteId == null || !file.isPreviewAvailable) {
+            val icon = MimeTypeUtil.getFileTypeIcon(file.mimeType, file.fileName, context, viewThemeUtils)
+            binding.thumbnail.apply {
+                setImageDrawable(icon)
+                clearColorFilter()
+                ImageViewCompat.setImageTintList(this, null)
+            }
+        } else {
+            DisplayUtils.setThumbnailFromCache(
+                file,
+                binding.thumbnail,
+                storageManager,
+                listOf(),
+                false,
+                binding.thumbnailShimmer,
+                user,
+                preferences,
+                context,
+                viewThemeUtils
+            )
+        }
+    }
+
+    private fun bindRemoteThumbnail(entry: SearchResultEntry, entryType: SearchResultEntryType) {
+        binding.thumbnail.apply {
+            setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_find_in_page))
+            viewThemeUtils.platform.colorImageView(this, ColorRole.SECONDARY)
+        }
+
+        if (entry.thumbnailUrl.isNotBlank()) {
+            filesAction.loadFileThumbnail(entry) { client ->
+                GlideHelper.loadIntoImageView(
+                    context,
+                    client,
+                    entry.thumbnailUrl,
+                    binding.thumbnail,
+                    entryType.iconId(),
+                    circleCrop = entry.rounded
+                )
+            }
+        } else {
+            binding.thumbnail.setImageDrawable(ContextCompat.getDrawable(context, entryType.iconId()))
+        }
+    }
+
+    private fun bindMoreButton(entry: SearchResultEntry) {
         if (entry.isFile) {
             binding.more.visibility = View.VISIBLE
             binding.more.setOnClickListener {
@@ -85,10 +165,6 @@ class UnifiedSearchItemViewHolder(
             }
         } else {
             binding.more.visibility = View.GONE
-        }
-
-        binding.unifiedSearchItemLayout.setOnClickListener {
-            searchEntryOnClick(entry, entryType)
         }
     }
 
@@ -158,4 +234,5 @@ class UnifiedSearchItemViewHolder(
             return false
         }
     }
+}
 }

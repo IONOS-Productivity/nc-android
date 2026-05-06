@@ -8,17 +8,19 @@
 package com.owncloud.android.ui.activity
 
 import android.content.Intent
-import androidx.test.espresso.intent.rule.IntentsTestRule
+import androidx.test.core.app.launchActivity
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.matcher.ViewMatchers.isRoot
 import com.owncloud.android.AbstractIT
 import com.owncloud.android.datamodel.OCFile
 import com.owncloud.android.utils.ScreenshotTest
 import org.junit.Assert.assertTrue
-import org.junit.Rule
 import org.junit.Test
 
 class ContactsPreferenceActivityIT : AbstractIT() {
-    @get:Rule
-    var activityRule = IntentsTestRule(ContactsPreferenceActivity::class.java, true, false)
+    private val testClassName = "com.owncloud.android.ui.activity.ContactsPreferenceActivityIT"
 
     @Test
     @ScreenshotTest
@@ -29,23 +31,31 @@ class ContactsPreferenceActivityIT : AbstractIT() {
 
         assertTrue(vcfFile.isDown)
 
-        val intent = Intent()
-        intent.putExtra(ContactsPreferenceActivity.EXTRA_FILE, vcfFile)
-        intent.putExtra(ContactsPreferenceActivity.EXTRA_USER, user)
-        val sut = activityRule.launchActivity(intent)
+        val intent = Intent(targetContext, ContactsPreferenceActivity::class.java).apply {
+            putExtra(ContactsPreferenceActivity.EXTRA_FILE, vcfFile)
+            putExtra(ContactsPreferenceActivity.EXTRA_USER, user)
+        }
 
-        shortSleep()
+        launchActivity<ContactsPreferenceActivity>(intent).use { scenario ->
+            val screenShotName = createName(testClassName + "_" + "openVCF", "")
+            onView(isRoot()).check(matches(isDisplayed()))
 
-        screenshot(sut)
+            scenario.onActivity { sut ->
+                screenshotViaName(sut, screenShotName)
+            }
+        }
     }
 
     @Test
     @ScreenshotTest
     fun openContactsPreference() {
-        val sut = activityRule.launchActivity(null)
+        launchActivity<ContactsPreferenceActivity>().use { scenario ->
+            val screenShotName = createName(testClassName + "_" + "openContactsPreference", "")
+            onView(isRoot()).check(matches(isDisplayed()))
 
-        shortSleep()
-
-        screenshot(sut)
+            scenario.onActivity { sut ->
+                screenshotViaName(sut, screenShotName)
+            }
+        }
     }
 }

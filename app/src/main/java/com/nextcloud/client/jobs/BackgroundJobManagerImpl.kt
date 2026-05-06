@@ -9,6 +9,7 @@ package com.nextcloud.client.jobs
 import android.provider.MediaStore
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
+import androidx.work.BackoffPolicy
 import androidx.work.Constraints
 import androidx.work.Data
 import androidx.work.ExistingPeriodicWorkPolicy
@@ -17,6 +18,7 @@ import androidx.work.ListenableWorker
 import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequest
 import androidx.work.Operation
+import androidx.work.OutOfQuotaPolicy
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
@@ -25,14 +27,22 @@ import com.nextcloud.client.account.User
 import com.nextcloud.client.core.Clock
 import com.nextcloud.client.di.Injectable
 import com.nextcloud.client.documentscan.GeneratePdfFromImagesWork
+import com.nextcloud.client.jobs.autoUpload.AutoUploadWorker
 import com.nextcloud.client.jobs.download.FileDownloadWorker
+import com.nextcloud.client.jobs.folderDownload.FolderDownloadWorker
+import com.nextcloud.client.jobs.metadata.MetadataWorker
 import com.nextcloud.client.jobs.offlineOperations.OfflineOperationsWorker
+import com.nextcloud.client.jobs.upload.FileUploadHelper
 import com.nextcloud.client.jobs.upload.FileUploadWorker
 import com.nextcloud.client.preferences.AppPreferences
-import com.nextcloud.utils.extensions.isWorkRunning
 import com.nextcloud.utils.extensions.isWorkScheduled
 import com.owncloud.android.datamodel.OCFile
+import com.owncloud.android.datamodel.SyncedFolder
 import com.owncloud.android.operations.DownloadType
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.time.Duration
 import java.util.Date
 import java.util.UUID
 import java.util.concurrent.TimeUnit
@@ -57,10 +67,10 @@ internal class BackgroundJobManagerImpl(
     private val workManager: WorkManager,
     private val clock: Clock,
     private val preferences: AppPreferences
-) : BackgroundJobManager, Injectable {
+) : BackgroundJobManager,
+    Injectable {
 
     companion object {
-
         const val TAG_ALL = "*" // This tag allows us to retrieve list of all jobs run by Nextcloud client
         const val JOB_CONTENT_OBSERVER = "content_observer"
         const val JOB_PERIODIC_CONTACTS_BACKUP = "periodic_contacts_backup"
@@ -85,12 +95,11 @@ internal class BackgroundJobManagerImpl(
         const val JOB_PERIODIC_OFFLINE_OPERATIONS = "periodic_offline_operations"
         const val JOB_PERIODIC_HEALTH_STATUS = "periodic_health_status"
         const val JOB_IMMEDIATE_HEALTH_STATUS = "immediate_health_status"
-
+        const val JOB_DOWNLOAD_FOLDER = "download_folder"
+        const val JOB_METADATA_SYNC = "metadata_sync"
         const val JOB_INTERNAL_TWO_WAY_SYNC = "internal_two_way_sync"
 
         const val JOB_TEST = "test_job"
-
-        const val MAX_CONTENT_TRIGGER_DELAY_MS = 10000L
 
         const val TAG_PREFIX_NAME = "name"
         const val TAG_PREFIX_USER = "user"
@@ -102,15 +111,14 @@ internal class BackgroundJobManagerImpl(
         const val DEFAULT_PERIODIC_JOB_INTERVAL_MINUTES = 15L
         const val OFFLINE_OPERATIONS_PERIODIC_JOB_INTERVAL_MINUTES = 5L
         const val DEFAULT_IMMEDIATE_JOB_DELAY_SEC = 3L
+        const val DEFAULT_BACKOFF_CRITERIA_DELAY_SEC = 300L
 
         private const val KEEP_LOG_MILLIS = 1000 * 60 * 60 * 24 * 3L
 
-        fun formatNameTag(name: String, user: User? = null): String {
-            return if (user == null) {
-                "$TAG_PREFIX_NAME:$name"
-            } else {
-                "$TAG_PREFIX_NAME:$name ${user.accountName}"
-            }
+        fun formatNameTag(name: String, user: User? = null): String = if (user == null) {
+            "$TAG_PREFIX_NAME:$name"
+        } else {
+            "$TAG_PREFIX_NAME:$name ${user.accountName}"
         }
 
         fun formatUserTag(user: User): String = "$TAG_PREFIX_USER:${user.accountName}"
@@ -127,36 +135,32 @@ internal class BackgroundJobManagerImpl(
             }
         }
 
-        fun parseTimestamp(timestamp: String): Date {
-            return try {
-                val ms = timestamp.toLong()
-                Date(ms)
-            } catch (ex: NumberFormatException) {
-                Date(0)
-            }
+        fun parseTimestamp(timestamp: String): Date = try {
+            val ms = timestamp.toLong()
+            Date(ms)
+        } catch (ex: NumberFormatException) {
+            Date(0)
         }
 
         /**
          * Convert platform [androidx.work.WorkInfo] object into application-specific [JobInfo] model.
          * Conversion extracts work metadata from tags.
          */
-        fun fromWorkInfo(info: WorkInfo?): JobInfo? {
-            return if (info != null) {
-                val metadata = mutableMapOf<String, String>()
-                info.tags.forEach { parseTag(it)?.let { metadata[it.first] = it.second } }
-                val timestamp = parseTimestamp(metadata.get(TAG_PREFIX_START_TIMESTAMP) ?: "0")
-                JobInfo(
-                    id = info.id,
-                    state = info.state.toString(),
-                    name = metadata.get(TAG_PREFIX_NAME) ?: NOT_SET_VALUE,
-                    user = metadata.get(TAG_PREFIX_USER) ?: NOT_SET_VALUE,
-                    started = timestamp,
-                    progress = info.progress.getInt("progress", -1),
-                    workerClass = metadata.get(TAG_PREFIX_CLASS) ?: NOT_SET_VALUE
-                )
-            } else {
-                null
-            }
+        fun fromWorkInfo(info: WorkInfo?): JobInfo? = if (info != null) {
+            val metadata = mutableMapOf<String, String>()
+            info.tags.forEach { parseTag(it)?.let { metadata[it.first] = it.second } }
+            val timestamp = parseTimestamp(metadata.get(TAG_PREFIX_START_TIMESTAMP) ?: "0")
+            JobInfo(
+                id = info.id,
+                state = info.state.toString(),
+                name = metadata.get(TAG_PREFIX_NAME) ?: NOT_SET_VALUE,
+                user = metadata.get(TAG_PREFIX_USER) ?: NOT_SET_VALUE,
+                started = timestamp,
+                progress = info.progress.getInt("progress", -1),
+                workerClass = metadata.get(TAG_PREFIX_CLASS) ?: NOT_SET_VALUE
+            )
+        } else {
+            null
         }
 
         fun deleteOldLogs(logEntries: MutableList<LogEntry>): MutableList<LogEntry> {
@@ -173,6 +177,8 @@ internal class BackgroundJobManagerImpl(
             return logEntries
         }
     }
+
+    private val defaultDispatcherScope = CoroutineScope(Dispatchers.Default)
 
     override fun logStartOfWorker(workerName: String?) {
         val logs = deleteOldLogs(preferences.readLogEntry().toMutableList())
@@ -261,13 +267,15 @@ internal class BackgroundJobManagerImpl(
             return workInfo.map { it -> it.map { fromWorkInfo(it) ?: JobInfo() }.sortedBy { it.started }.reversed() }
         }
 
+    @Suppress("MagicNumber")
     override fun scheduleContentObserverJob() {
         val constrains = Constraints.Builder()
             .addContentUriTrigger(MediaStore.Images.Media.INTERNAL_CONTENT_URI, true)
             .addContentUriTrigger(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, true)
             .addContentUriTrigger(MediaStore.Video.Media.INTERNAL_CONTENT_URI, true)
             .addContentUriTrigger(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, true)
-            .setTriggerContentMaxDelay(MAX_CONTENT_TRIGGER_DELAY_MS, TimeUnit.MILLISECONDS)
+            .setTriggerContentUpdateDelay(Duration.ofSeconds(5))
+            .setTriggerContentMaxDelay(Duration.ofSeconds(10))
             .build()
 
         val request = oneTimeRequestBuilder(ContentObserverWork::class, JOB_CONTENT_OBSERVER)
@@ -308,13 +316,13 @@ internal class BackgroundJobManagerImpl(
         contactsAccountName: String?,
         contactsAccountType: String?,
         vCardFilePath: String,
-        selectedContacts: IntArray
+        selectedContactsFilePath: String
     ): LiveData<JobInfo?> {
         val data = Data.Builder()
             .putString(ContactsImportWork.ACCOUNT_NAME, contactsAccountName)
             .putString(ContactsImportWork.ACCOUNT_TYPE, contactsAccountType)
             .putString(ContactsImportWork.VCARD_FILE_PATH, vCardFilePath)
-            .putIntArray(ContactsImportWork.SELECTED_CONTACTS_INDICES, selectedContacts)
+            .putString(ContactsImportWork.SELECTED_CONTACTS_FILE_PATH, selectedContactsFilePath)
             .build()
 
         val constraints = Constraints.Builder()
@@ -413,11 +421,6 @@ internal class BackgroundJobManagerImpl(
         workManager.cancelJob(JOB_PERIODIC_CALENDAR_BACKUP, user)
     }
 
-    override fun bothFilesSyncJobsRunning(syncedFolderID: Long): Boolean {
-        return workManager.isWorkRunning(JOB_PERIODIC_FILES_SYNC + "_" + syncedFolderID) &&
-            workManager.isWorkRunning(JOB_IMMEDIATE_FILES_SYNC + "_" + syncedFolderID)
-    }
-
     override fun startPeriodicallyOfflineOperation() {
         val inputData = Data.Builder()
             .putString(OfflineOperationsWorker.JOB_NAME, JOB_PERIODIC_OFFLINE_OPERATIONS)
@@ -447,58 +450,58 @@ internal class BackgroundJobManagerImpl(
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()
 
+        // Backoff criteria define how the system should retry the task if it fails.
+        // LINEAR means each retry will be delayed linearly (e.g., 10s, 20s, 30s...)
+        // DEFAULT_PERIODIC_JOB_INTERVAL_MINUTES is used as the initial delay duration.
+        val backoffCriteriaPolicy = BackoffPolicy.LINEAR
+        val backoffCriteriaDelay = DEFAULT_BACKOFF_CRITERIA_DELAY_SEC
+
         val request =
             oneTimeRequestBuilder(OfflineOperationsWorker::class, JOB_OFFLINE_OPERATIONS, constraints = constraints)
+                .setBackoffCriteria(
+                    backoffCriteriaPolicy,
+                    backoffCriteriaDelay,
+                    TimeUnit.SECONDS
+                )
                 .setInputData(inputData)
                 .build()
 
         workManager.enqueueUniqueWork(
             JOB_OFFLINE_OPERATIONS,
-            ExistingWorkPolicy.REPLACE,
+            ExistingWorkPolicy.KEEP,
             request
         )
     }
 
-    override fun schedulePeriodicFilesSyncJob(syncedFolderID: Long) {
+    override fun startAutoUpload(syncedFolder: SyncedFolder, overridePowerSaving: Boolean) {
+        val syncedFolderID = syncedFolder.id
+
         val arguments = Data.Builder()
-            .putLong(FilesSyncWork.SYNCED_FOLDER_ID, syncedFolderID)
+            .putBoolean(AutoUploadWorker.OVERRIDE_POWER_SAVING, overridePowerSaving)
+            .putLong(AutoUploadWorker.SYNCED_FOLDER_ID, syncedFolderID)
             .build()
 
-        val request = periodicRequestBuilder(
-            jobClass = FilesSyncWork::class,
-            jobName = JOB_PERIODIC_FILES_SYNC + "_" + syncedFolderID,
-            intervalMins = DEFAULT_PERIODIC_JOB_INTERVAL_MINUTES
-        )
-            .setInputData(arguments)
-            .build()
-        workManager.enqueueUniquePeriodicWork(
-            JOB_PERIODIC_FILES_SYNC + "_" + syncedFolderID,
-            ExistingPeriodicWorkPolicy.REPLACE,
-            request
-        )
-    }
-
-    override fun startImmediateFilesSyncJob(
-        syncedFolderID: Long,
-        overridePowerSaving: Boolean,
-        changedFiles: Array<String?>
-    ) {
-        val arguments = Data.Builder()
-            .putBoolean(FilesSyncWork.OVERRIDE_POWER_SAVING, overridePowerSaving)
-            .putStringArray(FilesSyncWork.CHANGED_FILES, changedFiles)
-            .putLong(FilesSyncWork.SYNCED_FOLDER_ID, syncedFolderID)
+        val constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .setRequiresCharging(syncedFolder.isChargingOnly)
             .build()
 
         val request = oneTimeRequestBuilder(
-            jobClass = FilesSyncWork::class,
+            jobClass = AutoUploadWorker::class,
             jobName = JOB_IMMEDIATE_FILES_SYNC + "_" + syncedFolderID
         )
             .setInputData(arguments)
+            .setConstraints(constraints)
+            .setBackoffCriteria(
+                BackoffPolicy.LINEAR,
+                DEFAULT_BACKOFF_CRITERIA_DELAY_SEC,
+                TimeUnit.SECONDS
+            )
             .build()
 
         workManager.enqueueUniqueWork(
             JOB_IMMEDIATE_FILES_SYNC + "_" + syncedFolderID,
-            ExistingWorkPolicy.APPEND,
+            ExistingWorkPolicy.KEEP,
             request
         )
     }
@@ -509,6 +512,28 @@ internal class BackgroundJobManagerImpl(
 
     override fun cancelAllFilesDownloadJobs() {
         workManager.cancelAllWorkByTag(formatClassTag(FileDownloadWorker::class))
+    }
+
+    override fun startMetadataSyncJob(currentDirPath: String) {
+        val inputData = Data.Builder()
+            .putString(MetadataWorker.FILE_PATH, currentDirPath)
+            .build()
+
+        val constrains = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .setRequiresBatteryNotLow(true)
+            .build()
+
+        val request = oneTimeRequestBuilder(MetadataWorker::class, JOB_METADATA_SYNC)
+            .setConstraints(constrains)
+            .setInputData(inputData)
+            .build()
+
+        workManager.enqueueUniqueWork(
+            JOB_METADATA_SYNC,
+            ExistingWorkPolicy.REPLACE,
+            request
+        )
     }
 
     override fun scheduleOfflineSync() {
@@ -571,8 +596,69 @@ internal class BackgroundJobManagerImpl(
         workManager.enqueue(request)
     }
 
-    private fun startFileUploadJobTag(user: User): String {
-        return JOB_FILES_UPLOAD + user.accountName
+    private fun startFileUploadJobTag(accountName: String): String = JOB_FILES_UPLOAD + accountName
+
+    override fun isStartFileUploadJobScheduled(accountName: String): Boolean =
+        workManager.isWorkScheduled(startFileUploadJobTag(accountName))
+
+    /**
+     * This method supports initiating uploads for various scenarios, including:
+     * - New upload batches
+     * - Failed uploads
+     * - FilesSyncWork
+     * - ...
+     *
+     * @param user The user for whom the upload job is being created.
+     * @param uploadIds Array of upload IDs to be processed. These IDs originate from multiple sources
+     *                  and cannot be determined directly from the account name or a single function
+     *                  within the worker.
+     */
+    override fun startFilesUploadJob(user: User, uploadIds: LongArray, showSameFileAlreadyExistsNotification: Boolean) {
+        defaultDispatcherScope.launch {
+            val batchSize = FileUploadHelper.MAX_FILE_COUNT
+            val batches = uploadIds.toList().chunked(batchSize)
+            val tag = startFileUploadJobTag(user.accountName)
+
+            val constraints = Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build()
+
+            val dataBuilder = Data.Builder()
+                .putBoolean(
+                    FileUploadWorker.SHOW_SAME_FILE_ALREADY_EXISTS_NOTIFICATION,
+                    showSameFileAlreadyExistsNotification
+                )
+                .putString(FileUploadWorker.ACCOUNT, user.accountName)
+                .putInt(FileUploadWorker.TOTAL_UPLOAD_SIZE, uploadIds.size)
+
+            val workRequests = batches.mapIndexed { index, batch ->
+                dataBuilder
+                    .putLongArray(FileUploadWorker.UPLOAD_IDS, batch.toLongArray())
+                    .putInt(FileUploadWorker.CURRENT_BATCH_INDEX, index)
+
+                oneTimeRequestBuilder(FileUploadWorker::class, JOB_FILES_UPLOAD, user)
+                    .addTag(tag)
+                    .setInputData(dataBuilder.build())
+                    .setConstraints(constraints)
+                    .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+                    .build()
+            }
+
+            // Chain the work requests sequentially
+            if (workRequests.isNotEmpty()) {
+                var workChain = workManager.beginUniqueWork(
+                    tag,
+                    ExistingWorkPolicy.APPEND_OR_REPLACE,
+                    workRequests.first()
+                )
+
+                workRequests.drop(1).forEach { request ->
+                    workChain = workChain.then(request)
+                }
+
+                workChain.enqueue()
+            }
+        }
     }
 
     override fun isStartFileUploadJobScheduled(user: User): Boolean {
@@ -604,6 +690,8 @@ internal class BackgroundJobManagerImpl(
     override fun isStartFileDownloadJobScheduled(user: User, fileId: Long): Boolean {
         return workManager.isWorkScheduled(startFileDownloadJobTag(user, fileId))
     }
+    private fun startFileDownloadJobTag(accountName: String, fileId: Long): String =
+        JOB_FOLDER_DOWNLOAD + accountName + fileId
 
     override fun startFileDownloadJob(
         user: User,
@@ -614,7 +702,7 @@ internal class BackgroundJobManagerImpl(
         packageName: String,
         conflictUploadId: Long?
     ) {
-        val tag = startFileDownloadJobTag(user, file.fileId)
+        val tag = startFileDownloadJobTag(user.accountName, file.fileId)
 
         val data = workDataOf(
             FileDownloadWorker.ACCOUNT_NAME to user.accountName,
@@ -629,6 +717,7 @@ internal class BackgroundJobManagerImpl(
         val request = oneTimeRequestBuilder(FileDownloadWorker::class, JOB_FILES_DOWNLOAD, user)
             .addTag(tag)
             .setInputData(data)
+            .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
             .build()
 
         // Since for each file new FileDownloadWorker going to be scheduled,
@@ -645,8 +734,8 @@ internal class BackgroundJobManagerImpl(
         workManager.cancelJob(JOB_FILES_UPLOAD, user)
     }
 
-    override fun cancelFilesDownloadJob(user: User, fileId: Long) {
-        workManager.cancelAllWorkByTag(startFileDownloadJobTag(user, fileId))
+    override fun cancelFilesDownloadJob(accountName: String, fileId: Long) {
+        workManager.cancelAllWorkByTag(startFileDownloadJobTag(accountName, fileId))
     }
 
     override fun startPdfGenerateAndUploadWork(
@@ -723,5 +812,30 @@ internal class BackgroundJobManagerImpl(
             .build()
 
         workManager.enqueueUniquePeriodicWork(JOB_INTERNAL_TWO_WAY_SYNC, ExistingPeriodicWorkPolicy.UPDATE, request)
+    }
+
+    override fun downloadFolder(folder: OCFile, accountName: String) {
+        val constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .setRequiresStorageNotLow(true)
+            .build()
+
+        val data = Data.Builder()
+            .putLong(FolderDownloadWorker.FOLDER_ID, folder.fileId)
+            .putString(FolderDownloadWorker.ACCOUNT_NAME, accountName)
+            .build()
+
+        val request = oneTimeRequestBuilder(FolderDownloadWorker::class, JOB_DOWNLOAD_FOLDER)
+            .addTag(JOB_DOWNLOAD_FOLDER)
+            .setInputData(data)
+            .setConstraints(constraints)
+            .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+            .build()
+
+        workManager.enqueueUniqueWork(JOB_DOWNLOAD_FOLDER, ExistingWorkPolicy.APPEND_OR_REPLACE, request)
+    }
+
+    override fun cancelFolderDownload() {
+        workManager.cancelAllWorkByTag(JOB_DOWNLOAD_FOLDER)
     }
 }

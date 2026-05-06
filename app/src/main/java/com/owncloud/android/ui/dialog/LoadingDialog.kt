@@ -19,20 +19,20 @@ import com.owncloud.android.databinding.LoadingDialogBinding
 import com.owncloud.android.utils.theme.ViewThemeUtils
 import javax.inject.Inject
 
-class LoadingDialog : DialogFragment(), Injectable {
+class LoadingDialog :
+    DialogFragment(),
+    Injectable {
 
-    @JvmField
     @Inject
-    var viewThemeUtils: ViewThemeUtils? = null
+    lateinit var viewThemeUtils: ViewThemeUtils
 
     private var mMessage: String? = null
     private lateinit var binding: LoadingDialogBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        retainInstance = true
         isCancelable = false
+        mMessage = arguments?.getString(ARG_MESSAGE)
     }
 
     @IonosCustomization
@@ -45,20 +45,22 @@ class LoadingDialog : DialogFragment(), Injectable {
     }
 
     override fun onDestroyView() {
-        if (dialog != null && retainInstance) {
-            dialog?.setDismissMessage(null)
-        }
-
+        dialog?.setDismissMessage(null)
         super.onDestroyView()
     }
 
     companion object {
+        private const val ARG_MESSAGE = "message"
 
         @JvmStatic
         fun newInstance(message: String?): LoadingDialog {
-            val loadingDialog = LoadingDialog()
-            loadingDialog.mMessage = message
-            return loadingDialog
+            val args = Bundle().apply {
+                putString(ARG_MESSAGE, message)
+            }
+
+            return LoadingDialog().apply {
+                arguments = args
+            }
         }
     }
 }

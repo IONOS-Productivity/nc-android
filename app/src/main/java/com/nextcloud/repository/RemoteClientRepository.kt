@@ -25,6 +25,8 @@ class RemoteClientRepository(
     private val context: Context,
     lifecycleOwner: LifecycleOwner
 ) : ClientRepository {
+class RemoteClientRepository(private val user: User, private val context: Context, lifecycleOwner: LifecycleOwner) :
+    ClientRepository {
     private val tag = "ClientRepository"
     private val clientFactory = OwnCloudClientManagerFactory.getDefaultSingleton()
     private val scope = lifecycleOwner.lifecycleScope
@@ -48,6 +50,12 @@ class RemoteClientRepository(
                 Log_OC.d(tag, "Exception caught getNextcloudClient(): $e")
                 null
             }
+    override suspend fun getNextcloudClient(): NextcloudClient? = withContext(Dispatchers.IO) {
+        try {
+            clientFactory.getNextcloudClientFor(user.toOwnCloudAccount(), context)
+        } catch (e: Exception) {
+            Log_OC.d(tag, "Exception caught getNextcloudClient(): $e")
+            null
         }
     }
 
@@ -70,6 +78,12 @@ class RemoteClientRepository(
                 Log_OC.d(tag, "Exception caught getOwncloudClient(): $e")
                 null
             }
+    override suspend fun getOwncloudClient(): OwnCloudClient? = withContext(Dispatchers.IO) {
+        try {
+            clientFactory.getClientFor(user.toOwnCloudAccount(), context)
+        } catch (e: Exception) {
+            Log_OC.d(tag, "Exception caught getOwncloudClient(): $e")
+            null
         }
     }
 }

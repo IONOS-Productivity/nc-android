@@ -8,8 +8,7 @@
 package com.owncloud.android.ui.activity
 
 import android.annotation.SuppressLint
-import android.net.Uri
-import android.widget.Toast
+import androidx.core.net.toUri
 import androidx.webkit.WebSettingsCompat
 import androidx.webkit.WebViewFeature
 import com.nextcloud.android.common.ui.util.PlatformThemeUtil
@@ -18,6 +17,7 @@ import com.nextcloud.client.device.DeviceInfo
 import com.nextcloud.utils.EditorUtils
 import com.owncloud.android.R
 import com.owncloud.android.ui.asynctasks.TextEditorLoadUrlTask
+import com.owncloud.android.utils.DisplayUtils
 import com.owncloud.android.utils.theme.ThemeUtils
 import javax.inject.Inject
 
@@ -39,11 +39,11 @@ class TextEditorWebView : EditorWebView() {
         super.postOnCreate()
 
         if (!user.isPresent) {
-            Toast.makeText(this, getString(R.string.failed_to_start_editor), Toast.LENGTH_LONG).show()
+            DisplayUtils.showSnackMessage(this, R.string.failed_to_start_editor)
             finish()
         }
 
-        val editor = editorUtils.getEditor(user.get(), file.mimeType)
+        val editor = editorUtils.getEditor(user.get(), file?.mimeType)
 
         if (editor != null && editor.id == "onlyoffice") {
             webView.settings.userAgentString = generateOnlyOfficeUserAgent()
@@ -61,7 +61,7 @@ class TextEditorWebView : EditorWebView() {
             WebSettingsCompat.setForceDark(webView.settings, WebSettingsCompat.FORCE_DARK_ON)
         }
 
-        webView.setDownloadListener { url, _, _, _, _ -> downloadFile(Uri.parse(url)) }
+        webView.setDownloadListener { url, _, _, _, _ -> downloadFile(url.toUri(), fileName) }
 
         loadUrl(intent.getStringExtra(EXTRA_URL))
     }

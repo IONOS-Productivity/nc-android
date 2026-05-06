@@ -13,7 +13,6 @@ import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
 import android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP
 import android.media.AudioManager
-import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
 import android.widget.MediaController
@@ -69,7 +68,6 @@ class PlayerService : Service() {
                 putExtra(IS_MEDIA_CONTROL_LAYOUT_READY, false)
             }
             LocalBroadcastManager.getInstance(applicationContext).sendBroadcast(intent)
-            startForeground(file)
         }
 
         override fun onStart() {
@@ -135,11 +133,22 @@ class PlayerService : Service() {
         )
     }
 
-    override fun onBind(intent: Intent?): IBinder? {
-        return Binder(this)
-    }
+    override fun onBind(intent: Intent?): IBinder? = Binder(this)
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
+        Log_OC.d(TAG, "player service started")
+        if (!isRunning) {
+            val file = intent.getParcelableArgument(EXTRA_FILE, OCFile::class.java)
+            if (file != null) {
+                startForeground(file)
+            } else {
+                startForegroundWithPlaceholder()
+                stopForeground(STOP_FOREGROUND_REMOVE)
+                stopSelf()
+                return START_NOT_STICKY
+            }
+        }
+
         when (intent.action) {
             ACTION_PLAY -> onActionPlay(intent)
             ACTION_STOP -> onActionStop()
@@ -147,6 +156,23 @@ class PlayerService : Service() {
             ACTION_TOGGLE -> onActionToggle()
         }
         return START_NOT_STICKY
+    }
+
+    private fun startForegroundWithPlaceholder() {
+        val ticker = String.format(getString(R.string.media_notif_ticker), getString(R.string.app_name))
+        notificationBuilder.run {
+            setSmallIcon(R.drawable.ic_play_arrow)
+            setWhen(System.currentTimeMillis())
+            setOngoing(false)
+            setContentTitle(ticker)
+            setChannelId(NotificationUtils.NOTIFICATION_CHANNEL_MEDIA)
+        }
+        ForegroundServiceHelper.startService(
+            this,
+            R.string.media_notif_ticker,
+            notificationBuilder.build(),
+            ForegroundServiceType.MediaPlayback
+        )
     }
 
     private fun onActionToggle() {
@@ -200,6 +226,7 @@ class PlayerService : Service() {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 setChannelId(NotificationUtils.NOTIFICATION_CHANNEL_MEDIA)
             }
+            setChannelId(NotificationUtils.NOTIFICATION_CHANNEL_MEDIA)
         }
 
         ForegroundServiceHelper.startService(

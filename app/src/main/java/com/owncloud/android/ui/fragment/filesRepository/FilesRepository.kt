@@ -8,6 +8,8 @@
 package com.owncloud.android.ui.fragment.filesRepository
 
 import com.nextcloud.android.lib.resources.recommendations.Recommendation
+import com.owncloud.android.datamodel.FileDataStorageManager
+import com.owncloud.android.datamodel.OCFile
 
 interface FilesRepository {
 
@@ -21,4 +23,12 @@ interface FilesRepository {
      *
      */
     fun fetchRecommendedFiles(onCompleted: (ArrayList<Recommendation>) -> Unit)
+     */
+    suspend fun fetchRecommendedFiles(
+        accountName: String,
+        ignoreETag: Boolean,
+        storageManager: FileDataStorageManager
+    ): ArrayList<OCFile>
+
+    fun createRichWorkspace(remotePath: String, onCompleted: (String) -> Unit, onError: () -> Unit)
 }

@@ -18,6 +18,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -30,10 +31,15 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textview.MaterialTextView;
 import com.ionos.annotation.IonosCustomization;
+import com.nextcloud.android.common.ui.theme.utils.ColorRole;
 import com.nextcloud.client.di.Injectable;
 import com.owncloud.android.R;
 import com.owncloud.android.datamodel.FileDataStorageManager;
 import com.owncloud.android.datamodel.OCFile;
+import com.owncloud.android.datamodel.OCFileDepth;
+import com.owncloud.android.lib.common.utils.Log_OC;
+import com.owncloud.android.ui.fragment.OCFileListFragment;
+import com.owncloud.android.ui.fragment.SearchType;
 import com.owncloud.android.utils.theme.ThemeColorUtils;
 import com.owncloud.android.utils.theme.ThemeUtils;
 import com.owncloud.android.utils.theme.ViewThemeUtils;
@@ -41,6 +47,7 @@ import com.owncloud.android.utils.theme.ViewThemeUtils;
 import javax.inject.Inject;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.AppCompatSpinner;
@@ -58,13 +65,15 @@ public abstract class ToolbarActivity extends BaseActivity implements Injectable
     private AppBarLayout mAppBar;
     private RelativeLayout mDefaultToolbar;
     private MaterialToolbar mToolbar;
-    private MaterialCardView mHomeSearchToolbar;
+    //private MaterialCardView mHomeSearchContainer;
+    private ViewGroup mHomeSearchToolbar;
     private ImageView mPreviewImage;
     private FrameLayout mPreviewImageContainer;
     private LinearLayout mInfoBox;
     private TextView mInfoBoxMessage;
     protected AppCompatSpinner mToolbarSpinner;
     private boolean isHomeSearchToolbarShow = false;
+    private static final String TAG = "ToolbarActivity";
 
     @Inject public ThemeColorUtils themeColorUtils;
     @Inject public ThemeUtils themeUtils;
@@ -75,6 +84,7 @@ public abstract class ToolbarActivity extends BaseActivity implements Injectable
      * to use the toolbar.
      */
     @IonosCustomization
+    @IonosCustomization("search container, menu btn")
     private void setupToolbar(boolean isHomeSearchToolbarShow, boolean showSortListButtonGroup) {
         mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
@@ -82,6 +92,7 @@ public abstract class ToolbarActivity extends BaseActivity implements Injectable
         mAppBar = findViewById(R.id.appbar);
         mDefaultToolbar = findViewById(R.id.default_toolbar);
         mHomeSearchToolbar = findViewById(R.id.home_toolbar);
+        //mHomeSearchContainer = findViewById(R.id.home_search_container);
         mMenuButton = findViewById(R.id.menu_button);
         mSearchText = findViewById(R.id.search_text);
         mSwitchAccountButton = findViewById(R.id.switch_account_button);
@@ -104,6 +115,10 @@ public abstract class ToolbarActivity extends BaseActivity implements Injectable
 
         viewThemeUtils.platform.themeStatusBar(this);
         viewThemeUtils.material.colorMaterialTextButton(mSwitchAccountButton);
+
+        //viewThemeUtils.material.themeSearchCardView(mHomeSearchContainer);
+        viewThemeUtils.material.colorMaterialButtonContent(mNotificationButton, ColorRole.ON_SURFACE);
+        viewThemeUtils.platform.colorTextView(mSearchText, ColorRole.ON_SURFACE_VARIANT);
     }
 
     public void setupToolbarShowOnlyMenuButtonAndTitle(String title, View.OnClickListener toggleDrawer) {
@@ -126,26 +141,117 @@ public abstract class ToolbarActivity extends BaseActivity implements Injectable
         menuButton.setOnClickListener(toggleDrawer);
     }
 
+    /**
+     * Shows plain action bar
+     */
     public void setupToolbar() {
+        if (mHomeSearchToolbar != null && mDefaultToolbar != null && mHomeSearchToolbar.getVisibility() == View.GONE && mDefaultToolbar.getVisibility() == View.VISIBLE) {
+            Log_OC.d(TAG, "Search toolbar is already hidden, skipping update.");
+            return;
+        }
+
         setupToolbar(false, false);
     }
 
+    /**
+     * Shows action bar with search
+     */
     public void setupHomeSearchToolbarWithSortAndListButtons() {
+        if (mHomeSearchToolbar != null && mDefaultToolbar != null && mHomeSearchToolbar.getVisibility() == View.VISIBLE && mDefaultToolbar.getVisibility() == View.GONE) {
+            Log_OC.d(TAG, "Search toolbar is already visible, skipping update.");
+            return;
+        }
+
         setupToolbar(true, true);
     }
 
-    /**
-     * Updates title bar and home buttons (state and icon).
-     */
-    protected void updateActionBarTitleAndHomeButton(OCFile chosenFile) {
-        String title;
-        boolean isRoot = isRoot(chosenFile);
+    private OCFileListFragment getOCFileListFragment() {
+        if (this instanceof FileDisplayActivity fda) {
+            return fda.getListOfFilesFragment();
+        }
 
-        title = isRoot ? themeUtils.getDefaultDisplayNameForRootFolder(this) : fileDataStorageManager.getFilenameConsideringOfflineOperation(chosenFile);
+        return null;
+    }
+
+    private OCFileDepth getCurrentDirDepth() {
+        OCFileListFragment fragment = getOCFileListFragment();
+        if (fragment != null) {
+            return fragment.getFileDepth();
+        }
+
+        return null;
+    }
+
+    private SearchType getSearchType() {
+        final OCFileListFragment fragment = getOCFileListFragment();
+        if (fragment != null) {
+            return fragment.getCurrentSearchType();
+        }
+        return SearchType.NO_SEARCH;
+    }
+
+    public String getActionBarRootTitle() {
+        final SearchType searchType = getSearchType();
+        Integer rootTitleId = searchType.titleId();
+        String result = themeUtils.getDefaultDisplayNameForRootFolder(this);
+
+        if (rootTitleId != null) {
+            result = getString(rootTitleId);
+        }
+
+        return result;
+    }
+
+    public String getActionBarTitle(OCFile chosenFile, boolean isRoot) {
+        if (isRoot) {
+            return getActionBarRootTitle();
+        }
+
+        return getActionBarTitleFromFile(chosenFile);
+    }
+
+    private String getActionBarTitleFromFile(OCFile file) {
+        // if offline rename operation already pointing same file, offline operation name will be used
+        return fileDataStorageManager.getFilenameConsideringOfflineOperation(file);
+    }
+
+    @IonosCustomization("Search hint")
+    protected void updateActionBarTitleAndHomeButton(OCFile file) {
+        final OCFileDepth currentDirDepth = getCurrentDirDepth();
+        final boolean isRoot = isRoot(file) || currentDirDepth == OCFileDepth.Root;
+        final String title = getActionBarTitle(file, isRoot);
         updateActionBarTitleAndHomeButtonByString(title);
 
-        if (mAppBar != null) {
-            showHomeSearchToolbar(title, isRoot);
+        boolean isToolbarStyleSearch = false;
+        if (this instanceof DrawerActivity drawerActivity) {
+            isToolbarStyleSearch = drawerActivity.isToolbarStyleSearch();
+        }
+        final boolean canShowSearchBar = (isHomeSearchToolbarShow && isRoot && isToolbarStyleSearch);
+
+        showHomeSearchToolbar(canShowSearchBar);
+
+        if (mSearchText != null) {
+            mSearchText.setText(getString(R.string.actionbar_search, title));
+        }
+
+        final var actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            viewThemeUtils.files.themeActionBar(this, actionBar, title, isRoot);
+        }
+    }
+
+    protected void updateActionBarForFile(@Nullable OCFile file) {
+        if (file == null) {
+            return;
+        }
+
+        final String title = getActionBarTitleFromFile(file);
+        updateActionBarTitleAndHomeButtonByString(title);
+
+        showHomeSearchToolbar(false);
+        final var actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            viewThemeUtils.files.themeActionBar(this, actionBar, title, false);
         }
     }
 
@@ -170,6 +276,14 @@ public abstract class ToolbarActivity extends BaseActivity implements Injectable
     @SuppressLint("PrivateResource")
     @IonosCustomization
     private void showHomeSearchToolbar(boolean isShow) {
+    @SuppressLint("PrivateResource")
+    @IonosCustomization
+    private void showHomeSearchToolbar(boolean isShow) {
+        if (mAppBar == null) {
+            return;
+        }
+        viewThemeUtils.material.themeToolbar(mToolbar);
+
         if (isShow) {
             viewThemeUtils.platform.resetStatusBar(this);
             mDefaultToolbar.setVisibility(View.GONE);
@@ -248,11 +362,21 @@ public abstract class ToolbarActivity extends BaseActivity implements Injectable
     }
 
     public void showSortListGroup(boolean show) {
-        findViewById(R.id.sort_list_button_group).setVisibility(show ? View.VISIBLE : View.GONE);
+        final var view = findViewById(R.id.sort_list_button_group);
+        if (view == null) {
+            return;
+        }
+
+        view.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 
     public boolean sortListGroupVisibility(){
-        return findViewById(R.id.sort_list_button_group).getVisibility() == View.VISIBLE;
+        final var view = findViewById(R.id.sort_list_button_group);
+        if (view == null) {
+            return false;
+        }
+
+        return view.getVisibility() == View.VISIBLE;
     }
     /**
      * Change the bitmap for the toolbar's preview image.

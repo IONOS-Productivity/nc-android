@@ -20,6 +20,7 @@ import android.view.View
 import android.view.Window
 import android.webkit.SslErrorHandler
 import android.widget.Button
+import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.nextcloud.client.di.Injectable
@@ -43,7 +44,9 @@ import javax.inject.Inject
  * Abstract implementation of common functionality for different dialogs that get the information about the error and
  * the certificate from different classes.
  */
-open class SslUntrustedCertDialog : DialogFragment(), Injectable {
+open class SslUntrustedCertDialog :
+    DialogFragment(),
+    Injectable {
 
     @JvmField
     @Inject
@@ -88,7 +91,7 @@ open class SslUntrustedCertDialog : DialogFragment(), Injectable {
             cancel.setOnClickListener(OnCertificateNotTrusted())
 
             detailsBtn.setOnClickListener { v: View ->
-                if (detailsScroll.visibility == View.VISIBLE) {
+                if (detailsScroll.isVisible) {
                     detailsScroll.visibility = View.GONE
                     (v as Button).setText(R.string.ssl_validator_btn_details_see)
                 } else {

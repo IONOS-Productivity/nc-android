@@ -33,6 +33,7 @@ import javax.inject.Inject
 internal class SaveActivity : BaseActivity<Event, State, ViewModel>() {
     @Inject override lateinit var viewModelFactory: SaveViewModelFactory
 	override val viewBinding by lazy { ScanbotActivitySaveBinding.inflate(layoutInflater) }
+    override val viewModelClass: Class<ViewModel> = ViewModel::class.java
 
     @Inject lateinit var selectDirectoryContract: SelectDirectoryContract
 	private val progressDialog by lazy { LockProgressDialog() }

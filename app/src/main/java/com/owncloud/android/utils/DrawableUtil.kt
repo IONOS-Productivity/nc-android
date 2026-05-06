@@ -11,6 +11,16 @@ import android.graphics.drawable.Drawable
 import android.graphics.drawable.LayerDrawable
 import android.view.Gravity
 import androidx.core.graphics.drawable.DrawableCompat
+import android.content.Context
+import android.graphics.Canvas
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
+import android.graphics.drawable.LayerDrawable
+import android.view.Gravity
+import androidx.core.graphics.createBitmap
+import androidx.core.graphics.drawable.DrawableCompat
+import androidx.core.graphics.drawable.toDrawable
+import androidx.core.graphics.scale
 import com.ionos.annotation.IonosCustomization
 
 object DrawableUtil {
@@ -29,4 +39,19 @@ object DrawableUtil {
             setLayerGravity(1, Gravity.CENTER)
         }
     }
+
+    fun getResizedDrawable(context: Context, drawable: Drawable, pxSize: Int): Drawable {
+        if (drawable is BitmapDrawable) {
+            val originalBitmap = drawable.bitmap
+            val scaledBitmap = originalBitmap.scale(pxSize, pxSize)
+            return scaledBitmap.toDrawable(context.resources)
+        }
+
+        val bitmap = createBitmap(pxSize, pxSize)
+        val canvas = Canvas(bitmap)
+        drawable.setBounds(0, 0, pxSize, pxSize)
+        drawable.draw(canvas)
+
+        return bitmap.toDrawable(context.resources)
+    } 
 }

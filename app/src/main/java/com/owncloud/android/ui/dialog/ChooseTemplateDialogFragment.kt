@@ -58,9 +58,13 @@ import javax.inject.Inject
 /**
  * Dialog to show templates for new documents/spreadsheets/presentations.
  */
-class ChooseTemplateDialogFragment : DialogFragment(), View.OnClickListener, TemplateAdapter.ClickListener, Injectable {
+class ChooseTemplateDialogFragment :
+    DialogFragment(),
+    View.OnClickListener,
+    TemplateAdapter.ClickListener,
+    Injectable {
 
-    private lateinit var fileNames: List<String>
+    private lateinit var fileNames: MutableSet<String>
 
     @Inject
     lateinit var clientFactory: ClientFactory
@@ -125,7 +129,7 @@ class ChooseTemplateDialogFragment : DialogFragment(), View.OnClickListener, Tem
             else -> savedInstanceState.getString(ARG_HEADLINE)
         }
 
-        fileNames = fileDataStorageManager.getFolderContent(parentFolder, false).map { it.fileName }
+        fileNames = fileDataStorageManager.getFolderContent(parentFolder, false).map { it.fileName }.toMutableSet()
 
         val inflater = requireActivity().layoutInflater
         _binding = ChooseTemplateBinding.inflate(inflater, null, false)
@@ -252,11 +256,13 @@ class ChooseTemplateDialogFragment : DialogFragment(), View.OnClickListener, Tem
 
         val selectedTemplate = adapter?.selectedTemplate
         val name = binding.filename.text.toString().trim()
-        val isNameJustExtension = selectedTemplate != null && name.equals(
-            DOT + selectedTemplate.extension,
-            ignoreCase = true
-        )
-        val fileNameValidatorResult = FileNameValidator.checkFileName(name, getOCCapability(), requireContext())
+        val isNameJustExtension = selectedTemplate != null &&
+            name.equals(
+                DOT + selectedTemplate.extension,
+                ignoreCase = true
+            )
+        val fileNameValidatorResult =
+            FileNameValidator.checkFileName(name, getOCCapability(), requireContext(), fileNames)
 
         val errorMessage = when {
             isNameJustExtension -> null
@@ -266,16 +272,18 @@ class ChooseTemplateDialogFragment : DialogFragment(), View.OnClickListener, Tem
 
         val isNameValid = (errorMessage == null) && !name.equals(DOT + selectedTemplate?.extension, ignoreCase = true)
         val isHiddenFileName = FileNameValidator.isFileHidden(name)
+        val isChangedExtension = name.substringAfterLast(DOT) != selectedTemplate?.extension
 
-        binding.filenameContainer.isErrorEnabled = !isNameValid || isHiddenFileName
+        binding.filenameContainer.isErrorEnabled = !isNameValid || isHiddenFileName || isChangedExtension
         binding.filenameContainer.error = when {
             !isNameValid -> errorMessage ?: getString(R.string.enter_filename)
             isHiddenFileName -> getText(R.string.hidden_file_name_warning)
+            isChangedExtension -> getString(R.string.extension_cannot_be_changed)
             else -> null
         }
 
         positiveButton?.apply {
-            isEnabled = isNameValid && !isHiddenFileName
+            isEnabled = isNameValid && !isHiddenFileName && !isChangedExtension
             isClickable = isEnabled
         }
     }

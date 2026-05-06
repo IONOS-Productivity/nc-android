@@ -102,6 +102,8 @@ public final class MimeTypeUtil {
             }
 
            icon.setTint(context.getColor(R.color.filelist_file_icon_color));
+            icon = icon.mutate();
+            
             if (R.drawable.file_image != iconId && R.drawable.file_movie != iconId && R.drawable.file_sound != iconId) {
                 icon.setTint(context.getColor(R.color.filelist_file_icon_color));
             }
@@ -462,6 +464,7 @@ public final class MimeTypeUtil {
         MIMETYPE_TO_ICON_MAPPING.put("application/rss+xml", R.drawable.file_code);
         MIMETYPE_TO_ICON_MAPPING.put("application/rtf", R.drawable.file);
         MIMETYPE_TO_ICON_MAPPING.put("application/vnd.android.package-archive", R.drawable.file_zip);
+        MIMETYPE_TO_ICON_MAPPING.put("application/vnd.excalidraw+json", R.drawable.file_whiteboard);
         MIMETYPE_TO_ICON_MAPPING.put("application/vnd.garmin.tcx+xml", R.drawable.file_location);
         MIMETYPE_TO_ICON_MAPPING.put("application/vnd.google-earth.kml+xml", R.drawable.file_location);
         MIMETYPE_TO_ICON_MAPPING.put("application/vnd.google-earth.kmz", R.drawable.file_location);

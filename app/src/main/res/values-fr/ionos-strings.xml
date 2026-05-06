@@ -29,4 +29,6 @@
     <string name="ionos_share_search">Nom ou adresse e-mail…</string>
     <string name="ionos_side_menu_storage_used">Stockage occupé</string>
     <string name="ionos_toolbar_sort_button_text">Filtre</string>
+    <string name="ionos_need_camera_permissions">IONOS HiDrive Next a besoin d\'une autorisation pour accéder à la caméra</string>
+    <string name="settings_action">PARAMÈTRES</string>
 </resources>

@@ -86,6 +86,7 @@ class ChooseAccountDialogFragment :
     }
 
     @IonosCustomization("Hide account id")
+    @Suppress("LongMethod")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         accountManager = (activity as BaseActivity).userAccountManager
@@ -141,9 +142,19 @@ class ChooseAccountDialogFragment :
                 (activity as DrawerActivity).openManageAccounts()
             }
 
-            binding.setStatus.setOnClickListener {
-                val setStatusDialog = SetStatusDialogFragment.newInstance(accountManager.user, currentStatus)
+            binding.onlineStatus.setOnClickListener {
+                val setStatusDialog = SetOnlineStatusBottomSheet(currentStatus)
                 setStatusDialog.show((activity as DrawerActivity).supportFragmentManager, "fragment_set_status")
+
+                dismiss()
+            }
+
+            binding.statusMessage.setOnClickListener {
+                val setStatusMessageDialog = SetStatusMessageBottomSheet(accountManager.user, currentStatus)
+                setStatusMessageDialog.show(
+                    (activity as DrawerActivity).supportFragmentManager,
+                    "fragment_set_status_message"
+                )
 
                 dismiss()
             }
@@ -176,8 +187,10 @@ class ChooseAccountDialogFragment :
         viewThemeUtils.platform.themeDialogDivider(binding.separatorLine)
         viewThemeUtils.platform.themeDialog(binding.root)
 
-        viewThemeUtils.material.colorMaterialTextButton(binding.setStatus)
-        viewThemeUtils.dialog.colorDialogMenuText(binding.setStatus)
+        viewThemeUtils.material.colorMaterialTextButton(binding.onlineStatus)
+        viewThemeUtils.dialog.colorDialogMenuText(binding.onlineStatus)
+        viewThemeUtils.material.colorMaterialTextButton(binding.statusMessage)
+        viewThemeUtils.dialog.colorDialogMenuText(binding.statusMessage)
         viewThemeUtils.material.colorMaterialTextButton(binding.addAccount)
         viewThemeUtils.dialog.colorDialogMenuText(binding.addAccount)
         viewThemeUtils.material.colorMaterialTextButton(binding.manageAccounts)
@@ -208,13 +221,11 @@ class ChooseAccountDialogFragment :
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        return dialogView
-    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
+        dialogView
 
-    override fun shouldCallGeneratedCallback(tag: String?, callContext: Any?): Boolean {
-        return (callContext as ImageView).tag.toString() == tag
-    }
+    override fun shouldCallGeneratedCallback(tag: String?, callContext: Any?): Boolean =
+        (callContext as ImageView).tag.toString() == tag
 
     override fun avatarGenerated(avatarDrawable: Drawable?, callContext: Any?) {
         if (_binding != null) {
@@ -223,7 +234,7 @@ class ChooseAccountDialogFragment :
     }
 
     override fun onAccountClicked(user: User?) {
-        (activity as DrawerActivity).accountClicked(user.hashCode())
+        (activity as DrawerActivity).accountClicked(user)
     }
 
     override fun onOptionItemClicked(user: User?, view: View?) {

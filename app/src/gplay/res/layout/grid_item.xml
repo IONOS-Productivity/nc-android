@@ -156,6 +156,63 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:visibility="visible" />
 
+        <FrameLayout
+            android:id="@+id/bidi_filename_container"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:padding="8dp">
+
+                <TextView
+                    android:id="@+id/bidi_filename"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:maxWidth="@dimen/grid_container_default_max_file_name"
+                    android:text="@string/placeholder_filename"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/grid_item_text_size"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/bidi_extension"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:ellipsize="start"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:text="@string/placeholder_extension"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/grid_item_text_size"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/bidi_more"
+                android:layout_width="@dimen/grid_mode_icon_size"
+                android:layout_height="@dimen/grid_mode_icon_size"
+                android:layout_margin="@dimen/standard_half_margin"
+                android:layout_gravity="end"
+                android:background="@drawable/grid_mode_more_button_background"
+                android:contentDescription="@string/overflow_menu"
+                app:srcCompat="@drawable/ic_grid_mode_more"
+                tools:ignore="TouchTargetSizeCheck" />
+
+        </FrameLayout>
+
         <TextView
             android:id="@+id/Filename"
             android:layout_width="0dp"

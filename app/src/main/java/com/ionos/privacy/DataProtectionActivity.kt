@@ -23,6 +23,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import com.ionos.annotation.IonosCustomization
 import com.ionos.utils.context.isDarkMode
 import com.ionos.utils.text.convertAnnotatedTextToLinks
 import com.nextcloud.utils.extensions.getParcelableArgument
@@ -83,6 +84,7 @@ class DataProtectionActivity : BaseActivity() {
             .launchIn(lifecycleScope)
     }
 
+    @IonosCustomization("Remove window insets paddings")
     override fun isDefaultWindowInsetsHandlingEnabled() = false
 
     private fun handleLink(type: String) {

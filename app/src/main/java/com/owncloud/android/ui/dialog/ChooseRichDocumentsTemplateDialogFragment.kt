@@ -167,11 +167,10 @@ class ChooseRichDocumentsTemplateDialogFragment :
         binding.list.setHasFixedSize(true)
         binding.list.layoutManager = GridLayoutManager(activity, 2)
         adapter = RichDocumentsTemplateAdapter(
+            currentAccount,
             type,
             this,
             context,
-            currentAccount,
-            clientFactory,
             viewThemeUtils
         )
         binding.list.adapter = adapter
@@ -199,19 +198,17 @@ class ChooseRichDocumentsTemplateDialogFragment :
         return builder
     }
 
-    private fun getTitle(type: Type): Int {
-        return when (type) {
-            Type.DOCUMENT -> {
-                R.string.create_new_document
-            }
+    private fun getTitle(type: Type): Int = when (type) {
+        Type.DOCUMENT -> {
+            R.string.create_new_document
+        }
 
-            Type.SPREADSHEET -> {
-                R.string.create_new_spreadsheet
-            }
+        Type.SPREADSHEET -> {
+            R.string.create_new_spreadsheet
+        }
 
-            Type.PRESENTATION -> {
-                R.string.create_new_presentation
-            }
+        Type.PRESENTATION -> {
+            R.string.create_new_presentation
         }
     }
 
@@ -307,12 +304,15 @@ class ChooseRichDocumentsTemplateDialogFragment :
             fileNames
         )
         val isExtension = (
-            selectedTemplate == null || !name.equals(
-                DOT + selectedTemplate.extension,
-                ignoreCase = true
+            selectedTemplate == null ||
+                !name.equals(
+                    DOT + selectedTemplate.extension,
+                    ignoreCase = true
+                )
             )
-            )
-        val isEnable = isExtension && errorMessage == null
+        val isChangedExtension = name.substringAfterLast(DOT) != selectedTemplate?.extension
+
+        val isEnable = isExtension && !isChangedExtension && errorMessage == null
 
         positiveButton?.let {
             it.isEnabled = isEnable
@@ -322,7 +322,11 @@ class ChooseRichDocumentsTemplateDialogFragment :
         binding.filenameContainer.run {
             isErrorEnabled = !isEnable
             error = if (!isEnable) {
-                errorMessage ?: getText(R.string.filename_empty)
+                when {
+                    errorMessage != null -> errorMessage
+                    isChangedExtension -> getString(R.string.extension_cannot_be_changed)
+                    else -> getText(R.string.filename_empty)
+                }
             } else {
                 null
             }

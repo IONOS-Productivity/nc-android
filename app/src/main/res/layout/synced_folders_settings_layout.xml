@@ -41,7 +41,7 @@
                 android:ellipsize="middle"
                 android:maxLines="2"
                 android:textColor="?android:attr/textColorSecondary"
-                tools:text="For /storage/emulated/0/DCIM/Camera" />
+                tools:text="@string/placeholder_auto_upload_overview_path" />
         </LinearLayout>
 
         <LinearLayout
@@ -53,6 +53,8 @@
 
             <com.google.android.material.materialswitch.MaterialSwitch
                 android:id="@+id/sync_enabled"
+                style="@style/IonosMaterialSwitchStyle"
+                android:theme="@style/IonosMaterialSwitchStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@null"
@@ -390,6 +392,7 @@
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:text="@string/placeholder_filename"
+                    android:text="@string/placeholder_filename_with_extension"
                     android:textColor="?android:attr/textColorSecondary" />
             </LinearLayout>
 
@@ -418,6 +421,7 @@
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:text="@string/placeholder_filename"
+                    android:text="@string/placeholder_filename_with_extension"
                     android:textColor="?android:attr/textColorSecondary" />
             </LinearLayout>
         </LinearLayout>

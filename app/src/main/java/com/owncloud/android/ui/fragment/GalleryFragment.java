@@ -36,6 +36,7 @@ import com.owncloud.android.ui.activity.FolderPickerActivity;
 import com.owncloud.android.ui.activity.ToolbarActivity;
 import com.owncloud.android.ui.adapter.CommonOCFileListAdapterInterface;
 import com.owncloud.android.ui.adapter.GallerySimpleAdapter;
+import com.owncloud.android.ui.adapter.GalleryAdapter;
 import com.owncloud.android.ui.asynctasks.GallerySearchTask;
 import com.owncloud.android.ui.events.ChangeMenuEvent;
 
@@ -67,7 +68,6 @@ public class GalleryFragment extends OCFileListFragment implements GalleryFragme
     private static final int SELECT_LOCATION_REQUEST_CODE = 212;
     private GalleryFragmentBottomSheetDialog galleryFragmentBottomSheetDialog;
 
-    @Inject FileDataStorageManager fileDataStorageManager;
     private final static int maxColumnSizeLandscape = 5;
     @IonosCustomization("increased quantity")
     private final static int maxColumnSizePortrait = 3;
@@ -75,7 +75,6 @@ public class GalleryFragment extends OCFileListFragment implements GalleryFragme
 
     protected void setPhotoSearchQueryRunning(boolean value) {
         this.photoSearchQueryRunning = value;
-        this.setLoading(value); // link the photoSearchQueryRunning variable with UI progress loading
     }
 
     public boolean isPhotoSearchQueryRunning() {
@@ -100,6 +99,7 @@ public class GalleryFragment extends OCFileListFragment implements GalleryFragme
         }
 
         registerRefreshSearchEventReceiver();
+
     }
 
     private void registerRefreshSearchEventReceiver() {
@@ -122,8 +122,15 @@ public class GalleryFragment extends OCFileListFragment implements GalleryFragme
 
     @Override
     public void onDestroyView() {
+        if (photoSearchTask != null) {
+            photoSearchTask.cancel(true);
+            photoSearchTask = null;
+        }
+
         LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(refreshSearchEventReceiver);
-        setLastMediaItemPosition(null);
+
+        mAdapter.cleanup();
+
         super.onDestroyView();
     }
 
@@ -143,12 +150,14 @@ public class GalleryFragment extends OCFileListFragment implements GalleryFragme
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = super.onCreateView(inflater, container, savedInstanceState);
 
-        getRecyclerView().addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                loadMoreWhenEndReached(recyclerView, dy);
-            }
-        });
+        if (getRecyclerView() != null) {
+            getRecyclerView().addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                    loadMoreWhenEndReached(recyclerView, dy);
+                }
+            });
+        }
 
         Log_OC.i(this, "onCreateView() in GalleryFragment end");
         return v;
@@ -180,19 +189,37 @@ public class GalleryFragment extends OCFileListFragment implements GalleryFragme
                                       columnSize,
                                       ThumbnailsCacheManager.getThumbnailDimension());
 
+    public void setAdapter(Bundle args) {
+        final var recyclerView = getRecyclerView();
+        mAdapter = new GalleryAdapter(
+            requireContext(),
+            accountManager.getUser(),
+            this,
+            preferences,
+            mContainerActivity,
+            viewThemeUtils,
+            columnSize,
+            ThumbnailsCacheManager.getThumbnailDimension()
+        );
+        mAdapter.setHasStableIds(true);
         setRecyclerViewAdapter(mAdapter);
-
-        //update the footer as there is no footer shown in media view
-        if (getRecyclerView() instanceof EmptyRecyclerView) {
-            ((EmptyRecyclerView) getRecyclerView()).setHasFooter(false);
+        // update the footer as there is no footer shown in media view
+        if (recyclerView instanceof EmptyRecyclerView emptyRecyclerView) {
+            emptyRecyclerView.setHasFooter(false);
         }
 
-        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
-        mAdapter.setLayoutManager(layoutManager);
-        getRecyclerView().setLayoutManager(layoutManager);
-
-        if (lastMediaItemPosition != null) {
-            layoutManager.scrollToPosition(lastMediaItemPosition);
+        if (recyclerView != null) {
+            GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
+            mAdapter.setLayoutManager(layoutManager);
+            recyclerView.setLayoutManager(layoutManager);
+            recyclerView.post(() -> {
+                if (lastMediaItemPosition != null) {
+                    RecyclerView.LayoutManager lm = recyclerView.getLayoutManager();
+                    if (lm != null) {
+                        lm.scrollToPosition(lastMediaItemPosition);
+                    }
+                }
+            });
         }
     }
 
@@ -229,7 +256,6 @@ public class GalleryFragment extends OCFileListFragment implements GalleryFragme
     public void onResume() {
         super.onResume();
 
-        setLoading(this.isPhotoSearchQueryRunning());
         if (getActivity() instanceof FileDisplayActivity fileDisplayActivity) {
             fileDisplayActivity.updateActionBarTitleAndHomeButtonByString(getString(R.string.drawer_item_gallery));
             fileDisplayActivity.setMainFabVisible(false);
@@ -243,7 +269,7 @@ public class GalleryFragment extends OCFileListFragment implements GalleryFragme
 
     private void handleSearchEvent() {
         prepareCurrentSearch(searchEvent);
-        setEmptyListLoadingMessage();
+        setEmptyListMessage(EmptyListState.LOADING);
 
         // always show first stored items
         showAllGalleryItems();
@@ -264,6 +290,8 @@ public class GalleryFragment extends OCFileListFragment implements GalleryFragme
     }
 
     public void searchCompleted(boolean emptySearch, long lastTimeStamp) {
+        if (!isAdded()) return;
+
         this.setPhotoSearchQueryRunning(false);
 
         if (lastTimeStamp > -1) {
@@ -297,10 +325,8 @@ public class GalleryFragment extends OCFileListFragment implements GalleryFragme
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         // Handle item selection
-        if (item.getItemId() == R.id.action_three_dot_icon && !this.isPhotoSearchQueryRunning()
-            && galleryFragmentBottomSheetDialog != null) {
+        if (item.getItemId() == R.id.action_three_dot_icon && galleryFragmentBottomSheetDialog != null) {
             showBottomSheet();
             return true;
         }
@@ -409,7 +435,12 @@ public class GalleryFragment extends OCFileListFragment implements GalleryFragme
     }
 
     private void updateSubtitle(GalleryFragmentBottomSheetDialog.MediaState mediaState) {
-        requireActivity().runOnUiThread(() -> {
+        final var activity = getActivity();
+        if (!isAdded() || activity == null) {
+            return;
+        }
+
+        activity.runOnUiThread(() -> {
             if (!isAdded()) {
                 return;
             }
@@ -421,7 +452,7 @@ public class GalleryFragment extends OCFileListFragment implements GalleryFragme
                 subTitle = getResources().getString(R.string.subtitle_videos_only);
             }
 
-            if (requireActivity() instanceof ToolbarActivity toolbarActivity) {
+            if (activity instanceof ToolbarActivity toolbarActivity) {
                 toolbarActivity.updateToolbarSubtitle(subTitle);
             }
         });
@@ -430,5 +461,9 @@ public class GalleryFragment extends OCFileListFragment implements GalleryFragme
     @Override
     protected void setGridViewColumns(float scaleFactor) {
         // do nothing
+    }
+
+    public void markAsFavorite(String remotePath, boolean favorite) {
+        mAdapter.markAsFavorite(remotePath, favorite);
     }
 }

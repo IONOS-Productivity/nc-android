@@ -6,6 +6,7 @@
  * Copyright (C) 2021 Andy Scherzinger
  * Copyright (C) 2021 Stefan Niedermann
  *
+ * SPDX-FileCopyrightText: 2021-2026 Nextcloud GmbH and Nextcloud contributors
  * SPDX-License-Identifier: AGPL-3.0-or-later OR GPL-2.0-only
  */
 package com.owncloud.android.ui
@@ -26,6 +27,9 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.BitmapImageViewTarget
 import com.nextcloud.android.common.ui.theme.utils.ColorRole
 import com.nextcloud.client.account.User
+import com.nextcloud.android.common.ui.theme.utils.ColorRole
+import com.nextcloud.client.account.User
+import com.nextcloud.utils.GlideHelper.loadCircularBitmapIntoImageView
 import com.owncloud.android.R
 import com.owncloud.android.lib.common.utils.Log_OC
 import com.owncloud.android.lib.resources.shares.ShareType
@@ -79,6 +83,7 @@ class AvatarGroupLayout @JvmOverloads constructor(
             val avatar = ImageView(context).apply {
                 layoutParams = avatarLayoutParams
                 setPadding(avatarBorderSize, avatarBorderSize, avatarBorderSize, avatarBorderSize)
+                scaleType = ImageView.ScaleType.CENTER_INSIDE
                 background = borderDrawable
             }
 
@@ -99,6 +104,7 @@ class AvatarGroupLayout @JvmOverloads constructor(
                         )
 
                     ShareType.FEDERATED -> showFederatedShareAvatar(
+                    ShareType.FEDERATED, ShareType.FEDERATED_GROUP -> showFederatedShareAvatar(
                         context,
                         sharee.userId!!,
                         avatarRadius,
@@ -118,6 +124,8 @@ class AvatarGroupLayout @JvmOverloads constructor(
                             resources,
                             avatar,
                             context
+                            context,
+                            avatarBorderSize
                         )
                     }
                 }
@@ -159,6 +167,24 @@ class AvatarGroupLayout @JvmOverloads constructor(
                     R.drawable.account_circle_white,
                     null
                 )!!,
+        val split = user.split("@")
+        val userId = split.getOrNull(0) ?: user
+        val server = split.getOrNull(1)
+
+        val url = if (server != null) {
+            "https://$server/index.php/avatar/$userId/${resources.getInteger(R.integer.file_avatar_px)}"
+        } else {
+            // fallback: no federated server, maybe use local avatar
+            null
+        }
+
+        val placeholder: Drawable = try {
+            TextDrawable.createAvatarByUserId(userId, avatarRadius)
+        } catch (e: Exception) {
+            Log_OC.e(TAG, "Error calculating RGB value for active account icon.", e)
+            viewThemeUtils.platform.colorDrawable(
+                ResourcesCompat
+                    .getDrawable(resources, R.drawable.account_circle_white, null)!!,
                 ContextCompat.getColor(context, R.color.black)
             )
         }
@@ -177,6 +203,11 @@ class AvatarGroupLayout @JvmOverloads constructor(
                     }
                 }
             })
+        if (url != null) {
+            loadCircularBitmapIntoImageView(context, url, avatar, placeholder)
+        } else {
+            avatar.setImageDrawable(placeholder)
+        }
     }
 
     override fun avatarGenerated(avatarDrawable: Drawable?, callContext: Any) {

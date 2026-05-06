@@ -25,6 +25,7 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import com.ionos.annotation.IonosCustomization
 import com.ionos.player.model.PlaybackFileType
 import com.ionos.player.model.PlaybackModel
 import com.ionos.player.ui.PlayerScreenEvent.LaunchOpenFileIntent
@@ -82,6 +83,8 @@ class PlayerActivity : FileActivity(), Injectable {
     private var onBackPressedCallback: OnBackPressedCallback? = null
 
     override fun isDefaultWindowInsetsHandlingEnabled(): Boolean = false
+    @IonosCustomization("Remove window insets paddings")
+    override fun isDefaultWindowInsetsHandlingEnabled() = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
@@ -224,6 +227,7 @@ class PlayerActivity : FileActivity(), Injectable {
 
     private fun showFileActions(file: OCFile, actionIds: List<Int>) {
         val actionsToHide = FileAction.SORTED_VALUES.map(FileAction::id).filter { it !in actionIds }
+        val actionsToHide = FileAction.getActions(listOf(file)).map(FileAction::id).filter { it !in actionIds }
         FileActionsBottomSheet.newInstance(file, false, actionsToHide)
             .setResultListener(supportFragmentManager, this) { viewModel.onFileActionChosen(file, it) }
             .show(supportFragmentManager, "actions")

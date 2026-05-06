@@ -10,12 +10,12 @@ import android.content.ActivityNotFoundException
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.drawable.Drawable
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.net.toUri
 import androidx.fragment.app.FragmentActivity
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -36,7 +36,8 @@ class ProfileBottomSheetDialog(
     private val user: User,
     private val hoverCard: HoverCard,
     private val viewThemeUtils: ViewThemeUtils
-) : BottomSheetDialog(fileActivity), DisplayUtils.AvatarGenerationListener {
+) : BottomSheetDialog(fileActivity),
+    DisplayUtils.AvatarGenerationListener {
     private var _binding: ProfileBottomSheetFragmentBinding? = null
 
     // This property is only valid between onCreateView and onDestroyView.
@@ -80,7 +81,7 @@ class ProfileBottomSheetDialog(
             actionBinding.name.text = action.title
 
             val icon = when (action.appId) {
-                "profile" -> R.drawable.ic_user
+                "profile" -> R.drawable.ic_user_outline
                 "email" -> R.drawable.ic_email
                 "spreed" -> R.drawable.ic_talk
                 else -> R.drawable.ic_edit
@@ -121,7 +122,7 @@ class ProfileBottomSheetDialog(
 
     private fun sendEmail(email: String) {
         val intent = Intent(Intent.ACTION_SENDTO).apply {
-            data = Uri.parse("mailto:")
+            data = "mailto:".toUri()
             putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
         }
 

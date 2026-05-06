@@ -19,6 +19,7 @@
         <item name="android:statusBarColor">@color/black</item>
         <item name="android:navigationBarColor">@color/madison</item>
         <item name="android:windowBackground">@color/bg_default</item>
+        <item name="android:windowBackground">@color/black</item>
         <item name="android:textColorHint">@color/secondary_text_color</item>
     </style>
 
@@ -130,6 +131,7 @@
     </style>
 
     <style name="SettingsMaterialSwitchStyle" parent="Widget.Material3.CompoundButton.MaterialSwitch">
+    <style name="IonosMaterialSwitchStyle" parent="Widget.Material3.CompoundButton.MaterialSwitch">
         <item name="materialThemeOverlay">@style/SettingsMaterialSwitchThemeOverlayStyle</item>
 
         <!-- unchecked, track stroke and thumb color -->
@@ -159,6 +161,7 @@
     </style>
 
     <style name="SettingsBackupSwitchStyle" parent="SettingsMaterialSwitchStyle">
+    <style name="SettingsBackupSwitchStyle" parent="IonosMaterialSwitchStyle">
         <item name="android:textSize">@dimen/settings_screen_title_text_size</item>
         <item name="android:textColor">@color/text_color</item>
         <item name="android:singleLine">true</item>

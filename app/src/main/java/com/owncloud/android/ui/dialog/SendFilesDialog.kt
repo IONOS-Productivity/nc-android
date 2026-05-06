@@ -16,7 +16,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.nextcloud.android.common.ui.theme.utils.ColorRole
@@ -27,10 +26,13 @@ import com.owncloud.android.databinding.SendFilesFragmentBinding
 import com.owncloud.android.datamodel.OCFile
 import com.owncloud.android.ui.adapter.SendButtonAdapter
 import com.owncloud.android.ui.components.SendButtonData
+import com.owncloud.android.utils.DisplayUtils
 import com.owncloud.android.utils.theme.ViewThemeUtils
 import javax.inject.Inject
 
-class SendFilesDialog : BottomSheetDialogFragment(R.layout.send_files_fragment), Injectable {
+class SendFilesDialog :
+    BottomSheetDialogFragment(R.layout.send_files_fragment),
+    Injectable {
 
     private var files: Array<OCFile>? = null
     private lateinit var binding: SendFilesFragmentBinding
@@ -66,7 +68,9 @@ class SendFilesDialog : BottomSheetDialogFragment(R.layout.send_files_fragment),
         val matches = requireActivity().packageManager.queryIntentActivities(sendIntent, 0)
 
         if (matches.isEmpty()) {
-            Toast.makeText(context, R.string.no_send_app, Toast.LENGTH_SHORT).show()
+            activity?.let {
+                DisplayUtils.showSnackMessage(it, R.string.no_send_app)
+            }
             dismiss()
             return
         }
@@ -79,15 +83,14 @@ class SendFilesDialog : BottomSheetDialogFragment(R.layout.send_files_fragment),
         binding.sendButtonRecyclerView.adapter = SendButtonAdapter(sendButtonDataList, clickListener)
     }
 
-    private fun setupSendButtonClickListener(sendIntent: Intent): SendButtonAdapter.ClickListener {
-        return SendButtonAdapter.ClickListener { sendButtonDataData: SendButtonData ->
+    private fun setupSendButtonClickListener(sendIntent: Intent): SendButtonAdapter.ClickListener =
+        SendButtonAdapter.ClickListener { sendButtonDataData: SendButtonData ->
             val packageName = sendButtonDataData.packageName
             val activityName = sendButtonDataData.activityName
             sendIntent.component = ComponentName(packageName, activityName)
             requireActivity().startActivity(Intent.createChooser(sendIntent, getString(R.string.send)))
             dismiss()
         }
-    }
 
     private fun setupSendButtonData(matches: List<ResolveInfo>): List<SendButtonData> {
         var icon: Drawable

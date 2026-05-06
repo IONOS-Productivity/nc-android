@@ -16,7 +16,6 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.LayerDrawable
 import android.graphics.drawable.PictureDrawable
@@ -35,6 +34,7 @@ import android.widget.LinearLayout
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.drawable.toDrawable
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
@@ -48,6 +48,7 @@ import com.nextcloud.client.account.UserAccountManager
 import com.nextcloud.client.di.Injectable
 import com.nextcloud.client.jobs.BackgroundJobManager
 import com.nextcloud.client.network.ConnectivityService
+import com.nextcloud.ui.fileactions.FileAction
 import com.nextcloud.ui.fileactions.FileActionsBottomSheet.Companion.newInstance
 import com.nextcloud.utils.extensions.clickWithDebounce
 import com.nextcloud.utils.extensions.getParcelableArgument
@@ -59,6 +60,7 @@ import com.owncloud.android.datamodel.ThumbnailsCacheManager
 import com.owncloud.android.datamodel.ThumbnailsCacheManager.AsyncResizedImageDrawable
 import com.owncloud.android.datamodel.ThumbnailsCacheManager.ResizedImageGenerationTask
 import com.owncloud.android.lib.common.utils.Log_OC
+import com.owncloud.android.ui.activity.FileActivity
 import com.owncloud.android.ui.dialog.ConfirmationDialogFragment
 import com.owncloud.android.ui.dialog.RemoveFilesDialogFragment
 import com.owncloud.android.ui.fragment.FileFragment
@@ -95,7 +97,9 @@ import kotlin.math.min
  */
 
 @Suppress("TooManyFunctions")
-class PreviewImageFragment : FileFragment(), Injectable {
+class PreviewImageFragment :
+    FileFragment(),
+    Injectable {
     private var showResizedImage: Boolean? = null
     private var bitmap: Bitmap? = null
 
@@ -178,6 +182,7 @@ class PreviewImageFragment : FileFragment(), Injectable {
     /**
      * {@inheritDoc}
      */
+    @Deprecated("Deprecated in Java")
     @Suppress("ReturnCount")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -329,9 +334,8 @@ class PreviewImageFragment : FileFragment(), Injectable {
         return cachedImage
     }
 
-    private fun getThumbnailBitmap(file: OCFile): Bitmap? {
-        return ThumbnailsCacheManager.getBitmapFromDiskCache(ThumbnailsCacheManager.PREFIX_THUMBNAIL + file.remoteId)
-    }
+    private fun getThumbnailBitmap(file: OCFile): Bitmap? =
+        ThumbnailsCacheManager.getBitmapFromDiskCache(ThumbnailsCacheManager.PREFIX_THUMBNAIL + file.remoteId)
 
     override fun onStop() {
         Log_OC.d(TAG, "onStop starts")
@@ -362,25 +366,23 @@ class PreviewImageFragment : FileFragment(), Injectable {
                     }
                 }
 
-                override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                    return when (menuItem.itemId) {
-                        R.id.custom_menu_placeholder_item -> {
-                            val file = file
-                            if (containerActivity.storageManager != null && file != null) {
-                                // Update the file
-                                val updatedFile = containerActivity.storageManager.getFileById(file.fileId)
-                                setFile(updatedFile)
+                override fun onMenuItemSelected(menuItem: MenuItem): Boolean = when (menuItem.itemId) {
+                    R.id.custom_menu_placeholder_item -> {
+                        val file = file
+                        if (containerActivity.storageManager != null && file != null) {
+                            // Update the file
+                            val updatedFile = containerActivity.storageManager.getFileById(file.fileId)
+                            setFile(updatedFile)
 
-                                val fileNew = getFile()
-                                if (fileNew != null) {
-                                    showFileActions(file)
-                                }
+                            val fileNew = getFile()
+                            if (fileNew != null) {
+                                showFileActions(file)
                             }
-                            true
                         }
-
-                        else -> false
+                        true
                     }
+
+                    else -> false
                 }
             },
             viewLifecycleOwner,
@@ -389,21 +391,7 @@ class PreviewImageFragment : FileFragment(), Injectable {
     }
 
     private fun showFileActions(file: OCFile) {
-        val additionalFilter: MutableList<Int> = ArrayList(
-            listOf(
-                R.id.action_rename_file,
-                R.id.action_sync_file,
-                R.id.action_move_or_copy,
-                R.id.action_favorite,
-                R.id.action_unset_favorite,
-                R.id.action_pin_to_homescreen
-            )
-        )
-
-        if (getFile() != null && getFile().isSharedWithMe && !getFile().canReshare()) {
-            additionalFilter.add(R.id.action_send_share_file)
-        }
-
+        val additionalFilter = FileAction.getFilePreviewActions(getFile())
         val fragmentManager = childFragmentManager
         newInstance(file, false, additionalFilter)
             .setResultListener(fragmentManager, this) { itemId: Int -> this.onFileActionChosen(itemId) }
@@ -420,6 +408,8 @@ class PreviewImageFragment : FileFragment(), Injectable {
             } else {
                 containerActivity.fileOperationsHelper.sendShareFile(file)
             }
+        } else if (itemId == R.id.action_send_file) {
+            containerActivity.fileOperationsHelper.sendShareFile(file, true)
         } else if (itemId == R.id.action_open_file_with) {
             openFile()
         } else if (itemId == R.id.action_remove_file) {
@@ -428,6 +418,10 @@ class PreviewImageFragment : FileFragment(), Injectable {
         } else if (itemId == R.id.action_see_details) {
             seeDetails()
         } else if (itemId == R.id.action_download_file || itemId == R.id.action_sync_file) {
+            if (containerActivity is FileActivity) {
+                val activity = containerActivity as FileActivity
+                activity.showSyncLoadingDialog(file.isFolder)
+            }
             containerActivity.fileOperationsHelper.syncFile(file)
         } else if (itemId == R.id.action_cancel_sync) {
             containerActivity.fileOperationsHelper.cancelTransference(file)
@@ -646,7 +640,7 @@ class PreviewImageFragment : FileFragment(), Injectable {
 
         val bitmapDrawable =
             if (MIME_TYPE_PNG.equals(result.ocFile.mimeType, ignoreCase = true)) {
-                BitmapDrawable(resources, bitmap)
+                bitmap?.toDrawable(resources)
             } else if (MIME_TYPE_SVG.equals(result.ocFile.mimeType, ignoreCase = true)) {
                 result.drawable
             } else if (MIME_TYPE_GIF.equals(result.ocFile.mimeType, ignoreCase = true)) {
@@ -656,7 +650,7 @@ class PreviewImageFragment : FileFragment(), Injectable {
                     result.drawable
                 }
             } else {
-                BitmapDrawable(resources, bitmap)
+                bitmap?.toDrawable(resources)
             }
 
         layers[1] = bitmapDrawable
@@ -755,13 +749,15 @@ class PreviewImageFragment : FileFragment(), Injectable {
 
     @Suppress("ComplexCondition")
     private fun toggleImageBackground() {
-        if (file != null && (
+        if (file != null &&
+            (
                 MIME_TYPE_PNG.equals(
                     file.mimeType,
                     ignoreCase = true
                 ) ||
                     MIME_TYPE_SVG.equals(file.mimeType, ignoreCase = true)
-                ) && activity != null &&
+                ) &&
+            activity != null &&
             activity is PreviewImageActivity
         ) {
             val previewImageActivity = activity as PreviewImageActivity?
@@ -842,9 +838,7 @@ class PreviewImageFragment : FileFragment(), Injectable {
          * @return 'True' if the file can be handled by the fragment.
          */
         @JvmStatic
-        fun canBePreviewed(file: OCFile?): Boolean {
-            return file != null && MimeTypeUtil.isImage(file)
-        }
+        fun canBePreviewed(file: OCFile?): Boolean = file != null && MimeTypeUtil.isImage(file)
 
         private fun convertDpToPixel(dp: Float, context: Context?): Int {
             val resources = context?.resources ?: return 0

@@ -9,6 +9,7 @@ package com.ionos.scanbot.image_loading
 
 import android.widget.ImageView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.signature.ObjectKey
 import com.ionos.scanbot.image_loader.ImageLoaderOptions
 import com.ionos.scanbot.image_loader.ImageRequestBuilder
 import com.ionos.scanbot.image_loader.ScaleType
@@ -35,6 +36,15 @@ class ImageRequestBuilderImpl(
                     else -> this
                 }
             }
+        val baseRequest = Glide.with(target.context).load(file)
+
+        val request = when (options?.scaleType) {
+            ScaleType.CENTER_CROP -> baseRequest.centerCrop()
+            ScaleType.CENTER_INSIDE -> baseRequest.fitCenter()
+            null -> baseRequest
+        }
+
+        request
             .signature(ObjectKey(file.lastModified()))
             .into(target)
     }

@@ -39,6 +39,12 @@
     <string name="assistant_screen_create_task_alert_dialog_input_field_placeholder">مقداری متن را تایپ کنید</string>
     <string name="assistant_screen_delete_task_alert_dialog_title">وظیفه را حذف کنید</string>
     <string name="assistant_screen_task_delete_success_message">Task successfully deleted</string>
+    <string name="appear_offline">نمایش آفلاین</string>
+    <string name="assistant_screen_delete_task_alert_dialog_title">وظیفه را حذف کنید</string>
+    <string name="assistant_screen_send_message">فرستادن پیام</string>
+    <string name="assistant_screen_task_create_success_message">Task created</string>
+    <string name="assistant_task_status_running">running</string>
+    <string name="assistant_task_status_unknown">نامشخص</string>
     <string name="associated_account_not_found">حساب مرتبط یافت نشد!</string>
     <string name="auth_access_failed">دسترسی خطای  %1$s</string>
     <string name="auth_account_does_not_exist">حساب به این وسیله اضافه نشده است</string>
@@ -88,8 +94,10 @@
     <string name="bottom_navigation_menu_favorites_label">مورد علاقه‌ها</string>
     <string name="bottom_navigation_menu_files_label">تمامی فایل‌ها</string>
     <string name="bottom_navigation_menu_media_label">رسانه‌ها</string>
+    <string name="busy">مشغول</string>
     <string name="calendar">تقویم</string>
     <string name="calendars">تقویم‌ها</string>
+    <string name="cancel_upload">انصراف</string>
     <string name="certificate_load_problem">در حال بارگذاری گواهینامه، یک مشکل وجود دارد.</string>
     <string name="changelog_dev_version">تغییرات نسخه در حال توسعه</string>
     <string name="check_back_later_or_reload">بعدا چک فرمایید یا مجددا بارگذاری کنید.</string>
@@ -99,9 +107,9 @@
     <string name="choose_template_helper_text">لطفا یک قالب را انتخاب و نامی برای پرونده وارد کنید.</string>
     <string name="choose_which_file">انتخاب کنید کدام فایل را نگه‌ دارید!</string>
     <string name="choose_widget">گزینش ابزارک</string>
+    <string name="clear">پاک کردن</string>
     <string name="clear_notifications_failed">ناموفق بودن در پاک کردن اعلانها</string>
-    <string name="clear_status_message">پیام وضعیت را پاک کن</string>
-    <string name="clear_status_message_after">"بعد از آن پیام وضعیت را پاک کن "</string>
+    <string name="clear_status_after">پاک کردن وضعیت بعدی</string>
     <string name="clipboard_label">متن کپی شده از %1$s</string>
     <string name="clipboard_no_text_to_copy">هیچ متنی برای کپی کردن در کلیپ بورد دریافت نشده است</string>
     <string name="clipboard_text_copied">پیوند کپی شد</string>
@@ -116,6 +124,7 @@
     <string name="common_error">خطا</string>
     <string name="common_error_out_memory">حافظه کافی وجود ندارد</string>
     <string name="common_error_unknown">خطای نامشخص</string>
+    <string name="common_leave_this_share">ترک این اشتراک</string>
     <string name="common_loading">بار کردن…</string>
     <string name="common_next">بعدی</string>
     <string name="common_no">نه</string>
@@ -148,6 +157,7 @@
     <string name="community_testing_bug_text">خطایی پیدا کردید؟ عجیب و غریب؟</string>
     <string name="community_testing_headline">با آزمایش کردن کمک کنید</string>
     <string name="community_testing_report_text">گزارش یک مورد در GitHub</string>
+    <string name="compose_activity_label">Nextcloud Assistant</string>
     <string name="configure_new_media_folder_detection_notifications">" پیکربندی"</string>
     <string name="confirm_removal">رمزگذاری محلی را حذف کنید.</string>
     <string name="confirmation_remove_file_alert">آیا واقعا می‌خواهید %1$s را حذف کنید؟</string>
@@ -168,7 +178,9 @@
     <string name="contacts_preferences_import_scheduled">زمانبدی ها وارد شده و به زودی آغاز می شود</string>
     <string name="contacts_preferences_no_file_found">هیچ فایلی یافت نشد</string>
     <string name="contacts_preferences_something_strange_happened">آخرین نسخه پشتیبان شما پیدا نشد!</string>
-    <string name="copied_to_clipboard">در حافظه رونویسی شد</string>
+    <string name="conversation_screen_empty_content_title">No conversations found</string>
+    <string name="conversation_screen_title">گفتگو</string>
+    <string name="copied">کپی شد</string>
     <string name="copy_file_error">یک خطا در زمان تلاش برای کپی این فایل یا شاخه رخ داد</string>
     <string name="copy_file_invalid_into_descendent">کپی کردن پوشه در یکی از پوشه های زیرین خود امکان پذیر نیست</string>
     <string name="copy_file_invalid_overwrite">فایل در حال حاضر در پوشه مقصد موجود است</string>
@@ -186,6 +198,7 @@
     <string name="create_new_folder">پوشه جدید</string>
     <string name="create_new_presentation">ارائه جدید</string>
     <string name="create_new_spreadsheet">صفحهٔ گستردهٔ جدید</string>
+    <string name="create_rich_workspace">اضافه کردن توضیحات پوشه</string>
     <string name="credentials_disabled">اعتبارنامه غیرفعال است</string>
     <string name="daily_backup">پشتیبان روزانه</string>
     <string name="data_to_back_up">داده برای پشتیبان‌گیری</string>
@@ -237,7 +250,7 @@
     <string name="drawer_item_all_files">تمامی فایل‌ها</string>
     <string name="drawer_item_favorites">مورد علاقه</string>
     <string name="drawer_item_gallery">رسانه‌ها</string>
-    <string name="drawer_item_groupfolders">گروه پوشه ها</string>
+    <string name="drawer_item_groupfolders">پوشه‌های تیم</string>
     <string name="drawer_item_home">خانه </string>
     <string name="drawer_item_notifications">پیغام ها</string>
     <string name="drawer_item_on_device">در دستگاه </string>
@@ -311,6 +324,7 @@
     <string name="etm_transfer_type">انتقال</string>
     <string name="etm_transfer_type_download">بارگیری</string>
     <string name="etm_transfer_type_upload">بارگذاری</string>
+    <string name="external_shares">اشتراک خارجی</string>
     <string name="fab_label">اضافه یا بارگذاری کنید</string>
     <string name="failed_to_download">ارسال فایل برای مدیر بارگیری انجام نشد</string>
     <string name="failed_to_print">چاپ پرونده انجام نشد</string>
@@ -318,6 +332,7 @@
     <string name="failed_update_ui">رابط کاربری بروز نشد</string>
     <string name="favorite">افزوردن به موارد دلخواه</string>
     <string name="favorite_icon">مورد ‌علاقه</string>
+    <string name="fifteenMinutes">۱۵ دقیقه</string>
     <string name="file_already_exists">نام فایل از قبل وجود دارد.</string>
     <string name="file_delete">حذف</string>
     <string name="file_detail_activity_error">خطا در بازیابی فعالیت‌ها برای فایل</string>
@@ -333,6 +348,8 @@
     <string name="file_list_empty_headline_server_search">نتیجه ای یافت نشد</string>
     <string name="file_list_empty_moving">هیچ چیز در اینجا نیست. می توانید یک پوشه اضافه کنید.</string>
     <string name="file_list_empty_on_device">فایل‌ها و پوشه‌های بارگیری شده، در این قسمت نمایش داده خواهند شد.</string>
+    <string name="file_list_empty_recent_files_description">فایل‌ها و پوشه‌هایی که اخیراً تغییر داده‌اید در اینجا نمایش داده می‌شوند.</string>
+    <string name="file_list_empty_recent_files_headline">هیچ فایلی که اخیراً اصلاح شده است</string>
     <string name="file_list_empty_recently_modified">در ۷ روز گذشته هیچ فایلی تغییر نیافته است.</string>
     <string name="file_list_empty_search">شاید در پوشه های مختلف باشد؟</string>
     <string name="file_list_empty_shared">فایل‌ها و پوشه‌های به اشتراک گذاشته شده در این قسمت نمایش داده خواهند شد.</string>
@@ -343,7 +360,6 @@
     <string name="file_list_loading">درحال بارگیری...</string>
     <string name="file_list_no_app_for_file_type">هیچ برنامه ای برای استفاده این نوع فایل تنظیم نشده است.</string>
     <string name="file_list_seconds_ago">ثانیه‌هایی پیش</string>
-    <string name="file_management_permission">مجوزهای مورد نیاز</string>
     <string name="file_management_permission_optional">مجوزهای ذخیره سازی</string>
     <string name="file_management_permission_optional_text">%1$s با مجوز دسترسی به فضای ذخیره سازی بهترین کار را دارد. می‌توانید دسترسی کامل به همه فایل‌ها یا دسترسی فقط خواندنی به عکس‌ها و ویدیوها را انتخاب کنید.</string>
     <string name="file_management_permission_text">%1$s برای آپلود فایل ها به مجوزهای مدیریت فایل نیاز دارد. می‌توانید دسترسی کامل به همه فایل‌ها یا دسترسی فقط خواندنی به عکس‌ها و ویدیوها را انتخاب کنید.</string>
@@ -372,7 +388,6 @@
     <string name="file_not_synced">پرونده نمی تواند همگام سازی شود. نمایش آخرین نسخه موجود</string>
     <string name="file_rename">تغییرنام</string>
     <string name="file_version_restored_error">خطا در بازیابی نسخه پرونده!</string>
-    <string name="file_version_restored_successfully">نسخه پرونده با موفقیت بازیابی شد.</string>
     <string name="filedetails_details">جزییات</string>
     <string name="filedetails_download">دانلود</string>
     <string name="filedetails_export">گرفتن خروجی</string>
@@ -405,7 +420,6 @@
     <string name="foreign_files_local_text">محلی: %1$s</string>
     <string name="foreign_files_move">انتقال همه</string>
     <string name="foreign_files_remote_text">از راه دور:%1$s</string>
-    <string name="foreign_files_success">همه فایل‌ها انتقال یافتند</string>
     <string name="forward">ارسال کردن</string>
     <string name="fourHours">۴ ساعت</string>
     <string name="grid_file_features_live_photo_content_description">این آیکون، نمایانگر دسترسی به تصویر زنده است</string>
@@ -434,16 +448,14 @@
     <string name="instant_upload_existing">فایل های موجود را نیز بارگذاری کنید</string>
     <string name="instant_upload_on_charging">فقط هنگامی که گوشی شارژ می شود آپلود کنید</string>
     <string name="instant_upload_path">آپلود فوری</string>
+    <string name="internal_shares">اشتراک داخلی</string>
     <string name="invalid_url">نشانی وب نامعتبر است</string>
     <string name="invisible">نامرئی</string>
     <string name="label_empty">برچسب نمی تواند خالی باشد</string>
     <string name="last_backup">آخرین پشتیبان: %1$s</string>
     <string name="link">پیوند</string>
     <string name="link_name">نام پیوند</string>
-    <string name="link_share_allow_upload_and_editing">مجاز به بارگذاری و ویرایش</string>
     <string name="link_share_editing">ویرایش کردن</string>
-    <string name="link_share_file_drop">انداختن فایل (فقط آپلود)</string>
-    <string name="link_share_view_only">تنها مشاهده</string>
     <string name="list_layout">Listed layout</string>
     <string name="load_more_results">بار کردن نتیحه‌های بیش‌تر</string>
     <string name="local_file_list_empty">هیچ فایلی در این پوشه نیست.</string>
@@ -481,6 +493,8 @@
     <string name="media_forward_description">دکمه رو به جلو سریع</string>
     <string name="media_notif_ticker">%1$s پخش کننده موسیقی</string>
     <string name="media_play_pause_description">دکمه پخش یا توقف</string>
+    <string name="media_player_pause">توقف کردن</string>
+    <string name="media_player_play">پخش کردن</string>
     <string name="media_rewind_description">دکمه عقبگرد</string>
     <string name="media_state_playing">%1$s (در حال پخش)</string>
     <string name="menu_item_sort_by_date_newest_first">تازه ترین ها اول </string>
@@ -494,6 +508,7 @@
     <string name="move_file_invalid_into_descendent">انتقال یک پوشه در یکی از پوشه های زیرین خود امکان پذیر نیست</string>
     <string name="move_file_invalid_overwrite">فایل در حال حاضر در پوشه مقصد موجود است</string>
     <string name="move_file_not_found">انتقال فایل امکان پذیر نمی‌باشد. لطفا موجود بودن فایل را بررسی کنید.</string>
+    <string name="mute_all_notifications">خاموش کردن همه اعلانات</string>
     <string name="network_error_connect_timeout_exception">هنگام اتصال به سرور خطایی روی داد. تکمیل عملیات میسر نیست.</string>
     <string name="network_error_socket_exception">هنگام اتصال به سرور خطایی روی داد</string>
     <string name="network_error_socket_timeout_exception">هنگام اتصال به سرور خطایی روی داد. تکمیل عملیات میسر نیست.</string>
@@ -538,7 +553,6 @@
     <string name="outdated_server">سرور به پایان عمر رسیده است، لطفاً ارتقا دهید!</string>
     <string name="overflow_menu">منوی بیشتر</string>
     <string name="pass_code_configure_your_pass_code">رمز خود را وارد کنید</string>
-    <string name="pass_code_configure_your_pass_code_explanation">هر بار که برنامه باز شود, شما نیاز به استفاده از کد عبور خواهید داشت</string>
     <string name="pass_code_enter_pass_code">لطفا کد عبور خود را وارد کنید</string>
     <string name="pass_code_mismatch">رمزهای وارد شده یکسان نیستند</string>
     <string name="pass_code_reenter_your_pass_code">لطفا کد عبور خود را دوباره وارد کنید</string>
@@ -546,11 +560,10 @@
     <string name="pass_code_removed">کد عبور حذف شد</string>
     <string name="pass_code_stored">رمز ذخیره شد</string>
     <string name="pass_code_wrong">رمز نادرست</string>
+    <string name="pause_upload">توقف کردن</string>
     <string name="pdf_password_protected">PDF محافظت شده با رمز عبور باز نمی شود. لطفا از یک نمایشگر PDF خارجی استفاده کنید.</string>
-    <string name="pdf_zoom_tip">برای بزرگنمایی روی صفحه ضربه بزنید</string>
     <string name="permission_allow">اجازه دادن</string>
     <string name="permission_deny">غیر مجاز</string>
-    <string name="permission_storage_access">نیاز به مجوزهای اضافی برای بارگذاری و دریافت پرونده‌ها می باشد.</string>
     <string name="picture_set_as_no_app">هیچ برنامه ای برای تنظیم عکس یافت نشد</string>
     <string name="pin_shortcut_label">باز کنید %1$s</string>
     <string name="placeholder_fileSize">۳۸۹ کیلوبایت</string>
@@ -577,6 +590,7 @@
     <string name="prefs_category_about">درباره</string>
     <string name="prefs_category_details">جزئیات</string>
     <string name="prefs_category_dev">توسعه</string>
+    <string name="prefs_category_files">پرونده‌ها</string>
     <string name="prefs_category_general">عمومی</string>
     <string name="prefs_category_more">بیش‌تر</string>
     <string name="prefs_category_sync">همگام‌سازی</string>
@@ -627,7 +641,6 @@
     <string name="preview_image_file_is_not_exist">فایل وجود ندارد</string>
     <string name="preview_sorry">ببخشید</string>
     <string name="privacy">حریم خصوصی</string>
-    <string name="public_share_name">اسم جدید</string>
     <string name="push_notifications_not_implemented">ارسال اعلانات به دلیل وابستگی به خدمات اختصاصی Google Play غیرفعال شده است.</string>
     <string name="push_notifications_old_login">امکان ارسال اعلانات، به دلیل منقضی شدن زمان نشست ورود به سیستم وجود ندارد. لطفاً دوباره حساب خود را اضافه کنید.</string>
     <string name="push_notifications_temp_error">ارسال اعلانات در حال حاضر در دسترس نیست.</string>
@@ -689,6 +702,11 @@
     <string name="set_status_message">تنظیم پیام وضعیت</string>
     <string name="setup_e2e">در طول راه اندازی رمزگذاری سرتاسری، یک یادگاری تصادفی ۱۲ کلمه‌ای دریافت خواهید کرد که باید فایل‌های خود را در دستگاه‌های دیگر باز کنید. این فقط در این دستگاه ذخیره می شود و می تواند دوباره در این صفحه نمایش داده شود. لطفا آن را در یک مکان امن یادداشت کنید!</string>
     <string name="share">هم‌رسانی</string>
+    <string name="set_online_status">وضعیت برخط</string>
+    <string name="set_picture_as">استفاده از تصویر به عنوان</string>
+    <string name="setup_e2e">در طول راه اندازی رمزگذاری سرتاسری، یک یادگاری تصادفی ۱۲ کلمه‌ای دریافت خواهید کرد که باید فایل‌های خود را در دستگاه‌های دیگر باز کنید. این فقط در این دستگاه ذخیره می شود و می تواند دوباره در این صفحه نمایش داده شود. لطفا آن را در یک مکان امن یادداشت کنید!</string>
+    <string name="share">هم‌رسانی</string>
+    <string name="share_allow_download_and_sync_permission">اجازه دانلود و همگام‌سازی</string>
     <string name="share_create_permission">ایجاد</string>
     <string name="share_custom_permission">Custom permissions</string>
     <string name="share_delete_permission">حذف</string>
@@ -714,9 +732,9 @@
     <string name="share_no_expiration_date_label">تنظیم تاریخ انقضا</string>
     <string name="share_no_password_title">تنظیم گذرواژه</string>
     <string name="share_not_allowed_when_file_drop">اشتراک‌گذاری مجدد در حین ارائه فایل به صورت امن امکان‌پذیر نمی‌باشد</string>
-    <string name="share_password_title">محافظت شده با گذرواژه</string>
     <string name="share_permission_can_edit">توانایی ویرایش</string>
     <string name="share_permission_file_drop">انداختن پرونده</string>
+    <string name="share_permission_file_request">درخواست فایل</string>
     <string name="share_permission_secure_file_drop">دراپ فایل امن</string>
     <string name="share_permission_view_only">تنها مشاهده</string>
     <string name="share_re_share_permission">اشتراک‌گذاری</string>
@@ -730,7 +748,6 @@
     <string name="share_via_link_section_title">اشتراک گذاشتن لینک</string>
     <string name="share_via_link_send_link_label">فرستادن پیوند</string>
     <string name="share_via_link_unset_password">ناتنظیم</string>
-    <string name="share_with_title">هم‌رسانی با…</string>
     <string name="shared_avatar_desc">چهرک از کاربر مشترک</string>
     <string name="shared_icon_share">هم‌رسانی</string>
     <string name="shared_icon_shared">هم‌رسانده</string>
@@ -744,6 +761,8 @@
     <string name="signup_with_provider">ثبت‌نام با ارائه دهنده</string>
     <string name="single_sign_on_request_token" formatted="true">اجازه به %1$s برای دسترسی به حساب نکست‌کلود %2$s؟</string>
     <string name="sort_by">مرتب سازی بر اساس</string>
+    <string name="sort_favorites_first">ابتدا موارد دلخواه را مرتب کنید</string>
+    <string name="sort_folders_before_files">Sort folders before files</string>
     <string name="ssl_validator_btn_details_hide">پنهان کردن</string>
     <string name="ssl_validator_btn_details_see">جزییات</string>
     <string name="ssl_validator_header">هویت کارساز نتوانست تأیید شود</string>
@@ -779,7 +798,6 @@
     <string name="storage_internal_storage">ذخیره‌ساز داخلی</string>
     <string name="storage_movies">فیلم‌ها</string>
     <string name="storage_music">آهنگ‌ها</string>
-    <string name="storage_permission_full_access">دسترسی کامل</string>
     <string name="storage_permission_media_read_only">رسانه فقط‌خواندنی</string>
     <string name="storage_pictures">نگاره‌ها</string>
     <string name="store_full_dev_desc">"بستر خودمیزبانی که به شما اختیارات کامل می‌دهد. این نسخه رسمی درحال توسعه می‌باشد، شامل یک نمونه روزانه از هر قابلیت جدید آزمایش نشده است، چیزی که ممکن است باعث ناپایداری و از دست دادن اطلاعات شود. این برنامک برای کاربرانی می‌باشد که قصد آزمایش دارند، و در صورت بروز مشکل آن را گزارش دهند. از آن برای کار تولیدی استفاده نکنید! هردو نسخه عادی و در حال توسعه در F-droid در دسترس هستند و به صورت هم‌زمان قابل نصب هستند. "</string>
@@ -842,6 +860,7 @@
     <string name="trashbin_loading_failed">بار کردن سطل زباله شکست خورد!</string>
     <string name="trashbin_not_emptied">نمی توان پرونده ها را برای همیشه حذف کرد!</string>
     <string name="unexpected_error_occurred">خطای غیرمنتظره رخ داد</string>
+    <string name="unknown">ناشناخته.</string>
     <string name="unlock_file">باز کردن قفل پرونده</string>
     <string name="unread_comments">نظرات خوانده نشده وجود دارد</string>
     <string name="unset_encrypted">به صورت رمزگذاری شده تنظیم نشده است</string>
@@ -899,7 +918,6 @@
     <string name="uploader_file_not_found_message">فایل یافت نشد. آیا مطمئن هستید که فایل وجود دارد یا ممکن است تداخل قبلی آن رفع نشده است؟</string>
     <string name="uploader_file_not_found_on_server_message">نتوانستیم فایل را در فضای سرویس‌دهنده پیدا کنیم. ممکن است توسط کاربر دیگری حذف شده باشد</string>
     <string name="uploader_info_dirname">نام پوشه</string>
-    <string name="uploader_local_files_uploaded">تلاش مجدد آپلود فایل‌های محلی ناموفق</string>
     <string name="uploader_top_message">پوشه آپلود را انتخاب کنید </string>
     <string name="uploader_upload_failed_content_single">%1$sآپلود نشد</string>
     <string name="uploader_upload_failed_credentials_error">بارگذاری شکست خورد. دوباره وارد شوید</string>
@@ -919,9 +937,9 @@
     <string name="uploader_wrn_no_account_setup_btn_text">نصب</string>
     <string name="uploader_wrn_no_account_text">هیچ حساب کاربری %1$s برای دستگاه شما وجود ندارد. لطفا ابتدا  یک حساب ایجاد کنید </string>
     <string name="uploader_wrn_no_account_title">هیچ حسابی یافت نشد</string>
+    <string name="uploads_view_group_completed_uploads">نکمیل شده</string>
     <string name="uploads_view_group_current_uploads">کنونی</string>
     <string name="uploads_view_group_failed_uploads">شکست. در انتظار شروع دوباره</string>
-    <string name="uploads_view_group_finished_uploads">آپلود شده</string>
     <string name="uploads_view_group_manually_cancelled_uploads">لغو شده</string>
     <string name="uploads_view_later_waiting_to_upload">درحال انتظار برای آپلود</string>
     <string name="uploads_view_title">آپلودها</string>
@@ -946,7 +964,9 @@
     <string name="user_icon">کاربر</string>
     <string name="user_info_address">نشانی</string>
     <string name="user_info_email">رایانامه</string>
+    <string name="user_info_groups">گروه ها</string>
     <string name="user_info_phone">شماره تلفن</string>
+    <string name="user_info_profile">نمایه</string>
     <string name="user_info_twitter">توییتر</string>
     <string name="user_info_website">وب‌ سایت</string>
     <string name="user_information_retrieval_error">خطا در بازیابی اطلاعات کاربر</string>

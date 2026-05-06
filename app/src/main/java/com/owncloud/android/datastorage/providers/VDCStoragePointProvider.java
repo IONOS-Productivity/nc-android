@@ -28,11 +28,8 @@ public class VDCStoragePointProvider extends AbstractCommandLineStoragePoint {
 
     @Override
     public List<StoragePoint> getAvailableStoragePoint() {
-        List<StoragePoint> result = new Vector<>();
 
-        result.addAll(getPaths(getCommandLineResult()));
-
-        return result;
+        return new Vector<>(getPaths(getCommandLineResult()));
     }
 
     @Override
@@ -44,7 +41,7 @@ public class VDCStoragePointProvider extends AbstractCommandLineStoragePoint {
         List<StoragePoint> result = new Vector<>();
 
         for (String line : vdcResources.split("\n")) {
-            String vdcLine[] = line.split(" ");
+            String[] vdcLine = line.split(" ");
             try {
                 int status = Integer.parseInt(vdcLine[0]);
                 if (status != sVDCVolumeList) {

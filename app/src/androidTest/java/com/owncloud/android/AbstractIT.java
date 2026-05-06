@@ -6,12 +6,12 @@
  */
 package com.owncloud.android;
 
+import android.Manifest;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.accounts.AuthenticatorException;
 import android.accounts.OperationCanceledException;
 import android.app.Activity;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -22,6 +22,8 @@ import android.view.View;
 
 import com.facebook.testing.screenshot.Screenshot;
 import com.facebook.testing.screenshot.internal.TestNameDetector;
+import com.nextcloud.android.common.ui.theme.MaterialSchemes;
+import com.nextcloud.android.common.ui.theme.MaterialSchemesImpl;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.account.UserAccountManager;
 import com.nextcloud.client.account.UserAccountManagerImpl;
@@ -38,7 +40,6 @@ import com.nextcloud.test.RandomStringGenerator;
 import com.owncloud.android.datamodel.ArbitraryDataProvider;
 import com.owncloud.android.datamodel.ArbitraryDataProviderImpl;
 import com.owncloud.android.datamodel.FileDataStorageManager;
-import com.owncloud.android.datamodel.OCFile;
 import com.owncloud.android.datamodel.UploadsStorageManager;
 import com.owncloud.android.db.OCUpload;
 import com.owncloud.android.files.services.NameCollisionPolicy;
@@ -76,6 +77,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.test.espresso.contrib.DrawerActions;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
 import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.rule.GrantPermissionRule;
 import androidx.test.runner.lifecycle.ActivityLifecycleMonitorRegistry;
 import androidx.test.runner.lifecycle.Stage;
 
@@ -91,7 +93,10 @@ import static org.junit.Assume.assumeTrue;
  */
 public abstract class AbstractIT {
     @Rule
-    public final TestRule permissionRule = GrantStoragePermissionRule.grant();
+    public final TestRule storagePermissionRule = GrantStoragePermissionRule.grant();
+
+    @Rule
+    public GrantPermissionRule notificationsPermissionRule = GrantPermissionRule.grant(Manifest.permission.POST_NOTIFICATIONS);
 
     protected static OwnCloudClient client;
     protected static NextcloudClient nextcloudClient;
@@ -116,7 +121,7 @@ public abstract class AbstractIT {
             AccountManager platformAccountManager = AccountManager.get(targetContext);
 
             for (Account account : platformAccountManager.getAccounts()) {
-                if (account.type.equalsIgnoreCase("nextcloud")) {
+                if (account.type.equalsIgnoreCase(MainApp.getAccountType(targetContext))) {
                     platformAccountManager.removeAccountExplicitly(account);
                 }
             }
@@ -206,11 +211,7 @@ public abstract class AbstractIT {
     protected OCCapability getCapability() throws AccountUtils.AccountNotFoundException {
         NextcloudClient client = OwnCloudClientFactory.createNextcloudClient(user, targetContext);
 
-        OCCapability ocCapability = (OCCapability) new GetCapabilitiesRemoteOperation()
-            .execute(client)
-            .getSingleData();
-
-        return ocCapability;
+        return new GetCapabilitiesRemoteOperation().execute(client).getResultData();
     }
 
     @Before
@@ -254,19 +255,12 @@ public abstract class AbstractIT {
             file.mkdirs();
             return file;
         } else {
-            switch (name) {
-                case "empty.txt":
-                    return createFile("empty.txt", 0);
-
-                case "nonEmpty.txt":
-                    return createFile("nonEmpty.txt", 100);
-
-                case "chunkedFile.txt":
-                    return createFile("chunkedFile.txt", 500000);
-
-                default:
-                    return createFile(name, 0);
-            }
+            return switch (name) {
+                case "empty.txt" -> createFile("empty.txt", 0);
+                case "nonEmpty.txt" -> createFile("nonEmpty.txt", 100);
+                case "chunkedFile.txt" -> createFile("chunkedFile.txt", 500000);
+                default -> createFile(name, 0);
+            };
         }
     }
 
@@ -301,7 +295,7 @@ public abstract class AbstractIT {
         InstrumentationRegistry.getInstrumentation().waitForIdleSync();
     }
 
-    protected void onIdleSync(Runnable recipient) {
+    public void onIdleSync(Runnable recipient) {
         InstrumentationRegistry.getInstrumentation().waitForIdle(recipient);
     }
 
@@ -355,7 +349,7 @@ public abstract class AbstractIT {
         }
     }
 
-    public OCFile createFolder(String remotePath) {
+    public void createFolder(String remotePath) {
         RemoteOperationResult check = new ExistenceCheckRemoteOperation(remotePath, false).execute(client);
 
         if (!check.isSuccess()) {
@@ -363,8 +357,6 @@ public abstract class AbstractIT {
                            .execute(client)
                            .isSuccess());
         }
-
-        return getStorageManager().getFileByDecryptedRemotePath(remotePath.endsWith("/") ? remotePath : remotePath + "/");
     }
 
     public void uploadFile(File file, String remotePath) {
@@ -407,11 +399,6 @@ public abstract class AbstractIT {
             public boolean isPowerSavingEnabled() {
                 return false;
             }
-
-            @Override
-            public boolean isPowerSavingExclusionAvailable() {
-                return false;
-            }
         };
 
         UserAccountManager accountManager = UserAccountManagerImpl.fromContext(targetContext);
@@ -438,7 +425,7 @@ public abstract class AbstractIT {
 
         newUpload.setRemoteFolderToBeCreated();
 
-        RemoteOperationResult result = newUpload.execute(client);
+        var result = newUpload.execute(client);
         assertTrue(result.getLogMessage(), result.isSuccess());
     }
 
@@ -462,7 +449,7 @@ public abstract class AbstractIT {
         screenshot(view, "");
     }
 
-    protected void screenshotViaName(Activity activity, String name) {
+    public void screenshotViaName(Activity activity, String name) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
             Screenshot.snapActivity(activity).setName(name).record();
         }
@@ -543,13 +530,17 @@ public abstract class AbstractIT {
         platformAccountManager.setUserData(temp, KEY_USER_ID, name.substring(0, atPos));
 
         Account account = UserAccountManagerImpl.fromContext(targetContext).getAccountByName(name);
-        if (account == null) {
-            throw new ActivityNotFoundException();
+        if (Objects.equals(account.type, targetContext.getString(R.string.anonymous_account_type))) {
+            throw new RuntimeException("Could not get account with name " + name);
         }
         return account;
     }
 
     protected static boolean removeAccount(Account account) {
         return AccountManager.get(targetContext).removeAccountExplicitly(account);
+    }
+
+    protected MaterialSchemes getMaterialSchemesForCurrentUser() {
+        return new MaterialSchemesImpl(R.color.primary, false);
     }
 }

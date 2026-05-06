@@ -9,11 +9,10 @@ package com.owncloud.android.ui.activity;
 
 import android.accounts.Account;
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 
 import com.ionos.annotation.IonosCustomization;
+import com.nextcloud.android.common.ui.util.extensions.AppCompatActivityExtensionsKt;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.account.UserAccountManager;
 import com.nextcloud.client.di.Injectable;
@@ -34,8 +33,6 @@ import java.util.Optional;
 
 import javax.inject.Inject;
 
-import androidx.activity.EdgeToEdge;
-import androidx.activity.SystemBarStyle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -81,8 +78,11 @@ public abstract class BaseActivity extends AppCompatActivity implements Injectab
         if (isApiLevel35OrHigher && isDefaultWindowInsetsHandlingEnabled()) {
             enableEdgeToEdge();
             WindowExtensionsKt.addSystemBarPaddings(getWindow());
+    @IonosCustomization("Window insets handling, status bar color")
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        if(isDefaultWindowInsetsHandlingEnabled()) {
+            AppCompatActivityExtensionsKt.applyEdgeToEdgeWithSystemBarPadding(this);
         }
-
         super.onCreate(savedInstanceState);
         sessionMixin = new SessionMixin(this, accountManager);
         mixinRegistry.add(sessionMixin);
@@ -104,9 +104,9 @@ public abstract class BaseActivity extends AppCompatActivity implements Injectab
         return true;
     }
 
-    private void enableEdgeToEdge() {
-        final var style = SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT);
-        EdgeToEdge.enable(this, style, style);
+    @IonosCustomization("Window insets handling")
+    protected boolean isDefaultWindowInsetsHandlingEnabled() {
+        return true;
     }
 
     @Override

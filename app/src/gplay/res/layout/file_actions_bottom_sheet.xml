@@ -42,6 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/bottom_sheet_default_header_bottom_margin"
             android:gravity="center"
+            android:gravity="start"
             android:orientation="horizontal"
             android:visibility="visible">
 
@@ -58,12 +59,28 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/standard_margin"
                 android:ellipsize="middle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/standard_margin"
+                android:ellipsize="end"
                 android:lines="1"
                 android:textColor="@color/ionos_default_text_color"
                 android:textSize="@dimen/dialog_title_text_size"
                 android:textStyle="bold"
                 tools:text="Test file name which is very very very very very long.pdf" />
 
+                tools:text="Test file name which is very very very very very long" />
+
+            <TextView
+                android:id="@+id/extension"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="start"
+                android:lines="1"
+                android:textColor="@color/ionos_default_text_color"
+                android:textSize="@dimen/dialog_title_text_size"
+                android:textStyle="bold"
+                tools:text="@string/placeholder_extension" />
         </LinearLayout>
 
         <androidx.core.widget.NestedScrollView

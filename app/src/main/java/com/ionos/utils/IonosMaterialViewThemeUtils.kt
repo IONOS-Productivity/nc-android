@@ -12,6 +12,9 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.setPadding
 import androidx.core.view.updatePadding
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.card.MaterialCardView
 import com.google.android.material.chip.Chip
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.materialswitch.MaterialSwitch
@@ -19,6 +22,7 @@ import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.textfield.TextInputLayout
+import com.google.android.material.textview.MaterialTextView
 import com.nextcloud.android.common.ui.theme.utils.ColorRole
 import com.nextcloud.android.common.ui.theme.utils.MaterialViewThemeUtils
 import com.nextcloud.android.common.ui.util.buildColorStateList
@@ -117,6 +121,8 @@ class IonosMaterialViewThemeUtils(
 
     fun colorProgressBar(progressBar: LinearProgressIndicator) {
         delegate.colorProgressBar(progressBar)
+    fun colorProgressBar(progressBar: LinearProgressIndicator, primary: ColorRole) {
+        delegate.colorProgressBar(progressBar, primary)
     }
 
     fun themeChipSuggestion(chip: Chip) {
@@ -133,5 +139,20 @@ class IonosMaterialViewThemeUtils(
 
     fun colorMaterialSwitch(materialSwitch: MaterialSwitch) {
         delegate.colorMaterialSwitch(materialSwitch)
+    }
+
+    fun themeCardView(cardView: MaterialCardView) {
+        delegate.themeCardView(cardView)
+    }
+
+    fun themeSearchCardView(cardView: MaterialCardView) {
+        delegate.themeSearchCardView(cardView)
+    }
+
+    fun colorMaterialButtonContent(btn: MaterialButton, colorRole: ColorRole) {
+        delegate.colorMaterialButtonContent(btn, colorRole)
+    }
+
+    fun themeToolbar(toolbar: MaterialToolbar) {
     }
 }

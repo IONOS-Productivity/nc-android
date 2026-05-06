@@ -88,6 +88,9 @@ import com.owncloud.android.ui.dialog.ConfirmationDialogFragment;
 import com.owncloud.android.ui.dialog.LoadingDialog;
 import com.owncloud.android.ui.dialog.ShareLinkToDialog;
 import com.owncloud.android.ui.dialog.SslUntrustedCertDialog;
+import com.owncloud.android.ui.events.DialogEvent;
+import com.owncloud.android.ui.events.DialogEventType;
+import com.owncloud.android.ui.events.FavoriteEvent;
 import com.owncloud.android.ui.fragment.FileDetailFragment;
 import com.owncloud.android.ui.fragment.FileDetailSharingFragment;
 import com.owncloud.android.ui.fragment.OCFileListFragment;
@@ -101,6 +104,9 @@ import com.owncloud.android.utils.DisplayUtils;
 import com.owncloud.android.utils.ErrorMessageAdapter;
 import com.owncloud.android.utils.FilesSyncHelper;
 import com.owncloud.android.utils.theme.ViewThemeUtils;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -126,6 +132,7 @@ public abstract class FileActivity extends DrawerActivity
     LoadingVersionNumberTask.VersionDevInterface, FileDetailSharingFragment.OnEditShareListener, NetworkChangeListener {
 
     public static final String EXTRA_FILE = "com.owncloud.android.ui.activity.FILE";
+    public static final String EXTRA_FILE_REMOTE_PATH = "com.owncloud.android.ui.activity.FILE_REMOTE_PATH";
     public static final String EXTRA_LIVE_PHOTO_FILE = "com.owncloud.android.ui.activity.LIVE.PHOTO.FILE";
     public static final String EXTRA_USER = "com.owncloud.android.ui.activity.USER";
     public static final String EXTRA_FROM_NOTIFICATION = "com.owncloud.android.ui.activity.FROM_NOTIFICATION";
@@ -168,6 +175,7 @@ public abstract class FileActivity extends DrawerActivity
 
     protected FileDownloadWorker.FileDownloadProgressListener fileDownloadProgressListener;
     protected FileUploadHelper fileUploadHelper = FileUploadHelper.Companion.instance();
+    protected boolean isFileDisplayActivityResumed = false;
 
     @Inject
     UserAccountManager accountManager;
@@ -256,7 +264,11 @@ public abstract class FileActivity extends DrawerActivity
     public void networkAndServerConnectionListener(boolean isNetworkAndServerAvailable) {
         if (isNetworkAndServerAvailable) {
             hideInfoBox();
-            refreshList();
+
+            // No need to refresh the file list again since file display activity doing it.
+            if (!isFileDisplayActivityResumed) {
+                refreshList();
+            }
         } else {
             if (this instanceof PreviewMediaActivity) {
                 hideInfoBox();
@@ -309,10 +321,14 @@ public abstract class FileActivity extends DrawerActivity
         outState.putParcelable(FileActivity.EXTRA_FILE, mFile);
         outState.putBoolean(FileActivity.EXTRA_FROM_NOTIFICATION, mFromNotification);
         outState.putLong(KEY_WAITING_FOR_OP_ID, mFileOperationsHelper.getOpIdWaitingFor());
-        if(getSupportActionBar() != null && getSupportActionBar().getTitle() != null) {
-            // Null check in case the actionbar is used in ActionBar.NAVIGATION_MODE_LIST
-            // since it doesn't have a title then
-            outState.putString(KEY_ACTION_BAR_TITLE, getSupportActionBar().getTitle().toString());
+
+        final var actionBar = getSupportActionBar();
+
+        if(actionBar != null) {
+            final var actionBarTitle = actionBar.getTitle();
+            if (actionBarTitle != null) {
+                outState.putString(KEY_ACTION_BAR_TITLE, actionBarTitle.toString());
+            }
         }
     }
 
@@ -321,6 +337,7 @@ public abstract class FileActivity extends DrawerActivity
      *
      * @return  Main {@link OCFile} handled by the activity.
      */
+    @Nullable
     public OCFile getFile() {
         return mFile;
     }
@@ -428,8 +445,10 @@ public abstract class FileActivity extends DrawerActivity
             onCreateShareViaLinkOperationFinish((CreateShareViaLinkOperation) operation, result);
         } else if (operation instanceof CreateShareWithShareeOperation) {
             onUpdateShareInformation(result, R.string.sharee_add_failed);
-        } else if (operation instanceof UpdateShareViaLinkOperation || operation instanceof UpdateShareInfoOperation || operation instanceof SetFilesDownloadLimitOperation) {
+        } else if (operation instanceof UpdateShareViaLinkOperation || operation instanceof UpdateShareInfoOperation) {
             onUpdateShareInformation(result, R.string.updating_share_failed);
+        } else if (operation instanceof SetFilesDownloadLimitOperation) {
+            onUpdateShareInformation(result, R.string.set_download_limit_failed);
         } else if (operation instanceof UpdateSharePermissionsOperation) {
             onUpdateShareInformation(result, R.string.updating_share_failed);
         } else if (operation instanceof UnshareOperation) {
@@ -548,25 +567,35 @@ public abstract class FileActivity extends DrawerActivity
         }
     }
 
-
     /**
      * Show loading dialog
      */
     public void showLoadingDialog(String message) {
-        dismissLoadingDialog();
-
         runOnUiThread(() -> {
+            if (!ActivityExtensionsKt.isActive(this)) {
+                Log_OC.w(TAG, "cannot show loading dialog, activity is finishing");
+                return;
+            }
+
             FragmentManager fragmentManager = getSupportFragmentManager();
-            Fragment fragment = fragmentManager.findFragmentByTag(DIALOG_WAIT_TAG);
-            if (fragment == null) {
+            fragmentManager.executePendingTransactions();
+            Fragment existingDialog = fragmentManager.findFragmentByTag(DIALOG_WAIT_TAG);
+
+            if (existingDialog instanceof LoadingDialog loadingDialog) {
+                Log_OC.d(TAG, "dismiss previous loading dialog");
+
+                if (!fragmentManager.isStateSaved()) {
+                    loadingDialog.dismiss();
+                } else {
+                    loadingDialog.dismissAllowingStateLoss();
+                }
+            }
+
+            // Show new dialog
+            if (!fragmentManager.isStateSaved()) {
                 Log_OC.d(TAG, "show loading dialog");
                 LoadingDialog loadingDialogFragment = LoadingDialog.newInstance(message);
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                boolean isDialogFragmentReady = ActivityExtensionsKt.isDialogFragmentReady(this, loadingDialogFragment);
-                if (isDialogFragmentReady) {
-                    fragmentTransaction.add(loadingDialogFragment, DIALOG_WAIT_TAG);
-                    fragmentTransaction.commitNow();
-                }
+                loadingDialogFragment.show(fragmentManager, DIALOG_WAIT_TAG);
             }
         });
     }
@@ -576,15 +605,24 @@ public abstract class FileActivity extends DrawerActivity
      */
     public void dismissLoadingDialog() {
         runOnUiThread(() -> {
+            if (!ActivityExtensionsKt.isActive(this)) {
+                Log_OC.w(TAG, "cannot dismiss loading dialog, activity is finishing");
+                return;
+            }
+
             FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.executePendingTransactions();
             Fragment fragment = fragmentManager.findFragmentByTag(DIALOG_WAIT_TAG);
-            if (fragment != null) {
+
+            if (fragment instanceof LoadingDialog loadingDialogFragment) {
                 Log_OC.d(TAG, "dismiss loading dialog");
-                LoadingDialog loadingDialogFragment = (LoadingDialog) fragment;
-                boolean isDialogFragmentReady = ActivityExtensionsKt.isDialogFragmentReady(this, loadingDialogFragment);
-                if (isDialogFragmentReady) {
+
+                // Avoid dismissing after state is saved
+                if (!fragmentManager.isStateSaved()) {
                     loadingDialogFragment.dismiss();
-                    fragmentManager.executePendingTransactions();
+                } else {
+                    // Dismiss allowing state loss if needed
+                    loadingDialogFragment.dismissAllowingStateLoss();
                 }
             }
         });
@@ -644,6 +682,7 @@ public abstract class FileActivity extends DrawerActivity
         return fileUploadHelper;
     }
 
+    @Nullable
     public OCFile getCurrentDir() {
         OCFile file = getFile();
         if (file != null) {
@@ -698,7 +737,7 @@ public abstract class FileActivity extends DrawerActivity
                                        Integer latestVersion,
                                        boolean openDirectly,
                                        boolean inBackground) {
-        Integer currentVersion = -1;
+        int currentVersion = -1;
         try {
             currentVersion = activity.getPackageManager().getPackageInfo(activity.getPackageName(), 0).versionCode;
         } catch (PackageManager.NameNotFoundException e) {
@@ -715,9 +754,7 @@ public abstract class FileActivity extends DrawerActivity
             } else {
                 Snackbar.make(activity.findViewById(android.R.id.content), R.string.dev_version_new_version_available,
                               Snackbar.LENGTH_LONG)
-                    .setAction(activity.getString(R.string.version_dev_download), v -> {
-                        DisplayUtils.startLinkIntent(activity, devApkLink);
-                    }).show();
+                    .setAction(activity.getString(R.string.version_dev_download), v -> DisplayUtils.startLinkIntent(activity, devApkLink)).show();
             }
         } else {
             if (!inBackground) {
@@ -968,14 +1005,12 @@ public abstract class FileActivity extends DrawerActivity
      * @param share
      * @param screenTypePermission
      * @param isReshareShown
-     * @param isExpiryDateShown
      */
     @Override
-    public void editExistingShare(OCShare share, int screenTypePermission, boolean isReshareShown,
-                                  boolean isExpiryDateShown) {
+    public void editExistingShare(OCShare share, int screenTypePermission, boolean isReshareShown) {
         FileDetailFragment fragment = getFileDetailFragment();
         if (fragment != null) {
-            fragment.editExistingShare(share, screenTypePermission, isReshareShown, isExpiryDateShown);
+            fragment.editExistingShare(share, screenTypePermission, isReshareShown);
         }
     }
 
@@ -1000,5 +1035,20 @@ public abstract class FileActivity extends DrawerActivity
 
     public FilesRepository getFilesRepository() {
         return filesRepository;
+    }
+
+    public void showSyncLoadingDialog(boolean isFolder) {
+        if (isFolder) {
+            return;
+        }
+
+        showLoadingDialog(getApplicationContext().getString(R.string.wait_a_moment));
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void handleSyncDialogEvent(DialogEvent event) {
+        if (event.getType() == DialogEventType.SYNC) {
+            dismissLoadingDialog();
+        }
     }
 }

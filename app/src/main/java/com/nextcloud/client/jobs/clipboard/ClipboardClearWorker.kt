@@ -19,6 +19,7 @@ class ClipboardClearWorker(
     private val context: Context,
     params: WorkerParameters
 ) : Worker(context, params) {
+class ClipboardClearWorker(private val context: Context, params: WorkerParameters) : Worker(context, params) {
     private val tag = ClipboardClearWorker::class.java.name
 
     companion object {
@@ -42,6 +43,7 @@ class ClipboardClearWorker(
                 val newEmptyClip = ClipData.newPlainText("EmptyClipContent", "")
                 clipboardManager.setPrimaryClip(newEmptyClip)
             }
+            clipboardManager.clearPrimaryClip()
 
             return Result.success()
         } catch (e: Exception) {

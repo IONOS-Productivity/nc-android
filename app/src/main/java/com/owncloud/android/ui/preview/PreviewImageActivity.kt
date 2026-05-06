@@ -10,13 +10,12 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import android.view.WindowInsets
-import android.view.WindowInsetsController
-import androidx.appcompat.app.ActionBar
+import androidx.activity.OnBackPressedCallback
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toDrawable
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.viewpager2.widget.ViewPager2
@@ -25,15 +24,14 @@ import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.account.User
 import com.nextcloud.client.di.Injectable
 import com.nextcloud.client.editimage.EditImageActivity
+import com.nextcloud.client.jobs.download.FileDownloadEventBroadcaster
 import com.nextcloud.client.jobs.download.FileDownloadHelper
 import com.nextcloud.client.jobs.download.FileDownloadWorker
-import com.nextcloud.client.jobs.download.FileDownloadWorker.Companion.getDownloadFinishMessage
-import com.nextcloud.client.jobs.upload.FileUploadWorker.Companion.getUploadFinishMessage
 import com.nextcloud.client.preferences.AppPreferences
 import com.nextcloud.model.WorkerState
-import com.nextcloud.model.WorkerStateLiveData
 import com.nextcloud.utils.extensions.getParcelableArgument
 import com.nextcloud.utils.extensions.getSerializableArgument
+import com.nextcloud.utils.extensions.observeWorker
 import com.owncloud.android.MainApp
 import com.owncloud.android.R
 import com.owncloud.android.datamodel.FileDataStorageManager
@@ -49,7 +47,6 @@ import com.owncloud.android.ui.activity.FileActivity
 import com.owncloud.android.ui.activity.FileDisplayActivity
 import com.owncloud.android.ui.fragment.FileFragment
 import com.owncloud.android.ui.fragment.GalleryFragment
-import com.owncloud.android.ui.fragment.OCFileListFragment
 import com.owncloud.android.ui.preview.model.PreviewImageActivityState
 import com.owncloud.android.utils.DisplayUtils
 import com.owncloud.android.utils.MimeTypeUtil
@@ -63,17 +60,26 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
 import java.io.Serializable
 import javax.inject.Inject
 import kotlin.math.max
+import kotlin.math.min
 
 /**
  * Holds a swiping gallery where image files contained in an Nextcloud directory are shown.
  */
 @Suppress("TooManyFunctions")
-class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnRemoteOperationListener, Injectable {
+class PreviewImageActivity :
+    FileActivity(),
+    FileFragment.ContainerActivity,
+    OnRemoteOperationListener,
+    Injectable {
     private var livePhotoFile: OCFile? = null
     private var viewPager: ViewPager2? = null
     private var previewImagePagerAdapter: PreviewImagePagerAdapter? = null
     private var savedPosition: Int? = null
     private var downloadFinishReceiver: DownloadFinishReceiver? = null
+
+    private val downloadStartReceiver = DownloadStartReceiver()
+    private val downloadFinishReceiver = DownloadFinishReceiver()
+
     private var fullScreenAnchorView: View? = null
 
     private var isDownloadWorkStarted = false
@@ -104,21 +110,24 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
 
         actionBar = supportActionBar
 
-        if (savedInstanceState != null && !savedInstanceState.getBoolean(
+        if (savedInstanceState != null &&
+            !savedInstanceState.getBoolean(
                 KEY_SYSTEM_VISIBLE,
                 true
-            ) && actionBar != null
+            ) &&
+            supportActionBar != null
         ) {
-            actionBar?.hide()
+            supportActionBar?.hide()
         }
 
         setContentView(R.layout.preview_image_activity)
 
         livePhotoFile = intent.getParcelableArgument(EXTRA_LIVE_PHOTO_FILE, OCFile::class.java)
 
-        setupDrawer()
+        setupDrawer(menuItemId)
 
         val chosenFile = intent.getParcelableArgument(EXTRA_FILE, OCFile::class.java)
+
         updateActionBarTitleAndHomeButton(chosenFile)
 
         viewThemeUtils.platform.themeStatusBar(this, getColor(R.color.preview_image_system_bars_color))
@@ -126,6 +135,11 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
             viewThemeUtils.files.setWhiteBackButton(this, actionBar!!)
             actionBar?.setBackgroundDrawable(ColorDrawable(getColor(R.color.preview_image_system_bars_color)))
             actionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.let {
+            updateActionBarTitleAndHomeButton(chosenFile)
+            viewThemeUtils.files.setWhiteBackButton(this, it)
+            it.setDisplayHomeAsUpEnabled(true)
+            it.setBackgroundDrawable(R.color.preview_image_system_bars_color.toDrawable())
         }
 
         fullScreenAnchorView = window.decorView
@@ -138,6 +152,32 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
         }
 
         observeWorkerState()
+        applyDisplayCutOutTopPadding()
+        handleBackPress()
+    }
+
+    @IonosCustomization("Remove window insets paddings")
+    override fun isDefaultWindowInsetsHandlingEnabled() = false
+
+    override fun getMenuItemId(): Int = R.id.nav_gallery
+
+    private fun applyDisplayCutOutTopPadding() {
+        window.decorView.setOnApplyWindowInsetsListener { view, insets ->
+            val displayCutout = insets.displayCutout
+            if (displayCutout != null) {
+                val safeInsetTop = displayCutout.safeInsetTop
+                val viewPager = findViewById<View>(R.id.fragmentPager)
+                viewPager.setPadding(
+                    viewPager.paddingLeft,
+                    safeInsetTop,
+                    viewPager.paddingRight,
+                    viewPager.paddingBottom
+                )
+                viewPager.setBackgroundColor(ContextCompat.getColor(this, R.color.black))
+            }
+
+            view.onApplyWindowInsets(insets)
+        }
     }
 
     @IonosCustomization("Remove default window insets paddings")
@@ -148,14 +188,10 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
     }
 
     fun toggleActionBarVisibility(hide: Boolean) {
-        if (actionBar == null) {
-            return
-        }
-
         if (hide) {
-            actionBar?.hide()
+            supportActionBar?.hide()
         } else {
-            actionBar?.show()
+            supportActionBar?.show()
         }
     }
 
@@ -168,16 +204,12 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
                 this,
                 type,
                 user,
-                storageManager
+                storageManager,
+                preferences
             )
         } else {
-            // get parent from path
-            var parentFolder = storageManager.getFileById(file.parentId)
-
-            if (parentFolder == null) {
-                // should not be necessary
-                parentFolder = storageManager.getFileByEncryptedRemotePath(OCFile.ROOT_PATH)
-            }
+            val parentFolder = file?.let { storageManager.getFileById(it.parentId) }
+                ?: storageManager.getFileByEncryptedRemotePath(OCFile.ROOT_PATH)
 
             previewImagePagerAdapter = PreviewImagePagerAdapter(
                 this,
@@ -193,6 +225,13 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
         viewPager = findViewById(R.id.fragmentPager)
 
         var position = if (savedPosition != null) savedPosition else previewImagePagerAdapter?.getFilePosition(file)
+        var position = if (savedPosition !=
+            null
+        ) {
+            savedPosition
+        } else {
+            file?.let { previewImagePagerAdapter?.getFilePosition(it) }
+        }
         position = position?.toDouble()?.let { max(it, 0.0).toInt() }
 
         viewPager?.adapter = previewImagePagerAdapter
@@ -205,16 +244,32 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
             viewPager?.setCurrentItem(position, false)
         }
 
-        if (position == 0 && !file.isDown) {
+        if (position == 0 && file?.isDown == false) {
             // this is necessary because mViewPager.setCurrentItem(0) just after setting the
             // adapter does not result in a call to #onPageSelected(0)
             screenState = PreviewImageActivityState.WaitingForBinder
         }
     }
 
-    override fun onBackPressed() {
-        sendRefreshSearchEventBroadcast()
-        super.onBackPressed()
+    private fun updateViewPagerAfterDeletionAndAdvanceForward() {
+        val deletePosition = viewPager?.currentItem ?: return
+        previewImagePagerAdapter?.let { adapter ->
+            val nextPosition = min(deletePosition, adapter.itemCount - 1)
+            viewPager?.setCurrentItem(nextPosition, true)
+            adapter.delete(deletePosition)
+            // Page needs to be reselected after the adapter has been updated. Otherwise, wrong title is shown
+            selectPage(nextPosition)
+        }
+    }
+
+    private fun handleBackPress() {
+        onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                sendRefreshSearchEventBroadcast()
+                isEnabled = false
+                onBackPressedDispatcher.onBackPressed()
+            }
+        })
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -240,6 +295,7 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
 
     public override fun onStart() {
         super.onStart()
+        registerReceivers()
         val optionalUser = user
         if (optionalUser.isPresent) {
             var file: OCFile? = file ?: throw IllegalStateException("Instanced with a NULL OCFile")
@@ -254,7 +310,7 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
             if (file != null) {
                 // / Refresh the activity according to the Account and OCFile set
                 setFile(file) // reset after getting it fresh from storageManager
-                updateActionBarTitle(getFile().fileName)
+                updateActionBarTitle(getFile()?.fileName)
                 // if (!stateWasRecovered) {
                 initViewPager(optionalUser.get())
 
@@ -276,9 +332,6 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
         super.onRemoteOperationFinish(operation, result)
 
         if (operation is RemoveFileOperation) {
-            val deletePosition = viewPager?.currentItem ?: return
-            val nextPosition = if (deletePosition > 0) deletePosition - 1 else 0
-
             previewImagePagerAdapter?.let {
                 if (it.itemCount <= 1) {
                     backToDisplayActivity()
@@ -286,12 +339,9 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
                 }
             }
 
-            if (user.isPresent) {
-                initViewPager(user.get())
+            if (result.isSuccess) {
+                updateViewPagerAfterDeletionAndAdvanceForward()
             }
-
-            viewPager?.setCurrentItem(nextPosition, true)
-            previewImagePagerAdapter?.delete(deletePosition)
         } else if (operation is SynchronizeFileOperation) {
             onSynchronizeFileOperationFinish(result)
         }
@@ -304,7 +354,7 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
     }
 
     private fun observeWorkerState() {
-        WorkerStateLiveData.instance().observe(this) { state: WorkerState? ->
+        observeWorker { state: WorkerState? ->
             when (state) {
                 is WorkerState.DownloadStarted -> {
                     Log_OC.d(TAG, "Download worker started")
@@ -340,6 +390,10 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
             previewImagePagerAdapter?.run {
                 updateFile(position, file)
                 notifyItemChanged(position)
+                file?.let {
+                    updateFile(position, it)
+                    notifyItemChanged(position)
+                }
             }
 
             if (user.isPresent) {
@@ -363,28 +417,31 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
         dismissLoadingDialog()
         screenState = PreviewImageActivityState.Idle
         file = downloadedFile
-        startEditImageActivity()
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        downloadFinishReceiver = DownloadFinishReceiver()
-        val downloadIntentFilter = IntentFilter(getDownloadFinishMessage())
-        localBroadcastManager.registerReceiver(downloadFinishReceiver!!, downloadIntentFilter)
-
-        val uploadFinishReceiver = UploadFinishReceiver()
-        val uploadIntentFilter = IntentFilter(getUploadFinishMessage())
-        localBroadcastManager.registerReceiver(uploadFinishReceiver, uploadIntentFilter)
-    }
-
-    public override fun onPause() {
-        if (downloadFinishReceiver != null) {
-            localBroadcastManager.unregisterReceiver(downloadFinishReceiver!!)
-            downloadFinishReceiver = null
+        file?.let {
+            startEditImageActivity(it)
         }
+    }
 
-        super.onPause()
+    private fun registerReceivers() {
+        localBroadcastManager.run {
+            val downloadStartIntentFilter = IntentFilter(FileDownloadEventBroadcaster.ACTION_DOWNLOAD_ENQUEUED)
+            registerReceiver(downloadStartReceiver, downloadStartIntentFilter)
+
+            val downloadFinishIntentFilter = IntentFilter(FileDownloadEventBroadcaster.ACTION_DOWNLOAD_COMPLETED)
+            registerReceiver(downloadFinishReceiver, downloadFinishIntentFilter)
+        }
+    }
+
+    private fun unregisterReceivers() {
+        localBroadcastManager.run {
+            unregisterReceiver(downloadStartReceiver)
+            unregisterReceiver(downloadFinishReceiver)
+        }
+    }
+
+    public override fun onStop() {
+        unregisterReceivers()
+        super.onStop()
     }
 
     private fun backToDisplayActivity() {
@@ -408,8 +465,7 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
         showDetails(file)
     }
 
-    @JvmOverloads
-    fun requestForDownload(file: OCFile?, downloadBehaviour: String? = null) {
+    fun requestForDownload(file: OCFile?) {
         if (file == null) return
         val user = user.orElseThrow { RuntimeException() }
         FileDownloadHelper.instance().downloadFileIfNotStartedBefore(user, file)
@@ -431,7 +487,8 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
             screenState = PreviewImageActivityState.WaitingForBinder
         } else {
             if (currentFile != null) {
-                if (currentFile.isEncrypted && !currentFile.isDown &&
+                if (currentFile.isEncrypted &&
+                    !currentFile.isDown &&
                     previewImagePagerAdapter?.pendingErrorAt(position) == false
                 ) {
                     requestForDownload(currentFile)
@@ -461,51 +518,30 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
      */
     private inner class DownloadFinishReceiver : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
-            previewNewImage(intent)
+            Log_OC.d(TAG, "Download worker stopped")
+            isDownloadWorkStarted = false
+            val accountName = intent.getStringExtra(FileDownloadEventBroadcaster.EXTRA_ACCOUNT_NAME)
+            val downloadedRemotePath = intent.getStringExtra(FileDownloadEventBroadcaster.EXTRA_REMOTE_PATH)
+            if (account.name != accountName || downloadedRemotePath == null) {
+                return
+            }
+            val file = storageManager.getFileByEncryptedRemotePath(downloadedRemotePath)
+
+            if (screenState == PreviewImageActivityState.Edit) {
+                onImageDownloadComplete(file)
+            } else {
+                setDownloadedItem()
+            }
         }
     }
 
-    private inner class UploadFinishReceiver : BroadcastReceiver() {
+    private inner class DownloadStartReceiver : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
-            previewNewImage(intent)
-        }
-    }
+            Log_OC.d(TAG, "Download worker started")
+            isDownloadWorkStarted = true
 
-    @Suppress("NestedBlockDepth", "ReturnCount")
-    private fun previewNewImage(intent: Intent) {
-        val accountName = intent.getStringExtra(FileDownloadWorker.EXTRA_ACCOUNT_NAME)
-        val downloadedRemotePath = intent.getStringExtra(FileDownloadWorker.EXTRA_REMOTE_PATH)
-        val downloadBehaviour = intent.getStringExtra(OCFileListFragment.DOWNLOAD_BEHAVIOUR)
-
-        if (account.name != accountName || downloadedRemotePath == null) {
-            return
-        }
-
-        val file = storageManager.getFileByEncryptedRemotePath(downloadedRemotePath)
-        val downloadWasFine = intent.getBooleanExtra(FileDownloadWorker.EXTRA_DOWNLOAD_RESULT, false)
-
-        if (EditImageActivity.OPEN_IMAGE_EDITOR == downloadBehaviour) {
-            startImageEditor(file)
-        } else {
-            val position = previewImagePagerAdapter?.getFilePosition(file) ?: return
-
-            if (position >= 0) {
-                if (downloadWasFine) {
-                    previewImagePagerAdapter?.updateFile(position, file)
-                } else {
-                    previewImagePagerAdapter?.updateWithDownloadError(position)
-                }
-                previewImagePagerAdapter?.notifyItemChanged(position)
-            } else if (downloadWasFine) {
-                val user = user
-
-                if (user.isPresent) {
-                    initViewPager(user.get())
-                    val newPosition = previewImagePagerAdapter?.getFilePosition(file) ?: return
-                    if (newPosition >= 0) {
-                        viewPager?.currentItem = newPosition
-                    }
-                }
+            if (screenState == PreviewImageActivityState.WaitingForBinder) {
+                selectPageOnDownload()
             }
         }
     }
@@ -529,25 +565,27 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
             hideSystemUI(fullScreenAnchorView!!)
         } else {
             showSystemUI(fullScreenAnchorView!!)
+        fullScreenAnchorView?.let {
+            val visible = (it.systemUiVisibility and View.SYSTEM_UI_FLAG_HIDE_NAVIGATION) == 0
+            if (visible) {
+                hideSystemUI(it)
+            } else {
+                showSystemUI(it)
+            }
         }
     }
 
     fun startImageEditor(file: OCFile) {
         if (file.isDown) {
-            startEditImageActivity()
+            startEditImageActivity(file)
         } else {
             showLoadingDialog(getString(R.string.preview_image_downloading_image_for_edit))
             screenState = PreviewImageActivityState.Edit
-            requestForDownload(file, EditImageActivity.OPEN_IMAGE_EDITOR)
+            requestForDownload(file)
         }
     }
 
-    private fun startEditImageActivity() {
-        if (file == null) {
-            DisplayUtils.showSnackMessage(this, R.string.preview_image_file_is_not_exist)
-            return
-        }
-
+    private fun startEditImageActivity(file: OCFile) {
         if (!file.isDown) {
             DisplayUtils.showSnackMessage(this, R.string.preview_image_file_is_not_downloaded)
             return
@@ -559,14 +597,10 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
         startActivity(intent)
     }
 
-    override fun onBrowsedDownTo(folder: OCFile) {
-        // TODO Auto-generated method stub
-    }
+    override fun onBrowsedDownTo(folder: OCFile) = Unit
+    override fun onTransferStateChanged(file: OCFile, downloading: Boolean, uploading: Boolean) = Unit
 
-    override fun onTransferStateChanged(file: OCFile, downloading: Boolean, uploading: Boolean) {
-        // TODO Auto-generated method stub
-    }
-
+    @Suppress("DEPRECATION")
     private fun hideSystemUI(anchorView: View) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             actionBar?.hide()
@@ -585,8 +619,17 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
                     or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                 )
         }
+        anchorView.systemUiVisibility = (
+            View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_FULLSCREEN
+                or View.SYSTEM_UI_FLAG_IMMERSIVE
+                or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+            )
     }
 
+    @Suppress("DEPRECATION")
     private fun showSystemUI(anchorView: View) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             actionBar?.show()
@@ -605,6 +648,11 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
                     or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                 )
         }
+        anchorView.systemUiVisibility = (
+            View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+            )
     }
 
     companion object {
@@ -613,11 +661,10 @@ class PreviewImageActivity : FileActivity(), FileFragment.ContainerActivity, OnR
         private const val KEY_WAITING_FOR_BINDER = "WAITING_FOR_BINDER"
         private const val KEY_SYSTEM_VISIBLE = "TRUE"
 
-        fun previewFileIntent(context: Context?, user: User?, file: OCFile?): Intent {
-            return Intent(context, PreviewImageActivity::class.java).apply {
+        fun previewFileIntent(context: Context?, user: User?, file: OCFile?): Intent =
+            Intent(context, PreviewImageActivity::class.java).apply {
                 putExtra(EXTRA_FILE, file)
                 putExtra(EXTRA_USER, user)
             }
-        }
     }
 }

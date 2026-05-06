@@ -10,6 +10,7 @@ package com.ionos.privacy
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.ionos.analycis.AnalyticsManager
+import com.ionos.analytics.AnalyticsManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update

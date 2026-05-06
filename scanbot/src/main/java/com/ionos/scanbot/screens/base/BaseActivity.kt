@@ -26,6 +26,9 @@ import com.ionos.scanbot.util.config.applyDefaultFontScale
 import com.ionos.scanbot.util.window.WindowWrapper
 import dagger.android.AndroidInjection
 import javax.inject.Inject
+import dagger.internal.DoubleCheck.lazy
+import javax.inject.Inject
+import kotlin.lazy
 
 internal abstract class BaseActivity<E : Event, S : State<E>, VM : ViewModel<E, S>> : BaseWindowInsetsActivity() {
     abstract val viewModelFactory: ViewModelProvider.Factory
@@ -33,6 +36,13 @@ internal abstract class BaseActivity<E : Event, S : State<E>, VM : ViewModel<E, 
 
     protected val context: Context get() = this
     protected val viewModel: VM by viewModels { viewModelFactory }
+    protected abstract val viewModelClass: Class<VM>
+
+    protected val context: Context get() = this
+    @Suppress("UNCHECKED_CAST")
+    protected val viewModel: VM by lazy {
+        ViewModelProvider(this, viewModelFactory)[viewModelClass as Class<androidx.lifecycle.ViewModel>] as VM
+    }
     protected val windowWrapper: WindowWrapper by lazy { WindowWrapper(window) }
     @Inject lateinit var scanbotController: ScanbotController
 

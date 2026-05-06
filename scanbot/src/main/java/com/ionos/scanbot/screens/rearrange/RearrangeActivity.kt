@@ -27,6 +27,8 @@ import javax.inject.Inject
 internal class RearrangeActivity : BaseActivity<Event, State, ViewModel>() {
     @Inject override lateinit var viewModelFactory: RearrangeViewModelFactory
 	override val viewBinding by lazy { ScanbotActivityRearrangeBinding.inflate(layoutInflater) }
+    override val viewModelClass: Class<ViewModel> = ViewModel::class.java
+
     @Inject lateinit var adapter: RearrangeAdapter
 
 	override fun onCreate(savedInstanceState: Bundle?) {

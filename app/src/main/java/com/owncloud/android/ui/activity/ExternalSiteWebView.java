@@ -108,7 +108,7 @@ public class ExternalSiteWebView extends FileActivity {
             }
         }
 
-        setupDrawer();
+        setupDrawer(R.id.nav_view);
 
         if (!showSidebar) {
             setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
@@ -151,7 +151,7 @@ public class ExternalSiteWebView extends FileActivity {
             }
         });
 
-        new WebViewUtil(getApplicationContext()).setProxyKKPlus(getWebView());
+        new WebViewUtil().setProxyKKPlus(getWebView());
         getWebView().loadUrl(url);
     }
 

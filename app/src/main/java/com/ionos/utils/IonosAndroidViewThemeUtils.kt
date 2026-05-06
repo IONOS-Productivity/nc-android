@@ -25,10 +25,14 @@ import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import androidx.appcompat.app.ActionBarDrawerToggle
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationView
 import com.nextcloud.android.common.ui.theme.utils.AndroidViewThemeUtils
 import com.nextcloud.android.common.ui.theme.utils.ColorRole
 import com.nextcloud.android.common.ui.util.buildColorStateList
 import com.owncloud.android.R
+import com.owncloud.android.ui.activity.DrawerActivity
 
 class IonosAndroidViewThemeUtils(
     private val delegate: AndroidViewThemeUtils,
@@ -87,6 +91,7 @@ class IonosAndroidViewThemeUtils(
 
     fun colorImageView(imageView: ImageView, colorRole: ColorRole) {
         delegate.colorImageView(imageView, colorRole)
+        //delegate.colorImageView(imageView, colorRole)
     }
 
     fun colorImageViewBackgroundAndIcon(imageView: ImageView) {
@@ -152,6 +157,7 @@ class IonosAndroidViewThemeUtils(
 
     fun themeRadioButton(radioButton: RadioButton) {
         delegate.themeRadioButton(radioButton)
+        //delegate.themeRadioButton(radioButton)
     }
 
     fun themeStatusBar(activity: Activity, colorRole: ColorRole) {
@@ -198,5 +204,17 @@ class IonosAndroidViewThemeUtils(
                 -android.R.attr.state_checked to context.getColor(R.color.secondary_text_color),
             )
         }
+    }
+
+    fun colorNavigationView(navigationView: NavigationView) {
+        delegate.colorNavigationView(navigationView)
+    }
+
+    fun tintToolbarArrowDrawable(
+        context: Context,
+        mDrawerToggle: androidx.appcompat.app.ActionBarDrawerToggle,
+        backArrow: android.graphics.drawable.Drawable
+    ) {
+        delegate.tintToolbarArrowDrawable(context, mDrawerToggle, backArrow)
     }
 }

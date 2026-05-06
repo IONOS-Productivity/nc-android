@@ -16,7 +16,8 @@ import com.google.gson.Gson;
 import com.nextcloud.android.lib.resources.directediting.DirectEditingObtainRemoteOperation;
 import com.nextcloud.client.account.User;
 import com.nextcloud.common.NextcloudClient;
-import com.nextcloud.utils.extensions.RemoteOperationResultExtensionsKt;
+import com.nextcloud.utils.e2ee.E2EVersionHelper;
+import com.nextcloud.utils.extensions.StringExtensionsKt;
 import com.owncloud.android.datamodel.ArbitraryDataProvider;
 import com.owncloud.android.datamodel.ArbitraryDataProviderImpl;
 import com.owncloud.android.datamodel.FileDataStorageManager;
@@ -40,7 +41,6 @@ import com.owncloud.android.lib.resources.status.E2EVersion;
 import com.owncloud.android.lib.resources.users.GetPredefinedStatusesRemoteOperation;
 import com.owncloud.android.lib.resources.users.PredefinedStatus;
 import com.owncloud.android.syncadapter.FileSyncAdapter;
-import com.owncloud.android.ui.activity.FileDisplayActivity;
 import com.owncloud.android.utils.DataHolderUtil;
 import com.owncloud.android.utils.EncryptionUtils;
 import com.owncloud.android.utils.FileStorageUtils;
@@ -75,6 +75,8 @@ public class RefreshFolderOperation extends RemoteOperation {
         RefreshFolderOperation.class.getName() + ".EVENT_SINGLE_FOLDER_CONTENTS_SYNCED";
     public static final String EVENT_SINGLE_FOLDER_SHARES_SYNCED =
         RefreshFolderOperation.class.getName() + ".EVENT_SINGLE_FOLDER_SHARES_SYNCED";
+
+    private boolean isMetadataSyncWorkerRunning = false;
 
     /**
      * Time stamp for the synchronization process in progress
@@ -178,6 +180,29 @@ public class RefreshFolderOperation extends RemoteOperation {
         mFilesToSyncContents = new Vector<>();
     }
 
+    /**
+     * Returns RefreshFolderOperation for metadata sync worker
+     */
+    public RefreshFolderOperation(OCFile folder,
+                                  FileDataStorageManager dataStorageManager,
+                                  User user,
+                                  Context context) {
+        mLocalFolder = folder;
+        mCurrentSyncTime = System.currentTimeMillis();
+        mSyncFullAccount = false;
+        fileDataStorageManager = dataStorageManager;
+        this.user = user;
+        mContext = context;
+        mForgottenLocalFiles = new HashMap<>();
+        mRemoteFolderChanged = false;
+        mIgnoreETag = false;
+        mOnlyFileMetadata = true;
+        mFilesToSyncContents = new Vector<>();
+
+        // since metadata worker working in background for sub-folders no need send folder refresh event
+        isMetadataSyncWorkerRunning = true;
+    }
+
     public RefreshFolderOperation(OCFile folder,
                                   long currentSyncTime,
                                   boolean syncFullAccount,
@@ -247,9 +272,9 @@ public class RefreshFolderOperation extends RemoteOperation {
 
         if (result.isSuccess()) {
             if (mRemoteFolderChanged) {
-                // TODO catch IllegalStateException, show properly to user
                 result = fetchAndSyncRemoteFolder(client);
             } else {
+                Log_OC.d(TAG, "💾 Remote folder is not changed, getting folder content from database");
                 mChildren = fileDataStorageManager.getFolderContent(mLocalFolder, false);
             }
 
@@ -270,6 +295,7 @@ public class RefreshFolderOperation extends RemoteOperation {
         }
 
         if (!mSyncFullAccount && mRemoteFolderChanged && mLocalFolder != null) {
+        if (!mSyncFullAccount && mRemoteFolderChanged && mLocalFolder != null && !isMetadataSyncWorkerRunning) {
             sendLocalBroadcast(EVENT_SINGLE_FOLDER_CONTENTS_SYNCED, mLocalFolder.getRemotePath(), result);
         }
 
@@ -286,29 +312,11 @@ public class RefreshFolderOperation extends RemoteOperation {
         }
 
         if (!mSyncFullAccount && mLocalFolder != null) {
+        if (!mSyncFullAccount && mLocalFolder != null && !isMetadataSyncWorkerRunning) {
             sendLocalBroadcast(EVENT_SINGLE_FOLDER_SHARES_SYNCED, mLocalFolder.getRemotePath(), result);
         }
 
         return result;
-    }
-
-    private static HashMap<String, String> lastConflictData = new HashMap<>();
-
-    private void checkFolderConflictData(RemoteOperationResult result) {
-        var offlineOperations = fileDataStorageManager.offlineOperationDao.getAll();
-        if (offlineOperations.isEmpty()) return;
-
-        var conflictData = RemoteOperationResultExtensionsKt.getConflictedRemoteIdsWithOfflineOperations(result, offlineOperations, fileDataStorageManager);
-        if (conflictData != null && !conflictData.equals(lastConflictData)) {
-            lastConflictData = new HashMap<>(conflictData);
-            sendFolderSyncConflictEventBroadcast(conflictData);
-        }
-    }
-
-    private void sendFolderSyncConflictEventBroadcast(HashMap<String, String> conflictData) {
-        Intent intent = new Intent(FileDisplayActivity.FOLDER_SYNC_CONFLICT);
-        intent.putExtra(FileDisplayActivity.FOLDER_SYNC_CONFLICT_ARG_REMOTE_IDS_TO_OPERATION_PATHS, conflictData);
-        LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
     }
 
     private void updateOCVersion(OwnCloudClient client) {
@@ -395,7 +403,7 @@ public class RefreshFolderOperation extends RemoteOperation {
 
     private RemoteOperationResult checkForChanges(OwnCloudClient client) {
         mRemoteFolderChanged = true;
-        RemoteOperationResult result;
+        RemoteOperationResult<?> result;
         String remotePath = mLocalFolder.getRemotePath();
 
         Log_OC.d(TAG, "Checking changes in " + user.getAccountName() + remotePath);
@@ -410,13 +418,24 @@ public class RefreshFolderOperation extends RemoteOperation {
                 // check if remote and local folder are different
                 String remoteFolderETag = remoteFolder.getEtag();
                 if (remoteFolderETag != null) {
-                    mRemoteFolderChanged = !(remoteFolderETag.equalsIgnoreCase(mLocalFolder.getEtag()));
+                    String localFolderEtag = mLocalFolder.getEtag();
+                    mRemoteFolderChanged = StringExtensionsKt.eTagChanged(remoteFolderETag, localFolderEtag);
+                    Log_OC.d(
+                        TAG,
+                        "📂 eTag check\n" +
+                            "  Path:        " + remoteFolder.getRemotePath() + "\n" +
+                            "  Local eTag:  " + localFolderEtag + "\n" +
+                            "  Remote eTag: " + remoteFolderETag + "\n" +
+                            "  Changed:     " + mRemoteFolderChanged
+                            );
                 } else {
                     Log_OC.e(TAG, "Checked " + user.getAccountName() + remotePath + ": No ETag received from server");
                 }
+            } else {
+                Log_OC.d(TAG, "Ignoring eTag. mRemoteFolderChanged is true.");
             }
 
-            result = new RemoteOperationResult(ResultCode.OK);
+            result = new RemoteOperationResult<>(ResultCode.OK);
 
             Log_OC.i(TAG, "Checked " + user.getAccountName() + remotePath + " : " +
                 (mRemoteFolderChanged ? "changed" : "not changed"));
@@ -438,12 +457,10 @@ public class RefreshFolderOperation extends RemoteOperation {
         return result;
     }
 
-
     private RemoteOperationResult fetchAndSyncRemoteFolder(OwnCloudClient client) {
         String remotePath = mLocalFolder.getRemotePath();
         RemoteOperationResult result = new ReadFolderRemoteOperation(remotePath).execute(client);
-        Log_OC.d(TAG, "Refresh folder " + user.getAccountName() + remotePath);
-        Log_OC.d(TAG, "Refresh folder with remote id" + mLocalFolder.getRemoteId());
+        Log_OC.d(TAG, "⬇ eTag is changed or ignored, fetching folder: " + user.getAccountName() + remotePath);
 
         if (result.isSuccess()) {
             synchronizeData(result.getData());
@@ -485,7 +502,7 @@ public class RefreshFolderOperation extends RemoteOperation {
         mLocalFolder = fileDataStorageManager.getFileByPath(mLocalFolder.getRemotePath());
 
         if (mLocalFolder == null) {
-            Log_OC.d(TAG,"mLocalFolder cannot be null");
+            Log_OC.e(TAG,"mLocalFolder cannot be null");
             return;
         }
 
@@ -494,7 +511,7 @@ public class RefreshFolderOperation extends RemoteOperation {
         remoteFolder.setParentId(mLocalFolder.getParentId());
         remoteFolder.setFileId(mLocalFolder.getFileId());
 
-        Log_OC.d(TAG, "Remote folder " + mLocalFolder.getRemotePath() + " changed - starting update of local data ");
+        Log_OC.d(TAG, "Remote folder path: " + mLocalFolder.getRemotePath() + " changed - starting update of local data ");
 
         List<OCFile> updatedFiles = new ArrayList<>(folderAndFiles.size() - 1);
         mFilesToSyncContents.clear();
@@ -524,7 +541,9 @@ public class RefreshFolderOperation extends RemoteOperation {
                                                 mContext);
         }
 
-        if (CapabilityUtils.getCapability(mContext).getEndToEndEncryptionApiVersion().compareTo(E2EVersion.V2_0) >= 0) {
+        final var capability = CapabilityUtils.getCapability(mContext);
+
+        if (E2EVersionHelper.INSTANCE.isV2Plus(capability)) {
             if (encryptedAncestor && object == null) {
                 throw new IllegalStateException("metadata is null!");
             }
@@ -533,14 +552,12 @@ public class RefreshFolderOperation extends RemoteOperation {
         // get current data about local contents of the folder to synchronize
         Map<String, OCFile> localFilesMap;
         E2EVersion e2EVersion;
-        if (object instanceof DecryptedFolderMetadataFileV1) {
-            e2EVersion = E2EVersion.V1_2;
-            localFilesMap = prefillLocalFilesMap((DecryptedFolderMetadataFileV1) object,
-                                                 fileDataStorageManager.getFolderContent(mLocalFolder, false));
+        if (object instanceof DecryptedFolderMetadataFileV1 metadataFileV1) {
+            e2EVersion = E2EVersionHelper.INSTANCE.latestVersion(false);
+            localFilesMap = prefillLocalFilesMap(metadataFileV1, fileDataStorageManager.getFolderContent(mLocalFolder, false));
         } else {
-            e2EVersion = E2EVersion.V2_0;
-            localFilesMap = prefillLocalFilesMap((DecryptedFolderMetadataFile) object,
-                                                 fileDataStorageManager.getFolderContent(mLocalFolder, false));
+            e2EVersion = E2EVersionHelper.INSTANCE.latestVersion(true);
+            localFilesMap = prefillLocalFilesMap(object, fileDataStorageManager.getFolderContent(mLocalFolder, false));
 
             // update counter
             if (object != null) {
@@ -586,11 +603,11 @@ public class RefreshFolderOperation extends RemoteOperation {
             FileStorageUtils.searchForLocalFileInDefaultPath(updatedFile, user.getAccountName());
 
             // update file name for encrypted files
-            if (e2EVersion == E2EVersion.V1_2) {
+            if (e2EVersion == E2EVersionHelper.INSTANCE.latestVersion(false)) {
                 updateFileNameForEncryptedFileV1(fileDataStorageManager,
                                                  (DecryptedFolderMetadataFileV1) object,
                                                  updatedFile);
-            } else {
+            } else if (object != null) {
                 updateFileNameForEncryptedFile(fileDataStorageManager,
                                                (DecryptedFolderMetadataFile) object,
                                                updatedFile);
@@ -609,7 +626,7 @@ public class RefreshFolderOperation extends RemoteOperation {
 
         // save updated contents in local database
         // update file name for encrypted files
-        if (e2EVersion == E2EVersion.V1_2) {
+        if (e2EVersion == E2EVersionHelper.INSTANCE.latestVersion(false)) {
             updateFileNameForEncryptedFileV1(fileDataStorageManager,
                                              (DecryptedFolderMetadataFileV1) object,
                                              mLocalFolder);

@@ -20,7 +20,6 @@ import com.nextcloud.client.di.ViewModelFactory
 import com.owncloud.android.R
 import com.owncloud.android.databinding.LogsActivityBinding
 import com.owncloud.android.ui.activity.ToolbarActivity
-import com.owncloud.android.utils.theme.ViewThemeUtils
 import javax.inject.Inject
 
 class LogsActivity : ToolbarActivity() {
@@ -28,17 +27,12 @@ class LogsActivity : ToolbarActivity() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
-    @Inject
-    lateinit var viewThemeUtils: ViewThemeUtils
-
     private lateinit var vm: LogsViewModel
     private lateinit var binding: LogsActivityBinding
     private lateinit var logsAdapter: LogsAdapter
 
     private val searchBoxListener = object : SearchView.OnQueryTextListener {
-        override fun onQueryTextSubmit(query: String): Boolean {
-            return false
-        }
+        override fun onQueryTextSubmit(query: String): Boolean = false
 
         override fun onQueryTextChange(newText: String): Boolean {
             vm.filter(newText)
@@ -91,6 +85,7 @@ class LogsActivity : ToolbarActivity() {
             android.R.id.home -> finish()
             R.id.action_delete_logs -> vm.deleteAll()
             R.id.action_send_logs -> vm.send()
+            R.id.action_export_logs -> vm.export()
             R.id.action_refresh_logs -> vm.load()
             else -> retval = super.onOptionsItemSelected(item)
         }

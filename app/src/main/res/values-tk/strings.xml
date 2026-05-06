@@ -28,8 +28,8 @@
     <string name="activity_icon">işjeňlik we hereket</string>
     <string name="add_new_public_share">Täze köpçülikleýin paýlaşma baglanyşygyny goşuň</string>
     <string name="add_to_cloud">Goşuň%1$s</string>
-    <string name="allow_resharing">Täzeden paýlaşmaga rugsat beriň</string>
     <string name="appbar_search_in">Gözlemek%siçinde</string>
+    <string name="assistant_task_status_unknown">näbelli</string>
     <string name="associated_account_not_found">Baglanyşyk hasaby tapylmady!</string>
     <string name="auth_access_failed">Şowsuz Giriş%1$s:</string>
     <string name="auth_account_does_not_exist">Akaunt entek bu enjamda goşulmaýar</string>
@@ -77,6 +77,7 @@
     <string name="bottom_navigation_menu_favorites_label">Halanýanlar</string>
     <string name="bottom_navigation_menu_files_label">Ähli faýllar</string>
     <string name="bottom_navigation_menu_media_label">Mediýa</string>
+    <string name="cancel_upload">Cancel</string>
     <string name="certificate_load_problem">Şahadatnamany ýüklemekde näsazlyk bar.</string>
     <string name="changelog_dev_version">Özgeriş žurnalynyň gowlaşdyrmak döwri</string>
     <string name="checkbox">Bellik gutusy</string>
@@ -85,8 +86,6 @@
     <string name="choose_template_helper_text">Şablon saýlaň we faýl giriziň</string>
     <string name="choose_which_file">Haýsy faýly gorap saklamalydygyny saýlaň!</string>
     <string name="clear_notifications_failed">Duýduryşlary pozup bolmady</string>
-    <string name="clear_status_message">Status habaryny arassalaň</string>
-    <string name="clear_status_message_after">Soňra statusly habary arassalaň</string>
     <string name="clipboard_label">Tekst göçürildi%1$s-dan</string>
     <string name="clipboard_no_text_to_copy">Paneli göçürmeklik üçin tekst alynmady</string>
     <string name="clipboard_text_copied">Link-yň nusgasy alyndy</string>
@@ -144,7 +143,6 @@
     <string name="contacts_preferences_import_scheduled">Import meýilnama edilen we gysga wagtda başlar</string>
     <string name="contacts_preferences_no_file_found">Hiç hili faýl tapylmady</string>
     <string name="contacts_preferences_something_strange_happened">Soňky ätiýaçlyk nusgasyny tapyp bilmedim!</string>
-    <string name="copied_to_clipboard">Panele göçürildi</string>
     <string name="copy_file_error">Bu faýly ýa-da bukjany göçürjek bolanyňyzda ýalňyşlyk ýüze çykdy</string>
     <string name="copy_file_invalid_into_descendent">Bir bukjany onuň öz esasy bukjalarynyň birine göçürmek mümkin däl</string>
     <string name="copy_file_invalid_overwrite">Faýl niýetlenen bukjada eýýäm bar</string>
@@ -299,7 +297,6 @@
     <string name="file_not_synced">Faýl sinhronlap bolmady. Iň soňky wersiýasyny görkezmek.</string>
     <string name="file_rename">Adyny üýtgetmek</string>
     <string name="file_version_restored_error">Faýl wersiýasyny dikeltmekdäki ýalňyşlyklar!</string>
-    <string name="file_version_restored_successfully">Faýl wersiýasy üstünlikli dikeldildi.</string>
     <string name="filedetails_details">Jikme-jiklikler</string>
     <string name="filedetails_download">Göçürip almak</string>
     <string name="filedetails_renamed_in_upload_msg">%1$sFaýl ýüklenende üýtgedildi</string>
@@ -327,7 +324,6 @@
     <string name="foreign_files_local_text">Ýerli:%1$s</string>
     <string name="foreign_files_move">Hemmesini süýşüriň</string>
     <string name="foreign_files_remote_text">Uzakdan:%1$s</string>
-    <string name="foreign_files_success">Ähli faýllar süýşürildi</string>
     <string name="forward">Öňe</string>
     <string name="fourHours">4 sagat</string>
     <string name="hint_name">Ady</string>
@@ -342,8 +338,6 @@
     <string name="invisible">göze görünmeýän</string>
     <string name="label_empty">Bellik boş bolup bilmez</string>
     <string name="link">Baglanyşyk</string>
-    <string name="link_share_allow_upload_and_editing">Ýüklemäge we redaktirlemäge rugsat beriň</string>
-    <string name="link_share_file_drop">Faýlyň düşmegi (diňe ýüklemek)</string>
     <string name="list_layout">Sanawyň tertibi</string>
     <string name="local_file_list_empty">Bu bukjada faýl ýok.</string>
     <string name="local_file_not_found_message">Ýerli faýl ulgamynda faýl tapylmady</string>
@@ -420,7 +414,6 @@
     <string name="outdated_server">Serwer ömrüniň ahyryna ýetdi, täzelemegiňizi haýyş edýäris!</string>
     <string name="overflow_menu">Has köp menýu</string>
     <string name="pass_code_configure_your_pass_code">Giriş koduňyzy giriziň</string>
-    <string name="pass_code_configure_your_pass_code_explanation">Giriş programmasynyň kody her gezek işe başlanda talap ediler.</string>
     <string name="pass_code_enter_pass_code">Parolyňyzy giriziň haýyş edýäris</string>
     <string name="pass_code_mismatch">Giriş parollary deň däl</string>
     <string name="pass_code_reenter_your_pass_code">Giriş koduňyzy täzeden ýazmagyňyzy haýyş edýäris</string>
@@ -430,13 +423,7 @@
     <string name="pass_code_wrong">Gizlin kod nädogry</string>
     <string name="permission_allow">Rugsat ber</string>
     <string name="permission_deny">inkär et</string>
-    <string name="permission_storage_access">Faýllary ýüklemek we göçürip almak üçin goşmaça rugsatlar gerek.</string>
     <string name="picture_set_as_no_app">Surat goýmak üçin hiç bir programma tapylmady</string>
-    <string name="placeholder_fileSize">389 KB</string>
-    <string name="placeholder_filename">placeholder.txt</string>
-    <string name="placeholder_media_time">12:23:45</string>
-    <string name="placeholder_sentence">Bu bir ýer eýesi</string>
-    <string name="placeholder_timestamp">2012/05/18 12:23</string>
     <string name="player_stop">Dur</string>
     <string name="player_toggle">üýtgetmek</string>
     <string name="power_save_check_dialog_message">Kuwwat tygşytlaýyş barlagyny öçürmek, batareýanyň pes ýagdaýynda faýl ýüklemegine sebäp bolup biler!</string>
@@ -491,7 +478,6 @@
     <string name="preview_image_error_unknown_format">Surat görkezip bolmaýar</string>
     <string name="preview_sorry">Bagyşlaň</string>
     <string name="privacy">Gizlinlik</string>
-    <string name="public_share_name">Täze ady</string>
     <string name="push_notifications_not_implemented">Hususy Google Play hyzmatlaryna baglylyk sebäpli basma bildirişleri ýapylýar.</string>
     <string name="push_notifications_old_login">Könelen giriş sessiýasy sebäpli itergi habarnamalary ýok. Hasabyňyzy täzeden goşmagy göz öňünde tutmagyňyzy haýyş edýäris.</string>
     <string name="push_notifications_temp_error">Push habarnamalary häzirki wagtda elýeterli däl.</string>
@@ -527,9 +513,8 @@
     <string name="send">Iber</string>
     <string name="sendbutton_description">\"Ibermek\" düwmesiniň nyşanyny</string>
     <string name="set_as">Hökmünde ornaşdyryň</string>
+    <string name="set_online_status">Onlaýn ýagdaýy</string>
     <string name="set_picture_as">Suraty ulanmak hökmünde</string>
-    <string name="set_status">Status ýagdaýy düzüň</string>
-    <string name="set_status_message">Status habaryny düzüň</string>
     <string name="share">Paýlaş</string>
     <string name="share_create_permission">Dörediň</string>
     <string name="share_delete_permission">Pozmak</string>
@@ -562,7 +547,6 @@
     <string name="share_via_link_section_title">Baglanyşyk paýlaş</string>
     <string name="share_via_link_send_link_label">Baglanyşyk iber</string>
     <string name="share_via_link_unset_password">Gurnalmady</string>
-    <string name="share_with_title">Paýlaşmak bilen…</string>
     <string name="shared_avatar_desc">Paýlaşylan ulanyjydan awatar</string>
     <string name="shared_icon_share">paýlaş</string>
     <string name="shared_icon_shared">paýlaşdy</string>
@@ -655,6 +639,7 @@
     <string name="trashbin_file_not_deleted">Faýl %1$söçürilip bilinmedi!</string>
     <string name="trashbin_file_not_restored">Faýl%1$s dikeldip bolmady!</string>
     <string name="trashbin_not_emptied">Faýllary hemişelik pozup bolmaz!</string>
+    <string name="unknown">Näbelli</string>
     <string name="unread_comments">Okalmadyk teswirler bar</string>
     <string name="unset_encrypted">Şifrlemäni açmak</string>
     <string name="unshare_link_file_error">Bu faýly ýa-da bukjany paýlaşmaga synanyşanda ýalňyşlyk ýüze çykdy.</string>
@@ -717,9 +702,9 @@
     <string name="uploader_wrn_no_account_setup_btn_text">Gurmak</string>
     <string name="uploader_wrn_no_account_text">Enjamyňyzda %1$shasap ýok. Ilki bilen hasap açmagyňyzy haýyş edýäris.</string>
     <string name="uploader_wrn_no_account_title">Hasap tapylmady</string>
+    <string name="uploads_view_group_completed_uploads">Tamamlanan</string>
     <string name="uploads_view_group_current_uploads">Häzirki</string>
     <string name="uploads_view_group_failed_uploads">Şowsuz / täzeden başlamaga garaşýar</string>
-    <string name="uploads_view_group_finished_uploads">Ýüklendi</string>
     <string name="uploads_view_group_manually_cancelled_uploads">Ýatyryldy</string>
     <string name="uploads_view_later_waiting_to_upload">Ýüklemek üçin garaşýar</string>
     <string name="uploads_view_title">Ýüklemeler</string>

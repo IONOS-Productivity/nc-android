@@ -53,12 +53,10 @@ class SessionMixin(
         setAccount(user.toPlatformAccount())
     }
 
-    fun getUser(): Optional<User> {
-        return if (currentAccount.isAnonymous(activity)) {
-            Optional.empty()
-        } else {
-            accountManager.getUser(currentAccount.name)
-        }
+    fun getUser(): Optional<User> = if (currentAccount.isAnonymous(activity)) {
+        Optional.empty()
+    } else {
+        accountManager.getUser(currentAccount.name)
     }
 
     /**

@@ -29,6 +29,8 @@
     <string name="advanced_settings">Altanivela agordo</string>
     <string name="allow_resharing">Permesi rekunhavigon</string>
     <string name="appbar_search_in">Serĉi en 1%s</string>
+    <string name="appbar_search_in">Serĉi en 1%s</string>
+    <string name="assistant_task_status_unknown">nekonata</string>
     <string name="auth_access_failed">Aliro malsukcesis: %1$s</string>
     <string name="auth_account_does_not_exist">La konto ankoraŭ ne aldoniĝis al tiu ĉi aparato</string>
     <string name="auth_account_not_new">Konto pri samaj uzanto kaj servilo jam ekzistas tiuaparate</string>
@@ -70,14 +72,15 @@
     <string name="battery_optimization_title">Bateria optimumigo</string>
     <string name="bottom_navigation_menu_favorites_label">Plej ŝatataj</string>
     <string name="bottom_navigation_menu_files_label">Ĉiuj dosieroj</string>
+    <string name="busy">Okupita</string>
     <string name="calendar">Kalendaro</string>
+    <string name="cancel_upload">Cancel</string>
     <string name="certificate_load_problem">Ekestis problemo dum ŝargo de la atestilo.</string>
     <string name="checkbox">Markobutono</string>
     <string name="choose_local_folder">Elekti lokan dosierujon...</string>
     <string name="choose_remote_folder">Elekti foran dosierujon...</string>
+    <string name="clear">Viŝi</string>
     <string name="clear_notifications_failed">Malsukcesis forviŝi sciigojn.</string>
-    <string name="clear_status_message">Forviŝi statusan mesaĝon</string>
-    <string name="clear_status_message_after">Forviŝos statusan mesaĝon poste</string>
     <string name="clipboard_label">Teksto kopiita el %1$s</string>
     <string name="clipboard_no_text_to_copy">Neniu teksto ricevita por kopii tondujen</string>
     <string name="clipboard_text_copied">Ligilo kopiita</string>
@@ -138,7 +141,6 @@
     <string name="contacts_preferences_import_scheduled">Importado estas planita kaj komenciĝos tre baldaŭ</string>
     <string name="contacts_preferences_no_file_found">Neniu dosiero trovebla</string>
     <string name="contacts_preferences_something_strange_happened">Ne eblis trovi vian lastan savkopion!</string>
-    <string name="copied_to_clipboard">Kopiita en la tondejon</string>
     <string name="copy_file_error">Eraro okazis dum provo kopii ĉi tiun dosieron aŭ dosierujon</string>
     <string name="copy_file_invalid_into_descendent">Ne eblas kopii dosierujon en unu el ĝiaj idoj</string>
     <string name="copy_file_invalid_overwrite">La dosiero jam ekzistas en la cela dosierujo</string>
@@ -229,7 +231,6 @@
     <string name="file_list_empty_headline_search">Neniu rezulto en tiu dosierujo</string>
     <string name="file_list_empty_headline_server_search">Neniu rezulto</string>
     <string name="file_list_empty_moving">Nenio ĉi tie. Vi povas aldoni dosierujon.</string>
-    <string name="file_list_empty_recently_modified">Troviĝis neniu dosiero modifita dum la lastaj 7 tagoj</string>
     <string name="file_list_empty_search">Ĉu eble ĝi estas en alia dosierujo?</string>
     <string name="file_list_empty_shared_headline">Ankoraŭ neniu kunhavo</string>
     <string name="file_list_folder">dosierujo</string>
@@ -259,7 +260,6 @@
     <string name="file_not_synced">La dosiero ne eblis sinkroniĝi. Nun montriĝas lasta disponebla versio.</string>
     <string name="file_rename">Alinomi</string>
     <string name="file_version_restored_error">Eraro dum restaŭro de dosierversio!</string>
-    <string name="file_version_restored_successfully">Sukcese restaŭriĝis dosierversio.</string>
     <string name="filedetails_details">Detaloj</string>
     <string name="filedetails_download">Elŝuti</string>
     <string name="filedetails_export">Eksporti</string>
@@ -288,7 +288,6 @@
     <string name="foreign_files_local_text">Loka: %1$s</string>
     <string name="foreign_files_move">Movi ĉion</string>
     <string name="foreign_files_remote_text">Fora: %1$s</string>
-    <string name="foreign_files_success">Ĉiuj dosieroj moviĝis</string>
     <string name="forward">Antaŭen</string>
     <string name="fourHours">4 horoj</string>
     <string name="hint_name">Nomo</string>
@@ -300,8 +299,6 @@
     <string name="instant_upload_path">/TujAlŝutado</string>
     <string name="invisible">Nevidebla</string>
     <string name="link">Ligilo</string>
-    <string name="link_share_allow_upload_and_editing">Permesi alŝuton kaj redakton</string>
-    <string name="link_share_file_drop">Demeti dosieron (nur alŝuto)</string>
     <string name="list_layout">Montri liste</string>
     <string name="local_file_list_empty">Estas neniu dosiero en ĉi tiu dosierujo.</string>
     <string name="local_file_not_found_message">Dosiero ne trovita en loka dosiersistemo</string>
@@ -322,6 +319,8 @@
     <string name="media_forward_description">Rapidpluiga butono</string>
     <string name="media_notif_ticker">Muzika ludilo %1$s</string>
     <string name="media_play_pause_description">Luda aŭ paŭziga butono</string>
+    <string name="media_player_pause">Paŭzigi</string>
+    <string name="media_player_play">Ludi</string>
     <string name="media_rewind_description">Revolva butono</string>
     <string name="media_state_playing">%1$s (ludante)</string>
     <string name="menu_item_sort_by_date_newest_first">Pli novaj unue</string>
@@ -364,7 +363,6 @@
     <string name="outdated_server">La servilo nun malaktualas, bonvolu ĝisdatigi ĝin!</string>
     <string name="overflow_menu">Pliaj menuoj</string>
     <string name="pass_code_configure_your_pass_code">Entajpu vian pasvorton</string>
-    <string name="pass_code_configure_your_pass_code_explanation">La pasvorto estos petita ĉiufoje, kiam la aplikaĵo ekkomenciĝas</string>
     <string name="pass_code_enter_pass_code">Bonvolu entajpi vian pasvorton</string>
     <string name="pass_code_mismatch">La pasvortoj ne samas</string>
     <string name="pass_code_reenter_your_pass_code">Bonvolu reentajpi vian pasvorton</string>
@@ -372,15 +370,10 @@
     <string name="pass_code_removed">Pasvorto forigita</string>
     <string name="pass_code_stored">Pasvorto konservita</string>
     <string name="pass_code_wrong">Neĝusta pasvorto</string>
+    <string name="pause_upload">Paŭzigi</string>
     <string name="permission_allow">Permesi</string>
     <string name="permission_deny">Rifuzi</string>
-    <string name="permission_storage_access">Pliaj permesoj bezonataj por el- kaj alŝuti dosierojn.</string>
     <string name="picture_set_as_no_app">Neniu aplikaĵo trovita por uzi tiun bildon</string>
-    <string name="placeholder_fileSize">389 KB</string>
-    <string name="placeholder_filename">lokokupilo.txt</string>
-    <string name="placeholder_media_time">12:23:45</string>
-    <string name="placeholder_sentence">Ĉi tio estas lokokupilo</string>
-    <string name="placeholder_timestamp">2012/05/18 12:23</string>
     <string name="pref_behaviour_entries_delete_file">forigita</string>
     <string name="pref_behaviour_entries_keep_file">konservita en origina dosierujo</string>
     <string name="pref_behaviour_entries_move">movita al aplikaĵa dosierujo</string>
@@ -464,7 +457,6 @@
     <string name="share_link_password_title">Enigu pasvorton</string>
     <string name="share_no_expiration_date_label">Uzi limdaton</string>
     <string name="share_no_password_title">Uzi pasvorton</string>
-    <string name="share_password_title">Pasvorte protektita</string>
     <string name="share_permission_can_edit">Povas redakti</string>
     <string name="share_read_permission">Legi</string>
     <string name="share_remote_clarification">%1$s (fora)</string>
@@ -475,7 +467,6 @@
     <string name="share_via_link_section_title">Kunhavigi ligilon</string>
     <string name="share_via_link_send_link_label">Sendi ligilon</string>
     <string name="share_via_link_unset_password">Malprotekti</string>
-    <string name="share_with_title">Kunhavigi kun...</string>
     <string name="shared_avatar_desc">Avataro el kunhavuzanto</string>
     <string name="shared_icon_share">kunhavo</string>
     <string name="shared_icon_shared">kunhavigita</string>
@@ -563,6 +554,7 @@
     <string name="trashbin_file_not_restored">Dosiero %1$s ne povis esti restaŭrita!</string>
     <string name="trashbin_file_remove">Forigi por ĉiam</string>
     <string name="trashbin_not_emptied">Dosieroj ne povis esti porĉiame forigitaj!</string>
+    <string name="unknown">Nekonata</string>
     <string name="unread_comments">Ekzistas nelegataj komentoj</string>
     <string name="unset_encrypted">Malĉifrigi</string>
     <string name="unset_favorite">Malpliŝatigi</string>
@@ -619,9 +611,9 @@
     <string name="uploader_wrn_no_account_setup_btn_text">Agordi</string>
     <string name="uploader_wrn_no_account_text">Neniu konto %1$s sur via aparato. Bonvolu unue agordi konton.</string>
     <string name="uploader_wrn_no_account_title">Neniu konto troviĝis</string>
+    <string name="uploads_view_group_completed_uploads">Plenumita</string>
     <string name="uploads_view_group_current_uploads">Nuna</string>
     <string name="uploads_view_group_failed_uploads">Malsukcesa aŭ atendante reprovadon</string>
-    <string name="uploads_view_group_finished_uploads">Alŝutita</string>
     <string name="uploads_view_group_manually_cancelled_uploads">Nuligita</string>
     <string name="uploads_view_later_waiting_to_upload">Atendo por alŝuti</string>
     <string name="uploads_view_title">Alŝutoj</string>
@@ -643,6 +635,7 @@
     <string name="user_icon">Uzanto</string>
     <string name="user_info_address">Adreso</string>
     <string name="user_info_email">Retpoŝtadreso</string>
+    <string name="user_info_groups">Grupoj</string>
     <string name="user_info_phone">Telefonnumero</string>
     <string name="user_info_twitter">Twitter</string>
     <string name="user_info_website">Retejo</string>

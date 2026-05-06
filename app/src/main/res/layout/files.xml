@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             app:menu="@menu/bottom_navigation_menu"
-            app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior" />
+            app:layout_behavior="com.nextcloud.ui.behavior.OnScrollBehavior" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_main"
@@ -69,6 +69,7 @@
             app:tint="@color/fab_icon_tint"
             app:ionosCustomization="Custom FAB colors"
             app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
+            app:layout_behavior="com.nextcloud.ui.behavior.OnScrollBehavior"
             android:visibility="gone"
             tools:visibility="visible" />
 

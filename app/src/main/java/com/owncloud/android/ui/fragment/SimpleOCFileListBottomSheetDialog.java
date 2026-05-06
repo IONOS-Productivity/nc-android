@@ -7,6 +7,7 @@
 
 package com.owncloud.android.ui.fragment;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
@@ -18,6 +19,12 @@ import com.nextcloud.client.documentscan.AppScanOptionalFeature;
 import com.owncloud.android.R;
 import com.owncloud.android.databinding.SimpleFileListActionsBottomSheetFragmentBinding;
 import com.owncloud.android.ui.activity.FileActivity;
+import com.owncloud.android.MainApp;
+import com.nextcloud.utils.BuildHelper;
+import com.owncloud.android.R;
+import com.owncloud.android.databinding.SimpleFileListActionsBottomSheetFragmentBinding;
+import com.owncloud.android.ui.activity.FileActivity;
+import com.owncloud.android.utils.PermissionUtil;
 import com.owncloud.android.utils.theme.ThemeUtils;
 import com.owncloud.android.utils.theme.ViewThemeUtils;
 
@@ -65,6 +72,18 @@ public class SimpleOCFileListBottomSheetDialog extends BottomSheetDialog impleme
         }
 
         setupClickListener();
+
+        if (MainApp.isClientBranded() && BuildHelper.INSTANCE.isFlavourGPlay()) {
+            // this way we can have branded clients with that permission
+            boolean hasPermission = true;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                hasPermission = PermissionUtil.INSTANCE.manifestHasAllFilesPermission(getContext());
+            }
+            if (!hasPermission) {
+                binding.menuUploadFiles.setVisibility(View.GONE);
+//                binding.uploadContentFromOtherApps.setText(getContext().getString(R.string.upload_files));
+            }
+        }
     }
 
     private void setupClickListener() {

@@ -42,3 +42,18 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+<com.google.android.material.button.MaterialButton
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/quickPermissionButton"
+    android:textColor="@color/ionos_default_text_color"
+    app:iconTint="@color/text_color"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/bottom_sheet_default_item_height"
+    android:gravity="center_vertical"
+    android:insetTop="0dp"
+    android:insetBottom="0dp"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    app:iconGravity="textStart"
+    app:iconPadding="12dp" />

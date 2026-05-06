@@ -13,6 +13,9 @@ import android.widget.ImageView
 import androidx.annotation.StringRes
 import androidx.appcompat.app.ActionBar
 import com.google.android.material.card.MaterialCardView
+import androidx.appcompat.widget.SearchView
+import com.google.android.material.card.MaterialCardView
+import com.google.android.material.navigation.NavigationView
 import com.nextcloud.android.common.ui.theme.MaterialSchemes
 import com.nextcloud.android.common.ui.theme.ViewThemeUtilsBase
 import com.owncloud.android.R
@@ -84,5 +87,12 @@ class IonosFilesSpecificViewThemeUtils @Inject constructor(
 
     fun setWhiteBackButton(context: Context, supportActionBar: ActionBar) {
         delegate.setWhiteBackButton(context, supportActionBar)
+    }
+
+    fun themeContentSearchView(searchView: SearchView) {
+        delegate.themeContentSearchView(searchView)
+    }
+
+    fun colorNavigationView(navigationView: NavigationView) {
     }
 }

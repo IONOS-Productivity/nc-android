@@ -30,7 +30,9 @@ import com.owncloud.android.ui.preview.PreviewBitmapActivity
 import com.owncloud.android.utils.DisplayUtils
 import javax.inject.Inject
 
-class PreviewPdfFragment : Fragment(), Injectable {
+class PreviewPdfFragment :
+    Fragment(),
+    Injectable {
 
     @Inject
     lateinit var vmFactory: ViewModelFactory
@@ -84,12 +86,6 @@ class PreviewPdfFragment : Fragment(), Injectable {
                     putExtra(PreviewBitmapActivity.EXTRA_BITMAP_PATH, path)
                 }
                 requireContext().startActivity(intent)
-            }
-        }
-        viewModel.showZoomTip.observe(viewLifecycleOwner) { shouldShow ->
-            if (shouldShow) {
-                snack = DisplayUtils.showSnackMessage(binding.root, R.string.pdf_zoom_tip)
-                viewModel.onZoomTipShown()
             }
         }
     }

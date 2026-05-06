@@ -47,6 +47,7 @@ internal class FilterActivity : BaseActivity<Event, State, ViewModel>() {
 
 	override val viewModelFactory by lazy { viewModelFactoryAssistant.create(getInitialState()) }
 	override val viewBinding by lazy { ScanbotActivityFilterBinding.inflate(layoutInflater) }
+    override val viewModelClass: Class<ViewModel> = ViewModel::class.java
 
     @Inject lateinit var viewModelFactoryAssistant: FilterViewModelFactory.Assistant
 	private val progressDialog by lazy { LockProgressDialog() }

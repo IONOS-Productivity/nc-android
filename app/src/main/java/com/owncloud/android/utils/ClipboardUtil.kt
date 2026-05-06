@@ -39,6 +39,7 @@ object ClipboardUtil {
 
         if (TextUtils.isEmpty(text)) {
             Toast.makeText(activity, R.string.clipboard_no_text_to_copy, Toast.LENGTH_SHORT).show()
+            DisplayUtils.showSnackMessage(activity, R.string.clipboard_no_text_to_copy)
             return
         }
 
@@ -50,17 +51,21 @@ object ClipboardUtil {
 
             if (showToast) {
                 Toast.makeText(activity, R.string.clipboard_text_copied, Toast.LENGTH_SHORT).show()
+                DisplayUtils.showSnackMessage(activity, R.string.copied)
             }
 
             scheduleClipboardClearWorker(activity, text)
         } catch (e: Exception) {
             Toast.makeText(activity, R.string.clipboard_unexpected_error, Toast.LENGTH_SHORT).show()
+            DisplayUtils.showSnackMessage(activity, R.string.clipboard_unexpected_error)
             Log_OC.e(TAG, "Exception caught while copying to clipboard", e)
         }
     }
 
     private fun getClipData(clipboardLabel: String, text: String?): ClipData {
         return ClipData.newPlainText(clipboardLabel, text).apply {
+    private fun getClipData(clipboardLabel: String, text: String?): ClipData =
+        ClipData.newPlainText(clipboardLabel, text).apply {
             description.extras = PersistableBundle().apply {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                     putBoolean(ClipDescription.EXTRA_IS_SENSITIVE, true)

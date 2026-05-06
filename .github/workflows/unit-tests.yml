@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2022-2024 Nextcloud GmbH and Nextcloud contributors
+# SPDX-FileCopyrightText: 2022-2025 Nextcloud GmbH and contributors
 # SPDX-License-Identifier: AGPL-3.0-or-later OR GPL-2.0-only
 
 name: Unit tests
@@ -20,36 +20,45 @@ concurrency:
 jobs:
     test:
         runs-on: ubuntu-latest
+
         steps:
-            -   uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-            -   name: Set up JDK 17
-                uses: actions/setup-java@7a6d8a8234af8eb26422e24e3006232cccaa061b # v4.6.0
-                with:
-                    distribution: "temurin"
-                    java-version: 17
-            -   name: Delete old comments
-                env:
-                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                if: ${{ always() }}
-                run: scripts/deleteOldComments.sh "test" "Unit" ${{github.event.number}}
-            -   name: Setup Gradle
-                uses: gradle/actions/setup-gradle@0bdd871935719febd78681f197cd39af5b6e16a6 # v4.2.2
-            -   name: Run unit tests with coverage
-                run: ./gradlew jacocoTestGplayDebugUnitTest
-            -   name: Upload failing results
-                if: ${{ failure() }}
-                env:
-                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                run: scripts/uploadReport.sh "${{ secrets.LOG_USERNAME }}" "${{ secrets.LOG_PASSWORD }}" ${{github.event.number}} "test" "Unit" ${{github.event.number}}
-            -   name: Upload coverage to codecov
-                uses: codecov/codecov-action@1e68e06f1dbfde0e4cefc87efeba9e4643565303 # v5.1.2
-                with:
-                    token: ${{ secrets.CODECOV_TOKEN }}
-                    flags: unit
-                    fail_ci_if_error: true
-            -   name: Upload jacoco artifacts
-                if: ${{ failure() }}
-                uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4.6.0
-                with:
-                    name: test-results
-                    path: app/build/reports/tests/testGplayDebugUnitTest/
+            - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+            - name: Set up JDK 21
+              uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 # v5.2.0
+              with:
+                  distribution: "temurin"
+                  java-version: 21
+
+            - name: Delete old comments
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              if: ${{ always() }}
+              run: scripts/deleteOldComments.sh "test" "Unit" ${{github.event.number}}
+
+            - name: Setup Gradle
+              uses: gradle/actions/setup-gradle@f29f5a9d7b09a7c6b29859002d29d24e1674c884 # v5.0.1
+
+            - name: Run unit tests with coverage
+              run: ./gradlew jacocoTestGplayDebugUnitTest
+
+            - name: Upload failing results
+              if: ${{ failure() }}
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              run: scripts/uploadReport.sh "${{ secrets.LOG_USERNAME }}" "${{ secrets.LOG_PASSWORD }}" ${{github.event.number}} "test" "Unit" ${{github.event.number}}
+
+            - name: Upload coverage to codecov
+              uses: codecov/codecov-action@671740ac38dd9b0130fbe1cec585b89eea48d3de # v5.5.2
+              with:
+                  token: ${{ secrets.CODECOV_TOKEN }}
+                  flags: unit
+                  fail_ci_if_error: true
+                  files: app/build/reports/jacoco/jacocoTestGplayDebugUnitTestReport/jacoco.xml
+
+            - name: Upload jacoco artifacts
+              if: ${{ failure() }}
+              uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+              with:
+                  name: test-results
+                  path: app/build/reports/jacoco/jacocoTestGplayDebugUnitTestReport/html/

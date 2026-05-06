@@ -130,9 +130,11 @@ public class OCUpload implements Parcelable {
      */
     public OCUpload(String localPath, String remotePath, String accountName) {
         if (localPath == null || !localPath.startsWith(File.separator)) {
+            Log_OC.e(TAG, "oc upload, local path: " + localPath);
             throw new IllegalArgumentException("Local path must be an absolute path in the local file system");
         }
         if (remotePath == null || !remotePath.startsWith(OCFile.PATH_SEPARATOR)) {
+            Log_OC.e(TAG, "oc upload, remote path: " + remotePath);
             throw new IllegalArgumentException("Remote path must be an absolute path in the local file system");
         }
         if (accountName == null || accountName.length() < 1) {
@@ -238,7 +240,7 @@ public class OCUpload implements Parcelable {
     /****
      *
      */
-    public static final Parcelable.Creator<OCUpload> CREATOR = new Parcelable.Creator<OCUpload>() {
+    public static final Parcelable.Creator<OCUpload> CREATOR = new Parcelable.Creator<>() {
 
         @Override
         public OCUpload createFromParcel(Parcel source) {
@@ -292,10 +294,9 @@ public class OCUpload implements Parcelable {
 
     @SuppressFBWarnings("SEO_SUBOPTIMAL_EXPRESSION_ORDER")
     public boolean isSame(@Nullable Object obj) {
-        if (!(obj instanceof OCUpload)) {
+        if (!(obj instanceof OCUpload other)) {
             return false;
         }
-        OCUpload other = (OCUpload) obj;
         return this.uploadId == other.uploadId &&
             localPath.equals(other.localPath) &&
             remotePath.equals(other.remotePath) &&

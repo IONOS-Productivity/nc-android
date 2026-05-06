@@ -10,6 +10,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <LinearLayout
@@ -26,7 +27,7 @@
             android:layout_height="@dimen/user_icon_size"
             android:layout_margin="6dp"
             android:contentDescription="@string/avatar"
-            android:src="@drawable/ic_user" />
+            android:src="@drawable/ic_user_outline" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -40,14 +41,14 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="middle"
                 android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
-                tools:text="Alice Muster" />
+                tools:text="@string/placeholder_first_name_last_name" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/account"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="middle"
-                tools:text="alice@cloud.nextcloud.com" />
+                tools:text="@string/placeholder_random_account" />
 
         </LinearLayout>
 
@@ -73,6 +74,7 @@
             android:id="@+id/radio_local_remove"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:buttonTint="@color/radio_button_color"
             tools:checked="true" />
 
         <LinearLayout

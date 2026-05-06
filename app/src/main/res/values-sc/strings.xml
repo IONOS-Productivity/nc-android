@@ -35,6 +35,13 @@
     <string name="appbar_search_in">Chirca in %s</string>
     <string name="assistant_screen_delete_task_alert_dialog_title">Cantzella faina</string>
     <string name="assistant_screen_no_task_available_text">Peruna faina a disponimentu pro sa genia %s. Nde podes creare una noa dae su cugione in bassu a dereta.</string>
+    <string name="app_config_base_url_title">URL de base</string>
+    <string name="app_config_proxy_port_title">Port serbidore intermèdiu</string>
+    <string name="appbar_search_in">Chirca in %s</string>
+    <string name="appear_offline">Mustra•ti foras de lìnia</string>
+    <string name="assistant_screen_delete_task_alert_dialog_title">Cantzella faina</string>
+    <string name="assistant_task_status_running">in esecutzione</string>
+    <string name="assistant_task_status_unknown">non connotu</string>
     <string name="associated_account_not_found">Contu assotziadu no agatadu!</string>
     <string name="auth_access_failed">Atzessu faddidu: %1$s</string>
     <string name="auth_account_does_not_exist">Su contu non s\'agatat ancora in custu dispositivu</string>
@@ -83,8 +90,10 @@
     <string name="bottom_navigation_menu_favorites_label">Preferidos</string>
     <string name="bottom_navigation_menu_files_label">Totu is archìvios</string>
     <string name="bottom_navigation_menu_media_label">Elementos multimediales</string>
+    <string name="busy">Impinnadu</string>
     <string name="calendar">Calendàriu</string>
     <string name="calendars">Calendàrios</string>
+    <string name="cancel_upload">Cancel</string>
     <string name="certificate_load_problem">Problema in su carrigamentu de su tzertificadu.</string>
     <string name="changelog_dev_version">Registru de is modìficas de sa versione dispositivu</string>
     <string name="checkbox">Casella de ispunta</string>
@@ -92,9 +101,9 @@
     <string name="choose_remote_folder">Sèbera cartella remota...</string>
     <string name="choose_template_helper_text">Sèbera unu tema e inserta-nche su nùmene de s\'archìviu.</string>
     <string name="choose_which_file">Sèbera cale archìviu boles mantènnere!</string>
+    <string name="clear">Lìmpia</string>
     <string name="clear_notifications_failed">Impossìbile a nche bogare is notìficas.</string>
-    <string name="clear_status_message">Lìmpia su messàgiu de istadu</string>
-    <string name="clear_status_message_after">Lìmpia su messàgiu de istadu a pustis</string>
+    <string name="clear_status_after">Lìmpia s\'istadu a pustis</string>
     <string name="clipboard_label">Testu copiadu dae %1$s</string>
     <string name="clipboard_no_text_to_copy">Testu de copiare in sa punta de billete non retzidu</string>
     <string name="clipboard_text_copied">Ligòngiu copiadu</string>
@@ -155,7 +164,10 @@
     <string name="contacts_preferences_import_scheduled">S\'importatzione s\'est programmada e at a cumintzare intre pagu</string>
     <string name="contacts_preferences_no_file_found">Perunu archìviu agatadu</string>
     <string name="contacts_preferences_something_strange_happened">Non s\'est agatada s\'ùrtima còpia de seguresa tua!</string>
-    <string name="copied_to_clipboard">Copiadu in punta de billete</string>
+    <string name="conversation_screen_delete_button_title">Cantzella sa resonada</string>
+    <string name="conversation_screen_empty_content_title">Peruna resonada agatada</string>
+    <string name="conversation_screen_title">Cunversatziones</string>
+    <string name="copied">Copiadu</string>
     <string name="copy_file_error">Ddoe at àpidu un\'errore in sa còpia de su documentu o de sa cartella</string>
     <string name="copy_file_invalid_into_descendent">No est possìbile a copiare una cartella a intro de una de is cartellas in suta </string>
     <string name="copy_file_invalid_overwrite">Su documentu est giai presente in sa cartella de destinatzione</string>
@@ -278,6 +290,7 @@
     <string name="failed_update_ui">Non s\'est pòdidu agiornare UI</string>
     <string name="favorite">Agiunghe a preferidos</string>
     <string name="favorite_icon">Preferi</string>
+    <string name="fifteenMinutes">15 minutos</string>
     <string name="file_activity_shared_file_cannot_be_updated">Impossìbile agiornare s\'archìviu cumpartzidu</string>
     <string name="file_delete">Cantzella</string>
     <string name="file_detail_activity_error">Errore in su recùperu de atividades pro su documentu</string>
@@ -292,6 +305,8 @@
     <string name="file_list_empty_headline_server_search">Perunu resurtadu</string>
     <string name="file_list_empty_moving">Non b\'at nudda. Podes agiùnghere una cartella.</string>
     <string name="file_list_empty_on_device">Is cartellas e is archìvios iscarrigados ant a aparèssere inoghe.</string>
+    <string name="file_list_empty_recent_files_description">Is cartellas e is archìvios chi apas modificadu de reghente ant a èssere mustrados inoghe.</string>
+    <string name="file_list_empty_recent_files_headline">Nissunu archìviu modificadu de reghente</string>
     <string name="file_list_empty_recently_modified">Perunu archìviu modificadu in is ùrtimas 7 dies agatadu</string>
     <string name="file_list_empty_search">Forsis est in un\'àtera cartella?</string>
     <string name="file_list_empty_shared">Is cartellas e is archìvios chi cumpartzis ant a aparèssere inoghe.</string>
@@ -326,7 +341,6 @@
     <string name="file_not_synced">No at fatu a sincronizare su documentu. Mustrende s\'ùrtima versione a disponimentu.</string>
     <string name="file_rename">Torra a numenare</string>
     <string name="file_version_restored_error">Errore in su recùperu de sa versione documentu!</string>
-    <string name="file_version_restored_successfully">Recùperu de sa versione documentu fatu.</string>
     <string name="filedetails_details">Detàllios</string>
     <string name="filedetails_download">Iscàrriga</string>
     <string name="filedetails_export">Esporta</string>
@@ -359,7 +373,6 @@
     <string name="foreign_files_local_text">Locale: %1$s</string>
     <string name="foreign_files_move">Tràmuda totu</string>
     <string name="foreign_files_remote_text">Remotu: %1$s</string>
-    <string name="foreign_files_success">Totu is documentos tramudados</string>
     <string name="forward">Torra a imbiare</string>
     <string name="fourHours">4 oras</string>
     <string name="hint_name">Nùmene</string>
@@ -375,10 +388,7 @@
     <string name="invisible">Invisìbile</string>
     <string name="label_empty">S\'eticheta non podet èssere bòida</string>
     <string name="link">Ligòngiu</string>
-    <string name="link_share_allow_upload_and_editing">Permite carrigamentu e modìficas</string>
     <string name="link_share_editing">Modìfica</string>
-    <string name="link_share_file_drop">Trìsina archìviu (isceti pro carrigare)</string>
-    <string name="link_share_view_only">Isceti in visualizatzione</string>
     <string name="list_layout">Istrutura in elencu</string>
     <string name="load_more_results">Càrriga àteros resurtados</string>
     <string name="local_file_list_empty">Non ddoe at documentos in custa cartella.</string>
@@ -411,6 +421,7 @@
     <string name="media_forward_description">Butone bae a in antis a sa lestra</string>
     <string name="media_notif_ticker">%1$s riprodutore de mùsica</string>
     <string name="media_play_pause_description">Butone reprodue o pàusa</string>
+    <string name="media_player_pause">Pàusa</string>
     <string name="media_rewind_description">Butone torra in segus</string>
     <string name="media_state_playing">%1$s (in riprodutzione)</string>
     <string name="menu_item_sort_by_date_newest_first">Prima su prus nou</string>
@@ -424,6 +435,7 @@
     <string name="move_file_invalid_into_descendent">No est possìbile a tramudare una cartella a intro de una de is cartellas in suta</string>
     <string name="move_file_invalid_overwrite">Su documentu est giai presente in sa cartella de destinatzione</string>
     <string name="move_file_not_found">Impossìbile a tramudare su documentu. Controlla si esistit.</string>
+    <string name="mute_all_notifications">Istuda totu is notìficas</string>
     <string name="network_error_connect_timeout_exception">Ddoe at àpidu un\'errore abetende su serbidore. No at fatu a agabbare s\'operatzione.</string>
     <string name="network_error_socket_exception">Ddoe at àpidu un\'errore durante sa connessione cun su serbidore</string>
     <string name="network_error_socket_timeout_exception">Ddoe at àpidu un\'errore abetende su serbidore. No at fatu a agabbare s\'operatzione.</string>
@@ -462,7 +474,6 @@
     <string name="outdated_server">Su serbidore est a sa fine de sa vida sua, agiorna·ddu!</string>
     <string name="overflow_menu">Àteros menu</string>
     <string name="pass_code_configure_your_pass_code">Inserta su còdighe de atzessu</string>
-    <string name="pass_code_configure_your_pass_code_explanation">Su còdighe de atzessu at a èssere rechestu ogni borta chi s\'aplicatzione s\'aviat.</string>
     <string name="pass_code_enter_pass_code">Inserta su còdighe de atzessu</string>
     <string name="pass_code_mismatch">Is còdighes de atzessu non sunt is pròpios</string>
     <string name="pass_code_reenter_your_pass_code">Torra a insertare su còdighe de atzessu</string>
@@ -470,9 +481,9 @@
     <string name="pass_code_removed">Còdighe de atzessu cantzelladu</string>
     <string name="pass_code_stored">Còdighe de atzessu sarvadu</string>
     <string name="pass_code_wrong">Còdighe de atzessu isballiadu</string>
+    <string name="pause_upload">Pàusa</string>
     <string name="permission_allow">Permite</string>
     <string name="permission_deny">Nega</string>
-    <string name="permission_storage_access">Sunt rechertos àteros permissos pro carrigare e iscarrigare documentos.</string>
     <string name="picture_set_as_no_app">Peruna aplicatzione agatada pro cunfigurare un\'immàgine</string>
     <string name="placeholder_fileSize">389 KB</string>
     <string name="placeholder_filename">placeholder.txt</string>
@@ -498,6 +509,7 @@
     <string name="prefs_category_about">In contu de</string>
     <string name="prefs_category_details">Detàllios</string>
     <string name="prefs_category_dev">Dispositivu</string>
+    <string name="prefs_category_files">Archìvios</string>
     <string name="prefs_category_general">Generale</string>
     <string name="prefs_category_more">Àteru</string>
     <string name="prefs_category_sync">Sincronizatzione</string>
@@ -540,7 +552,6 @@
     <string name="preview_image_error_unknown_format">Impossìbile mustrare s\'immàgine</string>
     <string name="preview_sorry">Nos dispraghet</string>
     <string name="privacy">Riservadesa</string>
-    <string name="public_share_name">Nùmene nou</string>
     <string name="push_notifications_not_implemented">Notìficas push disativadas pro more de dipendèntzias dae serbìtzios propietàrios de Google Play.</string>
     <string name="push_notifications_old_login">Non ddoe sunt notìficas push ca sa sessione de atzessu nch\'est passada. Proa de torrare a agiùnghere su contu tuo.</string>
     <string name="push_notifications_temp_error">Is notìficas push non sunt a disponimentu immoe</string>
@@ -585,9 +596,8 @@
     <string name="send">Imbia</string>
     <string name="sendbutton_description">Imbia s\'icona de su butone</string>
     <string name="set_as">Cunfigura comente</string>
+    <string name="set_online_status">Istadu in lìnia</string>
     <string name="set_picture_as">Imprea immàgine comente</string>
-    <string name="set_status">Cunfigura s\'istadu</string>
-    <string name="set_status_message">Cunfigura unu messàgiu de istadu</string>
     <string name="share">Cumpartzi</string>
     <string name="share_create_permission">Crea</string>
     <string name="share_custom_permission">Permissos personalizados</string>
@@ -611,7 +621,6 @@
     <string name="share_link_with_label">Cumpartzi ligòngiu (%1$s)</string>
     <string name="share_no_expiration_date_label">Cunfigura una data de iscadèntzia</string>
     <string name="share_no_password_title">Cunfigura sa crae</string>
-    <string name="share_password_title">Amparadu dae una crae</string>
     <string name="share_permission_can_edit">Podet modificare</string>
     <string name="share_permission_view_only">Isceti in visualizatzione</string>
     <string name="share_re_share_permission">Cumpartzidura</string>
@@ -625,7 +634,6 @@
     <string name="share_via_link_section_title">Cumpartzi ligòngiu</string>
     <string name="share_via_link_send_link_label">Imbia ligòngiu</string>
     <string name="share_via_link_unset_password">Non cunfiguradu</string>
-    <string name="share_with_title">Cumpartzi cun...</string>
     <string name="shared_avatar_desc">Avatar dae utente cumpartzidu</string>
     <string name="shared_icon_share">cumpartzi</string>
     <string name="shared_icon_shared">cumpartzidu</string>
@@ -638,6 +646,8 @@
     <string name="signup_with_provider">Registra·ti cun su frunidore</string>
     <string name="single_sign_on_request_token" formatted="true">Permìtere a %1$s de intrare in su contu tuo de Nextcloud %2$s?</string>
     <string name="sort_by">Assenta segundu</string>
+    <string name="sort_favorites_first">Assenta cun is preferidos in antis</string>
+    <string name="sort_folders_before_files">Assenta cun is cartellas in antis de is archìvios</string>
     <string name="ssl_validator_btn_details_hide">Cua</string>
     <string name="ssl_validator_btn_details_see">Detàllios</string>
     <string name="ssl_validator_header">No at fatu a averguare s\'identidade de su serbidore</string>
@@ -730,6 +740,7 @@
     <string name="two_way_sync_activity_disable_all_button_title">Disativa pro totu is cartellas</string>
     <string name="two_way_sync_activity_title">Sincronizatzione interna in duas diretziones</string>
     <string name="unexpected_error_occurred">B\'at àpidu un\'errore ispantosu</string>
+    <string name="unknown">Disconnotu</string>
     <string name="unlock_file">Isbloca su documentu</string>
     <string name="unread_comments">Ddoe sunt cummentos non lèghidos</string>
     <string name="unset_encrypted">Tzifradura non cunfigurada</string>
@@ -796,9 +807,9 @@
     <string name="uploader_wrn_no_account_setup_btn_text">Cunfigura</string>
     <string name="uploader_wrn_no_account_text">Non ddoe sunt %1$s contos in su dispositivu tuo. Prima cunfigura unu contu.</string>
     <string name="uploader_wrn_no_account_title">Perunu contu agatadu</string>
+    <string name="uploads_view_group_completed_uploads">Cumpletadu</string>
     <string name="uploads_view_group_current_uploads">Atuale</string>
     <string name="uploads_view_group_failed_uploads">Faddidu/in isetu de aviare torra</string>
-    <string name="uploads_view_group_finished_uploads">Carrigadu</string>
     <string name="uploads_view_group_manually_cancelled_uploads">Annulladu</string>
     <string name="uploads_view_later_waiting_to_upload">Abetende pro carrigare</string>
     <string name="uploads_view_title">Carrigamentos</string>
@@ -822,6 +833,7 @@
     <string name="user_icon">Utente</string>
     <string name="user_info_address">Indiritzu</string>
     <string name="user_info_email">Posta eletrònica</string>
+    <string name="user_info_groups">Grupos</string>
     <string name="user_info_phone">Nùmeru de telèfonu</string>
     <string name="user_info_twitter">Twitter</string>
     <string name="user_info_website">Situ web</string>

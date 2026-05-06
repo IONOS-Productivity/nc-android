@@ -16,7 +16,6 @@ import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.annotation.IdRes
 import androidx.core.os.bundleOf
 import androidx.core.view.isEmpty
@@ -30,9 +29,11 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.ionos.annotation.IonosCustomization
 import com.nextcloud.android.common.ui.theme.utils.ColorRole
+import com.nextcloud.android.lib.resources.clientintegration.Endpoint
 import com.nextcloud.client.account.CurrentAccountProvider
 import com.nextcloud.client.di.Injectable
 import com.nextcloud.client.di.ViewModelFactory
+import com.nextcloud.utils.extensions.setVisibleIf
 import com.owncloud.android.R
 import com.owncloud.android.databinding.FileActionsBottomSheetBinding
 import com.owncloud.android.databinding.FileActionsBottomSheetItemBinding
@@ -44,10 +45,14 @@ import com.owncloud.android.lib.resources.files.model.FileLockType
 import com.owncloud.android.ui.activity.ComponentsGetter
 import com.owncloud.android.utils.DisplayUtils
 import com.owncloud.android.utils.DisplayUtils.AvatarGenerationListener
+import com.owncloud.android.utils.FileStorageUtils
+import com.owncloud.android.utils.overlay.OverlayManager
 import com.owncloud.android.utils.theme.ViewThemeUtils
 import javax.inject.Inject
 
-class FileActionsBottomSheet : BottomSheetDialogFragment(), Injectable {
+class FileActionsBottomSheet :
+    BottomSheetDialogFragment(),
+    Injectable {
 
     @Inject
     lateinit var viewThemeUtils: ViewThemeUtils
@@ -64,6 +69,9 @@ class FileActionsBottomSheet : BottomSheetDialogFragment(), Injectable {
     @Inject
     lateinit var syncedFolderProvider: SyncedFolderProvider
 
+    @Inject
+    lateinit var overlayManager: OverlayManager
+
     private lateinit var viewModel: FileActionsViewModel
 
     private var _binding: FileActionsBottomSheetBinding? = null
@@ -73,6 +81,10 @@ class FileActionsBottomSheet : BottomSheetDialogFragment(), Injectable {
     private lateinit var componentsGetter: ComponentsGetter
 
     private val thumbnailAsyncTasks = mutableListOf<ThumbnailsCacheManager.ThumbnailGenerationTask>()
+
+    private var endpoints: List<Endpoint>? = mutableListOf()
+
+    private lateinit var clientIntegration: ClientIntegration
 
     fun interface ResultListener {
         fun onResult(@IdRes actionId: Int)
@@ -90,11 +102,15 @@ class FileActionsBottomSheet : BottomSheetDialogFragment(), Injectable {
 
         viewModel.load(requireArguments(), componentsGetter)
 
+        endpoints = arguments?.getParcelableArrayList(FileActionsViewModel.ARG_ENDPOINTS)
+
         val bottomSheetDialog = dialog as BottomSheetDialog
         bottomSheetDialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
         bottomSheetDialog.behavior.skipCollapsed = true
 
         viewThemeUtils.platform.colorViewBackground(binding.bottomSheet, ColorRole.SURFACE)
+
+        clientIntegration = ClientIntegration(this, currentUserProvider.user, requireContext())
 
         return binding.root
     }
@@ -119,8 +135,8 @@ class FileActionsBottomSheet : BottomSheetDialogFragment(), Injectable {
 
             FileActionsViewModel.UiState.Loading -> {}
             FileActionsViewModel.UiState.Error -> {
-                context?.let {
-                    Toast.makeText(it, R.string.error_file_actions, Toast.LENGTH_SHORT).show()
+                activity?.let {
+                    DisplayUtils.showSnackMessage(it, R.string.error_file_actions)
                 }
                 dismissAllowingStateLoss()
             }
@@ -140,7 +156,7 @@ class FileActionsBottomSheet : BottomSheetDialogFragment(), Injectable {
                 binding.thumbnailLayout.thumbnailShimmer,
                 syncedFolderProvider.preferences,
                 viewThemeUtils,
-                syncedFolderProvider
+                overlayManager
             )
         }
     }
@@ -194,17 +210,43 @@ class FileActionsBottomSheet : BottomSheetDialogFragment(), Injectable {
                 val view = inflateActionView(action)
                 binding.fileActionsList.addView(view)
             }
+
+            // add client integration
+            if (endpoints != null) {
+                for (val e in endpoints) {
+                    val ui = clientIntegration.inflateClientIntegrationActionView(
+                        e,
+                        layoutInflater,
+                        binding,
+                        viewModel,
+                        viewThemeUtils
+                    )
+                    binding.fileActionsList.addView(ui)
+                }
+            }
         }
     }
 
     private fun displayTitle(titleFile: OCFile?) {
         val decryptedFileName = titleFile?.decryptedFileName
         if (decryptedFileName != null) {
-            decryptedFileName.let {
-                binding.title.text = it
+            val isFolder = titleFile.isFolder
+            val isRTL = DisplayUtils.isRTL()
+            val (base, ext) = FileStorageUtils.getFilenameAndExtension(decryptedFileName, isFolder, isRTL)
+            val titleMaxWidth = DisplayUtils.convertDpToPixel(
+                requireContext().resources.configuration.screenWidthDp.times(FILENAME_MAX_WIDTH_PERCENTAGE).toFloat(),
+                context
+            )
+
+            binding.title.maxWidth = titleMaxWidth
+            binding.title.text = base
+            binding.extension.setVisibleIf(!isFolder)
+            if (!isFolder) {
+                binding.extension.text = ext
             }
         } else {
             binding.title.isVisible = false
+            binding.extension.isVisible = false
         }
     }
 
@@ -232,9 +274,7 @@ class FileActionsBottomSheet : BottomSheetDialogFragment(), Injectable {
                 icon.setImageDrawable(avatarDrawable)
             }
 
-            override fun shouldCallGeneratedCallback(tag: String?, callContext: Any?): Boolean {
-                return false
-            }
+            override fun shouldCallGeneratedCallback(tag: String?, callContext: Any?): Boolean = false
         }
         DisplayUtils.setAvatar(
             currentUserProvider.user,
@@ -294,6 +334,7 @@ class FileActionsBottomSheet : BottomSheetDialogFragment(), Injectable {
     companion object {
         private const val REQUEST_KEY = "REQUEST_KEY_ACTION"
         private const val RESULT_KEY_ACTION_ID = "RESULT_KEY_ACTION_ID"
+        private const val FILENAME_MAX_WIDTH_PERCENTAGE = 0.6
 
         @JvmStatic
         @JvmOverloads
@@ -302,9 +343,7 @@ class FileActionsBottomSheet : BottomSheetDialogFragment(), Injectable {
             isOverflow: Boolean,
             @IdRes
             additionalToHide: List<Int>? = null
-        ): FileActionsBottomSheet {
-            return newInstance(1, listOf(file), isOverflow, additionalToHide, true)
-        }
+        ): FileActionsBottomSheet = newInstance(1, listOf(file), isOverflow, additionalToHide, true, emptyList())
 
         @JvmStatic
         @JvmOverloads
@@ -314,20 +353,20 @@ class FileActionsBottomSheet : BottomSheetDialogFragment(), Injectable {
             isOverflow: Boolean,
             @IdRes
             additionalToHide: List<Int>? = null,
-            inSingleFileFragment: Boolean = false
-        ): FileActionsBottomSheet {
-            return FileActionsBottomSheet().apply {
-                val argsBundle = bundleOf(
-                    FileActionsViewModel.ARG_ALL_FILES_COUNT to numberOfAllFiles,
-                    FileActionsViewModel.ARG_FILES to ArrayList<OCFile>(files),
-                    FileActionsViewModel.ARG_IS_OVERFLOW to isOverflow,
-                    FileActionsViewModel.ARG_IN_SINGLE_FILE_FRAGMENT to inSingleFileFragment
-                )
-                additionalToHide?.let {
-                    argsBundle.putIntArray(FileActionsViewModel.ARG_ADDITIONAL_FILTER, additionalToHide.toIntArray())
-                }
-                arguments = argsBundle
+            inSingleFileFragment: Boolean = false,
+            endpoints: List<Endpoint>
+        ): FileActionsBottomSheet = FileActionsBottomSheet().apply {
+            val argsBundle = bundleOf(
+                FileActionsViewModel.ARG_ALL_FILES_COUNT to numberOfAllFiles,
+                FileActionsViewModel.ARG_FILES to ArrayList<OCFile>(files),
+                FileActionsViewModel.ARG_IS_OVERFLOW to isOverflow,
+                FileActionsViewModel.ARG_IN_SINGLE_FILE_FRAGMENT to inSingleFileFragment,
+                FileActionsViewModel.ARG_ENDPOINTS to endpoints
+            )
+            additionalToHide?.let {
+                argsBundle.putIntArray(FileActionsViewModel.ARG_ADDITIONAL_FILTER, additionalToHide.toIntArray())
             }
+            arguments = argsBundle
         }
     }
 }

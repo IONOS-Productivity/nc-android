@@ -24,7 +24,7 @@
         android:layout_marginEnd="@dimen/standard_half_margin"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textStyle="bold"
-        tools:text="July" />
+        tools:text="@string/placeholder_month" />
 
     <TextView
         android:id="@+id/year"
@@ -35,5 +35,5 @@
         android:textStyle="bold"
         app:ionosCustomization="bold text"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        tools:text="2016" />
+        tools:text="@string/placeholder_year" />
 </LinearLayout>

@@ -8,8 +8,6 @@
  */
 package com.owncloud.android;
 
-import android.os.NetworkOnMainThreadException;
-
 import com.nextcloud.client.account.UserAccountManagerImpl;
 import com.nextcloud.client.device.BatteryStatus;
 import com.nextcloud.client.device.PowerManagementService;
@@ -84,12 +82,6 @@ public class UploadIT extends AbstractOnServerIT {
         public boolean isPowerSavingEnabled() {
             return false;
         }
-
-        @Override
-        public boolean isPowerSavingExclusionAvailable() {
-            return false;
-        }
-
         @NonNull
         @Override
         public BatteryStatus getBattery() {
@@ -236,11 +228,6 @@ public class UploadIT extends AbstractOnServerIT {
         PowerManagementService powerManagementServiceMock = new PowerManagementService() {
             @Override
             public boolean isPowerSavingEnabled() {
-                return false;
-            }
-
-            @Override
-            public boolean isPowerSavingExclusionAvailable() {
                 return false;
             }
 

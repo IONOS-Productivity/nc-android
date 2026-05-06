@@ -10,6 +10,7 @@ package com.ionos.startup
 import android.content.Context
 import androidx.startup.Initializer
 import com.ionos.analycis.AnalyticsManager
+import com.ionos.analytics.AnalyticsManager
 import com.ionos.privacy.PrivacyPreferences
 import com.ionos.scanbot.initializer.ScanbotInitializer
 import com.nextcloud.client.preferences.AppPreferences

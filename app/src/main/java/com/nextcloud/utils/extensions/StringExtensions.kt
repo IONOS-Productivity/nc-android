@@ -25,14 +25,22 @@ fun String.removeFileExtension(): String {
     }
 }
 
+@Suppress("ComplexCondition")
+fun String?.eTagChanged(eTagOnServer: String?): Boolean {
+    if (this == null || this.isEmpty() || eTagOnServer == null || eTagOnServer.isEmpty()) {
+        // provided eTags are empty or null can't compare treat as eTag changed
+        return true
+    }
+
+    return !this.equals(eTagOnServer, ignoreCase = true)
+}
+
+fun String.truncateWithEllipsis(limit: Int) = take(limit) + if (length > limit) StringConstants.THREE_DOT else ""
+
 object StringConstants {
     const val SLASH = "/"
     const val DOT = "."
     const val SPACE = " "
-}
-
-fun String.getContentOfPublicKey(): String {
-    return replace("-----BEGIN PUBLIC KEY-----", "")
-        .replace("-----END PUBLIC KEY-----", "")
-        .replace("\\s+".toRegex(), "")
+    const val THREE_DOT = "..."
+    const val TEMP = "tmp"
 }

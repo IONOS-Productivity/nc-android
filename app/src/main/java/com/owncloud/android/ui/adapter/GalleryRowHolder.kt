@@ -1,178 +1,184 @@
 /*
  * Nextcloud - Android Client
  *
+ * SPDX-FileCopyrightText: 2025 Alper Ozturk <alper.ozturk@nextcloud.com>
  * SPDX-FileCopyrightText: 2022 Tobias Kaminsky <tobias@kaminsky.me>
  * SPDX-FileCopyrightText: 2022 Nextcloud GmbH
  * SPDX-License-Identifier: AGPL-3.0-or-later OR GPL-2.0-only
  */
 package com.owncloud.android.ui.adapter
 
+import android.view.Gravity
+import android.view.View
+import android.widget.FrameLayout
 import android.widget.ImageView
-import android.widget.LinearLayout
-import androidx.core.content.res.ResourcesCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.get
 import com.afollestad.sectionedrecyclerview.SectionedViewHolder
 import com.elyeproj.loaderviewlibrary.LoaderImageView
+import com.ionos.annotation.IonosCustomization
+import com.nextcloud.android.common.ui.theme.utils.ColorRole
+import com.nextcloud.utils.OCFileUtils
+import com.nextcloud.utils.extensions.makeRounded
+import com.nextcloud.utils.extensions.setVisibleIf
 import com.owncloud.android.R
 import com.owncloud.android.databinding.GalleryRowBinding
 import com.owncloud.android.datamodel.FileDataStorageManager
 import com.owncloud.android.datamodel.GalleryRow
 import com.owncloud.android.datamodel.OCFile
-import com.owncloud.android.datamodel.ThumbnailsCacheManager
-import com.owncloud.android.lib.resources.files.model.ImageDimension
-import com.owncloud.android.utils.BitmapUtils
-import com.owncloud.android.utils.DisplayUtils
+import com.owncloud.android.utils.theme.ViewThemeUtils
 
+@Suppress("LongParameterList")
 class GalleryRowHolder(
     val binding: GalleryRowBinding,
     private val defaultThumbnailSize: Float,
     private val ocFileListDelegate: OCFileListDelegate,
     val storageManager: FileDataStorageManager,
-    private val galleryAdapter: GalleryAdapter
+    private val galleryAdapter: GalleryAdapter,
+    private val viewThemeUtils: ViewThemeUtils
 ) : SectionedViewHolder(binding.root) {
     val context = galleryAdapter.context
 
-    lateinit var currentRow: GalleryRow
+    private lateinit var currentRow: GalleryRow
+
+    // Cached values
+    private val zero by lazy { context.resources.getInteger(R.integer.zero) }
+    private val smallMargin by lazy { context.resources.getInteger(R.integer.small_margin) }
+    private val iconRadius by lazy { context.resources.getDimension(R.dimen.activity_icon_radius) }
+    private val standardMargin by lazy { context.resources.getDimension(R.dimen.standard_margin) }
+    private val checkBoxMargin by lazy { context.resources.getDimension(R.dimen.standard_quarter_padding) }
+    @IonosCustomization("space between photos")
+    private val photoSpacing by lazy { context.resources.getDimensionPixelSize(R.dimen.ionos_media_items_padding) }
+
+    @IonosCustomization("checkbox icon")
+    private val checkedDrawable by lazy {
+        ContextCompat.getDrawable(context, R.drawable.ic_checkbox_marked)
+    }
+
+    private val uncheckedDrawable by lazy {
+        ContextCompat.getDrawable(context, R.drawable.ic_checkbox_blank_outline)
+    }
+
+    private var lastFileCount = -1
+    // endregion
 
     fun bind(row: GalleryRow) {
         currentRow = row
+        val requiredCount = row.files.size
 
-        // re-use existing ones
-        while (binding.rowLayout.childCount < row.files.size) {
-            val shimmer = LoaderImageView(context).apply {
-                setImageResource(R.drawable.background)
-                resetLoader()
-                invalidate()
+        // Only rebuild if file count changed
+        if (lastFileCount != requiredCount) {
+            binding.rowLayout.removeAllViews()
+            row.files.forEach { file ->
+                binding.rowLayout.addView(getRowLayout(file))
             }
-
-            val imageView = ImageView(context).apply {
-                setImageDrawable(
-                    ThumbnailsCacheManager.AsyncGalleryImageDrawable(
-                        context.resources,
-                        BitmapUtils.drawableToBitmap(
-                            ResourcesCompat.getDrawable(resources, R.drawable.file_image, null),
-                            defaultThumbnailSize.toInt(),
-                            defaultThumbnailSize.toInt()
-                        ),
-                        null
-                    )
-                )
-            }
-
-            LinearLayout(context).apply {
-                addView(shimmer)
-                addView(imageView)
-
-                binding.rowLayout.addView(this)
-            }
+            lastFileCount = requiredCount
         }
 
-        if (binding.rowLayout.childCount > row.files.size) {
-            binding.rowLayout.removeViewsInLayout(row.files.size - 1, (binding.rowLayout.childCount - row.files.size))
-        }
+        val dimensions = getDimensions(row)
 
-        val shrinkRatio = computeShrinkRatio(row)
-
-        for (indexedFile in row.files.withIndex()) {
-            adjustFile(indexedFile, shrinkRatio, row)
+        for (i in row.files.indices) {
+            val dim = dimensions.getOrNull(i) ?: (defaultThumbnailSize.toInt() to defaultThumbnailSize.toInt())
+            adjustFile(i, row.files[i], dim, row)
         }
     }
 
-    fun redraw() {
-        bind(currentRow)
-    }
+    fun updateRowVisuals() = bind(currentRow)
 
-    @SuppressWarnings("MagicNumber", "ComplexMethod")
-    private fun computeShrinkRatio(row: GalleryRow): Float {
-        val screenWidth =
-            DisplayUtils.convertDpToPixel(context.resources.configuration.screenWidthDp.toFloat(), context)
-                .toFloat()
+    private fun getRowLayout(file: OCFile): FrameLayout {
+        val (width, height) = OCFileUtils.getImageSize(file, defaultThumbnailSize)
 
-        if (row.files.size > 1) {
-            var newSummedWidth = 0f
-            for (file in row.files) {
-                // first adjust all thumbnails to max height
-                val thumbnail1 = file.imageDimension ?: ImageDimension(defaultThumbnailSize, defaultThumbnailSize)
-
-                val height1 = thumbnail1.height
-                val width1 = thumbnail1.width
-
-                val scaleFactor1 = row.getMaxHeight() / height1
-                val newHeight1 = height1 * scaleFactor1
-                val newWidth1 = width1 * scaleFactor1
-
-                file.imageDimension = ImageDimension(newWidth1, newHeight1)
-
-                newSummedWidth += newWidth1
+        val checkbox = ImageView(context).apply {
+            visibility = View.GONE
+            layoutParams = FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.WRAP_CONTENT,
+                FrameLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                gravity = Gravity.TOP or Gravity.START
+                marginStart = checkBoxMargin.toInt()
+                topMargin = checkBoxMargin.toInt()
             }
+        }
 
-            var c = 1f
-            // this ensures that files in last row are better visible,
-            // e.g. when 2 images are there, it uses 2/5 of screen
-            if (galleryAdapter.columns == 5) {
-                when (row.files.size) {
-                    2 -> {
-                        c = 5 / 2f
-                    }
-                    3 -> {
-                        c = 4 / 3f
-                    }
-                    4 -> {
-                        c = 4 / 5f
-                    }
-                    5 -> {
-                        c = 1f
-                    }
-                }
-            }
+        val shimmer = LoaderImageView(context).apply {
+            setImageResource(R.drawable.background)
+            resetLoader()
+            layoutParams = FrameLayout.LayoutParams(width, height)
+        }
 
-            return (screenWidth / c) / newSummedWidth
-        } else {
-            val thumbnail1 = row.files[0].imageDimension ?: ImageDimension(defaultThumbnailSize, defaultThumbnailSize)
-            return (screenWidth / galleryAdapter.columns) / thumbnail1.width
+        val drawable = OCFileUtils.getMediaPlaceholder(file, width to height)
+        val rowCellImageView = ImageView(context).apply {
+            setImageDrawable(drawable)
+            adjustViewBounds = true
+            scaleType = ImageView.ScaleType.CENTER_CROP
+            layoutParams = FrameLayout.LayoutParams(width, height)
+        }
+
+        return FrameLayout(context).apply {
+            addView(shimmer)
+            addView(rowCellImageView)
+            addView(checkbox)
         }
     }
 
-    private fun adjustFile(indexedFile: IndexedValue<OCFile>, shrinkRatio: Float, row: GalleryRow) {
-        val file = indexedFile.value
-        val index = indexedFile.index
+    @IonosCustomization("squared cell size depending on screen width and column count")
+    private fun getDimensions(row: GalleryRow): List<Pair<Int, Int>> {
+        val count = row.files.size
+        val screenWidthPx = context.resources.displayMetrics.widthPixels
+        val totalMargins = photoSpacing * galleryAdapter.columns
+        val cellSize = (screenWidthPx - totalMargins) / galleryAdapter.columns
+        return List(count) { cellSize to cellSize }
+    }
 
-        val adjustedHeight1 = ((file.imageDimension?.height ?: defaultThumbnailSize) * shrinkRatio).toInt()
-        val adjustedWidth1 = ((file.imageDimension?.width ?: defaultThumbnailSize) * shrinkRatio).toInt()
+    @IonosCustomization("spacing and marging adjustments")
+    private fun adjustFile(index: Int, file: OCFile, dims: Pair<Int, Int>, row: GalleryRow) {
+        val (width, height) = dims
+        val frameLayout = binding.rowLayout[index] as FrameLayout
+        val shimmer = frameLayout[0] as LoaderImageView
+        val thumbnail = frameLayout[1] as ImageView
+        val checkbox = frameLayout[2] as ImageView
 
-        // re-use existing one
-        val linearLayout = binding.rowLayout[index] as LinearLayout
-        val shimmer = linearLayout[0] as LoaderImageView
+        val isChecked = ocFileListDelegate.isCheckedFile(file)
+        adjustRowCell(thumbnail, isChecked)
+        adjustCheckBox(checkbox, isChecked)
 
-        val thumbnail = linearLayout[1] as ImageView
+        ocFileListDelegate.bindGalleryRow(shimmer, thumbnail, file, this, dims)
 
-        thumbnail.adjustViewBounds = true
-        thumbnail.scaleType = ImageView.ScaleType.FIT_CENTER
+        val halfSpacing = photoSpacing / 2
+        val startMargin = if (index == 0) halfSpacing else zero
+        val endMargin = if (index < row.files.size - 1) photoSpacing else halfSpacing
 
-        ocFileListDelegate.bindGalleryRowThumbnail(
-            shimmer,
-            thumbnail,
-            file,
-            this,
-            adjustedWidth1
-        )
+        thumbnail.layoutParams = FrameLayout.LayoutParams(width, height).apply {
+            setMargins(startMargin, 0, endMargin, photoSpacing)
+        }
+        shimmer.layoutParams = FrameLayout.LayoutParams(width, height)
+        frameLayout.requestLayout()
+    }
 
-        val params = LinearLayout.LayoutParams(adjustedWidth1, adjustedHeight1)
+    @Suppress("MagicNumber")
+    private fun adjustRowCell(imageView: ImageView, isChecked: Boolean) {
+        val scale = if (isChecked) 0.8f else 1.0f
+        val radius = if (isChecked) iconRadius else 0f
+        imageView.scaleX = scale
+        imageView.scaleY = scale
+        imageView.makeRounded(context, radius)
+    }
 
-        val zero = context.resources.getInteger(R.integer.zero)
-        val margin = context.resources.getInteger(R.integer.small_margin)
-        if (index < (row.files.size - 1)) {
-            params.setMargins(zero, zero, margin, margin)
-        } else {
-            params.setMargins(zero, zero, zero, margin)
+    private fun adjustCheckBox(imageView: ImageView, isChecked: Boolean) {
+        if (ocFileListDelegate.isMultiSelect) {
+            val checkboxDrawable = if (isChecked) checkedDrawable else uncheckedDrawable
+
+            checkboxDrawable?.apply {
+                val margin = standardMargin.toInt()
+                setBounds(margin, margin, margin, margin)
+            }
+
+            // Only set if different
+            if (imageView.drawable !== checkboxDrawable) {
+                imageView.setImageDrawable(checkboxDrawable)
+            }
         }
 
-        thumbnail.layoutParams = params
-        thumbnail.layoutParams.height = adjustedHeight1
-        thumbnail.layoutParams.width = adjustedWidth1
-
-        shimmer.layoutParams = params
-        shimmer.layoutParams.height = adjustedHeight1
-        shimmer.layoutParams.width = adjustedWidth1
+        imageView.setVisibleIf(ocFileListDelegate.isMultiSelect)
     }
 }

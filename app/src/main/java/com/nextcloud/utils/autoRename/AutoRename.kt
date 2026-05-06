@@ -8,16 +8,18 @@
 package com.nextcloud.utils.autoRename
 
 import com.nextcloud.utils.extensions.StringConstants
+import com.nextcloud.utils.extensions.checkWCFRestrictions
 import com.nextcloud.utils.extensions.forbiddenFilenameCharacters
 import com.nextcloud.utils.extensions.forbiddenFilenameExtensions
 import com.nextcloud.utils.extensions.shouldRemoveNonPrintableUnicodeCharactersAndConvertToUTF8
 import com.owncloud.android.datamodel.OCFile
-import com.owncloud.android.lib.resources.status.NextcloudVersion
+import com.owncloud.android.lib.common.utils.Log_OC
 import com.owncloud.android.lib.resources.status.OCCapability
 import org.apache.commons.io.FilenameUtils
 import java.util.regex.Pattern
 
 object AutoRename {
+    private const val TAG = "AutoRename"
     private const val REPLACEMENT = "_"
 
     @Suppress("NestedBlockDepth")
@@ -27,6 +29,15 @@ object AutoRename {
         }
 
         val isFolder = filename.endsWith(OCFile.PATH_SEPARATOR)
+    @JvmOverloads
+    fun rename(filename: String, capability: OCCapability, isFolderPath: Boolean? = null): String {
+        if (!capability.checkWCFRestrictions()) {
+            return filename
+        }
+
+        Log_OC.d(TAG, "Before - $filename")
+
+        val isFolder = isFolderPath ?: filename.endsWith(OCFile.PATH_SEPARATOR)
         val pathSegments = filename.split(OCFile.PATH_SEPARATOR).toMutableList()
 
         capability.run {
@@ -84,6 +95,18 @@ object AutoRename {
         } else {
             result
         }.trim()
+        val updatedFileName = if (isFolder) filenameWithExtension else lowercaseFileExtension(filenameWithExtension)
+
+        val result = if (capability.shouldRemoveNonPrintableUnicodeCharactersAndConvertToUTF8()) {
+            val utf8Result = convertToUTF8(updatedFileName)
+            removeNonPrintableUnicodeCharacters(utf8Result)
+        } else {
+            updatedFileName
+        }.trim()
+
+        Log_OC.d(TAG, "After - $result")
+
+        return result
     }
 
     private fun lowercaseFileExtension(filename: String): String {
@@ -96,31 +119,26 @@ object AutoRename {
         }
     }
 
-    private fun replaceDots(forbiddenExtension: String, segment: String): String {
-        return if (isSegmentContainsForbiddenExtension(forbiddenExtension, segment)) {
+    private fun replaceDots(forbiddenExtension: String, segment: String): String =
+        if (isSegmentContainsForbiddenExtension(forbiddenExtension, segment)) {
             segment.replaceFirst(forbiddenExtension, REPLACEMENT)
         } else {
             segment
         }
-    }
 
-    private fun replaceFileExtensions(forbiddenExtension: String, segment: String): String {
-        return if (isSegmentContainsForbiddenExtension(forbiddenExtension, segment)) {
+    private fun replaceFileExtensions(forbiddenExtension: String, segment: String): String =
+        if (isSegmentContainsForbiddenExtension(forbiddenExtension, segment)) {
             val newExtension = forbiddenExtension.replace(StringConstants.DOT, REPLACEMENT, ignoreCase = true)
             segment.replace(forbiddenExtension, newExtension.lowercase(), ignoreCase = true)
         } else {
             segment
         }
-    }
 
-    private fun isSegmentContainsForbiddenExtension(forbiddenExtension: String, segment: String): Boolean {
-        return segment.endsWith(forbiddenExtension, ignoreCase = true) ||
+    private fun isSegmentContainsForbiddenExtension(forbiddenExtension: String, segment: String): Boolean =
+        segment.endsWith(forbiddenExtension, ignoreCase = true) ||
             segment.startsWith(forbiddenExtension, ignoreCase = true)
-    }
 
-    private fun convertToUTF8(filename: String): String {
-        return String(filename.toByteArray(), Charsets.UTF_8)
-    }
+    private fun convertToUTF8(filename: String): String = String(filename.toByteArray(), Charsets.UTF_8)
 
     private fun removeNonPrintableUnicodeCharacters(filename: String): String {
         val regex = "\\p{C}"

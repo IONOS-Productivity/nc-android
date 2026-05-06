@@ -32,6 +32,11 @@ class ScanbotControllerImpl @Inject internal constructor(
 	override val uploadTargetRepository get() = _uploadTargetRepository
 
 	private val _fileUploadStarted = PublishSubject.create<Any>()
+    override val cameraPermissionDenied get() = _cameraPermissionDenied
+	override val uploadTargetRepository get() = _uploadTargetRepository
+
+	private val _fileUploadStarted = PublishSubject.create<Any>()
+    private val _cameraPermissionDenied = PublishSubject.create<Unit>()
 	private val stateManager = StateManager()
 
 	private lateinit var _uploadTargetRepository: UploadTargetRepository
@@ -48,6 +53,10 @@ class ScanbotControllerImpl @Inject internal constructor(
 	override fun scanToDocument(context: Context, path: String) {
         startCameraActivity(context, ScanbotUploadTarget(path))
 	}
+
+    override fun notifyCameraPermissionDenied() {
+        _cameraPermissionDenied.onNext(Unit)
+    }
 
 	override fun saveState(state: Bundle) {
 		if (::_uploadTargetRepository.isInitialized) {

@@ -18,10 +18,8 @@
     android:layout_height="wrap_content"
     android:baselineAligned="false"
     android:descendantFocusability="blocksDescendants"
-    android:minHeight="@dimen/standard_list_item_size"
-    android:orientation="horizontal"
-    android:paddingTop="@dimen/standard_half_padding"
-    android:paddingBottom="@dimen/standard_half_padding">
+    android:minHeight="@dimen/min_list_item_size"
+    android:orientation="horizontal">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="@dimen/min_list_item_size"
@@ -48,6 +46,8 @@
             android:layout_width="@dimen/list_item_local_file_indicator_layout_width"
             android:layout_height="@dimen/list_item_local_file_indicator_layout_height"
             android:contentDescription="@string/downloader_download_succeeded_ticker"
+            android:visibility="gone"
+            tools:visibility="visible"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_synced"
             app:layout_constraintBottom_toBottomOf="@+id/thumbnail_container"
@@ -77,15 +77,31 @@
         android:orientation="vertical"
         android:paddingTop="@dimen/standard_half_padding">
 
-        <TextView
-            android:id="@+id/Filename"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ellipsize="middle"
-            android:singleLine="true"
-            android:textColor="@color/text_color"
-            android:textSize="@dimen/two_line_primary_text_size"
-            tools:text="@string/placeholder_filename" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/Filename"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="middle"
+                android:singleLine="true"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/two_line_primary_text_size"
+                tools:text="@string/placeholder_filename" />
+
+            <TextView
+                android:id="@+id/extension"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="middle"
+                android:singleLine="true"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/two_line_primary_text_size"
+                tools:text="@string/placeholder_extension" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -113,8 +129,7 @@
                     app:chipBackgroundColor="@color/bg_default"
                     app:chipEndPadding="@dimen/zero"
                     app:chipStartPadding="@dimen/zero"
-                    app:ensureMinTouchTargetSize="false"
-                    tools:text="tag1" />
+                    app:ensureMinTouchTargetSize="false" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/secondTag"
@@ -128,8 +143,7 @@
                     app:chipBackgroundColor="@color/bg_default"
                     app:chipEndPadding="@dimen/zero"
                     app:chipStartPadding="@dimen/zero"
-                    app:ensureMinTouchTargetSize="false"
-                    tools:text="tag2" />
+                    app:ensureMinTouchTargetSize="false" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/tag_more"
@@ -143,8 +157,7 @@
                     app:chipBackgroundColor="@color/bg_default"
                     app:chipEndPadding="@dimen/zero"
                     app:chipStartPadding="@dimen/zero"
-                    app:ensureMinTouchTargetSize="false"
-                    tools:text="+3" />
+                    app:ensureMinTouchTargetSize="false" />
 
             </com.google.android.material.chip.ChipGroup>
 
@@ -231,7 +244,7 @@
 
         <ImageView
             android:id="@+id/unreadComments"
-            android:layout_width="48dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:clickable="true"
             android:contentDescription="@string/unread_comments"
@@ -244,7 +257,7 @@
 
         <ImageView
             android:id="@+id/sharedIcon"
-            android:layout_width="48dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
             android:clickable="true"
@@ -252,7 +265,7 @@
             android:focusable="true"
             android:minHeight="@dimen/min_list_item_size"
             android:paddingStart="@dimen/list_item_share_right_margin"
-            android:paddingEnd="@dimen/list_item_share_right_margin"
+            android:paddingEnd="4dp"
             android:src="@drawable/ic_unshared"
             tools:visibility="visible" />
 
@@ -287,8 +300,8 @@
             android:contentDescription="@string/overflow_menu"
             android:focusable="true"
             android:minHeight="@dimen/min_list_item_size"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
+            android:paddingStart="@dimen/list_item_share_right_margin"
+            android:paddingEnd="@dimen/list_item_share_right_margin"
             android:src="@drawable/ic_dots_vertical" />
 
     </LinearLayout>

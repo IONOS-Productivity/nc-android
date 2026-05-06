@@ -8,6 +8,7 @@
  */
 package com.owncloud.android.ui.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
@@ -54,13 +55,14 @@ public class ActivityAndVersionListAdapter extends ActivityListAdapter {
         this.versionListInterface = versionListInterface;
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void setActivityAndVersionItems(List<Object> items, NextcloudClient newClient, boolean clear) {
         if (client == null) {
             client = newClient;
         }
         if (clear) {
             values.clear();
-            Collections.sort(items, (o1, o2) -> {
+            items.sort((o1, o2) -> {
                 long o1Date;
                 long o2Date;
                 if (o1 instanceof Activity) {
@@ -83,8 +85,7 @@ public class ActivityAndVersionListAdapter extends ActivityListAdapter {
         for (Object item : items) {
             String time;
 
-            if (item instanceof Activity) {
-                Activity activity = (Activity) item;
+            if (item instanceof Activity activity) {
                 time = getHeaderDateString(context, activity.getDatetime().getTime()).toString();
             } else {
                 FileVersion version = (FileVersion) item;
@@ -115,8 +116,7 @@ public class ActivityAndVersionListAdapter extends ActivityListAdapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof VersionViewHolder) {
-            final VersionViewHolder versionViewHolder = (VersionViewHolder) holder;
+        if (holder instanceof VersionViewHolder versionViewHolder) {
             FileVersion fileVersion = (FileVersion) values.get(position);
 
             versionViewHolder.binding.size.setText(DisplayUtils.bytesToHumanReadable(fileVersion.getFileLength()));

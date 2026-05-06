@@ -27,6 +27,10 @@ import com.owncloud.android.R
 import com.owncloud.android.utils.MimeTypeUtil
 import java.util.concurrent.Callable
 import java.util.concurrent.Executors
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.guava.future
 
 @UnstableApi
 class MediaSessionBitmapLoader(
@@ -47,6 +51,7 @@ class MediaSessionBitmapLoader(
     private val executorService: ListeningExecutorService by lazy {
         MoreExecutors.listeningDecorator(Executors.newSingleThreadExecutor())
     }
+    private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
     private var previousRequest: BitmapRequest? = null
 
@@ -67,6 +72,11 @@ class MediaSessionBitmapLoader(
                 file?.let(::getBitmapForFile) ?: getDefaultBitmap(file)
             }
         })
+        val bitmapFuture = coroutineScope.future {
+            getBitmapFromMetadata(metadata, file?.id)
+                ?: file?.let { getBitmapForFile(it) }
+                ?: getDefaultBitmap(file)
+        }
 
         this.previousRequest = BitmapRequest(
             file?.id,
@@ -82,6 +92,10 @@ class MediaSessionBitmapLoader(
         val model = metadata.artworkData ?: metadata.artworkUri ?: return null
         return try {
             thumbnailLoader.load(context, model, fileId, thumbnailSize, thumbnailSize).get()
+    private suspend fun getBitmapFromMetadata(metadata: MediaMetadata, fileId: String?): Bitmap? {
+        val model = metadata.artworkData ?: metadata.artworkUri ?: return null
+        return try {
+            thumbnailLoader.load(context, model, fileId, thumbnailSize, thumbnailSize)
         } catch (e: Exception) {
             null
         }
@@ -90,6 +104,9 @@ class MediaSessionBitmapLoader(
     private fun getBitmapForFile(file: PlaybackFile): Bitmap? {
         return try {
             thumbnailLoader.load(context, file, thumbnailSize, thumbnailSize).get()
+    private suspend fun getBitmapForFile(file: PlaybackFile): Bitmap? {
+        return try {
+            thumbnailLoader.load(context, file, thumbnailSize, thumbnailSize)
         } catch (e: Exception) {
             null
         }
@@ -110,4 +127,5 @@ class MediaSessionBitmapLoader(
         val artworkUri: Uri?,
         val bitmapFuture: ListenableFuture<Bitmap>,
     )
+}
 }

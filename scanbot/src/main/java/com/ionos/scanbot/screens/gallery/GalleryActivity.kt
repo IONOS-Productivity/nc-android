@@ -54,6 +54,7 @@ internal class GalleryActivity : BaseActivity<Event, State, ViewModel>() {
 
 	override val viewModelFactory by lazy { viewModelFactoryAssistant.create(getPictureId()) }
 	override val viewBinding by lazy { ScanbotActivityGalleryBinding.inflate(layoutInflater) }
+    override val viewModelClass: Class<ViewModel> = ViewModel::class.java
 
     @Inject lateinit var viewModelFactoryAssistant: GalleryViewModelFactory.Assistant
     @Inject lateinit var viewPagerAdapter: GalleryPagerAdapter

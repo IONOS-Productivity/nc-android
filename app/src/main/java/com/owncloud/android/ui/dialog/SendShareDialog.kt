@@ -43,7 +43,9 @@ import com.owncloud.android.utils.MimeTypeUtil
 import com.owncloud.android.utils.theme.ViewThemeUtils
 import javax.inject.Inject
 
-class SendShareDialog : BottomSheetDialogFragment(R.layout.send_share_fragment), Injectable {
+class SendShareDialog :
+    BottomSheetDialogFragment(R.layout.send_share_fragment),
+    Injectable {
 
     private lateinit var binding: SendShareFragmentBinding
 
@@ -178,8 +180,8 @@ class SendShareDialog : BottomSheetDialogFragment(R.layout.send_share_fragment),
         message.show()
     }
 
-    private fun setupSendButtonClickListener(sendIntent: Intent): SendButtonAdapter.ClickListener {
-        return SendButtonAdapter.ClickListener { sendButtonDataData: SendButtonData ->
+    private fun setupSendButtonClickListener(sendIntent: Intent): SendButtonAdapter.ClickListener =
+        SendButtonAdapter.ClickListener { sendButtonDataData: SendButtonData ->
             val packageName = sendButtonDataData.packageName
             val activityName = sendButtonDataData.activityName
 
@@ -199,7 +201,6 @@ class SendShareDialog : BottomSheetDialogFragment(R.layout.send_share_fragment),
 
             dismiss()
         }
-    }
 
     private fun setupSendButtonData(sendIntent: Intent): List<SendButtonData> {
         var icon: Drawable
@@ -245,8 +246,6 @@ class SendShareDialog : BottomSheetDialogFragment(R.layout.send_share_fragment),
         private const val KEY_SHARING_PUBLIC_ASK_FOR_PASSWORD = "KEY_SHARING_PUBLIC_ASK_FOR_PASSWORD"
         private const val KEY_HIDE_NCSHARING_OPTIONS = "KEY_HIDE_NCSHARING_OPTIONS"
         private val TAG = SendShareDialog::class.java.simpleName
-        const val PACKAGE_NAME = "PACKAGE_NAME"
-        const val ACTIVITY_NAME = "ACTIVITY_NAME"
 
         @JvmStatic
         fun newInstance(file: OCFile?, hideNcSharingOptions: Boolean, capability: OCCapability): SendShareDialog {

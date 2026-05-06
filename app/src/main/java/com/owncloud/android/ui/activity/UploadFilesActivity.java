@@ -17,7 +17,6 @@ import android.accounts.Account;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.Menu;
@@ -29,15 +28,19 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.ionos.annotation.IonosCustomization;
+import com.nextcloud.android.common.ui.theme.utils.ColorRole;
 import com.nextcloud.client.account.User;
+import com.nextcloud.client.core.Clock;
 import com.nextcloud.client.di.Injectable;
 import com.nextcloud.client.jobs.upload.FileUploadHelper;
 import com.nextcloud.client.jobs.upload.FileUploadWorker;
 import com.nextcloud.client.preferences.AppPreferences;
 import com.nextcloud.utils.extensions.ActivityExtensionsKt;
 import com.nextcloud.utils.extensions.FileExtensionsKt;
+import com.nextcloud.utils.extensions.SyncedFolderExtensionsKt;
 import com.owncloud.android.R;
 import com.owncloud.android.databinding.UploadFilesLayoutBinding;
+import com.owncloud.android.datamodel.SyncedFolderProvider;
 import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.ui.adapter.StoragePathAdapter;
 import com.owncloud.android.ui.asynctasks.CheckAvailableSpaceTask;
@@ -48,7 +51,6 @@ import com.owncloud.android.ui.dialog.LocalStoragePathPickerDialogFragment;
 import com.owncloud.android.ui.dialog.SortingOrderDialogFragment;
 import com.owncloud.android.ui.fragment.ExtendedListFragment;
 import com.owncloud.android.ui.fragment.LocalFileListFragment;
-import com.owncloud.android.utils.DisplayUtils;
 import com.owncloud.android.utils.FileSortOrder;
 import com.owncloud.android.utils.FileStorageUtils;
 import com.owncloud.android.utils.PermissionUtil;
@@ -61,6 +63,7 @@ import javax.inject.Inject;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.view.MenuItemCompat;
@@ -91,10 +94,15 @@ public class UploadFilesActivity extends DrawerActivity implements LocalFileList
     private static final String ENCRYPTED_FOLDER_KEY = "encrypted_folder";
 
     private static final String QUERY_TO_MOVE_DIALOG_TAG = "QUERY_TO_MOVE";
+    private static final String SUB_FOLDER_WARNING_DIALOG_TAG = "SUB_FOLDER_WARNING_DIALOG";
     private static final String TAG = "UploadFilesActivity";
     private static final String WAIT_DIALOG_TAG = "WAIT";
 
     @Inject AppPreferences preferences;
+
+    @Inject
+    Clock clock;
+
     private Account mAccountOnCreation;
     private ArrayAdapter<String> mDirectories;
     private boolean mLocalFolderPickerMode;
@@ -231,7 +239,7 @@ public class UploadFilesActivity extends DrawerActivity implements LocalFileList
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 int i = position;
                 while (i-- != 0) {
-                    onBackPressed();
+                    getOnBackPressedDispatcher().onBackPressed();
                 }
                 // the next operation triggers a new call to this method, but it's necessary to
                 // ensure that the name exposed in the action bar is the current directory when the
@@ -258,10 +266,6 @@ public class UploadFilesActivity extends DrawerActivity implements LocalFileList
         getOnBackPressedDispatcher().addCallback(this, onBackPressedCallback);
 
         Log_OC.d(TAG, "onCreate() end");
-    }
-
-    private void requestPermissions() {
-        PermissionUtil.requestExternalStoragePermission(this, viewThemeUtils, true);
     }
 
     public void showToolbarSpinner() {
@@ -294,63 +298,90 @@ public class UploadFilesActivity extends DrawerActivity implements LocalFileList
 
         mSearchView.setOnSearchClickListener(v -> mToolbarSpinner.setVisibility(View.GONE));
 
+        MenuItem chooseStoragePathItem = menu.findItem(R.id.action_choose_storage_path);
+        if (chooseStoragePathItem != null) {
+            chooseStoragePathItem.setVisible(PermissionUtil.checkStoragePermission(this));
+
+            final var chooseStoragePathDrawable = chooseStoragePathItem.getIcon();
+            if (chooseStoragePathDrawable != null) {
+                viewThemeUtils.platform.tintDrawable(this, chooseStoragePathDrawable, ColorRole.ON_SURFACE);
+            }
+        }
+
         return super.onCreateOptionsMenu(menu);
+    }
+
+    private static final String rootDir = "/storage/emulated/0";
+
+    private boolean isRoot() {
+        if (mCurrentDir == null) {
+            return false;
+        }
+
+        return mCurrentDir.getAbsolutePath().equals(rootDir);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        boolean retval = true;
         int itemId = item.getItemId();
 
         if (itemId == android.R.id.home) {
-            if (mCurrentDir != null && mCurrentDir.getParentFile() != null) {
-                onBackPressed();
-            }
-        } else if (itemId == R.id.action_select_all) {
+            handleHomePressed();
+            return true;
+        }
+
+        if (itemId == R.id.action_select_all) {
             mSelectAll = !item.isChecked();
             item.setChecked(mSelectAll);
             mFileListFragment.selectAllFiles(mSelectAll);
             setSelectAllMenuItem(item, mSelectAll);
-        } else if (itemId == R.id.action_choose_storage_path) {
-            checkLocalStoragePathPickerPermission();
-        } else {
-            retval = super.onOptionsItemSelected(item);
+            return true;
         }
 
-        return retval;
+        if (itemId == R.id.action_choose_storage_path) {
+            showLocalStoragePathPickerDialog();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
-    private void checkLocalStoragePathPickerPermission() {
-        if (!PermissionUtil.checkExternalStoragePermission(this)) {
-            requestPermissions();
+    private void cancelAndFinish() {
+        setResult(RESULT_CANCELED);
+        finish();
+    }
+
+    private void handleHomePressed() {
+        boolean root = isRoot();
+        boolean hasPermission = PermissionUtil.checkStoragePermission(this);
+
+        if (root && !hasPermission) {
+            cancelAndFinish();
+            return;
+        }
+
+        if (mCurrentDir == null || mCurrentDir.getParentFile() == null) {
+            return;
+        }
+
+        if (root) {
+            cancelAndFinish();
         } else {
-            showLocalStoragePathPickerDialog();
+            getOnBackPressedDispatcher().onBackPressed();
         }
     }
 
     private void showLocalStoragePathPickerDialog() {
+        if (!PermissionUtil.checkStoragePermission(this)) {
+            cancelAndFinish();
+            return;
+        }
+
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.addToBackStack(null);
         dialog = LocalStoragePathPickerDialogFragment.newInstance();
         dialog.show(ft, LocalStoragePathPickerDialogFragment.LOCAL_STORAGE_PATH_PICKER_FRAGMENT);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-
-        if (requestCode == PermissionUtil.PERMISSIONS_EXTERNAL_STORAGE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // permission was granted
-                showLocalStoragePathPickerDialog();
-            } else {
-                DisplayUtils.showSnackMessage(this, R.string.permission_storage_access);
-            }
-        } else {
-            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
     }
 
     @Override
@@ -383,8 +414,7 @@ public class UploadFilesActivity extends DrawerActivity implements LocalFileList
                 }
 
                 File parentFolder = mCurrentDir.getParentFile();
-                if (!parentFolder.canRead()) {
-                    checkLocalStoragePathPickerPermission();
+                if (parentFolder != null && !parentFolder.canRead()) {
                     return;
                 }
 
@@ -440,12 +470,9 @@ public class UploadFilesActivity extends DrawerActivity implements LocalFileList
 
     /**
      * Pops a directory name from the drop down list
-     *
-     * @return True, unless the stack is empty
      */
-    public boolean popDirname() {
+    public void popDirname() {
         mDirectories.remove(mDirectories.getItem(0));
-        return !mDirectories.isEmpty();
     }
 
     private void updateUploadButtonActive() {
@@ -497,7 +524,13 @@ public class UploadFilesActivity extends DrawerActivity implements LocalFileList
 
                 preferences.setUploaderBehaviour(FileUploadWorker.LOCAL_BEHAVIOUR_DELETE);
             } else {
-                data.putExtra(EXTRA_CHOSEN_FILES, mFileListFragment.getCheckedFilePaths());
+                final var chosenFiles = mFileListFragment.getCheckedFilePaths();
+                if (chosenFiles.length > FileUploadHelper.MAX_FILE_COUNT) {
+                    FileUploadHelper.Companion.instance().showFileUploadLimitMessage(this);
+                    return;
+                }
+
+                data.putExtra(EXTRA_CHOSEN_FILES, chosenFiles);
                 data.putExtra(LOCAL_BASE_PATH, mCurrentDir.getAbsolutePath());
 
                 // set result code
@@ -617,6 +650,17 @@ public class UploadFilesActivity extends DrawerActivity implements LocalFileList
         return isWithinEncryptedFolder;
     }
 
+    private boolean isGivenLocalPathHasEnabledParent() {
+        if (mCurrentDir == null) {
+            return false;
+        }
+
+        final var chosenPath = mCurrentDir.getPath();
+        final var syncedFolderProvider = new SyncedFolderProvider(getContentResolver(), preferences, clock);
+        final var syncedFolders = syncedFolderProvider.getSyncedFolders();
+        return SyncedFolderExtensionsKt.hasEnabledParent(syncedFolders, chosenPath);
+    }
+
     /**
      * Performs corresponding action when user presses 'Cancel' or 'Upload' button
      * <p>
@@ -626,38 +670,74 @@ public class UploadFilesActivity extends DrawerActivity implements LocalFileList
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.upload_files_btn_cancel) {
-            setResult(RESULT_CANCELED);
-            finish();
-
-        } else if (v.getId() == R.id.upload_files_btn_upload) {
-            if (PermissionUtil.checkExternalStoragePermission(this)) {
+            cancelAndFinish();
+        } else if (v.getId() == R.id.upload_files_btn_upload && PermissionUtil.checkStoragePermission(this)) {
+            if (mCurrentDir != null) {
+                preferences.setUploadFromLocalLastPath(mCurrentDir.getAbsolutePath());
+            }
+            if (mLocalFolderPickerMode) {
+                Intent data = new Intent();
                 if (mCurrentDir != null) {
-                    preferences.setUploadFromLocalLastPath(mCurrentDir.getAbsolutePath());
+                    data.putExtra(EXTRA_CHOSEN_FILES, mCurrentDir.getAbsolutePath());
                 }
-                if (mLocalFolderPickerMode) {
-                    Intent data = new Intent();
-                    if (mCurrentDir != null) {
-                        data.putExtra(EXTRA_CHOSEN_FILES, mCurrentDir.getAbsolutePath());
-                    }
-                    setResult(RESULT_OK, data);
+                setResult(RESULT_OK, data);
 
-                    finish();
+                if (isGivenLocalPathHasEnabledParent()) {
+                    showSubFolderWarningDialog();
                 } else {
-                    String[] selectedFilePaths = mFileListFragment.getCheckedFilePaths();
-                    boolean isPositionZero = (binding.uploadFilesSpinnerBehaviour.getSelectedItemPosition() == 0);
-                    new CheckAvailableSpaceTask(this, selectedFilePaths).execute(isPositionZero);
+                    finish();
                 }
             } else {
-                requestPermissions();
+                final var chosenFiles = mFileListFragment.getCheckedFilePaths();
+                if (chosenFiles.length > FileUploadHelper.MAX_FILE_COUNT) {
+                    FileUploadHelper.Companion.instance().showFileUploadLimitMessage(this);
+                    return;
+                }
+                boolean isPositionZero = (binding.uploadFilesSpinnerBehaviour.getSelectedItemPosition() == 0);
+                new CheckAvailableSpaceTask(this, chosenFiles).execute(isPositionZero);
             }
+        }
+    }
+
+    private void showSubFolderWarningDialog() {
+        final var dialog = ConfirmationDialogFragment.newInstance(
+            R.string.auto_upload_sub_folder_warning,
+            null,
+            R.string.sync_duplication,
+            R.drawable.ic_info,
+            R.string.sync_anyway,
+            R.string.common_cancel,
+            -1);
+
+        dialog.setOnConfirmationListener(new ConfirmationDialogFragmentListener() {
+            @Override
+            public void onConfirmation(@Nullable String callerTag) {
+                finish();
+            }
+
+            @Override
+            public void onNeutral(@Nullable String callerTag) {
+
+            }
+
+            @Override
+            public void onCancel(@Nullable String callerTag) {
+
+            }
+        });
+
+        final var isDialogFragmentReady = ActivityExtensionsKt.isDialogFragmentReady(this, dialog);
+        if (isDialogFragmentReady) {
+            dialog.show(getSupportFragmentManager(), SUB_FOLDER_WARNING_DIALOG_TAG);
         }
     }
 
     @Override
     public void onConfirmation(String callerTag) {
         Log_OC.d(TAG, "Positive button in dialog was clicked; dialog tag is " + callerTag);
-        if (mFileListFragment.getCheckedFilePaths().length > FileUploadHelper.MAX_FILE_COUNT) {
-            DisplayUtils.showSnackMessage(this, R.string.max_file_count_warning_message);
+        final var chosenFiles = mFileListFragment.getCheckedFilePaths();
+        if (chosenFiles.length > FileUploadHelper.MAX_FILE_COUNT) {
+            FileUploadHelper.Companion.instance().showFileUploadLimitMessage(this);
             return;
         }
 
@@ -665,7 +745,7 @@ public class UploadFilesActivity extends DrawerActivity implements LocalFileList
             // return the list of selected files to the caller activity (success),
             // signaling that they should be moved to the ownCloud folder, instead of copied
             Intent data = new Intent();
-            data.putExtra(EXTRA_CHOSEN_FILES, mFileListFragment.getCheckedFilePaths());
+            data.putExtra(EXTRA_CHOSEN_FILES, chosenFiles);
             data.putExtra(LOCAL_BASE_PATH, mCurrentDir.getAbsolutePath());
             setResult(RESULT_OK_AND_MOVE, data);
             finish();
@@ -687,11 +767,8 @@ public class UploadFilesActivity extends DrawerActivity implements LocalFileList
     protected void onStart() {
         super.onStart();
         final Account account = getAccount();
-        if (mAccountOnCreation != null && mAccountOnCreation.equals(account)) {
-            requestPermissions();
-        } else {
-            setResult(RESULT_CANCELED);
-            finish();
+        if (mAccountOnCreation == null || !mAccountOnCreation.equals(account)) {
+            cancelAndFinish();
         }
     }
 
@@ -714,5 +791,11 @@ public class UploadFilesActivity extends DrawerActivity implements LocalFileList
         }
 
         super.onStop();
+    }
+
+    public void setupStoragePermissionWarningBanner() {
+        if (getListOfFilesFragment() instanceof LocalFileListFragment fragment) {
+            fragment.setupStoragePermissionWarningBanner();
+        }
     }
 }

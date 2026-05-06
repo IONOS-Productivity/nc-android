@@ -7,17 +7,14 @@
 package com.owncloud.android.ui.dialog.setupEncryption
 
 import android.accounts.AccountManager
-import android.annotation.SuppressLint
 import android.app.Dialog
-import android.content.Context
 import android.content.DialogInterface
-import android.content.Intent
-import android.os.AsyncTask
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.nextcloud.client.account.User
@@ -37,17 +34,23 @@ import com.owncloud.android.lib.resources.users.GetPublicKeyRemoteOperation
 import com.owncloud.android.lib.resources.users.GetServerPublicKeyRemoteOperation
 import com.owncloud.android.lib.resources.users.SendCSRRemoteOperation
 import com.owncloud.android.lib.resources.users.StorePrivateKeyRemoteOperation
+import com.owncloud.android.utils.DisplayUtils
 import com.owncloud.android.utils.EncryptionUtils
+import com.owncloud.android.utils.crypto.CryptoHelper
 import com.owncloud.android.utils.theme.ViewThemeUtils
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.IOException
 import java.lang.ref.WeakReference
-import java.util.Arrays
 import javax.inject.Inject
 
 /*
  *  Dialog to setup encryption
  */
-class SetupEncryptionDialogFragment : DialogFragment(), Injectable {
+class SetupEncryptionDialogFragment :
+    DialogFragment(),
+    Injectable {
 
     @Inject
     lateinit var viewThemeUtils: ViewThemeUtils
@@ -64,9 +67,9 @@ class SetupEncryptionDialogFragment : DialogFragment(), Injectable {
     private var arbitraryDataProvider: ArbitraryDataProvider? = null
     private var positiveButton: MaterialButton? = null
     private var negativeButton: MaterialButton? = null
-    private var task: DownloadKeysAsyncTask? = null
     private var keyResult: String? = null
     private var keyWords: ArrayList<String>? = null
+    private var downloadKeyResult: DownloadKeyResult? = null
 
     private lateinit var binding: SetupEncryptionDialogBinding
 
@@ -74,7 +77,9 @@ class SetupEncryptionDialogFragment : DialogFragment(), Injectable {
         super.onStart()
 
         setupAlertDialog()
-        executeTask()
+        lifecycleScope.launch {
+            downloadKeys()
+        }
     }
 
     private fun setupAlertDialog() {
@@ -91,11 +96,6 @@ class SetupEncryptionDialogFragment : DialogFragment(), Injectable {
                 viewThemeUtils.material.colorMaterialButtonPrimaryBorderless(it)
             }
         }
-    }
-
-    private fun executeTask() {
-        task = DownloadKeysAsyncTask(requireContext())
-        task?.execute()
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -127,13 +127,12 @@ class SetupEncryptionDialogFragment : DialogFragment(), Injectable {
         }
     }
 
-    private fun buildMaterialAlertDialog(v: View): MaterialAlertDialogBuilder {
-        return MaterialAlertDialogBuilder(requireContext())
+    private fun buildMaterialAlertDialog(v: View): MaterialAlertDialogBuilder =
+        MaterialAlertDialogBuilder(requireContext())
             .setView(v)
             .setPositiveButton(R.string.common_ok, null)
             .setNegativeButton(R.string.common_cancel) { dialog: DialogInterface, _: Int -> dialog.cancel() }
             .setTitle(R.string.end_to_end_encryption_title)
-    }
 
     private fun positiveButtonOnClick(dialog: DialogInterface) {
         when (keyResult) {
@@ -155,22 +154,30 @@ class SetupEncryptionDialogFragment : DialogFragment(), Injectable {
         }
     }
 
-    @Suppress("TooGenericExceptionCaught", "TooGenericExceptionThrown")
+    @Suppress("TooGenericExceptionCaught", "TooGenericExceptionThrown", "ReturnCount", "LongMethod")
     private fun decryptPrivateKey(dialog: DialogInterface) {
         Log_OC.d(TAG, "Decrypt private key")
         binding.encryptionStatus.setText(R.string.end_to_end_encryption_decrypting)
 
         try {
-            val privateKey = task?.get()
+            if (downloadKeyResult !is DownloadKeyResult.Success) {
+                Log_OC.d(TAG, "DownloadKeyResult is not success")
+                return
+            }
+
+            val privateKey = (downloadKeyResult as DownloadKeyResult.Success).privateKey
+            if (privateKey.isNullOrEmpty()) {
+                Log_OC.e(TAG, "privateKey is null or empty")
+                return
+            }
             val mnemonicUnchanged = binding.encryptionPasswordInput.text.toString().trim()
             val mnemonic =
                 binding.encryptionPasswordInput.text.toString().replace("\\s".toRegex(), "")
                     .lowercase()
-            val decryptedPrivateKey = EncryptionUtils.decryptPrivateKey(
+            val decryptedPrivateKey = CryptoHelper.decryptPrivateKey(
                 privateKey,
                 mnemonic
             )
-
             val accountName = user?.accountName ?: return
 
             arbitraryDataProvider?.storeOrUpdateKeyValue(
@@ -206,7 +213,7 @@ class SetupEncryptionDialogFragment : DialogFragment(), Injectable {
             )
             val secondKey = EncryptionUtils.decodeStringToBase64Bytes(decryptedString)
 
-            if (!Arrays.equals(firstKey, secondKey)) {
+            if (!firstKey.contentEquals(secondKey)) {
                 EncryptionUtils.reportE2eError(arbitraryDataProvider, user)
                 throw Exception("Keys do not match")
             }
@@ -214,7 +221,7 @@ class SetupEncryptionDialogFragment : DialogFragment(), Injectable {
             notifyResult()
         } catch (e: Exception) {
             binding.encryptionStatus.setText(R.string.end_to_end_encryption_wrong_password)
-            Log_OC.d(TAG, "Error while decrypting private key: " + e.message)
+            Log_OC.e(TAG, "Error while decrypting private key: " + e.message)
         }
     }
 
@@ -225,32 +232,20 @@ class SetupEncryptionDialogFragment : DialogFragment(), Injectable {
 
         dialog?.setTitle(R.string.end_to_end_encryption_storing_keys)
 
-        val newKeysTask = GenerateNewKeysAsyncTask(requireContext())
-        newKeysTask.execute()
+        lifecycleScope.launch {
+            generateNewKeys()
+        }
     }
 
     private fun notifyResult() {
-        val targetFragment = targetFragment
-        targetFragment?.onActivityResult(
-            targetRequestCode,
-            SETUP_ENCRYPTION_RESULT_CODE,
-            resultIntent
-        )
         parentFragmentManager.setFragmentResult(RESULT_REQUEST_KEY, resultBundle)
     }
 
-    private val resultIntent: Intent
-        get() {
-            return Intent().apply {
-                putExtra(SUCCESS, true)
-                putExtra(ARG_POSITION, requireArguments().getInt(ARG_POSITION))
-            }
-        }
     private val resultBundle: Bundle
         get() {
             return Bundle().apply {
                 putBoolean(SUCCESS, true)
-                putInt(ARG_POSITION, requireArguments().getInt(ARG_POSITION))
+                putString(ARG_FILE_PATH, requireArguments().getString(ARG_FILE_PATH))
             }
         }
 
@@ -269,36 +264,56 @@ class SetupEncryptionDialogFragment : DialogFragment(), Injectable {
         super.onSaveInstanceState(outState)
     }
 
-    @SuppressLint("StaticFieldLeak")
-    inner class DownloadKeysAsyncTask(context: Context) : AsyncTask<Void?, Void?, String?>() {
-        private val mWeakContext: WeakReference<Context> = WeakReference(context)
+    sealed class DownloadKeyResult(open val descriptionId: Int? = null) {
+        data class CertificateVerificationFailed(
+            override val descriptionId: Int = R.string.end_to_end_encryption_certificate_verification_failed
+        ) : DownloadKeyResult(descriptionId)
 
-        @Suppress("ReturnCount", "LongMethod")
-        @Deprecated("Deprecated in Java")
-        override fun doInBackground(vararg params: Void?): String? {
-            // fetch private/public key
-            // if available
-            //  - store public key
-            //  - decrypt private key, store unencrypted private key in database
+        data class ServerPublicKeyUnavailable(
+            override val descriptionId: Int = R.string.end_to_end_encryption_server_public_key_unavailable
+        ) : DownloadKeyResult(descriptionId)
 
-            val context = mWeakContext.get() ?: return null
+        data class ServerPrivateKeyUnavailable(
+            override val descriptionId: Int = R.string.end_to_end_encryption_server_private_key_unavailable
+        ) : DownloadKeyResult(descriptionId)
+
+        data class CertificateUnavailable(
+            override val descriptionId: Int = R.string.end_to_end_encryption_certificate_unavailable
+        ) : DownloadKeyResult(descriptionId)
+
+        data class UnexpectedError(
+            override val descriptionId: Int = R.string.end_to_end_encryption_unexpected_error_occurred
+        ) : DownloadKeyResult(descriptionId)
+
+        data class Success(val privateKey: String?) : DownloadKeyResult()
+    }
+
+    private suspend fun downloadKeys() {
+        binding.encryptionStatus.setText(R.string.end_to_end_encryption_retrieving_keys)
+        positiveButton?.visibility = View.INVISIBLE
+
+        downloadKeyResult = withContext(Dispatchers.IO) {
+            val weakContext = WeakReference(context).get() ?: return@withContext DownloadKeyResult.UnexpectedError()
+            val user = user ?: return@withContext DownloadKeyResult.UnexpectedError()
+            val dataProvider = arbitraryDataProvider ?: return@withContext DownloadKeyResult.UnexpectedError()
+
             val certificateOperation = GetPublicKeyRemoteOperation()
-            val serverPublicKeyOperation = GetServerPublicKeyRemoteOperation()
-            val user = user ?: return null
-
-            val privateKeyOperation = GetPrivateKeyRemoteOperation()
-            val privateKeyResult = privateKeyOperation.executeNextcloudClient(user, context)
-            val certificateResult = certificateOperation.executeNextcloudClient(user, context)
-            val serverPublicKeyResult = serverPublicKeyOperation.executeNextcloudClient(user, context)
-
-            var encryptedPrivateKey: com.owncloud.android.lib.ocs.responses.PrivateKey? = null
-            if (privateKeyResult.isSuccess) {
-                encryptedPrivateKey = privateKeyResult.resultData
+            val certificateResult = certificateOperation.executeNextcloudClient(user, weakContext)
+            val savedPrivateKey = dataProvider.getValue(user.accountName, EncryptionUtils.PRIVATE_KEY)
+            if (!certificateResult.isSuccess) {
+                // The certificate might not be available on the server yet.
+                // Therefore, the user needs to generate a new passphrase first.
+                return@withContext if (savedPrivateKey.isEmpty()) {
+                    DownloadKeyResult.Success(null)
+                } else {
+                    DownloadKeyResult.CertificateUnavailable()
+                }
             }
 
-            if (!certificateResult.isSuccess || !serverPublicKeyResult.isSuccess) {
-                Log_OC.d(TAG, "certificate or server public key not fetched")
-                return null
+            val serverPublicKeyOperation = GetServerPublicKeyRemoteOperation()
+            val serverPublicKeyResult = serverPublicKeyOperation.executeNextcloudClient(user, weakContext)
+            if (!serverPublicKeyResult.isSuccess) {
+                return@withContext DownloadKeyResult.ServerPublicKeyUnavailable()
             }
 
             val serverKey = serverPublicKeyResult.resultData
@@ -306,21 +321,18 @@ class SetupEncryptionDialogFragment : DialogFragment(), Injectable {
             val isCertificateValid = certificateValidator?.validate(serverKey, certificateAsString)
 
             if (isCertificateValid == false) {
-                Log_OC.d(TAG, "Could not save certificate, certificate is not valid")
-                return null
+                return@withContext DownloadKeyResult.CertificateVerificationFailed()
             }
 
-            if (arbitraryDataProvider == null) {
-                return null
-            }
-
-            arbitraryDataProvider?.storeOrUpdateKeyValue(
+            dataProvider.storeOrUpdateKeyValue(
                 user.accountName,
                 EncryptionUtils.PUBLIC_KEY,
                 certificateAsString
             )
 
-            if (privateKeyResult.isSuccess) {
+            val privateKeyOperation = GetPrivateKeyRemoteOperation()
+            val privateKeyResult = privateKeyOperation.executeNextcloudClient(user, weakContext)
+            return@withContext if (privateKeyResult.isSuccess) {
                 Log_OC.d(TAG, "private key successful downloaded for " + user.accountName)
                 keyResult = KEY_EXISTING_USED
                 return encryptedPrivateKey?.getKey()
@@ -361,42 +373,61 @@ class SetupEncryptionDialogFragment : DialogFragment(), Injectable {
                 binding.encryptionStatus.setText(R.string.end_to_end_encryption_enter_passphrase_to_access_files)
                 binding.encryptionPasswordInputContainer.visibility = View.VISIBLE
                 positiveButton?.visibility = View.VISIBLE
+                val privateKey = privateKeyResult.resultData?.getKey()
+                DownloadKeyResult.Success(privateKey)
             } else {
-                Log_OC.e(TAG, "Got empty private key string")
+                DownloadKeyResult.ServerPrivateKeyUnavailable()
+            }
+        }
+
+        downloadKeyResult?.let { result ->
+            if (result is DownloadKeyResult.Success) {
+                handlePrivateKey(result.privateKey)
+            } else {
+                val descriptionId = result.descriptionId ?: return
+                val description = getString(descriptionId)
+                dismiss()
+                DisplayUtils.showSnackMessage(requireActivity(), description)
             }
         }
     }
 
-    @SuppressLint("StaticFieldLeak")
-    inner class GenerateNewKeysAsyncTask(context: Context) : AsyncTask<Void?, Void?, String>() {
-        private val mWeakContext: WeakReference<Context> = WeakReference(context)
-
-        @Deprecated("Deprecated in Java")
-        override fun onPreExecute() {
-            super.onPreExecute()
-            binding.encryptionStatus.setText(R.string.end_to_end_encryption_generating_keys)
+    private fun handlePrivateKey(privateKey: String?) {
+        if (privateKey == null) {
+            // first show info
+            try {
+                if (keyWords == null || keyWords!!.isEmpty()) {
+                    keyWords = EncryptionUtils.getRandomWords(NUMBER_OF_WORDS, context)
+                }
+                showMnemonicInfo()
+            } catch (e: IOException) {
+                binding.encryptionStatus.setText(R.string.common_error)
+            }
+        } else if (privateKey.isNotEmpty()) {
+            binding.encryptionStatus.setText(R.string.end_to_end_encryption_enter_passphrase_to_access_files)
+            binding.encryptionPasswordInputContainer.visibility = View.VISIBLE
+            positiveButton?.visibility = View.VISIBLE
+        } else {
+            Log_OC.e(TAG, "Got empty private key string")
         }
+    }
 
-        @Suppress("TooGenericExceptionCaught", "TooGenericExceptionThrown", "ReturnCount", "LongMethod")
-        @Deprecated("Deprecated in Java")
-        override fun doInBackground(vararg voids: Void?): String {
+    @Suppress("LongMethod", "TooGenericExceptionCaught", "TooGenericExceptionThrown")
+    private suspend fun generateNewKeys() {
+        binding.encryptionStatus.setText(R.string.end_to_end_encryption_generating_keys)
+        val context = context ?: return
+        val privateKey: String = withContext(Dispatchers.IO) {
             //  - create CSR, push to server, store returned public key in database
             //  - encrypt private key, push key to server, store unencrypted private key in database
             try {
-                val context = mWeakContext.get()
                 val publicKeyString: String
-
-                if (context == null) {
-                    keyResult = KEY_FAILED
-                    return ""
-                }
 
                 // Create public/private key pair
                 val keyPair = EncryptionUtils.generateKeyPair()
 
                 // create CSR
                 val accountManager = AccountManager.get(context)
-                val user = user ?: return ""
+                val user = user ?: return@withContext ""
 
                 val userId = accountManager.getUserData(user.toPlatformAccount(), AccountUtils.Constants.KEY_USER_ID)
                 val urlEncoded = CsrHelper().generateCsrPemEncodedString(keyPair, userId)
@@ -412,13 +443,13 @@ class SetupEncryptionDialogFragment : DialogFragment(), Injectable {
                     Log_OC.d(TAG, "public key success")
                 } else {
                     keyResult = KEY_FAILED
-                    return ""
+                    return@withContext ""
                 }
 
                 val privateKey = keyPair.private
                 val privateKeyString = EncryptionUtils.encodeBytesToBase64String(privateKey.encoded)
                 val privatePemKeyString = EncryptionUtils.privateKeyToPEM(privateKey)
-                val encryptedPrivateKey = EncryptionUtils.encryptPrivateKey(
+                val encryptedPrivateKey = CryptoHelper.encryptPrivateKey(
                     privatePemKeyString,
                     generateMnemonicString(false)
                 )
@@ -445,7 +476,7 @@ class SetupEncryptionDialogFragment : DialogFragment(), Injectable {
                     )
                     keyResult = KEY_CREATED
 
-                    return storePrivateKeyResult.resultData
+                    return@withContext storePrivateKeyResult.resultData
                 } else {
                     val deletePublicKeyOperation = DeletePublicKeyRemoteOperation()
                     deletePublicKeyOperation.executeNextcloudClient(user, context)
@@ -454,27 +485,18 @@ class SetupEncryptionDialogFragment : DialogFragment(), Injectable {
                 Log_OC.e(TAG, e.message)
             }
             keyResult = KEY_FAILED
-            return ""
+            return@withContext ""
         }
 
-        @Deprecated("Deprecated in Java")
-        override fun onPostExecute(s: String) {
-            super.onPostExecute(s)
-            val context = mWeakContext.get()
-            if (context == null) {
-                Log_OC.e(TAG, "Context lost after generating new private keys.")
+        if (privateKey.isEmpty()) {
+            errorSavingKeys()
+        } else {
+            if (dialog == null) {
+                Log_OC.e(TAG, "Dialog is null cannot proceed further.")
                 return
             }
-            if (s.isEmpty()) {
-                errorSavingKeys()
-            } else {
-                if (dialog == null) {
-                    Log_OC.e(TAG, "Dialog is null cannot proceed further.")
-                    return
-                }
-                requireDialog().dismiss()
-                notifyResult()
-            }
+            requireDialog().dismiss()
+            notifyResult()
         }
     }
 
@@ -545,9 +567,8 @@ class SetupEncryptionDialogFragment : DialogFragment(), Injectable {
     companion object {
         const val SUCCESS = "SUCCESS"
         const val SETUP_ENCRYPTION_RESULT_CODE = 101
-        const val SETUP_ENCRYPTION_REQUEST_CODE = 100
         const val SETUP_ENCRYPTION_DIALOG_TAG = "SETUP_ENCRYPTION_DIALOG_TAG"
-        const val ARG_POSITION = "ARG_POSITION"
+        const val ARG_FILE_PATH = "ARG_FILE_PATH"
         const val RESULT_REQUEST_KEY = "RESULT_REQUEST"
         const val RESULT_KEY_CANCELLED = "IS_CANCELLED"
         private const val NUMBER_OF_WORDS = 12
@@ -558,16 +579,11 @@ class SetupEncryptionDialogFragment : DialogFragment(), Injectable {
         private const val KEY_FAILED = "KEY_FAILED"
         private const val KEY_GENERATE = "KEY_GENERATE"
 
-        /**
-         * Public factory method to create new SetupEncryptionDialogFragment instance
-         *
-         * @return Dialog ready to show.
-         */
         @JvmStatic
-        fun newInstance(user: User?, position: Int): SetupEncryptionDialogFragment {
+        fun newInstance(user: User?, filePath: String?): SetupEncryptionDialogFragment {
             val bundle = Bundle().apply {
                 putParcelable(ARG_USER, user)
-                putInt(ARG_POSITION, position)
+                putString(ARG_FILE_PATH, filePath)
             }
 
             return SetupEncryptionDialogFragment().apply {

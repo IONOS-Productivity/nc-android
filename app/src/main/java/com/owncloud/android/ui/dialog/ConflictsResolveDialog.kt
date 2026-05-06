@@ -11,7 +11,6 @@ import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
@@ -34,6 +33,7 @@ import com.owncloud.android.ui.dialog.parcel.ConflictDialogData
 import com.owncloud.android.ui.dialog.parcel.ConflictFileData
 import com.owncloud.android.utils.DisplayUtils
 import com.owncloud.android.utils.MimeTypeUtil
+import com.owncloud.android.utils.overlay.OverlayManager
 import com.owncloud.android.utils.theme.ViewThemeUtils
 import java.io.File
 import javax.inject.Inject
@@ -41,7 +41,9 @@ import javax.inject.Inject
 /**
  * Dialog which will be displayed to user upon keep-in-sync file conflict.
  */
-class ConflictsResolveDialog : DialogFragment(), Injectable {
+class ConflictsResolveDialog :
+    DialogFragment(),
+    Injectable {
     private lateinit var binding: ConflictResolveDialogBinding
 
     var listener: OnConflictDecisionMadeListener? = null
@@ -62,6 +64,9 @@ class ConflictsResolveDialog : DialogFragment(), Injectable {
     @Inject
     lateinit var fileDataStorageManager: FileDataStorageManager
 
+    @Inject
+    lateinit var overlayManager: OverlayManager
+
     enum class Decision {
         CANCEL,
         KEEP_BOTH,
@@ -77,7 +82,7 @@ class ConflictsResolveDialog : DialogFragment(), Injectable {
 
         try {
             listener = context as OnConflictDecisionMadeListener
-        } catch (e: ClassCastException) {
+        } catch (_: ClassCastException) {
             throw ClassCastException("Activity of this dialog must implement OnConflictDecisionMadeListener")
         }
     }
@@ -88,7 +93,9 @@ class ConflictsResolveDialog : DialogFragment(), Injectable {
         val alertDialog = dialog as AlertDialog?
 
         if (alertDialog == null) {
-            Toast.makeText(context, "Failed to create conflict dialog", Toast.LENGTH_LONG).show()
+            activity?.let {
+                DisplayUtils.showSnackMessage(it, R.string.failed_to_create_conflict_dialog)
+            }
             return
         }
 
@@ -114,7 +121,9 @@ class ConflictsResolveDialog : DialogFragment(), Injectable {
             rightDataFile = bundle.getParcelableArgument(ARG_RIGHT_FILE, OCFile::class.java)
             user = bundle.getParcelableArgument(ARG_USER, User::class.java)
         } else {
-            Toast.makeText(context, "Failed to create conflict dialog", Toast.LENGTH_LONG).show()
+            activity?.let {
+                DisplayUtils.showSnackMessage(it, R.string.failed_to_create_conflict_dialog)
+            }
         }
     }
 
@@ -142,17 +151,15 @@ class ConflictsResolveDialog : DialogFragment(), Injectable {
         return builder.create()
     }
 
-    private fun createDialogBuilder(): MaterialAlertDialogBuilder {
-        return MaterialAlertDialogBuilder(requireContext())
-            .setView(binding.root)
-            .setPositiveButton(R.string.common_ok) { _: DialogInterface?, _: Int ->
-                okButtonClick()
-            }
-            .setNegativeButton(R.string.common_cancel) { _: DialogInterface?, _: Int ->
-                listener?.conflictDecisionMade(Decision.CANCEL)
-            }
-            .setTitle(data?.dialogTitle)
-    }
+    private fun createDialogBuilder(): MaterialAlertDialogBuilder = MaterialAlertDialogBuilder(requireContext())
+        .setView(binding.root)
+        .setPositiveButton(R.string.common_ok) { _: DialogInterface?, _: Int ->
+            okButtonClick()
+        }
+        .setNegativeButton(R.string.common_cancel) { _: DialogInterface?, _: Int ->
+            listener?.conflictDecisionMade(Decision.CANCEL)
+        }
+        .setTitle(data?.dialogTitle)
 
     private fun okButtonClick() {
         binding.run {
@@ -229,7 +236,7 @@ class ConflictsResolveDialog : DialogFragment(), Injectable {
             null,
             syncedFolderProvider.preferences,
             viewThemeUtils,
-            syncedFolderProvider
+            overlayManager
         )
     }
 
@@ -292,9 +299,15 @@ class ConflictsResolveDialog : DialogFragment(), Injectable {
         private const val ARG_USER = "USER"
 
         @JvmStatic
-        fun newInstance(context: Context, leftFile: OCFile, rightFile: OCFile, user: User?): ConflictsResolveDialog {
+        fun newInstance(
+            title: String,
+            context: Context,
+            leftFile: OCFile,
+            rightFile: OCFile,
+            user: User?
+        ): ConflictsResolveDialog {
             val file = File(leftFile.storagePath)
-            val conflictData = getFileConflictData(file, rightFile, context)
+            val conflictData = getFileConflictData(title, file, rightFile, context)
 
             val bundle = Bundle().apply {
                 putParcelable(ARG_CONFLICT_DATA, conflictData)
@@ -308,13 +321,8 @@ class ConflictsResolveDialog : DialogFragment(), Injectable {
             }
         }
 
-        @JvmStatic
-        fun newInstance(
-            context: Context,
-            offlineOperation: OfflineOperationEntity,
-            rightFile: OCFile
-        ): ConflictsResolveDialog {
-            val conflictData = getFolderConflictData(offlineOperation, rightFile, context)
+        fun newInstance(context: Context, leftFile: OfflineOperationEntity, rightFile: OCFile): ConflictsResolveDialog {
+            val conflictData = getFolderConflictData(leftFile, rightFile, context)
 
             val bundle = Bundle().apply {
                 putParcelable(ARG_CONFLICT_DATA, conflictData)
@@ -327,7 +335,6 @@ class ConflictsResolveDialog : DialogFragment(), Injectable {
         }
 
         @Suppress("MagicNumber")
-        @JvmStatic
         private fun getFolderConflictData(
             offlineOperation: OfflineOperationEntity,
             rightFile: OCFile,
@@ -349,11 +356,12 @@ class ConflictsResolveDialog : DialogFragment(), Injectable {
             return ConflictDialogData(null, title, description, Pair(leftCheckBoxData, rightCheckBoxData))
         }
 
-        @JvmStatic
-        private fun getFileConflictData(leftFile: File, rightFile: OCFile, context: Context): ConflictDialogData {
-            // TODO Path needs to be set it correctly for encrypted folders
-            val title = rightFile.decryptedRemotePath
-
+        private fun getFileConflictData(
+            title: String,
+            leftFile: File,
+            rightFile: OCFile,
+            context: Context
+        ): ConflictDialogData {
             val leftTitle = context.getString(R.string.conflict_local_file)
             val leftTimestamp = DisplayUtils.getRelativeTimestamp(context, leftFile.lastModified())
             val leftFileSize = DisplayUtils.bytesToHumanReadable(leftFile.length())

@@ -17,6 +17,7 @@ import io.reactivex.Observable
 
 abstract class ScanbotController {
 	abstract val fileUploadStarted: Observable<Any>
+    abstract val cameraPermissionDenied: Observable<Unit>
 	abstract val uploadTargetRepository: UploadTargetRepository
 
 	abstract fun setUpController(scanBotUploadTarget: UploadTarget)
@@ -24,6 +25,8 @@ abstract class ScanbotController {
 	abstract fun createIntent(context: Context): Intent
 
 	abstract fun scanToDocument(context: Context, path: String)
+
+    internal abstract fun notifyCameraPermissionDenied()
 
 	internal abstract fun saveState(state: Bundle)
 

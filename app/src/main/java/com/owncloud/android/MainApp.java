@@ -17,7 +17,6 @@ package com.owncloud.android;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -31,7 +30,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.StrictMode;
@@ -61,6 +59,7 @@ import com.nextcloud.client.preferences.AppPreferencesImpl;
 import com.nextcloud.client.preferences.DarkMode;
 import com.nextcloud.receiver.NetworkChangeListener;
 import com.nextcloud.receiver.NetworkChangeReceiver;
+import com.nextcloud.ui.composeActivity.ComposeProcessTextAlias;
 import com.nextcloud.utils.extensions.ContextExtensionsKt;
 import com.nextcloud.utils.mdm.MDMConfig;
 import com.nmc.android.ui.LauncherActivity;
@@ -80,6 +79,7 @@ import com.owncloud.android.datastorage.StoragePoint;
 import com.owncloud.android.lib.common.OwnCloudClientManagerFactory;
 import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.lib.resources.status.NextcloudVersion;
+import com.owncloud.android.lib.resources.status.OCCapability;
 import com.owncloud.android.lib.resources.status.OwnCloudVersion;
 import com.owncloud.android.ui.activity.SyncedFoldersActivity;
 import com.owncloud.android.ui.notifications.NotificationUtils;
@@ -88,6 +88,7 @@ import com.owncloud.android.utils.FilesSyncHelper;
 import com.owncloud.android.utils.PermissionUtil;
 import com.owncloud.android.utils.ReceiversHelper;
 import com.owncloud.android.utils.SecurityUtils;
+import com.owncloud.android.utils.theme.CapabilityUtils;
 import com.owncloud.android.utils.theme.ViewThemeUtils;
 
 import org.conscrypt.Conscrypt;
@@ -125,12 +126,12 @@ import static com.owncloud.android.ui.activity.ContactsPreferenceActivity.PREFER
 
 
 /**
- * Main Application of the project.
- * Contains methods to build the "static" strings. These strings were before constants in different classes.
+ * Main Application of the project. Contains methods to build the "static" strings. These strings were before constants
+ * in different classes.
  */
 public class MainApp extends Application implements HasAndroidInjector, NetworkChangeListener {
-    public static final OwnCloudVersion OUTDATED_SERVER_VERSION = NextcloudVersion.nextcloud_28;
-    public static final OwnCloudVersion MINIMUM_SUPPORTED_SERVER_VERSION = OwnCloudVersion.nextcloud_18;
+    public static final OwnCloudVersion OUTDATED_SERVER_VERSION = NextcloudVersion.nextcloud_30;
+    public static final OwnCloudVersion MINIMUM_SUPPORTED_SERVER_VERSION = OwnCloudVersion.nextcloud_20;
 
     private static final String TAG = MainApp.class.getSimpleName();
     public static final String DOT = ".";
@@ -141,6 +142,7 @@ public class MainApp extends Application implements HasAndroidInjector, NetworkC
 
     private static boolean mOnlyOnDevice;
     private static boolean mOnlyPersonalFiles;
+
 
     @Inject
     protected AppPreferences preferences;
@@ -191,6 +193,8 @@ public class MainApp extends Application implements HasAndroidInjector, NetworkC
 
     @Inject WalledCheckCache walledCheckCache;
 
+    @Inject ComposeProcessTextAlias composeProcessTextAlias;
+
     // workaround because injection is initialized on onAttachBaseContext
     // and getApplicationContext is null at that point, which crashes when getting current user
     @Inject Provider<ViewThemeUtils> viewThemeUtilsProvider;
@@ -232,23 +236,7 @@ public class MainApp extends Application implements HasAndroidInjector, NetworkC
     }
 
     private String getAppProcessName() {
-        String processName = "";
-        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
-            ActivityManager manager = (ActivityManager) this.getSystemService(Context.ACTIVITY_SERVICE);
-            final int ownPid = android.os.Process.myPid();
-            final List<ActivityManager.RunningAppProcessInfo> processes = manager.getRunningAppProcesses();
-            if (processes != null) {
-                for (ActivityManager.RunningAppProcessInfo info : processes) {
-                    if (info.pid == ownPid) {
-                        processName = info.processName;
-                        break;
-                    }
-                }
-            }
-        } else {
-            processName = Application.getProcessName();
-        }
-        return processName;
+        return Application.getProcessName();
     }
 
     @Override
@@ -338,7 +326,8 @@ public class MainApp extends Application implements HasAndroidInjector, NetworkC
         }
 
         // initialise thumbnails cache on background thread
-        new ThumbnailsCacheManager.InitDiskCacheTask().execute();
+        ThumbnailsCacheManager.initDiskCacheAsync();
+
 
         if (MDMConfig.INSTANCE.isLogEnabled(this)) {
             // use app writable dir, no permissions needed
@@ -352,6 +341,10 @@ public class MainApp extends Application implements HasAndroidInjector, NetworkC
         } catch (Exception e) {
             Log_OC.d("Debug", "Failed to disable uri exposure");
         }
+
+        Log_OC.d(TAG, "scheduleContentObserverJob, called");
+        backgroundJobManager.scheduleContentObserverJob();
+
         initSyncOperations(this,
                            preferences,
                            uploadsStorageManager,
@@ -361,8 +354,7 @@ public class MainApp extends Application implements HasAndroidInjector, NetworkC
                            backgroundJobManager,
                            clock,
                            viewThemeUtils,
-                           walledCheckCache,
-                           syncedFolderProvider);
+                           walledCheckCache);
         initContactsBackup(accountManager, backgroundJobManager);
         notificationChannels();
 
@@ -385,9 +377,7 @@ public class MainApp extends Application implements HasAndroidInjector, NetworkC
         if (!MDMConfig.INSTANCE.sendFilesSupport(this)) {
             disableDocumentsStorageProvider();
         }
-        
-        
-     }
+    }
 
     public void disableDocumentsStorageProvider() {
         String packageName = getPackageName();
@@ -400,6 +390,14 @@ public class MainApp extends Application implements HasAndroidInjector, NetworkC
     private final LifecycleEventObserver lifecycleEventObserver = ((lifecycleOwner, event) -> {
         if (event == Lifecycle.Event.ON_START) {
             Log_OC.d(TAG, "APP IN FOREGROUND");
+            composeProcessTextAlias.configure();
+
+            if (preferences.startAutoUploadOnStart()) {
+                FilesSyncHelper.startAutoUploadForEnabledSyncedFolders(syncedFolderProvider,
+                                                                       backgroundJobManager,
+                                                                       false);
+                preferences.setLastAutoUploadOnStartTime(System.currentTimeMillis());
+            }
         } else if (event == Lifecycle.Event.ON_STOP) {
             passCodeManager.setCanAskPin(true);
             Log_OC.d(TAG, "APP IN BACKGROUND");
@@ -417,7 +415,7 @@ public class MainApp extends Application implements HasAndroidInjector, NetworkC
             Log_OC.d(TAG, "Error caught at setProxyForNonBrandedPlusClients: " + e);
         }
     }
-    
+
     public static boolean isClientBranded() {
         return getAppContext().getResources().getBoolean(R.bool.is_branded_client);
     }
@@ -429,7 +427,8 @@ public class MainApp extends Application implements HasAndroidInjector, NetworkC
     private final IntentFilter restrictionsFilter = new IntentFilter(Intent.ACTION_APPLICATION_RESTRICTIONS_CHANGED);
 
     private final BroadcastReceiver restrictionsReceiver = new BroadcastReceiver() {
-        @Override public void onReceive(Context context, Intent intent) {
+        @Override
+        public void onReceive(Context context, Intent intent) {
             setProxyConfig();
         }
     };
@@ -571,7 +570,6 @@ public class MainApp extends Application implements HasAndroidInjector, NetworkC
                             if (storagePoint.getPrivacyType() == StoragePoint.PrivacyType.PUBLIC) {
                                 preferences.setStoragePath(storagePoint.getPath());
                                 preferences.removeKeysMigrationPreference();
-                                set = true;
                                 break;
                             }
                         }
@@ -620,14 +618,13 @@ public class MainApp extends Application implements HasAndroidInjector, NetworkC
         final BackgroundJobManager backgroundJobManager,
         final Clock clock,
         final ViewThemeUtils viewThemeUtils,
-        final WalledCheckCache walledCheckCache,
-        final SyncedFolderProvider syncedFolderProvider) {
+        final WalledCheckCache walledCheckCache) {
         updateToAutoUpload(context);
         cleanOldEntries(clock);
         updateAutoUploadEntries(clock);
 
         if (getAppContext() != null) {
-            if (PermissionUtil.checkExternalStoragePermission(getAppContext())) {
+            if (PermissionUtil.checkStoragePermission(getAppContext())) {
                 splitOutAutoUploadEntries(clock, viewThemeUtils);
             } else {
                 preferences.setAutoUploadSplitEntriesEnabled(true);
@@ -635,11 +632,9 @@ public class MainApp extends Application implements HasAndroidInjector, NetworkC
         }
 
         if (!preferences.isAutoUploadInitialized()) {
-            FilesSyncHelper.startFilesSyncForAllFolders(syncedFolderProvider, backgroundJobManager,false, new String[]{});
             preferences.setAutoUploadInit(true);
         }
 
-        FilesSyncHelper.scheduleFilesSyncForAllFoldersIfNeeded(appContext.get(), syncedFolderProvider, backgroundJobManager);
         FilesSyncHelper.restartUploadsIfNeeded(
             uploadsStorageManager,
             accountManager,
@@ -666,7 +661,7 @@ public class MainApp extends Application implements HasAndroidInjector, NetworkC
     }
 
     public static void notificationChannels() {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O && getAppContext() != null) {
+        if (getAppContext() != null) {
             Context context = getAppContext();
             NotificationManager notificationManager = (NotificationManager)
                 context.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -678,7 +673,7 @@ public class MainApp extends Application implements HasAndroidInjector, NetworkC
 
                 createChannel(notificationManager, NotificationUtils.NOTIFICATION_CHANNEL_UPLOAD,
                               R.string.notification_channel_upload_name_short,
-                              R.string.notification_channel_upload_description, context);
+                              R.string.notification_channel_upload_description, context, NotificationManager.IMPORTANCE_LOW);
 
                 createChannel(notificationManager, NotificationUtils.NOTIFICATION_CHANNEL_MEDIA,
                               R.string.notification_channel_media_name,
@@ -696,11 +691,22 @@ public class MainApp extends Application implements HasAndroidInjector, NetworkC
 
                 createChannel(notificationManager, NotificationUtils.NOTIFICATION_CHANNEL_BACKGROUND_OPERATIONS,
                               R.string.notification_channel_background_operations_name, R.string
-                                  .notification_channel_background_operations_description, context, NotificationManager.IMPORTANCE_DEFAULT);
+                                  .notification_channel_background_operations_description, context, NotificationManager.IMPORTANCE_LOW);
 
                 createChannel(notificationManager, NotificationUtils.NOTIFICATION_CHANNEL_GENERAL, R.string
                                   .notification_channel_general_name, R.string.notification_channel_general_description,
                               context, NotificationManager.IMPORTANCE_DEFAULT);
+
+                createChannel(notificationManager, NotificationUtils.NOTIFICATION_CHANNEL_OFFLINE_OPERATIONS,
+                              R.string.notification_channel_offline_operations_name_short,
+                              R.string.notification_channel_offline_operations_description, context);
+
+                createChannel(notificationManager,
+                              NotificationUtils.NOTIFICATION_CHANNEL_CONTENT_OBSERVER,
+                              R.string.notification_channel_content_observer_name_short,
+                              R.string.notification_channel_content_observer_description,
+                              context,
+                              NotificationManager.IMPORTANCE_LOW);
             } else {
                 Log_OC.e(TAG, "Notification manager is null");
             }
@@ -717,8 +723,7 @@ public class MainApp extends Application implements HasAndroidInjector, NetworkC
     private static void createChannel(NotificationManager notificationManager,
                                       String channelId, int channelName,
                                       int channelDescription, Context context, int importance) {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O
-            && getAppContext() != null) {
+        if (getAppContext() != null) {
             CharSequence name = context.getString(channelName);
             String description = context.getString(channelDescription);
             NotificationChannel channel = new NotificationChannel(channelId, name, importance);
@@ -808,6 +813,18 @@ public class MainApp extends Application implements HasAndroidInjector, NetworkC
         return mOnlyPersonalFiles;
     }
 
+    public static Integer getMenuItemId() {
+        if (MainApp.isOnlyPersonFiles()) {
+            return R.id.nav_personal_files;
+        }
+
+        if (MainApp.isOnlyOnDevice()) {
+            return R.id.nav_on_device;
+        }
+
+        return null;
+    }
+
     public static String getUserAgent() {
         // Mozilla/5.0 (Android) Nextcloud-android/2.1.0
         return getUserAgent(R.string.nextcloud_user_agent);
@@ -850,7 +867,6 @@ public class MainApp extends Application implements HasAndroidInjector, NetworkC
         }
     }
 
-    
 
     private static void showAutoUploadAlertDialog(Context context) {
         new MaterialAlertDialogBuilder(context, R.style.Theme_ownCloud_Dialog)
@@ -893,13 +909,11 @@ public class MainApp extends Application implements HasAndroidInjector, NetworkC
             final List<MediaFolder> imageMediaFolders = MediaProvider.getImageFolders(contentResolver,
                                                                                       1,
                                                                                       null,
-                                                                                      true,
-                                                                                      viewThemeUtils);
+                                                                                      true);
             final List<MediaFolder> videoMediaFolders = MediaProvider.getVideoFolders(contentResolver,
                                                                                       1,
                                                                                       null,
-                                                                                      true,
-                                                                                      viewThemeUtils);
+                                                                                      true);
 
             ArrayList<Long> idsToDelete = new ArrayList<>();
             List<SyncedFolder> syncedFolders = syncedFolderProvider.getSyncedFolders();
@@ -1015,5 +1029,11 @@ public class MainApp extends Application implements HasAndroidInjector, NetworkC
         if (isNetworkAndServerAvailable) {
             backgroundJobManager.startOfflineOperations();
         }
+    }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        ReceiversHelper.shutdown();
     }
 }

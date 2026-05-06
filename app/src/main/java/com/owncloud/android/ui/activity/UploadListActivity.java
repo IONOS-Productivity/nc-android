@@ -26,11 +26,9 @@ import com.nextcloud.client.account.UserAccountManager;
 import com.nextcloud.client.core.Clock;
 import com.nextcloud.client.device.PowerManagementService;
 import com.nextcloud.client.jobs.BackgroundJobManager;
+import com.nextcloud.client.jobs.upload.FileUploadEventBroadcaster;
 import com.nextcloud.client.jobs.upload.FileUploadHelper;
-import com.nextcloud.client.jobs.upload.FileUploadWorker;
 import com.nextcloud.client.utils.Throttler;
-import com.nextcloud.model.WorkerState;
-import com.nextcloud.model.WorkerStateLiveData;
 import com.owncloud.android.R;
 import com.owncloud.android.databinding.UploadListLayoutBinding;
 import com.owncloud.android.datamodel.OCFile;
@@ -42,7 +40,6 @@ import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.operations.CheckCurrentCredentialsOperation;
 import com.owncloud.android.ui.adapter.UploadListAdapter;
 import com.owncloud.android.ui.decoration.MediaGridItemDecoration;
-import com.owncloud.android.utils.DisplayUtils;
 import com.owncloud.android.utils.FilesSyncHelper;
 
 import javax.inject.Inject;
@@ -60,7 +57,7 @@ public class UploadListActivity extends FileActivity {
 
     private static final String TAG = UploadListActivity.class.getSimpleName();
 
-    private UploadMessagesReceiver uploadMessagesReceiver;
+    private UploadFinishReceiver uploadFinishReceiver;
 
     private UploadListAdapter uploadListAdapter;
 
@@ -124,23 +121,14 @@ public class UploadListActivity extends FileActivity {
         updateActionBarTitleAndHomeButtonByString(getString(R.string.uploads_view_title));
 
         // setup drawer
-        setupDrawer();
+        setupDrawer(getMenuItemId());
 
         setupContent();
-        observeWorkerState();
     }
 
-    private void observeWorkerState() {
-        WorkerStateLiveData.Companion.instance().observe(this, state -> {
-            if (state instanceof WorkerState.UploadStarted) {
-                Log_OC.d(TAG, "Upload worker started");
-                handleUploadWorkerState();
-            }
-        });
-    }
-
-    private void handleUploadWorkerState() {
-        uploadListAdapter.loadUploadItemsFromDb();
+    @Override
+    protected int getMenuItemId() {
+        return R.id.nav_uploads;
     }
 
     @IonosCustomization
@@ -174,77 +162,52 @@ public class UploadListActivity extends FileActivity {
         swipeListRefreshLayout.setOnRefreshListener(this::refresh);
 
         loadItems();
-        uploadListAdapter.loadUploadItemsFromDb();
     }
 
     private void loadItems() {
-        uploadListAdapter.loadUploadItemsFromDb();
-
-        if (uploadListAdapter.getItemCount() > 0) {
-            return;
-        }
-
-        swipeListRefreshLayout.setVisibility(View.VISIBLE);
-        swipeListRefreshLayout.setRefreshing(false);
+        swipeListRefreshLayout.setRefreshing(true);
+        uploadListAdapter.loadUploadItemsFromDb(() -> swipeListRefreshLayout.setRefreshing(false));
     }
 
     private void refresh() {
-        FilesSyncHelper.startFilesSyncForAllFolders(syncedFolderProvider,
-                                                    backgroundJobManager,
-                                                    true,
-                                                    new String[]{});
+        boolean isUploadStarted = FileUploadHelper.Companion.instance().retryFailedUploads(
+            uploadsStorageManager,
+            connectivityService,
+            accountManager,
+            powerManagementService);
 
-        if (uploadsStorageManager.getFailedUploads().length > 0) {
-            new Thread(() -> {
-                FileUploadHelper.Companion.instance().retryFailedUploads(
-                    uploadsStorageManager,
-                    connectivityService,
-                    accountManager,
-                    powerManagementService);
-                this.runOnUiThread(() -> {
-                    uploadListAdapter.loadUploadItemsFromDb();
-                });
-            }).start();
-            DisplayUtils.showSnackMessage(this, R.string.uploader_local_files_uploaded);
+        if (!isUploadStarted) {
+            uploadListAdapter.loadUploadItemsFromDb(() -> swipeListRefreshLayout.setRefreshing(false));
         }
-
-
-        // update UI
-        uploadListAdapter.loadUploadItemsFromDb();
-        swipeListRefreshLayout.setRefreshing(false);
     }
 
     @Override
     protected void onStart() {
+        Log_OC.v(TAG, "onStart() start");
         super.onStart();
-    }
 
-    @Override
-    protected void onResume() {
-        Log_OC.v(TAG, "onResume() start");
-        super.onResume();
+        highlightNavigationViewItem(getMenuItemId());
 
         // Listen for upload messages
-        uploadMessagesReceiver = new UploadMessagesReceiver();
+        uploadFinishReceiver = new UploadFinishReceiver();
         IntentFilter uploadIntentFilter = new IntentFilter();
-        uploadIntentFilter.addAction(FileUploadWorker.Companion.getUploadsAddedMessage());
-        uploadIntentFilter.addAction(FileUploadWorker.Companion.getUploadStartMessage());
-        uploadIntentFilter.addAction(FileUploadWorker.Companion.getUploadFinishMessage());
-        localBroadcastManager.registerReceiver(uploadMessagesReceiver, uploadIntentFilter);
+        uploadIntentFilter.addAction(FileUploadEventBroadcaster.ACTION_UPLOAD_ENQUEUED);
+        uploadIntentFilter.addAction(FileUploadEventBroadcaster.ACTION_UPLOAD_STARTED);
+        uploadIntentFilter.addAction(FileUploadEventBroadcaster.ACTION_UPLOAD_COMPLETED);
+        localBroadcastManager.registerReceiver(uploadFinishReceiver, uploadIntentFilter);
 
-        Log_OC.v(TAG, "onResume() end");
-
+        Log_OC.v(TAG, "onStart() end");
     }
 
     @Override
-    protected void onPause() {
-        Log_OC.v(TAG, "onPause() start");
-        if (uploadMessagesReceiver != null) {
-            localBroadcastManager.unregisterReceiver(uploadMessagesReceiver);
-            uploadMessagesReceiver = null;
+    protected void onStop() {
+        Log_OC.v(TAG, "onStop() start");
+        if (uploadFinishReceiver != null) {
+            localBroadcastManager.unregisterReceiver(uploadFinishReceiver);
+            uploadFinishReceiver = null;
         }
-        super.onPause();
-        Log_OC.v(TAG, "onPause() end");
+        super.onStop();
+        Log_OC.v(TAG, "onStop() end");
     }
 
     @Override
@@ -282,7 +245,8 @@ public class UploadListActivity extends FileActivity {
 
         for (User user : accountManager.getAllUsers()) {
             if (user != null) {
-                FileUploadHelper.Companion.instance().cancelAndRestartUploadJob(user);
+                final var uploadIds = uploadsStorageManager.getCurrentUploadIds(user.getAccountName());
+                FileUploadHelper.Companion.instance().cancelAndRestartUploadJob(user, uploadIds);
             }
         }
 
@@ -350,16 +314,10 @@ public class UploadListActivity extends FileActivity {
     /**
      * Once the file upload has changed its status -> update uploads list view
      */
-    private class UploadMessagesReceiver extends BroadcastReceiver {
-        /**
-         * {@link BroadcastReceiver} to enable syncing feedback in UI
-         */
+    private class UploadFinishReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-
-            throttler.run("update_upload_list", () -> {
-                uploadListAdapter.loadUploadItemsFromDb();
-            });
+            throttler.run("update_upload_list", () -> uploadListAdapter.loadUploadItemsFromDb(() -> {}));
         }
     }
 }

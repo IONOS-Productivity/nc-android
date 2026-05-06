@@ -6,6 +6,7 @@
  */
 package com.nextcloud.client.logger.ui
 
+import android.annotation.SuppressLint
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -17,6 +18,7 @@ import com.nextcloud.client.logger.LogsRepository
 import com.owncloud.android.R
 import javax.inject.Inject
 
+@SuppressLint("StaticFieldLeak")
 class LogsViewModel @Inject constructor(
     private val context: Context,
     clock: Clock,
@@ -43,6 +45,12 @@ class LogsViewModel @Inject constructor(
     fun send() {
         entries.value?.let {
             sender.send(it)
+        }
+    }
+
+    fun export() {
+        entries.value?.let {
+            sender.export(it)
         }
     }
 

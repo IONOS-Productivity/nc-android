@@ -26,6 +26,7 @@ import javax.inject.Inject
 internal class CropActivity : BaseActivity<Event, State, ViewModel>() {
 	override val viewModelFactory by lazy { viewModelFactoryAssistant.create(getImageId()) }
 	override val viewBinding by lazy { ScanbotActivityCropBinding.inflate(layoutInflater) }
+    override val viewModelClass: Class<ViewModel> = ViewModel::class.java
 
     @Inject lateinit var viewModelFactoryAssistant: CropViewModelFactory.Assistant
     private val progressDialog by lazy { LockProgressDialog() }

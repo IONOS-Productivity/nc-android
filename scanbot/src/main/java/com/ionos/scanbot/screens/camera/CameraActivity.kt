@@ -37,6 +37,8 @@ private const val CHECK_PERMISSION_REQUEST_CODE = 99
 internal class CameraActivity : BaseActivity<Event, State, ViewModel>() {
     @Inject override lateinit var viewModelFactory: CameraViewModelFactory
 	override val viewBinding by lazy { ScanbotActivityCameraBinding.inflate(layoutInflater) }
+    override val viewBinding by lazy { ScanbotActivityCameraBinding.inflate(layoutInflater) }
+    override val viewModelClass: Class<ViewModel> = ViewModel::class.java
 
 	private val imagePickerLauncher = ImagePickerLauncher(this) { viewModel.onPicturesUrisReceived(it) }
 	private val importProgressDialog by lazy { ImportProgressDialog(this, viewModel::onCancelImportClicked) }
@@ -89,6 +91,7 @@ internal class CameraActivity : BaseActivity<Event, State, ViewModel>() {
         if (permissions.contains(Manifest.permission.CAMERA) &&
             (grantResults.isEmpty() || grantResults[0] == PackageManager.PERMISSION_DENIED)
         ) {
+            scanbotController.notifyCameraPermissionDenied()
             close()
         }
     }

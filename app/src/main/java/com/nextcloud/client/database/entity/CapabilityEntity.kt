@@ -136,5 +136,17 @@ data class CapabilityEntity(
     @ColumnInfo(name = ProviderTableMeta.CAPABILITIES_FILES_DOWNLOAD_LIMIT_DEFAULT)
     val filesDownloadLimitDefault: Int?,
     @ColumnInfo(name = ProviderTableMeta.CAPABILITIES_RECOMMENDATION)
-    val recommendation: Int?
+    val recommendation: Int?,
+    @ColumnInfo(name = ProviderTableMeta.CAPABILITIES_NOTES_FOLDER_PATH)
+    val notesFolderPath: String?,
+    @ColumnInfo(name = ProviderTableMeta.CAPABILITIES_DEFAULT_PERMISSIONS)
+    val defaultPermissions: Int?,
+    @ColumnInfo(name = ProviderTableMeta.CAPABILITIES_USER_STATUS_SUPPORTS_BUSY)
+    val userStatusSupportsBusy: Int?,
+    @ColumnInfo(name = ProviderTableMeta.CAPABILITIES_WINDOWS_COMPATIBLE_FILENAMES)
+    val isWCFEnabled: Int?,
+    @ColumnInfo(name = ProviderTableMeta.CAPABILITIES_HAS_VALID_SUBSCRIPTION)
+    val hasValidSubscription: Int?,
+    @ColumnInfo(name = ProviderTableMeta.CAPABILITIES_CLIENT_INTEGRATION_JSON)
+    val clientIntegrationJson: String?
 )

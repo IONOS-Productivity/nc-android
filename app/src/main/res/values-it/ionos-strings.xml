@@ -30,4 +30,6 @@
     <string name="ionos_share_search">Nome o indirizzo e-mail...</string>
     <string name="ionos_side_menu_storage_used">Storage usato</string>
     <string name="ionos_toolbar_sort_button_text">Filtro</string>
+    <string name="ionos_need_camera_permissions">IONOS HiDrive Next ha bisogno di un\'autorizzazione per accedere alla telecamera</string>
+    <string name="settings_action">IMPOSTAZIONI</string>
 </resources>

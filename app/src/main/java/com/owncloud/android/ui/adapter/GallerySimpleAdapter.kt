@@ -7,11 +7,13 @@
 
 package com.owncloud.android.ui.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.ionos.player.model.ThumbnailLoader
 import com.nextcloud.client.account.User
 import com.nextcloud.client.network.ClientFactoryImpl
 import com.nextcloud.client.preferences.AppPreferences
@@ -30,6 +32,8 @@ import com.owncloud.android.utils.FileSortOrder
 import com.owncloud.android.utils.MimeTypeUtil
 import com.owncloud.android.utils.glide.CustomGlideStreamLoader
 import com.owncloud.android.utils.theme.ViewThemeUtils
+import com.owncloud.android.utils.theme.ViewThemeUtils
+import kotlinx.coroutines.CoroutineScope
 
 class GallerySimpleAdapter(
     context: Context,
@@ -40,6 +44,9 @@ class GallerySimpleAdapter(
     viewThemeUtils: ViewThemeUtils,
     private var columns: Int,
     private val defaultThumbnailSize: Int
+    private val defaultThumbnailSize: Int,
+    private val thumbnailLoader: ThumbnailLoader,
+    private val coroutineScope: CoroutineScope
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), CommonOCFileListAdapterInterface {
 
     private val storageManager = transferServiceGetter.storageManager
@@ -153,6 +160,17 @@ class GallerySimpleAdapter(
                 defaultThumbnailSize,
                 getThumbnailUrl,
                 modelLoader,
+        return if (viewType == VIEW_TYPE_HEADER) {
+            val binding = GalleryHeaderBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            GalleryHeaderViewHolder(binding)
+        } else {
+            val binding = GallerySimpleItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            GallerySimpleItemHolder(
+                binding,
+                defaultThumbnailSize,
+                getThumbnailUrl,
+                thumbnailLoader,
+                coroutineScope,
                 ocFileListFragmentInterface,
             )
         }
@@ -166,6 +184,13 @@ class GallerySimpleAdapter(
             }
 
             is GalleryItem.FileItem -> (holder as GallerySimpleItemHolder).bind(item.file)
+        }
+    }
+
+    override fun onViewRecycled(holder: RecyclerView.ViewHolder) {
+        super.onViewRecycled(holder)
+        if (holder is GallerySimpleItemHolder) {
+            holder.recycle()
         }
     }
 
@@ -236,8 +261,51 @@ class GallerySimpleAdapter(
         ocFileListDelegate.clearCheckedItems()
     }
 
+    override fun selectAll(value: Boolean) {
+        if (value) {
+            addAllFilesToCheckedFiles()
+        } else {
+            clearCheckedItems()
+        }
+    }
+
+    private fun addAllFilesToCheckedFiles() {
+        val allFiles = items.mapNotNull { galleryItem ->
+            (galleryItem as? GalleryItem.FileItem)?.file
+        }
+        ocFileListDelegate.addToCheckedFiles(allFiles)
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun markAsFavorite(remotePath: String, favorite: Boolean) {
+    // TODO("Not yet implemented")
+        // This is inefficient, but favorites are not often changed, so it should be fine for now.
+        //
+    // val allFiles = getAllFiles()
+        // for (file in allFiles) {
+        //     if (file.remotePath == remotePath) {
+        //         file.isFavorite = favorite
+        //         break
+        //     }
+        // }
+        //
+        // files = allFiles.toGalleryItems()
+        // Handler(Looper.getMainLooper()).post { notifyDataSetChanged() }
+    }
+
+    // private fun List<OCFile>.toGalleryItems(): List<GalleryItems> {
+    //     return this
+    //         .groupBy { firstOfMonth(it.modificationTimestamp) }
+    //         .map { GalleryItems(it.key, transformToRows(it.value)) }
+    //         .sortedBy { it.date }.reversed()
+    // }
+
     sealed class GalleryItem {
         data class Header(val month: String, val year: String) : GalleryItem()
         data class FileItem(val file: OCFile) : GalleryItem()
+    }
+
+    fun cleanup() {
+        ocFileListDelegate.cleanup()
     }
 }

@@ -15,8 +15,6 @@ package com.owncloud.android.ui.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,6 +29,7 @@ import com.owncloud.android.datamodel.FileDataStorageManager
 import com.owncloud.android.datamodel.GalleryItems
 import com.owncloud.android.datamodel.GalleryRow
 import com.owncloud.android.datamodel.OCFile
+import com.owncloud.android.lib.common.utils.Log_OC
 import com.owncloud.android.ui.activity.ComponentsGetter
 import com.owncloud.android.ui.fragment.GalleryFragment
 import com.owncloud.android.ui.fragment.GalleryFragmentBottomSheetDialog
@@ -44,24 +43,45 @@ import me.zhanghai.android.fastscroll.PopupTextProvider
 import java.util.Calendar
 import java.util.Date
 
-@Suppress("LongParameterList")
+@Suppress("LongParameterList", "TooManyFunctions")
 class GalleryAdapter(
     val context: Context,
     user: User,
     ocFileListFragmentInterface: OCFileListFragmentInterface,
     preferences: AppPreferences,
     transferServiceGetter: ComponentsGetter,
-    viewThemeUtils: ViewThemeUtils,
+    private val viewThemeUtils: ViewThemeUtils,
     var columns: Int,
     private val defaultThumbnailSize: Int
-) : SectionedRecyclerViewAdapter<SectionedViewHolder>(), CommonOCFileListAdapterInterface, PopupTextProvider {
-    var files: List<GalleryItems> = mutableListOf()
+) : SectionedRecyclerViewAdapter<SectionedViewHolder>(),
+    CommonOCFileListAdapterInterface,
+    PopupTextProvider {
+
+    companion object {
+        private const val TAG = "GalleryAdapter"
+    }
+
+    // fileId -> (section, row)
+    private val filePositionMap = mutableMapOf<Long, Pair<Int, Int>>()
+
+    // (section, row) -> unique stable ID for that row
+    private val rowIdMap = mutableMapOf<Pair<Int, Int>, Long>()
+
+    private var cachedAllFiles: List<OCFile>? = null
+    private var cachedFilesCount: Int = 0
+
+    private var _files: List<GalleryItems> = mutableListOf()
+    var files: List<GalleryItems>
+        get() = _files
+        private set(value) {
+            _files = value
+            invalidateCaches()
+        }
+
     private val ocFileListDelegate: OCFileListDelegate
-    private var storageManager: FileDataStorageManager
+    private var storageManager: FileDataStorageManager = transferServiceGetter.storageManager
 
     init {
-        storageManager = transferServiceGetter.storageManager
-
         ocFileListDelegate = OCFileListDelegate(
             transferServiceGetter.fileUploaderHelper,
             context,
@@ -78,10 +98,63 @@ class GalleryAdapter(
         )
     }
 
+    private fun invalidateCaches() {
+        Log_OC.d(TAG, "invalidating caches")
+        cachedAllFiles = null
+        updateFilesCount()
+        rebuildFilePositionMap()
+    }
+
+    private fun updateFilesCount() {
+        cachedFilesCount = files.sumOf { it.rows.sumOf { it.files.size } }
+    }
+
+    private fun rebuildFilePositionMap() {
+        filePositionMap.clear()
+        rowIdMap.clear()
+
+        files.forEachIndexed { sectionIndex, galleryItem ->
+            galleryItem.rows.forEachIndexed { rowIndex, row ->
+                val position = sectionIndex to rowIndex
+
+                // since row can contain files two to five use first files id as adapter id
+                row.files.firstOrNull()?.fileId?.let { firstFileId ->
+                    rowIdMap[position] = firstFileId
+                }
+
+                // map all row files
+                row.files.forEach { file ->
+                    filePositionMap[file.fileId] = position
+                }
+            }
+        }
+    }
+
+    override fun getItemId(section: Int, position: Int): Long = rowIdMap[section to position] ?: -1L
+
+    override fun getItemCount(section: Int): Int = files.getOrNull(section)?.rows?.size ?: 0
+
+    override fun getSectionCount(): Int = files.size
+
+    override fun getFilesCount(): Int = cachedFilesCount
+
+    override fun getItemPosition(file: OCFile): Int {
+        val (section, row) = filePositionMap[file.fileId] ?: return -1
+        return getAbsolutePosition(section, row)
+    }
+
+    override fun selectAll(value: Boolean) {
+        if (value) {
+            addAllFilesToCheckedFiles()
+        } else {
+            clearCheckedItems()
+        }
+    }
+
     override fun showFooters(): Boolean = false
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SectionedViewHolder {
-        return if (viewType == VIEW_TYPE_HEADER) {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SectionedViewHolder =
+        if (viewType == VIEW_TYPE_HEADER) {
             GalleryHeaderViewHolder(
                 GalleryHeaderBinding.inflate(
                     LayoutInflater.from(parent.context),
@@ -95,10 +168,10 @@ class GalleryAdapter(
                 defaultThumbnailSize.toFloat(),
                 ocFileListDelegate,
                 storageManager,
-                this
+                this,
+                viewThemeUtils
             )
         }
-    }
 
     override fun onBindViewHolder(
         holder: SectionedViewHolder?,
@@ -106,27 +179,17 @@ class GalleryAdapter(
         relativePosition: Int,
         absolutePosition: Int
     ) {
-        if (holder != null) {
-            val rowHolder = holder as GalleryRowHolder
-            rowHolder.bind(files[section].rows[relativePosition])
+        if (holder is GalleryRowHolder) {
+            val row = files.getOrNull(section)?.rows?.getOrNull(relativePosition)
+            row?.let { holder.bind(it) }
         }
     }
 
-    override fun getItemCount(section: Int): Int {
-        return files[section].rows.size
-    }
-
-    override fun getSectionCount(): Int {
-        return files.size
-    }
-
-    override fun getPopupText(p0: View, position: Int): CharSequence {
-        return DisplayUtils.getDateByPattern(
-            files[getRelativePosition(position).section()].date,
-            context,
-            DisplayUtils.MONTH_YEAR_PATTERN
-        )
-    }
+    override fun getPopupText(p0: View, position: Int): CharSequence = DisplayUtils.getDateByPattern(
+        files[getRelativePosition(position).section()].date,
+        context,
+        DisplayUtils.MONTH_YEAR_PATTERN
+    )
 
     override fun onBindHeaderViewHolder(holder: SectionedViewHolder?, section: Int, expanded: Boolean) {
         if (holder != null) {
@@ -144,10 +207,6 @@ class GalleryAdapter(
                 DisplayUtils.YEAR_PATTERN
             )
         }
-    }
-
-    override fun onBindFooterViewHolder(holder: SectionedViewHolder?, section: Int) {
-        TODO("Not yet implemented")
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -178,9 +237,11 @@ class GalleryAdapter(
             GalleryFragmentBottomSheetDialog.MediaState.MEDIA_STATE_PHOTOS_ONLY -> {
                 items.filter { MimeTypeUtil.isImage(it.mimeType) }.distinct()
             }
+
             GalleryFragmentBottomSheetDialog.MediaState.MEDIA_STATE_VIDEOS_ONLY -> {
                 items.filter { MimeTypeUtil.isVideo(it.mimeType) }.distinct()
             }
+
             else -> items
         }
 
@@ -188,42 +249,34 @@ class GalleryAdapter(
             photoFragment.setEmptyListMessage(SearchType.GALLERY_SEARCH)
         }
 
-        files = finalSortedList
-            .groupBy { firstOfMonth(it.modificationTimestamp) }
-            .map { GalleryItems(it.key, transformToRows(it.value)) }
-            .sortedBy { it.date }.reversed()
-
-        Handler(Looper.getMainLooper()).post { notifyDataSetChanged() }
+        files = finalSortedList.toGalleryItems()
+        notifyDataSetChanged()
     }
 
     private fun transformToRows(list: List<OCFile>): List<GalleryRow> {
+        if (list.isEmpty()) return emptyList()
+
         return list
-            .sortedBy { it.modificationTimestamp }
-            .reversed()
+            .sortedByDescending { it.modificationTimestamp }
             .chunked(columns)
-            .map { entry -> GalleryRow(entry, defaultThumbnailSize, defaultThumbnailSize) }
+            .map { chunk -> GalleryRow(chunk, defaultThumbnailSize, defaultThumbnailSize) }
     }
 
     @SuppressLint("NotifyDataSetChanged")
     fun clear() {
         files = emptyList()
-        Handler(Looper.getMainLooper()).post { notifyDataSetChanged() }
+        notifyDataSetChanged()
     }
 
-    private fun firstOfMonth(timestamp: Long): Long {
-        val cal = Calendar.getInstance()
-        cal.time = Date(timestamp)
-        cal.set(Calendar.DAY_OF_MONTH, cal.getActualMinimum(Calendar.DAY_OF_MONTH))
-        cal.set(Calendar.HOUR_OF_DAY, 0)
-        cal.set(Calendar.MINUTE, 0)
-        cal.set(Calendar.SECOND, 0)
+    private fun firstOfMonth(timestamp: Long): Long = Calendar.getInstance().apply {
+        time = Date(timestamp)
+        set(Calendar.DAY_OF_MONTH, getActualMinimum(Calendar.DAY_OF_MONTH))
+        set(Calendar.HOUR_OF_DAY, 0)
+        set(Calendar.MINUTE, 0)
+        set(Calendar.SECOND, 0)
+    }.timeInMillis
 
-        return cal.timeInMillis
-    }
-
-    fun isEmpty(): Boolean {
-        return files.isEmpty()
-    }
+    fun isEmpty(): Boolean = files.isEmpty()
 
     fun getItem(position: Int): OCFile? {
         val itemCoordinates = getRelativePosition(position)
@@ -236,73 +289,63 @@ class GalleryAdapter(
             ?.getOrNull(0)
     }
 
-    override fun isMultiSelect(): Boolean {
-        return ocFileListDelegate.isMultiSelect
-    }
+    override fun isMultiSelect(): Boolean = ocFileListDelegate.isMultiSelect
 
     override fun cancelAllPendingTasks() {
         ocFileListDelegate.cancelAllPendingTasks()
-    }
-
-    override fun getItemPosition(file: OCFile): Int {
-        val findResult = files
-            .asSequence()
-            .flatMapIndexed { itemIndex, item ->
-                item.rows.withIndex().map { row -> Triple(itemIndex, row.index, row.value) }
-            }.find {
-                it.third.files.contains(file)
-            }
-
-        val (item, row) = findResult ?: Triple(0, 0, null)
-        return getAbsolutePosition(item, row)
-    }
-
-    override fun swapDirectory(
-        user: User,
-        directory: OCFile,
-        storageManager: FileDataStorageManager,
-        onlyOnDevice: Boolean,
-        mLimitToMimeType: String
-    ) {
-        TODO("Not yet implemented")
-    }
-
-    override fun setHighlightedItem(file: OCFile) {
-        TODO("Not yet implemented")
-    }
-
-    override fun setSortOrder(mFile: OCFile, sortOrder: FileSortOrder) {
-        TODO("Not yet implemented")
     }
 
     override fun addCheckedFile(file: OCFile) {
         ocFileListDelegate.addCheckedFile(file)
     }
 
-    override fun isCheckedFile(file: OCFile): Boolean {
-        return ocFileListDelegate.isCheckedFile(file)
-    }
+    override fun isCheckedFile(file: OCFile): Boolean = ocFileListDelegate.isCheckedFile(file)
 
-    override fun getCheckedItems(): Set<OCFile> {
-        return ocFileListDelegate.checkedItems
-    }
+    override fun getCheckedItems(): Set<OCFile> = ocFileListDelegate.checkedItems
 
     override fun removeCheckedFile(file: OCFile) {
         ocFileListDelegate.removeCheckedFile(file)
     }
 
     override fun notifyItemChanged(file: OCFile) {
-        notifyItemChanged(getItemPosition(file))
+        val position = getItemPosition(file)
+        if (position >= 0) {
+            notifyItemChanged(position)
+        }
     }
 
-    override fun getFilesCount(): Int {
-        return files.fold(0) { acc, item -> acc + item.rows.size }
-    }
-
+    /**
+     * Enables or disables multi-select mode in the gallery.
+     *
+     * When multi-select mode is enabled:
+     * - Checkboxes are shown for all items.
+     * - Users can select multiple files.
+     *
+     * When multi-select mode is disabled:
+     * - Checkboxes are hidden.
+     * - Selected files remain visually unselected.
+     *
+     * Note:
+     * - This function is only called when the user explicitly enters or exits multi-select mode.
+     *   It is **not** called for individual file selection or deselection.
+     * - The entire adapter is refreshed using [notifyDataSetChanged] to properly show or hide
+     *   checkboxes across all rows, as individual item updates are not sufficient in this case.
+     *
+     * @param isMultiSelect true to enable multi-select mode, false to disable it.
+     */
     @SuppressLint("NotifyDataSetChanged")
-    override fun setMultiSelect(boolean: Boolean) {
-        ocFileListDelegate.isMultiSelect = boolean
+    override fun setMultiSelect(isMultiSelect: Boolean) {
+        ocFileListDelegate.isMultiSelect = isMultiSelect
         notifyDataSetChanged()
+    }
+
+    private fun getAllFiles(): List<OCFile> = cachedAllFiles ?: files.flatMap { galleryItem ->
+        galleryItem.rows.flatMap { row -> row.files }
+    }.also { cachedAllFiles = it }
+
+    private fun addAllFilesToCheckedFiles() {
+        val allFiles = getAllFiles()
+        ocFileListDelegate.addToCheckedFiles(allFiles)
     }
 
     override fun clearCheckedItems() {
@@ -316,5 +359,42 @@ class GalleryAdapter(
 
     fun changeColumn(newColumn: Int) {
         columns = newColumn
+    }
+
+    fun markAsFavorite(remotePath: String, favorite: Boolean) {
+        val allFiles = getAllFiles()
+        allFiles.firstOrNull { it.remotePath == remotePath }?.also { file ->
+            file.isFavorite = favorite
+            files = allFiles.toGalleryItems()
+            notifyItemChanged(file)
+        }
+    }
+
+    private fun List<OCFile>.toGalleryItems(): List<GalleryItems> {
+        if (isEmpty()) return emptyList()
+
+        return groupBy { firstOfMonth(it.modificationTimestamp) }
+            .map { (date, filesList) ->
+                GalleryItems(date, transformToRows(filesList))
+            }
+            .sortedByDescending { it.date }
+    }
+
+    override fun onBindFooterViewHolder(holder: SectionedViewHolder?, section: Int) = Unit
+
+    override fun swapDirectory(
+        user: User,
+        directory: OCFile,
+        storageManager: FileDataStorageManager,
+        onlyOnDevice: Boolean,
+        mLimitToMimeType: String
+    ) = Unit
+
+    override fun setHighlightedItem(file: OCFile) = Unit
+
+    override fun setSortOrder(mFile: OCFile, sortOrder: FileSortOrder) = Unit
+
+    fun cleanup() {
+        ocFileListDelegate.cleanup()
     }
 }

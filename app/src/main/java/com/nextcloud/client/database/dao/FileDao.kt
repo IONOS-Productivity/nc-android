@@ -10,11 +10,17 @@ package com.nextcloud.client.database.dao
 import androidx.room.Dao
 import androidx.room.Query
 import com.ionos.annotation.IonosCustomization
+import androidx.room.Update
 import com.nextcloud.client.database.entity.FileEntity
 import com.owncloud.android.db.ProviderMeta.ProviderTableMeta
+import com.owncloud.android.utils.MimeType
 
+@Suppress("TooManyFunctions")
 @Dao
 interface FileDao {
+    @Update
+    fun update(entity: FileEntity)
+
     @Query("SELECT * FROM filelist WHERE _id = :id LIMIT 1")
     fun getFileById(id: Long): FileEntity?
 
@@ -33,8 +39,14 @@ interface FileDao {
     @Query("SELECT * FROM filelist WHERE remote_id = :remoteId AND file_owner = :fileOwner LIMIT 1")
     fun getFileByRemoteId(remoteId: String, fileOwner: String): FileEntity?
 
+    @Query("SELECT * FROM filelist WHERE remote_id = :remoteId LIMIT 1")
+    suspend fun getFileByRemoteId(remoteId: String): FileEntity?
+
     @Query("SELECT * FROM filelist WHERE parent = :parentId ORDER BY ${ProviderTableMeta.FILE_DEFAULT_SORT_ORDER}")
     fun getFolderContent(parentId: Long): List<FileEntity>
+
+    @Query("SELECT * FROM filelist WHERE parent = :parentId ORDER BY ${ProviderTableMeta.FILE_DEFAULT_SORT_ORDER}")
+    suspend fun getFolderContentSuspended(parentId: Long): List<FileEntity>
 
     @Query(
         "SELECT * FROM filelist WHERE modified >= :startDate" +
@@ -67,4 +79,86 @@ interface FileDao {
             "ORDER BY internal_two_way_sync_timestamp DESC"
     )
     fun getInternalTwoWaySyncFolders(fileOwner: String): List<FileEntity>
+
+    @Query(
+        """
+    SELECT * 
+    FROM filelist 
+    WHERE parent = :parentId 
+      AND file_owner = :accountName 
+      AND is_encrypted = 0  
+      AND (content_type = :dirType OR content_type = :webdavType)  
+    ORDER BY ${ProviderTableMeta._ID} ASC
+    """
+    )
+    fun getNonEncryptedSubfolders(
+        parentId: Long,
+        accountName: String,
+        dirType: String = MimeType.DIRECTORY,
+        webdavType: String = MimeType.WEBDAV_FOLDER
+    ): List<FileEntity>
+
+    @Query(
+        """
+    SELECT * 
+    FROM filelist 
+    WHERE parent = :parentId 
+      AND file_owner = :accountName 
+      AND (content_type != :dirType AND content_type != :webdavType)  
+    ORDER BY ${ProviderTableMeta.FILE_DEFAULT_SORT_ORDER}
+    """
+    )
+    suspend fun getSubfiles(
+        parentId: Long,
+        accountName: String,
+        dirType: String = MimeType.DIRECTORY,
+        webdavType: String = MimeType.WEBDAV_FOLDER
+    ): List<FileEntity>
+
+    @Query(
+        """
+    SELECT * 
+    FROM filelist 
+    WHERE file_owner = :fileOwner 
+      AND parent = :parentId
+      AND ${ProviderTableMeta.FILE_NAME} LIKE '%' || :query || '%'
+    ORDER BY ${ProviderTableMeta.FILE_DEFAULT_SORT_ORDER}
+    """
+    )
+    fun searchFilesInFolder(parentId: Long, fileOwner: String, query: String): List<FileEntity>
+
+    @Query(
+        """
+    SELECT *
+    FROM filelist
+    WHERE file_owner = :accountName
+      AND (
+          share_by_link = 1
+          OR shared_via_users = 1
+          OR permissions LIKE '%S%'
+      )
+    ORDER BY ${ProviderTableMeta.FILE_DEFAULT_SORT_ORDER}
+    """
+    )
+    suspend fun getSharedFiles(accountName: String): List<FileEntity>
+
+    @Query("SELECT remote_id FROM filelist WHERE file_owner = :accountName AND remote_id IS NOT NULL")
+    fun getAllRemoteIds(accountName: String): List<String>
+
+    @Query(
+        """
+    WITH RECURSIVE descendants AS (
+        SELECT _id FROM filelist WHERE _id = :folderId AND file_owner = :fileOwner
+        UNION ALL
+        SELECT f._id FROM filelist f
+        INNER JOIN descendants d ON f.parent = d._id
+        WHERE f.file_owner = :fileOwner
+    )
+    DELETE FROM filelist WHERE _id IN (SELECT _id FROM descendants)
+"""
+    )
+    fun deleteFolderWithDescendants(fileOwner: String, folderId: Long): Int
+
+    @Query("DELETE FROM filelist WHERE file_owner = :fileOwner AND path = :remotePath")
+    fun deleteFileByRemotePath(fileOwner: String, remotePath: String): Int
 }

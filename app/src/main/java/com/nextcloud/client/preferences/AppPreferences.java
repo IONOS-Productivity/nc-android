@@ -63,6 +63,12 @@ public interface AppPreferences {
 
     boolean isShowHiddenFilesEnabled();
     void setShowHiddenFilesEnabled(boolean enabled);
+    
+    boolean isSortFoldersBeforeFiles();
+    void setSortFoldersBeforeFiles(boolean enabled);
+    
+    boolean isSortFavoritesFirst();
+    void setSortFavoritesFirst(boolean enabled);
 
     boolean isShowEcosystemApps();
     void setShowEcosystemApps(boolean enabled);
@@ -168,14 +174,6 @@ public interface AppPreferences {
     String[] getPassCode();
 
     /**
-     * Gets the unlock via fingerprint preference configured by the user.
-     *
-     * @implNote  this is always false
-     * @return useFingerprint     is unlock with fingerprint enabled
-     */
-    boolean isFingerprintUnlockEnabled();
-
-    /**
      * Gets the auto upload paths flag last set.
      *
      * @return ascending order     the legacy cleaning flag, default is false
@@ -210,7 +208,7 @@ public interface AppPreferences {
      * Get preferred folder sort order.
      *
      * @param folder Folder whoch order is being retrieved or null for root folder
-     * @return sort order     the sort order, default is {@link FileSortOrder#sort_a_to_z} (sort by name)
+     * @return sort order     the sort order, default is {@link FileSortOrder# sort_a_to_z} (sort by name)
      */
     FileSortOrder getSortOrderByFolder(@Nullable OCFile folder);
 
@@ -232,7 +230,7 @@ public interface AppPreferences {
     /**
      * Get preferred folder sort order.
      *
-     * @return sort order     the sort order, default is {@link FileSortOrder#sort_a_to_z} (sort by name)
+     * @return sort order     the sort order, default is {@link FileSortOrder# sort_a_to_z} (sort by name)
      */
     FileSortOrder getSortOrderByType(FileSortOrder.Type type, FileSortOrder defaultOrder);
     FileSortOrder getSortOrderByType(FileSortOrder.Type type);
@@ -352,10 +350,6 @@ public interface AppPreferences {
 
     long getPhotoSearchTimestamp();
 
-    boolean isPowerCheckDisabled();
-
-    void setPowerCheckDisabled(boolean value);
-
     void increasePinWrongAttempts();
 
     void resetPinWrongAttempts();
@@ -373,10 +367,6 @@ public interface AppPreferences {
     boolean isGlobalUploadPaused();
 
     void setGlobalUploadPaused(boolean globalPausedState);
-
-    void setPdfZoomTipShownCount(int count);
-
-    int getPdfZoomTipShownCount();
 
     boolean isStoragePermissionRequested();
 
@@ -400,16 +390,18 @@ public interface AppPreferences {
 
     boolean shouldStopDownloadJobsOnStart();
     void setStopDownloadJobsOnStart(boolean value);
-    
-    boolean isAutoUploadGPlayWarningShown();
-    void setAutoUploadGPlayWarningShown(boolean value);
 
-    boolean isAutoUploadGPlayWarning2Shown();
-    void setAutoUploadGPlayWarning2Shown(boolean value);
+    int getPassCodeDelay();
+    void setPassCodeDelay(int value);
 
     boolean isAutoUploadGPlayNotificationShown();
     void setAutoUploadGPlayNotificationShown(boolean value);
 
     int getPassCodeDelay();
     void setPassCodeDelay(int value);
+    String getLastDisplayedAccountName();
+    void setLastDisplayedAccountName(String lastDisplayedAccountName);
+
+    boolean startAutoUploadOnStart();
+    void setLastAutoUploadOnStartTime(long timeInMillisecond);
 }

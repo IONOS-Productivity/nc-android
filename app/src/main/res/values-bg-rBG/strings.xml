@@ -7,11 +7,13 @@
     <string name="account_creation_failed">Създаването на профила се провали</string>
     <string name="account_icon">Профил</string>
     <string name="account_not_found">Няма намерен профил!</string>
-    <string name="action_edit">Променяне</string>
+    <string name="action_edit">Промяна</string>
     <string name="action_empty_notifications">Премахнете известията</string>
     <string name="action_empty_trashbin">Изпразване на кошчето</string>
+    <string name="action_send_share">Прати/сподели</string>
     <string name="action_switch_grid_view">Решетъчен изглед</string>
     <string name="action_switch_list_view">Списъчен изглед</string>
+    <string name="actionbar_calendar_contacts_restore"> Възстановяване на контакти и календар</string>
     <string name="actionbar_mkdir">Нова папка</string>
     <string name="actionbar_move_or_copy">Премести или копирай</string>
     <string name="actionbar_open_with">Отвори с</string>
@@ -29,15 +31,22 @@
     <string name="add_new_public_share">Добавете нова връзка за публично споделяне</string>
     <string name="add_new_secure_file_drop">Добавяне на ново, защитено пускане на файлове</string>
     <string name="add_to_cloud">Добави към %1$s</string>
-    <string name="advanced_settings">Допълнителни настройки</string>
-    <string name="allow_resharing">Може да споделя повторно</string>
     <string name="app_config_base_url_title">Основен URL адрес</string>
     <string name="app_config_disable_intro_title">Изключи въведението</string>
+    <string name="app_config_disable_clipboard_title"> Изключи клипборда</string>
+    <string name="app_config_disable_intro_title">Изключи въведението</string>
+    <string name="app_config_disable_log_title">Изключи системния лог</string>
+    <string name="app_config_disable_more_external_site_title">Изключи външни сайтове</string>
+    <string name="app_config_disable_multiaccount_title">Забрани използването на няколко профила</string>
+    <string name="app_config_disable_sharing_title">Изключи споделянето</string>
     <string name="app_config_proxy_port_title">Порт на прокси сървъра</string>
     <string name="app_widget_description">Показва един изпълним модул от таблото за управление</string>
     <string name="appbar_search_in">Търсене в %s</string>
     <string name="assistant_screen_delete_task_alert_dialog_title">Изтрива задача</string>
     <string name="assistant_screen_task_delete_success_message">Задачата е успешно изтрита</string>
+    <string name="assistant_screen_top_bar_title">Асистент</string>
+    <string name="assistant_task_status_running">в процес</string>
+    <string name="assistant_task_status_unknown">неясна</string>
     <string name="associated_account_not_found">Свързания профил не е намерен!</string>
     <string name="auth_access_failed">Достъп неуспешен: %1$s</string>
     <string name="auth_account_does_not_exist">Профилът все още не съществува на устройството</string>
@@ -83,10 +92,13 @@
     <string name="battery_optimization_disable">Изключване</string>
     <string name="battery_optimization_message">Възможно е устройството ви да има активирана оптимизация на батерията. AutoUpload работи правилно само, ако изключите това приложение от него.</string>
     <string name="battery_optimization_title">Оптимизация на батерията</string>
+    <string name="bottom_navigation_menu_assistant_label">Асистент</string>
     <string name="bottom_navigation_menu_favorites_label">Любими</string>
     <string name="bottom_navigation_menu_files_label">Всички файлове</string>
+    <string name="busy">Зает</string>
     <string name="calendar">Kалендар</string>
     <string name="calendars">Kалендари</string>
+    <string name="cancel_upload">Cancel</string>
     <string name="certificate_load_problem">Проблем при зареждане на сертификата.</string>
     <string name="changelog_dev_version">Версия за разработка на журнал за промени</string>
     <string name="check_back_later_or_reload">Проверка отново по-късно или презареждане.</string>
@@ -96,9 +108,9 @@
     <string name="choose_template_helper_text">Моля, изберете шаблон и въведете име на файл.</string>
     <string name="choose_which_file">Изберете кой файл да бъде запазен!</string>
     <string name="choose_widget">Избор на изпълним модул</string>
+    <string name="clear">Изчистване</string>
     <string name="clear_notifications_failed">Изтриването на известията не бе успешно.</string>
-    <string name="clear_status_message">Изчистване на съобщението за състоянието</string>
-    <string name="clear_status_message_after">Изчистване на съобщение за състоянието след това</string>
+    <string name="clear_status_after">Изчистване на състоянието след</string>
     <string name="clipboard_label">Текста е копиран от %1$s</string>
     <string name="clipboard_no_text_to_copy">Няма получен текст за копиране в клипборда</string>
     <string name="clipboard_text_copied">Връзката е копирана</string>
@@ -113,6 +125,7 @@
     <string name="common_error">Грешка</string>
     <string name="common_error_out_memory">Няма достатъчно памет</string>
     <string name="common_error_unknown">Неизвестна грешка</string>
+    <string name="common_leave_this_share">Напускане на споделянето</string>
     <string name="common_loading">Зареждане…</string>
     <string name="common_next">Следващ</string>
     <string name="common_no">Не</string>
@@ -145,6 +158,7 @@
     <string name="community_testing_bug_text">Открили сте грешка? Нещо странно?</string>
     <string name="community_testing_headline">Помогни с тестването</string>
     <string name="community_testing_report_text">Докладвайте за проблем чрез Github</string>
+    <string name="compose_activity_label">Асистент на \"Nextcloud\"</string>
     <string name="configure_new_media_folder_detection_notifications">Настройки</string>
     <string name="confirm_removal">Премахване на локалното криптиране</string>
     <string name="confirmation_remove_file_alert">Наистина ли желаете %1$s да бъде изтрит?</string>
@@ -163,7 +177,9 @@
     <string name="contacts_preferences_import_scheduled">Внасянето е планирано и ще започне скоро</string>
     <string name="contacts_preferences_no_file_found">Няма намерен файл</string>
     <string name="contacts_preferences_something_strange_happened">Последното ви резервно копие не може да бъде намерено!</string>
-    <string name="copied_to_clipboard">Копирано в клипборда</string>
+    <string name="conversation_screen_delete_button_title">Изтриване на разговора</string>
+    <string name="conversation_screen_empty_content_title">Няма намерени разговори</string>
+    <string name="conversation_screen_title">Разговори</string>
     <string name="copy_file_error">Възникна грешка при опита за копиране на файла или папката</string>
     <string name="copy_file_invalid_into_descendent">Не може да копирате папка в нейна подпапка</string>
     <string name="copy_file_invalid_overwrite">Файлът вече съществува в зададената папка</string>
@@ -228,6 +244,7 @@
     <string name="drawer_header_background">Фоново изображение на заглавката на чекмедже/панел/</string>
     <string name="drawer_item_activities">Активност</string>
     <string name="drawer_item_all_files">Всички файлове</string>
+    <string name="drawer_item_assistant">Асистент</string>
     <string name="drawer_item_favorites">Любими</string>
     <string name="drawer_item_gallery">Медия</string>
     <string name="drawer_item_home">Начало</string>
@@ -244,6 +261,7 @@
     <string name="drawer_quota_unlimited">%1$s използвани</string>
     <string name="drawer_synced_folders">Автоматично качване</string>
     <string name="e2e_not_yet_setup">E2E все още няма настройки</string>
+    <string name="ecosystem_apps_display_assistant">Асистент</string>
     <string name="ecosystem_apps_display_more">Повече </string>
     <string name="encrypted">Включване на криптиране</string>
     <string name="end_to_end_encryption_confirm_button">Настройки за криптиране</string>
@@ -305,6 +323,7 @@
     <string name="failed_update_ui">Неуспешно обновяване на UI /потребителски интерфейс/</string>
     <string name="favorite">Добави към любимите</string>
     <string name="favorite_icon">Любими</string>
+    <string name="fifteenMinutes">15 минути</string>
     <string name="file_already_exists">Името на файла вече съществува</string>
     <string name="file_delete">Изтрий</string>
     <string name="file_detail_activity_error">Грешка при извличането на активности за файл</string>
@@ -321,6 +340,8 @@
     <string name="file_list_empty_local_search">Не бяха открити файлове или папки, които да отговарят на търсенето</string>
     <string name="file_list_empty_moving">Тук няма нищо. Можете да добавите папка.</string>
     <string name="file_list_empty_on_device">Свалените файлове и папки ще се показват тук.</string>
+    <string name="file_list_empty_recent_files_description">Файловете и папките, които наскоро сте променили, ще се покажат тук.</string>
+    <string name="file_list_empty_recent_files_headline">Няма наскоро модифицирани файлове</string>
     <string name="file_list_empty_recently_modified">Няма модифицирани файлове през последните 7 дни</string>
     <string name="file_list_empty_search">Вероятно е в друга директория?</string>
     <string name="file_list_empty_shared">Споделените файлове и папки ще се показват тук.</string>
@@ -330,10 +351,8 @@
     <string name="file_list_loading">Зареждане…</string>
     <string name="file_list_no_app_for_file_type">Няма приложение, което да се справи с подобен тип файл.</string>
     <string name="file_list_seconds_ago">преди секунди</string>
-    <string name="file_management_permission">Необходими са права</string>
     <string name="file_management_permission_optional">Права за хранилище</string>
     <string name="file_management_permission_optional_text">%1$s работи най-добре с права за достъп до хранилище. Можете да изберете пълен достъп до всички файлове или достъп само за четене на снимки и видеоклипове.</string>
-    <string name="file_management_permission_text">%1$s се нуждае от права за управление на файлове, за да качва файлове. Можете да изберете пълен достъп до всички файлове или достъп само за четене на снимки и видеоклипове.</string>
     <string name="file_migration_checking_destination">Проверка на дестинацията…</string>
     <string name="file_migration_cleaning">Почистване…</string>
     <string name="file_migration_dialog_title">Обновяване на папката за съхранение на данни</string>
@@ -359,7 +378,6 @@
     <string name="file_not_synced">Файлът не може да бъде синхронизиран. Показана е актуалната версия.</string>
     <string name="file_rename">Преименувай</string>
     <string name="file_version_restored_error">Грешка при възстановяването!</string>
-    <string name="file_version_restored_successfully">Възстанявяването завърши.</string>
     <string name="filedetails_details">Подробности</string>
     <string name="filedetails_download">Изтегляне</string>
     <string name="filedetails_export">Експорт /изнасям/</string>
@@ -389,9 +407,9 @@
     <string name="foreign_files_local_text">Локален: %1$s</string>
     <string name="foreign_files_move">Премести всички</string>
     <string name="foreign_files_remote_text">Отдалечен: %1$s</string>
-    <string name="foreign_files_success">Всички файлове са преместени.</string>
     <string name="forward">Напред</string>
     <string name="fourHours">4 часа</string>
+    <string name="fourHours">4 чàса</string>
     <string name="grid_file_features_live_photo_content_description">Иконата служи за индикация дали \"live photo\" е налична</string>
     <string name="hidden_file_name_warning">Името ще доведе до скрит файл</string>
     <string name="hint_name">Име</string>
@@ -411,10 +429,7 @@
     <string name="last_backup">Последно архивиране: %1$s</string>
     <string name="link">Връзка</string>
     <string name="link_name">Име на Връзка</string>
-    <string name="link_share_allow_upload_and_editing">За качване и редактиране</string>
     <string name="link_share_editing">Редактиране</string>
-    <string name="link_share_file_drop">Само за качване</string>
-    <string name="link_share_view_only">Само преглед</string>
     <string name="list_layout">Оформление на списъка с емисии</string>
     <string name="load_more_results">Зареждане на още резултати</string>
     <string name="local_file_list_empty">В папката няма файлове.</string>
@@ -451,6 +466,8 @@
     <string name="media_forward_description">Бутон за превъртане напред</string>
     <string name="media_notif_ticker">%1$s музикален плеър</string>
     <string name="media_play_pause_description">Бутон възпроизведи / пауза </string>
+    <string name="media_player_pause">Пауза</string>
+    <string name="media_player_play">Пускане</string>
     <string name="media_rewind_description">Бутон за превъртане назад</string>
     <string name="media_state_playing">%1$s (възпроизвеждане)</string>
     <string name="menu_item_sort_by_date_newest_first">Най-нов</string>
@@ -503,11 +520,10 @@
     <string name="offline_mode">Няма връзка с Интернет</string>
     <string name="oneHour">1 час</string>
     <string name="online">На линия</string>
-    <string name="online_status">Състояние на линия</string>
+    <string name="online_status">Състояние</string>
     <string name="outdated_server">Сървърът е достигнал края на живота си, моля, надстройте!</string>
     <string name="overflow_menu">Повече</string>
     <string name="pass_code_configure_your_pass_code">Въведете кода за достъп</string>
-    <string name="pass_code_configure_your_pass_code_explanation">Кода ще бъде изискван при всяко стартиране на приложението</string>
     <string name="pass_code_enter_pass_code">Моля, въведете кода за достъп</string>
     <string name="pass_code_mismatch">Кодовете не съвпадат</string>
     <string name="pass_code_reenter_your_pass_code">Моля, въведете кода за достъп отново</string>
@@ -515,17 +531,11 @@
     <string name="pass_code_removed">Кодът за достъп е изтрит</string>
     <string name="pass_code_stored">Кодът е запаметен</string>
     <string name="pass_code_wrong">Грешен код</string>
-    <string name="pdf_zoom_tip">Докосване на страницата за увеличение на мащаба </string>
+    <string name="pause_upload">Пауза</string>
     <string name="permission_allow">Да</string>
     <string name="permission_deny">Не</string>
-    <string name="permission_storage_access">Изискват се допълнителни права за изтегляне и сваляне на файлове.</string>
     <string name="picture_set_as_no_app">Няма намерени приложения за задаване на снимка</string>
     <string name="pin_shortcut_label">Отваряне на %1$s</string>
-    <string name="placeholder_fileSize">389 KB</string>
-    <string name="placeholder_filename">placeholder.txt</string>
-    <string name="placeholder_media_time">12:23:45</string>
-    <string name="placeholder_sentence">Това е за запазено място</string>
-    <string name="placeholder_timestamp">2012/05/18 12:23 PM</string>
     <string name="player_stop">стоп</string>
     <string name="player_toggle">превключване</string>
     <string name="power_save_check_dialog_message">Деактивирането на проверката за пестене на енергия може да доведе до качване на файлове, в състояние с ниска батерия!</string>
@@ -543,6 +553,7 @@
     <string name="prefs_category_about">Относно</string>
     <string name="prefs_category_details">Подробности</string>
     <string name="prefs_category_dev">Разработка</string>
+    <string name="prefs_category_files">Файлове</string>
     <string name="prefs_category_general">Общи</string>
     <string name="prefs_category_more">Още</string>
     <string name="prefs_category_sync">Синхронизиране</string>
@@ -583,10 +594,8 @@
     <string name="preview_image_description">Преглед на изображението</string>
     <string name="preview_image_error_no_local_file">Няма локален файл за преглед</string>
     <string name="preview_image_error_unknown_format">Изображението не може да бъде показано</string>
-    <string name="preview_image_file_is_not_exist">Файлът не съществува</string>
     <string name="preview_sorry">Извиняваме се </string>
     <string name="privacy">Защита на лични данни</string>
-    <string name="public_share_name">Ново име</string>
     <string name="push_notifications_not_implemented">Известията са изключени заради зависимост от частни Google Play услуги.</string>
     <string name="push_notifications_old_login">Няма налични известия поради изтекла потребителска сесия. Моля, обмислете да пре-добавите вашия профил.</string>
     <string name="push_notifications_temp_error">Известията не са достъпни в момента.</string>
@@ -636,9 +645,8 @@
     <string name="send">Изпрати</string>
     <string name="sendbutton_description">Икона на бутон за изпращане</string>
     <string name="set_as">Задай като</string>
+    <string name="set_online_status">Състояние</string>
     <string name="set_picture_as">Задай като</string>
-    <string name="set_status">Задайте състояние</string>
-    <string name="set_status_message">Задайте съобщение за състояние</string>
     <string name="setup_e2e">По време на настройката на цялостното криптиране ще получите мнемоника от 12 произволни думи , която ще ви е необходима, за да отваряте файловете си на други устройства. Тя ще бъде съхранена само на това устройство и може да бъде показана отново на този екран. Моля, запишете я на сигурно място!</string>
     <string name="share">Сподели</string>
     <string name="share_create_permission">Създаване</string>
@@ -648,7 +656,6 @@
     <string name="share_download_limit">Задаване на ограничение за изтегляне</string>
     <string name="share_edit_permission">Редактиране</string>
     <string name="share_expiration_date_format">%1$s</string>
-    <string name="share_expiration_date_label">Изтича %1$s</string>
     <string name="share_file">Споделяне на %1$s</string>
     <string name="share_group_clarification">%1$s (група)</string>
     <string name="share_internal_link">Сподели вътрешна връзка</string>
@@ -665,9 +672,7 @@
     <string name="share_link_with_label">Споделяне на линк (%1$s)</string>
     <string name="share_no_expiration_date_label">Срок на валидност</string>
     <string name="share_no_password_title">Задайте парола</string>
-    <string name="share_password_title">Защитена с парола</string>
     <string name="share_permission_can_edit">Може да редактира</string>
-    <string name="share_permission_file_drop">Пускане/Преместване/ на файл</string>
     <string name="share_permission_secure_file_drop">Защитено пускане на файлове</string>
     <string name="share_permission_view_only">Само изглед</string>
     <string name="share_re_share_permission">Споделяне</string>
@@ -682,7 +687,6 @@
     <string name="share_via_link_section_title">Връзка за споделяне</string>
     <string name="share_via_link_send_link_label">Изпратете връзката</string>
     <string name="share_via_link_unset_password">Зануляване</string>
-    <string name="share_with_title">Споделете чрез ...</string>
     <string name="shared_avatar_desc">Аватар от споделен потребител</string>
     <string name="shared_icon_share">сподели</string>
     <string name="shared_icon_shared">споделено</string>
@@ -696,6 +700,8 @@
     <string name="signup_with_provider">Абониране при доставчик</string>
     <string name="single_sign_on_request_token" formatted="true">Разрешавате ли на %1$s да достъпва вашия Nextcloud профил %2$s?</string>
     <string name="sort_by">Сортиране по</string>
+    <string name="sort_favorites_first">Първо сортирайте любимите</string>
+    <string name="sort_folders_before_files">Сортиране на папки преди файлове</string>
     <string name="ssl_validator_btn_details_hide">Скриване</string>
     <string name="ssl_validator_btn_details_see">Подробности</string>
     <string name="ssl_validator_header">Идентичността на сървъра не може да бъде потвърдена</string>
@@ -731,7 +737,6 @@
     <string name="storage_internal_storage">Вътрешна памет</string>
     <string name="storage_movies">Филми</string>
     <string name="storage_music">Музика</string>
-    <string name="storage_permission_full_access">Пълен достъп</string>
     <string name="storage_permission_media_read_only">Медия само за четене</string>
     <string name="storage_pictures">Снимки</string>
     <string name="store_full_dev_desc">Самостоятелно хостваната платформа за производителност, която ви помага да поддържате контрол. \ NТова е официалната версия за разработка, включваща ежедневна извадка от всяка нова непроверена функционалност, която може да причини нестабилност и загуба на данни. Приложението е за потребители, които желаят да тестват и да докладват грешки, ако възникнат. Не го използвайте за вашата продуктивна работа! \ N \ nИ двете версии - официалната за разработчици и обикновената версия са налични на F-droid и могат да бъдат инсталирани едновременно.</string>
@@ -790,6 +795,7 @@
     <string name="trashbin_loading_failed">Зареждането на кошчето е неуспешно!</string>
     <string name="trashbin_not_emptied">Файловете не могат да бъдат окончателно изтрити!</string>
     <string name="unexpected_error_occurred">Възникна неочаквана грешка</string>
+    <string name="unknown">Неизвестен</string>
     <string name="unlock_file">Отключване на файл</string>
     <string name="unread_comments">Съществуват непрочетени коментари</string>
     <string name="unset_encrypted">Изключи криптиране</string>
@@ -824,6 +830,7 @@
     <string name="upload_local_storage_full">Локалното място за съхранение е пълно</string>
     <string name="upload_local_storage_not_copied">Файлът не може да бъде копиран в локалното хранилище</string>
     <string name="upload_lock_failed">Неуспешно заключване на папката</string>
+    <string name="upload_manually_cancelled">Качването е отменено от потребителя</string>
     <string name="upload_old_android">Шифроването е възможно само с > = Android 5.0</string>
     <string name="upload_query_move_foreign_files">В папка %1$s няма достатъчно място за копиране на избраните файлове. Желаете ли да бъдат преместени?</string>
     <string name="upload_scan_doc_upload">Сканиране на документ от камера</string>
@@ -857,9 +864,9 @@
     <string name="uploader_wrn_no_account_setup_btn_text">Настройка</string>
     <string name="uploader_wrn_no_account_text">На устройството няма профил за %1$s. Моля съдайте такъв.</string>
     <string name="uploader_wrn_no_account_title">Не е открит профил</string>
+    <string name="uploads_view_group_completed_uploads">Завършен</string>
     <string name="uploads_view_group_current_uploads">Текущ</string>
     <string name="uploads_view_group_failed_uploads">Провален/в очакване на рестарт</string>
-    <string name="uploads_view_group_finished_uploads">Качени</string>
     <string name="uploads_view_group_manually_cancelled_uploads">Отказано</string>
     <string name="uploads_view_later_waiting_to_upload">Изчакване за качване</string>
     <string name="uploads_view_title">Качени</string>
@@ -883,7 +890,9 @@
     <string name="user_icon">Потребител</string>
     <string name="user_info_address">Адрес</string>
     <string name="user_info_email">Имейл</string>
+    <string name="user_info_groups">Групи</string>
     <string name="user_info_phone">Телефонен номер</string>
+    <string name="user_info_profile">Профил</string>
     <string name="user_info_twitter">Twitter</string>
     <string name="user_info_website">Интернет страница</string>
     <string name="user_information_retrieval_error">Грешка при изтеглянето на потребителска информация</string>
@@ -898,7 +907,7 @@
     <string name="what_s_new_image">Какво ново</string>
     <string name="whats_new_skip">Пропусни</string>
     <string name="whats_new_title">Ново в %1$s</string>
-    <string name="whats_your_status">Какъв е вашият статус?</string>
+    <string name="whats_your_status">Какво е вашето състояние?</string>
     <string name="widgets_not_available_title">Не е наличен</string>
     <string name="worker_download">Сваляне на файлове...</string>
     <string name="write_email">Изпращане на имейл</string>
@@ -939,10 +948,6 @@
     <plurals name="export_partially_failed">
         <item quantity="one">Експортирани са %d файла, пропусната е почивка поради грешка</item>
         <item quantity="other">Експортирани са %d файла, пропусната почивка поради грешка</item>
-    </plurals>
-    <plurals name="export_start">
-        <item quantity="one">%dфайла ще бъдат експортирани. Вижте известието за подробности.</item>
-        <item quantity="other">%dфайла ще бъдат експортирани. Вижте известието за подробности.</item>
     </plurals>
     <plurals name="file_list__footer__folder">
         <item quantity="one">%1$d папка</item>

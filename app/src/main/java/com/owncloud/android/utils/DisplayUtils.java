@@ -26,6 +26,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -34,6 +35,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
@@ -44,23 +47,13 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.bumptech.glide.GenericRequestBuilder;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.model.StreamEncoder;
-import com.bumptech.glide.load.resource.file.FileToStreamDecoder;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.target.Target;
-import com.caverock.androidsvg.SVG;
 import com.elyeproj.loaderviewlibrary.LoaderImageView;
 import com.google.android.material.snackbar.Snackbar;
 import com.ionos.annotation.IonosCustomization;
 import com.ionos.utils.IonosBuildHelper;
 import com.nextcloud.client.account.CurrentAccountProvider;
 import com.nextcloud.client.account.User;
-import com.nextcloud.client.network.ClientFactory;
 import com.nextcloud.client.preferences.AppPreferences;
 import com.nextcloud.model.OfflineOperationType;
 import com.owncloud.android.MainApp;
@@ -69,22 +62,14 @@ import com.owncloud.android.datamodel.ArbitraryDataProvider;
 import com.owncloud.android.datamodel.ArbitraryDataProviderImpl;
 import com.owncloud.android.datamodel.FileDataStorageManager;
 import com.owncloud.android.datamodel.OCFile;
-import com.owncloud.android.datamodel.SyncedFolderProvider;
 import com.owncloud.android.datamodel.ThumbnailsCacheManager;
 import com.owncloud.android.lib.common.OwnCloudAccount;
 import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.lib.resources.files.model.ServerFileInterface;
 import com.owncloud.android.ui.TextDrawable;
-import com.owncloud.android.ui.activity.FileDisplayActivity;
 import com.owncloud.android.ui.dialog.SortingOrderDialogFragment;
-import com.owncloud.android.ui.events.SearchEvent;
-import com.owncloud.android.ui.fragment.OCFileListFragment;
-import com.owncloud.android.utils.glide.CustomGlideUriLoader;
-import com.owncloud.android.utils.svg.SvgDecoder;
-import com.owncloud.android.utils.svg.SvgDrawableTranscoder;
+import com.owncloud.android.utils.overlay.OverlayManager;
 import com.owncloud.android.utils.theme.ViewThemeUtils;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -93,15 +78,15 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.IDN;
 import java.nio.charset.Charset;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.TimeZone;
 
 import androidx.annotation.DrawableRes;
@@ -111,6 +96,7 @@ import androidx.annotation.StringRes;
 import androidx.appcompat.widget.AppCompatDrawableManager;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -130,37 +116,17 @@ public final class DisplayUtils {
 
     private static final String[] sizeSuffixes = {"B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"};
     private static final int[] sizeScales = {0, 0, 1, 1, 1, 2, 2, 2, 2};
-    private static final String MIME_TYPE_UNKNOWN = "Unknown type";
 
     private static final String HTTP_PROTOCOL = "http://";
     private static final String HTTPS_PROTOCOL = "https://";
     private static final String TWITTER_HANDLE_PREFIX = "@";
-    private static final int MIMETYPE_PARTS_COUNT = 2;
     private static final int BYTE_SIZE_DIVIDER = 1024;
     private static final double BYTE_SIZE_DIVIDER_DOUBLE = 1024.0;
     private static final int DATE_TIME_PARTS_SIZE = 2;
-
+    private static final Handler mainLooper = new Handler(Looper.getMainLooper());
     public static final String MONTH_YEAR_PATTERN = "MMMM yyyy";
     public static final String MONTH_PATTERN = "MMMM";
     public static final String YEAR_PATTERN = "yyyy";
-    public static final int SVG_SIZE = 512;
-
-    private static Map<String, String> mimeType2HumanReadable;
-
-    static {
-        mimeType2HumanReadable = new HashMap<>();
-        // images
-        mimeType2HumanReadable.put("image/jpeg", "JPEG image");
-        mimeType2HumanReadable.put("image/jpg", "JPEG image");
-        mimeType2HumanReadable.put("image/png", "PNG image");
-        mimeType2HumanReadable.put("image/bmp", "Bitmap image");
-        mimeType2HumanReadable.put("image/gif", "GIF image");
-        mimeType2HumanReadable.put("image/svg+xml", "JPEG image");
-        mimeType2HumanReadable.put("image/tiff", "TIFF image");
-        // music
-        mimeType2HumanReadable.put("audio/mpeg", "MP3 music file");
-        mimeType2HumanReadable.put("application/ogg", "OGG music file");
-    }
 
     private DisplayUtils() {
         // utility class -> private constructor
@@ -189,26 +155,8 @@ public final class DisplayUtils {
             }
 
             return new BigDecimal(String.valueOf(result)).setScale(
-                sizeScales[suffixIndex], BigDecimal.ROUND_HALF_UP) + " " + sizeSuffixes[suffixIndex];
+                sizeScales[suffixIndex], RoundingMode.HALF_UP) + " " + sizeSuffixes[suffixIndex];
         }
-    }
-
-    /**
-     * Converts MIME types like "image/jpg" to more end user friendly output
-     * like "JPG image".
-     *
-     * @param mimetype MIME type to convert
-     * @return A human friendly version of the MIME type, {@link #MIME_TYPE_UNKNOWN} if it can't be converted
-     */
-    public static String convertMIMEtoPrettyPrint(String mimetype) {
-        final String humanReadableMime = mimeType2HumanReadable.get(mimetype);
-        if (humanReadableMime != null) {
-            return humanReadableMime;
-        }
-        if (mimetype.split("/").length >= MIMETYPE_PARTS_COUNT) {
-            return mimetype.split("/")[1].toUpperCase(Locale.getDefault()) + " file";
-        }
-        return MIME_TYPE_UNKNOWN;
     }
 
     /**
@@ -279,10 +227,10 @@ public final class DisplayUtils {
     public static String convertIdn(String url, boolean toASCII) {
 
         String urlNoDots = url;
-        String dots = "";
+        StringBuilder dots = new StringBuilder();
         while (urlNoDots.length() > 0 && urlNoDots.charAt(0) == '.') {
             urlNoDots = url.substring(1);
-            dots = dots + ".";
+            dots.append(".");
         }
 
         // Find host name after '//' or '@'
@@ -300,7 +248,7 @@ public final class DisplayUtils {
         String host = urlNoDots.substring(hostStart, hostEnd);
         host = toASCII ? IDN.toASCII(host) : IDN.toUnicode(host);
 
-        return dots + urlNoDots.substring(0, hostStart) + host + urlNoDots.substring(hostEnd);
+        return dots.toString() + urlNoDots.substring(0, hostStart) + host + urlNoDots.substring(hostEnd);
     }
 
     /**
@@ -350,7 +298,6 @@ public final class DisplayUtils {
                                                          int flags,
                                                          boolean showFuture) {
 
-        CharSequence dateString = "";
 
         // in Future
         if (!showFuture && time > System.currentTimeMillis()) {
@@ -361,34 +308,19 @@ public final class DisplayUtils {
         if (diff > 0 && diff < 60 * 1000 && minResolution == DateUtils.SECOND_IN_MILLIS) {
             return c.getString(R.string.file_list_seconds_ago);
         } else {
-            dateString = DateUtils.getRelativeDateTimeString(c, time, minResolution, transitionResolution, flags);
-        }
+            CharSequence dateString = DateUtils.getRelativeDateTimeString(c, time, minResolution, transitionResolution, flags);
 
-        String[] parts = dateString.toString().split(",");
-        if (parts.length == DATE_TIME_PARTS_SIZE) {
-            if (parts[1].contains(":") && !parts[0].contains(":")) {
-                return parts[0];
-            } else if (parts[0].contains(":") && !parts[1].contains(":")) {
-                return parts[1];
+            String[] parts = dateString.toString().split(",");
+            if (parts.length == DATE_TIME_PARTS_SIZE) {
+                if (parts[1].contains(":") && !parts[0].contains(":")) {
+                    return parts[0];
+                } else if (parts[0].contains(":") && !parts[1].contains(":")) {
+                    return parts[1];
+                }
             }
+            // dateString contains unexpected format. fallback: use relative date time string from android api as is.
+            return dateString.toString();
         }
-        // dateString contains unexpected format. fallback: use relative date time string from android api as is.
-        return dateString.toString();
-    }
-
-    /**
-     * Update the passed path removing the last "/" if it is not the root folder.
-     *
-     * @param path the path to be trimmed
-     */
-    public static String getPathWithoutLastSlash(String path) {
-
-        // Remove last slash from path
-        if (path.length() > 1 && path.charAt(path.length() - 1) == OCFile.PATH_SEPARATOR.charAt(0)) {
-            return path.substring(0, path.length() - 1);
-        }
-
-        return path;
     }
 
     /**
@@ -454,6 +386,11 @@ public final class DisplayUtils {
         String userId = accountManager.getUserData(user.toPlatformAccount(),
                 com.owncloud.android.lib.common.accounts.AccountUtils.Constants.KEY_USER_ID);
 
+        if (userId == null) {
+            Log_OC.e(TAG, "user id is null, cannot set avatar");
+            return;
+        }
+
         setAvatar(user, userId, listener, avatarRadius, resources, callContext, context);
     }
 
@@ -480,6 +417,7 @@ public final class DisplayUtils {
      * @param avatarRadius the avatar radius
      * @param resources    reference for density information
      * @param callContext  which context is called to set the generated avatar
+     * @param context      general context
      */
     @IonosCustomization
     public static void setAvatar(@NonNull User user,
@@ -498,9 +436,39 @@ public final class DisplayUtils {
             Drawable avatar = ResourcesCompat.getDrawable(resources, R.drawable.account_circle_white, null);
             listener.avatarGenerated(avatar, callContext);
             return;
+        setAvatar(user, userId, displayName, listener, avatarRadius, resources, callContext, context, 0);
+    }
+
+    /**
+     * fetches and sets the avatar of the given account in the passed callContext
+     *
+     * @param user           the account to be used to connect to server
+     * @param userId         the userId which avatar should be set
+     * @param displayName    displayName used to generate avatar with first char, only used as fallback
+     * @param avatarRadius   the avatar radius
+     * @param resources      reference for density information
+     * @param callContext    which context is called to set the generated avatar
+     * @param context        general context
+     * @param avatarBorder  value in case the avatar has a border, like in the case of the AvatarGroupLayout
+     */
+    public static void setAvatar(@NonNull User user,
+                                 @NonNull String userId,
+                                 String displayName,
+                                 AvatarGenerationListener listener,
+                                 float avatarRadius,
+                                 Resources resources,
+                                 Object callContext,
+                                 Context context,
+                                 int avatarBorder) {
+        if (callContext instanceof View v) {
+            v.setContentDescription(String.valueOf(user.toPlatformAccount().hashCode()));
         }
 
-        ArbitraryDataProvider arbitraryDataProvider = new ArbitraryDataProviderImpl(context);
+        if (IonosBuildHelper.isIonosBuild()) {
+            Drawable avatar = ResourcesCompat.getDrawable(resources, R.drawable.account_circle_white, null);
+            listener.avatarGenerated(avatar, callContext);
+            return;
+        }
 
         final String accountName = user.getAccountName();
         String serverName = accountName.substring(accountName.lastIndexOf('@') + 1);
@@ -525,6 +493,8 @@ public final class DisplayUtils {
             if (avatar == null) {
                 try {
                     avatar = TextDrawable.createAvatarByUserId(displayName, avatarRadius);
+                    avatar = TextDrawable.createAvatarByUserId(displayName,
+                                                               (avatarRadius - avatarBorder));
                 } catch (Exception e) {
                     Log_OC.e(TAG, "Error calculating RGB value for active account icon.", e);
                     avatar = ResourcesCompat.getDrawable(resources,
@@ -551,87 +521,6 @@ public final class DisplayUtils {
         task.execute(userId);
     }
 
-    public static void downloadIcon(CurrentAccountProvider currentAccountProvider,
-                                    ClientFactory clientFactory,
-                                    Context context,
-                                    String iconUrl,
-                                    SimpleTarget imageView,
-                                    int placeholder) {
-        try {
-            if (Uri.parse(iconUrl).getEncodedPath().endsWith(".svg")) {
-                downloadSVGIcon(currentAccountProvider, clientFactory, context, iconUrl, imageView, placeholder);
-            } else {
-                downloadPNGIcon(context, iconUrl, imageView, placeholder);
-            }
-        } catch (Exception e) {
-            Log_OC.d(TAG, "not setting image as activity is destroyed");
-        }
-    }
-
-    private static void downloadPNGIcon(Context context, String iconUrl, SimpleTarget imageView, int placeholder) {
-        Glide
-            .with(context)
-            .load(iconUrl)
-            .centerCrop()
-            .placeholder(placeholder)
-            .error(placeholder)
-            .crossFade()
-            .into(imageView);
-    }
-
-    private static void downloadSVGIcon(CurrentAccountProvider currentAccountProvider,
-                                        ClientFactory clientFactory,
-                                        Context context,
-                                        String iconUrl,
-                                        SimpleTarget imageView,
-                                        int placeholder) {
-        GenericRequestBuilder<Uri, InputStream, SVG, Drawable> requestBuilder = Glide.with(context)
-            .using(new CustomGlideUriLoader(currentAccountProvider.getUser(), clientFactory), InputStream.class)
-            .from(Uri.class)
-            .as(SVG.class)
-            .transcode(new SvgDrawableTranscoder(context), Drawable.class)
-            .sourceEncoder(new StreamEncoder())
-            .cacheDecoder(new FileToStreamDecoder<>(new SvgDecoder()))
-            .decoder(new SvgDecoder())
-            .placeholder(placeholder)
-            .error(placeholder)
-            .animate(android.R.anim.fade_in);
-
-
-        Uri uri = Uri.parse(iconUrl);
-        requestBuilder
-            .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-            .load(uri)
-            .into(imageView);
-    }
-
-    public static Bitmap downloadImageSynchronous(Context context, String imageUrl) {
-        try {
-            return Glide.with(context)
-                .load(imageUrl)
-                .asBitmap()
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .skipMemoryCache(true)
-                .into(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
-                .get();
-        } catch (Exception e) {
-            Log_OC.e(TAG, "Could not download image " + imageUrl);
-            return null;
-        }
-    }
-
-    private static void switchToSearchFragment(Activity activity, SearchEvent event) {
-        if (activity instanceof FileDisplayActivity) {
-            EventBus.getDefault().post(event);
-        } else {
-            Intent recentlyAddedIntent = new Intent(activity.getBaseContext(), FileDisplayActivity.class);
-            recentlyAddedIntent.putExtra(OCFileListFragment.SEARCH_EVENT, event);
-            recentlyAddedIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            activity.startActivity(recentlyAddedIntent);
-        }
-    }
-
-
     /**
      * Get String data from a InputStream
      *
@@ -653,33 +542,142 @@ public final class DisplayUtils {
         return text.toString();
     }
 
-    /**
-     * Show a temporary message in a {@link Snackbar} bound to the content view.
-     *
-     * @param activity        The {@link Activity} to which's content view the {@link Snackbar} is bound.
-     * @param messageResource The resource id of the string resource to use. Can be formatted text.
-     * @return The created {@link Snackbar}
-     */
-    public static Snackbar showSnackMessage(Activity activity, @StringRes int messageResource) {
-        return showSnackMessage(activity.findViewById(android.R.id.content), messageResource);
+    // region snackbar
+    public static void showSnackMessage(Fragment fragment, @StringRes int messageResource) {
+        if (fragment == null) {
+            Log_OC.e(TAG, "snackbar cannot be shown fragment is null");
+            return;
+        }
+
+        final var activity = fragment.getActivity();
+        if (activity == null) {
+            Log_OC.e(TAG, "snackbar cannot be shown activity is null");
+            return;
+        }
+
+        showSnackMessage(activity, messageResource);
+    }
+
+    public static void showSnackMessage(Activity activity, @StringRes int messageResource) {
+        if (activity == null) {
+            Log_OC.e(TAG, "snackbar cannot be shown activity is null");
+            return;
+        }
+
+        showSnackMessage(activity.findViewById(android.R.id.content), messageResource);
+    }
+
+    public static void showSnackMessage(Activity activity, @StringRes int messageResource, Object... formatArgs) {
+        if (activity == null) {
+            Log_OC.e(TAG, "snackbar cannot be shown activity is null");
+            return;
+        }
+
+        showSnackMessage(activity, activity.findViewById(android.R.id.content), messageResource, formatArgs);
+    }
+
+    public static void showSnackMessage(Context context, View view, @StringRes int messageResource, Object... formatArgs) {
+        if (context == null || view == null) {
+            Log_OC.e(TAG, "snackbar cannot be shown view is null");
+            return;
+        }
+
+        final var snackbar = Snackbar.make(view, String.format(context.getString(messageResource, formatArgs)), Snackbar.LENGTH_LONG);
+        snackbar.show();
+    }
+
+    public static void showSnackMessage(Activity activity, String message) {
+        if (activity == null) {
+            Log_OC.e(TAG, "snackbar cannot be shown activity is null");
+            return;
+        }
+
+        activity.runOnUiThread(() -> {
+            final var snackbar = Snackbar.make(activity.findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG);
+            var fab = findFABView(activity);
+            if (fab != null && fab.getVisibility() == View.VISIBLE) {
+                snackbar.setAnchorView(fab);
+            }
+            snackbar.show();
+        });
+    }
+
+    public static void showSnackMessage(View view, @StringRes int messageResource) {
+        if (view == null) {
+            Log_OC.e(TAG, "snackbar cannot be shown view is null");
+            return;
+        }
+
+        mainLooper.post(() -> {
+            final var snackbar = Snackbar.make(view, messageResource, Snackbar.LENGTH_LONG);
+            var fab = findFABView(view.getRootView());
+            if (fab != null && fab.getVisibility() == View.VISIBLE) {
+                snackbar.setAnchorView(fab);
+            }
+            snackbar.show();
+        });
+    }
+
+    public static void showSnackMessage(View view, String message) {
+        if (view == null) {
+            Log_OC.e(TAG, "snackbar cannot be shown view is null");
+            return;
+        }
+
+        mainLooper.post(() -> {
+            final Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_LONG);
+            snackbar.show();
+        });
     }
 
     /**
-     * Show a temporary message in a {@link Snackbar} bound to the content view.
+     * Shows a Snackbar with an action button to open app settings.
      *
-     * @param activity The {@link Activity} to which's content view the {@link Snackbar} is bound.
-     * @param message  Message to show.
-     * @return The created {@link Snackbar}
+     * @param view            The view to find a parent from
+     * @param message         The message string
+     * @param context         Context to start the settings intent
      */
-    public static Snackbar showSnackMessage(Activity activity, String message) {
-        final Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG);
-        var fab = findFABView(activity);
-        if (fab != null && fab.getVisibility() == View.VISIBLE) {
-            snackbar.setAnchorView(fab);
+    @IonosCustomization("SnackMessageWithSettingsAction")
+    public static void showSnackMessageWithSettingsAction(View view,
+                                                          String message,
+                                                          Context context) {
+        if (view == null || context == null) {
+            Log_OC.e(TAG, "snackbar cannot be shown - view or context is null");
+            return;
         }
-        snackbar.show();
-        return snackbar;
+
+        mainLooper.post(() -> {
+            final Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_LONG);
+            snackbar.setAction(R.string.settings_action, v -> openAppSettings(context));
+            snackbar.show();
+        });
     }
+
+    /**
+     * Opens the app settings screen where user can grant permissions.
+     *
+     * @param context Context to start the settings activity
+     */
+    @IonosCustomization("openAppSettings")
+    private static void openAppSettings(Context context) {
+        try {
+            Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            Uri uri = Uri.fromParts("package", context.getPackageName(), null);
+            intent.setData(uri);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+        } catch (Exception e) {
+            Log_OC.e(TAG, "Error opening app settings", e);
+            try {
+                Intent intent = new Intent(android.provider.Settings.ACTION_SETTINGS);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+            } catch (Exception ex) {
+                Log_OC.e(TAG, "Error opening settings", ex);
+            }
+        }
+    }
+    // endregion
 
     private static View findFABView(Activity activity) {
         return activity.findViewById(R.id.fab_main);
@@ -689,35 +687,6 @@ public final class DisplayUtils {
         return view.findViewById(R.id.fab_main);
     }
 
-    /**
-     * Show a temporary message in a {@link Snackbar} bound to the given view.
-     *
-     * @param view            The view the {@link Snackbar} is bound to.
-     * @param messageResource The resource id of the string resource to use. Can be formatted text.
-     * @return The created {@link Snackbar}
-     */
-    public static Snackbar showSnackMessage(View view, @StringRes int messageResource) {
-        final Snackbar snackbar = Snackbar.make(view, messageResource, Snackbar.LENGTH_LONG);
-        var fab = findFABView(view.getRootView());
-        if (fab != null && fab.getVisibility() == View.VISIBLE) {
-            snackbar.setAnchorView(fab);
-        }
-        snackbar.show();
-        return snackbar;
-    }
-
-    /**
-     * Show a temporary message in a {@link Snackbar} bound to the given view.
-     *
-     * @param view    The view the {@link Snackbar} is bound to.
-     * @param message The message.
-     * @return The created {@link Snackbar}
-     */
-    public static Snackbar showSnackMessage(View view, String message) {
-        final Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_LONG);
-        snackbar.show();
-        return snackbar;
-    }
 
     /**
      * create a temporary message in a {@link Snackbar} bound to the given view.
@@ -728,37 +697,6 @@ public final class DisplayUtils {
      */
     public static Snackbar createSnackbar(View view, @StringRes int messageResource, int length) {
         return Snackbar.make(view, messageResource, length);
-    }
-
-    /**
-     * Show a temporary message in a {@link Snackbar} bound to the content view.
-     *
-     * @param activity        The {@link Activity} to which's content view the {@link Snackbar} is bound.
-     * @param messageResource The resource id of the string resource to use. Can be formatted text.
-     * @param formatArgs      The format arguments that will be used for substitution.
-     * @return The created {@link Snackbar}
-     */
-    public static Snackbar showSnackMessage(Activity activity, @StringRes int messageResource, Object... formatArgs) {
-        return showSnackMessage(activity, activity.findViewById(android.R.id.content), messageResource, formatArgs);
-    }
-
-    /**
-     * Show a temporary message in a {@link Snackbar} bound to the content view.
-     *
-     * @param context         to load resources.
-     * @param view            The content view the {@link Snackbar} is bound to.
-     * @param messageResource The resource id of the string resource to use. Can be formatted text.
-     * @param formatArgs      The format arguments that will be used for substitution.
-     * @return The created {@link Snackbar}
-     */
-    public static Snackbar showSnackMessage(Context context, View view, @StringRes int messageResource, Object... formatArgs) {
-        final Snackbar snackbar = Snackbar.make(
-            view,
-            String.format(context.getString(messageResource, formatArgs)),
-            Snackbar.LENGTH_LONG);
-        snackbar
-            .show();
-        return snackbar;
     }
 
     // Solution inspired by https://stackoverflow.com/questions/34936590/why-isnt-my-vector-drawable-scaling-as-expected
@@ -774,7 +712,7 @@ public final class DisplayUtils {
             constructor.setAccessible(true);
             Object vdcInflateDelegate = constructor.newInstance();
 
-            Class<?> args[] = {String.class, inflateDelegateClass};
+            Class<?>[] args = {String.class, inflateDelegateClass};
             Method addDelegate = AppCompatDrawableManager.class.getDeclaredMethod("addDelegate", args);
             addDelegate.setAccessible(true);
             addDelegate.invoke(drawableManager, "vector", vdcInflateDelegate);
@@ -795,6 +733,14 @@ public final class DisplayUtils {
         DisplayMetrics metrics = resources.getDisplayMetrics();
 
         return px * (DisplayMetrics.DENSITY_DEFAULT / (float) metrics.densityDpi);
+    }
+
+    public static boolean isRTL() {
+        return TextUtils.getLayoutDirectionFromLocale(Locale.getDefault()) == View.LAYOUT_DIRECTION_RTL;
+    }
+
+    public static boolean isOrientationLandscape() {
+        return MainApp.getAppContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
     }
 
     static public void showServerOutdatedSnackbar(Activity activity, int length) {
@@ -828,11 +774,6 @@ public final class DisplayUtils {
         }
     }
 
-    static public void showErrorAndFinishActivity(Activity activity, String errorMessage) {
-        Toast.makeText(activity, errorMessage, Toast.LENGTH_LONG).show();
-        activity.finish();
-    }
-
     static public void openSortingOrderDialogFragment(FragmentManager supportFragmentManager, FileSortOrder sortOrder) {
         FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
         fragmentTransaction.addToBackStack(null);
@@ -841,20 +782,32 @@ public final class DisplayUtils {
     }
 
     public static @StringRes int getSortOrderStringId(FileSortOrder sortOrder) {
+        return switch (sortOrder.name) {
+            case SORT_Z_TO_A_ID -> R.string.menu_item_sort_by_name_z_a;
+            case SORT_NEW_TO_OLD_ID -> R.string.menu_item_sort_by_date_newest_first;
+            case SORT_OLD_TO_NEW_ID -> R.string.menu_item_sort_by_date_oldest_first;
+            case SORT_BIG_TO_SMALL_ID -> R.string.menu_item_sort_by_size_biggest_first;
+            case SORT_SMALL_TO_BIG_ID -> R.string.menu_item_sort_by_size_smallest_first;
+            default -> R.string.menu_item_sort_by_name_a_z;
+        };
+    }
+
+    @IonosCustomization
+    public static @DrawableRes int getSortOrderIconRes(FileSortOrder sortOrder) {
         switch (sortOrder.name) {
             case SORT_Z_TO_A_ID:
-                return R.string.menu_item_sort_by_name_z_a;
+                return R.drawable.ic_alphabetical_desc;
             case SORT_NEW_TO_OLD_ID:
-                return R.string.menu_item_sort_by_date_newest_first;
+                return R.drawable.ic_modification_desc;
             case SORT_OLD_TO_NEW_ID:
-                return R.string.menu_item_sort_by_date_oldest_first;
+                return R.drawable.ic_modification_asc;
             case SORT_BIG_TO_SMALL_ID:
-                return R.string.menu_item_sort_by_size_biggest_first;
+                return R.drawable.ic_size_desc;
             case SORT_SMALL_TO_BIG_ID:
-                return R.string.menu_item_sort_by_size_smallest_first;
+                return R.drawable.ic_size_asc;
             case SORT_A_TO_Z_ID:
             default:
-                return R.string.menu_item_sort_by_name_a_z;
+                return R.drawable.ic_alphabetical_asc;
         }
     }
 
@@ -933,6 +886,7 @@ public final class DisplayUtils {
                                     AppPreferences preferences,
                                     ViewThemeUtils viewThemeUtils,
                                     SyncedFolderProvider syncedFolderProvider) {
+                                    OverlayManager overlayManager) {
         if (file == null || thumbnailView == null || context == null) {
             return;
         }
@@ -944,6 +898,7 @@ public final class DisplayUtils {
 
         if (file.isFolder()) {
             setThumbnailForFolder(file, thumbnailView, shimmerThumbnail, user, syncedFolderProvider, preferences, context, viewThemeUtils);
+            overlayManager.setFolderThumbnail(file, thumbnailView, shimmerThumbnail);
             return;
         }
 
@@ -958,6 +913,7 @@ public final class DisplayUtils {
     private static void setThumbnailFirstTimeForFile(OCFile file, ImageView thumbnailView, FileDataStorageManager storageManager, List<ThumbnailsCacheManager.ThumbnailGenerationTask> asyncTasks, boolean gridView, LoaderImageView shimmerThumbnail, User user, AppPreferences preferences, Context context, ViewThemeUtils viewThemeUtils) {
         if (file.getRemoteId() != null) {
             generateNewThumbnail(file, thumbnailView, user, storageManager, asyncTasks, gridView, context, shimmerThumbnail, preferences, viewThemeUtils);
+            generateNewThumbnail(file, thumbnailView, user, storageManager, new ArrayList<>(asyncTasks), gridView, context, shimmerThumbnail, preferences, viewThemeUtils);
             return;
         }
 
@@ -1003,6 +959,10 @@ public final class DisplayUtils {
         final var thumbnail = ThumbnailsCacheManager.getBitmapFromDiskCache(ThumbnailsCacheManager.PREFIX_THUMBNAIL + file.getRemoteId());
         if (thumbnail == null || file.isUpdateThumbnailNeeded()) {
             generateNewThumbnail(file, thumbnailView, user, storageManager, asyncTasks, gridView, context, shimmerThumbnail, preferences, viewThemeUtils);
+    public static void setThumbnailFromCache(OCFile file, ImageView thumbnailView, FileDataStorageManager storageManager, List<ThumbnailsCacheManager.ThumbnailGenerationTask> asyncTasks, boolean gridView, LoaderImageView shimmerThumbnail, User user, AppPreferences preferences, Context context, ViewThemeUtils viewThemeUtils) {
+        final var thumbnail = ThumbnailsCacheManager.getBitmapFromDiskCache(ThumbnailsCacheManager.PREFIX_THUMBNAIL + file.getRemoteId());
+        if (thumbnail == null || file.isUpdateThumbnailNeeded()) {
+            generateNewThumbnail(file, thumbnailView, user, storageManager, new ArrayList<>(asyncTasks), gridView, context, shimmerThumbnail, preferences, viewThemeUtils);
             setThumbnailBackgroundForPNGFileIfNeeded(file, context, thumbnailView);
             return;
         }
@@ -1030,7 +990,7 @@ public final class DisplayUtils {
                                              ImageView thumbnailView,
                                              User user,
                                              FileDataStorageManager storageManager,
-                                             List<ThumbnailsCacheManager.ThumbnailGenerationTask> asyncTasks,
+                                             ArrayList<ThumbnailsCacheManager.ThumbnailGenerationTask> asyncTasks,
                                              boolean gridView,
                                              Context context,
                                              LoaderImageView shimmerThumbnail,
@@ -1056,6 +1016,8 @@ public final class DisplayUtils {
                 return;
             }
         }
+
+        thumbnailView.setTag(file.getFileId());
 
         try {
             final ThumbnailsCacheManager.ThumbnailGenerationTask task =
@@ -1112,7 +1074,8 @@ public final class DisplayUtils {
             task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,
                                    new ThumbnailsCacheManager.ThumbnailGenerationTaskObject(file,
                                                                                             file.getRemoteId()));
-        } catch (IllegalArgumentException e) {
+            thumbnailView.invalidate();
+        } catch (Exception e) {
             Log_OC.d(TAG, "ThumbnailGenerationTask : " + e.getMessage());
         }
     }

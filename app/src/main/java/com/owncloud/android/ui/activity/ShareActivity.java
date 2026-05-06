@@ -22,6 +22,7 @@ import com.nextcloud.client.account.User;
 import com.owncloud.android.R;
 import com.owncloud.android.databinding.ShareActivityBinding;
 import com.owncloud.android.datamodel.OCFile;
+import com.owncloud.android.datamodel.SyncedFolderObserver;
 import com.owncloud.android.datamodel.SyncedFolderProvider;
 import com.owncloud.android.datamodel.ThumbnailsCacheManager;
 import com.owncloud.android.lib.common.operations.RemoteOperation;
@@ -73,14 +74,14 @@ public class ShareActivity extends FileActivity {
 
         OCFile file = getFile();
         Optional<User> optionalUser = getUser();
-        if (!optionalUser.isPresent()) {
+        if (optionalUser.isEmpty()) {
             finish();
             return;
         }
 
         // Icon
         if (file.isFolder()) {
-            boolean isAutoUploadFolder = SyncedFolderProvider.isAutoUploadFolder(syncedFolderProvider, file, optionalUser.get());
+            boolean isAutoUploadFolder = SyncedFolderObserver.INSTANCE.isAutoUploadFolder(file, optionalUser.get());
 
             Integer overlayIconId = file.getFileOverlayIconId(isAutoUploadFolder);
             LayerDrawable drawable = MimeTypeUtil.getFolderIcon(preferences.isDarkModeEnabled(), overlayIconId, this, viewThemeUtils);

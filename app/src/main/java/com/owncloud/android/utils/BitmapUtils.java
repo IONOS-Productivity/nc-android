@@ -15,8 +15,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapFactory.Options;
 import android.graphics.Canvas;
-import android.graphics.ImageDecoder;
-import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
@@ -25,9 +23,9 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.widget.ImageView;
 
+import com.nextcloud.utils.BitmapExtensionsKt;
 import com.owncloud.android.MainApp;
 import com.owncloud.android.R;
 import com.owncloud.android.lib.common.utils.Log_OC;
@@ -35,8 +33,6 @@ import com.owncloud.android.lib.resources.users.Status;
 import com.owncloud.android.lib.resources.users.StatusType;
 import com.owncloud.android.ui.StatusDrawable;
 
-
-import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -48,6 +44,8 @@ import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 import androidx.exifinterface.media.ExifInterface;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
+import static com.nextcloud.utils.extensions.ThumbnailsCacheManagerExtensionsKt.getExifOrientation;
 
 /**
  * Utility class with methods for decoding Bitmaps.
@@ -84,34 +82,9 @@ public final class BitmapUtils {
      * @param reqHeight Height of the surface where the Bitmap will be drawn on, in pixels.
      * @return decoded bitmap
      */
+    @Nullable
     public static Bitmap decodeSampledBitmapFromFile(String srcPath, int reqWidth, int reqHeight) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            // For API 28 and above, use ImageDecoder
-            try {
-                return ImageDecoder.decodeBitmap(ImageDecoder.createSource(new File(srcPath)),
-                                                 (decoder, info, source) -> {
-                                                     // Set the target size
-                                                     decoder.setTargetSize(reqWidth, reqHeight);
-                                                 });
-            } catch (Exception exception) {
-                Log_OC.e("BitmapUtil", "Error decoding the bitmap from file: " + srcPath + ", exception: " + exception.getMessage());
-            }
-        }
-        // set desired options that will affect the size of the bitmap
-        final Options options = new Options();
-
-        // make a false load of the bitmap to get its dimensions
-        options.inJustDecodeBounds = true;
-
-        // FIXME after auto-rename can't generate thumbnail from localPath
-        BitmapFactory.decodeFile(srcPath, options);
-
-        // calculate factor to subsample the bitmap
-        options.inSampleSize = calculateSampleFactor(options, reqWidth, reqHeight);
-
-        // decode bitmap with inSampleSize set
-        options.inJustDecodeBounds = false;
-        return BitmapFactory.decodeFile(srcPath, options);
+        return BitmapExtensionsKt.decodeSampledBitmapFromFile(srcPath, reqWidth, reqHeight);
     }
 
     /**
@@ -140,6 +113,9 @@ public final class BitmapUtils {
         // Calculate the scaling factors based on screen dimensions
         var widthScaleFactor = (float) minWidth/ bitmapResult.getWidth();
         var heightScaleFactor = (float) minHeight / bitmapResult.getHeight();
+        // Calculate the scaling factors based on screen dimensions
+        var widthScaleFactor = (float) minWidth/ originalWidth;
+        var heightScaleFactor = (float) minHeight / originalHeight;
 
         // Use the smaller scaling factor to maintain aspect ratio
         var scaleFactor = Math.min(widthScaleFactor, heightScaleFactor);
@@ -151,6 +127,17 @@ public final class BitmapUtils {
         bitmapResult = scaleBitmap(bitmapResult,scaledWidth,scaledHeight);
 
         return bitmapResult;
+        var scaledWidth = (int) (originalWidth * scaleFactor);
+        var scaledHeight = (int) (originalHeight * scaleFactor);
+
+        var shouldRotate = detectRotateImage(storagePath);
+        var result = decodeSampledBitmapFromFile(storagePath, scaledWidth, scaledHeight);
+        if (shouldRotate) {
+            int orientation = getExifOrientation(storagePath);
+            return BitmapExtensionsKt.rotateBitmapViaExif(result, orientation);
+        } else {
+            return result;
+        }
     }
     /**
      * Calculates a proper value for options.inSampleSize in order to decode a Bitmap minimizing the memory overload and
@@ -213,70 +200,41 @@ public final class BitmapUtils {
 
     /**
      * Rotate bitmap according to EXIF orientation. Cf. http://www.daveperrett.com/articles/2012/07/28/exif-orientation-handling-is-a-ghetto/
+     * Detect if Image will be rotated according to EXIF orientation. Cf. http://www.daveperrett.com/articles/2012/07/28/exif-orientation-handling-is-a-ghetto/
      *
-     * @param bitmap      Bitmap to be rotated
      * @param storagePath Path to source file of bitmap. Needed for EXIF information.
-     * @return correctly EXIF-rotated bitmap
+     * @return true if image's orientation determines it will be rotated to where height and width change
      */
-    public static Bitmap rotateImage(Bitmap bitmap, String storagePath) {
-        Bitmap resultBitmap = bitmap;
-
+    public static boolean detectRotateImage(String storagePath) {
         try {
             ExifInterface exifInterface = new ExifInterface(storagePath);
             int orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1);
 
             if (orientation != ExifInterface.ORIENTATION_NORMAL) {
-                Matrix matrix = new Matrix();
                 switch (orientation) {
-                    // 2
-                    case ExifInterface.ORIENTATION_FLIP_HORIZONTAL: {
-                        matrix.postScale(-1.0f, 1.0f);
-                        break;
-                    }
-                    // 3
-                    case ExifInterface.ORIENTATION_ROTATE_180: {
-                        matrix.postRotate(180);
-                        break;
-                    }
-                    // 4
-                    case ExifInterface.ORIENTATION_FLIP_VERTICAL: {
-                        matrix.postScale(1.0f, -1.0f);
-                        break;
-                    }
                     // 5
                     case ExifInterface.ORIENTATION_TRANSPOSE: {
-                        matrix.postRotate(-90);
-                        matrix.postScale(1.0f, -1.0f);
-                        break;
+                        return true;
                     }
                     // 6
                     case ExifInterface.ORIENTATION_ROTATE_90: {
-                        matrix.postRotate(90);
-                        break;
+                        return true;
                     }
                     // 7
                     case ExifInterface.ORIENTATION_TRANSVERSE: {
-                        matrix.postRotate(90);
-                        matrix.postScale(1.0f, -1.0f);
-                        break;
+                        return true;
                     }
                     // 8
                     case ExifInterface.ORIENTATION_ROTATE_270: {
-                        matrix.postRotate(270);
-                        break;
+                        return true;
                     }
                 }
-
-                // Rotate the bitmap
-                resultBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-                if (!resultBitmap.equals(bitmap)) {
-                    bitmap.recycle();
-                }
             }
-        } catch (Exception exception) {
-            Log_OC.e("BitmapUtil", "Could not rotate the image: " + storagePath);
         }
-        return resultBitmap;
+        catch (Exception exception) {
+            Log_OC.e("BitmapUtil", "Could not read orientation at: " + storagePath);
+        }
+        return false;
     }
 
     /**
@@ -425,11 +383,10 @@ public final class BitmapUtils {
 
         @Override
         public boolean equals(@Nullable Object obj) {
-            if (!(obj instanceof Color)) {
+            if (!(obj instanceof Color other)) {
                 return false;
             }
 
-            Color other = (Color) obj;
             return this.r == other.r && this.g == other.g && this.b == other.b;
         }
 
@@ -496,8 +453,7 @@ public final class BitmapUtils {
 
     @NonNull
     public static Bitmap drawableToBitmap(Drawable drawable, int desiredWidth, int desiredHeight) {
-        if (drawable instanceof BitmapDrawable) {
-            BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
+        if (drawable instanceof BitmapDrawable bitmapDrawable) {
             if (bitmapDrawable.getBitmap() != null) {
                 return bitmapDrawable.getBitmap();
             }

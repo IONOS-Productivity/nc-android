@@ -15,6 +15,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import com.ionos.annotation.IonosCustomization
 import com.owncloud.android.databinding.ActivityPrivacySettingsBinding
 import com.owncloud.android.ui.activity.BaseActivity
 import com.owncloud.android.utils.theme.ViewThemeUtils
@@ -58,6 +59,7 @@ class PrivacySettingsActivity : BaseActivity() {
             .launchIn(lifecycleScope)
     }
 
+    @IonosCustomization("Remove window insets paddings")
     override fun isDefaultWindowInsetsHandlingEnabled() = false
 
     override fun onStart() {

@@ -14,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import com.nextcloud.client.account.User
 import com.nextcloud.client.di.Injectable
 import com.nextcloud.client.logger.Logger
+import com.nextcloud.common.SessionTimeOut
 import com.owncloud.android.R
 import com.owncloud.android.datamodel.OCFile
 import com.owncloud.android.lib.common.operations.RemoteOperation
@@ -34,7 +35,9 @@ import javax.inject.Inject
  * A Fragment that lists folders shared by the user
  */
 @Suppress("TooManyFunctions")
-class SharedListFragment : OCFileListFragment(), Injectable {
+class SharedListFragment :
+    OCFileListFragment(),
+    Injectable {
 
     @Inject
     lateinit var logger: Logger
@@ -58,58 +61,61 @@ class SharedListFragment : OCFileListFragment(), Injectable {
         Handler().post {
             if (activity is FileDisplayActivity) {
                 val fileDisplayActivity = activity as FileDisplayActivity
-                fileDisplayActivity.updateActionBarTitleAndHomeButtonByString(getString(R.string.drawer_item_shared))
                 fileDisplayActivity.setMainFabVisible(false)
-                fileDisplayActivity.initSyncBroadcastReceiver()
             }
         }
     }
 
-    override fun getSearchRemoteOperation(currentUser: User?, event: SearchEvent?): RemoteOperation<*> {
-        return GetSharesRemoteOperation()
-    }
+    override fun getSearchRemoteOperation(currentUser: User?, event: SearchEvent?): RemoteOperation<*> =
+        GetSharesRemoteOperation(false, SessionTimeOut(TASK_TIMEOUT, TASK_TIMEOUT))
 
-    private suspend fun fetchFileData(partialFile: OCFile): OCFile? {
-        return withContext(Dispatchers.IO) {
-            val user = accountManager.user
-            val fetchResult = ReadFileRemoteOperation(partialFile.remotePath).execute(user, context)
-            if (!fetchResult.isSuccess) {
-                logger.e(SHARED_TAG, "Error fetching file")
-                if (fetchResult.isException && fetchResult.exception != null) {
-                    logger.e(SHARED_TAG, "exception: ", fetchResult.exception!!)
+    @Suppress("DEPRECATION")
+    private suspend fun fetchFileData(partialFile: OCFile): OCFile? = withContext(Dispatchers.IO) {
+        val user = accountManager.user
+        val fetchResult = ReadFileRemoteOperation(partialFile.remotePath).execute(user, context)
+        if (fetchResult.isSuccess) {
+            val remoteFile = (fetchResult.data[0] as RemoteFile).apply {
+                val prevETag = mContainerActivity.storageManager.getFileByDecryptedRemotePath(remotePath)
+
+                // Use previous eTag if exists to prevent break checkForChanges logic in RefreshFolderOperation.
+                // Otherwise RefreshFolderOperation will show empty list
+                prevETag?.etag?.let {
+                    etag = prevETag.etag
                 }
-                null
-            } else {
-                val remoteFile = fetchResult.data[0] as RemoteFile
-                val file = FileStorageUtils.fillOCFile(remoteFile)
-                FileStorageUtils.searchForLocalFileInDefaultPath(file, user.accountName)
-                val savedFile = mContainerActivity.storageManager.saveFileWithParent(file, context)
-                savedFile.apply {
-                    isSharedViaLink = partialFile.isSharedViaLink
-                    isSharedWithSharee = partialFile.isSharedWithSharee
-                    sharees = partialFile.sharees
-                }
-                savedFile
             }
+            val file = FileStorageUtils.fillOCFile(remoteFile)
+            FileStorageUtils.searchForLocalFileInDefaultPath(file, user.accountName)
+            val savedFile = mContainerActivity.storageManager.saveFileWithParent(file, context)
+            savedFile.apply {
+                isSharedViaLink = partialFile.isSharedViaLink
+                isSharedWithSharee = partialFile.isSharedWithSharee
+                sharees = partialFile.sharees
+            }
+            savedFile
+        } else {
+            logger.e(SHARED_TAG, "Error fetching file")
+            if (fetchResult.isException && fetchResult.exception != null) {
+                logger.e(SHARED_TAG, "exception: ", fetchResult.exception!!)
+            }
+            null
         }
     }
 
     private fun fetchFileAndRun(partialFile: OCFile, block: (file: OCFile) -> Unit) {
         lifecycleScope.launch {
-            isLoading = true
             val file = fetchFileData(partialFile)
-            isLoading = false
-            if (file != null) {
-                block(file)
-            } else {
-                DisplayUtils.showSnackMessage(requireActivity(), R.string.error_retrieving_file)
+            withContext(Dispatchers.Main) {
+                if (file != null) {
+                    block(file)
+                } else {
+                    DisplayUtils.showSnackMessage(requireActivity(), R.string.error_retrieving_file)
+                }
             }
         }
     }
 
     private fun fetchAllAndRun(partialFiles: MutableSet<OCFile>?, callback: (MutableSet<OCFile>?) -> Unit) {
         lifecycleScope.launch {
-            isLoading = true
             if (partialFiles != null) {
                 val files = partialFiles.toMutableSet().mapNotNull { partialFile ->
                     fetchFileData(partialFile).also { fetched ->
@@ -118,10 +124,7 @@ class SharedListFragment : OCFileListFragment(), Injectable {
                         }
                     }
                 }
-                isLoading = false
                 callback(files.toHashSet())
-            } else {
-                isLoading = false
             }
         }
     }
@@ -181,5 +184,6 @@ class SharedListFragment : OCFileListFragment(), Injectable {
 
     companion object {
         private val SHARED_TAG = SharedListFragment::class.java.simpleName
+        const val TASK_TIMEOUT = 120_000
     }
 }

@@ -19,6 +19,7 @@
             android:key="data_storage_location"
             android:summary="@string/prefs_data_storage_location_summary" />
         <ListPreference
+        <Preference
             android:key="darkMode"
             android:layout="@layout/settings_preference_list_item"
             android:summary="%s"
@@ -44,6 +45,29 @@
         android:layout="@layout/settings_preference_group"
         android:title="@string/prefs_category_details">
         <com.owncloud.android.ui.ListPreferenceDialog
+        android:title="@string/prefs_category_files"
+        android:key="files">
+        <com.owncloud.android.ui.ThemeableSwitchPreference
+            android:title="@string/prefs_show_hidden_files"
+            android:layout="@layout/settings_preference_switcher"
+            android:key="show_hidden_files" />
+        <com.owncloud.android.ui.ThemeableSwitchPreference
+            android:defaultValue="true"
+            android:title="@string/sort_folders_before_files"
+            android:layout="@layout/settings_preference_switcher"
+            android:key="sort_folders_before_files" />
+        <com.owncloud.android.ui.ThemeableSwitchPreference
+            android:defaultValue="true"
+            android:title="@string/sort_favorites_first"
+            android:layout="@layout/settings_preference_switcher"
+            android:key="sort_favorites_first" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="details"
+        android:layout="@layout/settings_preference_group"
+        android:title="@string/prefs_category_details">
+        <Preference
             android:defaultValue="none"
             android:dialogTitle="@string/prefs_lock_title"
             android:key="lock"
@@ -81,6 +105,12 @@
             android:layout="@layout/settings_preference_list_item"
             android:summary="@string/prefs_two_way_sync_summary"
             android:title="@string/internal_two_way_sync" />
+
+        <Preference
+            android:title="@string/prefs_all_files_access_title"
+            android:key="allFilesAccess"
+            android:layout="@layout/settings_preference_list_item"
+            android:summary="@string/prefs_all_files_access_summary" />
     </PreferenceCategory>
 
     <PreferenceCategory

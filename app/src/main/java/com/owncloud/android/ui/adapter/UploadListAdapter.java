@@ -8,6 +8,7 @@
  */
 package com.owncloud.android.ui.adapter;
 
+import android.annotation.SuppressLint;
 import android.app.NotificationManager;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -30,6 +31,7 @@ import com.nextcloud.client.device.PowerManagementService;
 import com.nextcloud.client.jobs.upload.FileUploadHelper;
 import com.nextcloud.client.jobs.upload.FileUploadWorker;
 import com.nextcloud.client.network.ConnectivityService;
+import com.nextcloud.utils.extensions.ViewExtensionsKt;
 import com.owncloud.android.MainApp;
 import com.owncloud.android.R;
 import com.owncloud.android.databinding.UploadListHeaderBinding;
@@ -42,23 +44,28 @@ import com.owncloud.android.datamodel.UploadsStorageManager.UploadStatus;
 import com.owncloud.android.db.OCUpload;
 import com.owncloud.android.db.OCUploadComparator;
 import com.owncloud.android.db.UploadResult;
+import com.owncloud.android.files.services.NameCollisionPolicy;
 import com.owncloud.android.lib.common.operations.OnRemoteOperationListener;
 import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.operations.RefreshFolderOperation;
 import com.owncloud.android.ui.activity.ConflictsResolveActivity;
 import com.owncloud.android.ui.activity.FileActivity;
 import com.owncloud.android.ui.activity.FileDisplayActivity;
-import com.owncloud.android.ui.notifications.NotificationUtils;
+import com.owncloud.android.ui.adapter.progressListener.UploadProgressListener;
 import com.owncloud.android.ui.preview.PreviewImageFragment;
 import com.owncloud.android.utils.DisplayUtils;
 import com.owncloud.android.utils.MimeTypeUtil;
 import com.owncloud.android.utils.theme.ViewThemeUtils;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import androidx.annotation.NonNull;
+import kotlin.Unit;
+import kotlin.jvm.functions.Function0;
 
 /**
  * This Adapter populates a ListView with following types of uploads: pending, active, completed. Filtering possible.
@@ -66,7 +73,26 @@ import androidx.annotation.NonNull;
 public class UploadListAdapter extends SectionedRecyclerViewAdapter<SectionedViewHolder> {
     private static final String TAG = UploadListAdapter.class.getSimpleName();
 
-    private ProgressListener progressListener;
+    private record Section(
+        Type type,
+        int titleRes,
+        UploadStatus status,
+        NameCollisionPolicy collisionPolicy,
+        OCUpload[] items
+    ) {
+        Section withItems(OCUpload[] newItems) {
+            return new Section(type, titleRes, status, collisionPolicy, newItems);
+        }
+    }
+
+    private final List<Section> sections = new ArrayList<>(List.of(
+        new Section(Type.CURRENT, R.string.uploads_view_group_current_uploads, UploadStatus.UPLOAD_IN_PROGRESS, null, new OCUpload[0]),
+        new Section(Type.FAILED, R.string.uploads_view_group_failed_uploads, UploadStatus.UPLOAD_FAILED, null, new OCUpload[0]),
+        new Section(Type.CANCELLED, R.string.uploads_view_group_manually_cancelled_uploads, UploadStatus.UPLOAD_CANCELLED, null, new OCUpload[0]),
+        new Section(Type.COMPLETED, R.string.uploads_view_group_completed_uploads, UploadStatus.UPLOAD_SUCCEEDED, NameCollisionPolicy.ASK_USER, new OCUpload[0]),
+        new Section(Type.SKIPPED, R.string.uploads_view_upload_status_skip, UploadStatus.UPLOAD_SUCCEEDED, NameCollisionPolicy.SKIP, new OCUpload[0])));
+
+    private UploadProgressListener uploadProgressListener;
     private final FileActivity parentActivity;
     private final UploadsStorageManager uploadsStorageManager;
     private final FileDataStorageManager storageManager;
@@ -74,32 +100,53 @@ public class UploadListAdapter extends SectionedRecyclerViewAdapter<SectionedVie
     private final PowerManagementService powerManagementService;
     private final UserAccountManager accountManager;
     private final Clock clock;
-    private final UploadGroup[] uploadGroups;
     private final boolean showUser;
     private final ViewThemeUtils viewThemeUtils;
     private NotificationManager mNotificationManager;
-
     private final FileUploadHelper uploadHelper = FileUploadHelper.Companion.instance();
+
+    public UploadListAdapter(final FileActivity fileActivity,
+                             final UploadsStorageManager uploadsStorageManager,
+                             final FileDataStorageManager storageManager,
+                             final UserAccountManager accountManager,
+                             final ConnectivityService connectivityService,
+                             final PowerManagementService powerManagementService,
+                             final Clock clock,
+                             final ViewThemeUtils viewThemeUtils) {
+        Log_OC.d(TAG, "UploadListAdapter");
+
+        this.parentActivity = fileActivity;
+        this.uploadsStorageManager = uploadsStorageManager;
+        this.storageManager = storageManager;
+        this.accountManager = accountManager;
+        this.connectivityService = connectivityService;
+        this.powerManagementService = powerManagementService;
+        this.clock = clock;
+        this.viewThemeUtils = viewThemeUtils;
+        shouldShowHeadersForEmptySections(false);
+        showUser = accountManager.getAccounts().length > 1;
+    }
 
     @Override
     public int getSectionCount() {
-        return uploadGroups.length;
+        return sections.size();
     }
 
     @Override
     public int getItemCount(int section) {
-        return uploadGroups[section].getItems().length;
+        return sections.get(section).items().length;
     }
 
     @Override
     public void onBindHeaderViewHolder(SectionedViewHolder holder, int section, boolean expanded) {
         HeaderViewHolder headerViewHolder = (HeaderViewHolder) holder;
 
-        UploadGroup group = uploadGroups[section];
+        Section group = sections.get(section);
+        String title = parentActivity.getString(group.titleRes());
+        int count = group.items().length;
 
         headerViewHolder.binding.uploadListTitle.setText(
-            String.format(parentActivity.getString(R.string.uploads_view_group_header),
-                          group.getGroupName(), group.getGroupItemCount()));
+            String.format(parentActivity.getString(R.string.uploads_view_group_header), title, count));
         viewThemeUtils.platform.colorPrimaryTextViewElement(headerViewHolder.binding.uploadListTitle);
 
         headerViewHolder.binding.uploadListTitle.setOnClickListener(v -> {
@@ -109,38 +156,62 @@ public class UploadListAdapter extends SectionedRecyclerViewAdapter<SectionedVie
                                                                           R.drawable.ic_expand_more);
         });
 
+        headerViewHolder.binding.uploadListStateLayout.setOnClickListener(v -> {{
+            toggleSectionExpanded(section);
+            headerViewHolder.binding.uploadListState.setImageResource(isSectionExpanded(section) ?
+                                                                          R.drawable.ic_expand_less :
+                                                                          R.drawable.ic_expand_more);
+        }});
+
         switch (group.type) {
-            case CURRENT, FINISHED -> headerViewHolder.binding.uploadListAction.setImageResource(R.drawable.ic_close);
+            case CURRENT, COMPLETED -> headerViewHolder.binding.uploadListAction.setImageResource(R.drawable.ic_close);
             case CANCELLED, FAILED ->
                 headerViewHolder.binding.uploadListAction.setImageResource(R.drawable.ic_dots_vertical);
 
         }
 
+        ViewExtensionsKt.setVisibleIf(headerViewHolder.binding.autoUploadBatterySaverWarningCard.root, powerManagementService.isPowerSavingEnabled());
+        viewThemeUtils.material.themeCardView(headerViewHolder.binding.autoUploadBatterySaverWarningCard.root);
+
         headerViewHolder.binding.uploadListAction.setOnClickListener(v -> {
             switch (group.type) {
-                case CURRENT -> new Thread(() -> {
-                    OCUpload ocUpload = group.getItem(0);
-                    if (ocUpload == null) {
-                        return;
-                    }
+                case CURRENT -> {
+                    String accountName = group.items()[0].getAccountName();
 
-                    String accountName = ocUpload.getAccountName();
-                    if (accountName == null) {
-                        return;
-                    }
+                    final int totalUploads = group.items().length;
+                    final int[] completedCount = {0};
 
-                    uploadHelper.cancelFileUploads(Arrays.asList(group.items), accountName);
-                    parentActivity.runOnUiThread(this::loadUploadItemsFromDb);
-                }).start();
-                case FINISHED -> {
+                    for (int i=0; i<group.items.length; i++) {
+                        OCUpload upload = group.items[i];
+                        uploadHelper.updateUploadStatus(upload.getRemotePath(), accountName, UploadStatus.UPLOAD_CANCELLED, new Function0<Unit>() {
+                            @Override
+                            public Unit invoke() {
+                                FileUploadWorker.Companion.cancelCurrentUpload(upload.getRemotePath(), accountName, new Function0<Unit>() {
+                                    @Override
+                                    public Unit invoke() {
+                                        completedCount[0]++;
+                                        if (completedCount[0] == totalUploads) {
+                                            Log_OC.d(TAG, "refreshing upload items");
+
+                                            // All uploads finished, refresh UI once
+                                            loadUploadItemsFromDb(() -> {});
+                                        }
+                                        return Unit.INSTANCE;
+                                    }
+                                });
+                                return Unit.INSTANCE;
+                            }
+                        });
+                    }
+                }
+                case COMPLETED -> {
                     uploadsStorageManager.clearSuccessfulUploads();
-                    loadUploadItemsFromDb();
+                    loadUploadItemsFromDb(() -> {});
                 }
-                case FAILED -> {
-                    showFailedPopupMenu(headerViewHolder);
-                }
-                case CANCELLED -> {
-                    showCancelledPopupMenu(headerViewHolder);
+                case FAILED -> showFailedPopupMenu(headerViewHolder);
+                case CANCELLED -> showCancelledPopupMenu(headerViewHolder);
+                default -> {
+
                 }
             }
         });
@@ -155,18 +226,13 @@ public class UploadListAdapter extends SectionedRecyclerViewAdapter<SectionedVie
             if (itemId == R.id.action_upload_list_failed_clear) {
                 uploadsStorageManager.clearFailedButNotDelayedUploads();
                 clearTempEncryptedFolder();
-                loadUploadItemsFromDb();
+                loadUploadItemsFromDb(() -> {});
             } else if (itemId == R.id.action_upload_list_failed_retry) {
-
-                // FIXME For e2e resume is not working
-                new Thread(() -> {
-                    uploadHelper.retryFailedUploads(
-                        uploadsStorageManager,
-                        connectivityService,
-                        accountManager,
-                        powerManagementService);
-                    parentActivity.runOnUiThread(this::loadUploadItemsFromDb);
-                }).start();
+                uploadHelper.retryFailedUploads(
+                    uploadsStorageManager,
+                    connectivityService,
+                    accountManager,
+                    powerManagementService);
             }
 
             return true;
@@ -184,7 +250,7 @@ public class UploadListAdapter extends SectionedRecyclerViewAdapter<SectionedVie
 
             if (itemId == R.id.action_upload_list_cancelled_clear) {
                 uploadsStorageManager.clearCancelledUploadsForCurrentAccount();
-                loadUploadItemsFromDb();
+                loadUploadItemsFromDb(() -> {});
                 clearTempEncryptedFolder();
             } else if (itemId == R.id.action_upload_list_cancelled_resume) {
                 retryCancelledUploads();
@@ -209,8 +275,6 @@ public class UploadListAdapter extends SectionedRecyclerViewAdapter<SectionedVie
                 connectivityService,
                 accountManager,
                 powerManagementService);
-
-            parentActivity.runOnUiThread(this::loadUploadItemsFromDb);
             parentActivity.runOnUiThread(() -> {
                 if (showNotExistMessage) {
                     showNotExistMessage();
@@ -228,80 +292,15 @@ public class UploadListAdapter extends SectionedRecyclerViewAdapter<SectionedVie
         // not needed
     }
 
-    public UploadListAdapter(final FileActivity fileActivity,
-                             final UploadsStorageManager uploadsStorageManager,
-                             final FileDataStorageManager storageManager,
-                             final UserAccountManager accountManager,
-                             final ConnectivityService connectivityService,
-                             final PowerManagementService powerManagementService,
-                             final Clock clock,
-                             final ViewThemeUtils viewThemeUtils) {
-        Log_OC.d(TAG, "UploadListAdapter");
-
-        this.parentActivity = fileActivity;
-        this.uploadsStorageManager = uploadsStorageManager;
-        this.storageManager = storageManager;
-        this.accountManager = accountManager;
-        this.connectivityService = connectivityService;
-        this.powerManagementService = powerManagementService;
-        this.clock = clock;
-        this.viewThemeUtils = viewThemeUtils;
-
-        uploadGroups = new UploadGroup[4];
-
-        shouldShowHeadersForEmptySections(false);
-
-        uploadGroups[0] = new UploadGroup(Type.CURRENT,
-                                          parentActivity.getString(R.string.uploads_view_group_current_uploads)) {
-            @Override
-            public void refresh() {
-                fixAndSortItems(uploadsStorageManager.getCurrentAndPendingUploadsForCurrentAccount());
-            }
-        };
-
-        uploadGroups[1] = new UploadGroup(Type.FAILED,
-                                          parentActivity.getString(R.string.uploads_view_group_failed_uploads)) {
-            @Override
-            public void refresh() {
-                fixAndSortItems(uploadsStorageManager.getFailedButNotDelayedUploadsForCurrentAccount());
-            }
-        };
-
-        uploadGroups[2] = new UploadGroup(Type.CANCELLED,
-                                          parentActivity.getString(
-                                              R.string.uploads_view_group_manually_cancelled_uploads)) {
-            @Override
-            public void refresh() {
-                fixAndSortItems(uploadsStorageManager.getCancelledUploadsForCurrentAccount());
-            }
-        };
-
-        uploadGroups[3] = new UploadGroup(Type.FINISHED,
-                                          parentActivity.getString(R.string.uploads_view_group_finished_uploads)) {
-            @Override
-            public void refresh() {
-                fixAndSortItems(uploadsStorageManager.getFinishedUploadsForCurrentAccount());
-            }
-        };
-
-        showUser = accountManager.getAccounts().length > 1;
-
-        loadUploadItemsFromDb();
-    }
-
-
     @Override
     public void onBindViewHolder(SectionedViewHolder holder, int section, int relativePosition, int absolutePosition) {
-        if (uploadGroups.length == 0 || section < 0 || section >= uploadGroups.length) {
+        if (sections.isEmpty() || section < 0 || section >= sections.size()) {
             return;
         }
 
-        UploadGroup uploadGroup = uploadGroups[section];
-        if (uploadGroup == null) {
-            return;
-        }
+        Section sectionData = sections.get(section);
+        OCUpload item = sectionData.items()[relativePosition];
 
-        OCUpload item = uploadGroup.getItem(relativePosition);
         if (item == null) {
             return;
         }
@@ -320,21 +319,35 @@ public class UploadListAdapter extends SectionedRecyclerViewAdapter<SectionedVie
         // remote path to parent folder
         itemViewHolder.binding.uploadRemotePath.setText(new File(item.getRemotePath()).getParent());
 
+        long updateTime = item.getUploadEndTimestamp();
+
         // file size
         if (item.getFileSize() != 0) {
-            itemViewHolder.binding.uploadFileSize.setText(String.format("%s, ",
-                                                                        DisplayUtils.bytesToHumanReadable(item.getFileSize())));
+            String fileSizeFormat = "%s ";
+
+            // we have valid update time so we can show the upload date
+            if (updateTime > 0) {
+                fileSizeFormat = "%s, ";
+            }
+
+            String fileSizeInBytes = DisplayUtils.bytesToHumanReadable(item.getFileSize());
+            String uploadFileSize = String.format(fileSizeFormat, fileSizeInBytes);
+            itemViewHolder.binding.uploadFileSize.setText(uploadFileSize);
         } else {
             itemViewHolder.binding.uploadFileSize.setText("");
         }
 
         // upload date
-        long updateTime = item.getUploadEndTimestamp();
-        CharSequence dateString = DisplayUtils.getRelativeDateTimeString(parentActivity,
-                                                                         updateTime,
-                                                                         DateUtils.SECOND_IN_MILLIS,
-                                                                         DateUtils.WEEK_IN_MILLIS, 0);
-        itemViewHolder.binding.uploadDate.setText(dateString);
+        boolean showUploadDate = updateTime > 0 && item.getUploadStatus() == UploadStatus.UPLOAD_SUCCEEDED && item.getLastResult() == UploadResult.UPLOADED;
+        itemViewHolder.binding.uploadDate.setVisibility(showUploadDate ? View.VISIBLE : View.GONE);
+        if (showUploadDate) {
+            CharSequence dateString = DisplayUtils.getRelativeDateTimeString(parentActivity,
+                                                                             updateTime,
+                                                                             DateUtils.SECOND_IN_MILLIS,
+                                                                             DateUtils.WEEK_IN_MILLIS,
+                                                                             0);
+            itemViewHolder.binding.uploadDate.setText(dateString);
+        }
 
         // account
         final Optional<User> optionalUser = accountManager.getUser(item.getAccountName());
@@ -351,7 +364,6 @@ public class UploadListAdapter extends SectionedRecyclerViewAdapter<SectionedVie
         }
 
         // Reset fields visibility
-        itemViewHolder.binding.uploadDate.setVisibility(View.VISIBLE);
         itemViewHolder.binding.uploadRemotePath.setVisibility(View.VISIBLE);
         itemViewHolder.binding.uploadFileSize.setVisibility(View.VISIBLE);
         itemViewHolder.binding.uploadStatus.setVisibility(View.VISIBLE);
@@ -368,32 +380,33 @@ public class UploadListAdapter extends SectionedRecyclerViewAdapter<SectionedVie
                 if (uploadHelper.isUploadingNow(item)) {
                     // really uploading, so...
                     // ... unbind the old progress bar, if any; ...
-                    if (progressListener != null) {
-                        String targetKey = FileUploadHelper.Companion.buildRemoteName(progressListener.getUpload().getAccountName(), progressListener.getUpload().getRemotePath());
-                        uploadHelper.removeUploadTransferProgressListener(progressListener, targetKey);
+                    if (uploadProgressListener != null) {
+                        String targetKey = FileUploadHelper.Companion.buildRemoteName(uploadProgressListener.getUpload().getAccountName(), uploadProgressListener.getUpload().getRemotePath());
+                        uploadHelper.removeUploadTransferProgressListener(uploadProgressListener, targetKey);
                     }
                     // ... then, bind the current progress bar to listen for updates
-                    progressListener = new ProgressListener(item, itemViewHolder.binding.uploadProgressBar);
+                    uploadProgressListener = new UploadProgressListener(item, itemViewHolder.binding.uploadProgressBar);
                     String targetKey = FileUploadHelper.Companion.buildRemoteName(item.getAccountName(), item.getRemotePath());
-                    uploadHelper.addUploadTransferProgressListener(progressListener, targetKey);
+                    uploadHelper.addUploadTransferProgressListener(uploadProgressListener, targetKey);
 
                 } else {
                     // not really uploading; stop listening progress if view is reused!
-                    if (progressListener != null &&
-                        progressListener.isWrapping(itemViewHolder.binding.uploadProgressBar)) {
+                    if (uploadProgressListener != null &&
+                        uploadProgressListener.isWrapping(itemViewHolder.binding.uploadProgressBar)) {
 
-                        String targetKey = FileUploadHelper.Companion.buildRemoteName(progressListener.getUpload().getAccountName(), progressListener.getUpload().getRemotePath());
+                        String targetKey = FileUploadHelper.Companion.buildRemoteName(uploadProgressListener.getUpload().getAccountName(), uploadProgressListener.getUpload().getRemotePath());
 
-                        uploadHelper.removeUploadTransferProgressListener(progressListener, targetKey);
-                        progressListener = null;
+                        uploadHelper.removeUploadTransferProgressListener(uploadProgressListener, targetKey);
+                        uploadProgressListener = null;
                     }
                 }
 
-                itemViewHolder.binding.uploadDate.setVisibility(View.GONE);
                 itemViewHolder.binding.uploadFileSize.setVisibility(View.GONE);
                 itemViewHolder.binding.uploadProgressBar.invalidate();
             }
-            case UPLOAD_FAILED -> itemViewHolder.binding.uploadDate.setVisibility(View.GONE);
+            case UPLOAD_FAILED -> {
+
+            }
             case UPLOAD_SUCCEEDED, UPLOAD_CANCELLED ->
                 itemViewHolder.binding.uploadStatus.setVisibility(View.GONE);
         }
@@ -403,7 +416,6 @@ public class UploadListAdapter extends SectionedRecyclerViewAdapter<SectionedVie
             || item.getUploadStatus() == UploadStatus.UPLOAD_CANCELLED) {
 
             itemViewHolder.binding.uploadStatus.setVisibility(View.VISIBLE);
-            itemViewHolder.binding.uploadDate.setVisibility(View.GONE);
             itemViewHolder.binding.uploadFileSize.setVisibility(View.GONE);
         }
 
@@ -415,18 +427,20 @@ public class UploadListAdapter extends SectionedRecyclerViewAdapter<SectionedVie
             itemViewHolder.binding.uploadRightButton.setImageResource(R.drawable.ic_action_cancel_grey);
             itemViewHolder.binding.uploadRightButton.setVisibility(View.VISIBLE);
             itemViewHolder.binding.uploadRightButton.setOnClickListener(v -> {
-                uploadHelper.cancelFileUpload(item.getRemotePath(), item.getAccountName());
-                loadUploadItemsFromDb();
+                uploadHelper.updateUploadStatus(item.getRemotePath(), item.getAccountName(), UploadStatus.UPLOAD_CANCELLED, () -> {
+                    FileUploadWorker.Companion.cancelCurrentUpload(item.getRemotePath(), item.getAccountName(), () -> {
+                        loadUploadItemsFromDb(() -> {});
+                        return Unit.INSTANCE;
+                    });
+                    return Unit.INSTANCE;
+                });
             });
 
         } else if (item.getUploadStatus() == UploadStatus.UPLOAD_FAILED) {
             if (item.getLastResult() == UploadResult.SYNC_CONFLICT) {
                 itemViewHolder.binding.uploadRightButton.setImageResource(R.drawable.ic_dots_vertical);
                 itemViewHolder.binding.uploadRightButton.setOnClickListener(view -> {
-                    if (optionalUser.isPresent()) {
-                        User user = optionalUser.get();
-                        showItemConflictPopup(user, itemViewHolder, item, status, view);
-                    }
+                    optionalUser.ifPresent(user -> showItemConflictPopup(user, itemViewHolder, item, status, view));
                 });
             } else {
                 // Delete
@@ -466,12 +480,8 @@ public class UploadListAdapter extends SectionedRecyclerViewAdapter<SectionedVie
                 Optional<User> user = accountManager.getUser(item.getAccountName());
                 if (file.exists() && user.isPresent()) {
                     uploadHelper.retryUpload(item, user.get());
-                    loadUploadItemsFromDb();
                 } else {
-                    DisplayUtils.showSnackMessage(
-                        v.getRootView().findViewById(android.R.id.content),
-                        R.string.local_file_not_found_message
-                                                 );
+                    DisplayUtils.showSnackMessage(v.getRootView().findViewById(android.R.id.content), R.string.local_file_not_found_message);
                 }
             });
         } else if (item.getUploadStatus() == UploadStatus.UPLOAD_SUCCEEDED) {
@@ -670,7 +680,7 @@ public class UploadListAdapter extends SectionedRecyclerViewAdapter<SectionedVie
     public void removeUpload(OCUpload item) {
         uploadsStorageManager.removeUpload(item);
         cancelOldErrorNotification(item);
-        loadUploadItemsFromDb();
+        loadUploadItemsFromDb(() -> {});
     }
 
     private void refreshFolder(
@@ -719,128 +729,89 @@ public class UploadListAdapter extends SectionedRecyclerViewAdapter<SectionedVie
      */
     private String getStatusText(OCUpload upload) {
         String status;
-        switch (upload.getUploadStatus()) {
+        var statusRes = parentActivity.getResources();
+        var prefs = parentActivity.getAppPreferences();
+        var uploadStatus = upload.getUploadStatus();
+
+        switch (uploadStatus) {
             case UPLOAD_IN_PROGRESS -> {
-                status = parentActivity.getString(R.string.uploads_view_later_waiting_to_upload);
-                if (uploadHelper.isUploadingNow(upload)) {
-                    // really uploading, bind the progress bar to listen for progress updates
-                    status = parentActivity.getString(R.string.uploader_upload_in_progress_ticker);
-                }
-                if (parentActivity.getAppPreferences().isGlobalUploadPaused()) {
-                    status = parentActivity.getString(R.string.upload_global_pause_title);
-                }
-            }
-            case UPLOAD_SUCCEEDED -> {
-                if (upload.getLastResult() == UploadResult.SAME_FILE_CONFLICT) {
-                    status = parentActivity.getString(R.string.uploads_view_upload_status_succeeded_same_file);
-                } else if (upload.getLastResult() == UploadResult.FILE_NOT_FOUND) {
-                    status = getUploadFailedStatusText(upload.getLastResult());
+                if (prefs.isGlobalUploadPaused()) {
+                    status = statusRes.getString(R.string.upload_global_pause_title);
+                } else if (uploadHelper.isUploadingNow(upload)) {
+                    status = statusRes.getString(R.string.uploader_upload_in_progress_ticker);
                 } else {
-                    status = parentActivity.getString(R.string.uploads_view_upload_status_succeeded);
+                    status = statusRes.getString(R.string.uploads_view_later_waiting_to_upload);
                 }
-            }
-            case UPLOAD_FAILED -> {
-                status = getUploadFailedStatusText(upload.getLastResult());
-            }
-            case UPLOAD_CANCELLED -> {
-                status = parentActivity.getString(R.string.upload_manually_cancelled);
             }
 
-            default -> {
-                status = "Uncontrolled status: " + upload.getUploadStatus();
+            case UPLOAD_SUCCEEDED -> {
+                UploadResult result = upload.getLastResult();
+                if (result == UploadResult.SAME_FILE_CONFLICT) {
+                    status = statusRes.getString(R.string.uploads_view_upload_status_succeeded_same_file);
+                } else if (result == UploadResult.FILE_NOT_FOUND) {
+                    status = getUploadFailedStatusText(result);
+                } else if (upload.getNameCollisionPolicy() == NameCollisionPolicy.SKIP) {
+                    status = statusRes.getString(R.string.uploads_view_upload_status_skip_reason);
+                } else {
+                    status = statusRes.getString(R.string.uploads_view_upload_status_succeeded);
+                }
             }
+
+            case UPLOAD_FAILED ->
+                status = getUploadFailedStatusText(upload.getLastResult());
+
+            case UPLOAD_CANCELLED ->
+                status = statusRes.getString(R.string.upload_manually_cancelled);
+
+            default ->
+                status = "Uncontrolled status: " + uploadStatus;
         }
+
         return status;
     }
 
+
     @NonNull
     private String getUploadFailedStatusText(UploadResult result) {
-        String status;
-        switch (result) {
-            case CREDENTIAL_ERROR:
-                status = parentActivity.getString(R.string.uploads_view_upload_status_failed_credentials_error);
-                break;
-            case FOLDER_ERROR:
-                status = parentActivity.getString(R.string.uploads_view_upload_status_failed_folder_error);
-                break;
-            case FILE_NOT_FOUND:
-                status = parentActivity.getString(R.string.uploads_view_upload_status_failed_localfile_error);
-                break;
-            case FILE_ERROR:
-                status = parentActivity.getString(R.string.uploads_view_upload_status_failed_file_error);
-                break;
-            case PRIVILEGES_ERROR:
-                status = parentActivity.getString(R.string.uploads_view_upload_status_failed_permission_error);
-                break;
-            case NETWORK_CONNECTION:
-                status = parentActivity.getString(R.string.uploads_view_upload_status_failed_connection_error);
-                break;
-            case DELAYED_FOR_WIFI:
-                status = parentActivity.getString(R.string.uploads_view_upload_status_waiting_for_wifi);
-                break;
-            case DELAYED_FOR_CHARGING:
-                status = parentActivity.getString(R.string.uploads_view_upload_status_waiting_for_charging);
-                break;
-            case CONFLICT_ERROR:
-                status = parentActivity.getString(R.string.uploads_view_upload_status_conflict);
-                break;
-            case SERVICE_INTERRUPTED:
-                status = parentActivity.getString(R.string.uploads_view_upload_status_service_interrupted);
-                break;
-            case CANCELLED:
+        return switch (result) {
+            case CREDENTIAL_ERROR ->
+                parentActivity.getString(R.string.uploads_view_upload_status_failed_credentials_error);
+            case FOLDER_ERROR -> parentActivity.getString(R.string.uploads_view_upload_status_failed_folder_error);
+            case FILE_NOT_FOUND -> parentActivity.getString(R.string.uploads_view_upload_status_failed_localfile_error);
+            case FILE_ERROR -> parentActivity.getString(R.string.uploads_view_upload_status_failed_file_error);
+            case PRIVILEGES_ERROR ->
+                parentActivity.getString(R.string.uploads_view_upload_status_failed_permission_error);
+            case NETWORK_CONNECTION ->
+                parentActivity.getString(R.string.uploads_view_upload_status_failed_connection_error);
+            case DELAYED_FOR_WIFI -> parentActivity.getString(R.string.uploads_view_upload_status_waiting_for_wifi);
+            case DELAYED_FOR_CHARGING ->
+                parentActivity.getString(R.string.uploads_view_upload_status_waiting_for_charging);
+            case CONFLICT_ERROR -> parentActivity.getString(R.string.uploads_view_upload_status_conflict);
+            case SERVICE_INTERRUPTED ->
+                parentActivity.getString(R.string.uploads_view_upload_status_service_interrupted);
+            case CANCELLED ->
                 // should not get here ; cancelled uploads should be wiped out
-                status = parentActivity.getString(R.string.uploads_view_upload_status_cancelled);
-                break;
-            case UPLOADED:
+                parentActivity.getString(R.string.uploads_view_upload_status_cancelled);
+            case UPLOADED ->
                 // should not get here ; status should be UPLOAD_SUCCESS
-                status = parentActivity.getString(R.string.uploads_view_upload_status_succeeded);
-                break;
-            case MAINTENANCE_MODE:
-                status = parentActivity.getString(R.string.maintenance_mode);
-                break;
-            case SSL_RECOVERABLE_PEER_UNVERIFIED:
-                status =
-                    parentActivity.getString(
-                        R.string.uploads_view_upload_status_failed_ssl_certificate_not_trusted
-                                            );
-                break;
-            case UNKNOWN:
-                status = parentActivity.getString(R.string.uploads_view_upload_status_unknown_fail);
-                break;
-            case LOCK_FAILED:
-                status = parentActivity.getString(R.string.upload_lock_failed);
-                break;
-            case DELAYED_IN_POWER_SAVE_MODE:
-                status = parentActivity.getString(
-                    R.string.uploads_view_upload_status_waiting_exit_power_save_mode);
-                break;
-            case VIRUS_DETECTED:
-                status = parentActivity.getString(R.string.uploads_view_upload_status_virus_detected);
-                break;
-            case LOCAL_STORAGE_FULL:
-                status = parentActivity.getString(R.string.upload_local_storage_full);
-                break;
-            case OLD_ANDROID_API:
-                status = parentActivity.getString(R.string.upload_old_android);
-                break;
-            case SYNC_CONFLICT:
-                status = parentActivity.getString(R.string.upload_sync_conflict);
-                break;
-            case CANNOT_CREATE_FILE:
-                status = parentActivity.getString(R.string.upload_cannot_create_file);
-                break;
-            case LOCAL_STORAGE_NOT_COPIED:
-                status = parentActivity.getString(R.string.upload_local_storage_not_copied);
-                break;
-            case QUOTA_EXCEEDED:
-                status = parentActivity.getString(R.string.upload_quota_exceeded);
-                break;
-            default:
-                status = parentActivity.getString(R.string.upload_unknown_error);
-                break;
-        }
-
-        return status;
+                parentActivity.getString(R.string.uploads_view_upload_status_succeeded);
+            case MAINTENANCE_MODE -> parentActivity.getString(R.string.maintenance_mode);
+            case SSL_RECOVERABLE_PEER_UNVERIFIED -> parentActivity.getString(
+                R.string.uploads_view_upload_status_failed_ssl_certificate_not_trusted
+                                                                            );
+            case UNKNOWN -> parentActivity.getString(R.string.uploads_view_upload_status_unknown_fail);
+            case LOCK_FAILED -> parentActivity.getString(R.string.upload_lock_failed);
+            case DELAYED_IN_POWER_SAVE_MODE -> parentActivity.getString(
+                R.string.uploads_view_upload_status_waiting_exit_power_save_mode);
+            case VIRUS_DETECTED -> parentActivity.getString(R.string.uploads_view_upload_status_virus_detected);
+            case LOCAL_STORAGE_FULL -> parentActivity.getString(R.string.upload_local_storage_full);
+            case OLD_ANDROID_API -> parentActivity.getString(R.string.upload_old_android);
+            case SYNC_CONFLICT -> parentActivity.getString(R.string.upload_sync_conflict);
+            case CANNOT_CREATE_FILE -> parentActivity.getString(R.string.upload_cannot_create_file);
+            case LOCAL_STORAGE_NOT_COPIED -> parentActivity.getString(R.string.upload_local_storage_not_copied);
+            case QUOTA_EXCEEDED -> parentActivity.getString(R.string.upload_quota_exceeded);
+            default -> parentActivity.getString(R.string.upload_unknown_error);
+        };
     }
 
     @Override
@@ -857,17 +828,35 @@ public class UploadListAdapter extends SectionedRecyclerViewAdapter<SectionedVie
         }
     }
 
-    /**
-     * Load upload items from {@link UploadsStorageManager}.
-     */
-    public final void loadUploadItemsFromDb() {
-        Log_OC.d(TAG, "loadUploadItemsFromDb");
+    @SuppressLint("NotifyDataSetChanged")
+    public final void loadUploadItemsFromDb(Runnable onCompleted) {
+        parentActivity.getUser().ifPresent(user -> {
+            String accountName = user.getAccountName();
 
-        for (UploadGroup group : uploadGroups) {
-            group.refresh();
-        }
+            for (int i = 0; i < sections.size(); i++) {
+                final int index = i;
+                Section sec = sections.get(index);
 
-        notifyDataSetChanged();
+                uploadHelper.getUploadsByStatus(accountName,
+                                                sec.status(),
+                                                parentActivity.getCapabilities(),
+                                                sec.collisionPolicy(),
+                                                uploads -> {
+                    for (OCUpload upload : uploads) {
+                        upload.setDataFixed(uploadHelper);
+                    }
+                    Arrays.sort(uploads, new OCUploadComparator());
+
+                    sections.set(index, sec.withItems(uploads));
+
+                    parentActivity.runOnUiThread(() -> {
+                        notifyDataSetChanged();
+                        onCompleted.run();
+                    });
+                    return Unit.INSTANCE;
+                });
+            }
+        });
     }
 
     /**
@@ -944,71 +933,19 @@ public class UploadListAdapter extends SectionedRecyclerViewAdapter<SectionedVie
         }
     }
 
-    interface Refresh {
-        void refresh();
-    }
-
     enum Type {
-        CURRENT, FINISHED, FAILED, CANCELLED
-    }
-
-    abstract class UploadGroup implements Refresh {
-        private final Type type;
-        private OCUpload[] items;
-        private final String name;
-
-        UploadGroup(Type type, String groupName) {
-            this.type = type;
-            this.name = groupName;
-            items = new OCUpload[0];
-        }
-
-        private String getGroupName() {
-            return name;
-        }
-
-        public OCUpload[] getItems() {
-            return items;
-        }
-
-        public OCUpload getItem(int position) {
-            if (items.length == 0 || position < 0 || position >= items.length) {
-                return null;
-            }
-
-            return items[position];
-        }
-
-        public void setItems(OCUpload... items) {
-            this.items = items;
-        }
-
-        void fixAndSortItems(OCUpload... array) {
-            for (OCUpload upload : array) {
-                upload.setDataFixed(uploadHelper);
-            }
-            Arrays.sort(array, new OCUploadComparator());
-
-            setItems(array);
-        }
-
-        private int getGroupItemCount() {
-            return items == null ? 0 : items.length;
-        }
+        CURRENT, COMPLETED, FAILED, CANCELLED, SKIPPED
     }
 
     public void cancelOldErrorNotification(OCUpload upload) {
-
         if (mNotificationManager == null) {
-            mNotificationManager = (NotificationManager) parentActivity.getSystemService(parentActivity.NOTIFICATION_SERVICE);
+            mNotificationManager = (NotificationManager) parentActivity.getSystemService(Context.NOTIFICATION_SERVICE);
         }
 
         if (upload == null) {
             return;
         }
-        mNotificationManager.cancel(NotificationUtils.createUploadNotificationTag(upload.getRemotePath(), upload.getLocalPath()),
-                                    FileUploadWorker.NOTIFICATION_ERROR_ID);
 
+        mNotificationManager.cancel((int) upload.getUploadId());
     }
-
 }

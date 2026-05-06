@@ -25,6 +25,7 @@
     <com.google.android.material.materialswitch.MaterialSwitch
         android:id="@+id/necessary_data_switch"
         style="@style/SettingsMaterialSwitchStyle"
+        style="@style/IonosMaterialSwitchStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:checked="true"
@@ -34,6 +35,7 @@
         android:textColor="@color/text_color"
         android:textSize="@dimen/two_line_primary_text_size"
         android:theme="@style/SettingsMaterialSwitchStyle"
+        android:theme="@style/IonosMaterialSwitchStyle"
         app:lineHeight="21.79sp" />
 
     <com.google.android.material.textview.MaterialTextView
@@ -47,6 +49,7 @@
     <com.google.android.material.materialswitch.MaterialSwitch
         android:id="@+id/analytics_switch"
         style="@style/SettingsMaterialSwitchStyle"
+        style="@style/IonosMaterialSwitchStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/standard_margin"
@@ -55,6 +58,7 @@
         android:textColor="@color/text_color"
         android:textSize="@dimen/two_line_primary_text_size"
         android:theme="@style/SettingsMaterialSwitchStyle"
+        android:theme="@style/IonosMaterialSwitchStyle"
         app:lineHeight="21.79sp" />
 
     <com.google.android.material.textview.MaterialTextView

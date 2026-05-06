@@ -21,3 +21,4 @@
     app:iconTint="@color/default_icon_color"
     app:ionosCustomization="Custom color"
     tools:text="DCIM" />
+    tools:text="@string/placeholder_file_path" />

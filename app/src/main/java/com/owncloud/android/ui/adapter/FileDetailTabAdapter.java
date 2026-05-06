@@ -64,10 +64,6 @@ public class FileDetailTabAdapter extends FragmentStateAdapter {
         }
 
         return switch (position) {
-            default -> {
-                fileDetailActivitiesFragment = FileDetailActivitiesFragment.newInstance(file, user);
-                yield fileDetailActivitiesFragment;
-            }
             case 1 -> {
                 fileDetailSharingFragment = FileDetailSharingFragment.newInstance(file, user);
                 yield fileDetailSharingFragment;
@@ -75,6 +71,10 @@ public class FileDetailTabAdapter extends FragmentStateAdapter {
             case 2 -> {
                 imageDetailFragment = ImageDetailFragment.newInstance(file, user);
                 yield imageDetailFragment;
+            }
+            default -> {
+                fileDetailActivitiesFragment = FileDetailActivitiesFragment.newInstance(file, user);
+                yield fileDetailActivitiesFragment;
             }
         };
     }

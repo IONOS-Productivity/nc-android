@@ -43,7 +43,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -106,6 +105,7 @@ import java.util.concurrent.Executors;
 
 import javax.inject.Inject;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -151,7 +151,6 @@ public class ReceiveExternalFilesActivity extends FileActivity
 
     private SyncBroadcastReceiver mSyncBroadcastReceiver;
     private ReceiveExternalFilesAdapter receiveExternalFilesAdapter;
-    private boolean mSyncInProgress;
 
     private final static int REQUEST_CODE__SETUP_ACCOUNT = REQUEST_CODE__LAST_SHARED + 1;
 
@@ -216,6 +215,8 @@ public class ReceiveExternalFilesActivity extends FileActivity
             fm.beginTransaction()
                 .add(taskRetainerFragment, TaskRetainerFragment.FTAG_TASK_RETAINER_FRAGMENT).commit();
         }   // else, Fragment already created and retained across configuration change
+
+        handleBackPress();
     }
 
     @Override
@@ -258,10 +259,9 @@ public class ReceiveExternalFilesActivity extends FileActivity
         super.onStart();
 
         if (mAccountManager.getAccountsByType(MainApp.getAccountType(this)).length == 0) {
-            Toast.makeText(this,
-                           String.format(getString(R.string.uploader_wrn_no_account_text),
-                                         getString(R.string.app_name)),
-                           Toast.LENGTH_LONG).show();
+            final var message = String.format(getString(R.string.uploader_wrn_no_account_text),
+                                              getString(R.string.app_name));
+            DisplayUtils.showSnackMessage(this, message);
             return;
         }
 
@@ -456,7 +456,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
                 mFileCategory = CATEGORY_URL;
             } else if (isIntentFromGoogleMap(subjectText, extraText)) {
                 String str = getString(R.string.upload_file_dialog_filetype_googlemap_shortcut);
-                String texts[] = extraText.split("\n");
+                String[] texts = extraText.split("\n");
                 mText.add(internetShortcutUrlText(texts[2]));
                 mFilenameBase.add(texts[0]);
                 mFilenameSuffix.add(URL_FILE_SUFFIX);
@@ -586,7 +586,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
         }
 
         private boolean isIntentFromGoogleMap(String subjectText, String extraText) {
-            String texts[] = extraText.split("\n");
+            String[] texts = extraText.split("\n");
             if (texts.length != EXTRA_TEXT_LENGTH) {
                 return false;
             }
@@ -650,35 +650,39 @@ public class ReceiveExternalFilesActivity extends FileActivity
 
         @Nullable
         private File createTempFile(String text) {
-            File file = new File(getActivity().getCacheDir(), "tmp.tmp");
-            FileWriter fw = null;
-            try {
-                fw = new FileWriter(file);
+            final var activity = getActivity();
+            if (activity == null) {
+                return null;
+            }
+
+            final var cacheDir = activity.getCacheDir();
+
+            File file = new File(cacheDir, "tmp.tmp");
+
+            try (FileWriter fw = new FileWriter(file)) {
                 fw.write(text);
             } catch (IOException e) {
                 Log_OC.d(TAG, "Error ", e);
                 return null;
-            } finally {
-                if (fw != null) {
-                    try {
-                        fw.close();
-                    } catch (IOException e) {
-                        Log_OC.d(TAG, "Error closing file writer ", e);
-                    }
-                }
             }
+
             return file;
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        if (mParents.size() <= SINGLE_PARENT) {
-            super.onBackPressed();
-        } else {
-            mParents.pop();
-            browseToFolderIfItExists();
-        }
+    private void handleBackPress() {
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if (mParents.size() <= SINGLE_PARENT) {
+                    setEnabled(false);
+                    getOnBackPressedDispatcher().onBackPressed();
+                } else {
+                    mParents.pop();
+                    browseToFolderIfItExists();
+                }
+            }
+        });
     }
 
     @Override
@@ -801,7 +805,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
         viewThemeUtils.material.colorMaterialButtonPrimaryFilled(btnChooseFolder);
         btnChooseFolder.setOnClickListener(this);
 
-        btnChooseFolder.setEnabled(mFile.canWrite());
+        btnChooseFolder.setEnabled(mFile.canCreateFileAndFolder());
 
         viewThemeUtils.platform.themeStatusBar(this);
 
@@ -815,9 +819,14 @@ public class ReceiveExternalFilesActivity extends FileActivity
     }
 
     private void setupReceiveExternalFilesAdapter(List<OCFile> files) {
+        final var optionalUser = getUser();
+        if (optionalUser.isEmpty()) {
+            return;
+        }
+
         receiveExternalFilesAdapter = new ReceiveExternalFilesAdapter(files,
                                                                       this,
-                                                                      getUser().get(),
+                                                                      optionalUser.get(),
                                                                       getStorageManager(),
                                                                       viewThemeUtils,
                                                                       syncedFolderProvider,
@@ -890,16 +899,18 @@ public class ReceiveExternalFilesActivity extends FileActivity
 
     private List<OCFile> sortFileList(List<OCFile> files) {
         FileSortOrder sortOrder = preferences.getSortOrderByFolder(mFile);
-        return sortOrder.sortCloudFiles(files);
+        boolean foldersBeforeFiles = preferences.isSortFoldersBeforeFiles();
+        boolean favoritesFirst = preferences.isSortFavoritesFirst();
+        return sortOrder.sortCloudFiles(files, foldersBeforeFiles, favoritesFirst);
     }
 
     private String generatePath(Stack<String> dirs) {
-        String full_path = "";
+        StringBuilder full_path = new StringBuilder();
 
         for (String a : dirs) {
-            full_path += a + OCFile.PATH_SEPARATOR;
+            full_path.append(a).append(OCFile.PATH_SEPARATOR);
         }
-        return full_path;
+        return full_path.toString();
     }
 
     private void prepareStreamsToUpload() {
@@ -960,7 +971,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
         }
 
         if (mStreamsToUpload.size() > FileUploadHelper.MAX_FILE_COUNT) {
-            DisplayUtils.showSnackMessage(this, R.string.max_file_count_warning_message);
+            FileUploadHelper.Companion.instance().showFileUploadLimitMessage(this);
             return;
         }
 
@@ -1076,7 +1087,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
 
         if (mFile != null) {
             MenuItem newFolderMenuItem = menu.findItem(R.id.action_create_dir);
-            newFolderMenuItem.setEnabled(mFile.canWrite());
+            newFolderMenuItem.setEnabled(mFile.canCreateFileAndFolder());
         }
 
         return true;
@@ -1089,13 +1100,17 @@ public class ReceiveExternalFilesActivity extends FileActivity
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                receiveExternalFilesAdapter.filter(query);
+                if (receiveExternalFilesAdapter != null) {
+                    receiveExternalFilesAdapter.filter(query);
+                }
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                receiveExternalFilesAdapter.filter(newText);
+                if (receiveExternalFilesAdapter != null) {
+                    receiveExternalFilesAdapter.filter(newText);
+                }
                 return false;
             }
         });
@@ -1113,7 +1128,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
             dialog.show(getSupportFragmentManager(), CreateFolderDialogFragment.CREATE_FOLDER_FRAGMENT);
         } else if (itemId == android.R.id.home) {
             if (mParents.size() > SINGLE_PARENT) {
-                onBackPressed();
+                getOnBackPressedDispatcher().onBackPressed();
             }
         } else if (itemId == R.id.action_switch_account) {
             showAccountChooserDialog();
@@ -1161,58 +1176,32 @@ public class ReceiveExternalFilesActivity extends FileActivity
                 boolean sameAccount = getAccount() != null && accountName.equals(getAccount().name)
                     && getStorageManager() != null;
 
-                if (sameAccount) {
+                if (sameAccount && !FileSyncAdapter.EVENT_FULL_SYNC_START.equals(event)) {
+                    OCFile currentFile = (mFile == null) ? null : getStorageManager().getFileByPath(mFile.getRemotePath());
+                    OCFile currentDir = (getCurrentFolder() == null) ? null : getStorageManager().getFileByPath(getCurrentFolder().getRemotePath());
 
-                    if (FileSyncAdapter.EVENT_FULL_SYNC_START.equals(event)) {
-                        mSyncInProgress = true;
-
+                    if (currentDir == null) {
+                        // current folder was removed from the server
+                        DisplayUtils.showSnackMessage(getActivity(), R.string.sync_current_folder_was_removed, getCurrentFolder().getFileName());
+                        browseToRoot();
                     } else {
-                        OCFile currentFile = (mFile == null) ? null :
-                            getStorageManager().getFileByPath(mFile.getRemotePath());
-                        OCFile currentDir = (getCurrentFolder() == null) ? null :
-                            getStorageManager().getFileByPath(getCurrentFolder().getRemotePath());
-
-                        if (currentDir == null) {
-                            // current folder was removed from the server
-                            DisplayUtils.showSnackMessage(
-                                getActivity(),
-                                R.string.sync_current_folder_was_removed,
-                                getCurrentFolder().getFileName()
-                                                         );
-                            browseToRoot();
-
-                        } else {
-                            if (currentFile == null && !mFile.isFolder()) {
-                                // currently selected file was removed in the server, and now we know it
-                                currentFile = currentDir;
-                            }
-
-                            if (currentDir.getRemotePath().equals(syncFolderRemotePath)) {
-                                populateDirectoryList(currentFile);
-                            }
+                        if (currentFile == null && !mFile.isFolder()) {
+                            // currently selected file was removed in the server, and now we know it
+                            currentFile = currentDir;
                         }
 
-                        mSyncInProgress = !FileSyncAdapter.EVENT_FULL_SYNC_END.equals(event) &&
-                            !RefreshFolderOperation.EVENT_SINGLE_FOLDER_SHARES_SYNCED.equals(event);
-
-                        if (RefreshFolderOperation.EVENT_SINGLE_FOLDER_CONTENTS_SYNCED.equals(event)
-                            /// TODO refactor and make common
-                            && syncResult != null && !syncResult.isSuccess()) {
-
-                            if (syncResult.getCode() == ResultCode.UNAUTHORIZED ||
-                                (syncResult.isException() && syncResult.getException()
-                                    instanceof AuthenticatorException)) {
-
-                                requestCredentialsUpdate();
-
-                            } else if (ResultCode.SSL_RECOVERABLE_PEER_UNVERIFIED == syncResult.getCode()) {
-
-                                showUntrustedCertDialog(syncResult);
-                            }
+                        if (currentDir.getRemotePath().equals(syncFolderRemotePath)) {
+                            populateDirectoryList(currentFile);
                         }
                     }
-                    Log_OC.d(TAG, "Setting progress visibility to " + mSyncInProgress);
 
+                    if (RefreshFolderOperation.EVENT_SINGLE_FOLDER_CONTENTS_SYNCED.equals(event) && syncResult != null && !syncResult.isSuccess()) {
+                        if (syncResult.getCode() == ResultCode.UNAUTHORIZED || (syncResult.isException() && syncResult.getException() instanceof AuthenticatorException)) {
+                            requestCredentialsUpdate();
+                        } else if (ResultCode.SSL_RECOVERABLE_PEER_UNVERIFIED == syncResult.getCode()) {
+                            showUntrustedCertDialog(syncResult);
+                        }
+                    }
                 }
             } catch (RuntimeException e) {
                 // avoid app crashes after changing the serial id of RemoteOperationResult

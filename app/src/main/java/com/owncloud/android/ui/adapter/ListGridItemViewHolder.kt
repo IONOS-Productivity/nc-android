@@ -15,4 +15,5 @@ internal interface ListGridItemViewHolder : ListViewHolder {
     val fileName: TextView
     @IonosCustomization("Show current playback progress")
     val playerProgressIndicator: PlayerProgressIndicator
+    val extension: TextView?
 }

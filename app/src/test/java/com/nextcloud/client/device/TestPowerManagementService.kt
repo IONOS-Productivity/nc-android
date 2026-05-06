@@ -56,9 +56,7 @@ class TestPowerManagementService {
             MockitoAnnotations.initMocks(this)
             powerManagementService = PowerManagementServiceImpl(
                 context,
-                platformPowerManager,
-                preferences,
-                deviceInfo
+                platformPowerManager
             )
         }
     }
@@ -83,26 +81,9 @@ class TestPowerManagementService {
         }
 
         @Test
-        fun `power saving exclusion is available for flagged vendors`() {
-            for (vendor in PowerManagementServiceImpl.OVERLY_AGGRESSIVE_POWER_SAVING_VENDORS) {
-                whenever(deviceInfo.vendor).thenReturn(vendor)
-                assertTrue("Vendor $vendor check failed", powerManagementService.isPowerSavingExclusionAvailable)
-            }
-        }
-
-        @Test
-        fun `power saving exclusion is not available for other vendors`() {
-            whenever(deviceInfo.vendor).thenReturn("some_other_nice_vendor")
-            assertFalse(powerManagementService.isPowerSavingExclusionAvailable)
-        }
-
-        @Test
         fun `power saving check is disabled`() {
             // GIVEN
-            //      a device which falsely returns power save mode enabled
-            //      power check is overridden by user
-            whenever(preferences.isPowerCheckDisabled).thenReturn(true)
-            whenever(platformPowerManager.isPowerSaveMode).thenReturn(true)
+            whenever(platformPowerManager.isPowerSaveMode).thenReturn(false)
 
             // WHEN
             //      power save mode is checked
@@ -130,11 +111,10 @@ class TestPowerManagementService {
         }
 
         @Test
-        fun `battery charging status on API 17+`() {
+        fun `battery charging status`() {
             // GIVEN
-            //      device has API level 17+
             //      battery status sticky intent is available
-            whenever(deviceInfo.apiLevel).thenReturn(Build.VERSION_CODES.JELLY_BEAN_MR1)
+            whenever(deviceInfo.apiLevel).thenReturn(Build.VERSION_CODES.P)
             val powerSources = setOf(
                 BatteryManager.BATTERY_PLUGGED_AC,
                 BatteryManager.BATTERY_PLUGGED_USB,
@@ -144,29 +124,6 @@ class TestPowerManagementService {
             for (row in powerSources) {
                 // WHEN
                 //      device is charging using supported power source
-                whenever(intent.getIntExtra(eq(BatteryManager.EXTRA_PLUGGED), any()))
-                    .thenReturn(row)
-
-                // THEN
-                //      charging flag is true
-                assertTrue(powerManagementService.battery.isCharging)
-            }
-        }
-
-        @Test
-        fun `battery charging status on API 16`() {
-            // GIVEN
-            //      device has API level 16
-            //      battery status sticky intent is available
-            whenever(deviceInfo.apiLevel).thenReturn(Build.VERSION_CODES.JELLY_BEAN)
-            val powerSources = setOf(
-                BatteryManager.BATTERY_PLUGGED_AC,
-                BatteryManager.BATTERY_PLUGGED_USB
-            )
-
-            for (row in powerSources) {
-                // WHEN
-                //      device is charging using AC or USB
                 whenever(intent.getIntExtra(eq(BatteryManager.EXTRA_PLUGGED), any()))
                     .thenReturn(row)
 

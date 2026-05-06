@@ -7,35 +7,42 @@
  */
 package com.nextcloud.client.etm
 
-import android.app.Activity
-import androidx.test.espresso.intent.rule.IntentsTestRule
-import androidx.test.internal.runner.junit4.statement.UiThreadStatement
+import androidx.test.core.app.launchActivity
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.matcher.ViewMatchers.isRoot
 import com.owncloud.android.AbstractIT
 import com.owncloud.android.utils.ScreenshotTest
-import org.junit.Rule
 import org.junit.Test
 
 class EtmActivityTest : AbstractIT() {
-    @get:Rule
-    var activityRule = IntentsTestRule(EtmActivity::class.java, true, false)
+    private val testClassName = "com.nextcloud.client.etm.EtmActivityTest"
 
     @Test
     @ScreenshotTest
     fun overview() {
-        val sut: Activity = activityRule.launchActivity(null)
+        launchActivity<EtmActivity>().use { scenario ->
+            val screenShotName = createName(testClassName + "_" + "overview", "")
+            onView(isRoot()).check(matches(isDisplayed()))
 
-        waitForIdleSync()
-
-        screenshot(sut)
+            scenario.onActivity { sut ->
+                screenshotViaName(sut, screenShotName)
+            }
+        }
     }
 
     @Test
     @ScreenshotTest
     fun accounts() {
-        val sut: EtmActivity = activityRule.launchActivity(null)
+        launchActivity<EtmActivity>().use { scenario ->
+            val screenShotName = createName(testClassName + "_" + "accounts", "")
+            onView(isRoot()).check(matches(isDisplayed()))
 
-        UiThreadStatement.runOnUiThread { sut.vm.onPageSelected(1) }
-
-        screenshot(sut)
+            scenario.onActivity { sut ->
+                sut.vm.onPageSelected(1)
+                screenshotViaName(sut, screenShotName)
+            }
+        }
     }
 }

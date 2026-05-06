@@ -46,6 +46,7 @@ class AudioFileFragment : Fragment(), PlaybackModel.Listener {
     private lateinit var binding: PlayerAudioFileFragmentBinding
     private lateinit var file: PlaybackFile
     private lateinit var loadFileThumbnailJob: Job
+    private var loadFileThumbnailJob: Job? = null
     private var isFileThumbnailLoaded = false
     private var metadata: PlaybackItemMetadata? = null
 
@@ -56,12 +57,14 @@ class AudioFileFragment : Fragment(), PlaybackModel.Listener {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = PlayerAudioFileFragmentBinding.inflate(inflater, container, false)
         binding.title.isSelected = true
         binding.title.text = file.getNameWithoutExtension()
         binding.fileDetails.text = file.getDetailsText()
         loadFileThumbnailJob = loadFileThumbnail()
         return binding.getRoot()
+        return binding.root
     }
 
     override fun onStart() {
@@ -90,6 +93,7 @@ class AudioFileFragment : Fragment(), PlaybackModel.Listener {
         this.metadata = metadata
         if (!isFileThumbnailLoaded && (metadata.artworkData != null || metadata.artworkUri != null)) {
             loadFileThumbnailJob.takeIf { it.isActive }?.cancel()
+            loadFileThumbnailJob?.takeIf { it.isActive }?.cancel()
             loadMetadataArtwork(metadata)
         }
         binding.title.text = if (metadata.artist.isNullOrEmpty()) {
@@ -113,6 +117,9 @@ class AudioFileFragment : Fragment(), PlaybackModel.Listener {
     private fun loadMetadataArtwork(metadata: PlaybackItemMetadata) {
         val source = metadata.artworkData ?: metadata.artworkUri ?: return
         thumbnailLoader.load(binding.albumCover, source, file.id)
+        viewLifecycleOwner.lifecycleScope.launch {
+            thumbnailLoader.load(binding.albumCover, source, file.id)
+        }
     }
 
     private fun PlaybackFile.getDetailsText(): String {

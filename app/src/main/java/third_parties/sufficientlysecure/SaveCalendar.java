@@ -25,7 +25,6 @@ import android.provider.CalendarContract.Reminders;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.text.format.DateUtils;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 
@@ -46,7 +45,6 @@ import net.fortuna.ical4j.data.CalendarOutputter;
 import net.fortuna.ical4j.model.Calendar;
 import net.fortuna.ical4j.model.Date;
 import net.fortuna.ical4j.model.DateTime;
-import net.fortuna.ical4j.model.Dur;
 import net.fortuna.ical4j.model.Period;
 import net.fortuna.ical4j.model.Property;
 import net.fortuna.ical4j.model.PropertyFactoryImpl;
@@ -230,8 +228,7 @@ public class SaveCalendar {
                                  where, args, sortBy);
         } catch (Exception except) {
             Log_OC.w(TAG, "Calendar provider is missing columns, continuing anyway");
-            int n = 0;
-            for (n = 0; n < EVENT_COLS.length; ++n) {
+            for (int n = 0; n < EVENT_COLS.length; ++n) {
                 if (EVENT_COLS[n] == null) {
                     Log_OC.e(TAG, "Invalid EVENT_COLS index " + Integer.toString(n));
                 }
@@ -301,7 +298,7 @@ public class SaveCalendar {
             return null;
         }
 
-        PropertyList l = new PropertyList();
+        PropertyList<Property> l = new PropertyList<>();
         l.add(timestamp);
         copyProperty(l, Property.UID, cur, Events.UID_2445);
 
@@ -431,7 +428,7 @@ public class SaveCalendar {
                 // FIXME: We should support other types if possible
                 int method = getInt(alarmCur, Reminders.METHOD);
                 if (method == Reminders.METHOD_DEFAULT || method == Reminders.METHOD_ALERT) {
-                    VAlarm alarm = new VAlarm(new Dur(0, 0, -mins, 0));
+                    VAlarm alarm = new VAlarm(java.time.Duration.ofMinutes(-mins));
                     alarm.getProperties().add(Action.DISPLAY);
                     alarm.getProperties().add(desc);
                     e.getAlarms().add(alarm);
@@ -527,7 +524,7 @@ public class SaveCalendar {
         return dt;
     }
 
-    private String copyProperty(PropertyList l, String evName, Cursor cur, String dbName) {
+    private String copyProperty(PropertyList<Property> l, String evName, Cursor cur, String dbName) {
         // None of the exceptions caught below should be able to be thrown AFAICS.
         try {
             String value = getString(cur, dbName);
@@ -542,7 +539,7 @@ public class SaveCalendar {
         return null;
     }
 
-    private void copyEnumProperty(PropertyList l, String evName, Cursor cur, String dbName,
+    private void copyEnumProperty(PropertyList<Property> l, String evName, Cursor cur, String dbName,
                                   List<String> vals) {
         // None of the exceptions caught below should be able to be thrown AFAICS.
         try {

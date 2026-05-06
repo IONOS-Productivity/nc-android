@@ -11,6 +11,7 @@ import android.content.Context
 import android.content.res.Resources
 import android.net.Uri
 import androidx.annotation.VisibleForTesting
+import androidx.core.net.toUri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.nextcloud.client.account.CurrentAccountProvider
@@ -24,25 +25,20 @@ import com.owncloud.android.lib.common.SearchResult
 import com.owncloud.android.lib.common.SearchResultEntry
 import com.owncloud.android.lib.common.utils.Log_OC
 import com.owncloud.android.ui.asynctasks.GetRemoteFileTask
+import com.owncloud.android.ui.fragment.UnifiedSearchFragmentScreenState
 import javax.inject.Inject
 
 @Suppress("LongParameterList")
-class UnifiedSearchViewModel(application: Application) : AndroidViewModel(application), IUnifiedSearchViewModel {
+class UnifiedSearchViewModel(application: Application) :
+    AndroidViewModel(application),
+    IUnifiedSearchViewModel {
     companion object {
         private const val TAG = "UnifiedSearchViewModel"
         private const val FILES_PROVIDER_ID = "files"
     }
 
-    private data class UnifiedSearchMetadata(
-        var results: MutableList<SearchResult> = mutableListOf()
-    ) {
-        fun nextCursor(): Int? {
-            return try {
-                results.lastOrNull()?.cursor?.toInt()
-            } catch (e: NumberFormatException) {
-                null
-            }
-        }
+    private data class UnifiedSearchMetadata(var results: MutableList<SearchResult> = mutableListOf()) {
+        fun nextCursor(): Int? = results.lastOrNull()?.cursor?.toIntOrNull()
         fun name(): String? = results.lastOrNull()?.name
     }
 
@@ -58,6 +54,8 @@ class UnifiedSearchViewModel(application: Application) : AndroidViewModel(applic
     private lateinit var repository: IUnifiedSearchRepository
     private var results: MutableMap<ProviderID, UnifiedSearchMetadata> = mutableMapOf()
 
+    override val screenState: MutableLiveData<UnifiedSearchFragmentScreenState> =
+        MutableLiveData(UnifiedSearchFragmentScreenState.ShowingContent)
     override val isLoading = MutableLiveData(false)
     override val searchResults = MutableLiveData<List<UnifiedSearchSection>>(mutableListOf())
     override val error = MutableLiveData("")
@@ -145,31 +143,35 @@ class UnifiedSearchViewModel(application: Application) : AndroidViewModel(applic
     }
 
     private fun getResultUri(result: SearchResultEntry): Uri {
-        val uri = Uri.parse(result.resourceUrl)
+        val uri = result.resourceUrl.toUri()
         return when (uri.host) {
             null -> {
                 val serverUrl = currentAccountProvider.user.server.uri.toString()
                 val fullUrl = serverUrl + result.resourceUrl
-                Uri.parse(fullUrl)
+                fullUrl.toUri()
             }
 
             else -> uri
         }
     }
 
-    fun openFile(fileUrl: String) {
+    override fun openFile(remotePath: String) {
         if (isLoading.value == false) {
             isLoading.value = true
-            val user = currentAccountProvider.user
-            val task = GetRemoteFileTask(
-                context,
-                fileUrl,
-                clientFactory.create(currentAccountProvider.user),
-                FileDataStorageManager(user, context.contentResolver),
-                user
-            )
-            runner.postQuickTask(task, onResult = this::onFileRequestResult)
+            getRemoteFile(remotePath)
         }
+    }
+
+    override fun getRemoteFile(remotePath: String) {
+        val user = currentAccountProvider.user
+        val task = GetRemoteFileTask(
+            context,
+            remotePath,
+            clientFactory.create(user),
+            FileDataStorageManager(user, context.contentResolver),
+            user
+        )
+        runner.postQuickTask(task, onResult = this::onFileRequestResult)
     }
 
     fun onError(error: Throwable) {
@@ -244,5 +246,9 @@ class UnifiedSearchViewModel(application: Application) : AndroidViewModel(applic
     @VisibleForTesting
     fun setConnectivityService(connectivityService: ConnectivityService) {
         this.connectivityService = connectivityService
+    }
+
+    override fun updateScreenState(state: UnifiedSearchFragmentScreenState) {
+        screenState.value = state
     }
 }

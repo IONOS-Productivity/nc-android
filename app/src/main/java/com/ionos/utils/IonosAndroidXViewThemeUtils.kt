@@ -27,6 +27,7 @@ class IonosAndroidXViewThemeUtils(
 
     fun colorSwitchCompat(switchCompat: SwitchCompat) {
         delegate.colorSwitchCompat(switchCompat)
+        //delegate.colorSwitchCompat(switchCompat)
     }
 
     fun themeActionBar(context: Context, actionBar: ActionBar, title: String, backArrow: Drawable) {

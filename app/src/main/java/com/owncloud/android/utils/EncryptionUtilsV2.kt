@@ -13,6 +13,8 @@ import androidx.annotation.VisibleForTesting
 import com.google.gson.reflect.TypeToken
 import com.nextcloud.client.account.User
 import com.nextcloud.utils.autoRename.AutoRename
+import com.nextcloud.utils.e2ee.E2EVersionHelper
+import com.nextcloud.utils.extensions.showToast
 import com.owncloud.android.MainApp
 import com.owncloud.android.R
 import com.owncloud.android.datamodel.ArbitraryDataProvider
@@ -118,10 +120,6 @@ class EncryptionUtilsV2 {
                 arbitraryDataProvider
             )
 
-            // do not store metadata key
-            metadataFile.metadata.metadataKey = ByteArray(0)
-            metadataFile.metadata.keyChecksums.clear()
-
             encryptedUsers = emptyList()
             encryptedMetadata = encryptMetadata(metadataFile.metadata, key)
         } else {
@@ -175,6 +173,11 @@ class EncryptionUtilsV2 {
         context: Context,
         arbitraryDataProvider: ArbitraryDataProvider
     ): DecryptedFolderMetadataFile {
+        if (signature.isEmpty()) {
+            context.showToast(R.string.e2e_signature_is_empty)
+            throw IllegalStateException("Cannot decryptFolderMetadataFile, signature is empty")
+        }
+
         val parent =
             storageManager.getFileById(ocFile.parentId) ?: throw IllegalStateException("Cannot retrieve metadata")
 
@@ -247,7 +250,9 @@ class EncryptionUtilsV2 {
             )
         }
 
-        verifyMetadata(metadataFile, decryptedFolderMetadataFile, oldCounter, signature)
+        if (!verifyMetadata(metadataFile, decryptedFolderMetadataFile, oldCounter, signature)) {
+            throw IllegalStateException("Metadata is corrupt!")
+        }
 
         val transferredFiledrop = filesDropCountBefore > 0 &&
             decryptedFolderMetadataFile.metadata.files.size == filesBefore + filesDropCountBefore
@@ -369,19 +374,17 @@ class EncryptionUtilsV2 {
         user: User,
         context: Context,
         arbitraryDataProvider: ArbitraryDataProvider
-    ): ByteArray {
-        return retrieveTopMostMetadata(
-            folder,
-            storageManager,
-            client,
-            userId,
-            privateKey,
-            user,
-            context,
-            arbitraryDataProvider
-        )
-            .metadata.metadataKey
-    }
+    ): ByteArray = retrieveTopMostMetadata(
+        folder,
+        storageManager,
+        client,
+        userId,
+        privateKey,
+        user,
+        context,
+        arbitraryDataProvider
+    )
+        .metadata.metadataKey
 
     @VisibleForTesting
     fun encryptUser(user: DecryptedUser, metadataKey: ByteArray): EncryptedUser {
@@ -398,21 +401,18 @@ class EncryptionUtilsV2 {
     }
 
     @VisibleForTesting
-    fun transformUser(user: EncryptedUser): DecryptedUser {
-        return DecryptedUser(
-            user.userId,
-            user.certificate,
-            user.encryptedMetadataKey
-        )
-    }
+    fun transformUser(user: EncryptedUser): DecryptedUser = DecryptedUser(
+        user.userId,
+        user.certificate,
+        user.encryptedMetadataKey
+    )
 
     @VisibleForTesting
-    fun decryptMetadataKey(user: EncryptedUser, privateKey: String): ByteArray {
-        return EncryptionUtils.decryptStringAsymmetricV2(
+    fun decryptMetadataKey(user: EncryptedUser, privateKey: String): ByteArray =
+        EncryptionUtils.decryptStringAsymmetricV2(
             user.encryptedMetadataKey,
             privateKey
         )
-    }
 
     fun gZipCompress(string: String): ByteArray {
         val outputStream = ByteArrayOutputStream()
@@ -425,13 +425,9 @@ class EncryptionUtilsV2 {
         return outputStream.toByteArray()
     }
 
-    fun gZipDecompress(compressed: String): String {
-        return gZipDecompress(compressed.byteInputStream())
-    }
+    fun gZipDecompress(compressed: String): String = gZipDecompress(compressed.byteInputStream())
 
-    fun gZipDecompress(compressed: ByteArray): String {
-        return gZipDecompress(compressed.inputStream())
-    }
+    fun gZipDecompress(compressed: ByteArray): String = gZipDecompress(compressed.inputStream())
 
     @VisibleForTesting
     fun gZipDecompress(inputStream: InputStream): String {
@@ -613,7 +609,9 @@ class EncryptionUtilsV2 {
             object : TypeToken<EncryptedFolderMetadataFile>() {}
         )
 
-        val decryptedFolderMetadata = if (v2.version == "2.0" || v2.version == "2") {
+        val e2eeVersion = E2EVersionHelper.fromVersionString(v2.version)
+
+        val decryptedFolderMetadata = if (E2EVersionHelper.isV2Plus(e2eeVersion)) {
             val userId = AccountManager.get(context).getUserData(
                 user.toPlatformAccount(),
                 AccountUtils.Constants.KEY_USER_ID
@@ -856,15 +854,14 @@ class EncryptionUtilsV2 {
     }
 
     @VisibleForTesting
-    fun migrateDecryptedFileV1ToV2(v1: com.owncloud.android.datamodel.e2e.v1.decrypted.DecryptedFile): DecryptedFile {
-        return DecryptedFile(
+    fun migrateDecryptedFileV1ToV2(v1: com.owncloud.android.datamodel.e2e.v1.decrypted.DecryptedFile): DecryptedFile =
+        DecryptedFile(
             v1.encrypted.filename,
             v1.encrypted.mimetype,
             v1.initializationVector,
             v1.authenticationTag ?: "",
             v1.encrypted.key
         )
-    }
 
     @Throws(UploadException::class)
     @Suppress("LongParameterList")
@@ -958,14 +955,10 @@ class EncryptionUtilsV2 {
         decryptedFolderMetadataFile: DecryptedFolderMetadataFile,
         oldCounter: Long,
         signature: String
-    ) {
-        if (signature.isEmpty()) {
-            return
-        }
-
+    ): Boolean {
         if (decryptedFolderMetadataFile.metadata.counter < oldCounter) {
             MainApp.showMessage(R.string.e2e_counter_too_old)
-            return
+            return false
         }
 
         val message = EncryptionUtils.serializeJSON(encryptedFolderMetadataFile, true)
@@ -974,14 +967,15 @@ class EncryptionUtilsV2 {
 
         if (certs.isNotEmpty() && !verifySignedData(signedData, certs)) {
             MainApp.showMessage(R.string.e2e_signature_does_not_match)
-            return
+            return false
         }
 
         val hashedMetadataKey = hashMetadataKey(decryptedFolderMetadataFile.metadata.metadataKey)
         if (!decryptedFolderMetadataFile.metadata.keyChecksums.contains(hashedMetadataKey)) {
             MainApp.showMessage(R.string.e2e_hash_not_found)
-            return
+            return false
         }
+        return true
     }
 
     private fun getSignedData(base64encodedSignature: String, message: String): CMSSignedData {
@@ -996,20 +990,19 @@ class EncryptionUtilsV2 {
         return CMSSignedData(cmsProcessableByteArray, contentInfo)
     }
 
+    @Suppress("TooGenericExceptionCaught")
     fun verifySignedData(data: CMSSignedData, certs: List<X509Certificate>): Boolean {
-        val signer: SignerInformation = data.signerInfos.signers.iterator().next() as SignerInformation
+        val signer = data.signerInfos.signers.first() as SignerInformation
+        val verifierBuilder = JcaSimpleSignerInfoVerifierBuilder()
 
-        certs.forEach {
-            try {
-                if (signer.verify(JcaSimpleSignerInfoVerifierBuilder().build(it))) {
-                    return true
-                }
-            } catch (e: java.lang.Exception) {
-                Log_OC.e(TAG, "Error caught at verifySignedData: $e")
+        return certs.any { cert ->
+            runCatching {
+                signer.verify(verifierBuilder.build(cert.publicKey))
+            }.getOrElse {
+                Log_OC.e(TAG, "Exception verifySignedData: $it")
+                false
             }
         }
-
-        return false
     }
 
     private fun signMessage(cert: X509Certificate, key: PrivateKey, data: ByteArray): CMSSignedData {
@@ -1080,13 +1073,12 @@ class EncryptionUtilsV2 {
         return BigInteger(1, bytes).toString(16).padStart(32, '0')
     }
 
-    fun getMessageSignature(cert: String, privateKey: String, metadataFile: EncryptedFolderMetadataFile): String {
-        return getMessageSignature(
+    fun getMessageSignature(cert: String, privateKey: String, metadataFile: EncryptedFolderMetadataFile): String =
+        getMessageSignature(
             EncryptionUtils.convertCertFromString(cert),
             EncryptionUtils.PEMtoPrivateKey(privateKey),
             metadataFile
         )
-    }
 
     private fun getMessageSignature(
         cert: X509Certificate,

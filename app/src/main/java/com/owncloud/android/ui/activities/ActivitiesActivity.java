@@ -11,8 +11,8 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.nextcloud.client.network.ClientFactory;
+import com.nextcloud.client.network.ConnectivityService;
 import com.nextcloud.common.NextcloudClient;
 import com.owncloud.android.R;
 import com.owncloud.android.databinding.ActivityListLayoutBinding;
@@ -50,14 +50,14 @@ public class ActivitiesActivity extends DrawerActivity implements ActivityListIn
 
     ActivityListLayoutBinding binding;
     private ActivityListAdapter adapter;
-    private int lastGiven;
+    private long lastGiven;
     private boolean isLoadingActivities;
     private ActivitiesContract.ActionListener actionListener;
-    private Snackbar snackbar;
 
     @Inject ActivitiesRepository activitiesRepository;
     @Inject FilesRepository filesRepository;
     @Inject ClientFactory clientFactory;
+    @Inject ConnectivityService connectivityService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +75,7 @@ public class ActivitiesActivity extends DrawerActivity implements ActivityListIn
         viewThemeUtils.androidx.themeSwipeRefreshLayout(binding.swipeContainingList);
 
         // setup drawer
-        setupDrawer();
+        setupDrawer(getMenuItemId());
         updateActionBarTitleAndHomeButtonByString(getString(R.string.drawer_item_activities));
 
         binding.swipeContainingList.setOnRefreshListener(() -> {
@@ -84,6 +84,11 @@ public class ActivitiesActivity extends DrawerActivity implements ActivityListIn
             lastGiven = ActivitiesContract.ActionListener.UNDEFINED;
             actionListener.loadActivities(lastGiven);
         });
+    }
+
+    @Override
+    protected int getMenuItemId() {
+        return R.id.nav_activity;
     }
 
     @VisibleForTesting
@@ -151,6 +156,7 @@ public class ActivitiesActivity extends DrawerActivity implements ActivityListIn
     @Override
     protected void onResume() {
         super.onResume();
+        highlightNavigationViewItem(getMenuItemId());
         actionListener.onResume();
         setupContent();
     }
@@ -162,11 +168,8 @@ public class ActivitiesActivity extends DrawerActivity implements ActivityListIn
     }
 
     @Override
-    public void showActivities(List<Object> activities, NextcloudClient client, int lastGiven) {
-        boolean clear = false;
-        if (this.lastGiven == ActivitiesContract.ActionListener.UNDEFINED) {
-            clear = true;
-        }
+    public void showActivities(List<Object> activities, NextcloudClient client, long lastGiven) {
+        boolean clear = this.lastGiven == ActivitiesContract.ActionListener.UNDEFINED;
         adapter.setActivityItems(activities, client, clear);
         this.lastGiven = lastGiven;
 
@@ -184,7 +187,16 @@ public class ActivitiesActivity extends DrawerActivity implements ActivityListIn
 
     @Override
     public void showActivitiesLoadError(String error) {
-        snackbar = DisplayUtils.showSnackMessage(this, error);
+        connectivityService.isNetworkAndServerAvailable(result -> {
+            if (result) {
+                DisplayUtils.showSnackMessage(this, error);
+            } else {
+                showEmptyContent(getString(R.string.server_not_reachable),
+                                 getString(R.string.server_not_reachable_content));
+                binding.emptyList.emptyListIcon.setImageResource(R.drawable.ic_sync_off);
+            }
+        });
+        
     }
 
     @Override
@@ -203,12 +215,12 @@ public class ActivitiesActivity extends DrawerActivity implements ActivityListIn
 
     @Override
     public void showActivityDetailUIIsNull() {
-        snackbar = DisplayUtils.showSnackMessage(this, R.string.file_not_found);
+        DisplayUtils.showSnackMessage(this, R.string.file_not_found);
     }
 
     @Override
     public void showActivityDetailError(String error) {
-        snackbar = DisplayUtils.showSnackMessage(this, error);
+        DisplayUtils.showSnackMessage(this, error);
     }
 
     @Override
@@ -240,13 +252,5 @@ public class ActivitiesActivity extends DrawerActivity implements ActivityListIn
         super.onStop();
 
         actionListener.onStop();
-    }
-
-    @VisibleForTesting
-    public void dismissSnackbar() {
-        if (snackbar != null && snackbar.isShown()) {
-            snackbar.dismiss();
-            snackbar = null;
-        }
     }
 }

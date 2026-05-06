@@ -19,7 +19,6 @@ import android.view.View
 import android.widget.AbsListView
 import android.widget.PopupMenu
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.IdRes
 import androidx.annotation.VisibleForTesting
@@ -33,6 +32,7 @@ import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.account.CurrentAccountProvider
 import com.nextcloud.client.di.Injectable
 import com.nextcloud.client.network.ClientFactory
+import com.nextcloud.client.network.ConnectivityService
 import com.nextcloud.client.preferences.AppPreferences
 import com.nextcloud.client.utils.Throttler
 import com.nextcloud.ui.trashbinFileActions.TrashbinFileActionsBottomSheet
@@ -77,6 +77,9 @@ class TrashbinActivity :
     @Inject
     lateinit var throttler: Throttler
 
+    @Inject
+    lateinit var connectivityService: ConnectivityService
+
     private var trashbinListAdapter: TrashbinListAdapter? = null
 
     @VisibleForTesting
@@ -89,6 +92,7 @@ class TrashbinActivity :
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
+            isEnabled = false
             trashbinPresenter?.navigateUp()
         }
     }
@@ -104,7 +108,7 @@ class TrashbinActivity :
             if (targetUser.isPresent) {
                 setUser(targetUser.get())
             } else {
-                Toast.makeText(this, R.string.associated_account_not_found, Toast.LENGTH_LONG).show()
+                DisplayUtils.showSnackMessage(this, R.string.associated_account_not_found)
                 finish()
                 return
             }
@@ -125,7 +129,15 @@ class TrashbinActivity :
             View.GONE
 
         updateActionBarTitleAndHomeButtonByString(getString(R.string.trashbin_activity_title))
-        setupDrawer()
+        setupDrawer(menuItemId)
+        handleBackPress()
+    }
+
+    override fun getMenuItemId(): Int = R.id.nav_trashbin
+
+    override fun onResume() {
+        super.onResume()
+        highlightNavigationViewItem(menuItemId)
     }
 
     override fun onStart() {
@@ -165,19 +177,26 @@ class TrashbinActivity :
         binding.swipeContainingList.setOnRefreshListener { loadFolder() }
         viewThemeUtils?.material?.colorMaterialTextButton(findViewById(R.id.sort_button))
 
-        findViewById<View>(R.id.sort_button).setOnClickListener {
-            DisplayUtils.openSortingOrderDialogFragment(
-                supportFragmentManager,
-                preferences?.getSortOrderByType(
-                    FileSortOrder.Type.trashBinView,
-                    FileSortOrder.SORT_NEW_TO_OLD
+        val sortOrder = preferences?.getSortOrderByType(
+            FileSortOrder.Type.trashBinView,
+            FileSortOrder.SORT_NEW_TO_OLD
+        )
+
+        findViewById<TextView>(R.id.sort_button).apply {
+            setOnClickListener {
+                DisplayUtils.openSortingOrderDialogFragment(
+                    supportFragmentManager,
+                    preferences?.getSortOrderByType(
+                        FileSortOrder.Type.trashBinView,
+                        FileSortOrder.SORT_NEW_TO_OLD
+                    )
                 )
-            )
+            }
+
+            setText(DisplayUtils.getSortOrderStringId(sortOrder))
         }
 
         loadFolder()
-
-        handleOnBackPressed()
 
         mMultiChoiceModeListener = MultiChoiceModeListener(
             this,
@@ -187,7 +206,7 @@ class TrashbinActivity :
         addDrawerListener(mMultiChoiceModeListener)
     }
 
-    private fun handleOnBackPressed() {
+    private fun handleBackPress() {
         onBackPressedDispatcher.addCallback(
             this,
             onBackPressedCallback
@@ -353,23 +372,43 @@ class TrashbinActivity :
 
     override fun showError(message: Int) {
         if (active) {
-            trashbinListAdapter?.removeAllFiles()
-            binding.loadingContent.visibility = View.GONE
-            binding.list.visibility = View.VISIBLE
-            binding.swipeContainingList.isRefreshing = false
-            binding.emptyList.emptyListViewHeadline.setText(R.string.common_error)
-            binding.emptyList.emptyListIcon.setImageDrawable(
-                ResourcesCompat.getDrawable(
-                    resources,
-                    R.drawable.ic_list_empty_error,
-                    null
-                )
-            )
-            binding.emptyList.emptyListViewText.setText(message)
-            binding.emptyList.emptyListViewText.visibility = View.VISIBLE
-            binding.emptyList.emptyListIcon.visibility = View.VISIBLE
-            binding.emptyList.emptyListView.visibility = View.VISIBLE
+            connectivityService.isNetworkAndServerAvailable { result: Boolean? ->
+                if (result == true) {
+                    trashbinListAdapter?.removeAllFiles()
+                    binding.loadingContent.visibility = View.GONE
+                    binding.list.visibility = View.VISIBLE
+                    binding.swipeContainingList.isRefreshing = false
+                    binding.emptyList.emptyListViewHeadline.setText(R.string.common_error)
+                    binding.emptyList.emptyListIcon.setImageDrawable(
+                        ResourcesCompat.getDrawable(
+                            resources,
+                            R.drawable.ic_list_empty_error,
+                            null
+                        )
+                    )
+                    binding.emptyList.emptyListViewText.setText(message)
+                    binding.emptyList.emptyListViewText.visibility = View.VISIBLE
+                    binding.emptyList.emptyListIcon.visibility = View.VISIBLE
+                    binding.emptyList.emptyListView.visibility = View.VISIBLE
+                } else {
+                    showEmptyContent(
+                        getString(R.string.server_not_reachable),
+                        getString(R.string.server_not_reachable_content)
+                    )
+                }
+            }
         }
+    }
+
+    private fun showEmptyContent(headline: String, message: String) {
+        binding.emptyList.emptyListViewHeadline.text = headline
+        binding.emptyList.emptyListViewText.text = message
+        binding.loadingContent.visibility = View.GONE
+        binding.emptyList.emptyListIcon.visibility = View.VISIBLE
+        binding.emptyList.emptyListViewHeadline.visibility = View.VISIBLE
+        binding.emptyList.emptyListViewText.visibility = View.VISIBLE
+        binding.emptyList.emptyListView.visibility = View.VISIBLE
+        binding.emptyList.emptyListIcon.setImageResource(R.drawable.ic_sync_off)
     }
 
     private fun openActionsMenu(filesCount: Int, checkedFiles: Set<TrashbinFile>) {
@@ -461,7 +500,8 @@ class TrashbinActivity :
         val adapter: TrashbinListAdapter?,
         val viewThemeUtils: ViewThemeUtils,
         val openActionsMenu: (Int, Set<TrashbinFile>) -> Unit
-    ) : AbsListView.MultiChoiceModeListener, DrawerLayout.DrawerListener {
+    ) : AbsListView.MultiChoiceModeListener,
+        DrawerLayout.DrawerListener {
 
         var mActiveActionMode: ActionMode? = null
         private var mIsActionModeNew = false

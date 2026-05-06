@@ -9,31 +9,57 @@ package com.nextcloud.client.assistant
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.nextcloud.client.assistant.model.AssistantScreenState
 import com.nextcloud.client.assistant.model.ScreenOverlayState
-import com.nextcloud.client.assistant.model.ScreenState
-import com.nextcloud.client.assistant.repository.AssistantRepositoryType
+import com.nextcloud.client.assistant.repository.local.AssistantLocalRepository
+import com.nextcloud.client.assistant.repository.remote.AssistantRemoteRepository
+import com.nextcloud.utils.TimeConstants.MILLIS_PER_SECOND
 import com.owncloud.android.R
+import com.owncloud.android.lib.common.utils.Log_OC
 import com.owncloud.android.lib.resources.assistant.v2.model.Task
 import com.owncloud.android.lib.resources.assistant.v2.model.TaskTypeData
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 
+@Suppress("TooManyFunctions")
 class AssistantViewModel(
-    private val repository: AssistantRepositoryType
+    private val accountName: String,
+    private val remoteRepository: AssistantRemoteRepository,
+    private val localRepository: AssistantLocalRepository,
+    sessionIdArg: Long?
 ) : ViewModel() {
 
-    private val _screenState = MutableStateFlow<ScreenState?>(null)
-    val screenState: StateFlow<ScreenState?> = _screenState
+    companion object {
+        private const val TAG = "AssistantViewModel"
+        private const val POLLING_INTERVAL_MS = 15_000L
+    }
+
+    private val _inputBarText = MutableStateFlow("")
+    val inputBarText: StateFlow<String> = _inputBarText
+
+    private val _screenState = MutableStateFlow<AssistantScreenState?>(null)
+    val screenState: StateFlow<AssistantScreenState?> = _screenState
 
     private val _screenOverlayState = MutableStateFlow<ScreenOverlayState?>(null)
     val screenOverlayState: StateFlow<ScreenOverlayState?> = _screenOverlayState
 
+    private val _sessionId = MutableStateFlow(sessionIdArg)
+    val sessionId: StateFlow<Long?> = _sessionId
+
     private val _snackbarMessageId = MutableStateFlow<Int?>(null)
     val snackbarMessageId: StateFlow<Int?> = _snackbarMessageId
+
+    private val _isTranslationTask = MutableStateFlow(false)
+    val isTranslationTask: StateFlow<Boolean> = _isTranslationTask
+
+    private val selectedTask = MutableStateFlow<Task?>(null)
 
     private val _selectedTaskType = MutableStateFlow<TaskTypeData?>(null)
     val selectedTaskType: StateFlow<TaskTypeData?> = _selectedTaskType
@@ -46,102 +72,180 @@ class AssistantViewModel(
     private val _filteredTaskList = MutableStateFlow<List<Task>?>(null)
     val filteredTaskList: StateFlow<List<Task>?> = _filteredTaskList
 
+    private var pollingJob: Job? = null
+
     init {
+        observeScreenState()
         fetchTaskTypes()
     }
 
-    @Suppress("MagicNumber")
-    fun createTask(input: String, taskType: TaskTypeData) {
-        viewModelScope.launch(Dispatchers.IO) {
-            val result = repository.createTask(input, taskType)
+    // region task polling
+    fun startPolling(sessionId: Long?) {
+        stopPolling()
 
-            val messageId = if (result.isSuccess) {
-                R.string.assistant_screen_task_create_success_message
-            } else {
-                R.string.assistant_screen_task_create_fail_message
+        pollingJob = viewModelScope.launch(Dispatchers.IO) {
+            try {
+                while (isActive) {
+                    delay(POLLING_INTERVAL_MS)
+                    val taskType = _selectedTaskType.value ?: continue
+                    if (!taskType.isChat()) {
+                        Log_OC.d(TAG, "Polling task list")
+                        pollTaskList()
+                    }
+                }
+            } finally {
+                Log_OC.d(TAG, "Polling cancelled, sessionId: $sessionId")
             }
+        }
+    }
 
-            updateSnackbarMessage(messageId)
+    fun stopPolling() {
+        pollingJob?.cancel()
+        pollingJob = null
+    }
+    // endregion
 
-            delay(2000L)
+    private suspend fun pollTaskList() {
+        val taskType = _selectedTaskType.value?.id ?: return
+
+        val cachedTasks = localRepository.getCachedTasks(accountName, taskType)
+        if (cachedTasks.isNotEmpty()) {
+            _filteredTaskList.value = cachedTasks.sortedByDescending { it.id }
+        }
+
+        val result = remoteRepository.getTaskList(taskType)
+        if (result != null) {
+            taskList = result
+            _filteredTaskList.value = taskList?.sortedByDescending { it.id }
+            localRepository.cacheTasks(result, accountName)
+        }
+    }
+
+    private fun observeScreenState() {
+        viewModelScope.launch {
+            combine(
+                selectedTask,
+                _selectedTaskType,
+                _filteredTaskList
+            ) { selectedTask, selectedTaskType, tasks ->
+                val isChat = selectedTaskType?.isChat() == true
+                val isTranslation =
+                    selectedTaskType?.isTranslate() == true && selectedTask?.isTranslate() == true
+
+                when {
+                    selectedTaskType == null -> AssistantScreenState.Loading
+
+                    isTranslation -> AssistantScreenState.Translation(selectedTask)
+
+                    isChat -> AssistantScreenState.ChatContent
+
+                    !isChat && tasks.isNullOrEmpty() -> AssistantScreenState.emptyTaskList()
+
+                    else -> {
+                        if (!_isTranslationTask.value) {
+                            AssistantScreenState.TaskContent
+                        } else {
+                            _screenState.value
+                        }
+                    }
+                }
+            }.collect { newState ->
+                _screenState.value = newState
+            }
+        }
+    }
+
+    // region task
+    fun createTask(input: String, taskType: TaskTypeData) = viewModelScope.launch(Dispatchers.IO) {
+        val result = remoteRepository.createTask(input, taskType)
+        val message = if (result.isSuccess) {
+            R.string.assistant_screen_task_create_success_message
+        } else {
+            R.string.assistant_screen_task_create_fail_message
+        }
+
+        updateSnackbarMessage(message)
+        delay(MILLIS_PER_SECOND * 2L)
+        fetchTaskList()
+    }
+
+    fun selectTaskType(task: TaskTypeData) {
+        Log_OC.d(TAG, "Task type changed: ${task.name}, session id: ${_sessionId.value}")
+
+        // clear task list immediately when task type change
+        if (_selectedTaskType.value != task) {
+            _filteredTaskList.update {
+                listOf()
+            }
+        }
+
+        updateTaskType(task)
+
+        if (!task.isChat()) {
             fetchTaskList()
         }
     }
 
-    fun selectTaskType(task: TaskTypeData) {
-        _selectedTaskType.update {
-            task
+    private fun fetchTaskTypes() = viewModelScope.launch(Dispatchers.IO) {
+        val result = remoteRepository.fetchTaskTypes()
+        if (result.isNullOrEmpty()) {
+            _screenState.value = AssistantScreenState.emptyTaskTypes()
+            return@launch
         }
 
-        fetchTaskList()
-    }
-
-    private fun fetchTaskTypes() {
-        viewModelScope.launch(Dispatchers.IO) {
-            val taskTypesResult = repository.getTaskTypes()
-
-            if (taskTypesResult.isNullOrEmpty()) {
-                updateSnackbarMessage(R.string.assistant_screen_task_types_error_state_message)
-                return@launch
-            }
-
-            _taskTypes.update {
-                taskTypesResult
-            }
-
-            selectTaskType(taskTypesResult.first())
+        _taskTypes.update {
+            result
         }
+        selectTaskType(result.first())
     }
 
-    fun fetchTaskList() {
-        viewModelScope.launch(Dispatchers.IO) {
-            _screenState.update {
-                ScreenState.Refreshing
-            }
+    fun fetchTaskList() = viewModelScope.launch(Dispatchers.IO) {
+        val taskType = _selectedTaskType.value ?: return@launch
 
-            val taskType = _selectedTaskType.value?.id ?: return@launch
-            val result = repository.getTaskList(taskType)
-            if (result != null) {
+        val cached = localRepository.getCachedTasks(accountName, taskType.name)
+        if (cached.isNotEmpty()) {
+            _filteredTaskList.update {
+                cached.sortedByDescending { it.id }
+            }
+        }
+
+        taskType.id?.let { typeId ->
+            remoteRepository.getTaskList(typeId)?.let { result ->
                 taskList = result
-                _filteredTaskList.update {
-                    taskList?.sortedByDescending { task ->
-                        task.id
-                    }
-                }
+                _filteredTaskList.value = result.sortedByDescending { it.id }
+                localRepository.cacheTasks(result, accountName)
                 updateSnackbarMessage(null)
-            } else {
-                updateSnackbarMessage(R.string.assistant_screen_task_list_error_state_message)
-            }
-
-            updateScreenState()
+            } ?: updateSnackbarMessage(R.string.assistant_screen_task_list_error_state_message)
         }
     }
 
-    private fun updateScreenState() {
-        _screenState.update {
-            if (_filteredTaskList.value?.isEmpty() == true) {
-                ScreenState.EmptyContent
-            } else {
-                ScreenState.Content
-            }
+    fun deleteTask(id: Long) = viewModelScope.launch(Dispatchers.IO) {
+        val result = remoteRepository.deleteTask(id)
+        val message = if (result.isSuccess) {
+            R.string.assistant_screen_task_delete_success_message
+        } else {
+            R.string.assistant_screen_task_delete_fail_message
+        }
+
+        updateSnackbarMessage(message)
+
+        val taskType = _selectedTaskType.value ?: return@launch
+        if (result.isSuccess) {
+            removeTaskFromList(id)
+            localRepository.deleteTask(id, accountName, taskType.name)
+        }
+    }
+    // endregion
+
+    private fun updateTaskType(value: TaskTypeData) {
+        _selectedTaskType.update {
+            value
         }
     }
 
-    fun deleteTask(id: Long) {
-        viewModelScope.launch(Dispatchers.IO) {
-            val result = repository.deleteTask(id)
-
-            val messageId = if (result.isSuccess) {
-                R.string.assistant_screen_task_delete_success_message
-            } else {
-                R.string.assistant_screen_task_delete_fail_message
-            }
-
-            updateSnackbarMessage(messageId)
-
-            if (result.isSuccess) {
-                removeTaskFromList(id)
-            }
+    fun selectTask(task: Task?) {
+        selectedTask.update {
+            task
         }
     }
 
@@ -151,11 +255,37 @@ class AssistantViewModel(
         }
     }
 
-    fun updateScreenState(value: ScreenOverlayState?) {
+    fun updateScreenOverlayState(value: ScreenOverlayState?) {
         _screenOverlayState.update {
             value
         }
     }
+
+    fun updateInputBarText(value: String) {
+        _inputBarText.update {
+            value
+        }
+    }
+
+    fun updateScreenState(state: AssistantScreenState) {
+        _screenState.update {
+            state
+        }
+    }
+
+    fun updateTranslationTaskState(value: Boolean) {
+        _isTranslationTask.update {
+            value
+        }
+    }
+
+    fun onTranslationScreenDismissed() {
+        updateInputBarText("")
+        updateTranslationTaskState(false)
+        selectTask(null)
+    }
+
+    fun getRemoteRepository(): AssistantRemoteRepository = remoteRepository
 
     private fun removeTaskFromList(id: Long) {
         _filteredTaskList.update { currentList ->

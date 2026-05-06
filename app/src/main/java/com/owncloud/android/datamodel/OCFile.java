@@ -22,6 +22,7 @@ import android.text.TextUtils;
 
 import com.ionos.annotation.IonosCustomization;
 import com.nextcloud.utils.BuildHelper;
+import com.nextcloud.utils.extensions.StringExtensionsKt;
 import com.owncloud.android.R;
 import com.owncloud.android.lib.common.network.WebdavEntry;
 import com.owncloud.android.lib.common.utils.Log_OC;
@@ -40,18 +41,25 @@ import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
 import androidx.core.content.FileProvider;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import third_parties.daveKoeller.AlphanumComparator;
 
 public class OCFile implements Parcelable, Comparable<OCFile>, ServerFileInterface {
 
-    private final static String PERMISSION_SHARED_WITH_ME = "S";
-    @VisibleForTesting
     public final static String PERMISSION_CAN_RESHARE = "R";
-    private final static String PERMISSION_CAN_WRITE = "CK";
-    private final static String PERMISSION_GROUPFOLDER = "M";
+    private final static String PERMISSION_SHARED = "S";
+    private final static String PERMISSION_MOUNTED = "M";
+    private final static String PERMISSION_CAN_CREATE_FILE_INSIDE_FOLDER = "C";
+    private final static String PERMISSION_CAN_CREATE_FOLDER_INSIDE_FOLDER = "K";
+    private final static String PERMISSION_CAN_READ = "G";
+    private final static String PERMISSION_CAN_WRITE = "W";
+    private final static String PERMISSION_CAN_DELETE_OR_LEAVE_SHARE = "D";
+    private final static String PERMISSION_CAN_RENAME = "N";
+    private final static String PERMISSION_CAN_MOVE = "V";
+    private final static String PERMISSION_CAN_CREATE_FILE_AND_FOLDER = PERMISSION_CAN_CREATE_FILE_INSIDE_FOLDER + PERMISSION_CAN_CREATE_FOLDER_INSIDE_FOLDER;
+
+    private final static int MAX_FILE_SIZE_FOR_IMMEDIATE_PREVIEW_BYTES = 1024000;
 
     public static final String PATH_SEPARATOR = "/";
     public static final String ROOT_PATH = PATH_SEPARATOR;
@@ -121,6 +129,11 @@ public class OCFile implements Parcelable, Comparable<OCFile>, ServerFileInterfa
     private List<Tag> tags = new ArrayList<>();
     private Long internalFolderSyncTimestamp = -1L;
     private String internalFolderSyncResult = "";
+
+    // region Recommend files variables
+    private boolean recommendedFile = false;
+    private String reason = "";
+    // endregion
 
     /**
      * URI to the local path of the file contents, if stored in the device; cached after first call to
@@ -567,7 +580,7 @@ public class OCFile implements Parcelable, Comparable<OCFile>, ServerFileInterfa
 
     @Override
     public int hashCode() {
-        return 31 * (int) (fileId ^ (fileId >>> 32)) + (int) (parentId ^ (parentId >>> 32));
+        return Objects.hash(fileId,parentId);
     }
 
     @NonNull
@@ -629,28 +642,68 @@ public class OCFile implements Parcelable, Comparable<OCFile>, ServerFileInterfa
     }
 
     public boolean isSharedWithMe() {
-        String permissions = getPermissions();
-        return permissions != null && permissions.contains(PERMISSION_SHARED_WITH_ME);
+        return hasPermission(PERMISSION_SHARED);
     }
 
     public boolean canReshare() {
-        String permissions = getPermissions();
-        return permissions != null && permissions.contains(PERMISSION_CAN_RESHARE);
+        return hasPermission(PERMISSION_CAN_RESHARE);
+    }
+
+    public boolean canCreateFileAndFolder() {
+        return hasPermission(PERMISSION_CAN_CREATE_FILE_AND_FOLDER);
+    }
+
+    public boolean mounted() {
+        return hasPermission(PERMISSION_MOUNTED);
+    }
+
+    public boolean canRead() {
+        return hasPermission(PERMISSION_CAN_READ);
+    }
+
+    public boolean canCreateFileInsideFolder() {
+        return hasPermission(PERMISSION_CAN_CREATE_FILE_INSIDE_FOLDER);
+    }
+
+    public boolean canCreateFolderInsideFolder() {
+        return hasPermission(PERMISSION_CAN_CREATE_FOLDER_INSIDE_FOLDER);
+    }
+
+    /**
+     * Determines whether the current account has the ability to delete the file or leave the share.
+     *
+     * <p>
+     * - If the file is shared with the current account (i.e., the user is the recipient),
+     *   the user cannot delete the file itself but can leave the shared file.
+     * <p>
+     * - If the file is belongs to the current user. User can delete the file.
+     *
+     * @return true if the user is allowed to either delete or leave the share; false otherwise.
+     */
+    public boolean canDeleteOrLeaveShare() {
+        return hasPermission(PERMISSION_CAN_DELETE_OR_LEAVE_SHARE);
+    }
+
+    public boolean canRename() {
+        return hasPermission(PERMISSION_CAN_RENAME);
     }
 
     public boolean canWrite() {
-        String permissions = getPermissions();
-        return permissions != null && permissions.contains(PERMISSION_CAN_WRITE);
+        return hasPermission(PERMISSION_CAN_WRITE);
     }
 
-    public boolean isGroupFolder() {
+    public boolean canMove() {
+        return hasPermission(PERMISSION_CAN_MOVE);
+    }
+
+    private boolean hasPermission(String permission) {
         String permissions = getPermissions();
-        return permissions != null && permissions.contains(PERMISSION_GROUPFOLDER);
+        return permissions != null && permissions.contains(permission);
     }
 
     @IonosCustomization("Icon for all sharing types")
     public Integer getFileOverlayIconId(boolean isAutoUploadFolder) {
-        if (WebdavEntry.MountType.GROUP == mountType || isGroupFolder()) {
+        if (WebdavEntry.MountType.GROUP == mountType || mounted()) {
             return R.drawable.ic_folder_overlay_account_group;
         } else if (sharedViaLink && !encrypted && (isSharedWithMe() || sharedWithSharee)) {
             return R.drawable.ic_folder_all_share_types;
@@ -671,7 +724,7 @@ public class OCFile implements Parcelable, Comparable<OCFile>, ServerFileInterfa
         }
     }
 
-    public static final Parcelable.Creator<OCFile> CREATOR = new Parcelable.Creator<OCFile>() {
+    public static final Parcelable.Creator<OCFile> CREATOR = new Parcelable.Creator<>() {
 
         @Override
         public OCFile createFromParcel(Parcel source) {
@@ -697,6 +750,10 @@ public class OCFile implements Parcelable, Comparable<OCFile>, ServerFileInterfa
 
     public long getFileLength() {
         return this.fileLength;
+    }
+
+    public boolean isFileEligibleForImmediatePreview() {
+        return fileLength <= MAX_FILE_SIZE_FOR_IMMEDIATE_PREVIEW_BYTES;
     }
 
     public long getCreationTimestamp() {
@@ -742,12 +799,16 @@ public class OCFile implements Parcelable, Comparable<OCFile>, ServerFileInterfa
         return this.etagOnServer;
     }
 
+    public boolean isEtagChanged() {
+        return StringExtensionsKt.eTagChanged(getEtag(), getEtagOnServer());
+    }
+
     public boolean isSharedViaLink() {
         return this.sharedViaLink;
     }
 
     public boolean isShared() {
-        return isSharedViaLink() || isSharedWithSharee() || isSharedWithMe();
+        return isSharedViaLink() || isSharedWithSharee() || isSharedWithMe() || !sharees.isEmpty();
     }
 
     public String getPermissions() {
@@ -1046,11 +1107,7 @@ public class OCFile implements Parcelable, Comparable<OCFile>, ServerFileInterfa
     }
 
     public void setE2eCounter(@Nullable Long e2eCounter) {
-        if (e2eCounter == null) {
-            this.e2eCounter = -1;
-        } else {
-            this.e2eCounter = e2eCounter;
-        }
+        this.e2eCounter = Objects.requireNonNullElse(e2eCounter, -1L);
     }
 
     public boolean isInternalFolderSync() {
@@ -1091,5 +1148,35 @@ public class OCFile implements Parcelable, Comparable<OCFile>, ServerFileInterfa
 
     public void setUploadTimestamp(long uploadTimestamp) {
         this.uploadTimestamp = uploadTimestamp;
+    }
+
+    public boolean exists() {
+        final String storagePath = getStoragePath();
+        return storagePath != null && new File(storagePath).exists();
+    }
+
+    public void setReason(String value) {
+        reason = value;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setIsRecommendedFile(boolean value) {
+        recommendedFile = value;
+    }
+
+    public boolean isRecommendedFile() {
+        return recommendedFile;
+    }
+
+    // only root directories parent id can be 0
+    public boolean hasValidParentId() {
+        if (isRootDirectory()) {
+            return getParentId() == 0;
+        } else {
+            return getParentId() != 0;
+        }
     }
 }

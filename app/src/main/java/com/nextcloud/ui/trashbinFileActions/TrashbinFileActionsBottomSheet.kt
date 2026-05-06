@@ -10,7 +10,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.annotation.IdRes
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.os.bundleOf
@@ -36,10 +35,13 @@ import com.owncloud.android.datamodel.SyncedFolderProvider
 import com.owncloud.android.datamodel.ThumbnailsCacheManager
 import com.owncloud.android.lib.resources.trashbin.model.TrashbinFile
 import com.owncloud.android.utils.DisplayUtils
+import com.owncloud.android.utils.overlay.OverlayManager
 import com.owncloud.android.utils.theme.ViewThemeUtils
 import javax.inject.Inject
 
-class TrashbinFileActionsBottomSheet : BottomSheetDialogFragment(), Injectable {
+class TrashbinFileActionsBottomSheet :
+    BottomSheetDialogFragment(),
+    Injectable {
 
     @Inject
     lateinit var viewThemeUtils: ViewThemeUtils
@@ -55,6 +57,9 @@ class TrashbinFileActionsBottomSheet : BottomSheetDialogFragment(), Injectable {
 
     @Inject
     lateinit var syncedFolderProvider: SyncedFolderProvider
+
+    @Inject
+    lateinit var overlayManager: OverlayManager
 
     private lateinit var viewModel: TrashbinFileActionsViewModel
 
@@ -106,8 +111,8 @@ class TrashbinFileActionsBottomSheet : BottomSheetDialogFragment(), Injectable {
 
             TrashbinFileActionsViewModel.UiState.Loading -> {}
             TrashbinFileActionsViewModel.UiState.Error -> {
-                context?.let {
-                    Toast.makeText(it, R.string.error_file_actions, Toast.LENGTH_SHORT).show()
+                activity?.let {
+                    DisplayUtils.showSnackMessage(it, R.string.error_file_actions)
                 }
                 dismissAllowingStateLoss()
             }
@@ -127,7 +132,7 @@ class TrashbinFileActionsBottomSheet : BottomSheetDialogFragment(), Injectable {
                 binding.thumbnailLayout.thumbnailShimmer,
                 syncedFolderProvider.preferences,
                 viewThemeUtils,
-                syncedFolderProvider
+                overlayManager
             )
         }
     }
@@ -220,14 +225,13 @@ class TrashbinFileActionsBottomSheet : BottomSheetDialogFragment(), Injectable {
         private const val RESULT_KEY_ACTION_ID = "RESULT_KEY_ACTION_ID"
 
         @JvmStatic
-        fun newInstance(numberOfAllFiles: Int, files: Collection<TrashbinFile>): TrashbinFileActionsBottomSheet {
-            return TrashbinFileActionsBottomSheet().apply {
+        fun newInstance(numberOfAllFiles: Int, files: Collection<TrashbinFile>): TrashbinFileActionsBottomSheet =
+            TrashbinFileActionsBottomSheet().apply {
                 val argsBundle = bundleOf(
                     TrashbinFileActionsViewModel.ARG_ALL_FILES_COUNT to numberOfAllFiles,
                     TrashbinFileActionsViewModel.ARG_FILES to ArrayList<TrashbinFile>(files)
                 )
                 arguments = argsBundle
             }
-        }
     }
 }

@@ -5,6 +5,9 @@
   ~ SPDX-FileCopyrightText: 2018-2020 Tobias Kaminsky <tobias@kaminsky.me>
   ~ SPDX-FileCopyrightText: 2017-2020 Andy Scherzinger <info@andy-scherzinger>
   ~ SPDX-FileCopyrightText: 22020 Joris Bodin <joris.bodin@infomaniak.com>
+  ~ SPDX-FileCopyrightText: 2017-2025 Andy Scherzinger <info@andy-scherzinger>
+  ~ SPDX-FileCopyrightText: 2018-2020 Tobias Kaminsky <tobias@kaminsky.me>
+  ~ SPDX-FileCopyrightText: 2020 Joris Bodin <joris.bodin@infomaniak.com>
   ~ SPDX-FileCopyrightText: 2025 STRATO GmbH.
   ~ SPDX-License-Identifier: AGPL-3.0-or-later OR GPL-2.0-only
 -->
@@ -21,6 +24,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/toolbar_frame"
         android:background="@color/ionos_toolbar_color"
+        android:id="@+id/toolbar_frame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_scrollFlags="scroll|enterAlways">
 
         <!-- sorting/layout bar -->
@@ -125,6 +131,8 @@
             android:visibility="gone"
             tools:visibility="gone"
             android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
@@ -134,12 +142,22 @@
             app:layout_constraintTop_toTopOf="parent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+            android:orientation="horizontal"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/toolbar_menu_button"
                 style="@style/Widget.AppTheme.Button.IconButton"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
+                android:layout_marginStart="@dimen/standard_quarter_margin"
+                android:layout_marginTop="-4dp"
+                android:layout_marginEnd="@dimen/standard_half_margin"
+                android:contentDescription="@string/drawer_open"
                 app:cornerRadius="@dimen/button_corner_radius"
                 app:icon="@drawable/ic_menu"
                 app:iconSize="24dp"
@@ -153,6 +171,13 @@
                 android:textSize="16sp"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"/>
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:gravity="center"
+                android:lines="1"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                tools:text="Headline" />
 
         </LinearLayout>
 
@@ -207,6 +232,7 @@
                     app:layout_constraintRight_toLeftOf="@id/notification_button"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="Search" />
+                    tools:text="@string/placeholder_search_in_nextcloud" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/notification_button"
@@ -236,6 +262,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
+                    app:layout_constraintTop_toTopOf="parent"
+	                tools:icon="@drawable/account_circle_white" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.card.MaterialCardView>

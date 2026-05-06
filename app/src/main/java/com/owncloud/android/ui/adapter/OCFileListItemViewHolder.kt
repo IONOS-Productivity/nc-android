@@ -21,7 +21,7 @@ import com.ionos.player.ui.common.PlayerProgressIndicator
 import com.owncloud.android.databinding.ListItemBinding
 import com.owncloud.android.ui.AvatarGroupLayout
 
-internal class OCFileListItemViewHolder(private var binding: ListItemBinding) :
+class OCFileListItemViewHolder(private var binding: ListItemBinding) :
     RecyclerView.ViewHolder(
         binding.root
     ),
@@ -32,6 +32,8 @@ internal class OCFileListItemViewHolder(private var binding: ListItemBinding) :
         get() = binding.livePhotoIndicator
     override val livePhotoIndicatorSeparator: TextView
         get() = binding.livePhotoIndicatorSeparator
+    override val hasVisibleFeatureIndicators: Boolean
+        get() = false
 
     override val fileSize: TextView
         get() = binding.fileSize
@@ -45,6 +47,8 @@ internal class OCFileListItemViewHolder(private var binding: ListItemBinding) :
         get() = binding.sharedAvatars
     override val fileName: TextView
         get() = binding.Filename
+    override val extension: TextView
+        get() = binding.extension
     override val thumbnail: ImageView
         get() = binding.thumbnailLayout.thumbnail
     override val tagsGroup: ChipGroup
