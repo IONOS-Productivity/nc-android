@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-  <!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ IONOS HiDrive Next - Android Client
   ~
   ~ SPDX-FileCopyrightText: 2025 STRATO GmbH.
@@ -12,6 +11,7 @@
     android:id="@+id/prefRoot"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground"
     android:paddingLeft="@dimen/settings_screen_items_horizontal_padding"
     android:paddingTop="@dimen/settings_screen_items_top_padding"
     android:paddingRight="@dimen/settings_screen_items_horizontal_padding"
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/settings_screen_items_horizontal_padding"
         app:layout_constraintBottom_toTopOf="@android:id/summary"
-        app:layout_constraintEnd_toStartOf="@+id/switch_widget"
+        app:layout_constraintEnd_toStartOf="@android:id/switch_widget"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Title" />
@@ -36,19 +36,19 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/settings_screen_items_horizontal_padding"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/switch_widget"
+        app:layout_constraintEnd_toStartOf="@android:id/switch_widget"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@android:id/title"
         tools:text="Summary" />
 
     <com.google.android.material.materialswitch.MaterialSwitch
-        android:id="@+id/switch_widget"
+        android:id="@android:id/switch_widget"
         style="@style/IonosMaterialSwitchStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:theme="@style/IonosMaterialSwitchStyle"
         android:focusable="false"
         android:clickable="false"
-        android:theme="@style/IonosMaterialSwitchStyle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
