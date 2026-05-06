@@ -23,6 +23,8 @@ import android.view.ViewGroup;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
+import com.ionos.annotation.IonosCustomization;
+import com.ionos.utils.IonosBuildHelper;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.account.UserAccountManager;
 import com.nextcloud.client.di.Injectable;
@@ -304,7 +306,15 @@ public class FileDetailFragment extends FileFragment implements OnClickListener,
             .show(fragmentManager, "actions");
     }
 
+    @IonosCustomization("Hide tabs in IONOS")
     private void setupViewPager() {
+        if (IonosBuildHelper.isIonosBuild()) {
+            FileDetailTabAdapter adapter = new FileDetailTabAdapter(requireActivity(), getFile(), user, showSharingTab());
+            binding.pager.setAdapter(adapter);
+            binding.tabLayout.setVisibility(View.GONE);
+            return;
+        }
+
         binding.tabLayout.removeAllTabs();
 
         binding.tabLayout.addTab(
@@ -377,11 +387,9 @@ public class FileDetailFragment extends FileFragment implements OnClickListener,
         });
 
         binding.tabLayout.post(() -> {
-            if (binding != null) {
-                TabLayout.Tab tab = binding.tabLayout.getTabAt(activeTab);
-                if (tab == null) return;
-                tab.select();
-            }
+            TabLayout.Tab tab1 = binding.tabLayout.getTabAt(activeTab);
+            if (tab1 == null) return;
+            tab1.select();
         });
     }
 
@@ -838,8 +846,9 @@ public class FileDetailFragment extends FileFragment implements OnClickListener,
      *
      * @param isFragmentReplaced
      */
+    @IonosCustomization("Hide tabs in IONOS")
     public void showHideFragmentView(boolean isFragmentReplaced) {
-        binding.tabLayout.setVisibility(isFragmentReplaced ? View.GONE : View.VISIBLE);
+        binding.tabLayout.setVisibility(View.GONE);
         binding.pager.setVisibility(isFragmentReplaced ? View.GONE : View.VISIBLE);
         binding.sharingFrameContainer.setVisibility(isFragmentReplaced ? View.VISIBLE : View.GONE);
     }
