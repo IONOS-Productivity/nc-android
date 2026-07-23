@@ -247,6 +247,10 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
     private ViewThemeUtils viewThemeUtils;
     private final ExecutorService singleThreadExecutor = Executors.newSingleThreadExecutor();
 
+    private String getResolvedLoginV2Url() {
+        return IonosLoginDomainResolver.resolveLoginV2Url(this);
+    }
+
     @VisibleForTesting
     public AccountSetupBinding getAccountSetupBinding() {
         return accountSetupBinding;
@@ -320,10 +324,10 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
             webViewLoginMethod = true;
         } else if (getIntent().getBooleanExtra(EXTRA_USE_PROVIDER_AS_WEBLOGIN, false)) {
             webViewLoginMethod = true;
-            webloginUrl = getString(R.string.provider_registration_server);
+            webloginUrl = getResolvedLoginV2Url();
         } else if (!TextUtils.isEmpty(getResources().getString(R.string.webview_login_url))) {
             webViewLoginMethod = true;
-            webloginUrl = getResources().getString(R.string.webview_login_url);
+            webloginUrl = getResolvedLoginV2Url();
             showWebViewLoginUrl = getResources().getBoolean(R.bool.show_server_url_input);
         }
 
@@ -482,7 +486,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
 
         Log_OC.e(TAG, "Both AuthObject and fallback parsing failed, returning default login URL");
         DisplayUtils.showSnackMessage(this, R.string.authenticator_activity_login_error);
-        return getResources().getString(R.string.webview_login_url);
+        return getResolvedLoginV2Url();
     }
 
     private String getLoginFromJsonObject(String response) {
@@ -549,7 +553,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
         if (baseURL != null && !baseURL.isEmpty()) {
             url = baseURL;
         } else {
-            url = getResources().getString(R.string.webview_login_url);
+            url = getResolvedLoginV2Url();
         }
 
         new WebViewUtil().setProxyKKPlus(accountSetupWebviewBinding.loginWebview);
@@ -798,7 +802,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
                 mServerInfo.mIsSslConn = mServerInfo.mBaseUrl.startsWith(HTTPS_PROTOCOL);
                 mServerInfo.mVersion = accountManager.getServerVersion(mAccount);
             } else {
-                mServerInfo.mBaseUrl = getString(R.string.webview_login_url).trim();
+                mServerInfo.mBaseUrl = getResolvedLoginV2Url().trim();
                 mServerInfo.mIsSslConn = mServerInfo.mBaseUrl.startsWith(HTTPS_PROTOCOL);
             }
         } else {
@@ -920,7 +924,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
         if (intent.getBooleanExtra(EXTRA_USE_PROVIDER_AS_WEBLOGIN, true)) {
             accountSetupWebviewBinding = AccountSetupWebviewBinding.inflate(getLayoutInflater());
             setContentView(accountSetupWebviewBinding.getRoot());
-            anonymouslyPostLoginRequest(getString(R.string.provider_registration_server));
+            anonymouslyPostLoginRequest(getResolvedLoginV2Url());
 			//initSimpleSignupLogin();
         }
     }
@@ -945,7 +949,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
 
         new WebViewUtil().setProxyKKPlus(accountSetupWebviewBinding.loginWebview);
 
-        accountSetupWebviewBinding.loginWebview.loadUrl(getString(R.string.provider_registration_server), headers);
+        accountSetupWebviewBinding.loginWebview.loadUrl(getResolvedLoginV2Url(), headers);
         accountSetupWebviewBinding.loginFlowV2.loginFlowInfoV2.setVisibility(View.GONE);
 
         setClient();
