@@ -43,6 +43,7 @@ import com.caverock.androidsvg.SVG
 import com.caverock.androidsvg.SVGParseException
 import com.github.chrisbanes.photoview.PhotoView
 import com.google.android.material.snackbar.Snackbar
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.account.UserAccountManager
 import com.nextcloud.client.di.Injectable
 import com.nextcloud.client.jobs.BackgroundJobManager
@@ -267,6 +268,7 @@ class PreviewImageFragment :
         }
     }
 
+    @IonosCustomization
     private fun adjustResizedImage(thumbnail: Bitmap?, width: Int, height: Int) {
         var resizedImage = getResizedBitmap(file, width, height)
 
@@ -275,7 +277,7 @@ class PreviewImageFragment :
             binding.image.visibility = View.VISIBLE
             binding.emptyListView.visibility = View.GONE
             binding.emptyListProgress.visibility = View.GONE
-            binding.image.setBackgroundColor(resources.getColor(R.color.background_color_inverse))
+            binding.image.setBackgroundColor(resources.getColor(R.color.preview_image_background))
 
             bitmap = resizedImage
         } else {
@@ -291,7 +293,7 @@ class PreviewImageFragment :
                         containerActivity.storageManager,
                         connectivityService,
                         containerActivity.storageManager.user,
-                        resources.getColor(R.color.background_color_inverse)
+                        resources.getColor(R.color.preview_image_background)
                     )
                 if (resizedImage == null) {
                     resizedImage = thumbnail
@@ -583,6 +585,7 @@ class PreviewImageFragment :
             }
         }
 
+        @IonosCustomization
         private fun showLoadedImage(result: LoadImage?) {
             val imageView = imageViewRef.get()
             val bitmap = result?.bitmap
@@ -624,7 +627,7 @@ class PreviewImageFragment :
             val progressView = progressViewRef.get()
             progressView?.visibility = View.GONE
 
-            imageView.setBackgroundColor(resources.getColor(R.color.background_color_inverse))
+            imageView.setBackgroundColor(resources.getColor(R.color.preview_image_background))
             imageView.visibility = View.VISIBLE
         }
     }
