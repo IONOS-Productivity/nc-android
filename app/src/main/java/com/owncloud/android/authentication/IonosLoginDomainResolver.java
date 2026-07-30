@@ -15,11 +15,11 @@ import java.util.Locale;
 import java.util.Map;
 
 public final class IonosLoginDomainResolver {
-    private static final String LOGIN_IT = "https://storage.ionos.it/login/v2";
-    private static final String LOGIN_DE = "https://storage.ionos.de/login/v2";
-    private static final String LOGIN_FR = "https://storage.ionos.fr/login/v2";
-    private static final String LOGIN_ES = "https://storage.ionos.es/login/v2";
-    private static final String LOGIN_UK = "https://storage.ionos.co.uk/login/v2";
+    private static final String LOGIN_IT = "https://storage.ionos.it/index.php/login/v2";
+    private static final String LOGIN_DE = "https://storage.ionos.de/index.php/login/v2";
+    private static final String LOGIN_FR = "https://storage.ionos.fr/index.php/login/v2";
+    private static final String LOGIN_ES = "https://storage.ionos.es/index.php/login/v2";
+    private static final String LOGIN_UK = "https://storage.ionos.co.uk/index.php/login/v2";
     private static final String LOGIN_FALLBACK = LOGIN_UK;
 
     private static final Map<String, String> COUNTRY_TO_LOGIN = Map.of(

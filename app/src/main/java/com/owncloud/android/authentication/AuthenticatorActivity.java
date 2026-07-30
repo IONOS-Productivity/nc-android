@@ -670,8 +670,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
                 getLoginWebViewContainer().ifPresent(it -> it.setVisibility(View.VISIBLE));
 
                 viewThemeUtils.platform.resetStatusBar(AuthenticatorActivity.this);
-
-                if(url.equals(baseUrl + "/grant") || url.equals(baseUrl + "/apptoken")) {
+                if (url.contains("/lf2-consent") || url.contains("/lf2-success")) {
                     finishLoginProcedure();
                 }
             }

@@ -16,23 +16,23 @@ public class IonosLoginDomainResolverTest {
     @Test
     public void resolveByCountryForSupportedMarkets() {
         Assert.assertEquals(
-            "https://storage.ionos.it/login/v2",
+            "https://storage.ionos.it/index.php/login/v2",
             IonosLoginDomainResolver.resolveLoginV2Url(Locale.forLanguageTag("it-IT"))
         );
         Assert.assertEquals(
-            "https://storage.ionos.de/login/v2",
+            "https://storage.ionos.de/index.php/login/v2",
             IonosLoginDomainResolver.resolveLoginV2Url(Locale.forLanguageTag("de-DE"))
         );
         Assert.assertEquals(
-            "https://storage.ionos.fr/login/v2",
+            "https://storage.ionos.fr/index.php/login/v2",
             IonosLoginDomainResolver.resolveLoginV2Url(Locale.forLanguageTag("fr-FR"))
         );
         Assert.assertEquals(
-            "https://storage.ionos.es/login/v2",
+            "https://storage.ionos.es/index.php/login/v2",
             IonosLoginDomainResolver.resolveLoginV2Url(Locale.forLanguageTag("es-ES"))
         );
         Assert.assertEquals(
-            "https://storage.ionos.co.uk/login/v2",
+            "https://storage.ionos.co.uk/index.php/login/v2",
             IonosLoginDomainResolver.resolveLoginV2Url(Locale.UK)
         );
     }
@@ -40,11 +40,11 @@ public class IonosLoginDomainResolverTest {
     @Test
     public void resolveByLanguageWhenCountryMissing() {
         Assert.assertEquals(
-            "https://storage.ionos.de/login/v2",
+            "https://storage.ionos.de/index.php/login/v2",
             IonosLoginDomainResolver.resolveLoginV2Url(Locale.GERMAN)
         );
         Assert.assertEquals(
-            "https://storage.ionos.co.uk/login/v2",
+            "https://storage.ionos.co.uk/index.php/login/v2",
             IonosLoginDomainResolver.resolveLoginV2Url(Locale.ENGLISH)
         );
     }
@@ -52,11 +52,11 @@ public class IonosLoginDomainResolverTest {
     @Test
     public void fallbackForUnsupportedLocale() {
         Assert.assertEquals(
-            "https://storage.ionos.co.uk/login/v2",
+            "https://storage.ionos.co.uk/index.php/login/v2",
             IonosLoginDomainResolver.resolveLoginV2Url(Locale.forLanguageTag("pl-PL"))
         );
         Assert.assertEquals(
-            "https://storage.ionos.co.uk/login/v2",
+            "https://storage.ionos.co.uk/index.php/login/v2",
             IonosLoginDomainResolver.resolveLoginV2Url(Locale.forLanguageTag("ja-JP"))
         );
     }
