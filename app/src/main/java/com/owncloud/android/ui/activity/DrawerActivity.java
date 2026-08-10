@@ -49,6 +49,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
+import com.ionos.annotation.IonosCustomization;
+import com.ionos.authorization_method.AuthorizationMethodActivity;
+import com.ionos.player.model.PlaybackModel;
 import com.nextcloud.android.common.core.utils.ecosystem.EcosystemApp;
 import com.nextcloud.android.common.core.utils.ecosystem.EcosystemManager;
 import com.nextcloud.android.common.ui.theme.utils.ColorRole;
@@ -56,7 +59,6 @@ import com.nextcloud.client.account.User;
 import com.nextcloud.client.di.Injectable;
 import com.nextcloud.client.files.DeepLinkConstants;
 import com.nextcloud.client.network.ClientFactory;
-import com.nextcloud.client.onboarding.FirstRunActivity;
 import com.nextcloud.client.preferences.AppPreferences;
 import com.nextcloud.common.NextcloudClient;
 import com.nextcloud.ui.ChooseAccountDialogFragment;
@@ -120,6 +122,7 @@ import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
@@ -228,6 +231,9 @@ public abstract class DrawerActivity extends ToolbarActivity
     @Inject
     ClientFactory clientFactory;
 
+    @Inject
+    PlaybackModel playbackModel;
+    
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
@@ -374,6 +380,7 @@ public abstract class DrawerActivity extends ToolbarActivity
         }
     }
 
+    @IonosCustomization
     private void setupDrawerToggle() {
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
             public void onDrawerClosed(View view) {
@@ -391,6 +398,10 @@ public abstract class DrawerActivity extends ToolbarActivity
         mDrawerLayout.addDrawerListener(mDrawerToggle);
         mDrawerToggle.setDrawerIndicatorEnabled(true);
         mDrawerToggle.setDrawerSlideAnimationEnabled(true);
+        Drawable drawerIndicator = AppCompatResources.getDrawable(this, R.drawable.ic_menu);
+        mDrawerToggle.setDrawerArrowDrawable(new SingleStateDrawerArrowDrawable(this, drawerIndicator));
+        mDrawerToggle.setHomeAsUpIndicator(R.drawable.ic_arrow_back);
+
         final Drawable backArrow = ResourcesCompat.getDrawable(getResources(), R.drawable.ic_arrow_back, null);
         if (backArrow != null) {
             viewThemeUtils.platform.tintToolbarArrowDrawable(this, mDrawerToggle, backArrow);
@@ -564,7 +575,9 @@ public abstract class DrawerActivity extends ToolbarActivity
      *
      * @param navigationView the drawers navigation view
      */
+    @IonosCustomization("Set items tint for correct color")
     private void setupDrawerMenu(NavigationView navigationView) {
+        navigationView.setItemIconTintList(null);
 
         // setup actions for drawer menu items
         navigationView.setNavigationItemSelectedListener(
@@ -591,6 +604,7 @@ public abstract class DrawerActivity extends ToolbarActivity
         DrawerMenuUtil.removeMenuItem(menu, R.id.nav_community, !getResources().getBoolean(R.bool.participate_enabled));
         DrawerMenuUtil.removeMenuItem(menu, R.id.nav_shared, !getResources().getBoolean(R.bool.shared_enabled));
         DrawerMenuUtil.removeMenuItem(menu, R.id.nav_logout, !getResources().getBoolean(R.bool.show_drawer_logout));
+        DrawerMenuUtil.removePersonalFiles(menu);
     }
 
     // region navigation item click
@@ -722,14 +736,20 @@ public abstract class DrawerActivity extends ToolbarActivity
         startActivityForResult(manageAccountsIntent, ACTION_MANAGE_ACCOUNTS);
     }
 
+    @IonosCustomization
     public void openAddAccount() {
+        stopMediaPlayerAndHidePip();
         if (MDMConfig.INSTANCE.showIntro(this)) {
-            Intent firstRunIntent = new Intent(getApplicationContext(), FirstRunActivity.class);
-            firstRunIntent.putExtra(FirstRunActivity.EXTRA_ALLOW_CLOSE, true);
+            Intent firstRunIntent = AuthorizationMethodActivity.createInstance(getApplicationContext());
             startActivity(firstRunIntent);
         } else {
             startAccountCreation();
         }
+    }
+
+    @IonosCustomization
+    protected void stopMediaPlayerAndHidePip() {
+        playbackModel.release();
     }
 
     private void resetFileDepth() {
@@ -894,6 +914,7 @@ public abstract class DrawerActivity extends ToolbarActivity
      * @param relative   the percentage of space already used
      * @param quotaValue {@link GetUserInfoRemoteOperation#SPACE_UNLIMITED} or other to determinate state
      */
+    @IonosCustomization
     private void setQuotaInformation(long usedSpace, long totalSpace, int relative, long quotaValue) {
         if (GetUserInfoRemoteOperation.SPACE_UNLIMITED == quotaValue) {
             mQuotaTextPercentage.setText(String.format(
@@ -909,12 +930,9 @@ public abstract class DrawerActivity extends ToolbarActivity
         mQuotaProgressBar.setProgress(relative);
 
         if (relative < RELATIVE_THRESHOLD_WARNING) {
-            viewThemeUtils.material.colorProgressBar(mQuotaProgressBar, ColorRole.PRIMARY);
+            mQuotaProgressBar.setIndicatorColor(getResources().getColor(R.color.sidemenu_progress_bar_color, getTheme()));
         } else {
-            viewThemeUtils.material.colorProgressBar(
-                mQuotaProgressBar,
-                getResources().getColor(R.color.infolevel_warning, null)
-                                                    );
+            mQuotaProgressBar.setIndicatorColor(getResources().getColor(R.color.sidemenu_warn_progress_bar_color, getTheme()));
         }
 
         updateQuotaLink();

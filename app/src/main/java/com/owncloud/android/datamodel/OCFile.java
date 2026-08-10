@@ -20,6 +20,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 
+import com.ionos.annotation.IonosCustomization;
 import com.nextcloud.utils.BuildHelper;
 import com.nextcloud.utils.extensions.StringExtensionsKt;
 import com.owncloud.android.R;
@@ -700,9 +701,12 @@ public class OCFile implements Parcelable, Comparable<OCFile>, ServerFileInterfa
         return permissions != null && permissions.contains(permission);
     }
 
+    @IonosCustomization("Icon for all sharing types")
     public Integer getFileOverlayIconId(boolean isAutoUploadFolder) {
         if (WebdavEntry.MountType.GROUP == mountType || mounted()) {
             return R.drawable.ic_folder_overlay_account_group;
+        } else if (sharedViaLink && !encrypted && (isSharedWithMe() || sharedWithSharee)) {
+            return R.drawable.ic_folder_all_share_types;
         } else if (sharedViaLink && !encrypted) {
             return R.drawable.ic_folder_overlay_link;
         } else if (isSharedWithMe() || sharedWithSharee) {

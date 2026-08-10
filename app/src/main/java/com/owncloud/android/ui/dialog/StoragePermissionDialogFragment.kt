@@ -16,6 +16,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.di.Injectable
 import com.nextcloud.client.preferences.AppPreferences
 import com.owncloud.android.R
@@ -61,12 +62,13 @@ class StoragePermissionDialogFragment :
         }
     }
 
+    @IonosCustomization
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val title = R.string.file_management_permission_optional
-        val explanationResource = R.string.file_management_permission_optional_text
+        val title = R.string.ionos_file_management_permission_optional
+        val explanationResource = R.string.ionos_file_management_permission_optional_text
         val message = getString(explanationResource, getString(R.string.app_name))
 
-        val dialogBuilder = MaterialAlertDialogBuilder(requireContext())
+        val dialogBuilder = MaterialAlertDialogBuilder(requireContext(), R.style.Theme_ownCloud_Dialog)
             .setTitle(title)
             .setMessage(message)
             .setPositiveButton(R.string.storage_permission_all_files_access) { _, _ ->

@@ -32,6 +32,7 @@ import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import com.ionos.annotation.IonosCustomization;
 import com.nextcloud.android.lib.resources.files.FileDownloadLimit;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.database.NextcloudDatabase;
@@ -1958,6 +1959,36 @@ public class FileDataStorageManager {
 
     }
 
+    @IonosCustomization
+    public List<OCShare> getShares() {
+        String selection = ProviderTableMeta.OCSHARES_ACCOUNT_OWNER + " = ?";
+        String[] selectionArgs = new String[]{user.getAccountName()};
+
+        Cursor cursor = null;
+        Uri uri = ProviderTableMeta.CONTENT_URI_SHARE;
+        if (getContentResolver() != null) {
+            cursor = getContentResolver().query(uri, null, selection, selectionArgs, null);
+        } else {
+            try {
+                cursor = getContentProviderClient().query(uri, null, selection, selectionArgs, null);
+            } catch (RemoteException e) {
+                Log_OC.e(TAG, "Could not get list of shares: " + e.getMessage(), e);
+            }
+        }
+
+        ArrayList<OCShare> shares = new ArrayList<>();
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                do {
+                    shares.add(createShareInstance(cursor));
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+        }
+
+        return shares;
+    }
+
     public List<OCShare> getSharesWithForAFile(String filePath, String accountName) {
         String selection = ProviderTableMeta.OCSHARES_PATH + AND
             + ProviderTableMeta.OCSHARES_ACCOUNT_OWNER + AND
@@ -2793,6 +2824,18 @@ public class FileDataStorageManager {
         }
 
         return folderContent;
+    }
+
+    @IonosCustomization
+    public List<OCFile> getFavoriteFiles() {
+        List<FileEntity> fileEntities = fileDao.getFavoriteFiles(user.getAccountName());
+        List<OCFile> favoriteFiles = new ArrayList<>(fileEntities.size());
+
+        for (FileEntity fileEntity : fileEntities) {
+            favoriteFiles.add(createFileInstance(fileEntity));
+        }
+
+        return favoriteFiles;
     }
 
     private String getString(Cursor cursor, String columnName) {

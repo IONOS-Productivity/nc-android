@@ -37,6 +37,8 @@ dependencyResolutionManagement {
         }
         mavenCentral()
         maven("https://jitpack.io")
+        maven("https://nexus.scanbot.io/nexus/content/repositories/releases/")
+
     }
 }
 // includeBuild("../android-common") {
@@ -51,4 +53,6 @@ dependencyResolutionManagement {
 //    }
 // }
 
-include(":app", ":appscan")
+//}
+
+include(":app", ":appscan", ":scanbot")
