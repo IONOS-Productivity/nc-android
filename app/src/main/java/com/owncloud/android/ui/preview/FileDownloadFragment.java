@@ -49,6 +49,7 @@ public class FileDownloadFragment extends FileFragment implements OnClickListene
     private static final String ARG_FILE = "FILE";
     private static final String ARG_IGNORE_FIRST = "IGNORE_FIRST";
     private static final String ARG_USER = "USER";
+    private static final String ARG_FILE_POSITION = "FILE_POSITION";
 
     private View mView;
     private User user;

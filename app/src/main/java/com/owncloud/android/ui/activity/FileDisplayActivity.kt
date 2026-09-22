@@ -52,6 +52,8 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import com.ionos.annotation.IonosCustomization
+import com.ionos.player.ui.PlayerLauncher
 import com.nextcloud.android.common.core.utils.ecosystem.AccountReceiverCallback
 import com.nextcloud.appReview.InAppReviewHelper
 import com.nextcloud.client.account.User
@@ -240,6 +242,9 @@ class FileDisplayActivity :
 
     @Inject
     lateinit var syncedFolderProvider: SyncedFolderProvider
+
+    @Inject
+    lateinit var playerLauncher: PlayerLauncher
 
     /**
      * Indicates whether the downloaded file should be previewed immediately. Since `FileDownloadWorker` can be
@@ -2532,18 +2537,10 @@ class FileDisplayActivity :
         }
     }
 
+    @IonosCustomization("Launch of custom player")
     private fun startMediaActivity(file: OCFile?, startPlaybackPosition: Long, autoplay: Boolean, user: User?) {
-        val previewMediaIntent = Intent(this, PreviewMediaActivity::class.java)
-        previewMediaIntent.putExtra(PreviewMediaActivity.EXTRA_FILE, file)
-
-        // Safely handle the absence of a user
-        if (user != null) {
-            previewMediaIntent.putExtra(PreviewMediaActivity.EXTRA_USER, user)
-        }
-
-        previewMediaIntent.putExtra(PreviewMediaActivity.EXTRA_START_POSITION, startPlaybackPosition)
-        previewMediaIntent.putExtra(PreviewMediaActivity.EXTRA_AUTOPLAY, autoplay)
-        startActivity(previewMediaIntent)
+        val searchType = listOfFilesFragment?.currentSearchType
+        playerLauncher.launch(this, file!!, searchType)
     }
 
     fun configureToolbarForPreview(file: OCFile?) {

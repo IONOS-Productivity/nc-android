@@ -185,6 +185,15 @@
 
         </LinearLayout>
 
+        <com.ionos.player.ui.common.PlayerProgressIndicator
+            android:id="@+id/player_progress_indicator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
         <ImageButton
             android:id="@+id/bidi_more"
             android:layout_width="@dimen/iconized_single_line_item_icon_size"

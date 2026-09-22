@@ -15,6 +15,7 @@ import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.elyeproj.loaderviewlibrary.LoaderImageView
+import com.ionos.player.ui.common.PlayerProgressIndicator
 import com.owncloud.android.databinding.RecommendedFileItemBinding
 
 class OCFileListRecommendedItemViewHolder(private val binding: RecommendedFileItemBinding) :
@@ -23,6 +24,8 @@ class OCFileListRecommendedItemViewHolder(private val binding: RecommendedFileIt
 
     val reason: TextView get() = binding.reason
     override val fileName: TextView get() = binding.filename
+    override val playerProgressIndicator: PlayerProgressIndicator
+        get() = TODO("Not yet implemented")
     override val extension: TextView? get() = binding.extension
     override val thumbnail: ImageView get() = binding.thumbnail
     override val shimmerThumbnail: LoaderImageView get() = binding.thumbnailShimmer

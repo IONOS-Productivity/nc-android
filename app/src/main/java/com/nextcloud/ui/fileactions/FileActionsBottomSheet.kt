@@ -17,7 +17,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.IdRes
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.os.bundleOf
 import androidx.core.view.isEmpty
 import androidx.core.view.isVisible
@@ -28,6 +27,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.android.common.ui.theme.utils.ColorRole
 import com.nextcloud.android.lib.resources.clientintegration.Endpoint
 import com.nextcloud.client.account.CurrentAccountProvider
@@ -161,11 +161,9 @@ class FileActionsBottomSheet :
         }
     }
 
+    @IonosCustomization("Set thumbnail drawable without tint")
     private fun setMultipleFilesThumbnail() {
-        context?.let {
-            val drawable = viewThemeUtils.platform.tintDrawable(it, R.drawable.file_multiple, ColorRole.PRIMARY)
-            binding.thumbnailLayout.thumbnail.setImageDrawable(drawable)
-        }
+        binding.thumbnailLayout.thumbnail.setImageResource(R.drawable.file_multiple)
     }
 
     override fun onDestroyView() {
@@ -310,6 +308,7 @@ class FileActionsBottomSheet :
         binding.title.text = resources.getQuantityString(R.plurals.file_list__footer__file, fileCount, fileCount)
     }
 
+    @IonosCustomization("Set icon drawable without tint")
     private fun inflateActionView(action: FileAction): View {
         val itemBinding = FileActionsBottomSheetItemBinding.inflate(layoutInflater, binding.fileActionsList, false)
             .apply {
@@ -318,12 +317,7 @@ class FileActionsBottomSheet :
                 }
                 text.setText(action.title)
                 if (action.icon != null) {
-                    val drawable =
-                        viewThemeUtils.platform.tintDrawable(
-                            requireContext(),
-                            AppCompatResources.getDrawable(requireContext(), action.icon)!!
-                        )
-                    icon.setImageDrawable(drawable)
+                    icon.setImageResource(action.icon)
                 }
             }
         return itemBinding.root

@@ -1,0 +1,9 @@
+# AI Code Review Configuration
+
+# Files to be analysed
+file_extensions:
+  - kt
+  - java
+  - xml
+  - gradle
+  - kts

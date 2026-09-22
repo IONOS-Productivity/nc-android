@@ -14,6 +14,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.ionos.annotation.IonosCustomization
 import com.google.android.material.button.MaterialButton
 import com.owncloud.android.R
 import com.owncloud.android.databinding.ItemQuickSharePermissionsBinding
@@ -45,6 +46,7 @@ class QuickSharingPermissionsAdapter(
         private val viewThemeUtils: ViewThemeUtils
     ) : RecyclerView.ViewHolder(itemView) {
 
+        @IonosCustomization("Disable icon tinting")
         fun bindData(quickPermission: QuickPermission) {
             val context = itemView.context
             val permissionName = quickPermission.type.getText(context)

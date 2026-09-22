@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.get
 import com.afollestad.sectionedrecyclerview.SectionedViewHolder
 import com.elyeproj.loaderviewlibrary.LoaderImageView
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.android.common.ui.theme.utils.ColorRole
 import com.nextcloud.utils.OCFileUtils
 import com.nextcloud.utils.extensions.makeRounded
@@ -33,7 +34,7 @@ class GalleryRowHolder(
     private val defaultThumbnailSize: Float,
     private val ocFileListDelegate: OCFileListDelegate,
     val storageManager: FileDataStorageManager,
-    galleryAdapter: GalleryAdapter,
+    private val galleryAdapter: GalleryAdapter,
     private val viewThemeUtils: ViewThemeUtils
 ) : SectionedViewHolder(binding.root) {
     val context = galleryAdapter.context
@@ -46,11 +47,12 @@ class GalleryRowHolder(
     private val iconRadius by lazy { context.resources.getDimension(R.dimen.activity_icon_radius) }
     private val standardMargin by lazy { context.resources.getDimension(R.dimen.standard_margin) }
     private val checkBoxMargin by lazy { context.resources.getDimension(R.dimen.standard_quarter_padding) }
+    @IonosCustomization("space between photos")
+    private val photoSpacing by lazy { context.resources.getDimensionPixelSize(R.dimen.ionos_media_items_padding) }
 
+    @IonosCustomization("checkbox icon")
     private val checkedDrawable by lazy {
-        ContextCompat.getDrawable(context, R.drawable.ic_checkbox_marked)?.also {
-            viewThemeUtils.platform.tintDrawable(context, it, ColorRole.PRIMARY)
-        }
+        ContextCompat.getDrawable(context, R.drawable.ic_checkbox_marked)
     }
 
     private val uncheckedDrawable by lazy {
@@ -119,39 +121,16 @@ class GalleryRowHolder(
         }
     }
 
+    @IonosCustomization("squared cell size depending on screen width and column count")
     private fun getDimensions(row: GalleryRow): List<Pair<Int, Int>> {
-        val screenWidthPx = context.resources.displayMetrics.widthPixels.toFloat()
-        val marginPx = smallMargin.toFloat()
-        val totalMargins = marginPx * (row.files.size - 1)
-        val availableWidth = screenWidthPx - totalMargins
-
-        val aspectRatios = row.files.map { file ->
-            val (w, h) = OCFileUtils.getImageSize(file, defaultThumbnailSize)
-            if (h > 0) w.toFloat() / h else 1.0f
-        }
-
-        val sumAspectRatios = aspectRatios.sum()
-
-        // calculate row height based on aspect ratios
-        val rowHeightFloat = if (sumAspectRatios > 0) availableWidth / sumAspectRatios else defaultThumbnailSize
-        val finalHeight = rowHeightFloat.toInt()
-
-        // for each aspect ratio calculate widths
-        val finalWidths = aspectRatios.map { ratio -> (rowHeightFloat * ratio).toInt() }.toMutableList()
-        val usedWidth = finalWidths.sum()
-
-        // based on screen width get remaining pixels
-        val remainingPixels = (availableWidth - usedWidth).toInt()
-
-        // add to remaining pixels to last image
-        if (remainingPixels > 0 && finalWidths.isNotEmpty()) {
-            val lastIndex = finalWidths.lastIndex
-            finalWidths[lastIndex] = finalWidths[lastIndex] + remainingPixels
-        }
-
-        return finalWidths.map { w -> w to finalHeight }
+        val count = row.files.size
+        val screenWidthPx = context.resources.displayMetrics.widthPixels
+        val totalMargins = photoSpacing * galleryAdapter.columns
+        val cellSize = (screenWidthPx - totalMargins) / galleryAdapter.columns
+        return List(count) { cellSize to cellSize }
     }
 
+    @IonosCustomization("spacing and marging adjustments")
     private fun adjustFile(index: Int, file: OCFile, dims: Pair<Int, Int>, row: GalleryRow) {
         val (width, height) = dims
         val frameLayout = binding.rowLayout[index] as FrameLayout
@@ -165,9 +144,12 @@ class GalleryRowHolder(
 
         ocFileListDelegate.bindGalleryRow(shimmer, thumbnail, file, this, dims)
 
-        val endMargin = if (index < row.files.size - 1) smallMargin else zero
+        val halfSpacing = photoSpacing / 2
+        val startMargin = if (index == 0) halfSpacing else zero
+        val endMargin = if (index < row.files.size - 1) photoSpacing else halfSpacing
+
         thumbnail.layoutParams = FrameLayout.LayoutParams(width, height).apply {
-            setMargins(0, 0, endMargin, smallMargin)
+            setMargins(startMargin, 0, endMargin, photoSpacing)
         }
         shimmer.layoutParams = FrameLayout.LayoutParams(width, height)
         frameLayout.requestLayout()

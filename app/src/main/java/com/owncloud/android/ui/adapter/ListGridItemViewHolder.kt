@@ -8,8 +8,12 @@
 package com.owncloud.android.ui.adapter
 
 import android.widget.TextView
+import com.ionos.annotation.IonosCustomization
+import com.ionos.player.ui.common.PlayerProgressIndicator
 
 internal interface ListGridItemViewHolder : ListViewHolder {
     val fileName: TextView
+    @IonosCustomization("Show current playback progress")
+    val playerProgressIndicator: PlayerProgressIndicator
     val extension: TextView?
 }

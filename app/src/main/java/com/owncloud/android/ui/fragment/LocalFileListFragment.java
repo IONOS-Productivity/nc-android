@@ -20,6 +20,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.ionos.annotation.IonosCustomization;
 import com.nextcloud.client.di.Injectable;
 import com.owncloud.android.R;
 import com.owncloud.android.lib.common.utils.Log_OC;
@@ -86,14 +87,17 @@ public class LocalFileListFragment extends ExtendedListFragment implements
      * {@inheritDoc}
      */
     @Override
+    @IonosCustomization
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log_OC.i(TAG, "onCreateView() start");
         View v = super.onCreateView(inflater, container, savedInstanceState);
 
-        if (mContainerActivity.isFolderPickerMode()) {
-            setEmptyListMessage(EmptyListState.LOCAL_FILE_LIST_EMPTY_FOLDER);
+        if (!mContainerActivity.isFolderPickerMode()) {
+            setMessageForEmptyList(R.string.file_list_empty_headline, R.string.local_file_list_empty,
+                    R.drawable.ic_list_empty_folder);
         } else {
-            setEmptyListMessage(EmptyListState.LOCAL_FILE_LIST_EMPTY_FILE);
+            setMessageForEmptyList(R.string.folder_list_empty_headline, R.string.local_folder_list_empty,
+                    R.drawable.ic_list_empty_folder);
         }
 
         setSwipeEnabled(false); // Disable pull-to-refresh
@@ -107,6 +111,7 @@ public class LocalFileListFragment extends ExtendedListFragment implements
      * {@inheritDoc}
      */
     @Override
+    @IonosCustomization("mSortButton icon")
     public void onActivityCreated(Bundle savedInstanceState) {
         Log_OC.i(TAG, "onActivityCreated() start");
 
@@ -130,7 +135,7 @@ public class LocalFileListFragment extends ExtendedListFragment implements
 
             FileSortOrder sortOrder = preferences.getSortOrderByType(FileSortOrder.Type.localFileListView);
             if (sortOrder != null) {
-                mSortButton.setText(DisplayUtils.getSortOrderStringId(sortOrder));
+                mSortButton.setIconResource(DisplayUtils.getSortOrderIconRes(sortOrder));
             }
         }
 
@@ -300,10 +305,9 @@ public class LocalFileListFragment extends ExtendedListFragment implements
         return mAdapter.getFilesCount();
     }
 
+    @IonosCustomization
     public void sortFiles(FileSortOrder sortOrder) {
-        if (mSortButton != null) {
-            mSortButton.setText(DisplayUtils.getSortOrderStringId(sortOrder));
-        }
+        mSortButton.setIconResource(DisplayUtils.getSortOrderIconRes(sortOrder));
         mAdapter.setSortOrder(sortOrder);
     }
 

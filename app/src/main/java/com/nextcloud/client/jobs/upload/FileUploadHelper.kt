@@ -20,9 +20,9 @@ import com.nextcloud.client.device.BatteryStatus
 import com.nextcloud.client.device.PowerManagementService
 import com.nextcloud.client.jobs.BackgroundJobManager
 import com.nextcloud.client.jobs.upload.FileUploadWorker.Companion.currentUploadFileOperation
+import com.nextcloud.client.notifications.AppWideNotificationManager
 import com.nextcloud.client.network.Connectivity
 import com.nextcloud.client.network.ConnectivityService
-import com.nextcloud.client.notifications.AppWideNotificationManager
 import com.nextcloud.utils.extensions.checkWCFRestrictions
 import com.nextcloud.utils.extensions.getUploadIds
 import com.owncloud.android.MainApp

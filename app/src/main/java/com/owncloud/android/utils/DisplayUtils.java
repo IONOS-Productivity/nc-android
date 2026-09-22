@@ -50,6 +50,9 @@ import android.widget.ImageView;
 
 import com.elyeproj.loaderviewlibrary.LoaderImageView;
 import com.google.android.material.snackbar.Snackbar;
+import com.ionos.annotation.IonosCustomization;
+import com.ionos.utils.IonosBuildHelper;
+import com.nextcloud.client.account.CurrentAccountProvider;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.preferences.AppPreferences;
 import com.nextcloud.model.OfflineOperationType;
@@ -86,6 +89,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
@@ -97,6 +101,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import static com.owncloud.android.ui.dialog.SortingOrderDialogFragment.SORTING_ORDER_FRAGMENT;
+import static com.owncloud.android.utils.FileSortOrder.SORT_A_TO_Z_ID;
 import static com.owncloud.android.utils.FileSortOrder.SORT_BIG_TO_SMALL_ID;
 import static com.owncloud.android.utils.FileSortOrder.SORT_NEW_TO_OLD_ID;
 import static com.owncloud.android.utils.FileSortOrder.SORT_OLD_TO_NEW_ID;
@@ -414,6 +419,7 @@ public final class DisplayUtils {
      * @param callContext  which context is called to set the generated avatar
      * @param context      general context
      */
+    @IonosCustomization
     public static void setAvatar(@NonNull User user,
                                  @NonNull String userId,
                                  String displayName,
@@ -448,6 +454,12 @@ public final class DisplayUtils {
                                  int avatarBorder) {
         if (callContext instanceof View v) {
             v.setContentDescription(String.valueOf(user.toPlatformAccount().hashCode()));
+        }
+
+        if (IonosBuildHelper.isIonosBuild()) {
+            Drawable avatar = ResourcesCompat.getDrawable(resources, R.drawable.account_circle_white, null);
+            listener.avatarGenerated(avatar, callContext);
+            return;
         }
 
         final String accountName = user.getAccountName();
@@ -608,6 +620,54 @@ public final class DisplayUtils {
             snackbar.show();
         });
     }
+
+    /**
+     * Shows a Snackbar with an action button to open app settings.
+     *
+     * @param view            The view to find a parent from
+     * @param message         The message string
+     * @param context         Context to start the settings intent
+     */
+    @IonosCustomization("SnackMessageWithSettingsAction")
+    public static void showSnackMessageWithSettingsAction(View view,
+                                                          String message,
+                                                          Context context) {
+        if (view == null || context == null) {
+            Log_OC.e(TAG, "snackbar cannot be shown - view or context is null");
+            return;
+        }
+
+        mainLooper.post(() -> {
+            final Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_LONG);
+            snackbar.setAction(R.string.settings_action, v -> openAppSettings(context));
+            snackbar.show();
+        });
+    }
+
+    /**
+     * Opens the app settings screen where user can grant permissions.
+     *
+     * @param context Context to start the settings activity
+     */
+    @IonosCustomization("openAppSettings")
+    private static void openAppSettings(Context context) {
+        try {
+            Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            Uri uri = Uri.fromParts("package", context.getPackageName(), null);
+            intent.setData(uri);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+        } catch (Exception e) {
+            Log_OC.e(TAG, "Error opening app settings", e);
+            try {
+                Intent intent = new Intent(android.provider.Settings.ACTION_SETTINGS);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+            } catch (Exception ex) {
+                Log_OC.e(TAG, "Error opening settings", ex);
+            }
+        }
+    }
     // endregion
 
     private static View findFABView(Activity activity) {
@@ -721,6 +781,25 @@ public final class DisplayUtils {
             case SORT_SMALL_TO_BIG_ID -> R.string.menu_item_sort_by_size_smallest_first;
             default -> R.string.menu_item_sort_by_name_a_z;
         };
+    }
+
+    @IonosCustomization
+    public static @DrawableRes int getSortOrderIconRes(FileSortOrder sortOrder) {
+        switch (sortOrder.name) {
+            case SORT_Z_TO_A_ID:
+                return R.drawable.ic_alphabetical_desc;
+            case SORT_NEW_TO_OLD_ID:
+                return R.drawable.ic_modification_desc;
+            case SORT_OLD_TO_NEW_ID:
+                return R.drawable.ic_modification_asc;
+            case SORT_BIG_TO_SMALL_ID:
+                return R.drawable.ic_size_desc;
+            case SORT_SMALL_TO_BIG_ID:
+                return R.drawable.ic_size_asc;
+            case SORT_A_TO_Z_ID:
+            default:
+                return R.drawable.ic_alphabetical_asc;
+        }
     }
 
     public static String getDateByPattern(long timestamp, String pattern) {

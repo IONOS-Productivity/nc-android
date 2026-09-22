@@ -19,9 +19,11 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.AsyncTask
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -58,6 +60,7 @@ import androidx.media3.ui.PlayerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.common.util.concurrent.ListenableFuture
 import com.google.common.util.concurrent.MoreExecutors
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.account.User
 import com.nextcloud.client.account.UserAccountManager
 import com.nextcloud.client.di.Injectable
@@ -177,6 +180,9 @@ class PreviewMediaActivity :
         }
     }
 
+    @IonosCustomization("Remove window insets paddings")
+    override fun isDefaultWindowInsetsHandlingEnabled() = false
+
     private fun sendAudioSessionReleaseBroadcast() {
         val intent = Intent(BackgroundPlayerService.RELEASE_MEDIA_SESSION_BROADCAST_ACTION).apply {
             setPackage(packageName)
@@ -226,6 +232,7 @@ class PreviewMediaActivity :
 
     private fun isFileVideo(): Boolean = MimeTypeUtil.isVideo(file)
 
+    @IonosCustomization("System bar colors")
     private fun configureSystemBars() {
         updateActionBarTitleAndHomeButton(file)
 
@@ -247,12 +254,16 @@ class PreviewMediaActivity :
                 )
 
                 it.setBackgroundDrawable(Color.BLACK.toDrawable())
+
+                viewThemeUtils.platform.themeStatusBar(this, getColor(R.color.transparent))
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    window.isNavigationBarContrastEnforced = false
+                }
+
+            } else {
+                viewThemeUtils.platform.themeStatusBar(this)
             }
         }
-
-        viewThemeUtils.platform.themeStatusBar(
-            this
-        )
     }
 
     private fun showProgressLayout() {
@@ -261,6 +272,7 @@ class PreviewMediaActivity :
         binding.emptyView.emptyListView.visibility = View.GONE
     }
 
+    @IonosCustomization("ui bugfix")
     private fun setErrorMessage(headline: String, @StringRes message: Int) {
         binding.emptyView.run {
             emptyListViewHeadline.text = headline
@@ -278,15 +290,9 @@ class PreviewMediaActivity :
         binding.imagePreview.setImageDrawable(genericThumbnail())
     }
 
+    @IonosCustomization("No generic thumbnail")
     private fun genericThumbnail(): Drawable? {
-        val result = AppCompatResources.getDrawable(this, R.drawable.logo)
-        result?.let {
-            if (!resources.getBoolean(R.bool.is_branded_client)) {
-                DrawableCompat.setTint(it, resources.getColor(R.color.primary, this.theme))
-            }
-        }
-
-        return result
+        return null
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -453,10 +459,12 @@ class PreviewMediaActivity :
         }
     }
 
+    @IonosCustomization("Insets for media controller")
     private fun applyWindowInsets() {
         val playerView = binding.exoplayerView
         val exoControls = playerView.findViewById<FrameLayout>(androidx.media3.ui.R.id.exo_bottom_bar)
         val exoProgress = playerView.findViewById<DefaultTimeBar>(androidx.media3.ui.R.id.exo_progress)
+        val exoControlsHeight = exoControls.layoutParams.height
         val progressBottomMargin = exoProgress.marginBottom
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, windowInsets ->
@@ -465,22 +473,21 @@ class PreviewMediaActivity :
                     .displayCutout()
             )
 
-            binding.materialToolbar.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                topMargin = insets.top
-            }
             exoControls.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                bottomMargin = insets.bottom
+                height = insets.bottom + exoControlsHeight
             }
             exoProgress.updateLayoutParams<ViewGroup.MarginLayoutParams> {
                 bottomMargin = insets.bottom + progressBottomMargin
             }
             exoControls.updatePadding(left = insets.left, right = insets.right)
+            binding.audioControllerView.updatePadding(left = insets.left, right = insets.right, bottom = insets.bottom)
             exoProgress.updatePadding(left = insets.left, right = insets.right)
-            binding.materialToolbar.updatePadding(left = insets.left, right = insets.right)
+            binding.materialToolbar.updatePadding(left = insets.left, top = insets.top, right = insets.right)
             WindowInsetsCompat.CONSUMED
         }
     }
 
+    @IonosCustomization("Hide cantrolls animation fix")
     private fun setupVideoView() {
         initWindowInsetsController()
         val type = WindowInsetsCompat.Type.systemBars()
@@ -495,6 +502,12 @@ class PreviewMediaActivity :
                     } else if (visibility == View.GONE) {
                         windowInsetsController.hide(type)
                         supportActionBar!!.hide()
+                    }
+                    val exoControls = it.findViewById<FrameLayout>(androidx.media3.ui.R.id.exo_bottom_bar)
+                    if (it.isControllerFullyVisible) {
+                        exoControls.getChildAt(0)?.visibility = View.VISIBLE
+                    } else {
+                        exoControls.getChildAt(0)?.visibility = View.INVISIBLE
                     }
                 }
             )
@@ -673,16 +686,18 @@ class PreviewMediaActivity :
     }
 
     @Suppress("TooGenericExceptionCaught")
+    @IonosCustomization("Better UX")
     private fun playVideo() {
         setupVideoView()
 
-        if (file?.isDown == true) {
-            prepareVideoPlayer(file?.storageUri)
-        } else {
-            try {
-                LoadStreamUrl(this, user, clientFactory).execute(file?.localId)
-            } catch (e: Exception) {
-                Log_OC.e(TAG, "Loading stream url for Video not possible: $e")
+        if(videoPlayer?.currentMediaItem == null) {
+            if (file?.isDown == true)
+                prepareVideoPlayer(file?.storageUri)
+            } else {
+                try {
+                    LoadStreamUrl(this, user, clientFactory).execute(file?.localId)
+                } catch (e: Exception) {
+                    Log_OC.e(TAG, "Loading stream url for Video not possible: $e")
             }
         }
     }

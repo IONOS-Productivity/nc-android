@@ -12,10 +12,10 @@ package com.owncloud.android.ui.fragment;
 
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.ionos.annotation.IonosCustomization;
 import com.nextcloud.android.common.ui.theme.utils.ColorRole;
 import com.nextcloud.utils.mdm.MDMConfig;
 import com.owncloud.android.databinding.FileDetailsSharingMenuBottomSheetFragmentBinding;
@@ -48,21 +48,13 @@ public class FileDetailSharingMenuBottomSheetDialog extends BottomSheetDialog {
     }
 
     @Override
+    @IonosCustomization("Remove custom window LayoutParams. Disable icon tinting")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = FileDetailsSharingMenuBottomSheetFragmentBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        if (getWindow() != null) {
-            getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        }
-
         viewThemeUtils.platform.themeDialog(binding.getRoot());
-
-        viewThemeUtils.platform.colorImageView(binding.menuIconAdvancedPermissions, ColorRole.PRIMARY);
-        viewThemeUtils.platform.colorImageView(binding.menuIconSendLink, ColorRole.PRIMARY);
-        viewThemeUtils.platform.colorImageView(binding.menuIconUnshare, ColorRole.PRIMARY);
-        viewThemeUtils.platform.colorImageView(binding.menuIconSendNewEmail, ColorRole.PRIMARY);
 
         updateUI();
 

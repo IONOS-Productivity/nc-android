@@ -40,7 +40,7 @@
                     android:layout_width="@dimen/user_icon_size"
                     android:layout_height="@dimen/user_icon_size"
                     android:contentDescription="@string/avatar"
-                    android:src="@drawable/ic_user_outline" />
+                    android:src="@drawable/ic_user" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -132,7 +132,7 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/send_copy_btn"
+                android:id="@+id/sendCopyBtn"
                 style="@style/Widget.Material3.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

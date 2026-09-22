@@ -18,6 +18,8 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.ionos.annotation.IonosCustomization;
+import com.ionos.utils.IonosBuildHelper;
 import com.nextcloud.client.account.User;
 import com.nextcloud.utils.extensions.ImageViewExtensionsKt;
 import com.owncloud.android.R;
@@ -131,22 +133,22 @@ class ShareViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
+    @IonosCustomization("Permission name color")
     private void setPermissionName(String permissionName) {
         if (!TextUtils.isEmpty(permissionName)) {
             binding.permissionName.setText(permissionName);
             binding.permissionName.setVisibility(View.VISIBLE);
-            viewThemeUtils.androidx.colorPrimaryTextViewElement(binding.permissionName);
+            //viewThemeUtils.androidx.colorPrimaryTextViewElement(binding.permissionName);
         } else {
             binding.permissionName.setVisibility(View.GONE);
         }
     }
 
     private void setImage(ImageView avatar, String name) {
-        if (TextUtils.isEmpty(name)) {
+        if (IonosBuildHelper.isIonosBuild() || TextUtils.isEmpty(name)) {
             setUserImage(avatar);
             return;
         }
-
         try {
             avatar.setImageDrawable(TextDrawable.createNamedAvatar(name, avatarRadiusDimension));
         } catch (StringIndexOutOfBoundsException e) {
@@ -154,8 +156,8 @@ class ShareViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
+    @IonosCustomization
     private void setUserImage(ImageView avatar) {
-        ImageViewExtensionsKt.makeRoundedWithIcon(avatar, context, R.drawable.ic_user_outline);
-        viewThemeUtils.platform.colorImageViewBackgroundAndIcon(avatar);
+        avatar.setImageResource(R.drawable.account_circle_white);
     }
 }

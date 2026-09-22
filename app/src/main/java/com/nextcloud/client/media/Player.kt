@@ -253,9 +253,7 @@ internal class Player(
     override fun getBufferPercentage(): Int = 0
 
     override fun seekTo(pos: Int) {
-        if (stateMachine.isInState(State.PLAYING)) {
-            mediaPlayer?.seekTo(pos)
-        }
+        mediaPlayer?.seekTo(pos)
     }
 
     override fun getCurrentPosition(): Int = mediaPlayer?.currentPosition ?: 0

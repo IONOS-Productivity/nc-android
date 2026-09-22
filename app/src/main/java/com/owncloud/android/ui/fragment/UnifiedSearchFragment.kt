@@ -28,6 +28,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.account.CurrentAccountProvider
 import com.nextcloud.client.account.UserAccountManager
 import com.nextcloud.client.core.AsyncRunner
@@ -156,11 +157,13 @@ class UnifiedSearchFragment :
                 ?: ArrayList()
     }
 
+    @IonosCustomization("themeSwipeRefreshLayout")
     @Suppress("DEPRECATION")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = ListFragmentBinding.inflate(inflater, container, false)
         binding.listRoot.updatePadding(top = resources.getDimension(R.dimen.standard_half_padding).toInt())
         setUpBinding()
+        viewThemeUtils.androidx.themeSwipeRefreshLayout(binding.swipeContainingList)
 
         setHasOptionsMenu(true)
         return binding.root
@@ -171,7 +174,7 @@ class UnifiedSearchFragment :
 
         setupAdapter()
         if (supportsOpeningCalendarContactsLocally()) {
-            checkPermissions()
+            // checkPermissions()
         }
     }
 
@@ -181,6 +184,10 @@ class UnifiedSearchFragment :
             setupToolbar()
             setMainFabVisible(false)
             updateActionBarTitleAndHomeButtonByString(null)
+
+            supportActionBar?.let { actionBar ->
+                viewThemeUtils.files.themeActionBar(this, actionBar)
+            }
         }
     }
 
@@ -263,13 +270,12 @@ class UnifiedSearchFragment :
         }
     }
 
+    @IonosCustomization("setImageResource")
     private fun showEmptyView(state: UnifiedSearchFragmentScreenState.Empty) {
         toggleEmptyListVisible(show = true)
 
         binding.emptyList.run {
-            emptyListIcon.setImageDrawable(
-                viewThemeUtils.platform.tintDrawable(requireContext(), state.iconId)
-            )
+            emptyListIcon.setImageResource(state.iconId)
             emptyListViewHeadline.text = requireContext().getString(state.titleId)
             emptyListViewText.text = requireContext().getString(state.descriptionId)
         }
@@ -313,6 +319,7 @@ class UnifiedSearchFragment :
     }
 
     @Suppress("ComplexCondition")
+    @IonosCustomization
     private fun setUpViewModel() {
         vm.searchResults.observe(viewLifecycleOwner, this::onSearchResultChanged)
         vm.isLoading.observe(viewLifecycleOwner) { loading ->
