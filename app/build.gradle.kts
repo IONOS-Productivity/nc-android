@@ -156,7 +156,9 @@ android {
             register("gplay") {
                 applicationId = "com.ionos.hidrivenext"
                 dimension = "default"
-                versionCode = 18
+                versionCode = 19
+                val releaseNumber = 4
+                versionName = "$versionMajor.$versionMinor.$versionPatch.$releaseNumber"
                 isDefault = true
                 resConfigs("en", "de", "es", "fr", "it", "en-rUS", "es-rUS", "en-rCA", "fr-rCA", "es-rMX")
             }
@@ -167,6 +169,8 @@ android {
                 applicationId = "com.strato.hidrivenext"
                 dimension = "default"
                 versionCode = 1
+                val releaseNumber = 1
+                versionName = "$versionMajor.$versionMinor.$versionPatch.$releaseNumber"
                 resConfigs("en", "de", "es", "fr", "it")
             }
 
