@@ -28,6 +28,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.utils.extensions.getAllGalleryItemsSuspended
 import com.nextcloud.utils.extensions.getParcelableArgument
 import kotlinx.coroutines.Job
@@ -452,7 +453,9 @@ class GalleryFragment :
         const val REFRESH_SEARCH_EVENT_RECEIVER: String = "refreshSearchEventReceiver"
 
         private const val MAX_LANDSCAPE_COLUMN_SIZE = 5
-        private const val MAX_PORTRAIT_COLUMN_SIZE = 2
+
+        @IonosCustomization("increased quantity")
+        private const val MAX_PORTRAIT_COLUMN_SIZE = 3
 
         fun setLastMediaItemPosition(position: Int?) {
             lastMediaItemPosition = position

@@ -11,6 +11,7 @@ import android.accounts.Account
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.account.User
 import com.nextcloud.client.account.UserAccountManager
 import com.nextcloud.utils.extensions.isAnonymous
@@ -26,8 +27,12 @@ import java.util.Optional
  * It is an intermediary step facilitating comprehensive rework of
  * account handling logic.
  */
-class SessionMixin(private val activity: Activity, private val accountManager: UserAccountManager) : ActivityMixin {
-    var currentAccount: Account = getDefaultAccount()
+class SessionMixin(
+    private val activity: Activity,
+    private val accountManager: UserAccountManager
+) : ActivityMixin {
+    @IonosCustomization("Fix double call of startAccountCreation on activity create")
+    var currentAccount: Account = accountManager.currentAccount
         private set
 
     companion object {

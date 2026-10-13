@@ -23,9 +23,11 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.spotless)
+    alias(libs.plugins.kapt)
     alias(libs.plugins.ksp)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.spotbugs)
     alias(libs.plugins.detekt)
     // needed to make renovate run without shot, as shot requires Android SDK
@@ -149,9 +151,23 @@ android {
                 dimension = "default"
             }
 
+            // IONOS HiDrive Next brand. Shared white-label base lives in src/gplay,
+            // Payload in src/brandIonos
             register("gplay") {
-                applicationId = "com.nextcloud.client"
+                applicationId = "com.ionos.hidrivenext"
                 dimension = "default"
+                versionCode = 18
+                isDefault = true
+                resConfigs("en", "de", "es", "fr", "it", "en-rUS", "es-rUS", "en-rCA", "fr-rCA", "es-rMX")
+            }
+
+            // HiDrive Next brand
+            // Payload in src/brandStrato
+            register("hidriveNext") {
+                applicationId = "com.strato.hidrivenext"
+                dimension = "default"
+                versionCode = 1
+                resConfigs("en", "de", "es", "fr", "it")
             }
 
             register("huawei") {
@@ -233,14 +249,29 @@ android {
         getByName("androidTest") {
             assets.srcDirs(files("$projectDir/schemas"))
         }
+
+        // src/gplay holds the shared white-label base
+        getByName("gplay") {
+            res.srcDir("src/brandIonos/res")
+            assets.srcDir("src/brandIonos/assets")
+        }
+        getByName("hidriveNext") {
+            manifest.srcFile("src/gplay/AndroidManifest.xml")
+            java.srcDir("src/gplay/java")
+            res.srcDir("src/gplay/res")
+            res.srcDir("src/brandStrato/res")
+            assets.srcDir("src/brandStrato/assets")
+        }
+        getByName("androidTestHidriveNext") {
+            java.srcDir("src/androidTestGplay/java")
+        }
     }
 
 }
 
-ksp.arg("room.schemaLocation", "$projectDir/schemas")
+kapt.useBuildCache = true
 
-// Configure KSP for test variants
-ksp.arg("dagger.moduleName", project.name)
+ksp.arg("room.schemaLocation", "$projectDir/schemas")
 
 kotlin.compilerOptions.jvmTarget.set(JvmTarget.JVM_21)
 
@@ -430,9 +461,9 @@ dependencies {
 
     // region AppScan, document scanner not available on FDroid (generic) due to OpenCV binaries
     // To enable the feature for another variant, add it here.
-    "gplayImplementation"(project(":appscan"))
     "huaweiImplementation"(project(":appscan"))
     "qaImplementation"(project(":appscan"))
+    "implementation"(project(":scanbot"))
     // endregion
 
     // region SpotBugs
@@ -444,9 +475,8 @@ dependencies {
     implementation(libs.dagger)
     implementation(libs.dagger.android)
     implementation(libs.dagger.android.support)
-    ksp(libs.dagger.compiler)
-    ksp(libs.dagger.processor)
-    kspAndroidTest(libs.dagger.compiler)
+    kapt(libs.dagger.compiler)
+    kapt(libs.dagger.processor)
     // endregion
 
     // region Crypto
@@ -510,6 +540,7 @@ dependencies {
 
     // region Google Play dependencies, upon each update first test: new registration, receive push
     "gplayImplementation"(libs.bundles.gplay)
+    "hidriveNextImplementation"(libs.bundles.gplay)
     // endregion
 
     // region common
@@ -523,4 +554,9 @@ dependencies {
 
     // kotlinx.serialization
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.kotlinx.coroutines.guava)
+
+    // reactivex
+    implementation(libs.rxjava)
+    implementation(libs.rxandroid)
 }

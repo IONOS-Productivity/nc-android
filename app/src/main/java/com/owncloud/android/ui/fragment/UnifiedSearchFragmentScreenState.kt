@@ -25,13 +25,13 @@ sealed class UnifiedSearchFragmentScreenState {
             fun startSearch() = Empty(
                 titleId = R.string.file_list_empty_unified_search_start_search,
                 descriptionId = R.string.file_list_empty_unified_search_start_search_description,
-                iconId = R.drawable.ic_search_grey
+                iconId = R.drawable.ic_search
             )
 
             fun noResults() = Empty(
                 titleId = R.string.file_list_empty_headline_server_search,
                 descriptionId = R.string.file_list_empty_unified_search_no_results,
-                iconId = R.drawable.ic_search_grey
+                iconId = R.drawable.ic_search
             )
         }
     }

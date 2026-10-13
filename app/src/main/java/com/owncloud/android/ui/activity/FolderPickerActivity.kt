@@ -21,8 +21,11 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.google.android.material.appbar.MaterialToolbar
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.account.User
 import com.nextcloud.client.di.Injectable
 import com.nextcloud.utils.extensions.getParcelableArgument
@@ -71,6 +74,8 @@ open class FolderPickerActivity :
 
     private var captionText: String? = null
 
+    private var showsBrandCaption = false
+
     private var action: String? = null
     private var targetFilePaths: ArrayList<String>? = null
 
@@ -109,6 +114,7 @@ open class FolderPickerActivity :
         }
 
         updateActionBarTitleAndHomeButtonByString(captionText)
+        updateToolbarBrandLogo()
         handleBackPress()
     }
 
@@ -131,6 +137,7 @@ open class FolderPickerActivity :
             setupUIForChooseButton()
         } else {
             captionText = themeUtils.getDefaultDisplayNameForRootFolder(this)
+            showsBrandCaption = true
         }
     }
 
@@ -445,6 +452,24 @@ open class FolderPickerActivity :
             getSelectedFolderPathTitle()?.let {
                 viewThemeUtils.files.themeActionBar(this, actionBar, it)
             }
+            updateToolbarBrandLogo()
+        }
+    }
+
+    @IonosCustomization("Brand logo instead of the root folder caption")
+    private fun updateToolbarBrandLogo() {
+        if (!showsBrandCaption || !resources.getBoolean(R.bool.show_brand_logo_in_folder_picker)) {
+            return
+        }
+
+        val folder = currentFolder
+        val atRoot = (folder == null || folder.parentId == 0L)
+
+        supportActionBar?.setDisplayShowTitleEnabled(!atRoot)
+        findViewById<MaterialToolbar>(R.id.toolbar)?.logo = if (atRoot) {
+            AppCompatResources.getDrawable(this, R.drawable.nextcloud_logo)
+        } else {
+            null
         }
     }
 

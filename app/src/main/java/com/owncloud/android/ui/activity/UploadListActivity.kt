@@ -21,6 +21,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.snackbar.Snackbar
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.account.User
 import com.nextcloud.client.core.Clock
 import com.nextcloud.client.device.PowerManagementService
@@ -139,6 +140,7 @@ class UploadListActivity :
         swipeListRefreshLayout?.setOnRefreshListener { this.refresh() }
     }
 
+    @IonosCustomization("Remove empty list icon alpha")
     private fun setupEmptyList() {
         binding?.run {
             list.setEmptyView(emptyList.getRoot())
@@ -147,8 +149,6 @@ class UploadListActivity :
 
                 emptyListIcon.run {
                     setImageResource(R.drawable.uploads)
-                    getDrawable().mutate()
-                    setAlpha(0.5f)
                     setVisibility(View.VISIBLE)
                 }
 

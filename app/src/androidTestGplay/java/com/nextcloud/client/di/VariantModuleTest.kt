@@ -7,41 +7,64 @@
 
 package com.nextcloud.client.di
 
+import com.ionos.scanbot.availability.Availability
+import com.ionos.scanbot.di.qualifiers.Scanbot
+import com.ionos.scanbot.di.qualifiers.ScanbotLicense
 import com.nextcloud.client.documentscan.AppScanOptionalFeature
+import dagger.BindsInstance
 import dagger.Component
-import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
-import org.junit.Assert.assertNotEquals
-import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertThrows
 import org.junit.Assert.assertTrue
-import org.junit.Before
 import org.junit.Test
 
-/**
- * Unit test for [VariantModule] that tests the reflection-based approach
- * to conditionally load the ScanPageContract.
- */
 class VariantModuleTest {
 
-    private lateinit var component: TestVariantComponent
+    @Test
+    fun testAppScanWhenScanbotFeatureAndLicenseAvailableShouldBeAvailable() {
+        val feature = createAppScanOptionalFeature(isFeatureAvailable = true, isLicenseAvailable = true)
 
-    @Before
-    fun setup() {
-        component = DaggerVariantModuleTest_TestVariantComponent.create()
+        assertTrue(feature.isAvailable)
     }
 
     @Test
-    fun testAppScanWhenAvailableShouldReturnContract() {
-        val feature = component.appScanOptionalFeature()
+    fun testAppScanWhenScanbotFeatureNotAvailableShouldNotBeAvailable() {
+        val feature = createAppScanOptionalFeature(isFeatureAvailable = false, isLicenseAvailable = true)
 
-        assertTrue(feature.isAvailable)
-        assertNotEquals(AppScanOptionalFeature.Stub, feature)
-
-        assertNotNull(feature.getScanContract())
+        assertFalse(feature.isAvailable)
     }
+
+    @Test
+    fun testAppScanWhenScanbotLicenseNotAvailableShouldNotBeAvailable() {
+        val feature = createAppScanOptionalFeature(isFeatureAvailable = true, isLicenseAvailable = false)
+
+        assertFalse(feature.isAvailable)
+    }
+
+    @Test
+    fun testAppScanShouldNotProvideScanContract() {
+        val feature = createAppScanOptionalFeature(isFeatureAvailable = true, isLicenseAvailable = true)
+
+        assertThrows(UnsupportedOperationException::class.java) { feature.getScanContract() }
+    }
+
+    private fun createAppScanOptionalFeature(
+        isFeatureAvailable: Boolean,
+        isLicenseAvailable: Boolean
+    ): AppScanOptionalFeature = DaggerVariantModuleTest_TestVariantComponent.factory()
+        .create(Availability { isFeatureAvailable }, Availability { isLicenseAvailable })
+        .appScanOptionalFeature()
 
     @Component(modules = [VariantModule::class])
     interface TestVariantComponent {
         fun appScanOptionalFeature(): AppScanOptionalFeature
+
+        @Component.Factory
+        interface Factory {
+            fun create(
+                @BindsInstance @Scanbot featureAvailability: Availability,
+                @BindsInstance @ScanbotLicense licenseAvailability: Availability
+            ): TestVariantComponent
+        }
     }
 }
