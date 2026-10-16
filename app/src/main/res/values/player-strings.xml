@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ IONOS HiDrive Next - Android Client
+  ~
+  ~ SPDX-FileCopyrightText: 2025 STRATO GmbH.
+  ~ SPDX-License-Identifier: GPL-2.0
+  -->
+
+<resources>
+    <string name="player_media_controls_close_action_title">Close</string>
+    <string name="player_audio_source_artist_and_title">%s • %s</string>
+    <string name="player_last_modified">Modified: %s</string>
+    <string name="player_error_source_not_found">Source not found</string>
+    <string name="player_error_unknown">Unknown error</string>
+</resources>

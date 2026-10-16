@@ -39,13 +39,15 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.ionos.annotation.IonosCustomization;
+import com.ionos.scanbot.controller.ScanbotController;
+import com.ionos.scanbot.ui.ScanbotCameraPermissionHandler;
 import com.nextcloud.android.lib.resources.clientintegration.Endpoint;
 import com.nextcloud.android.lib.resources.files.ToggleFileLockRemoteOperation;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.device.DeviceInfo;
 import com.nextcloud.client.di.Injectable;
 import com.nextcloud.client.documentscan.AppScanOptionalFeature;
-import com.nextcloud.client.documentscan.DocumentScanActivity;
 import com.nextcloud.client.editimage.EditImageActivity;
 import com.nextcloud.client.jobs.BackgroundJobManager;
 import com.nextcloud.client.network.ClientFactory;
@@ -118,7 +120,6 @@ import com.owncloud.android.utils.EncryptionUtils;
 import com.owncloud.android.utils.EncryptionUtilsV2;
 import com.owncloud.android.utils.FileSortOrder;
 import com.owncloud.android.utils.FileStorageUtils;
-import com.owncloud.android.utils.MimeTypeUtil;
 import com.owncloud.android.utils.PermissionUtil;
 import com.owncloud.android.utils.overlay.OverlayManager;
 import com.owncloud.android.utils.theme.ThemeUtils;
@@ -208,6 +209,7 @@ public class OCFileListFragment extends ExtendedListFragment implements
     @Inject ShortcutUtil shortcutUtil;
     @Inject SyncedFolderProvider syncedFolderProvider;
     @Inject AppScanOptionalFeature appScanOptionalFeature;
+    @Inject ScanbotController scanbotController;
     @Inject OverlayManager overlayManager;
 
     protected FileFragment.ContainerActivity mContainerActivity;
@@ -262,10 +264,16 @@ public class OCFileListFragment extends ExtendedListFragment implements
         searchFragment = currentSearchType != null && isSearchEventSet(searchEvent);
     }
 
+    @IonosCustomization("Subscribe to Scanbot events")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         listenSetupEncryptionDialogResult();
+        getViewLifecycleOwner().getLifecycle().addObserver(
+            new ScanbotCameraPermissionHandler(
+                scanbotController,
+                () -> isAdded() && !isDetached() ? getView() : null
+            ));
     }
 
     @Override
@@ -289,6 +297,10 @@ public class OCFileListFragment extends ExtendedListFragment implements
 
         if (isSearchEventSet(searchEvent)) {
             handleSearchEvent(searchEvent);
+        }
+
+        if (getActivity() instanceof FileDisplayActivity fda) {
+            fda.startSyncFolderOperation(getCurrentFile(), true);
         }
 
         super.onResume();
@@ -348,6 +360,7 @@ public class OCFileListFragment extends ExtendedListFragment implements
      * {@inheritDoc}
      */
     @Override
+    @IonosCustomization
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log_OC.i(TAG, "onCreateView() start");
         View v = super.onCreateView(inflater, container, savedInstanceState);
@@ -361,11 +374,6 @@ public class OCFileListFragment extends ExtendedListFragment implements
         }
 
         mFabMain = requireActivity().findViewById(R.id.fab_main);
-
-        if (mFabMain != null) {
-            // is not available in FolderPickerActivity
-            viewThemeUtils.material.themeFAB(mFabMain);
-        }
 
         Log_OC.i(TAG, "onCreateView() end");
         return v;
@@ -502,6 +510,7 @@ public class OCFileListFragment extends ExtendedListFragment implements
     /**
      * register listener on FAB.
      */
+    @IonosCustomization("Show simple FAB menu bottom sheet")
     public void registerFabListener() {
         if (!(getActivity() instanceof FileActivity fileActivity)) {
             Log_OC.w(TAG, "activity is null cannot register fab listener");
@@ -514,7 +523,6 @@ public class OCFileListFragment extends ExtendedListFragment implements
         }
 
         // is not available in FolderPickerActivity
-        viewThemeUtils.material.themeFAB(mFabMain);
         mFabMain.setOnClickListener(v -> {
             var currentDir = getCurrentFile();
             if (currentDir == null) {
@@ -522,14 +530,11 @@ public class OCFileListFragment extends ExtendedListFragment implements
                 return;
             }
             
-            final OCFileListBottomSheetDialog dialog = new OCFileListBottomSheetDialog(fileActivity,
+            final SimpleOCFileListBottomSheetDialog dialog = new SimpleOCFileListBottomSheetDialog(fileActivity,
                                                                                        this,
                                                                                        deviceInfo,
-                                                                                       accountManager.getUser(),
-                                                                                       currentDir,
                                                                                        themeUtils,
                                                                                        viewThemeUtils,
-                                                                                       editorUtils,
                                                                                        appScanOptionalFeature);
 
             dialog.getBehavior().setState(BottomSheetBehavior.STATE_EXPANDED);
@@ -615,9 +620,7 @@ public class OCFileListFragment extends ExtendedListFragment implements
         final OCFile currentFile = getCurrentFile();
         if (fileDisplayActivity != null && currentFile != null && currentFile.isFolder()) {
 
-            Intent intent = new Intent(requireContext(), DocumentScanActivity.class);
-            intent.putExtra(DocumentScanActivity.EXTRA_FOLDER, currentFile.getRemotePath());
-            startActivity(intent);
+            scanbotController.scanToDocument(requireContext(), currentFile.getRemotePath());
         } else {
             Log.w(TAG, "scanDocUpload: Failed to start doc scanning, fileDisplayActivity=" + fileDisplayActivity +
                 ", currentFile=" + currentFile);
@@ -856,6 +859,7 @@ public class OCFileListFragment extends ExtendedListFragment implements
          * Load menu and customize UI when action mode is started.
          */
         @Override
+        @IonosCustomization
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
             mActiveActionMode = mode;
             // Determine if actionMode is "new" or not (already affected by item-selection)
@@ -865,10 +869,10 @@ public class OCFileListFragment extends ExtendedListFragment implements
             MenuInflater inflater = requireActivity().getMenuInflater();
             inflater.inflate(R.menu.custom_menu_placeholder, menu);
 
-            final MenuItem item = menu.findItem(R.id.custom_menu_placeholder_item);
-            if (item.getIcon() != null) {
-                item.setIcon(viewThemeUtils.platform.colorDrawable(item.getIcon(), ContextCompat.getColor(requireContext(), R.color.white)));
-            }
+//            final MenuItem item = menu.findItem(R.id.custom_menu_placeholder_item);
+//            if (item.getIcon() != null) {
+//                item.setIcon(viewThemeUtils.platform.colorDrawable(item.getIcon(), ContextCompat.getColor(requireContext(), R.color.white)));
+//            }
 
             mActiveActionMode.invalidate();
 
@@ -1205,6 +1209,7 @@ public class OCFileListFragment extends ExtendedListFragment implements
         }
     }
 
+    @IonosCustomization("Video in custom player")
     private void handlePendingDownloadFile(OCFile file) {
         if (!isAccountManagerInitialized()) {
             Log_OC.e(TAG, "AccountManager not yet initialized");
@@ -1214,10 +1219,7 @@ public class OCFileListFragment extends ExtendedListFragment implements
         User account = accountManager.getUser();
         OCCapability capability = mContainerActivity.getStorageManager().getCapability(account.getAccountName());
 
-        if (MimeTypeUtil.isVideo(file) && !file.isEncrypted() && mContainerActivity instanceof FileDisplayActivity fda) {
-            setFabVisible(false);
-            fda.startImagePreview(file, true, null);
-        } else if (PreviewMediaActivity.Companion.canBePreviewed(file) && !file.isEncrypted() && mContainerActivity instanceof FileDisplayActivity fda) {
+        if (PreviewMediaActivity.Companion.canBePreviewed(file) && !file.isEncrypted() && mContainerActivity instanceof FileDisplayActivity fda) {
             setFabVisible(false);
             fda.startMediaPreview(file, 0, true, true, true, true);
         } else if (editorUtils.isEditorAvailable(accountManager.getUser(), file.getMimeType()) && !file.isEncrypted()) {
@@ -1645,7 +1647,8 @@ public class OCFileListFragment extends ExtendedListFragment implements
 
         invalidateActionMode();
     }
-    
+
+    @IonosCustomization("Sort button icon")
     private void updateSortButton() {
         if (mSortButton != null) {
             FileSortOrder sortOrder;
@@ -1655,7 +1658,7 @@ public class OCFileListFragment extends ExtendedListFragment implements
                 sortOrder = preferences.getSortOrderByFolder(mFile);
             }
 
-            mSortButton.setText(DisplayUtils.getSortOrderStringId(sortOrder));
+            mSortButton.setIconResource(DisplayUtils.getSortOrderIconRes(preferences.getSortOrderByFolder(mFile)));
         }
     }
 
@@ -2268,6 +2271,7 @@ public class OCFileListFragment extends ExtendedListFragment implements
      *
      * @param visible Desired visibility for the FAB.
      */
+    @IonosCustomization("Removed FAB theming")
     public void setFabVisible(final boolean visible) {
         if (mFabMain == null) {
             // is not available in FolderPickerActivity
@@ -2282,7 +2286,6 @@ public class OCFileListFragment extends ExtendedListFragment implements
         activity.runOnUiThread(() -> {
             if (visible) {
                 mFabMain.show();
-                viewThemeUtils.material.themeFAB(mFabMain);
             } else {
                 mFabMain.hide();
             }
@@ -2304,6 +2307,7 @@ public class OCFileListFragment extends ExtendedListFragment implements
      *
      * @param enabled Desired visibility for the FAB.
      */
+    @IonosCustomization
     public void setFabEnabled(final boolean enabled) {
         if (mFabMain == null) {
             // is not available in FolderPickerActivity
@@ -2314,10 +2318,8 @@ public class OCFileListFragment extends ExtendedListFragment implements
             getActivity().runOnUiThread(() -> {
                 if (enabled) {
                     mFabMain.setEnabled(true);
-                    viewThemeUtils.material.themeFAB(mFabMain);
                 } else {
                     mFabMain.setEnabled(false);
-                    viewThemeUtils.material.themeFAB(mFabMain);
                 }
             });
         }

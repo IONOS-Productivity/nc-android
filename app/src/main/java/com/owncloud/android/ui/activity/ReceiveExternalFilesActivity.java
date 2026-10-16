@@ -48,6 +48,9 @@ import android.widget.TextView;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.ionos.annotation.IonosCustomization;
+import com.ionos.privacy.DataProtectionActivity;
+import com.ionos.privacy.PrivacyPreferences;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.di.Injectable;
 import com.nextcloud.client.jobs.upload.FileUploadHelper;
@@ -144,6 +147,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
     public static final int SINGLE_PARENT = 1;
 
     @Inject AppPreferences preferences;
+    @Inject PrivacyPreferences privacyPreferences;
     @Inject LocalBroadcastManager localBroadcastManager;
     @Inject SyncedFolderProvider syncedFolderProvider;
 
@@ -179,6 +183,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     @Override
+    @IonosCustomization
     protected void onCreate(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             String parentPath = savedInstanceState.getString(KEY_PARENTS);
@@ -192,6 +197,14 @@ public class ReceiveExternalFilesActivity extends FileActivity
         mAccountManager = (AccountManager) getSystemService(Context.ACCOUNT_SERVICE);
 
         super.onCreate(savedInstanceState);
+
+        String accountName = accountManager.getCurrentOwnCloudAccount() != null
+            ? accountManager.getCurrentOwnCloudAccount().getName()
+            : null;
+        if (!privacyPreferences.isDataProtectionProcessed(accountName)) {
+            startActivity(DataProtectionActivity.createIntent(this));
+        }
+
         binding = ReceiveExternalFilesBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -303,9 +316,10 @@ public class ReceiveExternalFilesActivity extends FileActivity
     }
 
     @Override
+    @IonosCustomization
     public void onSortingOrderChosen(FileSortOrder newSortOrder) {
         preferences.setSortOrder(mFile, newSortOrder);
-        sortButton.setText(DisplayUtils.getSortOrderStringId(newSortOrder));
+        sortButton.setIconResource(DisplayUtils.getSortOrderIconRes(newSortOrder));
         populateDirectoryList(null);
     }
 
@@ -748,6 +762,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
         }
     }
 
+    @IonosCustomization
     private void populateDirectoryList(OCFile file) {
         setupEmptyList();
         setupToolbar();
@@ -816,7 +831,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
 
         sortButton = binding.toolbarLayout.sortButton;
         FileSortOrder sortOrder = preferences.getSortOrderByFolder(mFile);
-        sortButton.setText(DisplayUtils.getSortOrderStringId(sortOrder));
+        sortButton.setIconResource(DisplayUtils.getSortOrderIconRes(sortOrder));
         sortButton.setOnClickListener(l -> openSortingOrderDialogFragment(getSupportFragmentManager(), sortOrder));
     }
 

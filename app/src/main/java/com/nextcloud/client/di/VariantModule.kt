@@ -9,6 +9,10 @@
 package com.nextcloud.client.di
 
 import androidx.activity.result.contract.ActivityResultContract
+import com.ionos.annotation.IonosCustomization
+import com.ionos.scanbot.availability.Availability
+import com.ionos.scanbot.di.qualifiers.Scanbot
+import com.ionos.scanbot.di.qualifiers.ScanbotLicense
 import com.nextcloud.client.documentscan.AppScanOptionalFeature
 import dagger.Module
 import dagger.Provides
@@ -16,30 +20,18 @@ import dagger.Reusable
 
 @Module
 internal class VariantModule {
-    /**
-     * Using reflection to determine whether the ScanPageContract class from the appscan project is available.
-     * If yes, an instance of it is returned. If not, a stub is returned indicating the feature is not available.
-     *
-     * To make it available for your specific variant, make sure it is included in your build.gradle,
-     * e.g.: `"qaImplementation"(project(":appscan"))`
-     */
+    @IonosCustomization("Scanbot scan availability")
     @Provides
     @Reusable
-    fun scanOptionalFeature(): AppScanOptionalFeature = try {
-        // Try to load the ScanPageContract class only if the appscan project is present
-        val clazz = Class.forName("com.nextcloud.appscan.ScanPageContract")
-
-        @Suppress("UNCHECKED_CAST")
-        val contractInstance =
-            clazz.getDeclaredConstructor().newInstance() as ActivityResultContract<Unit, String?>
-        object : AppScanOptionalFeature() {
-            override fun getScanContract(): ActivityResultContract<Unit, String?> = contractInstance
+    fun scanOptionalFeature(
+        @Scanbot featureAvailability: Availability,
+        @ScanbotLicense licenseAvailability: Availability
+    ): AppScanOptionalFeature {
+        return object : AppScanOptionalFeature() {
+            override fun getScanContract(): ActivityResultContract<Unit, String?> {
+                throw UnsupportedOperationException("Document scan is not available")
+            }
+            override val isAvailable: Boolean = featureAvailability.available() && licenseAvailability.available()
         }
-    } catch (_: ClassNotFoundException) {
-        // appscan module is not present in this variant
-        AppScanOptionalFeature.Stub
-    } catch (_: Exception) {
-        // Any reflection/instantiation error -> be safe and use stub
-        AppScanOptionalFeature.Stub
     }
 }

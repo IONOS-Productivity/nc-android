@@ -19,6 +19,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -30,6 +31,7 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textview.MaterialTextView;
+import com.ionos.annotation.IonosCustomization;
 import com.nextcloud.android.common.ui.theme.utils.ColorRole;
 import com.nextcloud.client.di.Injectable;
 import com.owncloud.android.R;
@@ -64,8 +66,8 @@ public abstract class ToolbarActivity extends BaseActivity implements Injectable
     private AppBarLayout mAppBar;
     private RelativeLayout mDefaultToolbar;
     private MaterialToolbar mToolbar;
-    private MaterialCardView mHomeSearchContainer;
-    private LinearLayout mHomeSearchToolbar;
+    //private MaterialCardView mHomeSearchContainer;
+    private ViewGroup mHomeSearchToolbar;
     private ImageView mPreviewImage;
     private FrameLayout mPreviewImageContainer;
     private LinearLayout mInfoBox;
@@ -82,6 +84,7 @@ public abstract class ToolbarActivity extends BaseActivity implements Injectable
      * Toolbar setup that must be called in implementer's {@link #onCreate} after {@link #setContentView} if they want
      * to use the toolbar.
      */
+    @IonosCustomization("search container, menu btn")
     private void setupToolbar(boolean isHomeSearchToolbarShow, boolean showSortListButtonGroup) {
         mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
@@ -89,7 +92,7 @@ public abstract class ToolbarActivity extends BaseActivity implements Injectable
         mAppBar = findViewById(R.id.appbar);
         mDefaultToolbar = findViewById(R.id.default_toolbar);
         mHomeSearchToolbar = findViewById(R.id.home_toolbar);
-        mHomeSearchContainer = findViewById(R.id.home_search_container);
+        //mHomeSearchContainer = findViewById(R.id.home_search_container);
         mMenuButton = findViewById(R.id.menu_button);
         mSearchText = findViewById(R.id.search_text);
         mSwitchAccountButton = findViewById(R.id.switch_account_button);
@@ -110,13 +113,10 @@ public abstract class ToolbarActivity extends BaseActivity implements Injectable
 
         mToolbarSpinner = findViewById(R.id.toolbar_spinner);
 
-        viewThemeUtils.material.themeToolbar(mToolbar);
-        viewThemeUtils.material.colorToolbarOverflowIcon(mToolbar);
         viewThemeUtils.platform.themeStatusBar(this);
         viewThemeUtils.material.colorMaterialTextButton(mSwitchAccountButton);
 
-        viewThemeUtils.material.themeSearchCardView(mHomeSearchContainer);
-        viewThemeUtils.material.colorMaterialButtonContent(mMenuButton, ColorRole.ON_SURFACE);
+        //viewThemeUtils.material.themeSearchCardView(mHomeSearchContainer);
         viewThemeUtils.material.colorMaterialButtonContent(mNotificationButton, ColorRole.ON_SURFACE);
         viewThemeUtils.platform.colorTextView(mSearchText, ColorRole.ON_SURFACE_VARIANT);
     }
@@ -215,6 +215,7 @@ public abstract class ToolbarActivity extends BaseActivity implements Injectable
         return fileDataStorageManager.getFilenameConsideringOfflineOperation(file);
     }
 
+    @IonosCustomization("Search hint")
     protected void updateActionBarTitleAndHomeButton(OCFile file) {
         final OCFileDepth currentDirDepth = getCurrentDirDepth();
         final boolean isRoot = isRoot(file) || currentDirDepth == OCFileDepth.Root;
@@ -230,7 +231,7 @@ public abstract class ToolbarActivity extends BaseActivity implements Injectable
         showHomeSearchToolbar(canShowSearchBar);
 
         if (mSearchText != null) {
-            mSearchText.setText(getString(R.string.appbar_search_in, title));
+            mSearchText.setText(getString(R.string.actionbar_search, title));
         }
 
         final var actionBar = getSupportActionBar();
@@ -267,11 +268,11 @@ public abstract class ToolbarActivity extends BaseActivity implements Injectable
     }
 
     @SuppressLint("PrivateResource")
+    @IonosCustomization
     private void showHomeSearchToolbar(boolean isShow) {
         if (mAppBar == null) {
             return;
         }
-
         viewThemeUtils.material.themeToolbar(mToolbar);
 
         if (isShow) {
@@ -280,8 +281,6 @@ public abstract class ToolbarActivity extends BaseActivity implements Injectable
                                                                                 R.animator.appbar_elevation_off));
             mDefaultToolbar.setVisibility(View.GONE);
             mHomeSearchToolbar.setVisibility(View.VISIBLE);
-            viewThemeUtils.material.themeSearchCardView(mHomeSearchContainer);
-            viewThemeUtils.material.themeSearchBarText(mSearchText);
         } else {
             mAppBar.setStateListAnimator(AnimatorInflater.loadStateListAnimator(mAppBar.getContext(),
                                                                                 R.animator.appbar_elevation_on));

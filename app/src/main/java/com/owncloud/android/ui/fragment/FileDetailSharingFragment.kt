@@ -31,6 +31,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.button.MaterialButton
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.android.common.ui.theme.utils.ColorRole
 import com.nextcloud.client.account.User
 import com.nextcloud.client.account.UserAccountManager
@@ -310,6 +311,7 @@ class FileDetailSharingFragment :
         }
     }
 
+    @IonosCustomization("Search view theming")
     private fun themeView(binding: FileDetailsSharingFragmentBinding) {
         binding.run {
             viewThemeUtils.material.run {
@@ -329,6 +331,8 @@ class FileDetailSharingFragment :
             viewThemeUtils.files.run {
                 themeContentSearchView(searchView)
             }
+
+            viewThemeUtils.androidx.themeToolbarSearchView(searchView)
         }
     }
 
@@ -392,13 +396,14 @@ class FileDetailSharingFragment :
         toggleSearchViewEnable(searchView, false)
     }
 
+    @IonosCustomization("Share search hint")
     private fun setupShareView(binding: FileDetailsSharingFragmentBinding, parentFile: OCFile?) {
         binding.run {
             if (file?.isEncrypted == true || (parentFile != null && parentFile.isEncrypted)) {
                 setupViewForEncryptedShare(this)
             } else {
                 createLink.setText(R.string.create_link)
-                searchView.setQueryHint(getResources().getString(R.string.share_search_internal))
+                searchView.setQueryHint(getResources().getString(R.string.ionos_share_search))
             }
 
             createLink.setOnClickListener { createPublicShareLink() }
