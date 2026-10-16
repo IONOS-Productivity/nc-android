@@ -42,6 +42,7 @@ firebaseAnalyticsVersion = "23.0.0"
 flexboxVersion = "3.0.0"
 fragmentKtxVersion = "1.8.9"
 glide = "5.0.7"
+googleServicesGradlePlugin = "4.5.0"
 gsonVersion = "2.14.0"
 ical4jVersion = "3.2.19"
 jackrabbitWebdavVersion = "2.13.5"
@@ -304,6 +305,7 @@ gplay = [
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidPluginVersion" }
 android-library = { id = "com.android.library", version.ref = "androidPluginVersion" }
+google-services = { id = "com.google.gms.google-services", version.ref = "googleServicesGradlePlugin" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 spotbugs = { id = "com.github.spotbugs", version.ref = "spotbugsGradlePlugin" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }

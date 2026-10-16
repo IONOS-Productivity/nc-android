@@ -21,6 +21,7 @@ val perfAnalysis = project.hasProperty("perfAnalysis")
 
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.google.services)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.spotless)
     alias(libs.plugins.kapt)
@@ -156,7 +157,7 @@ android {
             register("gplay") {
                 applicationId = "com.ionos.hidrivenext"
                 dimension = "default"
-                versionCode = 19
+                versionCode = 20
                 val releaseNumber = 4
                 versionName = "$versionMajor.$versionMinor.$versionPatch.$releaseNumber"
                 isDefault = true
@@ -285,6 +286,12 @@ spotless.kotlin {
 }
 
 detekt.config.setFrom("detekt.yml")
+
+// Firebase config comes from google-services.json; flavors without the file keep their Firebase strings
+googleServices {
+    missingGoogleServicesStrategy =
+        com.google.gms.googleservices.GoogleServicesPlugin.MissingGoogleServicesStrategy.WARN
+}
 
 if (shotTest) configure<ShotExtension> {
     showOnlyFailingTestsInReports = ciBuild
