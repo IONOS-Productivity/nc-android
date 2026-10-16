@@ -27,6 +27,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.account.User
 import com.nextcloud.client.di.Injectable
 import com.nextcloud.client.jobs.BackgroundJobManager
@@ -235,22 +236,8 @@ class BackupFragment :
         }
     }
 
+    @IonosCustomization("Removed theming")
     private fun applyUserColor() {
-        viewThemeUtils.androidx.run {
-            colorSwitchCompat(binding.contacts)
-            colorSwitchCompat(binding.calendar)
-            colorSwitchCompat(binding.dailyBackup)
-        }
-
-        viewThemeUtils.material.run {
-            colorMaterialButtonPrimaryFilled(binding.backupNow)
-            colorMaterialButtonPrimaryOutlined(binding.contactsDatepicker)
-        }
-
-        viewThemeUtils.platform.run {
-            colorTextView(binding.dataToBackUpTitle)
-            colorTextView(binding.backupSettingsTitle)
-        }
     }
 
     private fun addMenuProvider() {
@@ -374,6 +361,7 @@ class BackupFragment :
         if (checkAndAskForCalendarReadPermission() && checkAndAskForContactsReadPermission()) openDate(null)
     }
 
+    @IonosCustomization("Removed date picker buttons theming")
     private fun openDate(savedDate: Calendar?) {
         val contactsPreferenceActivity = activity as? ContactsPreferenceActivity ?: run {
             activity?.let { DisplayUtils.showSnackMessage(it, R.string.error_choosing_date) }
@@ -400,11 +388,6 @@ class BackupFragment :
             setOnDismissListener { selectedDate = null }
             setTitle("")
             show()
-
-            viewThemeUtils.platform.colorTextButtons(
-                getButton(DatePickerDialog.BUTTON_NEGATIVE),
-                getButton(DatePickerDialog.BUTTON_POSITIVE)
-            )
         }
     }
 

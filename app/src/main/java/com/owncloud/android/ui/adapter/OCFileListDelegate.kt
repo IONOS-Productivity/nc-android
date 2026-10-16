@@ -8,10 +8,14 @@
 package com.owncloud.android.ui.adapter
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.LayerDrawable
 import android.view.View
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import com.elyeproj.loaderviewlibrary.LoaderImageView
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.android.common.ui.theme.utils.ColorRole
 import com.nextcloud.client.account.User
 import com.nextcloud.client.jobs.download.FileDownloadHelper
@@ -45,6 +49,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.job
 import kotlinx.coroutines.launch
+import androidx.core.graphics.drawable.toDrawable
 
 @Suppress("LongParameterList", "TooManyFunctions")
 class OCFileListDelegate(
@@ -124,7 +129,8 @@ class OCFileListDelegate(
             }
             imageView.setImageBitmap(overlay)
         } else {
-            imageView.setImageDrawable(OCFileUtils.getMediaPlaceholder(file, imageDimension))
+            @IonosCustomization("Custom placeholder for gallery images while loading")
+            imageView.setImageDrawable(Color.LTGRAY.toDrawable())
         }
 
         val job = ioScope.launch {
@@ -148,10 +154,21 @@ class OCFileListDelegate(
                             }
                         }
 
+                        @IonosCustomization("image post processing - custom placeholder for failed image loading")
                         override fun onError() {
                             if (imageView.tag == file.fileId) {
                                 Log_OC.d(tag, "setGalleryImage.onError()")
                                 DisplayUtils.stopShimmer(shimmer, imageView)
+                                imageView.post {
+                                    imageView.scaleType = ImageView.ScaleType.FIT_CENTER
+                                    val inset = (imageDimension.first * 0.45f).toInt()
+                                    val icon = OCFileUtils.getMediaPlaceholder(file, imageDimension)
+                                    val backgroundColor = context.getColor(R.color.ionos_gallery_item_background_color)
+                                    val layered = LayerDrawable(arrayOf(backgroundColor.toDrawable(), icon)).apply {
+                                        setLayerInset(1, inset, inset, inset, inset)
+                                    }
+                                    imageView.setImageDrawable(layered)
+                                }
                             }
                         }
                     }
@@ -203,6 +220,7 @@ class OCFileListDelegate(
     }
 
     @Suppress("MagicNumber")
+    @IonosCustomization
     fun bindViewHolder(
         viewHolder: ListViewHolder,
         file: OCFile,
@@ -213,7 +231,18 @@ class OCFileListDelegate(
         // thumbnail
         viewHolder.imageFileName?.text = file.fileName
         viewHolder.thumbnail.tag = file.fileId
-        setThumbnail(viewHolder.thumbnail, viewHolder.shimmerThumbnail, file, overlayManager)
+        OCFileListThumbnailLoader(
+            file,
+            viewHolder,
+            user,
+            storageManager,
+            asyncTasks,
+            gridView,
+            context,
+            preferences,
+            viewThemeUtils,
+            syncFolderProvider
+        ).load()
 
         // item layout + click listeners
         bindGridItemLayout(file, viewHolder)
@@ -273,8 +302,9 @@ class OCFileListDelegate(
         }
     }
 
+    @IonosCustomization
     private fun bindGridItemLayout(file: OCFile, gridViewHolder: ListViewHolder) {
-        setItemLayoutBackgroundColor(file, gridViewHolder)
+        setItemLayoutBackground(file, gridViewHolder)
         setCheckBoxImage(file, gridViewHolder)
         setItemLayoutOnClickListeners(file, gridViewHolder)
 
@@ -295,6 +325,26 @@ class OCFileListDelegate(
                     )
                 }
             }
+        }
+    }
+
+    @IonosCustomization
+    private fun setItemLayoutBackground(file: OCFile, gridViewHolder: ListViewHolder) {
+        val isSelected = file.fileId == highlightedItem?.fileId || isCheckedFile(file)
+        if (gridViewHolder is OCFileListGridItemViewHolder) {
+            val itemLayoutBackgroundResId = if (isSelected) {
+                R.drawable.grid_mode_selected_item_background
+            } else {
+                R.drawable.grid_mode_item_background
+            }
+            gridViewHolder.itemLayout.setBackgroundResource(itemLayoutBackgroundResId)
+        } else {
+            val itemLayoutBackgroundColor = if (isSelected) {
+                ContextCompat.getColor(context, R.color.selected_item_background)
+            } else {
+                ContextCompat.getColor(context, R.color.bg_default)
+            }
+            gridViewHolder.itemLayout.setBackgroundColor(itemLayoutBackgroundColor)
         }
     }
 
@@ -320,11 +370,10 @@ class OCFileListDelegate(
         }
     }
 
+    @IonosCustomization
     private fun setCheckBoxImage(file: OCFile, gridViewHolder: ListViewHolder) {
         if (isCheckedFile(file)) {
-            gridViewHolder.checkbox.setImageDrawable(
-                viewThemeUtils.platform.tintDrawable(context, R.drawable.ic_checkbox_marked, ColorRole.PRIMARY)
-            )
+            gridViewHolder.checkbox.setImageResource(R.drawable.ic_checkbox_marked)
         } else {
             gridViewHolder.checkbox.setImageResource(R.drawable.ic_checkbox_blank_outline)
         }

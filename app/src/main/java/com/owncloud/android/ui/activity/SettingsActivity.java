@@ -17,6 +17,7 @@ package com.owncloud.android.ui.activity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
@@ -24,6 +25,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -39,9 +41,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.webkit.URLUtil;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.ionos.annotation.IonosCustomization;
+import com.ionos.privacy.PrivacySettingsActivity;
+import com.ionos.utils.IonosBuildHelper;
+import com.nextcloud.android.common.ui.util.extensions.WindowExtensionsKt;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.account.UserAccountManager;
 import com.nextcloud.client.di.Injectable;
@@ -150,7 +157,19 @@ public class SettingsActivity extends PreferenceActivity
 
     @SuppressWarnings("deprecation")
     @Override
+    @IonosCustomization("Delegate fix")
     public void onCreate(Bundle savedInstanceState) {
+
+        boolean isApiLevel35OrHigher = (Build.VERSION.SDK_INT >= 35);
+        if (isApiLevel35OrHigher) {
+            final var window = getWindow();
+            if (window != null) {
+                WindowExtensionsKt.addSystemBarPaddings(getWindow());
+                final var flag = WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS;
+                window.setFlags(flag, flag);
+            }
+        }
+        
         super.onCreate(savedInstanceState);
 
         getDelegate().installViewFactory();
@@ -351,10 +370,11 @@ public class SettingsActivity extends PreferenceActivity
         viewThemeUtils.files.themePreferenceCategory(preferenceCategorySync);
 
         setupAutoUploadPreference(preferenceCategorySync);
-        setupInternalTwoWaySyncPreference();
+        setupInternalTwoWaySyncPreference(preferenceCategorySync);
         setupAllFilesAccessPreference(preferenceCategorySync);
     }
 
+    @IonosCustomization
     private void setupMoreCategory() {
         final PreferenceCategory preferenceCategoryMore = (PreferenceCategory) findPreference("more");
         viewThemeUtils.files.themePreferenceCategory(preferenceCategoryMore);
@@ -372,6 +392,8 @@ public class SettingsActivity extends PreferenceActivity
         removeE2E(preferenceCategoryMore);
 
         removeE2EFilesAndKeys(preferenceCategoryMore);
+
+        setupPrivacySettingsPreference(preferenceCategoryMore);
 
         setupHelpPreference(preferenceCategoryMore);
 
@@ -421,6 +443,7 @@ public class SettingsActivity extends PreferenceActivity
     }
 
 
+    @IonosCustomization
     private void setupRecommendPreference(PreferenceCategory preferenceCategoryMore) {
         boolean recommendEnabled = getResources().getBoolean(R.bool.recommend_enabled);
         Preference pRecommend = findPreference("recommend");
@@ -435,8 +458,13 @@ public class SettingsActivity extends PreferenceActivity
                     String appName = getString(R.string.app_name);
                     String downloadUrlGooglePlayStore = getString(R.string.url_app_download);
                     String downloadUrlFDroid = getString(R.string.fdroid_link);
-                    String downloadUrls = String.format(getString(R.string.recommend_urls),
-                                                        downloadUrlGooglePlayStore, downloadUrlFDroid);
+                    String downloadUrls;
+                    if (URLUtil.isValidUrl(downloadUrlFDroid)) {
+                        downloadUrls = String.format(getString(R.string.recommend_urls),
+                                                     downloadUrlGooglePlayStore, downloadUrlFDroid);
+                    } else {
+                        downloadUrls = downloadUrlGooglePlayStore;
+                    }
 
                     String recommendSubject = String.format(getString(R.string.recommend_subject), appName);
                     String recommendText = String.format(getString(R.string.recommend_text),
@@ -604,6 +632,16 @@ public class SettingsActivity extends PreferenceActivity
             .show();
     }
 
+    private void setupPrivacySettingsPreference(PreferenceCategory preferenceCategoryMore) {
+        Preference privacySettings = findPreference("privacy_settings");
+        if (privacySettings != null) {
+            privacySettings.setOnPreferenceClickListener(preference -> {
+                startActivity(PrivacySettingsActivity.createIntent(this));
+                return true;
+            });
+        }
+    }
+
     private void setupHelpPreference(PreferenceCategory preferenceCategoryMore) {
         boolean helpEnabled = getResources().getBoolean(R.bool.help_enabled);
         Preference pHelp = findPreference("help");
@@ -632,8 +670,14 @@ public class SettingsActivity extends PreferenceActivity
         }
     }
 
-    private void setupInternalTwoWaySyncPreference() {
+    @IonosCustomization("internal_two_way_sync was hidden")
+    private void setupInternalTwoWaySyncPreference(PreferenceCategory preferenceCategorySync) {
         Preference twoWaySync = findPreference("internal_two_way_sync");
+
+        if (IonosBuildHelper.isIonosBuild()) {
+            preferenceCategorySync.removePreference(twoWaySync);
+            return;
+        }
 
         twoWaySync.setOnPreferenceClickListener(preference -> {
             Intent intent = new Intent(this, InternalTwoWaySyncActivity.class);
@@ -886,6 +930,7 @@ public class SettingsActivity extends PreferenceActivity
         }
     }
 
+    @IonosCustomization("Workaround to hide prefStoragePath")
     private void setupGeneralCategory() {
         final PreferenceCategory preferenceCategoryGeneral = (PreferenceCategory) findPreference("general");
         viewThemeUtils.files.themePreferenceCategory(preferenceCategoryGeneral);
@@ -894,6 +939,7 @@ public class SettingsActivity extends PreferenceActivity
 
         prefDataLoc = findPreference(AppPreferencesImpl.DATA_STORAGE_LOCATION);
         if (prefDataLoc != null) {
+            preferenceCategoryGeneral.removePreference(prefDataLoc);
             prefDataLoc.setOnPreferenceClickListener(p -> {
                 Intent intent = ExtendedSettingsActivity.Companion.createIntent(this, ExtendedSettingsActivityDialog.StorageLocation);
                 startActivityForResult(intent, ExtendedSettingsActivityDialog.StorageLocation.getResultId());
@@ -935,6 +981,12 @@ public class SettingsActivity extends PreferenceActivity
 
     private void setListBackground() {
         getListView().setBackgroundColor(ContextCompat.getColor(this, R.color.bg_default));
+    }
+
+    @IonosCustomization
+    private void setListPadding() {
+        int bottom = (int) getResources().getDimension(R.dimen.settings_screen_list_bottom_padding);
+        getListView().setPadding(0, 0, 0, bottom);
     }
 
     private String getAppVersion() {
@@ -1195,6 +1247,11 @@ public class SettingsActivity extends PreferenceActivity
 
     public void invalidateOptionsMenu() {
         getDelegate().invalidateOptionsMenu();
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(getDelegate().attachBaseContext2(newBase));
     }
 
     private AppCompatDelegate getDelegate() {

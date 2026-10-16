@@ -16,6 +16,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.ionos.annotation.IonosCustomization
+import com.ionos.player.model.PlaybackModel
 import com.nextcloud.client.account.User
 import com.nextcloud.client.account.UserAccountManager
 import com.nextcloud.client.di.Injectable
@@ -40,6 +42,9 @@ class AccountRemovalDialog :
     @Inject
     lateinit var viewThemeUtils: ViewThemeUtils
 
+    @Inject
+    lateinit var playbackModel: PlaybackModel
+
     private var user: User? = null
     private lateinit var alertDialog: AlertDialog
     private var _binding: AccountRemovalDialogBinding? = null
@@ -50,6 +55,7 @@ class AccountRemovalDialog :
         user = requireArguments().getParcelableArgument(KEY_USER, User::class.java)
     }
 
+    @IonosCustomization("Hide account name, radio btn color")
     override fun onStart() {
         super.onStart()
 
@@ -57,7 +63,7 @@ class AccountRemovalDialog :
         alertDialog = dialog as AlertDialog
         alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = false
 
-        viewThemeUtils.platform.themeRadioButton(binding.radioLocalRemove)
+        // viewThemeUtils.platform.themeRadioButton(binding.radioLocalRemove)
         viewThemeUtils.platform.themeRadioButton(binding.radioRequestDeletion)
         viewThemeUtils.material.colorMaterialButtonPrimaryTonal(
             alertDialog.getButton(AlertDialog.BUTTON_POSITIVE) as MaterialButton
@@ -68,6 +74,7 @@ class AccountRemovalDialog :
 
         binding.userName.text = UserAccountManager.getDisplayName(user)
         binding.account.text = user?.let { DisplayUtils.convertIdn(it.accountName, false) }
+        binding.account.visibility = View.GONE
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -131,12 +138,17 @@ class AccountRemovalDialog :
      */
     private fun removeAccount() {
         user?.let { user ->
+            stopMediaPlayerAndHidePip()
             if (binding.radioRequestDeletion.isChecked) {
                 DisplayUtils.startLinkIntent(activity, user.server.uri.toString() + DROP_ACCOUNT_URI)
             } else {
                 backgroundJobManager.startAccountRemovalJob(user.accountName, false)
             }
         }
+    }
+
+    private fun stopMediaPlayerAndHidePip() {
+        playbackModel.release()
     }
 
     /**

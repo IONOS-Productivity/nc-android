@@ -20,7 +20,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AbsListView
 import android.widget.PopupMenu
-import android.widget.TextView
 import androidx.annotation.IdRes
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.ContextCompat
@@ -33,6 +32,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.account.CurrentAccountProvider
 import com.nextcloud.client.account.UserAccountManager
 import com.nextcloud.client.di.Injectable
@@ -312,10 +312,11 @@ class TrashbinFragment :
         navigatorActivity?.setDrawerIndicatorEnabled(isRoot)
     }
 
+    @IonosCustomization("Sort button icon")
     override fun onSortingOrderChosen(selection: FileSortOrder?) {
         val navigatorActivity = getTypedActivity(NavigatorActivity::class.java)
-        val sortButton = navigatorActivity?.findViewById<TextView>(R.id.sort_button)
-        sortButton?.setText(DisplayUtils.getSortOrderStringId(selection))
+        val sortButton = navigatorActivity?.findViewById<MaterialButton>(R.id.sort_button)
+        sortButton?.setIconResource(DisplayUtils.getSortOrderIconRes(selection))
         trashbinListAdapter?.setSortOrder(selection)
     }
 

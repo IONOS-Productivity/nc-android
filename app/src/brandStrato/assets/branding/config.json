@@ -1,0 +1,20 @@
+{
+    "version": 1,
+    "loginUrls": {
+        "byCountry": {
+            "DE": "https://storage.ionos.de/index.php/login/v2",
+            "GB": "https://storage.ionos.co.uk/index.php/login/v2",
+            "ES": "https://storage.ionos.es/index.php/login/v2",
+            "FR": "https://storage.ionos.fr/index.php/login/v2",
+            "IT": "https://storage.ionos.it/index.php/login/v2"
+        },
+        "byLanguage": {
+            "de": "https://storage.ionos.de/index.php/login/v2",
+            "en": "https://storage.ionos.co.uk/index.php/login/v2",
+            "es": "https://storage.ionos.es/index.php/login/v2",
+            "fr": "https://storage.ionos.fr/index.php/login/v2",
+            "it": "https://storage.ionos.it/index.php/login/v2"
+        },
+        "default": "https://storage.ionos.co.uk/index.php/login/v2"
+    }
+}

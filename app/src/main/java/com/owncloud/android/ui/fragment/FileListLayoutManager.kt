@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.preferences.AppPreferences
 import com.owncloud.android.lib.common.utils.Log_OC
 import com.owncloud.android.ui.adapter.OCFileListAdapter
@@ -21,8 +22,9 @@ import com.owncloud.android.utils.FileSortOrder
 
 class FileListLayoutManager(private val fragment: OCFileListFragment, private val preferences: AppPreferences) {
 
+    @IonosCustomization("Sort button icon")
     fun sortFiles(sortOrder: FileSortOrder?) {
-        fragment.mSortButton?.setText(DisplayUtils.getSortOrderStringId(sortOrder))
+        fragment.mSortButton?.setIconResource(DisplayUtils.getSortOrderIconRes(sortOrder))
         sortOrder?.let { fragment.mAdapter.setSortOrder(fragment.mFile, it) }
     }
 

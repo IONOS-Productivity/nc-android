@@ -14,6 +14,7 @@ import android.util.SparseArray
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.account.User
 import com.nextcloud.client.preferences.AppPreferences
 import com.owncloud.android.datamodel.FileDataStorageManager
@@ -45,6 +46,7 @@ class PreviewMediaPagerAdapter : FragmentStateAdapter {
      * @param parentFolder    Folder where images will be searched for.
      * @param storageManager  Bridge to database.
      */
+    @IonosCustomization("Only images in folder pager")
     @Suppress("LongParameterList")
     constructor(
         fragmentActivity: FragmentActivity,
@@ -60,7 +62,7 @@ class PreviewMediaPagerAdapter : FragmentStateAdapter {
         this.user = user
         this.selectedFile = selectedFile
         mStorageManager = storageManager
-        imageFiles = mStorageManager.getFolderImagesAndVideos(parentFolder, onlyOnDevice)
+        imageFiles = mStorageManager.getFolderImages(parentFolder, onlyOnDevice)
 
         val sortOrder = preferences.getSortOrderByFolder(parentFolder)
         val foldersBeforeFiles = preferences.isSortFoldersBeforeFiles()

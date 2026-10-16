@@ -17,6 +17,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import com.ionos.annotation.IonosCustomization
+import com.ionos.utils.IonosBuildHelper
 import com.nextcloud.client.account.User
 import com.nextcloud.utils.mdm.MDMConfig.shareViaLink
 import com.owncloud.android.R
@@ -170,6 +172,7 @@ class ShareeListAdapter(
         }
     }
 
+    @IonosCustomization("Hide internal share link")
     fun sortShares() {
         shares.sortWith(
             compareBy<OCShare> {
@@ -182,7 +185,7 @@ class ShareeListAdapter(
         )
 
         // add internal share link at end
-        if (!encrypted && sharesType == SharesType.INTERNAL) {
+        if (!IonosBuildHelper.isIonosBuild() && !encrypted && sharesType == SharesType.INTERNAL) {
             shares.add(OCShare().apply { shareType = ShareType.INTERNAL })
         }
     }
