@@ -20,6 +20,7 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.LifecycleCoroutineScope
 import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter
 import com.afollestad.sectionedrecyclerview.SectionedViewHolder
+import com.ionos.annotation.IonosCustomization
 import com.google.android.material.button.MaterialButton
 import com.nextcloud.android.common.ui.theme.utils.ColorRole
 import com.nextcloud.client.core.Clock
@@ -533,10 +534,10 @@ class SyncedFolderAdapter(
             binding.root
         )
 
+    @IonosCustomization
     private fun setSyncButtonActiveIcon(syncStatusButton: MaterialButton, enabled: Boolean) {
         if (enabled) {
-            syncStatusButton.icon =
-                viewThemeUtils.platform.tintDrawable(context, R.drawable.ic_cloud_sync_on, ColorRole.PRIMARY)
+            syncStatusButton.icon = ContextCompat.getDrawable(context, R.drawable.ic_cloud_sync_on)
         } else {
             syncStatusButton.icon = ContextCompat.getDrawable(context, R.drawable.ic_cloud_sync_off)
         }

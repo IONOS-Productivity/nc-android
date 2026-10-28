@@ -34,6 +34,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 
+import com.ionos.annotation.IonosCustomization;
 import com.nextcloud.android.common.ui.theme.utils.ColorRole;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.account.UserAccountManager;
@@ -285,6 +286,7 @@ public class FileDetailSharingFragment extends Fragment implements ShareeListAda
         searchConfig.reset();
     }
 
+    @IonosCustomization
     private void setupView() {
         setShareWithYou();
 
@@ -300,6 +302,7 @@ public class FileDetailSharingFragment extends Fragment implements ShareeListAda
         viewThemeUtils.platform.colorImageView(binding.pickContactEmailBtn, ColorRole.ON_SURFACE_VARIANT);
 
         viewThemeUtils.material.colorMaterialButtonPrimaryOutlined(binding.sendCopyBtn);
+		viewThemeUtils.androidx.themeToolbarSearchView(binding.searchView);
 
         viewThemeUtils.material.colorMaterialButtonPrimaryBorderless(binding.sharesListInternalShowAll);
         viewThemeUtils.material.colorMaterialTextButton(binding.sharesListInternalShowAll);
@@ -337,7 +340,7 @@ public class FileDetailSharingFragment extends Fragment implements ShareeListAda
                 }
             } else {
                 binding.createLink.setText(R.string.create_link);
-                binding.searchView.setQueryHint(getResources().getString(R.string.share_search_internal));
+                binding.searchView.setQueryHint(getResources().getString(R.string.ionos_share_search));
             }
 
             binding.createLink.setOnClickListener(v -> createPublicShareLink());
@@ -358,7 +361,7 @@ public class FileDetailSharingFragment extends Fragment implements ShareeListAda
             binding.sendCopyBtn.setVisibility(View.GONE);
         }
             binding.sendCopyBtn.setOnClickListener(v ->
-                                                       startActivity(Intent.createChooser(IntentUtil.createSendIntent(requireContext(), file), 
+                                                       startActivity(Intent.createChooser(IntentUtil.createSendIntent(requireContext(), file),
                                                                                           requireContext().getString(R.string.activity_chooser_send_file_title)))
                                                   );
     }
@@ -569,6 +572,10 @@ public class FileDetailSharingFragment extends Fragment implements ShareeListAda
      */
     @SuppressFBWarnings("PSC")
     public void refreshSharesFromDB() {
+        if (binding == null) {
+            return;
+        }
+
         OCFile newFile = fileDataStorageManager.getFileById(file.getFileId());
         if (newFile != null) {
             file = newFile;

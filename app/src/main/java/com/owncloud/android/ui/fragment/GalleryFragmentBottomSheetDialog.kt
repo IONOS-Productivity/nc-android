@@ -16,6 +16,7 @@ import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.android.common.ui.theme.utils.ColorRole
 import com.nextcloud.client.di.Injectable
 import com.owncloud.android.R
@@ -48,23 +49,9 @@ class GalleryFragmentBottomSheetDialog(private val actions: GalleryFragmentBotto
         setupClickListener()
     }
 
+    @IonosCustomization
     private fun setupLayout() {
         viewThemeUtils.platform.colorViewBackground(binding.bottomSheet, ColorRole.SURFACE)
-
-        listOf(
-            binding.tickMarkShowImages,
-            binding.tickMarkShowVideos
-        ).forEach {
-            viewThemeUtils.platform.colorImageView(it, ColorRole.PRIMARY)
-        }
-
-        listOf(
-            binding.btnSelectMediaFolder,
-            binding.btnHideVideos,
-            binding.btnHideImages
-        ).forEach {
-            viewThemeUtils.material.colorMaterialButtonText(it)
-        }
 
         when (currentMediaState) {
             MediaState.MEDIA_STATE_PHOTOS_ONLY -> {
