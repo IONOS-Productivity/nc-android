@@ -57,7 +57,6 @@
             android:paddingBottom="@dimen/standard_half_padding"
             android:textColor="@color/text_color"
             android:text="@string/file_list_empty"
-            android:textColor="@color/text_color"
             android:visibility="gone"
             tools:visibility="visible" />
 

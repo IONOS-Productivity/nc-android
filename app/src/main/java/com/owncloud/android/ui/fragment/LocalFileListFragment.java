@@ -111,7 +111,6 @@ public class LocalFileListFragment extends ExtendedListFragment implements
      * {@inheritDoc}
      */
     @Override
-    @IonosCustomization
     @IonosCustomization("mSortButton icon")
     public void onActivityCreated(Bundle savedInstanceState) {
         Log_OC.i(TAG, "onActivityCreated() start");
@@ -135,18 +134,6 @@ public class LocalFileListFragment extends ExtendedListFragment implements
             });
 
             FileSortOrder sortOrder = preferences.getSortOrderByType(FileSortOrder.Type.localFileListView);
-            openSortingOrderDialogFragment(requireFragmentManager(), sortOrder);
-        });
-
-        FileSortOrder sortOrder = preferences.getSortOrderByType(FileSortOrder.Type.localFileListView);
-        mSortButton.setIconResource(DisplayUtils.getSortOrderIconRes(sortOrder));
-
-        setGridSwitchButton();
-        mSwitchGridViewButton.setOnClickListener(v -> {
-            if (isGridEnabled()) {
-                switchToListView();
-            } else {
-                switchToGridView();
             if (sortOrder != null) {
                 mSortButton.setIconResource(DisplayUtils.getSortOrderIconRes(sortOrder));
             }

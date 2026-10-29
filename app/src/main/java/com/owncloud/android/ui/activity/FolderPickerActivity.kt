@@ -23,7 +23,6 @@ import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.account.User
 import com.nextcloud.client.di.Injectable
 import com.nextcloud.utils.extensions.getParcelableArgument
@@ -213,30 +212,6 @@ open class FolderPickerActivity :
         val transaction = supportFragmentManager.beginTransaction()
         transaction.add(R.id.fragment_container, listOfFiles, TAG_LIST_OF_FOLDERS)
         transaction.commit()
-    }
-
-    /**
-     * Show a text message on screen view for notifying user if content is loading or folder is empty
-     */
-    @IonosCustomization
-    private fun setBackgroundText() {
-        val listFragment = listOfFilesFragment
-
-        if (listFragment == null) {
-            Log_OC.e(TAG, "OCFileListFragment is null")
-        }
-
-        listFragment?.let {
-            if (!mSyncInProgress) {
-                it.setMessageForEmptyList(
-                    R.string.folder_list_empty_headline,
-                    R.string.file_list_empty_moving,
-                    R.drawable.ic_list_empty_create_folder,
-                )
-            } else {
-                it.setEmptyListLoadingMessage()
-            }
-        }
     }
 
     protected val listOfFilesFragment: OCFileListFragment?

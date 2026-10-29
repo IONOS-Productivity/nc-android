@@ -18,15 +18,11 @@ import androidx.media3.common.util.BitmapLoader
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.datasource.DataSourceBitmapLoader
 import com.google.common.util.concurrent.ListenableFuture
-import com.google.common.util.concurrent.ListeningExecutorService
-import com.google.common.util.concurrent.MoreExecutors
 import com.ionos.player.media3.common.playbackFile
 import com.ionos.player.model.PlaybackFile
 import com.ionos.player.model.ThumbnailLoader
 import com.owncloud.android.R
 import com.owncloud.android.utils.MimeTypeUtil
-import java.util.concurrent.Callable
-import java.util.concurrent.Executors
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -48,9 +44,6 @@ class MediaSessionBitmapLoader(
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) LARGE_THUMBNAIL_TARGET_SIZE
         else THUMBNAIL_TARGET_SIZE
 
-    private val executorService: ListeningExecutorService by lazy {
-        MoreExecutors.listeningDecorator(Executors.newSingleThreadExecutor())
-    }
     private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
     private var previousRequest: BitmapRequest? = null
@@ -67,11 +60,6 @@ class MediaSessionBitmapLoader(
             return previousRequest.bitmapFuture
         }
 
-        val bitmapFuture = executorService.submit(Callable {
-            getBitmapFromMetadata(metadata, file?.id) ?: run {
-                file?.let(::getBitmapForFile) ?: getDefaultBitmap(file)
-            }
-        })
         val bitmapFuture = coroutineScope.future {
             getBitmapFromMetadata(metadata, file?.id)
                 ?: file?.let { getBitmapForFile(it) }
@@ -88,10 +76,6 @@ class MediaSessionBitmapLoader(
         return bitmapFuture
     }
 
-    private fun getBitmapFromMetadata(metadata: MediaMetadata, fileId: String?): Bitmap? {
-        val model = metadata.artworkData ?: metadata.artworkUri ?: return null
-        return try {
-            thumbnailLoader.load(context, model, fileId, thumbnailSize, thumbnailSize).get()
     private suspend fun getBitmapFromMetadata(metadata: MediaMetadata, fileId: String?): Bitmap? {
         val model = metadata.artworkData ?: metadata.artworkUri ?: return null
         return try {
@@ -101,9 +85,6 @@ class MediaSessionBitmapLoader(
         }
     }
 
-    private fun getBitmapForFile(file: PlaybackFile): Bitmap? {
-        return try {
-            thumbnailLoader.load(context, file, thumbnailSize, thumbnailSize).get()
     private suspend fun getBitmapForFile(file: PlaybackFile): Bitmap? {
         return try {
             thumbnailLoader.load(context, file, thumbnailSize, thumbnailSize)
@@ -127,5 +108,4 @@ class MediaSessionBitmapLoader(
         val artworkUri: Uri?,
         val bitmapFuture: ListenableFuture<Bitmap>,
     )
-}
 }

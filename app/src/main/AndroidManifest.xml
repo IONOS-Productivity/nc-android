@@ -183,9 +183,8 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data android:scheme="http" />
-                <data android:host="storage.ionos.fr" />
                 <data
-                    android:host="storage.ionos.fr"
+                    android:host="prelive.storage.ionos.de"
                     tools:ignore="AppLinkUrlError" />
                 <data android:pathPattern="/f/..*" />
             </intent-filter>
@@ -196,9 +195,8 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data android:scheme="http" />
-                <data android:host="storage.ionos.fr" />
                 <data
-                    android:host="storage.ionos.fr"
+                    android:host="prelive.storage.ionos.de"
                     tools:ignore="AppLinkUrlError" />
                 <data android:pathPattern="/..*/f/..*" />
             </intent-filter>
@@ -209,9 +207,8 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data android:scheme="http" />
-                <data android:host="storage.ionos.fr" />
                 <data
-                    android:host="storage.ionos.fr"
+                    android:host="prelive.storage.ionos.de"
                     tools:ignore="AppLinkUrlError" />
                 <data android:pathPattern="/..*/..*/f/..*" />
             </intent-filter>
@@ -222,9 +219,8 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data android:scheme="http" />
-                <data android:host="storage.ionos.fr" />
                 <data
-                    android:host="storage.ionos.fr"
+                    android:host="prelive.storage.ionos.de"
                     tools:ignore="AppLinkUrlError" />
                 <data android:pathPattern="/..*/..*/..*/f/..*" />
             </intent-filter>
@@ -235,9 +231,8 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data android:scheme="https" />
-                <data android:host="storage.ionos.fr" />
                 <data
-                    android:host="storage.ionos.fr"
+                    android:host="prelive.storage.ionos.de"
                     tools:ignore="AppLinkUrlError" />
                 <data android:pathPattern="/f/..*" />
             </intent-filter>
@@ -248,9 +243,8 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data android:scheme="https" />
-                <data android:host="storage.ionos.fr" />
                 <data
-                    android:host="storage.ionos.fr"
+                    android:host="prelive.storage.ionos.de"
                     tools:ignore="AppLinkUrlError" />
                 <data android:pathPattern="/..*/f/..*" />
             </intent-filter>
@@ -261,9 +255,8 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data android:scheme="https" />
-                <data android:host="storage.ionos.fr" />
                 <data
-                    android:host="storage.ionos.fr"
+                    android:host="prelive.storage.ionos.de"
                     tools:ignore="AppLinkUrlError" />
                 <data android:pathPattern="/..*/..*/f/..*" />
             </intent-filter>
@@ -274,9 +267,8 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data android:scheme="https" />
-                <data android:host="storage.ionos.fr" />
                 <data
-                    android:host="storage.ionos.fr"
+                    android:host="prelive.storage.ionos.de"
                     tools:ignore="AppLinkUrlError" />
                 <data android:pathPattern="/..*/..*/..*/f/..*" />
                 <!-- path pattern to handle deep link -->
@@ -417,9 +409,6 @@
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:launchMode="singleTask"
             android:supportsPictureInPicture="true" />
-
-        <service
-            android:name="com.ionos.player.media3.PlaybackService"
 
         <service
             android:name="com.ionos.player.media3.PlaybackService"

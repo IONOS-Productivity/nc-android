@@ -82,7 +82,6 @@ class PlayerActivity : FileActivity(), Injectable {
 
     private var onBackPressedCallback: OnBackPressedCallback? = null
 
-    override fun isDefaultWindowInsetsHandlingEnabled(): Boolean = false
     @IonosCustomization("Remove window insets paddings")
     override fun isDefaultWindowInsetsHandlingEnabled() = false
 
@@ -226,7 +225,6 @@ class PlayerActivity : FileActivity(), Injectable {
     }
 
     private fun showFileActions(file: OCFile, actionIds: List<Int>) {
-        val actionsToHide = FileAction.SORTED_VALUES.map(FileAction::id).filter { it !in actionIds }
         val actionsToHide = FileAction.getActions(listOf(file)).map(FileAction::id).filter { it !in actionIds }
         FileActionsBottomSheet.newInstance(file, false, actionsToHide)
             .setResultListener(supportFragmentManager, this) { viewModel.onFileActionChosen(file, it) }

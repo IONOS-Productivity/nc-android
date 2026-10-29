@@ -35,9 +35,6 @@ class GalleryFragmentBottomSheetDialog(private val actions: GalleryFragmentBotto
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentGalleryBottomSheetBinding.inflate(layoutInflater, container, false)
-        val bottomSheetDialog = dialog as BottomSheetDialog
-        bottomSheetDialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
-        bottomSheetDialog.behavior.skipCollapsed = true
 
         val bottomSheetDialog = dialog as BottomSheetDialog
         bottomSheetDialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED

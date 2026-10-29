@@ -836,8 +836,6 @@ class SyncedFoldersActivity :
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // permission was granted
                     load(getItemsDisplayedPerFolder(), true)
-                } else if (externalStoragePermissionRequestCount++ == 0) {
-                    PermissionUtil.requestExternalStoragePermission(this, viewThemeUtils, true)
                 }
             }
             else -> super.onRequestPermissionsResult(requestCode, permissions, grantResults)

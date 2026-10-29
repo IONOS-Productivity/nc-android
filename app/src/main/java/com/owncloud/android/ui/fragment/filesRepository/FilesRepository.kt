@@ -7,7 +7,6 @@
 
 package com.owncloud.android.ui.fragment.filesRepository
 
-import com.nextcloud.android.lib.resources.recommendations.Recommendation
 import com.owncloud.android.datamodel.FileDataStorageManager
 import com.owncloud.android.datamodel.OCFile
 
@@ -19,10 +18,6 @@ interface FilesRepository {
      * This function runs on the IO dispatcher and retrieves recommendations
      * using the Nextcloud client. The results are passed to the provided callback on the main thread.
      *
-     * @param onCompleted A callback function that receives the list of recommended files.
-     *
-     */
-    fun fetchRecommendedFiles(onCompleted: (ArrayList<Recommendation>) -> Unit)
      */
     suspend fun fetchRecommendedFiles(
         accountName: String,

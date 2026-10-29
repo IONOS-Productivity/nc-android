@@ -35,7 +35,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class TermsOfServiceDialog : DialogFragment(), Injectable {
 class TermsOfServiceDialog :
     DialogFragment(),
     Injectable {
@@ -123,18 +122,6 @@ class TermsOfServiceDialog :
         }
     }
 
-    private fun createDialogBuilder(): MaterialAlertDialogBuilder {
-        return MaterialAlertDialogBuilder(binding.root.context)
-            .setView(binding.root)
-            .setTitle(R.string.terms_of_service_title)
-            .setNegativeButton(R.string.dialog_close) { _, _ ->
-                activity?.let { finishAffinity(it) }
-            }
-            .setPositiveButton(R.string.terms_of_services_agree) { dialog, _ ->
-                dialog.dismiss()
-                agreeToS()
-            }
-    }
     private fun createDialogBuilder(): MaterialAlertDialogBuilder = MaterialAlertDialogBuilder(binding.root.context)
         .setView(binding.root)
         .setTitle(R.string.terms_of_service_title)

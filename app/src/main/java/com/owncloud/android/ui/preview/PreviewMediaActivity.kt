@@ -180,7 +180,6 @@ class PreviewMediaActivity :
         }
     }
 
-    @IonosCustomization("Remove default window insets paddings")
     @IonosCustomization("Remove window insets paddings")
     override fun isDefaultWindowInsetsHandlingEnabled() = false
 
@@ -254,7 +253,6 @@ class PreviewMediaActivity :
                         ?.apply { setTint(Color.WHITE) }
                 )
 
-                it.setBackgroundDrawable(ColorDrawable(getColor(R.color.exo_bottom_bar_background)))
                 it.setBackgroundDrawable(Color.BLACK.toDrawable())
 
                 viewThemeUtils.platform.themeStatusBar(this, getColor(R.color.transparent))
@@ -274,12 +272,6 @@ class PreviewMediaActivity :
         binding.emptyView.emptyListView.visibility = View.GONE
     }
 
-    private fun hideProgressLayout() {
-        binding.progress.visibility = View.GONE
-        binding.audioControllerView.visibility = View.VISIBLE
-        binding.emptyView.emptyListView.visibility = View.VISIBLE
-    }
-
     @IonosCustomization("ui bugfix")
     private fun setErrorMessage(headline: String, @StringRes message: Int) {
         binding.emptyView.run {
@@ -288,7 +280,6 @@ class PreviewMediaActivity :
             emptyListIcon.setImageResource(R.drawable.file_movie)
             emptyListViewText.visibility = View.VISIBLE
             emptyListIcon.visibility = View.VISIBLE
-            binding.progress.visibility = View.GONE
             emptyListView.visibility = View.VISIBLE
         }
 
@@ -471,8 +462,6 @@ class PreviewMediaActivity :
     @IonosCustomization("Insets for media controller")
     private fun applyWindowInsets() {
         val playerView = binding.exoplayerView
-        val exoControls = playerView.findViewById<FrameLayout>(R.id.exo_bottom_bar)
-        val exoProgress = playerView.findViewById<DefaultTimeBar>(R.id.exo_progress)
         val exoControls = playerView.findViewById<FrameLayout>(androidx.media3.ui.R.id.exo_bottom_bar)
         val exoProgress = playerView.findViewById<DefaultTimeBar>(androidx.media3.ui.R.id.exo_progress)
         val exoControlsHeight = exoControls.layoutParams.height
@@ -514,7 +503,6 @@ class PreviewMediaActivity :
                         windowInsetsController.hide(type)
                         supportActionBar!!.hide()
                     }
-                    val exoControls = it.findViewById<FrameLayout>(R.id.exo_bottom_bar)
                     val exoControls = it.findViewById<FrameLayout>(androidx.media3.ui.R.id.exo_bottom_bar)
                     if (it.isControllerFullyVisible) {
                         exoControls.getChildAt(0)?.visibility = View.VISIBLE
@@ -703,14 +691,6 @@ class PreviewMediaActivity :
         setupVideoView()
 
         if(videoPlayer?.currentMediaItem == null) {
-            if (file.isDown) {
-                prepareVideoPlayer(file.storageUri)
-            } else {
-                try {
-                    LoadStreamUrl(this, user, clientFactory).execute(file.localId)
-                } catch (e: Exception) {
-                    Log_OC.e(TAG, "Loading stream url for Video not possible: $e")
-                }
             if (file?.isDown == true)
                 prepareVideoPlayer(file?.storageUri)
             } else {

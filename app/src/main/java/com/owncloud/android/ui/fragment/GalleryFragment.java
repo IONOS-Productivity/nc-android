@@ -35,7 +35,6 @@ import com.owncloud.android.ui.activity.FileDisplayActivity;
 import com.owncloud.android.ui.activity.FolderPickerActivity;
 import com.owncloud.android.ui.activity.ToolbarActivity;
 import com.owncloud.android.ui.adapter.CommonOCFileListAdapterInterface;
-import com.owncloud.android.ui.adapter.GallerySimpleAdapter;
 import com.owncloud.android.ui.adapter.GalleryAdapter;
 import com.owncloud.android.ui.asynctasks.GallerySearchTask;
 import com.owncloud.android.ui.events.ChangeMenuEvent;
@@ -62,8 +61,7 @@ public class GalleryFragment extends OCFileListFragment implements GalleryFragme
     private AsyncTask<Void, Void, GallerySearchTask.Result> photoSearchTask;
     private long endDate;
     private int limit = 150;
-    @IonosCustomization("Custom adapter")
-    private GallerySimpleAdapter mAdapter;
+    private GalleryAdapter mAdapter;
 
     private static final int SELECT_LOCATION_REQUEST_CODE = 212;
     private GalleryFragmentBottomSheetDialog galleryFragmentBottomSheetDialog;
@@ -178,17 +176,6 @@ public class GalleryFragment extends OCFileListFragment implements GalleryFragme
     }
 
     @Override
-    @IonosCustomization("Custom adapter")
-    protected void setAdapter(Bundle args) {
-        mAdapter = new GallerySimpleAdapter(requireContext(),
-                                      accountManager.getUser(),
-                                      this,
-                                      preferences,
-                                      mContainerActivity,
-                                      viewThemeUtils,
-                                      columnSize,
-                                      ThumbnailsCacheManager.getThumbnailDimension());
-
     public void setAdapter(Bundle args) {
         final var recyclerView = getRecyclerView();
         mAdapter = new GalleryAdapter(

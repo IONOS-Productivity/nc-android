@@ -30,15 +30,10 @@
     <string name="add_new_public_share">افزودن پیوند هم‌رسانی عمومی جدید</string>
     <string name="add_new_secure_file_drop">دراپ فایل امن جدید اضافه کنید.</string>
     <string name="add_to_cloud">افزودن به %1$s</string>
-    <string name="advanced_settings">تنظیمات پیشرفته</string>
-    <string name="allow_resharing">مجاز به اشتراک گذاری مجدد</string>
     <string name="app_config_base_url_title">Base URL</string>
     <string name="app_config_proxy_port_title">پورت پروکسی</string>
     <string name="app_widget_description">نمایش یک ابزارک از پیشخوان</string>
     <string name="appbar_search_in">جستجو در %s</string>
-    <string name="assistant_screen_create_task_alert_dialog_input_field_placeholder">مقداری متن را تایپ کنید</string>
-    <string name="assistant_screen_delete_task_alert_dialog_title">وظیفه را حذف کنید</string>
-    <string name="assistant_screen_task_delete_success_message">Task successfully deleted</string>
     <string name="appear_offline">نمایش آفلاین</string>
     <string name="assistant_screen_delete_task_alert_dialog_title">وظیفه را حذف کنید</string>
     <string name="assistant_screen_send_message">فرستادن پیام</string>
@@ -348,8 +343,6 @@
     <string name="file_list_empty_headline_server_search">نتیجه ای یافت نشد</string>
     <string name="file_list_empty_moving">هیچ چیز در اینجا نیست. می توانید یک پوشه اضافه کنید.</string>
     <string name="file_list_empty_on_device">فایل‌ها و پوشه‌های بارگیری شده، در این قسمت نمایش داده خواهند شد.</string>
-    <string name="file_list_empty_recent_files_description">فایل‌ها و پوشه‌هایی که اخیراً تغییر داده‌اید در اینجا نمایش داده می‌شوند.</string>
-    <string name="file_list_empty_recent_files_headline">هیچ فایلی که اخیراً اصلاح شده است</string>
     <string name="file_list_empty_recently_modified">در ۷ روز گذشته هیچ فایلی تغییر نیافته است.</string>
     <string name="file_list_empty_search">شاید در پوشه های مختلف باشد؟</string>
     <string name="file_list_empty_shared">فایل‌ها و پوشه‌های به اشتراک گذاشته شده در این قسمت نمایش داده خواهند شد.</string>
@@ -362,7 +355,6 @@
     <string name="file_list_seconds_ago">ثانیه‌هایی پیش</string>
     <string name="file_management_permission_optional">مجوزهای ذخیره سازی</string>
     <string name="file_management_permission_optional_text">%1$s با مجوز دسترسی به فضای ذخیره سازی بهترین کار را دارد. می‌توانید دسترسی کامل به همه فایل‌ها یا دسترسی فقط خواندنی به عکس‌ها و ویدیوها را انتخاب کنید.</string>
-    <string name="file_management_permission_text">%1$s برای آپلود فایل ها به مجوزهای مدیریت فایل نیاز دارد. می‌توانید دسترسی کامل به همه فایل‌ها یا دسترسی فقط خواندنی به عکس‌ها و ویدیوها را انتخاب کنید.</string>
     <string name="file_migration_checking_destination">در حال بررسی مقصد...</string>
     <string name="file_migration_cleaning">درحال پاک‌سازی…</string>
     <string name="file_migration_dialog_title">به روزرسانی مسیر ذخیره سازی</string>
@@ -469,7 +461,6 @@
     <string name="locked_by_app">برنامه توسط %1$s قفل شده است</string>
     <string name="log_send_mail_subject">لاگ‌های برنامه‌های اندروید %1$s</string>
     <string name="log_send_no_mail_app">برنامه‌ای برای فرستادن گزارش‌ها پیدا نشد. لطفا یک کارخواه رایانامه نصب کنید.</string>
-    <string name="logged_in_as">وارد شده با عنوان %1$s</string>
     <string name="login">ورود</string>
     <string name="login_url_helper_text">پیوند به رابط وب %1$s شما زمانی که در مرورگر بازش می‌کنید.</string>
     <string name="logs_menu_delete">حذف لاگ‌ها</string>
@@ -566,11 +557,6 @@
     <string name="permission_deny">غیر مجاز</string>
     <string name="picture_set_as_no_app">هیچ برنامه ای برای تنظیم عکس یافت نشد</string>
     <string name="pin_shortcut_label">باز کنید %1$s</string>
-    <string name="placeholder_fileSize">۳۸۹ کیلوبایت</string>
-    <string name="placeholder_filename">placeholder.txt</string>
-    <string name="placeholder_media_time">12:23:45</string>
-    <string name="placeholder_sentence">این یک حفره است.</string>
-    <string name="placeholder_timestamp">2012/05/18 12:23 بعد از ظهر</string>
     <string name="player_stop">توقف</string>
     <string name="player_toggle">تغییر وضعیت</string>
     <string name="power_save_check_dialog_message">غیرفعال کردن چک مارک صرفه جویی در مصرف برق ممکن است باعث شود بارگذاری پرونده ها در حالت باتری کم باشد!</string>
@@ -638,7 +624,6 @@
     <string name="preview_image_description">پیش نمایش تصویر</string>
     <string name="preview_image_error_no_local_file">هیچ فایل محلی برای پیش نمایش وجود ندارد</string>
     <string name="preview_image_error_unknown_format">نشان دادن تصویر نامقدور</string>
-    <string name="preview_image_file_is_not_exist">فایل وجود ندارد</string>
     <string name="preview_sorry">ببخشید</string>
     <string name="privacy">حریم خصوصی</string>
     <string name="push_notifications_not_implemented">ارسال اعلانات به دلیل وابستگی به خدمات اختصاصی Google Play غیرفعال شده است.</string>
@@ -697,11 +682,6 @@
     <string name="send">ارسال</string>
     <string name="sendbutton_description">ایکون دکمه ارسال</string>
     <string name="set_as">تنظیم به عنوان</string>
-    <string name="set_picture_as">استفاده از تصویر به عنوان</string>
-    <string name="set_status">تنظیم وضعیت</string>
-    <string name="set_status_message">تنظیم پیام وضعیت</string>
-    <string name="setup_e2e">در طول راه اندازی رمزگذاری سرتاسری، یک یادگاری تصادفی ۱۲ کلمه‌ای دریافت خواهید کرد که باید فایل‌های خود را در دستگاه‌های دیگر باز کنید. این فقط در این دستگاه ذخیره می شود و می تواند دوباره در این صفحه نمایش داده شود. لطفا آن را در یک مکان امن یادداشت کنید!</string>
-    <string name="share">هم‌رسانی</string>
     <string name="set_online_status">وضعیت برخط</string>
     <string name="set_picture_as">استفاده از تصویر به عنوان</string>
     <string name="setup_e2e">در طول راه اندازی رمزگذاری سرتاسری، یک یادگاری تصادفی ۱۲ کلمه‌ای دریافت خواهید کرد که باید فایل‌های خود را در دستگاه‌های دیگر باز کنید. این فقط در این دستگاه ذخیره می شود و می تواند دوباره در این صفحه نمایش داده شود. لطفا آن را در یک مکان امن یادداشت کنید!</string>
@@ -714,7 +694,6 @@
     <string name="share_download_limit">تنظیم محدودیت دانلود</string>
     <string name="share_edit_permission">ویرایش</string>
     <string name="share_expiration_date_format">%1$s</string>
-    <string name="share_expiration_date_label">منقضی در %1$s</string>
     <string name="share_file">هم‌رسانی %1$s</string>
     <string name="share_group_clarification">%1$s (گروه)</string>
     <string name="share_internal_link">هم‌رسانی پیوند داخلی</string>
@@ -733,7 +712,6 @@
     <string name="share_no_password_title">تنظیم گذرواژه</string>
     <string name="share_not_allowed_when_file_drop">اشتراک‌گذاری مجدد در حین ارائه فایل به صورت امن امکان‌پذیر نمی‌باشد</string>
     <string name="share_permission_can_edit">توانایی ویرایش</string>
-    <string name="share_permission_file_drop">انداختن پرونده</string>
     <string name="share_permission_file_request">درخواست فایل</string>
     <string name="share_permission_secure_file_drop">دراپ فایل امن</string>
     <string name="share_permission_view_only">تنها مشاهده</string>
@@ -964,9 +942,7 @@
     <string name="user_icon">کاربر</string>
     <string name="user_info_address">نشانی</string>
     <string name="user_info_email">رایانامه</string>
-    <string name="user_info_groups">گروه ها</string>
     <string name="user_info_phone">شماره تلفن</string>
-    <string name="user_info_profile">نمایه</string>
     <string name="user_info_twitter">توییتر</string>
     <string name="user_info_website">وب‌ سایت</string>
     <string name="user_information_retrieval_error">خطا در بازیابی اطلاعات کاربر</string>
@@ -1042,10 +1018,6 @@
     <plurals name="export_partially_failed">
         <item quantity="one">%d فایل صادر شد، بقیه به دلیل خطا نادیده گرفته شد</item>
         <item quantity="other">%d فایل صادر شد، بقیه به دلیل خطا نادیده گرفته شد</item>
-    </plurals>
-    <plurals name="export_start">
-        <item quantity="one">%d فایل صادر خواهد شد. برای جزئیات به اعلان مراجعه کنید.</item>
-        <item quantity="other">%d فایل صادر خواهد شد. برای جزئیات به اعلان مراجعه کنید.</item>
     </plurals>
     <plurals name="file_list__footer__folder">
         <item quantity="one">%1$d پوشه</item>

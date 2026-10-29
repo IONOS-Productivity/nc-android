@@ -117,8 +117,6 @@ public final class AppPreferencesImpl implements AppPreferences {
     private static final String AUTO_PREF__LAST_AUTO_UPLOAD_ON_START = "last_auto_upload_on_start";
 
 
-    private static final String PREF__PASSCODE_DELAY_IN_SECONDS = "passcode_delay_in_seconds";
-
     private static final String LOG_ENTRY = "log_entry";
 
     private final Context context;
@@ -876,15 +874,5 @@ public final class AppPreferencesImpl implements AppPreferences {
     @Override
     public void setLastAutoUploadOnStartTime(long timeInMillisecond) {
         preferences.edit().putLong(AUTO_PREF__LAST_AUTO_UPLOAD_ON_START, timeInMillisecond).apply();
-    }
-
-    @Override
-    public int getPassCodeDelay() {
-        return preferences.getInt(PREF__PASSCODE_DELAY_IN_SECONDS, 0);
-    }
-
-    @Override
-    public void setPassCodeDelay(int value) {
-        preferences.edit().putInt(PREF__PASSCODE_DELAY_IN_SECONDS, value).apply();
     }
 }

@@ -55,7 +55,6 @@ class AccountRemovalDialog :
         user = requireArguments().getParcelableArgument(KEY_USER, User::class.java)
     }
 
-    @IonosCustomization("Hide account name")
     @IonosCustomization("Hide account name, radio btn color")
     override fun onStart() {
         super.onStart()

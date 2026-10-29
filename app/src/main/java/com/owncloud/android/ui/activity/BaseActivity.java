@@ -22,7 +22,6 @@ import com.nextcloud.client.preferences.AppPreferences;
 import com.nextcloud.client.preferences.DarkMode;
 import com.nextcloud.repository.ClientRepository;
 import com.nextcloud.repository.RemoteClientRepository;
-import com.nextcloud.utils.extensions.WindowExtensionsKt;
 import com.owncloud.android.datamodel.FileDataStorageManager;
 import com.owncloud.android.datamodel.OCFile;
 import com.owncloud.android.lib.common.utils.Log_OC;
@@ -71,13 +70,6 @@ public abstract class BaseActivity extends AppCompatActivity implements Injectab
     private ClientRepository clientRepository;
 
     @Override
-    @IonosCustomization("Window insets handling")
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        boolean isApiLevel35OrHigher = (Build.VERSION.SDK_INT >= 35);
-
-        if (isApiLevel35OrHigher && isDefaultWindowInsetsHandlingEnabled()) {
-            enableEdgeToEdge();
-            WindowExtensionsKt.addSystemBarPaddings(getWindow());
     @IonosCustomization("Window insets handling, status bar color")
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         if(isDefaultWindowInsetsHandlingEnabled()) {
@@ -92,16 +84,6 @@ public abstract class BaseActivity extends AppCompatActivity implements Injectab
         }
 
         clientRepository = new RemoteClientRepository(accountManager.getUser(), this, this);
-    }
-
-    @IonosCustomization("Window insets handling")
-    protected boolean isDefaultWindowInsetsHandlingEnabled() {
-        return true;
-    }
-
-    @IonosCustomization("Window insets handling")
-    protected boolean isDefaultWindowInsetsHandlingEnabled() {
-        return true;
     }
 
     @IonosCustomization("Window insets handling")

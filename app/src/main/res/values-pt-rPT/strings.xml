@@ -31,8 +31,6 @@
     <string name="add_new_public_share">Adicionar nova hiperligação de partilha pública</string>
     <string name="add_new_secure_file_drop">Adicionar nova entrega segura de ficheiros</string>
     <string name="add_to_cloud">Adicionar a %1$s</string>
-    <string name="advanced_settings">Definições Avançadas</string>
-    <string name="allow_resharing">Permitir repartilha</string>
     <string name="app_config_base_url_title">URL Base</string>
     <string name="app_config_disable_clipboard_title">Desativar Área de Transferência</string>
     <string name="app_config_disable_intro_title">Desativar Introdução</string>
@@ -45,17 +43,6 @@
     <string name="app_config_proxy_port_title">Porta do Proxy</string>
     <string name="app_widget_description">Mostra um \'\'widget\'\' do painel</string>
     <string name="appbar_search_in">Procurar em %s</string>
-    <string name="assistant_screen_add_task_alert_dialog_title">Adicionar nova tarefa</string>
-    <string name="assistant_screen_create_a_new_task_from_bottom_right_text">Criar uma nova tarefa a partir do canto inferior direito</string>
-    <string name="assistant_screen_create_task_alert_dialog_input_field_placeholder">Digite algum texto</string>
-    <string name="assistant_screen_delete_task_alert_dialog_description">Tem a certeza que deseja eliminar esta tarefa?</string>
-    <string name="assistant_screen_delete_task_alert_dialog_title">Eliminar tarefa</string>
-    <string name="assistant_screen_loading">A carregar a lista de tarefas...</string>
-    <string name="assistant_screen_task_create_fail_message">Ocorreu um erro enquanto criava a tarefa</string>
-    <string name="assistant_screen_task_create_success_message">Tarefa criada com sucesso</string>
-    <string name="assistant_screen_task_delete_fail_message">Ocorreu um erro enquanto eliminava a tarefa</string>
-    <string name="assistant_screen_task_delete_success_message">Tarefa eliminada com sucesso</string>
-    <string name="assistant_screen_task_list_empty_message">A lista de tarefas está vazia.</string>
     <string name="appear_offline">Aparecer offline</string>
     <string name="assistant_screen_delete_task_alert_dialog_description">Tem a certeza que deseja eliminar esta tarefa?</string>
     <string name="assistant_screen_delete_task_alert_dialog_title">Eliminar tarefa</string>
@@ -273,7 +260,6 @@
     <string name="drawer_item_assistant">Assistente</string>
     <string name="drawer_item_favorites">Favoritos</string>
     <string name="drawer_item_gallery">Media</string>
-    <string name="drawer_item_groupfolders">Pastas de grupo</string>
     <string name="drawer_item_groupfolders">Pastas de equipa</string>
     <string name="drawer_item_home">Início</string>
     <string name="drawer_item_notifications">Notificações</string>
@@ -388,7 +374,6 @@
     <string name="file_list_no_app_for_file_type">Nenhuma aplicação para usar este tipo de ficheiro.</string>
     <string name="file_list_seconds_ago">há segundos</string>
     <string name="file_management_permission_optional">Permissões de armazenamento</string>
-    <string name="file_management_permission_text">%1$s precisa de permissões de gestão de ficheiros para enviar os ficheiros. Pode escolher o acesso completo para todos os ficheiros ou acesso só de leitura para as fotografias e vídeos.</string>
     <string name="file_migration_allow_media_indexing">Permitir o acesso de outras aplicações</string>
     <string name="file_migration_checking_destination">Verificando destino…</string>
     <string name="file_migration_cleaning">Limpando…</string>
@@ -480,10 +465,6 @@
     <string name="last_backup">Última cópia de segurança: %1$s</string>
     <string name="link">Hiperligação</string>
     <string name="link_name">Nome da Hiperligação</string>
-    <string name="link_share_allow_upload_and_editing">Permitir envios e edição</string>
-    <string name="link_share_editing">A editar</string>
-    <string name="link_share_file_drop">Largar ficheiro (apenas envio)</string>
-    <string name="link_share_view_only">Visualizar apenas</string>
     <string name="link_share_editing">A editar</string>
     <string name="list_layout">Layout listado</string>
     <string name="load_more_results">Carregar mais resultados</string>
@@ -958,7 +939,6 @@ Aproveite o novo e melhorado envio automático.</string>
     <string name="user_icon">Utilizador</string>
     <string name="user_info_address">Endereço</string>
     <string name="user_info_email">Correio eletrónico</string>
-    <string name="user_info_groups">Grupos</string>
     <string name="user_info_phone">Número de telefone</string>
     <string name="user_info_twitter">Twitter</string>
     <string name="user_info_website">Site da Internet</string>

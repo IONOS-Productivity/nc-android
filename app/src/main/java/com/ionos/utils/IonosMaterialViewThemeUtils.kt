@@ -11,7 +11,6 @@ import android.util.TypedValue
 import androidx.core.content.ContextCompat
 import androidx.core.view.setPadding
 import androidx.core.view.updatePadding
-import com.google.android.material.button.MaterialButton
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
@@ -119,8 +118,6 @@ class IonosMaterialViewThemeUtils(
         delegate.colorMaterialTextButton(btn)
     }
 
-    fun colorProgressBar(progressBar: LinearProgressIndicator) {
-        delegate.colorProgressBar(progressBar)
     fun colorProgressBar(progressBar: LinearProgressIndicator, primary: ColorRole) {
         delegate.colorProgressBar(progressBar, primary)
     }

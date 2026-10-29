@@ -33,7 +33,6 @@
     <string name="app_config_proxy_port_title">פתחת מתווך</string>
     <string name="app_widget_description">מצג וידג׳ט אחד מלוח הבקרה</string>
     <string name="appbar_search_in">חפש ב %s</string>
-    <string name="assistant_screen_delete_task_alert_dialog_title">מחיקת משימה</string>
     <string name="appear_offline">להופיע במצב בלתי מקוון</string>
     <string name="assistant_screen_delete_task_alert_dialog_title">מחיקת משימה</string>
     <string name="assistant_task_status_unknown">לא ידוע</string>
@@ -761,7 +760,6 @@
     <string name="user_icon">משתמש</string>
     <string name="user_info_address">כתובת</string>
     <string name="user_info_email">דוא״ל</string>
-    <string name="user_info_groups">קבוצות</string>
     <string name="user_info_phone">מספר טלפון</string>
     <string name="user_info_twitter">טוויטר</string>
     <string name="user_info_website">אתר</string>

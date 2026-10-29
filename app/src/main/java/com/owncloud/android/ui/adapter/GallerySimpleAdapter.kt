@@ -30,8 +30,6 @@ import com.owncloud.android.ui.interfaces.OCFileListFragmentInterface
 import com.owncloud.android.utils.DisplayUtils
 import com.owncloud.android.utils.FileSortOrder
 import com.owncloud.android.utils.MimeTypeUtil
-import com.owncloud.android.utils.glide.CustomGlideStreamLoader
-import com.owncloud.android.utils.theme.ViewThemeUtils
 import com.owncloud.android.utils.theme.ViewThemeUtils
 import kotlinx.coroutines.CoroutineScope
 
@@ -43,7 +41,6 @@ class GallerySimpleAdapter(
     transferServiceGetter: ComponentsGetter,
     viewThemeUtils: ViewThemeUtils,
     private var columns: Int,
-    private val defaultThumbnailSize: Int
     private val defaultThumbnailSize: Int,
     private val thumbnailLoader: ThumbnailLoader,
     private val coroutineScope: CoroutineScope
@@ -52,7 +49,6 @@ class GallerySimpleAdapter(
     private val storageManager = transferServiceGetter.storageManager
     private val clientFactory = ClientFactoryImpl(MainApp.getAppContext())
     private val getThumbnailUrl = clientFactory.create(user).baseUri.toString() + "/index.php/core/preview"
-    private val modelLoader = CustomGlideStreamLoader(user, clientFactory)
 
     private val ocFileListDelegate = OCFileListDelegate(
         transferServiceGetter.fileUploaderHelper,
@@ -150,16 +146,6 @@ class GallerySimpleAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        if (viewType == VIEW_TYPE_HEADER) {
-            val binding = GalleryHeaderBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-            return GalleryHeaderViewHolder(binding)
-        } else {
-            val binding = GallerySimpleItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-            return GallerySimpleItemHolder(
-                binding,
-                defaultThumbnailSize,
-                getThumbnailUrl,
-                modelLoader,
         return if (viewType == VIEW_TYPE_HEADER) {
             val binding = GalleryHeaderBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             GalleryHeaderViewHolder(binding)

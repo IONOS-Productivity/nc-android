@@ -13,6 +13,7 @@
  */
 package com.owncloud.android.ui.activity;
 
+import android.animation.AnimatorInflater;
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -83,7 +84,6 @@ public abstract class ToolbarActivity extends BaseActivity implements Injectable
      * Toolbar setup that must be called in implementer's {@link #onCreate} after {@link #setContentView} if they want
      * to use the toolbar.
      */
-    @IonosCustomization
     @IonosCustomization("search container, menu btn")
     private void setupToolbar(boolean isHomeSearchToolbarShow, boolean showSortListButtonGroup) {
         mToolbar = findViewById(R.id.toolbar);
@@ -267,15 +267,6 @@ public abstract class ToolbarActivity extends BaseActivity implements Injectable
         }
     }
 
-    @IonosCustomization
-    private void showHomeSearchToolbar(String title, boolean isRoot) {
-        showHomeSearchToolbar(isHomeSearchToolbarShow && isRoot);
-        mSearchText.setText(getString(R.string.actionbar_search, title));
-    }
-
-    @SuppressLint("PrivateResource")
-    @IonosCustomization
-    private void showHomeSearchToolbar(boolean isShow) {
     @SuppressLint("PrivateResource")
     @IonosCustomization
     private void showHomeSearchToolbar(boolean isShow) {
@@ -286,9 +277,13 @@ public abstract class ToolbarActivity extends BaseActivity implements Injectable
 
         if (isShow) {
             viewThemeUtils.platform.resetStatusBar(this);
+            mAppBar.setStateListAnimator(AnimatorInflater.loadStateListAnimator(mAppBar.getContext(),
+                                                                                R.animator.appbar_elevation_off));
             mDefaultToolbar.setVisibility(View.GONE);
             mHomeSearchToolbar.setVisibility(View.VISIBLE);
         } else {
+            mAppBar.setStateListAnimator(AnimatorInflater.loadStateListAnimator(mAppBar.getContext(),
+                                                                                R.animator.appbar_elevation_on));
             viewThemeUtils.platform.themeStatusBar(this);
             mDefaultToolbar.setVisibility(View.VISIBLE);
             mHomeSearchToolbar.setVisibility(View.GONE);

@@ -47,12 +47,6 @@ class QuickSharingPermissionsAdapter(
     ) : RecyclerView.ViewHolder(itemView) {
 
         @IonosCustomization("Disable icon tinting")
-        fun bindData(quickPermissionModel: QuickPermissionModel) {
-            binding.tvQuickShareName.text = quickPermissionModel.permissionName
-            if (quickPermissionModel.isSelected) {
-                binding.tvQuickShareCheckIcon.visibility = View.VISIBLE
-            } else {
-                binding.tvQuickShareCheckIcon.visibility = View.INVISIBLE
         fun bindData(quickPermission: QuickPermission) {
             val context = itemView.context
             val permissionName = quickPermission.type.getText(context)

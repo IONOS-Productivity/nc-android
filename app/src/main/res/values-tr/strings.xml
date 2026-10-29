@@ -44,13 +44,6 @@
     <string name="app_config_proxy_port_title">Vekil sunucu bağlantı noktası</string>
     <string name="app_widget_description">Panodan bir pano bileşeni görüntüler</string>
     <string name="appbar_search_in">%s içinde ara</string>
-    <string name="assistant_screen_add_task_alert_dialog_title">Yeni görev ekle</string>
-    <string name="assistant_screen_create_a_new_task_from_bottom_right_text">Sağ alttan yeni bir görev oluşturun</string>
-    <string name="assistant_screen_create_task_alert_dialog_input_field_placeholder">Bir şeyler yazın</string>
-    <string name="assistant_screen_delete_task_alert_dialog_description">Bu görevi silmek istediğinize emin misiniz?</string>
-    <string name="assistant_screen_delete_task_alert_dialog_title">Görevi sil</string>
-    <string name="assistant_screen_loading">Görev listesi yükleniyor…</string>
-    <string name="assistant_screen_no_task_available_text">%s türünde bir görev yok. Sağ alttan yeni bir görev ekleyebilirsiniz.</string>
     <string name="appear_offline">Çevrim dışı görün</string>
     <string name="assistant_output_generation_warning_text">Bu çıktı yapay zeka tarafından oluşturuldu. Her zaman iki kez kontrol ettiğinizden emin olun.</string>
     <string name="assistant_screen_chat_create_error">Bir ileti gönderilemedi</string>
@@ -69,7 +62,6 @@
     <string name="assistant_screen_task_create_success_message">Görev eklendi</string>
     <string name="assistant_screen_task_delete_fail_message">Görev silinirken bir sorun çıktı</string>
     <string name="assistant_screen_task_delete_success_message">Görev silindi</string>
-    <string name="assistant_screen_task_list_empty_message">Görev listesi boş.</string>
     <string name="assistant_screen_task_list_empty_warning">Görev listesi boş. Yardımcı uygulamasının yapılandırmasını denetleyin.</string>
     <string name="assistant_screen_task_list_error_state_message">Görev listesi alınamadı. Lütfen İnternet bağlantınızı denetleyin.</string>
     <string name="assistant_screen_task_more_actions_bottom_sheet_delete_action">Görevi sil</string>
@@ -123,12 +115,6 @@
     <string name="authenticator_activity_please_complete_login_process">Lütfen oturum açma işlemini tarayıcınızdan tamamlayın</string>
     <string name="auto_upload_battery_saver_mode_warning">Pil koruma modu açık olduğundan otomatik yükleme duraklatıldı</string>
     <string name="auto_upload_file_behaviour_kept_in_folder">salt okunur olduğundan özgün klasörde kaldı</string>
-    <string name="auto_upload_gplay">Otomatik yükleme davranışı değiştirildi</string>
-    <string name="auto_upload_gplay_desc">Google tarafından getirilen yeni kısıtlamalar nedeniyle otomatik yükleme özelliği artık yüklenen dosyaları otomatik olarak kaldıramayacak.</string>
-    <string name="auto_upload_gplay_desc2">Google tarafından uygulanan yeni kısıtlamalar nedeniyle önemli bir izni kaldırmak zorunda kaldık. Sonuç olarak, otomatik yükleme yalnızca görsel ve video dosyalarını yükleyebilecek.\nAyrıca, yüklenen görsellerin konum bilgilerine erişmek için yeni bir izin gerekiyor.\nMedya erişiminin \"Her zaman tümüne izin verilsin\" olarak ayarlandığından emin olun.</string>
-    <string name="auto_upload_on_wifi">Yalnızca kullanıma göre ücretlendirilmeyen kablosuz ağ üzerinden yüklensin</string>
-    <string name="auto_upload_path">/OtomatikYükleme</string>
-    <string name="auto_upload_sub_folder_warning">Bu klasör, üst klasörün eşitlemesine zaten katılmış olduğundan yinelenen yüklemelere neden olabilir.</string>
     <string name="auto_upload_low_battery_warning_info">Pil azaldı. Yükleme işlemi uzun sürebilir</string>
     <string name="auto_upload_on_wifi">Yalnızca kotasız kablosuz ağda yüklensin</string>
     <string name="auto_upload_path">/OtomatikYükleme</string>
@@ -146,7 +132,6 @@
     <string name="backup_title">Kişiler ve takvim yedeği</string>
     <string name="battery_optimization_close">Kapat</string>
     <string name="battery_optimization_disable">Kullanımdan kaldır</string>
-    <string name="battery_optimization_message">Aygıtınızda pil eniyileştirmesi etkin olabilir. Otomatik yükleme yalnızca bu uygulamayı hariç tutarsanız düzgün çalışır.</string>
     <string name="battery_optimization_message">Aygıtınızda pil iyileştirme özelliği açık olabilir. Otomatik yükleme yalnızca bu uygulamayı pil iyileştirmesi dışında tutarsanız düzgün çalışır.</string>
     <string name="battery_optimization_title">Pil kullanımı iyileştirmesi</string>
     <string name="bottom_navigation_menu_assistant_label">Yardımcı</string>
@@ -168,11 +153,6 @@
     <string name="choose_widget">Pano bileşenini seçin</string>
     <string name="clear">Temizle</string>
     <string name="clear_notifications_failed">Bildirimler temizlenemedi.</string>
-    <string name="clear_status_message">Durum iletisini kaldır</string>
-    <string name="clear_status_message_after">Durum iletisi şu süre sonunda kaldırılsın</string>
-    <string name="click_to_learn_how_to_re_enable_auto_uploads">Otomatik yükleme özelliğini yeniden el ile açmalısınız.</string>
-    <string name="clipboard_label">Metin %1$s kaynağından kopyalandı</string>
-    <string name="clipboard_no_text_to_copy">Panoya kopyalanacak bir metin alınamadı</string>
     <string name="clear_status_after">Durum şu kadar sonra kaldırılsın</string>
     <string name="clipboard_label">Yazı %1$s kaynağından kopyalandı</string>
     <string name="clipboard_no_text_to_copy">Panoya kopyalanacak bir yazı alınamadı</string>
@@ -265,8 +245,6 @@
     <string name="could_not_retrieve_url">Adres alınamadı</string>
     <string name="create">Ekle</string>
     <string name="create_dir_fail_msg">Klasör oluşturulamadı</string>
-    <string name="create_end_to_end_encrypted_share">Bağlantı paylaşımı</string>
-    <string name="create_end_to_end_encrypted_share_title">Uçtan uca şifrelenmiş bağlantı paylaşımları</string>
     <string name="create_link">Bağlantı oluştur</string>
     <string name="create_new">Yeni</string>
     <string name="create_new_document">Yeni belge</string>
@@ -372,7 +350,6 @@
     <string name="end_to_end_encryption_folder_not_empty">Bu klasör boş değil.</string>
     <string name="end_to_end_encryption_generating_keys">Yeni anahtarlar oluşturuluyor…</string>
     <string name="end_to_end_encryption_keywords_description">12 sözcüklü parola çok güçlüdür ve şifrelenmiş dosyalarınızı yalnızca sizin görüntüleyip kullanabilmenizi sağlar. Lütfen bir yere yazarak güvenli bir yerde saklayın.</string>
-    <string name="end_to_end_encryption_not_enabled">Sunucu üzerinde uçtan uca şifreleme devre dışı bırakılmış.</string>
     <string name="end_to_end_encryption_not_enabled">Uçtan uca şifreleme sunucu üzerinde kapatılmış.</string>
     <string name="end_to_end_encryption_passphrase_title">12 sözcüklü şifreleme parolanızı not edin</string>
     <string name="end_to_end_encryption_password">Parola …</string>
@@ -460,8 +437,6 @@
     <string name="file_list_empty_local_search">Aramanıza uygun bir dosya ya da klasör bulunamadı</string>
     <string name="file_list_empty_moving">Burada bir şey yok. Bir klasör ekleyebilirsiniz!</string>
     <string name="file_list_empty_on_device">İndirilmiş dosya ve klasörler burada görüntülenir.</string>
-    <string name="file_list_empty_recent_files_description">Son zamanlarda değiştirdiğiniz dosya ve klasörler burada görüntülenir.</string>
-    <string name="file_list_empty_recent_files_headline">Yakınlarda değiştirilmiş bir dosya yok</string>
     <string name="file_list_empty_recently_modified">Son 7 gün içinde düzenlenmiş bir dosya bulunamadı</string>
     <string name="file_list_empty_search">Başka bir klasöre bakılmasını ister misiniz?</string>
     <string name="file_list_empty_shared">Paylaştığınız dosya ve klasörler burada görüntülenir.</string>
@@ -513,7 +488,6 @@
     <string name="file_not_synced">Dosya eşitlenemedi. Kullanılabilen son sürüm görüntüleniyor.</string>
     <string name="file_rename">Yeniden adlandır</string>
     <string name="file_upload_worker_error_notification_title">Yüklenemedi. İnternet bağlantısı yok</string>
-    <string name="file_upload_worker_same_file_already_exists">Aynı dosya zaten var. Herhangi bir çakışma bulunmadı</string>
     <string name="file_upload_worker_same_file_already_exists">%s zaten var. Herhangi bir çakışma bulunmadı</string>
     <string name="file_version_restored_error">Geri yüklenecek dosya sürümünü seçin!</string>
     <string name="filedetails_details">Ayrıntılar</string>
@@ -584,7 +558,6 @@
     <string name="instant_upload_existing">Var olan dosyalar da yüklensin</string>
     <string name="instant_upload_on_charging">Yalnızca şarj edilirken yüklensin</string>
     <string name="instant_upload_path">/AnındaYükle</string>
-    <string name="internal_share_headline_end_to_end_encrypted">Uçtan uca şifrelenmiş paylaşımlar</string>
     <string name="internal_shares">İç paylaşımlar</string>
     <string name="internal_two_way_sync">İç iki yönlü eşitleme</string>
     <string name="internal_two_way_sync_not_yet">Henüz değil, yakında eşitlenecek</string>
@@ -623,7 +596,7 @@
     <string name="logs_title">Günlükler</string>
     <string name="maintenance_mode">Sunucu bakım kipinde</string>
     <string name="manage_space_clear_data">Verileri temizle</string>
-    <string name="manage_space_description">%1$s verilerinden ayarlar, veritabanı ve sunucu sertifikaları kalıcı olarak silinecek. \n\nİndirilen dosyalara dokunulmayacak.\n\nBu işlem biraz zaman alabilir.</string>
+    <string name="manage_space_description">%1$s verilerinden ayarlar, veri tabanı ve sunucu sertifikaları kalıcı olarak silinecek. \n\nİndirilen dosyalara dokunulmayacak.\n\nBu işlem biraz zaman alabilir.</string>
     <string name="manage_space_title">Alan yönetimi</string>
     <string name="media_err_invalid_progressive_playback">Ortam dosyası akışı sağlanamadı</string>
     <string name="media_err_io">Ortam dosyası okunamadı</string>
@@ -703,9 +676,6 @@
     <string name="offline_mode">İnternet bağlantısı yok</string>
     <string name="offline_mode_info_description">İnternet bağlantınız olmasa bile klasörlerinizi düzenleyebilir, dosyalar oluşturabilirsiniz. Yeniden çevrim içi olduğunuzda, bekleyen işlemleriniz otomatik olarak eşitlenir.</string>
     <string name="offline_mode_info_title">Çevrim dışınız ancak çalışma sürüyor</string>
-    <string name="offline_operations_file_does_not_exists_yet">Dosya bulunamadı. Önce lütfen dosyayı yükleyin.</string>
-    <string name="offline_operations_worker_notification_conflict_text">Çakışan klasör: %s</string>
-    <string name="offline_operations_worker_notification_delete_offline_folder">Çevrim dışı klasörü sil</string>
     <string name="offline_operations_file_does_not_exists_yet">Dosya henüz yok. Önce lütfen dosyayı yükleyin.</string>
     <string name="offline_operations_worker_notification_create_file_conflict_text">%s oluşturulamadı. Sunucuda aynı adlı bir dosya var.</string>
     <string name="offline_operations_worker_notification_create_folder_conflict_text">%s oluşturulamadı. Sunucuda aynı adlı bir klasör var.</string>
@@ -741,9 +711,6 @@
     <string name="player_toggle">değiştir</string>
     <string name="please_select_a_server">Lütfen bir sunucu seçin…</string>
     <string name="power_save_check_dialog_message">Güç koruma denetiminin kapatılması pil düzeyi düşükken dosyaların yüklenmesine neden olabilir!</string>
-    <string name="pref_behaviour_entries_delete_file">silindi</string>
-    <string name="pref_behaviour_entries_keep_file">özgün klasöründe korunacak</string>
-    <string name="pref_behaviour_entries_move">app klasörüne taşındı</string>
     <string name="pref_behaviour_entries_delete_file">silinecek</string>
     <string name="pref_behaviour_entries_keep_file">özgün klasöründe tutulacak</string>
     <string name="pref_behaviour_entries_move">app klasörüne taşınacak</string>
@@ -771,9 +738,6 @@
     <string name="prefs_daily_contact_backup_summary">Kişilerinizin günlük yedeği</string>
     <string name="prefs_data_storage_location">Veri depolama konumu</string>
     <string name="prefs_data_storage_location_summary">Veri depolama konumunu yönet</string>
-    <string name="prefs_e2e_active">Uçtan uca şifreleme kuruldu!</string>
-    <string name="prefs_e2e_mnemonic">E2E belleği</string>
-    <string name="prefs_e2e_no_device_credentials">Nimonik görüntülenmesi için aygıt kimlik doğrulama bilgilerini etkinleştirin.</string>
     <string name="prefs_davx5_setup_error">DAVx⁵ (eski adıyla DAVdroid) kurulurken beklenmeyen bir sorun çıktı</string>
     <string name="prefs_e2e_active">Uçtan uca şifreleme kuruldu!</string>
     <string name="prefs_e2e_mnemonic">E2E belleği</string>
@@ -825,13 +789,6 @@
     <string name="preview_media_unhandled_http_code_message">Dosya şu anda başka bir kullanıcı veya işlem tarafından kilitlenmiş olduğundan silinemez. Lütfen bir süre sonra yeniden deneyin.</string>
     <string name="preview_sorry">Ne yazık ki</string>
     <string name="privacy">Gizlilik</string>
-    <string name="public_share_name">Yeni ad</string>
-    <string name="push_notifications_not_implemented">Anında bildirimler Google Play hizmetlerine ait olan bağımlılıklar nedeniyle devre dışı bırakıldı.</string>
-    <string name="push_notifications_old_login">Oturumunuzun süresi dolduğundan anında bildirimler gönderilemez. Lütfen hesabınızı yeniden eklemeyi düşünün.</string>
-    <string name="push_notifications_temp_error">Anında bildirimler şu anda kullanılamıyor.</string>
-    <string name="qr_could_not_be_read">QR kodu okunamadı!</string>
-    <string name="re_enable_auto_upload">Otomatik yüklenecek değişiklikler</string>
-    <string name="re_enable_auto_upload_desc">Google tarafından getirilen yeni kısıtlamalar nedeniyle önemli bir izni kaldırmak zorunda kaldık. Şu anda bu sorunu çözmek ve tam özellikleri yeniden kullanabilmek için Google ile birlikte çalışıyoruz.\n\nYeni fotoğrafları ve videoları otomatik yüklemeyi yeniden etkinleştirmek için:\nAşağıdaki pencereden veya sistem ayarlarından \"Tümüne izin verilsin\" seçeneğini seçin.\nSorulduğunda medya konumu iznini verin: Böylece Nextcloud görselleri yüklerken konum verilerini kaydedebilir.\n\nİzin penceresi yalnızca gerektiğinde görüntülenir. Şüpheniz varsa, lütfen sistem ayarları bölümünden yeniden kontrol edin.\n\nOtomatik yükleme, yalnızca Nextcloud uygulamasının Google Play sürümünü kullanırken görsel ve video dosyalarını yükleyebilir.\n\nLütfen 2024 Aralık ayından sonra yüklenmemiş olabilecek dosyaları kontrol edin.</string>
     <string name="push_notifications_not_implemented">Anında bildirimler Google Play hizmetlerine olan bağımlılıklar nedeniyle kapatıldı.</string>
     <string name="push_notifications_old_login">Oturumunuzun süresi dolduğundan anında bildirimler gönderilemez. Lütfen hesabınızı yeniden eklemeyi düşünün.</string>
     <string name="push_notifications_temp_error">Anında bildirimler şu anda kullanılamıyor.</string>
@@ -906,13 +863,6 @@
     <string name="setup_e2e">Uçtan uca şifrelemenin kurulumu sırasında, dosyalarınızı diğer aygıtlarda açabilmeniz için rastgele 12 sözcükten oluşan bir parola alacaksınız. Bu parola yalnızca bu aygıta kaydedilir ve bu sayfadan yeniden görülebilir. Lütfen güvenli bir yere not edin!</string>
     <string name="share">Paylaş</string>
     <string name="share_allow_download_and_sync_permission">İndirmeye izin ver ve eşitle</string>
-    <string name="share_copy_link">Paylaş ve bağlantıyı kopyala</string>
-    <string name="share_create_permission">Ekleme</string>
-    <string name="share_custom_permission">Özel izinler</string>
-    <string name="share_delete_permission">Sil</string>
-    <string name="share_dialog_title">Paylaşım</string>
-    <string name="share_download_limit">İndirme sınırını ayarla</string>
-    <string name="share_edit_permission">Düzenle</string>
     <string name="share_cannot_update_empty_note">Paylaşım güncellenemedi. Lütfen bir not ekleyip yeniden deneyin.</string>
     <string name="share_copy_link">Paylaş ve bağlantıyı kopyala</string>
     <string name="share_create_permission">Ekleme</string>
@@ -941,8 +891,6 @@
     <string name="share_not_allowed_when_file_drop">Güvenli dosya bırakma sırasında yeniden paylaşım yapılamaz</string>
     <string name="share_option_required">İlerlemeden önce lütfen en az bir paylaşım seçeneği seçin.</string>
     <string name="share_permission_can_edit">Düzenleyebilir</string>
-    <string name="share_permission_file_drop">Dosya bırakma</string>
-    <string name="share_permission_file_request">Dosya isteği</string>
     <string name="share_permission_file_request">Dosya isteme</string>
     <string name="share_permission_secure_file_drop">Güvenli dosya bırakma</string>
     <string name="share_permission_view_only">Yalnızca görüntüleme</string>
@@ -1137,12 +1085,6 @@
     <string name="upload_file_dialog_title">Yüklenecek dosya adını ve dosya türünü belirtin</string>
     <string name="upload_files">Dosyaları yükle</string>
     <string name="upload_global_pause_title">Tüm yüklemeler duraklatıldı</string>
-    <string name="upload_gplay">İzin değişiklikleri</string>
-    <string name="upload_gplay_desc">Yüklenen görsellerin konum bilgilerine erişmek için yeni bir izin gerekiyor.\nMedya erişiminin \"Her zaman tümüne izin verilsin\" olarak ayarlandığından emin olun.</string>
-    <string name="upload_item_action_button">Öge yükleme işlemi düğmesi</string>
-    <string name="upload_list_delete">Sil</string>
-    <string name="upload_list_empty_headline">Herhangi bir yükleme yok</string>
-    <string name="upload_list_empty_text_auto_upload">Bazı içerikler yükleyin ya da otomatik yükleme özelliğini etkinleştirin.</string>
     <string name="upload_item_action_button">Öge yükleme işlemi düğmesi</string>
     <string name="upload_list_delete">Sil</string>
     <string name="upload_list_empty_headline">Herhangi bir yükleme yok</string>
@@ -1224,9 +1166,7 @@
     <string name="user_icon">Kullanıcı</string>
     <string name="user_info_address">Adres</string>
     <string name="user_info_email">E-posta</string>
-    <string name="user_info_groups">Gruplar</string>
     <string name="user_info_phone">Telefon numarası</string>
-    <string name="user_info_profile">Profil</string>
     <string name="user_info_twitter">Twitter</string>
     <string name="user_info_website">Site</string>
     <string name="user_information_retrieval_error">Kullanıcı bilgileri alınırken sorun çıktı</string>
@@ -1243,7 +1183,7 @@
     <string name="whats_new_skip">Atla</string>
     <string name="whats_new_title">%1$s yenilikleri</string>
     <string name="whats_your_status">Durumunuz nedir?</string>
-    <string name="widgets_not_available">Pano bileşenlerinin kullanılabilmesi için %1$s 25 veya üzeri sürümlerde Pano uygulaması etkinleştirilmelidir</string>
+    <string name="widgets_not_available">Pano bileşenlerinin kullanılabilmesi için %1$s 25 veya üzeri sürümlerde Pano uygulaması kullanıma alınmalıdır</string>
     <string name="widgets_not_available_title">Kullanılamaz</string>
     <string name="worker_download">Dosyalar indiriliyor…</string>
     <string name="write_email">E-posta gönder</string>

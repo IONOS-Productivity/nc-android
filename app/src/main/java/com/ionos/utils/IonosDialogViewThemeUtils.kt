@@ -35,7 +35,6 @@ class IonosDialogViewThemeUtils(
         val materialShapeDrawable = MaterialShapeDrawable(
             context,
             null,
-            com.google.android.material.R.attr.alertDialogStyle,
             com.google.android.material.R.attr.materialAlertDialogTheme,
             com.google.android.material.R.style.MaterialAlertDialog_MaterialComponents,
         )

@@ -661,35 +661,6 @@ internal class BackgroundJobManagerImpl(
         }
     }
 
-    override fun isStartFileUploadJobScheduled(user: User): Boolean {
-        return workManager.isWorkScheduled(startFileUploadJobTag(user))
-    }
-
-    override fun startFilesUploadJob(user: User) {
-        val data = workDataOf(FileUploadWorker.ACCOUNT to user.accountName)
-
-        val tag = startFileUploadJobTag(user)
-
-        val constraints = Constraints.Builder()
-            .setRequiredNetworkType(NetworkType.CONNECTED)
-            .build()
-
-        val request = oneTimeRequestBuilder(FileUploadWorker::class, JOB_FILES_UPLOAD, user)
-            .addTag(tag)
-            .setInputData(data)
-            .setConstraints(constraints)
-            .build()
-
-        workManager.enqueueUniqueWork(tag, ExistingWorkPolicy.KEEP, request)
-    }
-
-    private fun startFileDownloadJobTag(user: User, fileId: Long): String {
-        return JOB_FOLDER_DOWNLOAD + user.accountName + fileId
-    }
-
-    override fun isStartFileDownloadJobScheduled(user: User, fileId: Long): Boolean {
-        return workManager.isWorkScheduled(startFileDownloadJobTag(user, fileId))
-    }
     private fun startFileDownloadJobTag(accountName: String, fileId: Long): String =
         JOB_FOLDER_DOWNLOAD + accountName + fileId
 

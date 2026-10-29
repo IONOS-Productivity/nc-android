@@ -125,6 +125,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -351,28 +352,6 @@ public abstract class DrawerActivity extends ToolbarActivity
         launchActivityForSearch(searchEvent, R.id.nav_favorites);
     }
 
-    /**
-     * initializes and sets up the drawer toggle.
-     */
-    @IonosCustomization
-    private void setupDrawerToggle() {
-        mDrawerToggle = new AnimatedDrawerListener(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close, viewThemeUtils) {
-            private boolean isMenuItemChecked = false;
-
-            @Override
-            public void onDrawerSlide(View drawerView, float slideOffset) {
-                super.onDrawerSlide(drawerView, slideOffset);
-                if (slideOffset > 0 && !isMenuItemChecked) {
-                    Integer menuItemIdFromTitle = getMenuItemIdFromTitle(DrawerActivity.this);
-                    if (menuItemIdFromTitle != null && menuItemIdFromTitle != menuItemId) {
-                        menuItemId = menuItemIdFromTitle;
-                    }
-                    setNavigationViewItemChecked();
-                    isMenuItemChecked = true;
-                }
-            }
-
-            /** Called when a drawer has settled in a completely closed state. */
     private void openMediaTab(int menuItemId) {
         resetOnlyPersonalAndOnDevice();
         setupToolbar();
@@ -529,7 +508,6 @@ public abstract class DrawerActivity extends ToolbarActivity
         banner.setVisibility(View.GONE);
     }
 
-    private void showTopBanner(ConstraintLayout banner, int primaryColor) {
     private void showTopBanner(ConstraintLayout banner) {
         LinearLayout notesView = banner.findViewById(R.id.drawer_ecosystem_notes);
         LinearLayout talkView = banner.findViewById(R.id.drawer_ecosystem_talk);
@@ -769,13 +747,6 @@ public abstract class DrawerActivity extends ToolbarActivity
         }
     }
 
-    protected void stopMediaPlayerAndHidePip() {
-        playbackModel.release();
-    }
-
-    private void startSharedSearch(MenuItem menuItem) {
-        SearchEvent searchEvent = new SearchEvent("", SearchRemoteOperation.SearchType.SHARED_FILTER);
-        MainApp.showOnlyFilesOnDevice(false);
     @IonosCustomization
     protected void stopMediaPlayerAndHidePip() {
         playbackModel.release();
@@ -1007,17 +978,6 @@ public abstract class DrawerActivity extends ToolbarActivity
         }
     }
 
-    /**
-     * Sets the menu item as checked in both the drawer and bottom navigation views, if applicable.
-     */
-    @SuppressFBWarnings("RV")
-    @IonosCustomization("Removed server styles for the drawer")
-    public void setNavigationViewItemChecked() {
-        if (drawerNavigationView != null) {
-            MenuItem menuItem = drawerNavigationView.getMenu().findItem(menuItemId);
-
-            if (menuItem != null && !menuItem.isChecked()) {
-                menuItem.setChecked(true);
     private Target<Drawable> createQuotaDrawableTarget(int size, TextView quotaTextLink) {
         return new CustomTarget<>() {
             @Override

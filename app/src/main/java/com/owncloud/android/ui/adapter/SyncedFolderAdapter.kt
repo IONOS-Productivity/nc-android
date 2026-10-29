@@ -535,9 +535,6 @@ class SyncedFolderAdapter(
         )
 
     @IonosCustomization
-    private fun setSyncButtonActiveIcon(syncStatusButton: ImageButton, enabled: Boolean) {
-        if (enabled) {
-            syncStatusButton.setImageResource(R.drawable.ic_cloud_sync_on)
     private fun setSyncButtonActiveIcon(syncStatusButton: MaterialButton, enabled: Boolean) {
         if (enabled) {
             syncStatusButton.icon = ContextCompat.getDrawable(context, R.drawable.ic_cloud_sync_on)

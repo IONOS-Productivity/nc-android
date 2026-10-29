@@ -10,6 +10,7 @@
     <string name="action_edit">Editar</string>
     <string name="action_empty_notifications">Limpar todas as notificacións</string>
     <string name="action_empty_trashbin">Baleirar o lixo</string>
+    <string name="action_send_share">Enviar/compartir</string>
     <string name="action_switch_grid_view">Ver como grade</string>
     <string name="action_switch_list_view">Ver como lista</string>
     <string name="action_triggered">Acción activada</string>
@@ -43,11 +44,6 @@
     <string name="app_config_proxy_port_title">Porto do proxy</string>
     <string name="app_widget_description">Amosa un trebello do taboleiro</string>
     <string name="appbar_search_in">Buscar en %s</string>
-    <string name="assistant_screen_add_task_alert_dialog_title">Engadir unha nova tarefa</string>
-    <string name="assistant_screen_create_task_alert_dialog_input_field_placeholder">Escriba algún texto</string>
-    <string name="assistant_screen_delete_task_alert_dialog_description">Confirma que quere eliminar esta tarefa?</string>
-    <string name="assistant_screen_delete_task_alert_dialog_title">Eliminar tarefa</string>
-    <string name="assistant_screen_no_task_available_text">Non hai ningunha tarefa dispoñible para o tipo de tarefa %s, pode crear unha nova desde a parte inferior dereita.</string>
     <string name="appear_offline">Aparecer como sen conexión</string>
     <string name="assistant_output_generation_warning_text">O resultado que se amosa aquí foi xerado por IA. Asegúrese de facer sempre unha dobre comprobación</string>
     <string name="assistant_screen_chat_create_error">Produciuse un fallo ao enviar unha mensaxe</string>
@@ -118,9 +114,6 @@
     <string name="authenticator_activity_please_complete_login_process">Complete o proceso de acceso no seu navegador</string>
     <string name="auto_upload_battery_saver_mode_warning">O envío automático está en pausa porque o aforro de batería está activado.</string>
     <string name="auto_upload_file_behaviour_kept_in_folder">mantense no cartafol orixinal, xa que é de só lectura</string>
-    <string name="auto_upload_gplay">O comportamento do envío automático cambiou</string>
-    <string name="auto_upload_gplay_desc">Por mor dás novas restricións impostas por Google, a función de envío automático xa non poderá retirar automaticamente os ficheiros enviados.</string>
-    <string name="auto_upload_gplay_desc2">Por mor ás novas restricións impostas por Google, vímonos obrigados a retirar un permiso importante. Como resultado, o envío automático só poderá enviar ficheiros de imaxe e vídeo.\nAdemais, precisase dun novo permiso para acceder á información de localización das imaxes enviadas.\nAsegúrese de que o acceso multimedia estea definido como «Permitir todo sempre».</string>
     <string name="auto_upload_low_battery_warning_info">Batería baixa, o envío pode levar máis tempo</string>
     <string name="auto_upload_on_wifi">Enviar só con wifi sen límite de datos</string>
     <string name="auto_upload_path">/EnvíoAutomático</string>
@@ -251,8 +244,6 @@
     <string name="could_not_retrieve_url">Non foi posíbel recuperar o URL</string>
     <string name="create">Crear</string>
     <string name="create_dir_fail_msg">Non foi posíbel crear o cartafol</string>
-    <string name="create_end_to_end_encrypted_share">Ligazón para compartir</string>
-    <string name="create_end_to_end_encrypted_share_title">Ligazóns para compartir cifradas de extremo a extremo</string>
     <string name="create_link">Crear ligazón</string>
     <string name="create_new">Novo</string>
     <string name="create_new_document">Novo documento</string>
@@ -351,7 +342,6 @@
     <string name="encrypted">Definir como cifrado</string>
     <string name="end_to_end_encryption_certificate_unavailable">Non é posíbel recuperar o certificado de servidor</string>
     <string name="end_to_end_encryption_certificate_verification_failed">Produciuse un fallo ao verificar a chave pública</string>
-    <string name="end_to_end_encryption_confirm_button">Configurar o cifrado</string>
     <string name="end_to_end_encryption_confirm_button">Configurar a cifraxe</string>
     <string name="end_to_end_encryption_decrypting">Descifrando…</string>
     <string name="end_to_end_encryption_dialog_close">Pechar</string>
@@ -366,7 +356,6 @@
     <string name="end_to_end_encryption_server_private_key_unavailable">Non é posíbel recuperar a chave privada</string>
     <string name="end_to_end_encryption_server_public_key_unavailable">Non é posíbel recuperar a chave pública</string>
     <string name="end_to_end_encryption_storing_keys">Almacenando as chaves</string>
-    <string name="end_to_end_encryption_title">Configurar o cifrado</string>
     <string name="end_to_end_encryption_title">Configurar a cifraxe</string>
     <string name="end_to_end_encryption_unexpected_error_occurred">Produciuse un erro non agardado ao descargar as chaves</string>
     <string name="end_to_end_encryption_unsuccessful">Non foi posíbel gardar as súas chaves. Ténteo de novo</string>
@@ -407,6 +396,7 @@
     <string name="etm_background_jobs_stop_test_job">Deter o traballo de proba</string>
     <string name="etm_migrations">Migracións (anovación de aplicación)</string>
     <string name="etm_preferences">Preferencias</string>
+    <string name="etm_title">Modo de proba de enxeñería</string>
     <string name="etm_transfer">Transferencia de ficheiros</string>
     <string name="etm_transfer_enqueue_test_download">Poñer na cola a descarga de proba</string>
     <string name="etm_transfer_enqueue_test_upload">Poñer na cola o envío de proba</string>
@@ -446,8 +436,6 @@
     <string name="file_list_empty_local_search">Non hai ningún ficheiro ou cartafol que coincida coa busca</string>
     <string name="file_list_empty_moving">Aquí non hai ren. Pode engadir un cartafol.</string>
     <string name="file_list_empty_on_device">Aquí amosaranse os ficheiros e cartafoles descargados</string>
-    <string name="file_list_empty_recent_files_description">Os ficheiros e cartafoles que modificou recentemente amosaranse aquí.</string>
-    <string name="file_list_empty_recent_files_headline">Non hai ficheiros modificados recentemente</string>
     <string name="file_list_empty_recently_modified">Non se atopou ningún ficheiro modificado nos últimos 7 días.</string>
     <string name="file_list_empty_search">Quizáis estea nun cartafol diferente?</string>
     <string name="file_list_empty_shared">Aquí amosaranse os ficheiros e cartafoles que comparta.</string>
@@ -499,7 +487,6 @@
     <string name="file_not_synced">Non foi posíbel sincronizar o ficheiro. Amosase a última versión dispoñíbel.</string>
     <string name="file_rename">Cambiar o nome</string>
     <string name="file_upload_worker_error_notification_title">Produciuse un fallo no envío. Non hai conexión a Internet</string>
-    <string name="file_upload_worker_same_file_already_exists">Xa existe o mesmo ficheiro, non se detectou ningún conflito</string>
     <string name="file_upload_worker_same_file_already_exists">%s xa existe, non se detectou ningún conflito</string>
     <string name="file_version_restored_error">Produciuse un erro ao restaurar a versión do ficheiro</string>
     <string name="filedetails_details">Detalles</string>
@@ -570,7 +557,6 @@
     <string name="instant_upload_existing">Envíar tamén os ficheiros existentes</string>
     <string name="instant_upload_on_charging">Enviar só cando estea cargando</string>
     <string name="instant_upload_path">/EnvíoInstantáneo</string>
-    <string name="internal_share_headline_end_to_end_encrypted">Comparticións cifradas de extremo a extremo</string>
     <string name="internal_shares">Comparticións internas</string>
     <string name="internal_two_way_sync">Sincronización interna bidireccional</string>
     <string name="internal_two_way_sync_not_yet">Aínda non, pronto se sincronizará</string>
@@ -644,6 +630,7 @@
     <string name="new_media_folder_detected">Detectouse un novo cartafol de medios %1$s</string>
     <string name="new_media_folder_photos">foto</string>
     <string name="new_media_folder_videos">vídeo</string>
+    <string name="new_notification">Nova notificación</string>
     <string name="new_version_was_created">Creouse unha versión nova</string>
     <string name="no_actions">Non hai accións para este usuario</string>
     <string name="no_browser_available">Non hai ningunha aplicación dispoñíbel para manexar ligazóns</string>
@@ -680,12 +667,9 @@
     <string name="notification_icon_description">Hai notificacións sen ler</string>
     <string name="notifications_no_results_headline">Non hai notificacións</string>
     <string name="notifications_no_results_message">Compróbeo máis adiante.</string>
+    <string name="oc_file_list_adapter_offline_operation_description_text">Operación pendente</string>
     <string name="oc_file_list_adapter_offline_operation_remove_description_text">Operación de retirada pendente</string>
     <string name="offline_mode">Sen conexión a Internet</string>
-    <string name="offline_mode_info_description">Mesmo sen conexión a Internet, pode organizar os seus cartafoles, crear ficheiros. Unha vez que volva estar conectado, as túas accións pendentes sincronizaranse automaticamente.</string>
-    <string name="offline_operations_file_does_not_exists_yet">O ficheiro aínda non existe. Envíe primeiro o ficheiro.</string>
-    <string name="offline_operations_worker_notification_error_text">Non é posíbel completar a operación sen conexión. %s</string>
-    <string name="offline_operations_worker_notification_manager_ticker">Operacións sen conexión</string>
     <string name="offline_mode_info_description">Mesmo sen conexión a Internet, pode organizar os seus cartafoles, crear ficheiros. Unha vez que volva estar conectado, as súas accións pendentes sincronizaranse automaticamente.</string>
     <string name="offline_mode_info_title">Está sen conexión, mais o traballo continúa</string>
     <string name="offline_operations_file_does_not_exists_yet">O ficheiro aínda non existe. Envíe primeiro o ficheiro.</string>
@@ -717,6 +701,7 @@
     <string name="permission_deny">Denegar</string>
     <string name="pick_contact_to_share_with">Escolla un contacto co que compartir</string>
     <string name="picture_set_as_no_app">Non se atopou unha aplicación coa que definir unha imaxe</string>
+    <string name="pin_home">Fixar na pantalla de Inicio</string>
     <string name="pin_shortcut_label">Abrir %1$s</string>
     <string name="player_stop">parar</string>
     <string name="player_toggle">alternar</string>
@@ -749,8 +734,6 @@
     <string name="prefs_daily_contact_backup_summary">Copia de seguranza diaria dos seus contactos</string>
     <string name="prefs_data_storage_location">Localización do almacenamento de datos</string>
     <string name="prefs_data_storage_location_summary">Xestionar a localización do almacenamento de datos</string>
-    <string name="prefs_e2e_active">O cifrado de extremo a extremo está configurado.</string>
-    <string name="prefs_e2e_mnemonic">Mnemotécnico do cifrado E2E</string>
     <string name="prefs_davx5_setup_error">Produciuse un erro non agardado ao configurar DAVx⁵ (anteriormente coñecido como DAVdroid)</string>
     <string name="prefs_e2e_active">A cifraxe de extremo a extremo está configurado.</string>
     <string name="prefs_e2e_mnemonic">Mnemotécnico da cifraxe E2E</string>
@@ -807,8 +790,6 @@
     <string name="push_notifications_old_login">Non dispón de notificacións emerxentes por mor dun acceso á sesión caducado. Considere volver engadir a súa conta.</string>
     <string name="push_notifications_temp_error">Actualmente non están dispoñíbeis as notificacións emerxentes.</string>
     <string name="qr_could_not_be_read">Non foi posíbel ler o código QR.</string>
-    <string name="re_enable_auto_upload">Cambios no envío automático</string>
-    <string name="re_enable_auto_upload_desc">Por mor das novas restricións impostas por Google, vímonos obrigados a retirar un permiso importante. Estamos a traballar con Google para resolver este problema e restaurar a funcionalidade completa.\n\nPara volver activar o envío automático de novas fotos e vídeos:\nSeleccione «Permitir todo» no seguinte diálogo ou nos axustes do sistema.\nPermitir a localización multimedia cando sexa solicitado, xa que isto permite que Nextcloud almacene datos de localización ao enviar imaxes.\n\nO diálogo de permisos só se amosa cando é necesario. Se ten dúbidas, consulte os axustes do sistema.\n\nO envío automático só poderá enviar ficheiros de imaxes e vídeos cando utilice a versión de Google Play da aplicación de Nextcloud.\n\nComprobe se hai ficheiros que non fosen enviados desde decembro de 2024.</string>
     <string name="receive_external_files_activity_start_sync_folder_is_not_exists_message">Non é posíbel atopar o cartafol, a operación de sincronización foi cancelada</string>
     <string name="receive_external_files_activity_unable_to_find_file_to_upload">Non é posíbel atopar o ficheiro para enviar</string>
     <string name="recommend_subject">Probe %1$s no seu dispositivo!</string>
@@ -907,10 +888,6 @@
     <string name="share_not_allowed_when_file_drop">Non se permite volver compartir durante a entrega segura de ficheiros</string>
     <string name="share_option_required">Seleccione polo menos unha opción de compartir antes de continuar.</string>
     <string name="share_permission_can_edit">Pode editar</string>
-    <string name="share_permission_file_drop">Soltar o ficheiro</string>
-    <string name="share_permission_file_request">Solicitude de ficheiro</string>
-    <string name="share_permission_secure_file_drop">Entrega segura de ficheiros</string>
-    <string name="share_permission_view_only">Só ver</string>
     <string name="share_permission_file_request">Solicitude de ficheiro</string>
     <string name="share_permission_secure_file_drop">Entrega segura de ficheiros</string>
     <string name="share_permission_view_only">Só ver</string>
@@ -1186,9 +1163,7 @@
     <string name="user_icon">Usuario</string>
     <string name="user_info_address">Enderezo</string>
     <string name="user_info_email">Correo-e</string>
-    <string name="user_info_groups">Grupos</string>
     <string name="user_info_phone">Número de teléfono</string>
-    <string name="user_info_profile">Perfil</string>
     <string name="user_info_twitter">Twitter</string>
     <string name="user_info_website">Sitio web</string>
     <string name="user_information_retrieval_error">Produciuse un erro ao recuperar a información do usuario</string>

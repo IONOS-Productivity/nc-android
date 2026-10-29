@@ -873,7 +873,6 @@ public class ReceiveExternalFilesActivity extends FileActivity
 
         executorService.execute(() -> {
             long currentSyncTime = System.currentTimeMillis();
-            mSyncInProgress = true;
             final var optionalUser = getUser();
             if (optionalUser.isEmpty()) {
                 DisplayUtils.showSnackMessage(this, R.string.user_information_retrieval_error);

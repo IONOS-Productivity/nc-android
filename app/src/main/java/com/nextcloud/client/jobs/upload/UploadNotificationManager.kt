@@ -11,7 +11,6 @@ import android.app.PendingIntent
 import android.content.Context
 import androidx.core.app.NotificationCompat
 import com.nextcloud.client.jobs.notification.WorkerNotificationManager
-import com.nextcloud.utils.extensions.isFileSpecificError
 import com.nextcloud.utils.numberFormatter.NumberFormatter
 import com.owncloud.android.R
 import com.owncloud.android.operations.UploadFileOperation
@@ -117,20 +116,6 @@ class UploadNotificationManager(private val context: Context, viewThemeUtils: Vi
         )
     }
 
-    fun showConnectionErrorNotification() {
-        notificationManager.cancel(getId())
-
-        notificationBuilder.run {
-            setContentTitle(context.getString(R.string.file_upload_worker_error_notification_title))
-            setContentText("")
-        }
-
-        notificationManager.notify(
-            FileUploadWorker.NOTIFICATION_ERROR_ID,
-            notificationBuilder.build()
-        )
-    }
-
     fun dismissOldErrorNotification(operation: UploadFileOperation?) {
         if (operation == null) {
             return
@@ -140,13 +125,6 @@ class UploadNotificationManager(private val context: Context, viewThemeUtils: Vi
     }
 
     fun dismissErrorNotification() = notificationManager.cancel(FileUploadWorker.NOTIFICATION_ERROR_ID)
-
-    fun dismissOldErrorNotification(remotePath: String, localPath: String) {
-        notificationManager.cancel(
-            NotificationUtils.createUploadNotificationTag(remotePath, localPath),
-            FileUploadWorker.NOTIFICATION_ERROR_ID
-        )
-    }
 
     fun notifyPaused(intent: PendingIntent) {
         notificationBuilder.run {

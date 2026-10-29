@@ -40,11 +40,6 @@
     <string name="app_config_proxy_port_title">Proxy-port</string>
     <string name="app_widget_description">Viser en widget fra dashbordet</string>
     <string name="appbar_search_in">Søk i %s</string>
-    <string name="assistant_screen_add_task_alert_dialog_title">Legg til ny oppgave</string>
-    <string name="assistant_screen_create_task_alert_dialog_input_field_placeholder">Skriv inn litt tekst</string>
-    <string name="assistant_screen_delete_task_alert_dialog_description">Er du sikker på at du vil slette denne oppgaven?</string>
-    <string name="assistant_screen_delete_task_alert_dialog_title">Slett oppgave</string>
-    <string name="assistant_screen_no_task_available_text">Ingen oppgave tilgjengelig for %s-oppgavetype, du kan opprette en ny oppgave fra nede til høyre.</string>
     <string name="appear_offline">Vis som frakoblet</string>
     <string name="assistant_screen_delete_task_alert_dialog_description">Er du sikker på at du vil slette denne oppgaven?</string>
     <string name="assistant_screen_delete_task_alert_dialog_title">Slett oppgave</string>
@@ -378,8 +373,6 @@
     <string name="file_list_empty_local_search">Ingen fil eller mappe som samsvarer med søket ditt</string>
     <string name="file_list_empty_moving">Ingenting her. Du kan legge til en mappe!</string>
     <string name="file_list_empty_on_device">Nedlastede filer og mapper vil vises her.</string>
-    <string name="file_list_empty_recent_files_description">Filer og mapper du nylig har endret, vises her.</string>
-    <string name="file_list_empty_recent_files_headline">Ingen nylig endrede filer</string>
     <string name="file_list_empty_recently_modified">Fant ingen filer endret de siste 7 dagene</string>
     <string name="file_list_empty_search">Vil du prøve i en annen mappe?</string>
     <string name="file_list_empty_shared">Filer og mapper du deler vil dukke opp her.</string>
@@ -769,7 +762,6 @@
     <string name="share_no_password_title">Velg passord</string>
     <string name="share_not_allowed_when_file_drop">Videredeling er ikke tillatt under sikker filslipp</string>
     <string name="share_permission_can_edit">Kan endre</string>
-    <string name="share_permission_file_drop">Filkasse</string>
     <string name="share_permission_file_request">Filforespørsel</string>
     <string name="share_permission_secure_file_drop">Sikker filkasse</string>
     <string name="share_permission_view_only">Kun se</string>
@@ -1013,9 +1005,7 @@
     <string name="user_icon">Bruker</string>
     <string name="user_info_address">Adresse</string>
     <string name="user_info_email">E-post</string>
-    <string name="user_info_groups">Grupper</string>
     <string name="user_info_phone">Telefonnummer</string>
-    <string name="user_info_profile">Profil</string>
     <string name="user_info_twitter">Twitter</string>
     <string name="user_info_website">Nettsted</string>
     <string name="user_information_retrieval_error">Feil ved innhenting av brukerinformasjon</string>

@@ -222,10 +222,6 @@ class PlayerService : Service() {
             setContentIntent(
                 PendingIntent.getActivity(mContext, 0, intent, FLAG_IMMUTABLE)
             )
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                setChannelId(NotificationUtils.NOTIFICATION_CHANNEL_MEDIA)
-            }
             setChannelId(NotificationUtils.NOTIFICATION_CHANNEL_MEDIA)
         }
 

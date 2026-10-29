@@ -68,7 +68,6 @@
                     app:buttonTint="@color/radio_button_color"
                     android:visibility="gone"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/text_color"
                     android:minHeight="@dimen/minimum_size_for_touchable_area"
                     android:text="@string/share_permission_file_request" />
 

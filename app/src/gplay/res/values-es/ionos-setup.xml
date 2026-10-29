@@ -8,6 +8,7 @@
 
 <resources>
     <!-- Help, imprint and feedback, and other things -->
-    <string name="url_help">https://wl.hidrive.com/easy/0152</string>
+    <string name="url_help">https://wl.hidrive.com/easy/0131</string>
     <string name="url_imprint">https://wl.hidrive.com/easy/0112</string>
+    <string name="url_app_download">https://wl.hidrive.com/easy/0011</string>
 </resources>

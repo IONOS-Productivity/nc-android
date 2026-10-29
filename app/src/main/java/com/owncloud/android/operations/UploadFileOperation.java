@@ -441,8 +441,6 @@ public class UploadFileOperation extends SyncOperation {
         Log_OC.d(TAG, "file size set to 0KB before upload");
 
         String remoteParentPath = new File(getRemotePath()).getParent();
-        remoteParentPath = remoteParentPath.endsWith(OCFile.PATH_SEPARATOR) ? remoteParentPath : remoteParentPath + OCFile.PATH_SEPARATOR;
-        remoteParentPath = AutoRename.INSTANCE.rename(remoteParentPath, getCapabilities());
         if (remoteParentPath == null) {
             Log_OC.e(TAG, "remoteParentPath is null: " + getRemotePath());
             return new RemoteOperationResult<>(ResultCode.UNKNOWN_ERROR);

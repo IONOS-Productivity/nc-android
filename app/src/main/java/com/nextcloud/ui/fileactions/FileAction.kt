@@ -16,7 +16,6 @@ import com.owncloud.android.R
 import com.owncloud.android.datamodel.OCFile
 
 @IonosCustomization("Custom icons")
-enum class FileAction(@IdRes val id: Int, @StringRes val title: Int, @DrawableRes val icon: Int? = null) {
 enum class FileAction(
     @param:IdRes val id: Int,
     @param:StringRes val title: Int,

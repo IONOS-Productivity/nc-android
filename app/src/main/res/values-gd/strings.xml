@@ -523,10 +523,6 @@
     <string name="set_online_status">Staid air loidhne</string>
     <string name="set_picture_as">Cleachd an dealbh mar</string>
     <string name="share">Co-roinn</string>
-    <string name="share_delete_permission">Sguab às</string>
-    <string name="share_dialog_title">Co-roinneadh</string>
-    <string name="share_edit_permission">Deasaich</string>
-    <string name="share_expiration_date_label">Falbhaidh an ùine air %1$s</string>
     <string name="share_create_permission">Cruthaich</string>
     <string name="share_delete_permission">Sguab às</string>
     <string name="share_dialog_title">Co-roinneadh</string>

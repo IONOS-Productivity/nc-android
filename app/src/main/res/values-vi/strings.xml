@@ -30,7 +30,6 @@
     <string name="add_to_cloud">Thêm vào %1$s</string>
     <string name="app_widget_description">Hiện thị lối tắt từ dashboard</string>
     <string name="appbar_search_in">Tìm kiếm trong %s</string>
-    <string name="assistant_screen_delete_task_alert_dialog_title">Xóa nhiệm vụ</string>
     <string name="appear_offline">Đang offline</string>
     <string name="assistant_screen_delete_task_alert_dialog_title">Xóa nhiệm vụ</string>
     <string name="assistant_task_status_running">đang chạy</string>
@@ -313,8 +312,6 @@
     <string name="file_list_empty_headline_server_search">Không có kết quả</string>
     <string name="file_list_empty_moving">Không có gì ở đây. Bạn có thể thêm một thư mục</string>
     <string name="file_list_empty_on_device">Các tập tin và thư mục đã tải xuống sẽ hiển thị ở đây.</string>
-    <string name="file_list_empty_recent_files_description">Các tập tin và thư mục bạn sửa đổi gần đây sẽ hiển thị ở đây.</string>
-    <string name="file_list_empty_recent_files_headline">Không có tập tin được sửa đổi gần đây</string>
     <string name="file_list_empty_recently_modified">Không tìm thấy tệp nào được sửa đổi trong 7 ngày qua</string>
     <string name="file_list_empty_search">Có lẽ nó trong một thư mục khác?</string>
     <string name="file_list_empty_shared">Các tệp và thư mục bạn chia sẻ sẽ hiển thị ở đây.</string>
@@ -839,9 +836,7 @@
     <string name="user_icon">Người dùng</string>
     <string name="user_info_address">Địa chỉ</string>
     <string name="user_info_email">Email</string>
-    <string name="user_info_groups">Nhóm</string>
     <string name="user_info_phone">Số điện thoại</string>
-    <string name="user_info_profile">Hồ sơ</string>
     <string name="user_info_twitter">Twitter</string>
     <string name="user_info_website">Website</string>
     <string name="user_information_retrieval_error">Lỗi khi truy xuất thông tin người dùng</string>

@@ -98,21 +98,6 @@ public final class BitmapUtils {
         var originalWidth = bitmapResolution[0];
         var originalHeight = bitmapResolution[1];
 
-        // Detect Orientation and swap height/width if the image is to be rotated
-        var shouldRotate = detectRotateImage(storagePath);
-        if (shouldRotate) {
-            // Swap the width and height
-            var tempWidth = originalWidth;
-            originalWidth = originalHeight;
-            originalHeight = tempWidth;
-        }
-
-        var bitmapResult = decodeSampledBitmapFromFile(
-            storagePath, originalWidth, originalHeight);
-
-        // Calculate the scaling factors based on screen dimensions
-        var widthScaleFactor = (float) minWidth/ bitmapResult.getWidth();
-        var heightScaleFactor = (float) minHeight / bitmapResult.getHeight();
         // Calculate the scaling factors based on screen dimensions
         var widthScaleFactor = (float) minWidth/ originalWidth;
         var heightScaleFactor = (float) minHeight / originalHeight;
@@ -121,12 +106,6 @@ public final class BitmapUtils {
         var scaleFactor = Math.min(widthScaleFactor, heightScaleFactor);
 
         // Calculate the new scaled width and height
-        var scaledWidth = (int) (bitmapResult.getWidth() * scaleFactor);
-        var scaledHeight = (int) (bitmapResult.getHeight() * scaleFactor);
-
-        bitmapResult = scaleBitmap(bitmapResult,scaledWidth,scaledHeight);
-
-        return bitmapResult;
         var scaledWidth = (int) (originalWidth * scaleFactor);
         var scaledHeight = (int) (originalHeight * scaleFactor);
 
@@ -184,57 +163,6 @@ public final class BitmapUtils {
         int w = Math.round(scale * width);
         int h = Math.round(scale * height);
         return Bitmap.createScaledBitmap(bitmap, w, h, true);
-    }
-
-    /**
-     * scales a given bitmap depending on the given size parameters.
-     *
-     * @param bitmap the bitmap to be scaled
-     * @param width  the width
-     * @param height the height
-     * @return the scaled bitmap
-     */
-    public static Bitmap scaleBitmap(Bitmap bitmap, int width, int height) {
-        return Bitmap.createScaledBitmap(bitmap, width, height, true);
-    }
-
-    /**
-     * Rotate bitmap according to EXIF orientation. Cf. http://www.daveperrett.com/articles/2012/07/28/exif-orientation-handling-is-a-ghetto/
-     * Detect if Image will be rotated according to EXIF orientation. Cf. http://www.daveperrett.com/articles/2012/07/28/exif-orientation-handling-is-a-ghetto/
-     *
-     * @param storagePath Path to source file of bitmap. Needed for EXIF information.
-     * @return true if image's orientation determines it will be rotated to where height and width change
-     */
-    public static boolean detectRotateImage(String storagePath) {
-        try {
-            ExifInterface exifInterface = new ExifInterface(storagePath);
-            int orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1);
-
-            if (orientation != ExifInterface.ORIENTATION_NORMAL) {
-                switch (orientation) {
-                    // 5
-                    case ExifInterface.ORIENTATION_TRANSPOSE: {
-                        return true;
-                    }
-                    // 6
-                    case ExifInterface.ORIENTATION_ROTATE_90: {
-                        return true;
-                    }
-                    // 7
-                    case ExifInterface.ORIENTATION_TRANSVERSE: {
-                        return true;
-                    }
-                    // 8
-                    case ExifInterface.ORIENTATION_ROTATE_270: {
-                        return true;
-                    }
-                }
-            }
-        }
-        catch (Exception exception) {
-            Log_OC.e("BitmapUtil", "Could not read orientation at: " + storagePath);
-        }
-        return false;
     }
 
     /**

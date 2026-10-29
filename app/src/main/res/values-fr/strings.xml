@@ -44,13 +44,6 @@
     <string name="app_config_proxy_port_title">Port Proxy</string>
     <string name="app_widget_description">Affiche un widget du tableau de bord</string>
     <string name="appbar_search_in">Recherche dans %s</string>
-    <string name="assistant_screen_add_task_alert_dialog_title">Ajouter une nouvelle tâche</string>
-    <string name="assistant_screen_create_a_new_task_from_bottom_right_text">Créer une nouvelle tâche en bas à droite</string>
-    <string name="assistant_screen_create_task_alert_dialog_input_field_placeholder">Tapez du texte</string>
-    <string name="assistant_screen_delete_task_alert_dialog_description">Êtes-vous sûr de vouloir supprimer cette tâche ?</string>
-    <string name="assistant_screen_delete_task_alert_dialog_title">Supprimer la tâche</string>
-    <string name="assistant_screen_loading">Chargement de la liste des tâches...</string>
-    <string name="assistant_screen_no_task_available_text">Aucune tâche disponible pour le type de tâche %s, vous pouvez créer une nouvelle tâche en bas à droite.</string>
     <string name="appear_offline">Apparaître hors-ligne</string>
     <string name="assistant_output_generation_warning_text">Les résultats affichés ici sont générés par l\'IA. Veillez à toujours les vérifier.</string>
     <string name="assistant_screen_chat_create_error">Échec de l\'envoi du message</string>
@@ -68,8 +61,6 @@
     <string name="assistant_screen_task_create_fail_message">Une erreur est survenue lors de la création de la tâche</string>
     <string name="assistant_screen_task_create_success_message">Tâche créée</string>
     <string name="assistant_screen_task_delete_fail_message">Une erreur est survenue lors de la suppression de la tâche</string>
-    <string name="assistant_screen_task_delete_success_message">Tâche supprimée avec succès</string>
-    <string name="assistant_screen_task_list_empty_message">La liste des tâches est vide.</string>
     <string name="assistant_screen_task_delete_success_message">Tâche supprimée</string>
     <string name="assistant_screen_task_list_empty_warning">La liste des tâches est vide. Vérifiez la configuration de l’application de l’assistant.</string>
     <string name="assistant_screen_task_list_error_state_message">Impossible de récupérer la liste des tâches, veuillez vérifier votre connexion Internet.</string>
@@ -123,15 +114,7 @@
     <string name="authenticator_activity_no_web_browser_found">Aucun navigateur n\'est disponible pour ouvrir ce lien.</string>
     <string name="authenticator_activity_please_complete_login_process">Veuillez finaliser la connexion dans votre navigateur</string>
     <string name="auto_upload_battery_saver_mode_warning">Le téléversement automatique est suspendu, car l\'économiseur de batterie est activé.</string>
-    <string name="auto_upload_delete_dialog_description">Cette action supprimera le dossier et la configuration de téléchargement automatique. Tout téléchargement inachevé sera annulé.</string>
-    <string name="auto_upload_delete_dialog_title">Supprimer le dossier de téléchargement automatique ?</string>
     <string name="auto_upload_file_behaviour_kept_in_folder">conservé dans le dossier original (puisqu\'il est en lecture seule)</string>
-    <string name="auto_upload_gplay">Le comportement du téléversement automatique a changé</string>
-    <string name="auto_upload_gplay_desc">À cause de nouvelles restrictions imposées par Google, la fonctionnalité de téléversement automatique ne pourra plus automatiquement supprimer les fichiers téléversés.</string>
-    <string name="auto_upload_gplay_desc2">A cause de nouvelles restrictions imposées par Google, nous avons été forcé de retirer une permission importante. En conséquence, le téléversement automatique ne sera disponible que pour les fichiers images et vidéos.\nDe plus, une nouvelle permission est requise pour accéder aux informations de localisation pour les images téléversées.\nVérifiez que l\'accès au média est défini à \"Toujours tout autoriser\".</string>
-    <string name="auto_upload_on_wifi">Téléverser par Wi-Fi uniquement</string>
-    <string name="auto_upload_path">/TéléversementAuto</string>
-    <string name="auto_upload_sub_folder_warning">Ce dossier fait partie de la synchronisation du dossier parent, ce qui peut créer des doublons.</string>
     <string name="auto_upload_low_battery_warning_info">Batterie faible, le téléversement peut prendre plus de temps</string>
     <string name="auto_upload_on_wifi">Téléverser par Wi-Fi uniquement</string>
     <string name="auto_upload_path">/TéléversementAuto</string>
@@ -170,9 +153,6 @@
     <string name="choose_widget">Choisir un widget</string>
     <string name="clear">Effacer</string>
     <string name="clear_notifications_failed">Erreur lors de l\'effacement des notifications.</string>
-    <string name="clear_status_message">Effacer le message d\'état</string>
-    <string name="clear_status_message_after">Effacer le message d\'état après</string>
-    <string name="click_to_learn_how_to_re_enable_auto_uploads">Intervention manuelle requise pour réactiver le téléversement automatique</string>
     <string name="clear_status_after">Effacer le statut après</string>
     <string name="clipboard_label">Texte copié depuis %1$s</string>
     <string name="clipboard_no_text_to_copy">Aucun texte n\'a été reçu pour copier dans le presse-papier</string>
@@ -265,8 +245,6 @@
     <string name="could_not_retrieve_url">Impossible de récupérer l\'URL</string>
     <string name="create">Créer</string>
     <string name="create_dir_fail_msg">Le dossier n\'a pas pu être créé</string>
-    <string name="create_end_to_end_encrypted_share">Lien de partage</string>
-    <string name="create_end_to_end_encrypted_share_title">Lien de partages chiffrés de bout en bout</string>
     <string name="create_link">Créer un lien</string>
     <string name="create_new">Nouveau</string>
     <string name="create_new_document">Nouveau document</string>
@@ -341,7 +319,6 @@
     <string name="drawer_item_notifications">Notifications</string>
     <string name="drawer_item_on_device">Sur l\'appareil</string>
     <string name="drawer_item_personal_files">Fichiers personnels</string>
-    <string name="drawer_item_recent_files">Fichiers récents</string>
     <string name="drawer_item_recently_modified">Modifiés récemment</string>
     <string name="drawer_item_shared">Partagé</string>
     <string name="drawer_item_trashbin">Fichiers supprimés</string>
@@ -393,7 +370,7 @@
     <string name="error_crash_title">%1$s a planté</string>
     <string name="error_creating_file_from_template">Erreur lors de la création du fichier à partir du modèle</string>
     <string name="error_fetching_sharees">Impossible de récupérer les partages.</string>
-    <string name="error_file_actions">Erreur d\'affichage des actions sur les fichiers</string>
+    <string name="error_file_actions">Erreur d\'affichage des actions de fichier</string>
     <string name="error_file_lock">Erreur lors de la modification de l\'état de verrouillage du fichier</string>
     <string name="error_report_issue_action">Signaler</string>
     <string name="error_report_issue_text">Signaler le problème au traqueur ? (nécessite un compte GitHub)</string>
@@ -428,7 +405,6 @@
     <string name="etm_transfer_type">Transfert</string>
     <string name="etm_transfer_type_download">Téléchargement</string>
     <string name="etm_transfer_type_upload">Téléverser</string>
-    <string name="export_in_progress">Exportation %1$d sur %2$d</string>
     <string name="extension_cannot_be_changed">L\'extension ne peut pas être modifiée</string>
     <string name="extented_list_fragment_empty_list_message_no_write_permission">Vous n\'avez pas le droit de créer ou de téléverser des fichiers dans ce dossier.</string>
     <string name="external_shares">Partages externes</string>
@@ -461,8 +437,6 @@
     <string name="file_list_empty_local_search">Aucun fichier ou dossier ne correspond à votre recherche</string>
     <string name="file_list_empty_moving">Il n\'y a rien ici. Vous pouvez ajouter un dossier.</string>
     <string name="file_list_empty_on_device">Les fichiers/dossiers téléchargés apparaîtront ici.</string>
-    <string name="file_list_empty_recent_files_description">Les fichiers et dossiers que vous avez récemment modifiés apparaîtront ici</string>
-    <string name="file_list_empty_recent_files_headline">Pas de fichiers récemment modifiés</string>
     <string name="file_list_empty_recently_modified">Aucun fichier modifié n\'a été trouvé dans les 7 derniers jours</string>
     <string name="file_list_empty_search">Il se trouve peut-être dans un autre dossier ?</string>
     <string name="file_list_empty_shared">Les fichiers et dossiers que vous partagez apparaîtront ici.</string>
@@ -514,7 +488,6 @@
     <string name="file_not_synced">Le fichier ne peut pas être synchronisé. Affichage de la dernière version disponible. </string>
     <string name="file_rename">Renommer</string>
     <string name="file_upload_worker_error_notification_title">Échec du téléversement. Pas de connexion internet</string>
-    <string name="file_upload_worker_same_file_already_exists">Le même fichier existe déjà, aucun conflit détecté</string>
     <string name="file_upload_worker_same_file_already_exists">%s existe déjà, aucun conflit détecté</string>
     <string name="file_version_restored_error">Erreur, la version du fichier n\'a pas été restaurée !</string>
     <string name="filedetails_details">Détails</string>
@@ -585,8 +558,6 @@
     <string name="instant_upload_existing">Téléverser aussi les fichiers existants</string>
     <string name="instant_upload_on_charging">Téléverser uniquement lors de la recharge</string>
     <string name="instant_upload_path">/InstantUpload</string>
-    <string name="internal_share_description_end_to_end_encrypted">Les destinataires du partage ont toujours accès à l\'intégralité du dossier chiffré. Le partage est uniquement possible pour les comptes ayant déjà configuré le chiffrement de bout en bout.</string>
-    <string name="internal_share_headline_end_to_end_encrypted">Partages chiffrés de bout en bout</string>
     <string name="internal_shares">Partages internes</string>
     <string name="internal_two_way_sync">Synchronisation interne bidirectionnelle</string>
     <string name="internal_two_way_sync_not_yet">Pas encore, bientôt synchronisé</string>
@@ -732,10 +703,9 @@
     <string name="pdf_password_protected">Impossible d\'ouvrir un PDF protégé par un mot de passe. Veuillez utiliser une visionneuse PDF externe.</string>
     <string name="permission_allow">Accepter</string>
     <string name="permission_deny">Refuser</string>
-    <string name="permission_storage_access">Des permissions supplémentaires sont exigées pour téléverser et télécharger des fichiers.</string>
     <string name="pick_contact_to_share_with">Choisir un contact avec qui partager</string>
     <string name="picture_set_as_no_app">Aucune application trouvée pour utiliser cette image</string>
-    <string name="pin_home">Épingler à l\'écran d\'accueil</string>
+    <string name="pin_home">Épingler sur l\'écran d\'accueil</string>
     <string name="pin_shortcut_label">Ouvrir %1$s</string>
     <string name="player_stop">arrêter</string>
     <string name="player_toggle">inverser</string>
@@ -823,8 +793,6 @@
     <string name="push_notifications_old_login">Aucune notification push à cause d\'une connexion expirée. Veuillez ajouter de nouveau votre compte. </string>
     <string name="push_notifications_temp_error">Les notifications push ne sont pas disponibles actuellement.</string>
     <string name="qr_could_not_be_read">Le code QR ne peut être lu</string>
-    <string name="re_enable_auto_upload">Modifications du téléversement automatique</string>
-    <string name="re_enable_auto_upload_desc">En raison des nouvelles restrictions imposées par Google, nous avons été contraints de supprimer une autorisation importante. Nous travaillons actuellement avec Google pour résoudre ce problème et restaurer toutes les fonctionnalités.\n\nPour réactiver le téléversement automatique pour les nouvelles photos et vidéos :\nSélectionnez \"Tout autoriser\" dans la boîte de dialogue suivante ou dans les paramètres du système.\nAutorisez l\'emplacement des médias lorsque vous y êtes invité, car cela permet à Nextcloud de stocker les données de localisation lors du téléversement des images.\n\nLa boîte de dialogue des autorisations n\'est affichée que lorsque cela s\'avère nécessaire. En cas de doute, vérifiez les paramètres du système.\n\nLe téléversement automatique ne pourra téléverser des fichiers image et vidéo que si vous utilisez la version Google Play de l\'application Nextcloud.\n\nVérifiez s\'il y a des fichiers qui n\'ont pas été téléversés depuis décembre 2024.</string>
     <string name="receive_external_files_activity_start_sync_folder_is_not_exists_message">Le dossier est introuvable, l\'opération de synchronisation est annulée.</string>
     <string name="receive_external_files_activity_unable_to_find_file_to_upload">Impossible de trouver le fichier à téléverser</string>
     <string name="recommend_subject">Essayez %1$s sur votre appareil !</string>
@@ -880,8 +848,6 @@
     <string name="select_one_template">Veuillez sélectionner un modèle</string>
     <string name="select_template">Sélectionnez un modèle</string>
     <string name="send">Envoyer</string>
-    <string name="sendbutton_description">Icône du bouton d\'envoi</string>
-    <string name="send_share">Envoyer le partage</string>
     <string name="send_copy_to">Envoyer une copie à</string>
     <string name="send_share">Envoyer Partager</string>
     <string name="sendbutton_description">Icône du bouton d\'envoi</string>
@@ -897,7 +863,6 @@
     <string name="setup_e2e">Pendant la configuration du chiffrement de bout en bout, vous recevrez une phrase secrète aléatoire de 12 mots dont vous aurez besoin pour ouvrir vos fichiers sur d\'autres appareils. Cette phrase secrète ne sera stockée que sur cet appareil, et pourra être affichée à nouveau sur cet écran. Veuillez la noter en lieu sûr !</string>
     <string name="share">Partager</string>
     <string name="share_allow_download_and_sync_permission">Autoriser le téléchargement et la synchronisation</string>
-    <string name="share_copy_link">Partager et copier le lien</string>
     <string name="share_cannot_update_empty_note">Impossible de mettre à jour le partage. Veuillez ajouter une note et ré-essayer.</string>
     <string name="share_copy_link">Partager et copier le lien</string>
     <string name="share_create_permission">Créer</string>
@@ -905,7 +870,6 @@
     <string name="share_delete_permission">Supprimer</string>
     <string name="share_dialog_title">Partage</string>
     <string name="share_download_limit">Définir le nombre maximal de téléchargements autorisés</string>
-    <string name="share_edit_permission">Éditer</string>
     <string name="share_edit_permission">Modifier</string>
     <string name="share_expiration_date_format">%1$s</string>
     <string name="share_file">Partager %1$s</string>
@@ -927,7 +891,6 @@
     <string name="share_not_allowed_when_file_drop">Le repartage n\'est pas autorisé pendant le dépôt d\'un fichier sécurisé</string>
     <string name="share_option_required">Veuillez sélectionner au moins une option de partage avant de poursuivre.</string>
     <string name="share_permission_can_edit">Peut modifier</string>
-    <string name="share_permission_file_drop">Dépôt de fichier</string>
     <string name="share_permission_file_request">Demande de fichier</string>
     <string name="share_permission_secure_file_drop">Dépôt sécurisé de fichiers</string>
     <string name="share_permission_view_only">Afficher seulement</string>
@@ -1122,8 +1085,6 @@
     <string name="upload_file_dialog_title">Spécifiez le nom et le type du fichier à téléverser</string>
     <string name="upload_files">Téléverser des fichiers</string>
     <string name="upload_global_pause_title">Tous les téléversements sont suspendus</string>
-    <string name="upload_gplay">Modification des permissions</string>
-    <string name="upload_gplay_desc">Une nouvelle permission est requise pour accéder à l\'information de localisation pour les images téléversées.\nVérifiez que l\'accès au média est défini à \"Toujours tout autoriser\".</string>
     <string name="upload_item_action_button">Bouton d\'action d\'upload</string>
     <string name="upload_list_delete">Supprimer</string>
     <string name="upload_list_empty_headline">Aucun téléversement disponible</string>
@@ -1205,9 +1166,7 @@
     <string name="user_icon">Utilisateur</string>
     <string name="user_info_address">Adresse</string>
     <string name="user_info_email">E-mail</string>
-    <string name="user_info_groups">Groupes</string>
     <string name="user_info_phone">Numéro de téléphone</string>
-    <string name="user_info_profile">Profil</string>
     <string name="user_info_twitter">Twitter</string>
     <string name="user_info_website">Site web</string>
     <string name="user_information_retrieval_error">Erreur de récupération des informations utilisateur</string>
@@ -1219,9 +1178,6 @@
     <string name="wait_a_moment">Veuillez patienter…</string>
     <string name="wait_checking_credentials">Vérification des identifiants enregistrés</string>
     <string name="wait_for_tmp_copy_from_private_storage">Copie du fichier depuis le stockage privé</string>
-    <string name="webview_version_check_alert_dialog_message">Veuillez mettre à jour l\'application Android System WebView pour vous connecter</string>
-    <string name="webview_version_check_alert_dialog_positive_button_title">Mise à jour</string>
-    <string name="webview_version_check_alert_dialog_title">Mettre à jour Android System WebView</string>
     <string name="warn_rename_extension">La modification de l\'extension peut entraîner l\'ouverture de ce fichier dans une application différente.</string>
     <string name="what_s_new_image">Image quoi de neuf</string>
     <string name="whats_new_skip">Ignorer</string>

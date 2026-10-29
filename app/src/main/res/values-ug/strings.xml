@@ -43,10 +43,6 @@
     <string name="app_config_proxy_port_title">ۋاكالەتچى ئېغىز</string>
     <string name="app_widget_description">باشقۇرۇش تاختىسىدىكى بىر كىچىك قورالنى كۆرسىتىدۇ</string>
     <string name="appbar_search_in">%s دىن ئىزدەڭ</string>
-    <string name="assistant_screen_create_task_alert_dialog_input_field_placeholder">بەزى تېكىستلەرنى كىرگۈزۈڭ</string>
-    <string name="assistant_screen_delete_task_alert_dialog_description">بۇ ۋەزىپىنى ئۆچۈرمەكچىمۇ؟</string>
-    <string name="assistant_screen_delete_task_alert_dialog_title">ۋەزىپىنى ئۆچۈرۈڭ</string>
-    <string name="assistant_screen_no_task_available_text"> %s ۋەزىپە تىپىغا ماس كېلىدىغان ۋەزىپە يوق ، ئاستىدىن ئوڭدىن يېڭى ۋەزىپە قۇرالايسىز.</string>
     <string name="appear_offline">تورسىز كۆرۈنۈش</string>
     <string name="assistant_output_generation_warning_text">بۇ يەردىكى نەتىنج</string>
     <string name="assistant_screen_chat_create_error">بىر ئۇچۇرنى ئەۋەتىش مەغلۇپ بولدى</string>
@@ -129,7 +125,6 @@
     <string name="bottom_navigation_menu_assistant_label">ياردەمچى</string>
     <string name="bottom_navigation_menu_favorites_label">ياقتۇرىدىغانلار</string>
     <string name="bottom_navigation_menu_files_label">بارلىق ھۆججەتلەر</string>
-    <string name="bottom_navigation_menu_media_label">Media</string>
     <string name="bottom_navigation_menu_media_label">كۆپ-ۋاستە</string>
     <string name="busy">ئالدىراش</string>
     <string name="calendar">كالېندار</string>
@@ -390,6 +385,7 @@
     <string name="etm_background_jobs_stop_test_job">سىناق خىزمىتىنى توختىتىڭ</string>
     <string name="etm_migrations">كۆچۈش (ئەپ يېڭىلاش)</string>
     <string name="etm_preferences">مايىللىق</string>
+    <string name="etm_title">قۇرۇلۇش سىناق ھالىتى</string>
     <string name="etm_transfer">ھۆججەت يوللاش</string>
     <string name="etm_transfer_enqueue_test_download">سىناق چۈشۈرۈشنى تەلەپ قىلىڭ</string>
     <string name="etm_transfer_enqueue_test_upload">سىناق يۈكلەش</string>
@@ -427,8 +423,6 @@
     <string name="file_list_empty_local_search">ئىزدىشىڭىزگە ماس كېلىدىغان ھۆججەت ياكى ھۆججەت قىسقۇچ يوق</string>
     <string name="file_list_empty_moving">بۇ يەردە ھېچنېمە يوق. قىسقۇچ قوشالايسىز.</string>
     <string name="file_list_empty_on_device">چۈشۈرۈلگەن ھۆججەت ۋە ھۆججەت قىسقۇچلار بۇ يەردە كۆرۈنىدۇ.</string>
-    <string name="file_list_empty_recent_files_description">سىز يېقىندا ئۆزگەرتكەن ھۆججەت ۋە ھۆججەت قىسقۇچلار بۇ يەردە كۆرۈنىدۇ.</string>
-    <string name="file_list_empty_recent_files_headline">يېقىندا ئۆزگەرتىلگەن ھۆججەت يوق</string>
     <string name="file_list_empty_recently_modified">يېقىنقى 7 كۈن ئىچىدە ئۆزگەرتىلگەن ھۆججەت تېپىلمىدى</string>
     <string name="file_list_empty_search">بەلكىم ئۇ باشقا ھۆججەت قىسقۇچتا بولۇشى مۇمكىن؟</string>
     <string name="file_list_empty_shared">سىز ئورتاقلاشقان ھۆججەت ۋە ھۆججەت قىسقۇچلار بۇ يەردە كۆرۈنىدۇ.</string>
@@ -549,7 +543,6 @@
     <string name="instant_upload_existing">مەۋجۇت ھۆججەتلەرنىمۇ يۈكلەڭ</string>
     <string name="instant_upload_on_charging">توك قاچىلىغاندا ئاندىن يۈكلەڭ</string>
     <string name="instant_upload_path">/ InstantUpload</string>
-    <string name="internal_share_headline_end_to_end_encrypted">باشتىن-ئاخىر شىفىرلانغان ھەمبەھىر</string>
     <string name="internal_shares">ئىچكى ھەمبەھىر</string>
     <string name="internal_two_way_sync">ئىچكى ئىككى خىل ماسقەدەملەش</string>
     <string name="internal_two_way_sync_not_yet">تېخى ئەمەس ، ئۇزۇن ئۆتمەي ماسقەدەملىنىدۇ</string>
@@ -621,7 +614,6 @@
     <string name="new_comment">يېڭى باھا…</string>
     <string name="new_media_folder_detected">يېڭى%1$s مېدىيا ھۆججەت قىسقۇچى بايقالدى.</string>
     <string name="new_media_folder_photos">سۈرەت</string>
-    <string name="new_media_folder_videos">video</string>
     <string name="new_media_folder_videos">سىن</string>
     <string name="new_notification">يېڭى ئۇقتۇرۇش</string>
     <string name="new_version_was_created">يېڭى نەشرى قۇرۇلدى</string>
@@ -660,11 +652,6 @@
     <string name="notification_icon_description">ئوقۇلمىغان ئۇقتۇرۇشلار مەۋجۇت</string>
     <string name="notifications_no_results_headline">ئۇقتۇرۇش يوق</string>
     <string name="notifications_no_results_message">كېيىن قايتا تەكشۈرۈپ بېقىڭ.</string>
-    <string name="offline_mode">تور ئۇلىنىشى يوق</string>
-    <string name="offline_mode_info_description">تورغا ئۇلانمىسىڭىزمۇ ھۆججەت قىسقۇچلىرىڭىزنى رەتلىيەلەيسىز ، ھۆججەت قۇرالايسىز. تورغا قايتىپ كەلگەندىن كېيىن ، ساقلاۋاتقان ھەرىكەتلىرىڭىز ئاپتوماتىك ماسقەدەملىنىدۇ.</string>
-    <string name="offline_operations_file_does_not_exists_yet">ھۆججەت مەۋجۇت ئەمەس. ئاۋۋال ھۆججەتنى يۈكلەڭ.</string>
-    <string name="offline_operations_worker_notification_error_text">تورسىز مەشغۇلاتنى تاماملىغىلى بولمايدۇ. %s</string>
-    <string name="offline_operations_worker_notification_manager_ticker">تورسىز مەشغۇلات</string>
     <string name="oc_file_list_adapter_offline_operation_description_text">ساقلاۋاتقان مەشخۇلات</string>
     <string name="oc_file_list_adapter_offline_operation_remove_description_text">ساقلاۋاتقان ئۆچۈرۈش مەشخۇلاتى</string>
     <string name="offline_mode">تور ئۇلىنىشى يوق</string>
@@ -719,6 +706,7 @@
     <string name="prefs_all_files_access_title">بارلىق ھۆججەتنى ئىشلىتىش</string>
     <string name="prefs_calendar_contacts">كالېندار ۋە ئالاقىداش</string>
     <string name="prefs_calendar_contacts_no_store_error">F-Droid ياكى Google Play ئورنىتىلمىغان</string>
+    <string name="prefs_calendar_contacts_summary">نۆۋەتتىكى ھېسابات ئۈچۈن DAVx5 (ئىلگىرى DAVdroid دەپ ئاتالغان) (v1.3.0 +) نى تەڭشەڭ</string>
     <string name="prefs_calendar_contacts_sync_setup_successful">كالېندار ۋە ئالاقىداش ماسقەدەملەندى</string>
     <string name="prefs_category_about">ھەققىدە</string>
     <string name="prefs_category_details">تەپسىلاتى</string>
@@ -831,6 +819,7 @@
     <string name="screenshot_05_autoUpload_heading">ئاپتوماتىك يوللاش</string>
     <string name="screenshot_05_autoUpload_subline">رەسىم ۋە سىنلىرىڭىز ئۈچۈن</string>
     <string name="screenshot_06_davdroid_heading">كالېندار ۋە ئالاقىداشلار</string>
+    <string name="screenshot_06_davdroid_subline">DAVx5 بىلەن ماسقەدەملەش</string>
     <string name="search_error">ئىزدەش نەتىجىسىگە ئېرىشىشتە خاتالىق</string>
     <string name="secure_share_not_set_up">بۇ ئىشلەتكۈچى ئۈچۈن بىخەتەر ئورتاقلىشىش ئورنىتىلمىغان</string>
     <string name="secure_share_search">بىخەتەر ئورتاقلىشىش…</string>
@@ -882,10 +871,6 @@
     <string name="share_not_allowed_when_file_drop">بىخەتەر ھۆججەت چۈشۈرۈش جەريانىدا قايتا ئىشلىتىشكە بولمايدۇ</string>
     <string name="share_option_required">داۋاملاشتۇرۇشتىن بۇرۇن ئەڭ كەمدە بىر ئورتاقلىشىش تاللانمىسىنى تاللاڭ.</string>
     <string name="share_permission_can_edit">تەھرىرلىيەلەيدۇ</string>
-    <string name="share_permission_file_drop">ھۆججەت چۈشۈرۈش</string>
-    <string name="share_permission_file_request">ھۆججەت تەلىپى</string>
-    <string name="share_permission_secure_file_drop">بىخەتەر ھۆججەت چۈشۈرۈش</string>
-    <string name="share_permission_view_only">پەقەت كۆرۈش</string>
     <string name="share_permission_file_request">ھۆججەت تەلىپى</string>
     <string name="share_permission_secure_file_drop">بىخەتەر ھۆججەت چۈشۈرۈش</string>
     <string name="share_permission_view_only">پەقەت كۆرۈش</string>
@@ -1151,9 +1136,7 @@
     <string name="user_icon">ئىشلەتكۈچى</string>
     <string name="user_info_address">ئادرېس</string>
     <string name="user_info_email">ئېلخەت</string>
-    <string name="user_info_groups">گۇرۇپپىلار</string>
     <string name="user_info_phone">تېلېفون نومۇرى</string>
-    <string name="user_info_profile">ئارخىپ</string>
     <string name="user_info_twitter">Twitter</string>
     <string name="user_info_website">تور بېكەت</string>
     <string name="user_information_retrieval_error">ئىشلەتكۈچى ئۇچۇرىنى ئەسلىگە كەلتۈرۈشتە خاتالىق</string>

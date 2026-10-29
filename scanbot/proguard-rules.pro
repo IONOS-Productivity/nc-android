@@ -1,5 +1,3 @@
--ignorewarnings
-
 -keeppackagenames com.googlecode.tesseract.android.**
 -keep public class com.googlecode.tesseract.android.**{ *; }
 

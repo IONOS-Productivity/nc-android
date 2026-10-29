@@ -15,10 +15,6 @@ import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.owncloud.android.lib.common.utils.Log_OC
 
-class ClipboardClearWorker(
-    private val context: Context,
-    params: WorkerParameters
-) : Worker(context, params) {
 class ClipboardClearWorker(private val context: Context, params: WorkerParameters) : Worker(context, params) {
     private val tag = ClipboardClearWorker::class.java.name
 
@@ -37,12 +33,6 @@ class ClipboardClearWorker(private val context: Context, params: WorkerParameter
                 return Result.success()
             }
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                clipboardManager.clearPrimaryClip()
-            } else {
-                val newEmptyClip = ClipData.newPlainText("EmptyClipContent", "")
-                clipboardManager.setPrimaryClip(newEmptyClip)
-            }
             clipboardManager.clearPrimaryClip()
 
             return Result.success()

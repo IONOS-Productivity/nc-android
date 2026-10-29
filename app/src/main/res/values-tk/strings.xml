@@ -520,7 +520,6 @@
     <string name="share_delete_permission">Pozmak</string>
     <string name="share_dialog_title">Paýlaşmak</string>
     <string name="share_edit_permission">Redaktirläň</string>
-    <string name="share_expiration_date_label">Möhleti%1$s-da gutarýar</string>
     <string name="share_file">Paýlaş%1$s</string>
     <string name="share_group_clarification">%1$s(topar)</string>
     <string name="share_internal_link">Içerki baglanyşygy paýlaşyň</string>
@@ -537,7 +536,6 @@
     <string name="share_link_with_label">(%1$s)Baglanyşyk paýlaş</string>
     <string name="share_no_expiration_date_label">Möhlet möhletini belläň</string>
     <string name="share_no_password_title">Paroly düzüň</string>
-    <string name="share_password_title">Parol bilen goralan</string>
     <string name="share_re_share_permission">Paýlaş</string>
     <string name="share_remote_clarification">(uzakdan)%1$s</string>
     <string name="share_room_clarification">(söhbetdeşlik)%1$s</string>

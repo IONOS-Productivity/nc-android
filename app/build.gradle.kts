@@ -62,9 +62,9 @@ configurations.configureEach {
 }
 
 // semantic versioning for version code
-val versionMajor = 33
-val versionMinor = 0
-val versionPatch = 1
+val versionMajor = 3
+val versionMinor = 36
+val versionPatch = 0
 val versionBuild = 90 // 0-50=Alpha / 51-98=RC / 90-99=stable
 
 val ndkEnv = buildMap {
@@ -148,9 +148,9 @@ android {
             register("gplay") {
                 applicationId = "com.ionos.hidrivenext"
                 dimension = "default"
-                versionCode = 17
+                versionCode = 18
                 isDefault = true
-                resConfigs("en", "de", "es", "fr", "nl", "it")
+                resConfigs("en", "de", "es", "fr", "it")
             }
 
             register("huawei") {
@@ -440,8 +440,8 @@ dependencies {
     implementation(libs.dagger)
     implementation(libs.dagger.android)
     implementation(libs.dagger.android.support)
-    ksp(libs.dagger.compiler)
-    ksp(libs.dagger.processor)
+    kapt(libs.dagger.compiler)
+    kapt(libs.dagger.processor)
     // endregion
 
     // region Crypto

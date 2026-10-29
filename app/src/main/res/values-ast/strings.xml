@@ -20,12 +20,6 @@
     <string name="activities_no_results_headline"> Entá nun hai actividá</string>
     <string name="activity_chooser_send_file_title">Unviar</string>
     <string name="activity_icon">Actividá</string>
-    <string name="advanced_settings">Configuración avanzada</string>
-    <string name="app_config_base_url_title">URL base</string>
-    <string name="app_config_proxy_port_title">Puertu del proxy</string>
-    <string name="appbar_search_in">Buscar en: %s</string>
-    <string name="assistant_screen_create_task_alert_dialog_input_field_placeholder">Escribi daqué</string>
-    <string name="assistant_screen_delete_task_alert_dialog_title">Desaniciar la xera</string>
     <string name="app_config_base_url_title">URL base</string>
     <string name="app_config_proxy_port_title">Puertu del proxy</string>
     <string name="appbar_search_in">Buscar en: %s</string>
@@ -237,8 +231,6 @@
     <string name="file_list_empty_headline_search">Ensin resultaos nesta carpeta</string>
     <string name="file_list_empty_headline_server_search">Ensin resultaos</string>
     <string name="file_list_empty_moving">Equí nun hai nada. Pes amestar una carpeta</string>
-    <string name="file_list_empty_recent_files_description">Equí apaecen los ficheros y les carpetes modificaes de recién.</string>
-    <string name="file_list_empty_recent_files_headline">Nun hai nengún ficheru modificáu de recién</string>
     <string name="file_list_empty_search">¿Quiciabes tea nuna carpeta diferente?</string>
     <string name="file_list_empty_shared_headline">Entá nun se compartió nada</string>
     <string name="file_list_empty_unified_search_no_results">Nun s\'atopó nengún resultáu pa la to consulta</string>
@@ -483,7 +475,6 @@
     <string name="share_no_expiration_date_label">Afitar la data de caducidá</string>
     <string name="share_no_password_title">Afitar la contraseña</string>
     <string name="share_permission_can_edit">Pue editar</string>
-    <string name="share_permission_file_drop">Suelta de ficheros</string>
     <string name="share_permission_file_request">Solicitú de ficheru</string>
     <string name="share_permission_view_only">Ver namás</string>
     <string name="share_re_share_permission">Compartir</string>
@@ -641,9 +632,7 @@
     <string name="user_icon">Usuariu</string>
     <string name="user_info_address">Direición</string>
     <string name="user_info_email">Corréu electrónicu</string>
-    <string name="user_info_groups">Grupos</string>
     <string name="user_info_phone">Númberu telefónicu</string>
-    <string name="user_info_profile">Perfil</string>
     <string name="user_info_twitter">Twitter</string>
     <string name="user_info_website">Sitiu web</string>
     <string name="user_information_retrieval_error">Hebo un error al recuperar la información del usuariu</string>

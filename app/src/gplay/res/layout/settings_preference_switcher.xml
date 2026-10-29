@@ -24,7 +24,6 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/settings_screen_items_horizontal_padding"
         app:layout_constraintBottom_toTopOf="@android:id/summary"
-        app:layout_constraintEnd_toStartOf="@id/switcher"
         app:layout_constraintEnd_toStartOf="@android:id/switch_widget"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -37,19 +36,12 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/settings_screen_items_horizontal_padding"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/switcher"
         app:layout_constraintEnd_toStartOf="@android:id/switch_widget"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@android:id/title"
         tools:text="Summary" />
 
     <com.google.android.material.materialswitch.MaterialSwitch
-        android:id="@+id/switcher"
-        style="@style/SettingsMaterialSwitchStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:checked="true"
-        android:theme="@style/SettingsMaterialSwitchStyle"
         android:id="@android:id/switch_widget"
         style="@style/IonosMaterialSwitchStyle"
         android:layout_width="wrap_content"

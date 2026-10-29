@@ -29,9 +29,6 @@ class ScanbotControllerImpl @Inject internal constructor(
 ) : ScanbotController() {
 
 	override val fileUploadStarted get() = _fileUploadStarted
-	override val uploadTargetRepository get() = _uploadTargetRepository
-
-	private val _fileUploadStarted = PublishSubject.create<Any>()
     override val cameraPermissionDenied get() = _cameraPermissionDenied
 	override val uploadTargetRepository get() = _uploadTargetRepository
 

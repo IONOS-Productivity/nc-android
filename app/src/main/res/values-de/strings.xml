@@ -29,7 +29,6 @@
     <string name="activity_chooser_send_file_title">Senden</string>
     <string name="activity_chooser_title">Link senden an …</string>
     <string name="activity_icon">Aktivitäten</string>
-    <string name="add_new_public_share">Öffentlichen Link zum Teilen hinzufügen</string>
     <string name="add_new_public_share">Öffentlichen Freigabe-Link hinzufügen</string>
     <string name="add_new_secure_file_drop">Neue sichere Dateiablage hinzufügen</string>
     <string name="add_to_cloud">Hinzufügen zu %1$s</string>
@@ -45,13 +44,6 @@
     <string name="app_config_proxy_port_title">Proxy-Port</string>
     <string name="app_widget_description">Zeigt ein Widget aus dem Dashboard an</string>
     <string name="appbar_search_in">Suche in %s</string>
-    <string name="assistant_screen_add_task_alert_dialog_title">Neue Aufgabe hinzufügen</string>
-    <string name="assistant_screen_create_a_new_task_from_bottom_right_text">Unten rechts eine neue Aufgabe erstellen</string>
-    <string name="assistant_screen_create_task_alert_dialog_input_field_placeholder">Bitte einen Text eingeben</string>
-    <string name="assistant_screen_delete_task_alert_dialog_description">Möchten Sie diese Aufgabe wirklich löschen?</string>
-    <string name="assistant_screen_delete_task_alert_dialog_title">Aufgabe löschen</string>
-    <string name="assistant_screen_loading">Lade Aufgabenliste…</string>
-    <string name="assistant_screen_no_task_available_text">Für den Aufgabentyp %s ist keine Aufgabe verfügbar. Sie können unten rechts eine neue Aufgabe erstellen.</string>
     <string name="appear_offline">Offline erscheinen</string>
     <string name="assistant_output_generation_warning_text">Die hier gezeigte Ausgabe wurde von KI erstellt. Bitte genau überprüfen.</string>
     <string name="assistant_screen_chat_create_error">Eine Nachricht konnte nicht gesendet werden</string>
@@ -70,7 +62,6 @@
     <string name="assistant_screen_task_create_success_message">Aufgabe erstellt</string>
     <string name="assistant_screen_task_delete_fail_message">Es ist ein Fehler beim Löschen der Aufgabe aufgetreten</string>
     <string name="assistant_screen_task_delete_success_message">Aufgabe gelöscht</string>
-    <string name="assistant_screen_task_list_empty_message">Aufgabenliste ist leer.</string>
     <string name="assistant_screen_task_list_empty_warning">Die Aufgabenliste ist leer. Bitte die Konfiguration der Assistenten-App überprüfen.</string>
     <string name="assistant_screen_task_list_error_state_message">Die Aufgabenliste kann nicht abgerufen werden. Bitte überprüfen Sie Ihre Internetverbindung.</string>
     <string name="assistant_screen_task_more_actions_bottom_sheet_delete_action">Aufgabe löschen</string>
@@ -123,15 +114,7 @@
     <string name="authenticator_activity_no_web_browser_found">Es ist kein Browser verfügbar, um diesen Link zu öffnen.</string>
     <string name="authenticator_activity_please_complete_login_process">Bitte schließen Sie den Anmeldevorgang in Ihrem Browser ab</string>
     <string name="auto_upload_battery_saver_mode_warning">Der automatische Upload wurde angehalten, da Battery-Saver eingeschaltet ist.</string>
-    <string name="auto_upload_delete_dialog_description">Dadurch werden der Ordner und die Konfiguration für das \"Automatische Hochladen\" entfernt. Alle noch nicht abgeschlossenen Uploads werden abgebrochen.</string>
-    <string name="auto_upload_delete_dialog_title">Ordner für \"Automatisches Hochladen\" löschen?</string>
     <string name="auto_upload_file_behaviour_kept_in_folder">im Original-Verzeichnis belassen, da nur lesbar</string>
-    <string name="auto_upload_gplay">Automatisches Hochlade-Verhalten geändert</string>
-    <string name="auto_upload_gplay_desc">Aufgrund neuer Einschränkungen durch Google kann die Funktion zum automatischen Hochladen Dateien nicht mehr automatisch entfernen.</string>
-    <string name="auto_upload_gplay_desc2">Aufgrund neuer, von Google auferlegter Beschränkungen waren wir gezwungen, eine wichtige Berechtigung zu entfernen. Infolgedessen kann das automatische Hochladen nur noch Bild- und Videodateien hochladen.\nZusätzlich ist eine neue Berechtigung erforderlich, um auf Standortinformationen für hochgeladene Bilder zuzugreifen.\nStellen Sie sicher, dass der Medienzugriff auf \"Immer alles zulassen\" eingestellt ist.</string>
-    <string name="auto_upload_on_wifi">Nur über gebührenfreies WLAN hochladen</string>
-    <string name="auto_upload_path">/AutoUpload</string>
-    <string name="auto_upload_sub_folder_warning">Dieser Ordner ist bereits in der Synchronisierung des übergeordneten Ordners enthalten, was zu doppelten Uploads führen kann</string>
     <string name="auto_upload_low_battery_warning_info">Niedriger Akkustand, das Hochladen kann länger dauern</string>
     <string name="auto_upload_on_wifi">Nur über gebührenfreies WLAN hochladen</string>
     <string name="auto_upload_path">/AutoUpload</string>
@@ -166,12 +149,8 @@
     <string name="choose_local_folder">Wähle einen lokalen Ordner …</string>
     <string name="choose_remote_folder">Wähle einen entfernten Ordner …</string>
     <string name="choose_template_helper_text">Bitte eine Vorlage auswählen und einen Dateinamen eingeben.</string>
-    <string name="choose_which_file">Bitte auswählen, welche Datei behalten werden soll!</string>
+    <string name="choose_which_file">Wählen Sie, welche Datei behalten werden soll!</string>
     <string name="choose_widget">Widget auswählen</string>
-    <string name="clear_notifications_failed">Benachrichtigungen konnten nicht gelöscht werden</string>
-    <string name="clear_status_message">Statusnachricht löschen</string>
-    <string name="clear_status_message_after">Statusnachricht löschen nach</string>
-    <string name="click_to_learn_how_to_re_enable_auto_uploads">Manueller Eingriff erforderlich, um das automatische Hochladen wieder zu aktivieren</string>
     <string name="clear">Leeren</string>
     <string name="clear_notifications_failed">Benachrichtigungen konnten nicht gelöscht werden</string>
     <string name="clear_status_after">Status löschen nach</string>
@@ -231,7 +210,6 @@
     <string name="confirmation_remove_folders_alert">Sollen die ausgewählten Elemente und deren Inhalt gelöscht werden?</string>
     <string name="confirmation_remove_local">Nur lokal</string>
     <string name="conflict_dialog_error">Konfliktlösungsdialog konnte nicht erstellt werden</string>
-    <string name="conflict_folder_headline">Ordnerkonfilikt</string>
     <string name="conflict_folder_headline">Ordnerkonflikt</string>
     <string name="conflict_local_file">Lokale Datei</string>
     <string name="conflict_message_description">Falls beide Versionen gewählt werden, wird bei der lokalen Datei eine Zahl am Ende des Dateinamens hinzugefügt.</string>
@@ -267,8 +245,6 @@
     <string name="could_not_retrieve_url">URL konnte nicht abgerufen werden</string>
     <string name="create">Erstellen</string>
     <string name="create_dir_fail_msg">Verzeichnis konnte nicht erstellt werden</string>
-    <string name="create_end_to_end_encrypted_share">Linkfreigabe</string>
-    <string name="create_end_to_end_encrypted_share_title">Ende-zu-Ende-verschlüsselte Linkfreigaben</string>
     <string name="create_link">Link erstellen</string>
     <string name="create_new">Neu</string>
     <string name="create_new_document">Neues Dokument</string>
@@ -343,7 +319,6 @@
     <string name="drawer_item_notifications">Benachrichtigungen</string>
     <string name="drawer_item_on_device">Auf dem Gerät</string>
     <string name="drawer_item_personal_files">Persönliche Dateien</string>
-    <string name="drawer_item_recent_files">Aktuelle Dateien</string>
     <string name="drawer_item_recently_modified">Kürzlich geändert</string>
     <string name="drawer_item_shared">Geteilt</string>
     <string name="drawer_item_trashbin">Gelöschte Dateien</string>
@@ -363,10 +338,6 @@
     <string name="ecosystem_apps_display_assistant">Assistent</string>
     <string name="ecosystem_apps_display_more">Mehr</string>
     <string name="ecosystem_apps_more">Weitere Nextcloud-Apps</string>
-    <string name="email_pick_failed">E-Mail-Adresse konnte nicht ausgewählt werden.</string>
-    <string name="encrypted">Als verschlüsselt festlegen</string>
-    <string name="end_to_end_encryption_certificate_unavailable">Serverzertifikat kann nicht abgerufen werden</string>
-    <string name="end_to_end_encryption_certificate_verification_failed">Der öffentliche Schlüssel konnte nicht verifiziert werden.</string>
     <string name="editor_web_view_cannot_open_file">Dateiauswahl konnte nicht geöffnet werden</string>
     <string name="email_pick_failed">E-Mail-Adresse konnte nicht ausgewählt werden.</string>
     <string name="encrypted">Als verschlüsselt festlegen</string>
@@ -381,8 +352,6 @@
     <string name="end_to_end_encryption_keywords_description">Diese 12 Wörter-Phrase ist wie ein sehr starkes Passwort: Sie bietet vollen Zugriff um Ihre verschlüsselten Dateien anzusehen und zu verwenden. Bitte schreiben Sie sie auf und verwahren sie an einem sicheren Ort.</string>
     <string name="end_to_end_encryption_not_enabled">Ende-zu-Ende-Verschlüsselung ist auf diesem Server deaktiviert.</string>
     <string name="end_to_end_encryption_passphrase_title">Notieren Sie Ihre Verschlüsselungs-Passphrase</string>
-    <string name="end_to_end_encryption_password">Passwort…</string>
-    <string name="end_to_end_encryption_retrieving_keys">Schlüssel abrufen…</string>
     <string name="end_to_end_encryption_password">Passwort …</string>
     <string name="end_to_end_encryption_retrieving_keys">Schlüssel abrufen …</string>
     <string name="end_to_end_encryption_server_private_key_unavailable">Privater Schlüssel kann nicht abgerufen werden</string>
@@ -436,7 +405,6 @@
     <string name="etm_transfer_type">Übertragen</string>
     <string name="etm_transfer_type_download">Herunterladen</string>
     <string name="etm_transfer_type_upload">Hochladen</string>
-    <string name="export_in_progress">Exportiere %1$d von %2$d</string>
     <string name="extension_cannot_be_changed">Erweiterung kann nicht geändert werden</string>
     <string name="extented_list_fragment_empty_list_message_no_write_permission">Sie haben keine Berechtigung, in diesen Ordner Dateien hochzuladen oder zu erstellen.</string>
     <string name="external_shares">Externe Freigaben</string>
@@ -469,9 +437,7 @@
     <string name="file_list_empty_local_search">Keine Datei oder Ordner entsprechen Ihrer Suche</string>
     <string name="file_list_empty_moving">Noch nichts vorhanden. Sie können einen Ordner hinzufügen.</string>
     <string name="file_list_empty_on_device">Heruntergeladene Dateien und Ordner werden hier angezeigt werden.</string>
-    <string name="file_list_empty_recent_files_description">Vor kurzem geänderten Dateien und Ordner werden hier angezeigt.</string>
-    <string name="file_list_empty_recent_files_headline">Keine kürzlich geänderten Dateien</string>
-    <string name="file_list_empty_recently_modified">Es wurden keine Dateien gefunden, die innerhalb der letzten 7 Tage geändert wurden</string>
+    <string name="file_list_empty_recently_modified">Keine, innerhalb der letzten 7 Tage, geänderten Dateien gefunden</string>
     <string name="file_list_empty_search">Vielleicht befindet es sich in einem anderen Ordner?</string>
     <string name="file_list_empty_shared">Von Ihnen geteilte Dateien und Ordner werden hier angezeigt.</string>
     <string name="file_list_empty_shared_headline">Noch nichts geteilt</string>
@@ -522,9 +488,6 @@
     <string name="file_not_synced">Datei konnte nicht synchronisiert werden. Zeige letzte verfügbare Version. </string>
     <string name="file_rename">Umbenennen</string>
     <string name="file_upload_worker_error_notification_title">Upload fehlgeschlagen. Keine Internetverbindung</string>
-    <string name="file_upload_worker_same_file_already_exists">Dieselbe Datei existiert bereits, kein Konflikt erkannt</string>
-    <string name="file_version_restored_error">Fehler beim Wiederherstellen der Dateiversion!</string>
-    <string name="file_version_restored_successfully">Dateiversion wiederhergestellt</string>
     <string name="file_upload_worker_same_file_already_exists">%s existiert bereits, kein Konflikt erkannt</string>
     <string name="file_version_restored_error">Fehler beim Wiederherstellen der Dateiversion!</string>
     <string name="filedetails_details">Details</string>
@@ -595,8 +558,6 @@
     <string name="instant_upload_existing">Vorhandene Dateien ebenfalls hochladen</string>
     <string name="instant_upload_on_charging">Nur während des Ladens der Batterie hochladen</string>
     <string name="instant_upload_path">/SofortUpload</string>
-    <string name="internal_share_description_end_to_end_encrypted">Die Empfänger der Freigabe haben stets Zugriff auf den vollständigen verschlüsselten Ordner. Die Freigabe ist nur mit Konten möglich, die bereits eine Ende-zu-Ende-Verschlüsselung eingerichtet haben.</string>
-    <string name="internal_share_headline_end_to_end_encrypted">Ende-zu-Ende-verschlüsselte Freigaben</string>
     <string name="internal_shares">Interne Freigaben</string>
     <string name="internal_two_way_sync">Interne 2-Wege-Synchronisierung</string>
     <string name="internal_two_way_sync_not_yet">Bislang nicht, wird demnächst synchronisiert</string>
@@ -715,9 +676,6 @@
     <string name="offline_mode">Keine Internetverbindung</string>
     <string name="offline_mode_info_description">Auch ohne Internetverbindung können Sie Ihre Ordner organisieren und Dateien erstellen. Sobald Sie wieder online sind, werden die ausstehenden Aktionen automatisch synchronisiert.</string>
     <string name="offline_mode_info_title">Sie sind offline, können aber weiterarbeiten</string>
-    <string name="offline_operations_file_does_not_exists_yet">Datei existiert noch nicht. Bitte laden Sie zuerst die Datei hoch.</string>
-    <string name="offline_operations_worker_notification_conflict_text">Konfliktordner: %s</string>
-    <string name="offline_operations_worker_notification_delete_offline_folder">Offlineordner löschen</string>
     <string name="offline_operations_file_does_not_exists_yet">Datei existiert noch nicht. Bitte die Datei zuerst hochladen.</string>
     <string name="offline_operations_worker_notification_create_file_conflict_text">%s konnte nicht erstellt werden. Eine Datei mit demselben Namen ist bereits auf dem Server vorhanden.</string>
     <string name="offline_operations_worker_notification_create_folder_conflict_text">%s konnte nicht erstellt werden. Ein Ordner mit demselben Namen ist bereits auf dem Server vorhanden.</string>
@@ -743,7 +701,6 @@
     <string name="pass_code_wrong">PIN nicht korrekt</string>
     <string name="pause_upload">Pausieren</string>
     <string name="pdf_password_protected">Passwortgeschützte PDF-Datei konnte nicht geöffnet werden. Bitte verwenden Sie einen externen PDF-Viewer.</string>
-    <string name="pdf_zoom_tip">Auf eine Seite klicken, um hereinzuzoomen</string>
     <string name="permission_allow">Zulassen</string>
     <string name="permission_deny">Ablehnen</string>
     <string name="pick_contact_to_share_with">Kontakt zum Teilen auswählen</string>
@@ -752,7 +709,6 @@
     <string name="pin_shortcut_label">%1$s öffnen</string>
     <string name="player_stop">Stopp</string>
     <string name="player_toggle">Umschalten</string>
-    <string name="please_select_a_server">Bitte einen Server auswählen…</string>
     <string name="please_select_a_server">Bitte einen Server auswählen …</string>
     <string name="power_save_check_dialog_message">Bei deaktiviertem Energiesparmodus werden Daten auch bei niedrigem Batterieladezustand hochgeladen.</string>
     <string name="pref_behaviour_entries_delete_file">gelöscht</string>
@@ -814,7 +770,6 @@
     <string name="prefs_show_ecosystem_apps">App-Umschalter anzeigen</string>
     <string name="prefs_show_ecosystem_apps_summary">Nextcloud-App-Vorschläge in der Navigationsüberschrift</string>
     <string name="prefs_show_hidden_files">Versteckte Dateien anzeigen</string>
-    <string name="prefs_sourcecode">Zum Programmcode</string>
     <string name="prefs_sourcecode">Zum Quellcode</string>
     <string name="prefs_sycned_folders_summary">Ordner für \"Automatisches Hochladen\" verwalten</string>
     <string name="prefs_synced_folders_local_path_title">Lokaler Ordner</string>
@@ -833,14 +788,11 @@
     <string name="preview_image_file_is_not_downloaded">Datei nicht heruntergeladen</string>
     <string name="preview_media_unhandled_http_code_message">Die Datei ist derzeit von einem anderen Benutzer oder Prozess gesperrt und kann daher nicht gelöscht werden. Bitte später noch einmal versuchen.</string>
     <string name="preview_sorry">Entschuldigung</string>
-    <string name="preview_text_string_fragment_open_rich_text_editor_error_message">Editor konnte nicht geöffnet werden</string>
     <string name="privacy">Datenschutz</string>
     <string name="push_notifications_not_implemented">Push Benachrichtigungen deaktiviert aufgrund der Abhängigkeiten zu proprietären Google Play Diensten.</string>
     <string name="push_notifications_old_login">Keine Push Benachrichtigungen aufgrund veralteter Benutzersitzung. Bitte erwägen Sie das erneute Hinzufügen Ihres Kontos.</string>
     <string name="push_notifications_temp_error">Push Benachrichtigungen aktuell nicht verfügbar.</string>
     <string name="qr_could_not_be_read">QR-Code konnte nicht gelesen werden!</string>
-    <string name="re_enable_auto_upload">Änderungen beim automatischen Hochladen</string>
-    <string name="re_enable_auto_upload_desc">Aufgrund neuer Einschränkungen durch Google waren wir gezwungen, eine wichtige Berechtigung zu entfernen. Wir arbeiten derzeit mit Google daran, dieses Problem zu beheben und die volle Funktionalität wiederherzustellen.\n\nSo aktivieren Sie den automatischen Upload für neue Fotos und Videos wieder:\nWählen Sie im folgenden Dialog oder in den Systemeinstellungen \"Alle zulassen\".\nLassen Sie die Medienstandortangabe bei entsprechender Aufforderung zu, da Nextcloud dadurch beim Hochladen von Bildern Standortdaten speichern kann.\n\nDer Berechtigungsdialog wird nur bei Bedarf angezeigt. Überprüfen Sie im Zweifelsfall die Systemeinstellungen.\n\nDer automatische Upload kann Bild- und Videodateien nur hochladen, wenn die Google Play-Version der Nextcloud-App verwendet wird.\n\nBitte prüfen Sie, ob Dateien vorhanden sind, die möglicherweise seit Dezember 2024 nicht mehr hochgeladen wurden.</string>
     <string name="receive_external_files_activity_start_sync_folder_is_not_exists_message">Ordner nicht gefunden, Synchronisierungsvorgang wurde abgebrochen</string>
     <string name="receive_external_files_activity_unable_to_find_file_to_upload">Datei zum Hochladen konnte nicht gefunden werden</string>
     <string name="recommend_subject">Probieren Sie %1$s auf Ihrem Smartphone</string>
@@ -898,7 +850,7 @@
     <string name="send">Senden</string>
     <string name="send_copy_to">Kopie senden an</string>
     <string name="send_share">Freigabe senden</string>
-    <string name="sendbutton_description">Symbol für die Senden-Schaltfläche</string>
+    <string name="sendbutton_description">Icon für die Senden-Schaltfläche</string>
     <string name="server_not_reachable">Inhalt konnte nicht geladen werden</string>
     <string name="server_not_reachable_content">Das Gerät scheint nicht mit dem Internet verbunden zu sein</string>
     <string name="set_as">Setze als</string>
@@ -938,9 +890,6 @@
     <string name="share_no_password_title">Passwort setzen</string>
     <string name="share_not_allowed_when_file_drop">Erneutes teilen ist für die sichere Dateiablage nicht zugelassen</string>
     <string name="share_option_required">Bitte mindestens eine Freigabeoption wählen, bevor Sie fortfahren.</string>
-    <string name="share_password_title">Passwortgeschützt</string>
-    <string name="share_permission_can_edit">Kann bearbeiten</string>
-    <string name="share_permission_file_drop">Dateiablage</string>
     <string name="share_permission_can_edit">Kann bearbeiten</string>
     <string name="share_permission_file_request">Dateianfrage</string>
     <string name="share_permission_secure_file_drop">Sichere Dateiablage</string>
@@ -950,7 +899,6 @@
     <string name="share_read_permission">Lesen</string>
     <string name="share_remote_clarification">%1$s (remote)</string>
     <string name="share_room_clarification">%1$s (Unterhaltung)</string>
-    <string name="share_search">Name, Federated-Cloud-ID oder E-Mail-Adresse …</string>
     <string name="share_search">Name, Federated-Cloud-ID oder E-Mail-Adresse …</string>
     <string name="share_search_internal">Benutzer oder Teams hinzufügen</string>
     <string name="share_send_new_email">Neue E-Mail senden</string>
@@ -1058,8 +1006,6 @@
     <string name="sync_not_enough_space_dialog_title">Nicht genügend Speicherplatz</string>
     <string name="sync_status_button">Status-synchronisieren-Schaltfläche</string>
     <string name="sync_string_files">Dateien</string>
-    <string name="sync_warning_button">Schaltfläche „Synchronisationswarnung“</string>
-    <string name="synced_folder_settings_button">Einstellungs-Button</string>
     <string name="sync_warning_button">Schaltfläche \"Synchronisationswarnung\"</string>
     <string name="synced_folder_settings_button">Einstellungs-Schaltfläche</string>
     <string name="synced_folders_configure_folders">Ordner konfigurieren</string>
@@ -1070,8 +1016,7 @@
     <string name="synced_icon">Synchronisiert</string>
     <string name="tags">Schlagworte</string>
     <string name="terms_of_service_title">Nutzungsbedingungen</string>
-    <string name="terms_of_services_agree">Ich stimme den oben genannten ToS zu</string>
-    <string name="terms_of_services_agree">Ich stimme den vorstehenden Nutzungsbedingungen zu</string>
+    <string name="terms_of_services_agree">Ich stimme den oben genannten Nutzungsbedingungen zu</string>
     <string name="test_server_button">Prüfe Serververbindung</string>
     <string name="thirtyMinutes">30 Minuten</string>
     <string name="thisWeek">Diese Woche</string>
@@ -1115,7 +1060,7 @@
     <string name="unsharing_failed">Freigabe aufheben fehlgeschlagen</string>
     <string name="untrusted_domain">Zugriff über nicht vertrauenswürdige Domain. Weitere Informationen finden sich in der Dokumentation.</string>
     <string name="update_link_file_error">Es ist ein Fehler bei der Aktualisierung der Freigabe aufgetreten.</string>
-    <string name="update_link_file_no_exist">Aktualisierung nicht möglich. Bitte prüfen, ob die Datei existiert.</string>
+    <string name="update_link_file_no_exist">Aktualisierung nicht möglich. Bitte prüfen Sie, ob die Datei existiert.</string>
     <string name="update_link_forbidden_permissions">zum Aktualisieren dieser Freigabe</string>
     <string name="updating_share_failed">Aktualisierung der Freigabe fehlgeschlagen</string>
     <string name="upload_action_cancelled_clear">Abgebrochene Uploads entfernen</string>
@@ -1140,9 +1085,6 @@
     <string name="upload_file_dialog_title">Dateinamen und -typ zum Hochladen eingeben</string>
     <string name="upload_files">Dateien hochladen</string>
     <string name="upload_global_pause_title">Alle Uploads wurden pausiert</string>
-    <string name="upload_gplay">Änderungen der Berechtigung</string>
-    <string name="upload_gplay_desc">Für den Zugriff auf Standortinformationen für hochgeladene Bilder ist eine neue Berechtigung erforderlich. Stellen Sie sicher, dass der Medienzugriff auf \"Immer alle zulassen\" eingestellt ist.</string>
-    <string name="upload_item_action_button">Button, um Objekt hochzuladen</string>
     <string name="upload_item_action_button">Schaltfläche, um Element hochzuladen</string>
     <string name="upload_list_delete">Löschen</string>
     <string name="upload_list_empty_headline">Keine Uploads verfügbar</string>
@@ -1164,11 +1106,6 @@
     <string name="upload_quota_exceeded">Speicherkontingent überschritten</string>
     <string name="upload_scan_doc_upload">Dokument von der Kamera scannen</string>
     <string name="upload_sync_conflict">Synchronisierungskonflikt, bitte manuell beheben</string>
-    <string name="upload_sync_conflict_check">Möglicherweise liegt ein Konflikt bezüglich des letzten Uploads vor. Bitte Tippen, um zu überprüfen.</string>
-    <string name="upload_sync_conflict_check_error">Es konnte nicht auf Hochlade-Konflikte überprüft werden. Bitte erneut versuchen.</string>
-    <string name="upload_sync_conflict_checking">Prüfe auf Konflikte beim Hochladen …</string>
-    <string name="upload_sync_conflict_not_exists">Konflikt gelöst.</string>
-    <string name="upload_sync_conflict_same_file">Keine Konflikte gefunden. Gleiche Datei.</string>
     <string name="upload_unknown_error">Unbekannter Fehler</string>
     <string name="uploader_btn_alternative_text">Auswählen</string>
     <string name="uploader_btn_upload_text">Hochladen</string>
@@ -1217,7 +1154,7 @@
     <string name="uploads_view_upload_status_failed_ssl_certificate_not_trusted">Serverzertifikat ist nicht vertrauenswürdig</string>
     <string name="uploads_view_upload_status_fetching_server_version">Serverversion wird abgerufen …</string>
     <string name="uploads_view_upload_status_service_interrupted">App beendet</string>
-    <string name="uploads_view_upload_status_skip">Übersprungen</string>
+    <string name="uploads_view_upload_status_skip">Überspringen</string>
     <string name="uploads_view_upload_status_skip_reason">Eine Datei mit demselben Namen ist bereits vorhanden.</string>
     <string name="uploads_view_upload_status_succeeded">Fertiggestellt</string>
     <string name="uploads_view_upload_status_succeeded_same_file">Gleiche Datei auf dem Remote-Server gefunden, überspringe das Hochladen</string>
@@ -1229,9 +1166,7 @@
     <string name="user_icon">Nutzer</string>
     <string name="user_info_address">Adresse</string>
     <string name="user_info_email">E-Mail</string>
-    <string name="user_info_groups">Gruppen</string>
     <string name="user_info_phone">Telefonnummer</string>
-    <string name="user_info_profile">Profil</string>
     <string name="user_info_twitter">X</string>
     <string name="user_info_website">Webseite</string>
     <string name="user_information_retrieval_error">Fehler beim Laden der Nutzer-Informationen</string>

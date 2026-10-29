@@ -16,9 +16,6 @@ import com.nextcloud.android.common.ui.theme.utils.ColorRole;
 import com.nextcloud.client.device.DeviceInfo;
 import com.nextcloud.client.di.Injectable;
 import com.nextcloud.client.documentscan.AppScanOptionalFeature;
-import com.owncloud.android.R;
-import com.owncloud.android.databinding.SimpleFileListActionsBottomSheetFragmentBinding;
-import com.owncloud.android.ui.activity.FileActivity;
 import com.owncloud.android.MainApp;
 import com.nextcloud.utils.BuildHelper;
 import com.owncloud.android.R;
@@ -40,7 +37,6 @@ public class SimpleOCFileListBottomSheetDialog extends BottomSheetDialog impleme
     private final ViewThemeUtils viewThemeUtils;
 
     private final AppScanOptionalFeature appScanOptionalFeature;
-
 
     public SimpleOCFileListBottomSheetDialog(FileActivity fileActivity,
                                              OCFileListBottomSheetActions actions,

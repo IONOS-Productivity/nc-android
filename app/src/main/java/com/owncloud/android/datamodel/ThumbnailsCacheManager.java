@@ -1076,7 +1076,6 @@ public final class ThumbnailsCacheManager {
         return null;
     }
 
-    @IonosCustomization("Use layout overlay instead of bitmap overlay")
      @IonosCustomization("Use layout overlay instead of bitmap overlay")
     public static Bitmap addVideoOverlay(Bitmap thumbnail, Context context) {
         if (IonosBuildHelper.isIonosBuild()) {

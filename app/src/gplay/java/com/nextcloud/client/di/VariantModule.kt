@@ -8,10 +8,6 @@
  */
 package com.nextcloud.client.di
 
-import com.ionos.scanbot.availability.Availability
-import com.ionos.scanbot.di.qualifiers.Scanbot
-import com.ionos.scanbot.di.qualifiers.ScanbotLicense
-import com.nextcloud.appscan.ScanPageContract
 import androidx.activity.result.contract.ActivityResultContract
 import com.ionos.scanbot.availability.Availability
 import com.ionos.scanbot.di.qualifiers.Scanbot
@@ -30,7 +26,6 @@ internal class VariantModule {
         @ScanbotLicense licenseAvailability: Availability
     ): AppScanOptionalFeature {
         return object : AppScanOptionalFeature() {
-            override fun getScanContract() = ScanPageContract()
             override fun getScanContract(): ActivityResultContract<Unit, String?> {
                 throw UnsupportedOperationException("Document scan is not available")
             }

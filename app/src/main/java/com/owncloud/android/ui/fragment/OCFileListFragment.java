@@ -40,8 +40,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.ionos.annotation.IonosCustomization;
 import com.ionos.scanbot.controller.ScanbotController;
-import com.nextcloud.android.lib.resources.files.ToggleFileLockRemoteOperation;
-import com.nextcloud.android.lib.richWorkspace.RichWorkspaceDirectEditingRemoteOperation;
 import com.ionos.scanbot.ui.ScanbotCameraPermissionHandler;
 import com.nextcloud.android.lib.resources.clientintegration.Endpoint;
 import com.nextcloud.android.lib.resources.files.ToggleFileLockRemoteOperation;
@@ -464,22 +462,6 @@ public class OCFileListFragment extends ExtendedListFragment implements
         if (getActivity() instanceof FileDisplayActivity fda) {
             fda.updateActionBarTitleAndHomeButton(fda.getCurrentDir());
         }
-        listDirectory(MainApp.isOnlyOnDevice(), false);
-    }
-
-    public void fetchRecommendedFiles() {
-        OCFile folder = getCurrentFile();
-
-        if (getCapabilities().getRecommendations().isFalse() || !folder.isRootDirectory()) {
-            return;
-        }
-
-        if (getActivity() instanceof FileActivity fileActivity) {
-            fileActivity.getFilesRepository().fetchRecommendedFiles(recommendations -> {
-                mAdapter.updateRecommendedFiles(recommendations);
-                return Unit.INSTANCE;
-            });
-        }
     }
 
     protected void setAdapter(Bundle args) {
@@ -494,7 +476,6 @@ public class OCFileListFragment extends ExtendedListFragment implements
             this,
             hideItemOptions,
             isGridViewPreferred(mFile),
-            viewThemeUtils
             viewThemeUtils,
             overlayManager
         );
@@ -518,25 +499,6 @@ public class OCFileListFragment extends ExtendedListFragment implements
      */
     @IonosCustomization("Show simple FAB menu bottom sheet")
     public void registerFabListener() {
-        FileActivity activity = (FileActivity) getActivity();
-
-        if (mFabMain != null) {
-            // is not available in FolderPickerActivity
-            mFabMain.setOnClickListener(v -> {
-                PermissionUtil.requestMediaLocationPermission(activity);
-
-                final SimpleOCFileListBottomSheetDialog dialog =
-                    new SimpleOCFileListBottomSheetDialog(activity,
-                                                    this,
-                                                    deviceInfo,
-                                                    themeUtils,
-                                                    viewThemeUtils,
-                                                    appScanOptionalFeature);
-
-                dialog.getBehavior().setState(BottomSheetBehavior.STATE_EXPANDED);
-                dialog.getBehavior().setSkipCollapsed(true);
-                dialog.show();
-            });
         if (!(getActivity() instanceof FileActivity fileActivity)) {
             Log_OC.w(TAG, "activity is null cannot register fab listener");
             return;
@@ -855,7 +817,6 @@ public class OCFileListFragment extends ExtendedListFragment implements
             // fake menu to be able to use bottom sheet instead
             MenuInflater inflater = requireActivity().getMenuInflater();
             inflater.inflate(R.menu.custom_menu_placeholder, menu);
-            mode.invalidate();
 
 //            final MenuItem item = menu.findItem(R.id.custom_menu_placeholder_item);
 //            if (item.getIcon() != null) {
@@ -1525,11 +1486,6 @@ public class OCFileListFragment extends ExtendedListFragment implements
         return mFile;
     }
 
-    @IonosCustomization
-    public SearchType getCurrentSearchType() {
-        return currentSearchType;
-    }
-
     /**
      * Calls {@link OCFileListFragment#listDirectory(OCFile, boolean)} with a null parameter
      */
@@ -1647,28 +1603,11 @@ public class OCFileListFragment extends ExtendedListFragment implements
         mAdapter.notifyItemChanged(file);
     }
 
-    @IonosCustomization
     private void updateLayout() {
         setLayoutViewMode();
         updateSortButton();
         setLayoutSwitchButton();
 
-        if (mSortButton != null) {
-            mSortButton.setIconResource(DisplayUtils.getSortOrderIconRes(preferences.getSortOrderByFolder(mFile)));
-        }
-        if (mSwitchGridViewButton != null) {
-            setGridSwitchButton();
-        }
-
-        if (mHideFab) {
-            setFabVisible(false);
-        } else {
-            setFabVisible(true);
-            // registerFabListener();
-        }
-
-        // FAB
-        setFabEnabled(mFile != null && (mFile.canWrite() || mFile.isOfflineOperation()));
         setFabVisible(!mHideFab);
         slideHideBottomBehaviourForBottomNavigationView(!mHideFab);
         setFabEnabled(mFile != null && (mFile.canCreateFileAndFolder() || mFile.isOfflineOperation()));
@@ -1698,7 +1637,6 @@ public class OCFileListFragment extends ExtendedListFragment implements
 
     @IonosCustomization
     public void sortFiles(FileSortOrder sortOrder) {
-        mSortButton.setIconResource(DisplayUtils.getSortOrderIconRes(sortOrder));
         if (mSortButton != null) {
             mSortButton.setIconResource(DisplayUtils.getSortOrderIconRes(sortOrder));
         }
@@ -2263,7 +2201,6 @@ public class OCFileListFragment extends ExtendedListFragment implements
      *
      * @param visible Desired visibility for the FAB.
      */
-    @IonosCustomization
     @IonosCustomization("Removed FAB theming")
     public void setFabVisible(final boolean visible) {
         if (mFabMain == null) {
@@ -2271,16 +2208,6 @@ public class OCFileListFragment extends ExtendedListFragment implements
             return;
         }
 
-        if (getActivity() != null) {
-            getActivity().runOnUiThread(() -> {
-                if (visible) {
-                    mFabMain.show();
-                } else {
-                    mFabMain.hide();
-                }
-
-                showFabWithBehavior(visible);
-            });
         final var activity = getActivity();
         if (activity == null) {
             return;

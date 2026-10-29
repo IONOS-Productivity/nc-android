@@ -9,13 +9,6 @@ package com.owncloud.android.ui.adapter
 
 import android.content.Context
 import android.view.View
-import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
-import com.afollestad.sectionedrecyclerview.SectionedViewHolder
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
-import com.ionos.annotation.IonosCustomization
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.widget.ImageViewCompat
@@ -71,7 +64,9 @@ class UnifiedSearchItemViewHolder(
         bindLocalFileIndicator(entry)
 
         val entryType = entry.getType()
-        bindThumbnail(entry, entryType)
+        val file = storageManager.getFileByRemotePath(entry.remotePath())
+        bindThumbnail(file, entry, entryType)
+        bindFavoriteIndicator(file)
         bindMoreButton(entry)
         binding.unifiedSearchItemLayout.setOnClickListener {
             searchEntryOnClick(entry, entryType)
@@ -93,8 +88,11 @@ class UnifiedSearchItemViewHolder(
         binding.localFileIndicator.setVisibleIf(showLocalFileIndicator)
     }
 
-    private fun bindThumbnail(entry: SearchResultEntry, entryType: SearchResultEntryType) {
-        val file = storageManager.getFileByRemotePath(entry.remotePath())
+    private fun bindFavoriteIndicator(file: OCFile?) {
+        binding.favoriteAction.setVisibleIf(file?.isFavorite == true)
+    }
+
+    private fun bindThumbnail(file: OCFile?, entry: SearchResultEntry, entryType: SearchResultEntryType) {
         Glide.with(context).clear(binding.thumbnail)
         binding.thumbnailOverlayIcon.setVisibleIf(false)
 
@@ -187,52 +185,4 @@ class UnifiedSearchItemViewHolder(
             listInterface.onSearchResultClicked(entry)
         }
     }
-
-    @IonosCustomization
-    @IonosCustomization("Custom drawable tinting. Use mimetype icon for unknown entry types.")
-    private fun getPlaceholder(
-        entry: SearchResultEntry,
-        entryType: SearchResultEntryType,
-        mimetype: String?
-    ): Drawable {
-        val iconId = entryType.run {
-            iconId()
-        }
-
-        val defaultDrawable = MimeTypeUtil.getFileTypeIcon(mimetype, entry.title, context, viewThemeUtils)
-
-        if (entryType == SearchResultEntryType.Unknown && defaultDrawable != null) {
-            return defaultDrawable
-        }
-
-        val drawable: Drawable = ResourcesCompat.getDrawable(context.resources, iconId, null) ?: defaultDrawable
-        val color = ContextCompat.getColor(context, R.color.filelist_file_icon_color)
-        return viewThemeUtils.platform.colorDrawable(drawable, color)
-    }
-
-    private inner class RoundIfNeededListener(private val entry: SearchResultEntry) :
-        RequestListener<String, Bitmap> {
-        override fun onException(
-            e: Exception?,
-            model: String?,
-            target: Target<Bitmap>?,
-            isFirstResource: Boolean
-        ): Boolean = false
-
-        override fun onResourceReady(
-            resource: Bitmap?,
-            model: String?,
-            target: Target<Bitmap>?,
-            isFromMemoryCache: Boolean,
-            isFirstResource: Boolean
-        ): Boolean {
-            if (entry.rounded) {
-                val drawable = BitmapUtils.bitmapToCircularBitmapDrawable(context.resources, resource)
-                binding.thumbnail.setImageDrawable(drawable)
-                return true
-            }
-            return false
-        }
-    }
-}
 }

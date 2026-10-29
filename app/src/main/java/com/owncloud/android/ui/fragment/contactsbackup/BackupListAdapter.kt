@@ -22,9 +22,6 @@ import android.widget.CheckedTextView
 import android.widget.ImageView
 import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter
 import com.afollestad.sectionedrecyclerview.SectionedViewHolder
-import com.bumptech.glide.request.animation.GlideAnimation
-import com.bumptech.glide.request.target.SimpleTarget
-import com.ionos.annotation.IonosCustomization
 import com.ionos.annotation.IonosCustomization
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition

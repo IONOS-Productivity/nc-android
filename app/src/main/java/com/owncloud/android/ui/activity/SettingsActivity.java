@@ -169,9 +169,6 @@ public class SettingsActivity extends PreferenceActivity
 
         getDelegate().installViewFactory();
         getDelegate().onCreate(savedInstanceState);
-
-        super.onCreate(savedInstanceState);
-
         addPreferencesFromResource(R.xml.preferences);
         getListView().setFitsSystemWindows(true);
         setupActionBar();
@@ -213,10 +210,6 @@ public class SettingsActivity extends PreferenceActivity
 
         // workaround for mismatched color when app dark mode and system dark mode don't agree
         setListBackground();
-
-        // workaround to set custom paddings
-        setListPadding();
-
         showPasscodeDialogIfEnforceAppProtection();
     }
 

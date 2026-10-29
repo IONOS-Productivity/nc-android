@@ -232,11 +232,6 @@ class UnifiedSearchFragment :
         }
     }
 
-    @IonosCustomization
-    private fun setUpViewModel() {
-        vm.searchResults.observe(this, this::onSearchResultChanged)
-        vm.isLoading.observe(this) { loading ->
-            binding.swipeContainingList.isRefreshing = loading
     private fun setCloseAction(searchView: SearchView) {
         val closeButton = searchView.findViewById<ImageView>(androidx.appcompat.R.id.search_close_btn)
         closeButton?.setOnClickListener {
@@ -334,12 +329,6 @@ class UnifiedSearchFragment :
             handleScreenState(it)
         }
 
-                    binding.emptyList.emptyListViewHeadline.text =
-                        requireContext().getString(R.string.file_list_empty_headline_server_search)
-                    binding.emptyList.emptyListViewText.text =
-                        requireContext().getString(R.string.file_list_empty_unified_search_no_results)
-                    binding.emptyList.emptyListIcon.setImageResource(R.drawable.ic_search)
-                }
         PairMediatorLiveData(vm.searchResults, vm.isLoading).observe(viewLifecycleOwner) { (searchResults, isLoading) ->
             if (isLoading == true || searchResults.isNullOrEmpty()) {
                 return@observe

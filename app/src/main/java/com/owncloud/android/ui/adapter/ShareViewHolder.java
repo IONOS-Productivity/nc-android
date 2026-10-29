@@ -66,11 +66,6 @@ class ShareViewHolder extends RecyclerView.ViewHolder {
                      float avatarRadiusDimension) {
         this.avatarRadiusDimension = avatarRadiusDimension;
         String name = share.getSharedWithDisplayName();
-        
-        if ("".equals(name) && !"".equals(share.getShareWith())) {
-            name = share.getShareWith();
-        }
-        
 
         if ("".equals(name) && !"".equals(share.getShareWith())) {
             name = share.getShareWith();
@@ -149,10 +144,6 @@ class ShareViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
-    @IonosCustomization
-    private void setImage(ImageView avatar, String name, @DrawableRes int fallback) {
-        if (IonosBuildHelper.isIonosBuild()) {
-            avatar.setImageResource(R.drawable.account_circle_white);
     private void setImage(ImageView avatar, String name) {
         if (IonosBuildHelper.isIonosBuild() || TextUtils.isEmpty(name)) {
             setUserImage(avatar);

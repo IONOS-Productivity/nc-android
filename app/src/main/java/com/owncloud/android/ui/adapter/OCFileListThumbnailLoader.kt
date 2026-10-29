@@ -107,7 +107,6 @@ class OCFileListThumbnailLoader(
     }
 
     private fun showFolderIcon() {
-        val isAutoUploadFolder = SyncedFolderProvider.isAutoUploadFolder(syncedFolderProvider, file, user)
         val isAutoUploadFolder = SyncedFolderObserver.isAutoUploadFolder(file, user)
         val isDarkModeActive = preferences.isDarkModeEnabled
         val overlayIconId = file.getFileOverlayIconId(isAutoUploadFolder)

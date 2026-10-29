@@ -26,9 +26,6 @@
     <string name="activity_chooser_title">Sendi ligilon al...</string>
     <string name="activity_icon">Aktivaĵoj</string>
     <string name="add_to_cloud">Aldoni al %1$s</string>
-    <string name="advanced_settings">Altanivela agordo</string>
-    <string name="allow_resharing">Permesi rekunhavigon</string>
-    <string name="appbar_search_in">Serĉi en 1%s</string>
     <string name="appbar_search_in">Serĉi en 1%s</string>
     <string name="assistant_task_status_unknown">nekonata</string>
     <string name="auth_access_failed">Aliro malsukcesis: %1$s</string>
@@ -231,6 +228,7 @@
     <string name="file_list_empty_headline_search">Neniu rezulto en tiu dosierujo</string>
     <string name="file_list_empty_headline_server_search">Neniu rezulto</string>
     <string name="file_list_empty_moving">Nenio ĉi tie. Vi povas aldoni dosierujon.</string>
+    <string name="file_list_empty_recently_modified">Troviĝis neniu dosiero modifita dum la lastaj 7 tagoj</string>
     <string name="file_list_empty_search">Ĉu eble ĝi estas en alia dosierujo?</string>
     <string name="file_list_empty_shared_headline">Ankoraŭ neniu kunhavo</string>
     <string name="file_list_folder">dosierujo</string>
@@ -448,7 +446,6 @@
     <string name="share_delete_permission">Forigi</string>
     <string name="share_dialog_title">Kunhavigo</string>
     <string name="share_edit_permission">Modifi</string>
-    <string name="share_expiration_date_label">Senvalidiĝas je %1$s</string>
     <string name="share_file">Kunhavigi %1$s</string>
     <string name="share_group_clarification">%1$s (grupo)</string>
     <string name="share_link">Kunhavigi ligilon</string>
@@ -635,7 +632,6 @@
     <string name="user_icon">Uzanto</string>
     <string name="user_info_address">Adreso</string>
     <string name="user_info_email">Retpoŝtadreso</string>
-    <string name="user_info_groups">Grupoj</string>
     <string name="user_info_phone">Telefonnumero</string>
     <string name="user_info_twitter">Twitter</string>
     <string name="user_info_website">Retejo</string>

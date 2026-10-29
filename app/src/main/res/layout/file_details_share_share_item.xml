@@ -64,7 +64,6 @@
             app:drawableEndCompat="@drawable/ic_baseline_arrow_drop_down_24"
             app:drawableRightCompat="@drawable/ic_baseline_arrow_drop_down_24"
             app:drawableTint="@color/file_details_accent_color"
-            tools:text="View only" />
             tools:text="@string/placeholder_view_only" />
     </LinearLayout>
 

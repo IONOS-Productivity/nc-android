@@ -82,7 +82,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -135,7 +134,6 @@ public class OCFileListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private final long footerId = UUID.randomUUID().getLeastSignificantBits();
     private final long headerId = UUID.randomUUID().getLeastSignificantBits();
 
-    private ArrayList<Recommendation> recommendedFiles = new ArrayList<>();
     private ArrayList<OCFile> recommendedFiles = new ArrayList<>();
     private RecommendedFilesAdapter recommendedFilesAdapter;
     private final OCFileListAdapterHelper helper = new OCFileListAdapterHelper();
@@ -150,7 +148,6 @@ public class OCFileListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         OCFileListFragmentInterface ocFileListFragmentInterface,
         boolean argHideItemOptions,
         boolean gridView,
-        final ViewThemeUtils viewThemeUtils) {
         final ViewThemeUtils viewThemeUtils,
         OverlayManager overlayManager) {
         this.overlayManager = overlayManager;
@@ -551,19 +548,6 @@ public class OCFileListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
     }
 
-    @IonosCustomization
-    @IonosCustomization("Custom grid view, Show current playback progress")
-    private void bindListGridItemViewHolder(ListGridItemViewHolder holder, OCFile file) {
-        holder.getFileName().setText(mStorageManager.getFilenameConsideringOfflineOperation(file));
-        holder.getPlayerProgressIndicator().setFile(file);
-
-        if (IonosBuildHelper.isIonosBuild()) {
-            return;
-        }
-
-        if (IonosBuildHelper.isIonosBuild()) {
-            return;
-        }
     private void setFilenameAndExtension(ListGridItemViewHolder holder, OCFile file) {
         final String filename = mStorageManager.getFilenameConsideringOfflineOperation(file);
         final var pair = FileStorageUtils.getFilenameAndExtension(filename, file.isFolder(), isRTL);
@@ -621,12 +605,6 @@ public class OCFileListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         holder.getSharedAvatars().removeAllViews();
         if ((file.isSharedWithMe() || file.isSharedWithSharee()) && !isMultiSelect() && !gridView &&
             !hideItemOptions) {
-            if(file.isSharedViaLink()){
-                holder.getShared().setImageResource(R.drawable.ic_shared_all_types);
-            } else {
-                holder.getShared().setImageResource(R.drawable.shared_via_users);
-            }
-            holder.getShared().setVisibility(View.VISIBLE);
 
             String fileOwner = file.getOwnerId();
             List<ShareeUser> sharees = file.getSharees();
@@ -732,9 +710,6 @@ public class OCFileListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
     }
 
-    public void updateRecommendedFiles(ArrayList<Recommendation> recommendedFiles) {
-        this.recommendedFiles = recommendedFiles;
-        notifyItemChanged(0);
     private void setVisibilityOfMoreOption(Object holder) {
         boolean showMoreOptions = (!isMultiSelect() && !OCFileListFragment.isMultipleFileSelectedForCopyOrMove);
 

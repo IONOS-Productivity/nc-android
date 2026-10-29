@@ -644,28 +644,6 @@ public class FileContentProvider extends ContentProvider {
         return result;
     }
 
-    @IonosCustomization
-    private Set<Long> queryParentIds(SupportSQLiteDatabase db, Uri uri, String where, String... whereArgs) {
-        Set<Long> result = new HashSet<>();
-        int uriMatch = mUriMatcher.match(uri);
-        if (uriMatch == ROOT_DIRECTORY || mUriMatcher.match(uri) == DIRECTORY || mUriMatcher.match(uri) == SINGLE_FILE) {
-            try (Cursor cursor = query(db, uri, PROJECTION_PARENT_ID, where, whereArgs, null)) {
-                if (cursor.moveToFirst()) {
-                    do {
-                        int parentIdColumnIndex = cursor.getColumnIndex(ProviderTableMeta.FILE_PARENT);
-                        if (parentIdColumnIndex != -1 && !cursor.isNull(parentIdColumnIndex)) {
-                            long parentId = cursor.getLong(parentIdColumnIndex);
-                            result.add(parentId);
-                        }
-                    } while (cursor.moveToNext());
-                }
-            } catch (Exception e) {
-                Log_OC.d(TAG, "Error querying parent IDs", e);
-            }
-        }
-        return result;
-    }
-
     @NonNull
     @Override
     public ContentProviderResult[] applyBatch(@NonNull ArrayList<ContentProviderOperation> operations)

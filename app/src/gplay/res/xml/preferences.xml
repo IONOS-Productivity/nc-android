@@ -18,7 +18,6 @@
             android:title="@string/prefs_data_storage_location"
             android:key="data_storage_location"
             android:summary="@string/prefs_data_storage_location_summary" />
-        <ListPreference
         <Preference
             android:key="darkMode"
             android:layout="@layout/settings_preference_list_item"
@@ -41,10 +40,6 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:key="details"
-        android:layout="@layout/settings_preference_group"
-        android:title="@string/prefs_category_details">
-        <com.owncloud.android.ui.ListPreferenceDialog
         android:title="@string/prefs_category_files"
         android:key="files">
         <com.owncloud.android.ui.ThemeableSwitchPreference
@@ -73,10 +68,6 @@
             android:key="lock"
             android:layout="@layout/settings_preference_list_item"
             android:title="@string/prefs_lock" />
-        <com.owncloud.android.ui.ThemeableSwitchPreference
-            android:key="show_hidden_files"
-            android:layout="@layout/settings_preference_switcher"
-            android:title="@string/prefs_show_hidden_files" />
         <com.owncloud.android.ui.ThemeableSwitchPreference
             android:defaultValue="true"
             android:key="show_ecosystem_apps"

@@ -233,14 +233,6 @@ class FileUploadWorker(
 
             if (canExitEarly()) {
                 notificationManager.showConnectionErrorNotification()
-                return Result.failure()
-            }
-
-            Log_OC.d(TAG, "Handling ${uploadsPerPage.size} uploads for account $accountName")
-            val lastId = uploadsPerPage.last().uploadId
-            uploadFiles(totalUploadSize, uploadsPerPage, accountName)
-            uploadsPerPage =
-                uploadsStorageManager.getCurrentUploadsForAccountPageAscById(lastId, accountName)
                 return@withContext Result.failure()
             }
 
@@ -303,116 +295,6 @@ class FileUploadWorker(
         if (result) {
             Log_OC.d(TAG, "No internet connection, stopping worker.")
         } else {
-            Log_OC.d(TAG, "No more pending uploads for account $accountName, stopping work")
-        }
-        return Result.success()
-    }
-
-    private fun canExitEarly(): Boolean {
-        val result = !connectivityService.isConnected ||
-            connectivityService.isInternetWalled ||
-            isStopped
-
-        if (result) {
-            Log_OC.d(TAG, "No internet connection, stopping worker.")
-        } else {
-            notificationManager.dismissErrorNotification()
-        }
-
-        return result
-    }
-
-    @Suppress("NestedBlockDepth")
-    private fun uploadFiles(totalUploadSize: Int, uploadsPerPage: List<OCUpload>, accountName: String) {
-        val user = userAccountManager.getUser(accountName)
-        setWorkerState(user.get(), uploadsPerPage)
-
-        if (canExitEarly()) {
-            notificationManager.showConnectionErrorNotification()
-            return
-        }
-
-        run uploads@{
-            uploadsPerPage.forEach { upload ->
-                if (canExitEarly()) {
-                    notificationManager.showConnectionErrorNotification()
-                    return@uploads
-                }
-
-                if (user.isPresent) {
-                    val uploadFileOperation = createUploadFileOperation(upload, user.get())
-
-                    currentUploadFileOperation = uploadFileOperation
-
-                    notificationManager.prepareForStart(
-                        uploadFileOperation,
-                        cancelPendingIntent = intents.startIntent(uploadFileOperation),
-                        startIntent = intents.notificationStartIntent(uploadFileOperation),
-                        currentUploadIndex = currentUploadIndex,
-                        totalUploadSize = totalUploadSize
-                    )
-
-                    val result = upload(uploadFileOperation, user.get())
-
-                    if (result.isSuccess) {
-                        currentUploadIndex += 1
-                    }
-
-                    currentUploadFileOperation = null
-
-                    fileUploaderDelegate.sendBroadcastUploadFinished(
-                        uploadFileOperation,
-                        result,
-                        uploadFileOperation.oldFile?.storagePath,
-                        context,
-                        localBroadcastManager
-                    )
-                } else {
-                    uploadsStorageManager.removeUpload(upload.uploadId)
-                }
-            }
-        }
-    }
-
-    private fun createUploadFileOperation(upload: OCUpload, user: User): UploadFileOperation {
-        return UploadFileOperation(
-            uploadsStorageManager,
-            connectivityService,
-            powerManagementService,
-            user,
-            null,
-            upload,
-            upload.nameCollisionPolicy,
-            upload.localAction,
-            context,
-            upload.isUseWifiOnly,
-            upload.isWhileChargingOnly,
-            true,
-            FileDataStorageManager(user, context.contentResolver)
-        ).apply {
-            addDataTransferProgressListener(this@FileUploadWorker)
-        }
-    }
-
-    @Suppress("TooGenericExceptionCaught", "DEPRECATION")
-    private fun upload(uploadFileOperation: UploadFileOperation, user: User): RemoteOperationResult<Any?> {
-        lateinit var result: RemoteOperationResult<Any?>
-
-        try {
-            val storageManager = uploadFileOperation.storageManager
-            val ocAccount = OwnCloudAccount(user.toPlatformAccount(), context)
-            val uploadClient = OwnCloudClientManagerFactory.getDefaultSingleton().getClientFor(ocAccount, context)
-            result = uploadFileOperation.execute(uploadClient)
-
-            val task = ThumbnailsCacheManager.ThumbnailGenerationTask(storageManager, user)
-            val file = File(uploadFileOperation.originalStoragePath)
-            val remoteId: String? = uploadFileOperation.file.remoteId
-            task.execute(ThumbnailsCacheManager.ThumbnailGenerationTaskObject(file, remoteId))
-        } catch (e: Exception) {
-            Log_OC.e(TAG, "Error uploading", e)
-            result = RemoteOperationResult<Any?>(e)
-        } finally {
-            cleanupUploadProcess(result, uploadFileOperation)
             notificationManager.dismissErrorNotification()
         }
 

@@ -84,10 +84,6 @@ public abstract class EditorWebView extends ExternalSiteWebView {
                 this.getWebView().loadUrl(url);
             }
 
-            if (!url.equals(this.getWebView().getUrl())) {
-                this.getWebView().loadUrl(url);
-            }
-
             new Handler().postDelayed(() -> {
                 if (this.getWebView().getVisibility() != View.VISIBLE) {
                     Snackbar snackbar = DisplayUtils.createSnackbar(findViewById(android.R.id.content),

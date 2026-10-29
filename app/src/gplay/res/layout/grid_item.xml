@@ -218,7 +218,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@color/bg_default"
             android:ellipsize="middle"
             android:gravity="center_vertical"
             android:padding="8dp"

@@ -29,7 +29,6 @@ import com.nextcloud.client.assistant.repository.local.AssistantLocalRepositoryI
 import com.nextcloud.client.assistant.repository.remote.AssistantRemoteRepositoryImpl
 import com.nextcloud.client.database.NextcloudDatabase
 import com.nextcloud.common.NextcloudClient
-import com.nextcloud.utils.extensions.getSerializableArgument
 import com.nextcloud.ui.ClientIntegrationScreen
 import com.nextcloud.utils.extensions.getParcelableArgument
 import com.owncloud.android.R
@@ -112,17 +111,6 @@ class ComposeActivity : DrawerActivity() {
     }
 
     @Composable
-    private fun Content(destination: ComposeDestination?) {
-        var nextcloudClient by remember { mutableStateOf<NextcloudClient?>(null) }
-
-        LaunchedEffect(Unit) {
-            nextcloudClient = clientRepository.getNextcloudClient()
-        }
-
-        if (destination == ComposeDestination.AssistantScreen) {
-            binding.bottomNavigation.menu.findItem(R.id.nav_assistant).run {
-                isChecked = true
-            }
     private fun Content(destination: ComposeDestination) {
         val currentScreen by ComposeNavigation.currentScreen.collectAsState()
         var nextcloudClient by remember { mutableStateOf<NextcloudClient?>(null) }

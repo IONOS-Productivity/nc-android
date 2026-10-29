@@ -44,13 +44,6 @@
     <string name="app_config_proxy_port_title">Port proxy</string>
     <string name="app_widget_description">Zobrazuje jeden ovládací prvek z nástěnky</string>
     <string name="appbar_search_in">Hledat v %s</string>
-    <string name="assistant_screen_add_task_alert_dialog_title">Přidat nový úkol</string>
-    <string name="assistant_screen_create_a_new_task_from_bottom_right_text">Z pravého dolního rohu vytvořte nový úkol</string>
-    <string name="assistant_screen_create_task_alert_dialog_input_field_placeholder">Zadejte nějaký text</string>
-    <string name="assistant_screen_delete_task_alert_dialog_description">Opravdu chcete tuto úlohu smazat?</string>
-    <string name="assistant_screen_delete_task_alert_dialog_title">Smazat úkol</string>
-    <string name="assistant_screen_loading">Načítání seznamu úkolů…</string>
-    <string name="assistant_screen_no_task_available_text">Pro typ úkolu %s nejsou k dispozici žádné úkoly – nový úkol je možné vytvořit vpravo dole.</string>
     <string name="appear_offline">Jevit se offline</string>
     <string name="assistant_output_generation_warning_text">Zde zobrazený výstup je vytvořen AI. Vždy si informace ověřujte.</string>
     <string name="assistant_screen_chat_create_error">Nepodařilo se odeslat zprávu</string>
@@ -68,8 +61,6 @@
     <string name="assistant_screen_task_create_fail_message">Při vytváření úlohy se vyskytla chyba</string>
     <string name="assistant_screen_task_create_success_message">Úkol vytvořen</string>
     <string name="assistant_screen_task_delete_fail_message">Při mazání úlohy se vyskytla chyba</string>
-    <string name="assistant_screen_task_delete_success_message">Úloha úspěšně smazána</string>
-    <string name="assistant_screen_task_list_empty_message">Seznam úkolů je prázdný.</string>
     <string name="assistant_screen_task_delete_success_message">Úkol smazán</string>
     <string name="assistant_screen_task_list_empty_warning">Seznam úkolů je prázdný. Zkontrolujte nastavení aplikace Asistent.</string>
     <string name="assistant_screen_task_list_error_state_message">Nedaří se získat seznam úloh – zkontrolujte připojení k Internetu.</string>
@@ -124,12 +115,6 @@
     <string name="authenticator_activity_please_complete_login_process">Dokončete proces přihlášení prostřednictvím webového prohlížeče</string>
     <string name="auto_upload_battery_saver_mode_warning">Automatické nahrávání je pozastaveno, protože je zapnuté šetření energií z akumulátoru.</string>
     <string name="auto_upload_file_behaviour_kept_in_folder">ponechán v původní složce, protože je pouze pro čtení</string>
-    <string name="auto_upload_gplay">Chování automatického nahrávání změněno</string>
-    <string name="auto_upload_gplay_desc">Kvůli omezením, nově zavedeným společností Google, funkce pro automatické nahrávání už nebude schopná automaticky odebrat soubory, které už byly nahrány.</string>
-    <string name="auto_upload_gplay_desc2">Kvůli omezením, nově zavedeným ze strany Google, jsme byli nuceni odebrat důležité oprávnění. Výsledkem je, že automatické nahrávání bude moci pouze nahrávat soubory s obrázky a videi.\nOvěřte, že přístup k takovým médiím je nastaven na „Vždy umožnit vše“.</string>
-    <string name="auto_upload_on_wifi">Nahrávat pouze přes neúčtované Wi-Fi připojení</string>
-    <string name="auto_upload_path">/AutoUpload</string>
-    <string name="auto_upload_sub_folder_warning">Tato složka už je obsažena v synchronizaci nadřazené složky, což může způsobovat duplicitní nahrávání</string>
     <string name="auto_upload_low_battery_warning_info">Téměř vybitý akumulátor – nahrávání může trvat déle</string>
     <string name="auto_upload_on_wifi">Nahrávat pouze přes neúčtované Wi-Fi připojení</string>
     <string name="auto_upload_path">/AutoUpload</string>
@@ -260,8 +245,6 @@
     <string name="could_not_retrieve_url">Nepodařilo se získat URL</string>
     <string name="create">Vytvořit</string>
     <string name="create_dir_fail_msg">Nepodařilo se vytvořit složku</string>
-    <string name="create_end_to_end_encrypted_share">Sdílení odkazu</string>
-    <string name="create_end_to_end_encrypted_share_title">Sdílení odkazem, šifrovaná mezi koncovými body</string>
     <string name="create_link">Vytvořit odkaz</string>
     <string name="create_new">Nové</string>
     <string name="create_new_document">Nový dokument</string>
@@ -336,7 +319,6 @@
     <string name="drawer_item_notifications">Upozornění</string>
     <string name="drawer_item_on_device">Na přístroji</string>
     <string name="drawer_item_personal_files">Osobní soubory</string>
-    <string name="drawer_item_recent_files">Nedávné soubory</string>
     <string name="drawer_item_recently_modified">Nedávno změněné</string>
     <string name="drawer_item_shared">Sdíleno</string>
     <string name="drawer_item_trashbin">Smazané soubory</string>
@@ -370,8 +352,6 @@
     <string name="end_to_end_encryption_keywords_description">Všech 12 slov dohromady tvoří velmi silné heslo, které pouze vám umožní prohlížet a používat vaše zašifrované soubory. Poznamenejte si ho a někam bezpečně uložte.</string>
     <string name="end_to_end_encryption_not_enabled">Šifrování mezi koncovými body vypnuto na serveru.</string>
     <string name="end_to_end_encryption_passphrase_title">Poznamenejte si někam své 12 slovné šifrovací heslo</string>
-    <string name="end_to_end_encryption_password">Heslo…</string>
-    <string name="end_to_end_encryption_retrieving_keys">Získávání klíčů…</string>
     <string name="end_to_end_encryption_password">Heslo …</string>
     <string name="end_to_end_encryption_retrieving_keys">Získávání klíčů …</string>
     <string name="end_to_end_encryption_server_private_key_unavailable">Nepodařilo se získat soukromý klíč</string>
@@ -457,8 +437,6 @@
     <string name="file_list_empty_local_search">Vyhledávanému neodpovídá žádný soubor nebo složka</string>
     <string name="file_list_empty_moving">Nic tu není. Můžete přidat složku.</string>
     <string name="file_list_empty_on_device">Stažené soubory a složky se zobrazí zde.</string>
-    <string name="file_list_empty_recent_files_description">Zde budou zobrazeny soubory a složky, které jste nedávno změnili.</string>
-    <string name="file_list_empty_recent_files_headline">Žádné nedávno změněné soubory.</string>
     <string name="file_list_empty_recently_modified">Nenalezeny žádné soubory změněné za uplynulých 7 dnů</string>
     <string name="file_list_empty_search">Možná se nachází v jiné složce?</string>
     <string name="file_list_empty_shared">Zde budou zobrazeny vámi nasdílené soubory a složky.</string>
@@ -510,7 +488,6 @@
     <string name="file_not_synced">Soubor se nepodařilo synchronizovat. Zobrazuje se poslední dostupná verze.</string>
     <string name="file_rename">Přejmenovat</string>
     <string name="file_upload_worker_error_notification_title">Nahrávání se nezdařilo. Není k dispozici připojení k Internetu</string>
-    <string name="file_upload_worker_same_file_already_exists">Stejný soubor už existuje, nezjištěny žádné konflikty</string>
     <string name="file_upload_worker_same_file_already_exists">%s už existuje – nezjištěny žádné konflikty</string>
     <string name="file_version_restored_error">Chyba při obnovování verze souboru!</string>
     <string name="filedetails_details">Podrobnosti</string>
@@ -581,7 +558,6 @@
     <string name="instant_upload_existing">Také nahrát už existující soubory</string>
     <string name="instant_upload_on_charging">Nahrávat pouze při nabíjení</string>
     <string name="instant_upload_path">/InstantUpload</string>
-    <string name="internal_share_headline_end_to_end_encrypted">Sdílení šifrovaná mezi koncovými body</string>
     <string name="internal_shares">Vnitřní sdílení</string>
     <string name="internal_two_way_sync">Interní obousměrná synchronizace</string>
     <string name="internal_two_way_sync_not_yet">Zatím ještě ne, brzy bude synchronizováno</string>
@@ -817,8 +793,6 @@
     <string name="push_notifications_old_login">Žádná push upozornění kvůli zastaralé relaci přihlášení. Zvažte odebrání a opětovné přidání svého účtu.</string>
     <string name="push_notifications_temp_error">Push upozornění momentálně nejsou k dispozici.</string>
     <string name="qr_could_not_be_read">QR kód se nepodařilo načíst!</string>
-    <string name="re_enable_auto_upload">Změny v automatickém nahrávání</string>
-    <string name="re_enable_auto_upload_desc">Kvůli omezením, nově zavedeným ze strany Google, jsme byli nuceni odebrat důležité oprávnění. V tuto chvíli se s Google snažíme tento problém vyřešit a obnovit tak plnou funkčnost.\n\nPokud chcete znovu zapnout automatické nahrávání nových fotek a videí:\nVyberte „Umožnit vše“ v následujícím dialogu (nebo v nastavení systému).\nKdyž budete dotázání, povolte poloha médií, protože toto Nextcloud umožní ukládat při nahrávání obrázků údaje o poloze.\n\nDialog oprávnění se zobrazí pouze v případě potřeby. Pokud si nejste jistí, důkladně toto zkontrolujte v nastavení systému.\n\nAutomatické nahrávání bude moci nahrávat obrázky a videa pouze pokud používáte instalaci aplikace Nextcloud z Google Play.\n\nPodívejte se po jakýchkoli souborech, u kterých se mohlo stát, že nebyly od prosince 2024 nahrány. </string>
     <string name="receive_external_files_activity_start_sync_folder_is_not_exists_message">Složku se nepodařilo nalézt – operace synchronizace je zrušena</string>
     <string name="receive_external_files_activity_unable_to_find_file_to_upload">Nebylo možné nalézt soubor k nahrání</string>
     <string name="recommend_subject">Vyzkoušejte %1$s ve svém zařízení!</string>
@@ -916,9 +890,6 @@
     <string name="share_no_password_title">Nastavit heslo</string>
     <string name="share_not_allowed_when_file_drop">V případě zabezpečeného odhozu souboru není sdílení dál dalším dovoleno</string>
     <string name="share_option_required">Aby bylo možné pokračovat, vyberte alespoň jednu možnost sdílení</string>
-    <string name="share_password_title">Chráněno heslem</string>
-    <string name="share_permission_can_edit">Může upravovat</string>
-    <string name="share_permission_file_drop">Předání souboru</string>
     <string name="share_permission_can_edit">Může upravovat</string>
     <string name="share_permission_file_request">Žádost o soubor</string>
     <string name="share_permission_secure_file_drop">Bezpečné předání souborů</string>
@@ -928,7 +899,6 @@
     <string name="share_read_permission">Nastavit jako přečtené</string>
     <string name="share_remote_clarification">%1$s (vzdálený)</string>
     <string name="share_room_clarification">%1$s (konverzace)</string>
-    <string name="share_search">Jméno, identifikátor v rámci federovaného cloudu, nebo e-mailová adresa…</string>
     <string name="share_search">Jméno, identifikátor v rámci federovaného cloudu, nebo e-mailová adresa …</string>
     <string name="share_search_internal">Přidat uživatele a týmy</string>
     <string name="share_send_new_email">Odeslat nový e-mail</string>
@@ -1115,8 +1085,6 @@
     <string name="upload_file_dialog_title">Zadejte název a typ souboru k nahrání</string>
     <string name="upload_files">Nahrát soubory</string>
     <string name="upload_global_pause_title">Veškerá nahrávání jsou pozastavena</string>
-    <string name="upload_gplay">Změna oprávnění</string>
-    <string name="upload_gplay_desc">Je zapotřebí nového oprávnění pro přístup k informacím o umístění u nahrávaných obrázků.\nOvěřte, že přístup k médiím je nastaven na „Vždy umožnit vše“.</string>
     <string name="upload_item_action_button">Tlačítko akce Nahrát položku</string>
     <string name="upload_list_delete">Smazat</string>
     <string name="upload_list_empty_headline">Nic k nahrání</string>
@@ -1138,7 +1106,6 @@
     <string name="upload_quota_exceeded">Kvóta úložiště překročena</string>
     <string name="upload_scan_doc_upload">Naskenovat dokument kamerou</string>
     <string name="upload_sync_conflict">Konflikt synchronizace – vyřešte ručně</string>
-    <string name="upload_sync_conflict_not_exists">Konflikt vyřešen.</string>
     <string name="upload_unknown_error">Neznámá chyba</string>
     <string name="uploader_btn_alternative_text">Vybrat</string>
     <string name="uploader_btn_upload_text">Nahrát</string>
@@ -1199,9 +1166,7 @@
     <string name="user_icon">Uživatel</string>
     <string name="user_info_address">Adresa</string>
     <string name="user_info_email">E-mail</string>
-    <string name="user_info_groups">Skupiny</string>
     <string name="user_info_phone">Telefonní číslo</string>
-    <string name="user_info_profile">Profil</string>
     <string name="user_info_twitter">X (Twitter)</string>
     <string name="user_info_website">Webové stránky</string>
     <string name="user_information_retrieval_error">Chyba při načítání informací o uživateli</string>

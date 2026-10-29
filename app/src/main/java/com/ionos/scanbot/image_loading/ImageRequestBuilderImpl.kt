@@ -27,15 +27,6 @@ class ImageRequestBuilderImpl(
     }
 
     override fun into(target: ImageView) {
-        Glide.with(target.context)
-            .load(file)
-            .run {
-                when (options?.scaleType) {
-                    ScaleType.CENTER_CROP -> centerCrop()
-                    ScaleType.CENTER_INSIDE -> fitCenter()
-                    else -> this
-                }
-            }
         val baseRequest = Glide.with(target.context).load(file)
 
         val request = when (options?.scaleType) {

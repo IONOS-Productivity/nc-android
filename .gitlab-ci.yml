@@ -1,4 +1,0 @@
-include:
-  - project: ${CI_PROJECT_PATH}
-    ref: ci_config
-    file: '.gitlab-ci.yml'

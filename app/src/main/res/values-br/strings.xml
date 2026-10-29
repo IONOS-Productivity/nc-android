@@ -30,13 +30,6 @@
     <string name="add_new_public_share">Ouzhpennañ ul liamm rannañ publik nevez</string>
     <string name="add_new_secure_file_drop">Ouzhpennañ ur fizlec\'h restroù suraet nevez</string>
     <string name="add_to_cloud">Ouzhpennañ da %1$s</string>
-    <string name="allow_resharing">Aotren rannañ pelloc\'h</string>
-    <string name="app_config_proxy_port_title">Porzh Proksi</string>
-    <string name="app_widget_description">Diskouez a ra ur widget dre daolenn-vourzh</string>
-    <string name="appbar_search_in">Klask e %s</string>
-    <string name="assistant_screen_create_task_alert_dialog_input_field_placeholder">Skrivañ un tamm testenn</string>
-    <string name="assistant_screen_delete_task_alert_dialog_description">Ha sur oc\'h e fell deoc\'h dilemel an trevell-mañ ?</string>
-    <string name="assistant_screen_no_task_available_text">N\'eus trevell ebet evit %s seurt trevell, gallout a rit krouiñ unan nevez en traoñ a-zehoùt.</string>
     <string name="app_config_proxy_port_title">Porzh Proksi</string>
     <string name="app_widget_description">Diskouez a ra ur widget dre daolenn-vourzh</string>
     <string name="appbar_search_in">Klask e %s</string>
@@ -101,8 +94,6 @@
     <string name="bottom_navigation_menu_assistant_label">Skoazeller</string>
     <string name="bottom_navigation_menu_favorites_label">Penndibaboù</string>
     <string name="bottom_navigation_menu_files_label">An holl restroù</string>
-    <string name="calendar">Deiziataer</string>
-    <string name="calendars">Deiziataerioù</string>
     <string name="busy">O labourat</string>
     <string name="calendar">Deiziataer</string>
     <string name="calendars">Deiziataerioù</string>
@@ -607,7 +598,6 @@
     <string name="share_delete_permission">Dilemel</string>
     <string name="share_dialog_title">Rannan</string>
     <string name="share_edit_permission">Embann</string>
-    <string name="share_expiration_date_label">Termen %1$s</string>
     <string name="share_file">Rannañ %1$s</string>
     <string name="share_group_clarification">%1$s (strollad)</string>
     <string name="share_internal_link">Rannañ al liamm diabarzh</string>
@@ -790,7 +780,6 @@
     <string name="uploads_view_group_completed_uploads">Echu</string>
     <string name="uploads_view_group_current_uploads">A red</string>
     <string name="uploads_view_group_failed_uploads">Adlakaat war dro c\'hwitet pe re hir</string>
-    <string name="uploads_view_group_finished_uploads">Pellkaset</string>
     <string name="uploads_view_group_manually_cancelled_uploads">Nullet</string>
     <string name="uploads_view_later_waiting_to_upload">O gortoz ar pellkas</string>
     <string name="uploads_view_title">Pellkasadennoù</string>
@@ -814,9 +803,6 @@
     <string name="user_info_address">Chom-lec\'h</string>
     <string name="user_info_email">Postel</string>
     <string name="user_info_phone">Niverenn bellgomz</string>
-    <string name="user_info_groups">Strolladoù</string>
-    <string name="user_info_phone">Niverenn bellgomz</string>
-    <string name="user_info_profile">Profil</string>
     <string name="user_info_twitter">Twitter</string>
     <string name="user_info_website">Lec\'hienn web</string>
     <string name="user_information_retrieval_error">Ur fazi a zo bet en ur adtapout tutourioù an implijer</string>

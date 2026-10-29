@@ -75,7 +75,6 @@ class PreviewImageActivity :
     private var viewPager: ViewPager2? = null
     private var previewImagePagerAdapter: PreviewImagePagerAdapter? = null
     private var savedPosition: Int? = null
-    private var downloadFinishReceiver: DownloadFinishReceiver? = null
 
     private val downloadStartReceiver = DownloadStartReceiver()
     private val downloadFinishReceiver = DownloadFinishReceiver()
@@ -91,9 +90,6 @@ class PreviewImageActivity :
     @Inject
     lateinit var localBroadcastManager: LocalBroadcastManager
 
-    private var actionBar: ActionBar? = null
-    private var showDirectoryWhenDeletionCompleted = false
-
     @IonosCustomization
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
@@ -107,8 +103,6 @@ class PreviewImageActivity :
             actionBarView?.updatePadding(left = insets.left, top = insets.top, right = insets.right)
             WindowInsetsCompat.CONSUMED
         }
-
-        actionBar = supportActionBar
 
         if (savedInstanceState != null &&
             !savedInstanceState.getBoolean(
@@ -131,10 +125,6 @@ class PreviewImageActivity :
         updateActionBarTitleAndHomeButton(chosenFile)
 
         viewThemeUtils.platform.themeStatusBar(this, getColor(R.color.preview_image_system_bars_color))
-        if (actionBar != null) {
-            viewThemeUtils.files.setWhiteBackButton(this, actionBar!!)
-            actionBar?.setBackgroundDrawable(ColorDrawable(getColor(R.color.preview_image_system_bars_color)))
-            actionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.let {
             updateActionBarTitleAndHomeButton(chosenFile)
             viewThemeUtils.files.setWhiteBackButton(this, it)
@@ -180,13 +170,6 @@ class PreviewImageActivity :
         }
     }
 
-    @IonosCustomization("Remove default window insets paddings")
-    override fun isDefaultWindowInsetsHandlingEnabled() = false
-
-    fun showDirectoryWhenDeletionCompleted() {
-        showDirectoryWhenDeletionCompleted = true
-    }
-
     fun toggleActionBarVisibility(hide: Boolean) {
         if (hide) {
             supportActionBar?.hide()
@@ -224,7 +207,6 @@ class PreviewImageActivity :
 
         viewPager = findViewById(R.id.fragmentPager)
 
-        var position = if (savedPosition != null) savedPosition else previewImagePagerAdapter?.getFilePosition(file)
         var position = if (savedPosition !=
             null
         ) {
@@ -356,26 +338,6 @@ class PreviewImageActivity :
     private fun observeWorkerState() {
         observeWorker { state: WorkerState? ->
             when (state) {
-                is WorkerState.DownloadStarted -> {
-                    Log_OC.d(TAG, "Download worker started")
-                    isDownloadWorkStarted = true
-
-                    if (screenState == PreviewImageActivityState.WaitingForBinder) {
-                        selectPageOnDownload()
-                    }
-                }
-
-                is WorkerState.DownloadFinished -> {
-                    Log_OC.d(TAG, "Download worker stopped")
-                    isDownloadWorkStarted = false
-
-                    if (screenState == PreviewImageActivityState.Edit) {
-                        onImageDownloadComplete(state.currentFile)
-                    } else {
-                        setDownloadedItem()
-                    }
-                }
-
                 else -> {
                     Log_OC.d(TAG, "Worker stopped")
                     isDownloadWorkStarted = false
@@ -388,8 +350,6 @@ class PreviewImageActivity :
         savedPosition?.let { position ->
 
             previewImagePagerAdapter?.run {
-                updateFile(position, file)
-                notifyItemChanged(position)
                 file?.let {
                     updateFile(position, it)
                     notifyItemChanged(position)
@@ -550,21 +510,6 @@ class PreviewImageActivity :
         get() = supportActionBar == null || supportActionBar?.isShowing == true
 
     fun toggleFullScreen() {
-        if (fullScreenAnchorView == null) return
-        val visible = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            val insets = window.decorView.rootWindowInsets
-            insets.isVisible(WindowInsets.Type.statusBars())
-                || insets.isVisible(WindowInsets.Type.navigationBars())
-        } else {
-            @Suppress("DEPRECATION")
-            (fullScreenAnchorView!!.systemUiVisibility
-                and View.SYSTEM_UI_FLAG_HIDE_NAVIGATION) == 0
-        }
-
-        if (visible) {
-            hideSystemUI(fullScreenAnchorView!!)
-        } else {
-            showSystemUI(fullScreenAnchorView!!)
         fullScreenAnchorView?.let {
             val visible = (it.systemUiVisibility and View.SYSTEM_UI_FLAG_HIDE_NAVIGATION) == 0
             if (visible) {
@@ -602,23 +547,6 @@ class PreviewImageActivity :
 
     @Suppress("DEPRECATION")
     private fun hideSystemUI(anchorView: View) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            actionBar?.hide()
-            window.insetsController?.let { controller ->
-                controller.hide(WindowInsets.Type.systemBars())
-                controller.systemBarsBehavior = WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-            }
-        } else {
-            @Suppress("DEPRECATION")
-            anchorView.systemUiVisibility = (
-                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hides NAVIGATION BAR; Android >= 4.0
-                    or View.SYSTEM_UI_FLAG_FULLSCREEN // hides STATUS BAR;     Android >= 4.1
-                    or View.SYSTEM_UI_FLAG_IMMERSIVE // stays interactive;    Android >= 4.4
-                    or View.SYSTEM_UI_FLAG_LAYOUT_STABLE // draw full window;     Android >= 4.1
-                    or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN // draw full window;     Android >= 4.1
-                    or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                )
-        }
         anchorView.systemUiVisibility = (
             View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 or View.SYSTEM_UI_FLAG_FULLSCREEN
@@ -631,23 +559,6 @@ class PreviewImageActivity :
 
     @Suppress("DEPRECATION")
     private fun showSystemUI(anchorView: View) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            actionBar?.show()
-            window.insetsController?.let { controller ->
-                controller.show(WindowInsets.Type.systemBars())
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                    controller.systemBarsBehavior = WindowInsetsController.BEHAVIOR_DEFAULT
-                }
-            }
-        } else {
-            @Suppress("DEPRECATION")
-            anchorView.systemUiVisibility = (
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE // draw full window;     Android >= 4.1
-                    or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN // draw full window;     Android >= 4.1
-                    or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                )
-        }
         anchorView.systemUiVisibility = (
             View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                 or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN

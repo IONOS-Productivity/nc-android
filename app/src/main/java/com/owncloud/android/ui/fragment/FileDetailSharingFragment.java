@@ -165,7 +165,6 @@ public class FileDetailSharingFragment extends Fragment implements ShareeListAda
 
     private void fetchSharees() {
         final var activity = fileActivity;
-        if (activity == null || !isAdded()) {
         if (activity == null) {
             return;
         }
@@ -188,7 +187,6 @@ public class FileDetailSharingFragment extends Fragment implements ShareeListAda
             return Unit.INSTANCE;
         }, () -> {
             showShareContainer();
-            DisplayUtils.showSnackMessage(getView(), R.string.error_fetching_sharees);
             DisplayUtils.showSnackMessage(this, R.string.error_fetching_sharees);
             return Unit.INSTANCE;
         });
@@ -303,26 +301,6 @@ public class FileDetailSharingFragment extends Fragment implements ShareeListAda
         viewThemeUtils.platform.colorImageView(binding.searchViewIcon, ColorRole.ON_SURFACE_VARIANT);
         viewThemeUtils.platform.colorImageView(binding.pickContactEmailBtn, ColorRole.ON_SURFACE_VARIANT);
 
-        viewThemeUtils.material.colorMaterialTextButton(binding.sharesListInternalShowAll);
-        binding.sharesListInternalShowAll.setOnClickListener(view -> {
-            internalShareeListAdapter.toggleShowAll();
-
-            if (internalShareeListAdapter.isShowAll()) {
-                binding.sharesListInternalShowAll.setText(R.string.show_less);
-            } else {
-                binding.sharesListInternalShowAll.setText(R.string.show_all);
-            }
-        });
-        
-        viewThemeUtils.material.colorMaterialTextButton(binding.sharesListExternalShowAll);
-        binding.sharesListExternalShowAll.setOnClickListener(view -> {
-            externalShareeListAdapter.toggleShowAll();
-
-            if (internalShareeListAdapter.isShowAll()) {
-                binding.sharesListExternalShowAll.setText(R.string.show_less);
-            } else {
-                binding.sharesListExternalShowAll.setText(R.string.show_all);
-            }
         viewThemeUtils.material.colorMaterialButtonPrimaryOutlined(binding.sendCopyBtn);
 		viewThemeUtils.androidx.themeToolbarSearchView(binding.searchView);
 
@@ -604,10 +582,6 @@ public class FileDetailSharingFragment extends Fragment implements ShareeListAda
         }
 
         if (internalShareeListAdapter == null) {
-            DisplayUtils.showSnackMessage(getView(), getString(R.string.could_not_retrieve_shares));
-            return;
-        }
-        internalShareeListAdapter.getShares().clear();
             DisplayUtils.showSnackMessage(this, R.string.could_not_retrieve_shares);
             return;
         }
@@ -639,25 +613,12 @@ public class FileDetailSharingFragment extends Fragment implements ShareeListAda
         }
         
         internalShareeListAdapter.addShares(internalShares);
-
-        ViewExtensionsKt.setVisibleIf(binding.sharesListInternalShowAll,
-                                      internalShareeListAdapter.getShares().size() > 3
-                                     );
-
-        externalShareeListAdapter.getShares().clear();
         ViewExtensionsKt.setVisibleIf(binding.sharesListInternalShowAll, internalShareeListAdapter.shares.size() > 3);
 
         addExternalAndPublicShares(externalShares);
         ViewExtensionsKt.setVisibleIf(binding.sharesListExternalShowAll, externalShareeListAdapter.shares.size() > 3);
     }
 
-        externalShareeListAdapter.addShares(externalShares);
-
-        externalShareeListAdapter.addShares(publicShares);
-
-        ViewExtensionsKt.setVisibleIf(binding.sharesListExternalShowAll,
-                                      externalShareeListAdapter.getShares().size() > 3
-                                     );
     private void addExternalAndPublicShares(List<OCShare> externalShares) {
         final var publicShares = fileDataStorageManager.getSharesByPathAndType(file.getRemotePath(), ShareType.PUBLIC_LINK, "");
         externalShareeListAdapter.removeAll();
@@ -757,11 +718,6 @@ public class FileDetailSharingFragment extends Fragment implements ShareeListAda
 
     @Override
     public void unShare(OCShare share) {
-        unshareWith(share);
-        ShareeListAdapter adapter = (ShareeListAdapter) binding.sharesListInternal.getAdapter();
-        if (adapter == null) {
-            DisplayUtils.showSnackMessage(getView(), getString(R.string.failed_update_ui));
-            return;
         unShareWith(share);
 
         FileEntity entity = fileDataStorageManager.getFileEntity(file);

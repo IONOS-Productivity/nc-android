@@ -44,7 +44,6 @@
     <string name="app_config_proxy_port_title">Proxy port</string>
     <string name="app_widget_description">Prikazuje jedan widget s nadzorne ploče</string>
     <string name="appbar_search_in">Traži u %s</string>
-    <string name="assistant_screen_delete_task_alert_dialog_title">Izbriši zadatak</string>
     <string name="appear_offline">Prikaži se kao izvan mreže</string>
     <string name="assistant_output_generation_warning_text">Prikazani izlaz generirala je umjetna inteligencija. Obavezno ga uvijek provjerite.</string>
     <string name="assistant_screen_chat_create_error">Slanje poruke nije uspjelo</string>
@@ -320,7 +319,6 @@
     <string name="drawer_item_notifications">Obavijesti</string>
     <string name="drawer_item_on_device">Na uređaju</string>
     <string name="drawer_item_personal_files">Osobne datoteke</string>
-    <string name="drawer_item_recent_files">Nedavne datoteke</string>
     <string name="drawer_item_recently_modified">Nedavno izmijenjeno</string>
     <string name="drawer_item_shared">Dijeljeno</string>
     <string name="drawer_item_trashbin">Izbrisane datoteke</string>
@@ -407,7 +405,6 @@
     <string name="etm_transfer_type">Prijenos</string>
     <string name="etm_transfer_type_download">Preuzmi</string>
     <string name="etm_transfer_type_upload">Otpremi</string>
-    <string name="export_in_progress">Izvozim %1$d od %2$d</string>
     <string name="extension_cannot_be_changed">Ekstenziju nije moguće promijeniti</string>
     <string name="extented_list_fragment_empty_list_message_no_write_permission">Nemate dopuštenje za stvaranje ili prijenos datoteka u ovoj mapi.</string>
     <string name="external_shares">Vanjska dijeljenja</string>
@@ -440,8 +437,6 @@
     <string name="file_list_empty_local_search">Nema datoteka ili mapa koje odgovaraju pretraživanju</string>
     <string name="file_list_empty_moving">Ovdje nema ničega. Možete dodati mapu.</string>
     <string name="file_list_empty_on_device">Ovdje će se prikazati preuzete datoteke i mape.</string>
-    <string name="file_list_empty_recent_files_description">Ovdje će se prikazati datoteke i mape koje ste nedavno izmijenili.</string>
-    <string name="file_list_empty_recent_files_headline">Nema nedavno izmijenjenih datoteka.</string>
     <string name="file_list_empty_recently_modified">Nije pronađena nijedna datoteka izmijenjena u posljednjih 7 dana</string>
     <string name="file_list_empty_search">Možda je u drugoj mapi?</string>
     <string name="file_list_empty_shared">Ovdje će se prikazati datoteke i mape koje dijelite.</string>
@@ -640,6 +635,7 @@
     <string name="new_media_folder_detected">Otkrivena je nova medijska mapa %1$s.</string>
     <string name="new_media_folder_photos">fotografija</string>
     <string name="new_media_folder_videos">videozapis</string>
+    <string name="new_notification">Nova obavijest</string>
     <string name="new_version_was_created">Stvorena je nova inačica</string>
     <string name="no_actions">Nema radnji za ovog korisnika</string>
     <string name="no_browser_available">Nema dostupnih aplikacija za upravljanje poveznicama</string>
@@ -867,9 +863,6 @@
     <string name="set_picture_as">Koristi sliku kao</string>
     <string name="setup_e2e">Postavi E2E šifriranje</string>
     <string name="share">Dijeli</string>
-    <string name="share_create_permission">Stvori</string>
-    <string name="share_delete_permission">Izbriši</string>
-    <string name="share_dialog_title">Dijeljenje</string>
     <string name="share_allow_download_and_sync_permission">Dopusti preuzimanje i sinkronizaciju</string>
     <string name="share_cannot_update_empty_note">Napomena ne može biti prazna</string>
     <string name="share_copy_link">Kopiraj poveznicu</string>
@@ -1175,9 +1168,7 @@
     <string name="user_icon">Korisnik</string>
     <string name="user_info_address">Adresa</string>
     <string name="user_info_email">E-pošta</string>
-    <string name="user_info_groups">Grupe</string>
     <string name="user_info_phone">Broj telefona</string>
-    <string name="user_info_profile">Profil</string>
     <string name="user_info_twitter">Twitter</string>
     <string name="user_info_website">Web-mjesto</string>
     <string name="user_information_retrieval_error">Pogreška pri dohvaćanju korisničkih podataka</string>

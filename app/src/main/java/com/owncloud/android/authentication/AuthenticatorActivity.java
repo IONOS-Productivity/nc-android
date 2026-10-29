@@ -39,9 +39,6 @@ import android.webkit.URLUtil;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
-import android.webkit.WebResourceError;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
@@ -119,8 +116,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Map;
-import java.util.Objects;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.ExecutorService;
@@ -243,8 +238,6 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
     @Inject ColorUtil colorUtil;
     @Inject ClientFactory clientFactory;
 
-    private String token;
-    private boolean onlyAdd = false;
     private AuthObject authObject = null;
     private String fallbackToken;
     private boolean onlyAdd = false;
@@ -253,6 +246,10 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
 
     private ViewThemeUtils viewThemeUtils;
     private final ExecutorService singleThreadExecutor = Executors.newSingleThreadExecutor();
+
+    private String getResolvedLoginV2Url() {
+        return IonosLoginDomainResolver.resolveLoginV2Url(this);
+    }
 
     @VisibleForTesting
     public AccountSetupBinding getAccountSetupBinding() {
@@ -265,13 +262,11 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
      * IMPORTANT ENTRY POINT 1: activity is shown to the user
      */
     @Override
-    @IonosCustomization
     @IonosCustomization("Removed the coloring of the status bar to match the app style")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewThemeUtils = viewThemeUtilsFactory.withPrimaryAsBackground();
 
-         WebViewUtil webViewUtil = new WebViewUtil(this);
          WebViewUtil webViewUtil = new WebViewUtil();
 
         Uri data = getIntent().getData();
@@ -329,10 +324,10 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
             webViewLoginMethod = true;
         } else if (getIntent().getBooleanExtra(EXTRA_USE_PROVIDER_AS_WEBLOGIN, false)) {
             webViewLoginMethod = true;
-            webloginUrl = getString(R.string.provider_registration_server);
+            webloginUrl = getResolvedLoginV2Url();
         } else if (!TextUtils.isEmpty(getResources().getString(R.string.webview_login_url))) {
             webViewLoginMethod = true;
-            webloginUrl = getResources().getString(R.string.webview_login_url);
+            webloginUrl = getResolvedLoginV2Url();
             showWebViewLoginUrl = getResources().getBoolean(R.bool.show_server_url_input);
         }
 
@@ -359,7 +354,6 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
         }    
         initServerPreFragment(savedInstanceState);
         //ProcessLifecycleOwner.get().getLifecycle().addObserver(lifecycleEventObserver);
-        webViewUtil.checkWebViewVersion();
     }
     
     private void showEnforcedServers() {
@@ -455,19 +449,6 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
 
         singleThreadExecutor.execute(() -> {
             String response = getResponseOfAnonymouslyPostLoginRequest();
-
-            try {
-                JsonObject jsonObject = JsonParser.parseString(response).getAsJsonObject();
-                String loginUrl = getLoginUrl(jsonObject);
-                runOnUiThread(() -> {
-                    //initLoginInfoView();
-                    //launchDefaultWebBrowser(loginUrl);
-                    initWebViewLogin(loginUrl);
-                });
-                token = jsonObject.getAsJsonObject("poll").get("token").getAsString();
-            } catch (Throwable t) {
-                Log_OC.d(TAG, "Error caught at anonymouslyPostLoginRequest: " + t);
-                DisplayUtils.showSnackMessage(this, R.string.authenticator_activity_login_error);
             if (TextUtils.isEmpty(response)) {
                 DisplayUtils.showSnackMessage(AuthenticatorActivity.this, R.string.authenticator_activity_empty_response_message);
                 return;
@@ -505,7 +486,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
 
         Log_OC.e(TAG, "Both AuthObject and fallback parsing failed, returning default login URL");
         DisplayUtils.showSnackMessage(this, R.string.authenticator_activity_login_error);
-        return getResources().getString(R.string.webview_login_url);
+        return getResolvedLoginV2Url();
     }
 
     private String getLoginFromJsonObject(String response) {
@@ -543,12 +524,6 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
         }
     }
 
-    private void launchDefaultWebBrowser(String url) {
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-    }
-
     @SuppressFBWarnings("ANDROID_WEB_VIEW_JAVASCRIPT")
     @SuppressLint("SetJavaScriptEnabled")
     @IonosCustomization("Set LoginWebViewContainer visibility")
@@ -556,7 +531,6 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
         viewThemeUtils.platform.colorCircularProgressBar(accountSetupWebviewBinding.loginWebviewProgressBar, ColorRole.ON_PRIMARY_CONTAINER);
         accountSetupWebviewBinding.loginWebview.setVisibility(View.GONE);
         getLoginWebViewContainer().ifPresent(it -> it.setVisibility(View.GONE));
-        new WebViewUtil(this).setProxyKKPlus(accountSetupWebviewBinding.loginWebview);
 
             if (accountSetupBinding != null) {
                 accountSetupBinding.hostUrlInput.setText("");
@@ -579,10 +553,9 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
         if (baseURL != null && !baseURL.isEmpty()) {
             url = baseURL;
         } else {
-            url = getResources().getString(R.string.webview_login_url);
+            url = getResolvedLoginV2Url();
         }
 
-        new WebViewUtil(this).setProxyKKPlus(accountSetupWebviewBinding.loginWebview);
         new WebViewUtil().setProxyKKPlus(accountSetupWebviewBinding.loginWebview);
 
         accountSetupWebviewBinding.loginWebview.loadUrl(url, headers);
@@ -697,9 +670,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
                 getLoginWebViewContainer().ifPresent(it -> it.setVisibility(View.VISIBLE));
 
                 viewThemeUtils.platform.resetStatusBar(AuthenticatorActivity.this);
-
-                if(url.equals(baseUrl + "/grant")) {
-                if(url.equals(baseUrl + "/grant") || url.equals(baseUrl + "/apptoken")) {
+                if (url.contains("/lf2-consent") || url.contains("/lf2-success")) {
                     finishLoginProcedure();
                 }
             }
@@ -830,7 +801,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
                 mServerInfo.mIsSslConn = mServerInfo.mBaseUrl.startsWith(HTTPS_PROTOCOL);
                 mServerInfo.mVersion = accountManager.getServerVersion(mAccount);
             } else {
-                mServerInfo.mBaseUrl = getString(R.string.webview_login_url).trim();
+                mServerInfo.mBaseUrl = getResolvedLoginV2Url().trim();
                 mServerInfo.mIsSslConn = mServerInfo.mBaseUrl.startsWith(HTTPS_PROTOCOL);
             }
         } else {
@@ -952,7 +923,7 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
         if (intent.getBooleanExtra(EXTRA_USE_PROVIDER_AS_WEBLOGIN, true)) {
             accountSetupWebviewBinding = AccountSetupWebviewBinding.inflate(getLayoutInflater());
             setContentView(accountSetupWebviewBinding.getRoot());
-            anonymouslyPostLoginRequest(getString(R.string.provider_registration_server));
+            anonymouslyPostLoginRequest(getResolvedLoginV2Url());
 			//initSimpleSignupLogin();
         }
     }
@@ -962,7 +933,6 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
     private void initSimpleSignupLogin() {
         viewThemeUtils.platform.colorCircularProgressBar(accountSetupWebviewBinding.loginWebviewProgressBar, ColorRole.ON_PRIMARY_CONTAINER);
         accountSetupWebviewBinding.loginWebview.setVisibility(View.GONE);
-        new WebViewUtil(getApplicationContext()).setProxyKKPlus(accountSetupWebviewBinding.loginWebview);
         new WebViewUtil().setProxyKKPlus(accountSetupWebviewBinding.loginWebview);
 
         accountSetupWebviewBinding.loginWebview.getSettings().setAllowFileAccess(false);
@@ -976,10 +946,9 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
         Map<String, String> headers = new HashMap<>();
         headers.put(RemoteOperation.OCS_API_HEADER, RemoteOperation.OCS_API_HEADER_VALUE);
 
-        new WebViewUtil(getApplicationContext()).setProxyKKPlus(accountSetupWebviewBinding.loginWebview);
         new WebViewUtil().setProxyKKPlus(accountSetupWebviewBinding.loginWebview);
 
-        accountSetupWebviewBinding.loginWebview.loadUrl(getString(R.string.provider_registration_server), headers);
+        accountSetupWebviewBinding.loginWebview.loadUrl(getResolvedLoginV2Url(), headers);
         accountSetupWebviewBinding.loginFlowV2.loginFlowInfoV2.setVisibility(View.GONE);
 
         setClient();
@@ -1853,70 +1822,6 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
         }
     }
 
-    private final ScheduledExecutorService loginFlowExecutorService = Executors.newSingleThreadScheduledExecutor();
-    private boolean isLoginProcessCompleted = false;
-    private boolean isRedirectedToTheDefaultBrowser = false;
-
-    private void poolLogin() {
-        loginFlowExecutorService.scheduleWithFixedDelay(() -> {
-            if (!isLoginProcessCompleted) {
-                performLoginFlowV2();
-            }
-        }, 0, 30, TimeUnit.SECONDS);
-    }
-
-    private void performLoginFlowV2() {
-        String postRequestUrl = baseUrl + "/poll";
-
-        RequestBody requestBody = new FormBody.Builder()
-            .add("token", token)
-            .build();
-
-        PlainClient client = clientFactory.createPlainClient();
-        PostMethod post = new PostMethod(postRequestUrl, false, requestBody);
-        int status = post.execute(client);
-        String response = post.getResponseBodyAsString();
-
-        Log_OC.d(TAG, "performLoginFlowV2 status: " + status);
-        Log_OC.d(TAG, "performLoginFlowV2 response: " + response);
-
-        if (!response.isEmpty()) {
-            runOnUiThread(() -> completeLoginFlow(response, status));
-        }
-    }
-
-    private void completeLoginFlow(String response, int status) {
-        try {
-            JSONObject jsonObject = new JSONObject(response);
-
-            String server = jsonObject.getString("server");
-            String loginName = jsonObject.getString("loginName");
-            String appPassword = jsonObject.getString("appPassword");
-
-            LoginUrlInfo loginUrlInfo = new LoginUrlInfo();
-            loginUrlInfo.serverAddress = server;
-            loginUrlInfo.username = loginName;
-            loginUrlInfo.password = appPassword;
-
-            isLoginProcessCompleted = (status == 200 && !server.isEmpty() && !loginName.isEmpty() && !appPassword.isEmpty());
-
-            if (accountSetupBinding != null) {
-                accountSetupBinding.hostUrlInput.setText("");
-            }
-            mServerInfo.mBaseUrl = AuthenticatorUrlUtils.INSTANCE.normalizeUrlSuffix(loginUrlInfo.serverAddress);
-            webViewUser = loginUrlInfo.username;
-            webViewPassword = loginUrlInfo.password;
-        } catch (Exception e) {
-            Log_OC.d(TAG, "Error caught at completeLoginFlow: " + e);
-            mServerStatusIcon = R.drawable.ic_alert;
-            mServerStatusText = getString(R.string.qr_could_not_be_read);
-            showServerStatus();
-        }
-
-        checkOcServer();
-        loginFlowExecutorService.shutdown();
-        //ProcessLifecycleOwner.get().getLifecycle().removeObserver(lifecycleEventObserver);
-    }
 
     /**
      * Called from SslValidatorDialog when a new server certificate was correctly saved.

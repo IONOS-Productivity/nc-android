@@ -41,11 +41,6 @@
     <string name="app_config_proxy_port_title">Port del proxy</string>
     <string name="app_widget_description">Mostra un giny del tauler</string>
     <string name="appbar_search_in">Cerca a %s</string>
-    <string name="assistant_screen_add_task_alert_dialog_title">Afegeix una tasca nova</string>
-    <string name="assistant_screen_create_task_alert_dialog_input_field_placeholder">Escriu una mica de text</string>
-    <string name="assistant_screen_delete_task_alert_dialog_description">Segur que voleu suprimir aquesta tasca?</string>
-    <string name="assistant_screen_delete_task_alert_dialog_title">Suprimeix la tasca</string>
-    <string name="assistant_screen_no_task_available_text">No hi ha cap tasca disponible per al tipus de tasca %s. Podeu crear una tasca nova des de baix a la dreta.</string>
     <string name="appear_offline">Apareixeu fora de línia</string>
     <string name="assistant_screen_delete_task_alert_dialog_description">Segur que voleu suprimir aquesta tasca?</string>
     <string name="assistant_screen_delete_task_alert_dialog_title">Suprimeix la tasca</string>
@@ -97,9 +92,6 @@
     <string name="authenticator_activity_login_error">S\'ha produït un error en processar la sol·licitud d\'inici de sessió. Torneu-ho a provar més tard.</string>
     <string name="authenticator_activity_please_complete_login_process">Completeu el procés d\'inici de sessió al navegador</string>
     <string name="auto_upload_file_behaviour_kept_in_folder">manté a la carpeta original, ja que és només de lectura</string>
-    <string name="auto_upload_gplay">S\'ha canviat el comportament de la càrrega automàtica</string>
-    <string name="auto_upload_gplay_desc">A causa de les noves restriccions imposades per Google, la funció de càrrega automàtica ja no podrà eliminar automàticament els fitxers carregats.</string>
-    <string name="auto_upload_gplay_desc2">A causa de les noves restriccions imposades per Google, ens hem vist obligats a eliminar un permís important. Per consegüent, la pujada automàtica només podrà pujar fitxers d\'imatge i vídeo.\nA més a més, es requereix un altre permís per accedir a la informació d\'ubicació de les imatges pujades.\nComproveu que l\'accés multimèdia estigui establert a \"Permet sempre tot\".</string>
     <string name="auto_upload_on_wifi">Pujada només quan hi hagi Wi-Fi sense límits</string>
     <string name="auto_upload_path">/Càrrega automàtica</string>
     <string name="autoupload_configure">Configura</string>
@@ -134,9 +126,6 @@
     <string name="choose_widget">Trieu el giny</string>
     <string name="clear">Neteja</string>
     <string name="clear_notifications_failed">No s\'han pogut carregar les notificacions.</string>
-    <string name="clear_status_message">Esborrar el missatge d\'estat</string>
-    <string name="clear_status_message_after">Esborra el missatge d\'estat després</string>
-    <string name="click_to_learn_how_to_re_enable_auto_uploads">Cal la intervenció manual per tornar a habilitar la pujada automàtica</string>
     <string name="clear_status_after">Esborra l\'estat després de</string>
     <string name="clipboard_label">Text copiat des de %1$s</string>
     <string name="clipboard_no_text_to_copy">No s\'ha rebut cap text per copiar al porta-retalls</string>
@@ -393,8 +382,6 @@
     <string name="file_list_empty_local_search">Cap fitxer o carpeta coincideix amb la cerca.</string>
     <string name="file_list_empty_moving">Aquí no hi ha res. Podeu afegir una carpeta.</string>
     <string name="file_list_empty_on_device">Els fitxers i les carpetes que baixeu es mostraran aquí.</string>
-    <string name="file_list_empty_recent_files_description">Els fitxers i les carpetes que heu modificat recentment es mostraran aquí.</string>
-    <string name="file_list_empty_recent_files_headline">No hi ha cap fitxer modificat recentment</string>
     <string name="file_list_empty_recently_modified">No s\'han trobat fitxers modificats els darrers 7 dies</string>
     <string name="file_list_empty_search">Potser és a una altra carpeta?</string>
     <string name="file_list_empty_shared">Els fitxers i les carpetes que compartiu es mostraran aquí.</string>
@@ -527,7 +514,6 @@
     <string name="locked_by_app">Blocat per l\'aplicació %1$s</string>
     <string name="log_send_mail_subject">%1$s registres de la aplicació d\'Android.</string>
     <string name="log_send_no_mail_app">No s\'ha trobat cap aplicació per enviar els registres. Instal·leu un client de correu electrònic.</string>
-    <string name="logged_in_as">S\'ha iniciat la sessió com a %1$s</string>
     <string name="login">Inicia la sessió</string>
     <string name="login_url_helper_text">Enllaç a la interfície web del %1$s quan l\'obriu en el navegador.</string>
     <string name="logs_menu_delete">Suprimeix els registres</string>
@@ -542,7 +528,6 @@
     <string name="manage_space_clear_data">Neteja dades</string>
     <string name="manage_space_description">Els paràmetres, la base de dades i els certificats del servidor %1$s se suprimiran de forma permanent. \n\nEls fitxers descarregats romandran intactes.\n\n Aquest procés pot trigar una estona.</string>
     <string name="manage_space_title">Gestió d\'espai</string>
-    <string name="max_file_count_warning_message">Has assolit el límit màxim de pujada de fitxers. Puja menys de 500 fitxers alhora.</string>
     <string name="media_err_invalid_progressive_playback">No es pot reproduir el fitxer multimèdia</string>
     <string name="media_err_io">No s\'ha pogut llegir el fitxer multimèdia</string>
     <string name="media_err_malformed">El fitxer multimèdia té una codificació incorrecta</string>
@@ -576,6 +561,7 @@
     <string name="new_media_folder_detected">S\'ha detectat la nova carpeta multimèdia %1$s.</string>
     <string name="new_media_folder_photos">fotografia</string>
     <string name="new_media_folder_videos">vídeo</string>
+    <string name="new_notification">Nova notificació</string>
     <string name="new_version_was_created">S\'ha creat una nova versió</string>
     <string name="no_actions">No hi ha cap acció per a aquest usuari</string>
     <string name="no_browser_available">No hi ha cap aplicació disponible per manegar els enllaços</string>
@@ -610,7 +596,6 @@
     <string name="oc_file_list_adapter_offline_operation_description_text">Operació pendent</string>
     <string name="offline_mode">No hi ha connexió a internet</string>
     <string name="offline_mode_info_description">Fins i tot sense connexió a Internet, podeu organitzar les vostres carpetes i crear fitxers. Quan torneu a estar en línia, les accions pendents se sincronitzaran automàticament.</string>
-    <string name="offline_operations_file_does_not_exists_yet">El fitxer encara no existeix. Pugeu primer el fitxer.</string>
     <string name="offline_operations_worker_notification_error_text">No es pot completar l\'operació fora de línia. %s</string>
     <string name="offline_operations_worker_notification_manager_ticker">Operacions fora de línia</string>
     <string name="oneHour">1 hora</string>
@@ -626,13 +611,6 @@
     <string name="pass_code_removed">S\'ha suprimit el codi d\'accés</string>
     <string name="pass_code_stored">S\'ha desat el codi d\'accés</string>
     <string name="pass_code_wrong">Codi d\'accés incorrecte</string>
-    <string name="pdf_password_protected">No s\'ha pogut obrir el PDF protegit amb contrasenya. Utilitzeu un visor PDF extern.</string>
-    <string name="pdf_zoom_tip">Toca en una pàgina per ampliar</string>
-    <string name="permission_allow">Permet</string>
-    <string name="permission_deny">Denega</string>
-    <string name="permission_storage_access">Es necessiten permisos addicionals per pujada i baixada de fitxers.</string>
-    <string name="pick_contact_to_share_with">Trieu el contacte amb què compartir</string>
-    <string name="picture_set_as_no_app">No s\'ha trobat cap aplicació per establir-hi la foto</string>
     <string name="pause_upload">Posa en pausa</string>
     <string name="pdf_password_protected">No s\'ha pogut obrir el PDF protegit amb contrasenya. Utilitzeu un visor PDF extern.</string>
     <string name="permission_allow">Permet</string>
@@ -668,7 +646,6 @@
     <string name="prefs_daily_backup_summary">Còpia de seguretat diària del calendari i els contactes</string>
     <string name="prefs_daily_contact_backup_summary">Còpia de seguretat diària dels vostres contactes</string>
     <string name="prefs_data_storage_location">Ubicació de l\'emmagatzematge de dades</string>
-    <string name="prefs_data_storage_location_summary">Gestioneu la ubicació de l\'emmagatzematge de dades</string>
     <string name="prefs_data_storage_location_summary">Administrar la ubicació de l\'emmagatzematge de dades</string>
     <string name="prefs_e2e_active">S\'ha configurat el xifratge d\'extrem a extrem</string>
     <string name="prefs_e2e_mnemonic">E2E mnemònic</string>
@@ -708,7 +685,6 @@
     <string name="prefs_theme_title">Tema</string>
     <string name="prefs_two_way_sync_interval">Interval</string>
     <string name="prefs_two_way_sync_summary">Gestioneu les carpetes internes per a la sincronització bidireccional</string>
-    <string name="prefs_two_way_sync_switch_title">Habilita la sincronització bidireccional</string>
     <string name="prefs_value_theme_dark">Fosc</string>
     <string name="prefs_value_theme_light">Clar</string>
     <string name="prefs_value_theme_system">Seguir al sistema</string>
@@ -717,7 +693,6 @@
     <string name="preview_image_error_no_local_file">No hi ha cap fitxer local per fer una vista prèvia</string>
     <string name="preview_image_error_unknown_format">No es pot mostrar la imatge</string>
     <string name="preview_image_file_is_not_downloaded">No s\'ha baixat el fitxer</string>
-    <string name="preview_image_file_is_not_exist">El fitxer no existeix</string>
     <string name="preview_media_unhandled_http_code_message">Un altre usuari o procés ha bloquejat el fitxer i per tant no es pot eliminar. Torneu-ho a provar més tard.</string>
     <string name="preview_sorry">Ho sento</string>
     <string name="privacy">Privadesa</string>
@@ -799,7 +774,6 @@
     <string name="share_no_expiration_date_label">Establiu una data de caducitat</string>
     <string name="share_no_password_title">Estableix la contrasenya</string>
     <string name="share_permission_can_edit">Pot editar</string>
-    <string name="share_permission_file_drop">Deixa anar el fitxer</string>
     <string name="share_permission_file_request">Sol·licitud de fitxer</string>
     <string name="share_permission_view_only">Només visualització</string>
     <string name="share_re_share_permission">Comparteix</string>
@@ -1023,7 +997,6 @@
     <string name="user_icon">Usuari</string>
     <string name="user_info_address">Adreça</string>
     <string name="user_info_email">Correu electrònic</string>
-    <string name="user_info_groups">Grups</string>
     <string name="user_info_phone">Número de telèfon</string>
     <string name="user_info_twitter">Twitter</string>
     <string name="user_info_website">Pàgina web</string>

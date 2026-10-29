@@ -26,7 +26,6 @@ class IonosAndroidXViewThemeUtils(
     }
 
     fun colorSwitchCompat(switchCompat: SwitchCompat) {
-        delegate.colorSwitchCompat(switchCompat)
         //delegate.colorSwitchCompat(switchCompat)
     }
 

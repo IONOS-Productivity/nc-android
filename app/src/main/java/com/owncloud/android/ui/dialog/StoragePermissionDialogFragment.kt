@@ -64,14 +64,6 @@ class StoragePermissionDialogFragment :
 
     @IonosCustomization
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val title = when {
-            permissionRequired -> R.string.ionos_file_management_permission
-            else -> R.string.ionos_file_management_permission_optional
-        }
-        val explanationResource = when {
-            permissionRequired -> R.string.ionos_file_management_permission_text
-            else -> R.string.ionos_file_management_permission_optional_text
-        }
         val title = R.string.ionos_file_management_permission_optional
         val explanationResource = R.string.ionos_file_management_permission_optional_text
         val message = getString(explanationResource, getString(R.string.app_name))
@@ -79,12 +71,6 @@ class StoragePermissionDialogFragment :
         val dialogBuilder = MaterialAlertDialogBuilder(requireContext(), R.style.Theme_ownCloud_Dialog)
             .setTitle(title)
             .setMessage(message)
-            .setPositiveButton(R.string.permission_allow) { _, _ ->
-                setResult(Result.FULL_ACCESS)
-                dismiss()
-            }
-            .setNegativeButton(R.string.permission_deny) { _, _ ->
-                setResult(Result.CANCEL)
             .setPositiveButton(R.string.storage_permission_all_files_access) { _, _ ->
                 val intent = PermissionUtil.getManageAllFilesIntent(requireActivity())
                 activity?.startActivity(intent)

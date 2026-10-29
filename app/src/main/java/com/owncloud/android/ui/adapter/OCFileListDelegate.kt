@@ -219,8 +219,6 @@ class OCFileListDelegate(
 
     @Suppress("MagicNumber")
     @IonosCustomization
-    fun bindGridViewHolder(
-        gridViewHolder: ListViewHolder,
     fun bindViewHolder(
         viewHolder: ListViewHolder,
         file: OCFile,
@@ -229,11 +227,6 @@ class OCFileListDelegate(
         overlayManager: OverlayManager
     ) {
         // thumbnail
-        gridViewHolder.imageFileName?.text = file.fileName
-        gridViewHolder.thumbnail.tag = file.fileId
-        OCFileListThumbnailLoader(
-            file,
-            gridViewHolder,
         viewHolder.imageFileName?.text = file.fileName
         viewHolder.thumbnail.tag = file.fileId
         OCFileListThumbnailLoader(
@@ -284,10 +277,6 @@ class OCFileListDelegate(
 
         if (!file.isOfflineOperation && !file.isFolder) {
             viewHolder.thumbnail.makeRounded(context, 4f)
-        }
-
-        if (!file.isOfflineOperation && !file.isFolder) {
-            gridViewHolder.thumbnail.makeRounded(context, 4f)
         }
     }
 

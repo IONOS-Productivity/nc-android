@@ -1,9 +1,3 @@
-La plataforma de productividad auto-alojada que le mantiene en control.
-
-Características;
-* Interfaz moderna y fácil de usar adecuada al tema de su servidor
-* Suba archivos a su servidor Nextcloud
-* Compártalos con otros
 La plataforma de productividad auto-hospedada que le mantiene en control.
 
 Características;
@@ -12,7 +6,7 @@ Características;
 * Comparta los mismos con otros
 * Mantenga sus archivos y carpetas favoritas sincronizados
 * Busque en todas las carpetas de su servidor
-* Subida automática para fotos y videos capturados en su dispositivo
+* Carga automática para fotos y videos capturados en su dispositivo
 * Manténgase al día con notificaciones
 * Soporte para múltiples cuentas
 * Acceda a su información de forma segura usando su huella dactilar o PIN

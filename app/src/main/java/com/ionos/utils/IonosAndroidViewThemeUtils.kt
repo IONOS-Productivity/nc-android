@@ -24,7 +24,6 @@ import android.widget.Switch
 import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
@@ -90,7 +89,6 @@ class IonosAndroidViewThemeUtils(
     }
 
     fun colorImageView(imageView: ImageView, colorRole: ColorRole) {
-        delegate.colorImageView(imageView, colorRole)
         //delegate.colorImageView(imageView, colorRole)
     }
 
@@ -156,7 +154,6 @@ class IonosAndroidViewThemeUtils(
     }
 
     fun themeRadioButton(radioButton: RadioButton) {
-        delegate.themeRadioButton(radioButton)
         //delegate.themeRadioButton(radioButton)
     }
 

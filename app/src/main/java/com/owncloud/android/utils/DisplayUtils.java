@@ -428,14 +428,6 @@ public final class DisplayUtils {
                                  Resources resources,
                                  Object callContext,
                                  Context context) {
-        if (callContext instanceof View v) {
-            v.setContentDescription(String.valueOf(user.toPlatformAccount().hashCode()));
-        }
-
-        if (IonosBuildHelper.isIonosBuild()) {
-            Drawable avatar = ResourcesCompat.getDrawable(resources, R.drawable.account_circle_white, null);
-            listener.avatarGenerated(avatar, callContext);
-            return;
         setAvatar(user, userId, displayName, listener, avatarRadius, resources, callContext, context, 0);
     }
 
@@ -492,7 +484,6 @@ public final class DisplayUtils {
             // if no one exists, show colored icon with initial char
             if (avatar == null) {
                 try {
-                    avatar = TextDrawable.createAvatarByUserId(displayName, avatarRadius);
                     avatar = TextDrawable.createAvatarByUserId(displayName,
                                                                (avatarRadius - avatarBorder));
                 } catch (Exception e) {
@@ -811,25 +802,6 @@ public final class DisplayUtils {
         }
     }
 
-    @IonosCustomization
-    public static @DrawableRes int getSortOrderIconRes(FileSortOrder sortOrder) {
-        switch (sortOrder.name) {
-            case SORT_Z_TO_A_ID:
-                return R.drawable.ic_alphabetical_desc;
-            case SORT_NEW_TO_OLD_ID:
-                return R.drawable.ic_modification_desc;
-            case SORT_OLD_TO_NEW_ID:
-                return R.drawable.ic_modification_asc;
-            case SORT_BIG_TO_SMALL_ID:
-                return R.drawable.ic_size_desc;
-            case SORT_SMALL_TO_BIG_ID:
-                return R.drawable.ic_size_asc;
-            case SORT_A_TO_Z_ID:
-            default:
-                return R.drawable.ic_alphabetical_asc;
-        }
-    }
-
     public static String getDateByPattern(long timestamp, String pattern) {
         return getDateByPattern(timestamp, null, pattern);
     }
@@ -885,7 +857,6 @@ public final class DisplayUtils {
                                     LoaderImageView shimmerThumbnail,
                                     AppPreferences preferences,
                                     ViewThemeUtils viewThemeUtils,
-                                    SyncedFolderProvider syncedFolderProvider) {
                                     OverlayManager overlayManager) {
         if (file == null || thumbnailView == null || context == null) {
             return;
@@ -897,7 +868,6 @@ public final class DisplayUtils {
         }
 
         if (file.isFolder()) {
-            setThumbnailForFolder(file, thumbnailView, shimmerThumbnail, user, syncedFolderProvider, preferences, context, viewThemeUtils);
             overlayManager.setFolderThumbnail(file, thumbnailView, shimmerThumbnail);
             return;
         }
@@ -912,7 +882,6 @@ public final class DisplayUtils {
 
     private static void setThumbnailFirstTimeForFile(OCFile file, ImageView thumbnailView, FileDataStorageManager storageManager, List<ThumbnailsCacheManager.ThumbnailGenerationTask> asyncTasks, boolean gridView, LoaderImageView shimmerThumbnail, User user, AppPreferences preferences, Context context, ViewThemeUtils viewThemeUtils) {
         if (file.getRemoteId() != null) {
-            generateNewThumbnail(file, thumbnailView, user, storageManager, asyncTasks, gridView, context, shimmerThumbnail, preferences, viewThemeUtils);
             generateNewThumbnail(file, thumbnailView, user, storageManager, new ArrayList<>(asyncTasks), gridView, context, shimmerThumbnail, preferences, viewThemeUtils);
             return;
         }
@@ -944,21 +913,6 @@ public final class DisplayUtils {
         }
     }
 
-    private static void setThumbnailForFolder(OCFile file, ImageView thumbnailView, LoaderImageView shimmerThumbnail, User user, SyncedFolderProvider syncedFolderProvider, AppPreferences preferences, Context context, ViewThemeUtils viewThemeUtils) {
-        stopShimmer(shimmerThumbnail, thumbnailView);
-
-        boolean isAutoUploadFolder = SyncedFolderProvider.isAutoUploadFolder(syncedFolderProvider, file, user);
-        boolean isDarkModeActive = preferences.isDarkModeEnabled();
-
-        final var overlayIconId = file.getFileOverlayIconId(isAutoUploadFolder);
-        final var fileIcon = MimeTypeUtil.getFolderIcon(isDarkModeActive, overlayIconId, context, viewThemeUtils);
-        thumbnailView.setImageDrawable(fileIcon);
-    }
-
-    private static void setThumbnailFromCache(OCFile file, ImageView thumbnailView, FileDataStorageManager storageManager, List<ThumbnailsCacheManager.ThumbnailGenerationTask> asyncTasks, boolean gridView, LoaderImageView shimmerThumbnail, User user, AppPreferences preferences, Context context, ViewThemeUtils viewThemeUtils) {
-        final var thumbnail = ThumbnailsCacheManager.getBitmapFromDiskCache(ThumbnailsCacheManager.PREFIX_THUMBNAIL + file.getRemoteId());
-        if (thumbnail == null || file.isUpdateThumbnailNeeded()) {
-            generateNewThumbnail(file, thumbnailView, user, storageManager, asyncTasks, gridView, context, shimmerThumbnail, preferences, viewThemeUtils);
     public static void setThumbnailFromCache(OCFile file, ImageView thumbnailView, FileDataStorageManager storageManager, List<ThumbnailsCacheManager.ThumbnailGenerationTask> asyncTasks, boolean gridView, LoaderImageView shimmerThumbnail, User user, AppPreferences preferences, Context context, ViewThemeUtils viewThemeUtils) {
         final var thumbnail = ThumbnailsCacheManager.getBitmapFromDiskCache(ThumbnailsCacheManager.PREFIX_THUMBNAIL + file.getRemoteId());
         if (thumbnail == null || file.isUpdateThumbnailNeeded()) {

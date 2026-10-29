@@ -51,7 +51,6 @@ class FileDownloadWorker(
     localBroadcastManager: LocalBroadcastManager,
     private val context: Context,
     params: WorkerParameters
-) : CoroutineWorker(context, params), OnAccountsUpdateListener, OnDatatransferProgressListener {
 ) : CoroutineWorker(context, params),
     OnAccountsUpdateListener,
     OnDatatransferProgressListener {
@@ -78,18 +77,6 @@ class FileDownloadWorker(
         const val ACTIVITY_NAME = "ACTIVITY_NAME"
         const val PACKAGE_NAME = "PACKAGE_NAME"
         const val CONFLICT_UPLOAD_ID = "CONFLICT_UPLOAD_ID"
-        const val EXTRA_DOWNLOAD_RESULT = "EXTRA_DOWNLOAD_RESULT"
-        const val EXTRA_REMOTE_PATH = "EXTRA_REMOTE_PATH"
-        const val EXTRA_LINKED_TO_PATH = "EXTRA_LINKED_TO_PATH"
-        const val EXTRA_ACCOUNT_NAME = "EXTRA_ACCOUNT_NAME"
-
-        fun getDownloadAddedMessage(): String {
-            return FileDownloadWorker::class.java.name + "DOWNLOAD_ADDED"
-        }
-
-        fun getDownloadFinishMessage(): String {
-            return FileDownloadWorker::class.java.name + "DOWNLOAD_FINISH"
-        }
     }
 
     private var currentDownload: DownloadFileOperation? = null
@@ -116,14 +103,6 @@ class FileDownloadWorker(
 
     private var downloadError: FileDownloadError? = null
 
-    @Suppress("TooGenericExceptionCaught", "ReturnCount")
-    override suspend fun doWork(): Result {
-        val foregroundInfo = createWorkerForegroundInfo()
-        setForeground(foregroundInfo)
-
-        return try {
-            setUser()
-            val remotePath = inputData.keyValueMap[FILE_REMOTE_PATH] as String? ?: return Result.failure()
     @Suppress("ReturnCount")
     override suspend fun doWork(): Result {
         trySetForeground()
@@ -144,23 +123,6 @@ class FileDownloadWorker(
                 notificationManager.dismissNotification()
             }
 
-            Log_OC.e(TAG, "FilesDownloadWorker successfully completed")
-            Result.success()
-        } catch (t: Throwable) {
-            notificationManager.showNewNotification(context.getString(R.string.downloader_unexpected_error))
-            Log_OC.e(TAG, "Error caught at FilesDownloadWorker(): " + t.localizedMessage)
-            Result.failure()
-        } finally {
-            Log_OC.e(TAG, "FilesDownloadWorker cleanup")
-            notificationManager.dismissNotification()
-            setIdleWorkerState()
-        }
-    }
-
-    private fun createWorkerForegroundInfo(): ForegroundInfo {
-        return ForegroundServiceHelper.createWorkerForegroundInfo(
-            notificationManager.getId(),
-            notificationManager.getNotification(),
             Log_OC.d(TAG, "successfully completed")
             Result.success()
         } catch (t: Throwable) {
@@ -259,12 +221,6 @@ class FileDownloadWorker(
         fileDataStorageManager = FileDataStorageManager(user, context.contentResolver)
     }
 
-    private fun getFiles(file: OCFile): List<OCFile> {
-        return if (file.isFolder) {
-            fileDataStorageManager?.getAllFilesRecursivelyInsideFolder(file) ?: listOf()
-        } else {
-            listOf(file)
-        }
     private fun getFiles(file: OCFile): List<OCFile> = if (file.isFolder) {
         fileDataStorageManager?.getAllFilesRecursivelyInsideFolder(file) ?: listOf()
     } else {

@@ -26,10 +26,6 @@ import android.view.ViewGroup;
 import android.webkit.URLUtil;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.ionos.annotation.IonosCustomization;
 import com.ionos.annotation.IonosCustomization;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.target.Target;

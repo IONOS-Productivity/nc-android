@@ -294,7 +294,6 @@ public class RefreshFolderOperation extends RemoteOperation {
             }
         }
 
-        if (!mSyncFullAccount && mRemoteFolderChanged && mLocalFolder != null) {
         if (!mSyncFullAccount && mRemoteFolderChanged && mLocalFolder != null && !isMetadataSyncWorkerRunning) {
             sendLocalBroadcast(EVENT_SINGLE_FOLDER_CONTENTS_SYNCED, mLocalFolder.getRemotePath(), result);
         }
@@ -311,7 +310,6 @@ public class RefreshFolderOperation extends RemoteOperation {
             fileDataStorageManager.saveSharesFromRemoteFile(remoteFiles);
         }
 
-        if (!mSyncFullAccount && mLocalFolder != null) {
         if (!mSyncFullAccount && mLocalFolder != null && !isMetadataSyncWorkerRunning) {
             sendLocalBroadcast(EVENT_SINGLE_FOLDER_SHARES_SYNCED, mLocalFolder.getRemotePath(), result);
         }

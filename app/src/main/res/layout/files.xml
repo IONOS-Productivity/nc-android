@@ -68,7 +68,6 @@
             app:shapeAppearanceOverlay="@style/FabButtonBackgroundShape"
             app:tint="@color/fab_icon_tint"
             app:ionosCustomization="Custom FAB colors"
-            app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
             app:layout_behavior="com.nextcloud.ui.behavior.OnScrollBehavior"
             android:visibility="gone"
             tools:visibility="visible" />

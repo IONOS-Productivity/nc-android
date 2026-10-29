@@ -394,11 +394,6 @@ public interface AppPreferences {
     int getPassCodeDelay();
     void setPassCodeDelay(int value);
 
-    boolean isAutoUploadGPlayNotificationShown();
-    void setAutoUploadGPlayNotificationShown(boolean value);
-
-    int getPassCodeDelay();
-    void setPassCodeDelay(int value);
     String getLastDisplayedAccountName();
     void setLastDisplayedAccountName(String lastDisplayedAccountName);
 

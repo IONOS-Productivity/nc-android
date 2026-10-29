@@ -43,25 +43,12 @@
     <string name="app_config_proxy_port_title">Proxy-ataka</string>
     <string name="app_widget_description">Paneleko trepeta bat erakusten du</string>
     <string name="appbar_search_in">Bilatu %s(e)n</string>
-    <string name="assistant_screen_add_task_alert_dialog_title">Gehitu zeregin berria</string>
-    <string name="assistant_screen_create_a_new_task_from_bottom_right_text">Sortu zeregin berri bat eskuineko botoiarekin</string>
-    <string name="assistant_screen_create_task_alert_dialog_input_field_placeholder">Idatzi testu bat</string>
-    <string name="assistant_screen_delete_task_alert_dialog_description">Ziur zeregin hau ezabatu nahi duzula?</string>
-    <string name="assistant_screen_delete_task_alert_dialog_title">Ezabatu zeregina</string>
-    <string name="assistant_screen_loading">Zereginen zerrenda kargatzen...</string>
-    <string name="assistant_screen_no_task_available_text">Ez dago zereginik %s zeregin motarako, zeregin berri bat sor dezakezu behean eskuinean.</string>
     <string name="appear_offline">Lineaz kanpo agertzen da</string>
-    <string name="assistant_screen_chat_create_error">Ezin izan da mezua bidali</string>
-    <string name="assistant_screen_chat_fetch_error">Ezin izan dira txat-mezuak eskuratu</string>
-    <string name="assistant_screen_chat_generate_error">Ezin izan da erantzuna sortu</string>
-    <string name="assistant_screen_conversations_go_back_to_assistant">Itzuli laguntza orrira</string>
     <string name="assistant_screen_delete_task_alert_dialog_description">Ziur zeregin hau ezabatu nahi duzula?</string>
     <string name="assistant_screen_delete_task_alert_dialog_title">Ezabatu zeregina</string>
     <string name="assistant_screen_task_create_fail_message">Errore bat gertatu da zeregina sortzean</string>
     <string name="assistant_screen_task_create_success_message">Eginkizuna sortuta</string>
     <string name="assistant_screen_task_delete_fail_message">Errore bat gertatu da zeregina ezabatzean</string>
-    <string name="assistant_screen_task_delete_success_message">Zeregina ongi ezabatu da</string>
-    <string name="assistant_screen_task_list_empty_message">Zereginen zerrenda hutsik dago.</string>
     <string name="assistant_screen_task_list_error_state_message">Ezin da zereginen zerrenda eskuratu. Egiaztatu Interneteko konexioa.</string>
     <string name="assistant_screen_task_more_actions_bottom_sheet_delete_action">Ezabatu zeregina</string>
     <string name="assistant_screen_task_output_empty_text">Zereginaren irteera ez dago prest oraindik.</string>
@@ -105,9 +92,6 @@
     <string name="authenticator_activity_login_error">Arazo bat egon da zure saioa hasteko eskaera prozesatzean. Mesedez saiatu geroxeago.</string>
     <string name="authenticator_activity_please_complete_login_process">Mesedez, osatu saioa hasteko prozesua zure nabigatzailean</string>
     <string name="auto_upload_file_behaviour_kept_in_folder">Jatorrizko karpetan mantendu da, soilik irakurtzeko delako</string>
-    <string name="auto_upload_gplay">Igoera automatikoaren portaera aldatu da</string>
-    <string name="auto_upload_gplay_desc">Googlek ezarritako murrizketa berrien ondorioz, auto-igoera ezaugarriak ezingo ditu igotako fitxategiak automatikoki ezabatu.</string>
-    <string name="auto_upload_gplay_desc2">Google-k ezarritako murrizketa berriak direla eta, baimen garrantzitsua bat kendu behar izan dugu. Ondorioz, fitxategien karga automatikoak bakarrik funtzionatuko du irudiekin eta bideoekin.\n Gainera, baimen berria beharrezkoa da kargatutako irudien kokapenari buruzko informazioa eskuratzeko.\n  Ziurtatu multimedia fitxategiek \"baimendu beti guztiak\" ezarrita dutela.</string>
     <string name="auto_upload_on_wifi">Kargatu soilik mugarik gabeko Wi-Fi bidez</string>
     <string name="auto_upload_path">/Auto-karga</string>
     <string name="auto_upload_sub_folder_warning">Karpeta hau dagoeneko guraso-karpetaren sinkronizazioan sartuta dago, eta horrek karga bikoiztuak sor ditzake</string>
@@ -143,9 +127,6 @@
     <string name="choose_widget">Aukeratu trepeta</string>
     <string name="clear">Garbitu</string>
     <string name="clear_notifications_failed">Huts egin du jakinarazpenak garbitzean.</string>
-    <string name="clear_status_message">Garbitu egoera mezua</string>
-    <string name="clear_status_message_after">Egoera mezua noiz garbitu</string>
-    <string name="click_to_learn_how_to_re_enable_auto_uploads">Karga automatikoa berriro aktibatzeko eskuzko esku-hartzea beharrezkoa da</string>
     <string name="clear_status_after">Garbitu egoera honen ondoren</string>
     <string name="clipboard_label">Testua hemendik kopiatua: %1$s</string>
     <string name="clipboard_no_text_to_copy">Ez da jaso testurik arbelera kopiatzeko</string>
@@ -407,8 +388,6 @@
     <string name="file_list_empty_local_search">Ez dago zure bilaketarekin bat datorren fitxategi edo karpetarik</string>
     <string name="file_list_empty_moving">Hemen ez dago ezer. Karpeta bat gehi dezakezu.</string>
     <string name="file_list_empty_on_device">Deskargaturiko fitxategiak eta karpetak hemen agertuko dira.</string>
-    <string name="file_list_empty_recent_files_description">Azkenaldian aldatu dituzun fitxategi eta karpetak hemen agertuko dira.</string>
-    <string name="file_list_empty_recent_files_headline">Ez dago azkenaldian aldatutako fitxategirik</string>
     <string name="file_list_empty_recently_modified">Ez da aurkitu azken 7 egunetan aldatu den fitxategirik</string>
     <string name="file_list_empty_search">Agian beste karpeta batean dago?</string>
     <string name="file_list_empty_shared">Partekatzen dituzun fitxategiak eta karpetak hemen agertuko dira.</string>
@@ -456,7 +435,6 @@
     <string name="file_not_synced">Fitxategia ezin izan da sinkronizatu. Eskuragarri dagoen azken bertsioa erakusten.</string>
     <string name="file_rename">Aldatu izena</string>
     <string name="file_upload_worker_error_notification_title">Igoerak huts egin du. Ez dago internet konexiorik</string>
-    <string name="file_upload_worker_same_file_already_exists">Dagoeneko fitxategi bera dago, ez da gatazkarik hauteman</string>
     <string name="file_version_restored_error">Errorea fitxategiaren bertsioa berreskuratzean!</string>
     <string name="filedetails_details">Xehetasunak</string>
     <string name="filedetails_download">Deskargatu</string>
@@ -630,9 +608,6 @@
     <string name="offline_mode">Internet konexiorik ez</string>
     <string name="offline_mode_info_description">Interneteko konexiorik gabe ere, zure karpetak antola ditzakezu, fitxategiak sortu. Konektatuta berriro zaudenean, zain dauden ekintzak automatikoki sinkronizatuko dira.</string>
     <string name="offline_mode_info_title">Konexiorik gabe zaude, baina lanak aurrera jarraitzen du</string>
-    <string name="offline_operations_file_does_not_exists_yet">Fitxategia ez dago oraindik. Kargatu fitxategia lehenik.</string>
-    <string name="offline_operations_worker_notification_conflict_text">Karpeta gatazkatsua: %s</string>
-    <string name="offline_operations_worker_notification_delete_offline_folder">Ezabatu konexiorik gabeko karpeta</string>
     <string name="offline_operations_worker_notification_error_text">Lineaz kanpoko eragiketa ezin da osatu.. %s</string>
     <string name="offline_operations_worker_notification_manager_ticker">Lineaz kanpoko eragiketak</string>
     <string name="offline_operations_worker_notification_start_text">Konexiorik gabeko eragiketak hastea</string>
@@ -741,8 +716,6 @@
     <string name="push_notifications_old_login">Ez dago push jakinarazpenik saio zaharkituaren ondorioz. Mesedez, kontua berriz gehitu.</string>
     <string name="push_notifications_temp_error">Push jakinarazpenak ez daude eskuragarri.</string>
     <string name="qr_could_not_be_read">Ezin da QR kodea irakurri!</string>
-    <string name="re_enable_auto_upload">Aldatzen du igoera automatikora</string>
-    <string name="re_enable_auto_upload_desc">Google-k ezarritako murrizketa berriak direla eta, baimen garrantzitsua kendu behar izan dugu. Google-rekin lan egiten ari gara gai hau konpontzeko eta funtzionaltasun osoa berreskuratzeko.\n\n Berriro gaitzeko argazki eta bideo berrien igoera automatikoa:\nHautatu \"Baimendu dena\", hau da, irudiak kargatzean kokapen datuak gordetzeko aukera ematen duen moduan. Zalantzarik izanez gero, egiaztatu sistemaren ezarpenak.\nIrudi eta bideo fitxategiak automatikoki kargatu ahal izango dira NextCoud aplikazioaren Google Play bertsioa erabiltzerakoan.\n\n 2024ko abenduaz geroztik kargatu ez diren fitxategiak egiaztatu.</string>
     <string name="receive_external_files_activity_start_sync_folder_is_not_exists_message">Ezin da karpeta aurkitu, sinkronizazio lana bertan behera geratu da</string>
     <string name="receive_external_files_activity_unable_to_find_file_to_upload">Ezin da aurkitu igotzeko fitxategia</string>
     <string name="recommend_subject">Probatu %1$s zure gailuan!</string>
@@ -832,7 +805,6 @@
     <string name="share_no_password_title">Ezarri pasahitza</string>
     <string name="share_not_allowed_when_file_drop">Ez da birpartekatzea onartzen fitxategiak seguruen jariotzea erabiltzean</string>
     <string name="share_permission_can_edit">Editatu dezake</string>
-    <string name="share_permission_file_drop">Fitxategiak jaregin</string>
     <string name="share_permission_file_request">Fitxategi eskaera</string>
     <string name="share_permission_secure_file_drop">Fitxategi-jartze segurua</string>
     <string name="share_permission_view_only">Ikusi soilik</string>
@@ -904,9 +876,6 @@
     <string name="storage_music">Musika</string>
     <string name="storage_permission_media_read_only">Mutimediak irakurtzeko soilik</string>
     <string name="storage_pictures">Irudiak</string>
-    <string name="store_full_desc"> 
-
-Zure kontrola bermatzen dituzten auto-ostatatutako produktibitate-plataformak.\n\nEzaugarriak:\n* Interfaze erraza, modernoa, zure zerbitzariaren gaira egokitua\n* Igo fitxategiak zure Nextcloud zerbitzarira\n* Partekatu beste batzuekin\n* Mantendu zure fitxategi eta karpeta sinkronizatuak\n* Bilatu zure zerbitzariko karpeta guztietan\n* Igo automatikoki zure gailuz hartutako argazki eta bideoak\n* Eguneratuta egon jakinarazpenekin\n* Kontu anitzak onartzen dira\n* Datu seguruak zure zerbitzarian hatz-marka edo PINaren bidez* Davx⁵-ekin integratzea (lehenago Davdroid izenarekin ezagutzen dena) egutegiaren eta kontaktuen sinkronizazioa erraz konfiguratzeko\n\n Mesedez akatsen berri eman  https://github.com/extCloud/android web orrian eta eztabaidatu aplikazio honi buruz https://help.nextCoud.com/c/clients/android web orrian\n\n Berria Nextclouden?  Nextcloud fitxategi pribatuen sinkronizatu eta partekatzeko zerbitzaria da. Software librea da, eta zuk zeuk ostatatu edo ordaindu dezakezu enpresa bati zure ordez egiteko. Horrela, zure argazkiak, egutegia eta harremanetarako datuak, dokumentuak eta gainerako guztia kontrolatzen ahal dituzu.\n\nBegiratu Nextcloud informazioa https://nextcloud.com webgunean.</string>
     <string name="store_full_desc">Zure kontrola bermatzen dituzten auto-ostatatutako produktibitate-plataformak.\n\nEzaugarriak:\n* Interfaze erraza, modernoa, zure zerbitzariaren gaira egokitua\n* Igo fitxategiak zure Nextcloud zerbitzarira\n* Partekatu beste batzuekin\n* Mantendu zure fitxategi eta karpeta sinkronizatuak\n* Bilatu zure zerbitzariko karpeta guztietan\n* Igo automatikoki zure gailuz hartutako argazki eta bideoak\n* Eguneratuta egon jakinarazpenekin\n* Kontu anitzak onartzen dira\n* Datu seguruak zure zerbitzarian hatz-marka edo PINaren bidez* Davx⁵-ekin integratzea (lehenago Davdroid izenarekin ezagutzen dena) egutegiaren eta kontaktuen sinkronizazioa erraz konfiguratzeko\n\n Mesedez akatsen berri eman  https://github.com/nextcloud/android web orrian eta eztabaidatu aplikazio honi buruz https://help.nextcloud.com/c/clients/android web orrian\n\n Berria Nextclouden?  Nextcloud fitxategi pribatuen sinkronizatu eta partekatzeko zerbitzaria da. Software librea da, eta zuk zeuk ostatatu edo ordaindu dezakezu enpresa bati zure ordez egiteko. Horrela, zure argazkiak, egutegia eta harremanetarako datuak, dokumentuak eta gainerako guztia kontrolatzen ahal dituzu.\n\nBegiratu Nextcloud informazioa https://nextcloud.com webgunean.</string>
     <string name="store_full_dev_desc">Kontrola zuri ematen dizun norberak ostatatutako produktibitate-plataforma.\nHau garapeneko bertsio ofiziala da. Probatu gabeko funtzionalitateen eguneroko lagina hartzen du, eta horrek ezegonkortasuna eta datu-galera eragin ditzake. Aplikazio hau probatu eta gertatzen diren akatsen berri eman nahi duten erabiltzaileentzat da. Ez erabili zure produkzio-lanerako!\n\nBi bertsio ofizialak, garapenekoa eta normala, F-Droiden daude eskuragarri eta aldi berean instalatu daitezke.</string>
     <string name="store_short_desc">Kontrola zuri ematen dizun norberak ostatutako produktibitate plataforma</string>
@@ -1016,8 +985,6 @@ Zure kontrola bermatzen dituzten auto-ostatatutako produktibitate-plataformak.\n
     <string name="upload_file_dialog_title">Sartu igoko den fitxategi-izena eta fitxategi mota</string>
     <string name="upload_files">Igo fitxategiak</string>
     <string name="upload_global_pause_title">Igoera guztiak pausatuta daude</string>
-    <string name="upload_gplay">Baimenen aldaketak</string>
-    <string name="upload_gplay_desc">Baimen berri bat behar da kargatutako irudien kokapen-informazioa eskuratzeko.\nZiurtatu multimedia-sarbidea \"Beti baimendu guztiak\" gisa konfiguratuta dagoela.</string>
     <string name="upload_item_action_button">Elementua igotzeko ekintza botoia</string>
     <string name="upload_list_delete">Ezabatu</string>
     <string name="upload_list_empty_headline">Ezin dira fitxategiak igo</string>
@@ -1093,9 +1060,7 @@ Zure kontrola bermatzen dituzten auto-ostatatutako produktibitate-plataformak.\n
     <string name="user_icon">Erabiltzailea</string>
     <string name="user_info_address">Helbidea</string>
     <string name="user_info_email">Posta elektronikoa</string>
-    <string name="user_info_groups">Taldeak</string>
     <string name="user_info_phone">Telefono zenbakia</string>
-    <string name="user_info_profile">Profila</string>
     <string name="user_info_twitter">Twitter</string>
     <string name="user_info_website">Webgunea</string>
     <string name="user_information_retrieval_error">Akatsa erabiltzailearen informazioa eskuratzerakoan</string>

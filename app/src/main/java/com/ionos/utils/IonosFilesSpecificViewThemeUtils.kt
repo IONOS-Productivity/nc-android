@@ -12,7 +12,6 @@ import android.preference.PreferenceCategory
 import android.widget.ImageView
 import androidx.annotation.StringRes
 import androidx.appcompat.app.ActionBar
-import com.google.android.material.card.MaterialCardView
 import androidx.appcompat.widget.SearchView
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.navigation.NavigationView

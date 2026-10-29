@@ -14,11 +14,6 @@ import com.owncloud.android.databinding.RecommendedFileItemBinding
 import com.owncloud.android.datamodel.OCFile
 
 class RecommendedFilesAdapter(
-    private val recommendations: ArrayList<Recommendation>,
-    private val delegate: OCFileListDelegate,
-    private val onItemClickListener: OnItemClickListener,
-    private val storageManager: FileDataStorageManager
-) : RecyclerView.Adapter<RecommendedFilesAdapter.RecommendedFilesViewHolder>() {
     private val fileListAdapter: OCFileListAdapter,
     private val recommendations: ArrayList<OCFile>
 ) : RecyclerView.Adapter<OCFileListRecommendedItemViewHolder>() {

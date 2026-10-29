@@ -44,13 +44,6 @@
     <string name="app_config_proxy_port_title">proxy代理伺服器連接埠</string>
     <string name="app_widget_description">顯示儀表板中的一個小工具</string>
     <string name="appbar_search_in">搜尋 %s</string>
-    <string name="assistant_screen_add_task_alert_dialog_title">新增任務</string>
-    <string name="assistant_screen_create_a_new_task_from_bottom_right_text">從右下角建立新任務</string>
-    <string name="assistant_screen_create_task_alert_dialog_input_field_placeholder">輸入一些文字</string>
-    <string name="assistant_screen_delete_task_alert_dialog_description">您確定要刪除此工作項目嗎？</string>
-    <string name="assistant_screen_delete_task_alert_dialog_title">刪除工作項目</string>
-    <string name="assistant_screen_loading">正在載入工作項目清單……</string>
-    <string name="assistant_screen_no_task_available_text">沒有可用於 %s 工作項目類型的工作項目，您可以從右下角建立新工作項目。</string>
     <string name="appear_offline">顯示為離線</string>
     <string name="assistant_output_generation_warning_text">此處顯示的輸出是由人工智慧產生的。請務必仔細檢查。</string>
     <string name="assistant_screen_chat_create_error">傳送訊息失敗</string>
@@ -68,8 +61,6 @@
     <string name="assistant_screen_task_create_fail_message">建立工作項目時發生錯誤</string>
     <string name="assistant_screen_task_create_success_message">已建立工作</string>
     <string name="assistant_screen_task_delete_fail_message">刪除工作項目時發生錯誤</string>
-    <string name="assistant_screen_task_delete_success_message">已成功刪除工作項目</string>
-    <string name="assistant_screen_task_list_empty_message">任務清單為空。</string>
     <string name="assistant_screen_task_delete_success_message">任務已刪除</string>
     <string name="assistant_screen_task_list_empty_warning">任務清單是空的。請檢查小幫手應用程式設定。</string>
     <string name="assistant_screen_task_list_error_state_message">無法擷取工作項目清單，請檢查您的網際網路連線。</string>
@@ -123,8 +114,6 @@
     <string name="authenticator_activity_no_web_browser_found">沒有瀏覽器可以開啟此連結。</string>
     <string name="authenticator_activity_please_complete_login_process">請在瀏覽器中完成登入流程</string>
     <string name="auto_upload_battery_saver_mode_warning">因為省電模式已開啟，因此暫停自動上傳。</string>
-    <string name="auto_upload_delete_dialog_description">此操作將刪除該資料夾及自動上傳設定。任何尚未完成的上傳作業都將被取消。</string>
-    <string name="auto_upload_delete_dialog_title">刪除自動上傳資料夾？</string>
     <string name="auto_upload_file_behaviour_kept_in_folder">以唯讀模式保留在原本的資料夾</string>
     <string name="auto_upload_low_battery_warning_info">低電量，上傳可能會需要較長時間</string>
     <string name="auto_upload_on_wifi">只在非計量收費的 Wi-Fi 上傳</string>
@@ -256,8 +245,6 @@
     <string name="could_not_retrieve_url">無法擷取 URL</string>
     <string name="create">建立</string>
     <string name="create_dir_fail_msg">無法建立資料夾</string>
-    <string name="create_end_to_end_encrypted_share">連結分享</string>
-    <string name="create_end_to_end_encrypted_share_title">端到端連結分享</string>
     <string name="create_link">建立連結</string>
     <string name="create_new">建立新的</string>
     <string name="create_new_document">新增文件</string>
@@ -332,7 +319,6 @@
     <string name="drawer_item_notifications">通知</string>
     <string name="drawer_item_on_device">在裝置上</string>
     <string name="drawer_item_personal_files">個人檔案</string>
-    <string name="drawer_item_recent_files">近期檔案</string>
     <string name="drawer_item_recently_modified">最近修改</string>
     <string name="drawer_item_shared">已分享</string>
     <string name="drawer_item_trashbin">刪除的檔案</string>
@@ -419,7 +405,6 @@
     <string name="etm_transfer_type">傳輸</string>
     <string name="etm_transfer_type_download">下載</string>
     <string name="etm_transfer_type_upload">上傳</string>
-    <string name="export_in_progress">正在匯出第 %1$d 個（共 %2$d 個）</string>
     <string name="extension_cannot_be_changed">無法變更副檔名</string>
     <string name="extented_list_fragment_empty_list_message_no_write_permission">您無權在此資料夾建立或上傳檔案。</string>
     <string name="external_shares">外部分享</string>
@@ -452,8 +437,6 @@
     <string name="file_list_empty_local_search">沒有檔案或資料夾符合您的搜尋</string>
     <string name="file_list_empty_moving">此處空無一物。您可以新增資料夾。</string>
     <string name="file_list_empty_on_device">已下載的檔案跟資料夾會顯示在這裡。</string>
-    <string name="file_list_empty_recent_files_description">您最近修改的檔案與資料夾將會顯示在此處。</string>
-    <string name="file_list_empty_recent_files_headline">最近無修改檔案</string>
     <string name="file_list_empty_recently_modified">沒有找到最近 7 天修改的檔案</string>
     <string name="file_list_empty_search">也許在其他資料夾中？</string>
     <string name="file_list_empty_shared">您分享的檔案跟資料夾會顯示在這裡。</string>
@@ -505,7 +488,6 @@
     <string name="file_not_synced">檔案無法同步。將顯示最新可用版本。</string>
     <string name="file_rename">重新命名</string>
     <string name="file_upload_worker_error_notification_title">上傳失敗。沒有網際網路連線</string>
-    <string name="file_upload_worker_same_file_already_exists">已存在相同的檔案，未偵測到衝突</string>
     <string name="file_upload_worker_same_file_already_exists">%s 已存在，未偵測到衝突</string>
     <string name="file_version_restored_error">檔案版本復原錯誤！</string>
     <string name="filedetails_details">詳細資訊</string>
@@ -576,8 +558,6 @@
     <string name="instant_upload_existing">也同時上傳既有的檔案</string>
     <string name="instant_upload_on_charging">只在充電時上傳</string>
     <string name="instant_upload_path">/InstantUpload</string>
-    <string name="internal_share_description_end_to_end_encrypted">分享對象總是能存取完整的加密資料夾。僅能與已設定端到端加密的帳號進行分享。</string>
-    <string name="internal_share_headline_end_to_end_encrypted">端到端加密分享</string>
     <string name="internal_shares">內部分享</string>
     <string name="internal_two_way_sync">內部雙向同步</string>
     <string name="internal_two_way_sync_not_yet">還沒有，即將同步</string>
@@ -808,7 +788,6 @@
     <string name="preview_image_file_is_not_downloaded">檔案未下載</string>
     <string name="preview_media_unhandled_http_code_message">檔案目前已被其他使用者或處理程序鎖定，因此無法刪除。請稍後再試。</string>
     <string name="preview_sorry">很抱歉</string>
-    <string name="preview_text_string_fragment_open_rich_text_editor_error_message">開啟文字編輯器失敗</string>
     <string name="privacy">隱私權</string>
     <string name="push_notifications_not_implemented">因為依賴於專有的 Google Play 服務的關係，所以推播通知已停用。</string>
     <string name="push_notifications_old_login">因為登入工作階段已過期，故無推播通知。請考慮重新加入您的帳號。</string>
@@ -911,9 +890,6 @@
     <string name="share_no_password_title">設定密碼</string>
     <string name="share_not_allowed_when_file_drop">在安全檔案投遞時不允許轉分享</string>
     <string name="share_option_required">請在繼續前至少選取一個分享選項。</string>
-    <string name="share_password_title">受密碼保護</string>
-    <string name="share_permission_can_edit">可以編輯</string>
-    <string name="share_permission_file_drop">檔案投遞</string>
     <string name="share_permission_can_edit">可以編輯</string>
     <string name="share_permission_file_request">檔案請求</string>
     <string name="share_permission_secure_file_drop">安全檔案投遞</string>
@@ -1130,11 +1106,6 @@
     <string name="upload_quota_exceeded">超過儲存空間容量限制</string>
     <string name="upload_scan_doc_upload">使用相機掃描文件</string>
     <string name="upload_sync_conflict">同步發生衝突，請手動解決</string>
-    <string name="upload_sync_conflict_check">您的上次上傳可能存在衝突。點擊檢查。</string>
-    <string name="upload_sync_conflict_check_error">無法檢查上傳衝突。請重試。</string>
-    <string name="upload_sync_conflict_checking">正在檢查上傳衝突……</string>
-    <string name="upload_sync_conflict_not_exists">衝突已解決。</string>
-    <string name="upload_sync_conflict_same_file">未偵測到衝突。相同的檔案。</string>
     <string name="upload_unknown_error">未知的錯誤</string>
     <string name="uploader_btn_alternative_text">選擇</string>
     <string name="uploader_btn_upload_text">上傳</string>
@@ -1195,9 +1166,7 @@
     <string name="user_icon">使用者</string>
     <string name="user_info_address">地址</string>
     <string name="user_info_email">電子郵件</string>
-    <string name="user_info_groups">群組</string>
     <string name="user_info_phone">電話號碼</string>
-    <string name="user_info_profile">個人檔案</string>
     <string name="user_info_twitter">Twitter</string>
     <string name="user_info_website">網站</string>
     <string name="user_information_retrieval_error">擷取使用者資訊時發生錯誤</string>

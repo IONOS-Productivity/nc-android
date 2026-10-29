@@ -335,44 +335,6 @@ class SetupEncryptionDialogFragment :
             return@withContext if (privateKeyResult.isSuccess) {
                 Log_OC.d(TAG, "private key successful downloaded for " + user.accountName)
                 keyResult = KEY_EXISTING_USED
-                return encryptedPrivateKey?.getKey()
-            }
-
-            return null
-        }
-
-        @Deprecated("Deprecated in Java")
-        override fun onPreExecute() {
-            super.onPreExecute()
-
-            binding.encryptionStatus.setText(R.string.end_to_end_encryption_retrieving_keys)
-            positiveButton?.visibility = View.INVISIBLE
-        }
-
-        @Deprecated("Deprecated in Java")
-        override fun onPostExecute(privateKey: String?) {
-            super.onPostExecute(privateKey)
-
-            val context = mWeakContext.get()
-            if (context == null) {
-                Log_OC.e(TAG, "Context lost after fetching private keys.")
-                return
-            }
-
-            if (privateKey == null) {
-                // first show info
-                try {
-                    if (keyWords == null || keyWords!!.isEmpty()) {
-                        keyWords = EncryptionUtils.getRandomWords(NUMBER_OF_WORDS, context)
-                    }
-                    showMnemonicInfo()
-                } catch (e: IOException) {
-                    binding.encryptionStatus.setText(R.string.common_error)
-                }
-            } else if (privateKey.isNotEmpty()) {
-                binding.encryptionStatus.setText(R.string.end_to_end_encryption_enter_passphrase_to_access_files)
-                binding.encryptionPasswordInputContainer.visibility = View.VISIBLE
-                positiveButton?.visibility = View.VISIBLE
                 val privateKey = privateKeyResult.resultData?.getKey()
                 DownloadKeyResult.Success(privateKey)
             } else {

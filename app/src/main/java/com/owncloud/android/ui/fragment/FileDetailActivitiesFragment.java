@@ -329,8 +329,6 @@ public class FileDetailActivitiesFragment extends Fragment implements
                     isDataFetched = true;
                 } else {
                     Log_OC.d(TAG, result.getLogMessage());
-                    // show error
-                    String logMessage = result.getLogMessage(requireContext());
 
                     String logMessage = result.getLogMessage(activity);
                     if (result.getHttpCode() == HttpStatus.SC_NOT_MODIFIED) {

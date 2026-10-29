@@ -28,13 +28,6 @@
     <string name="activity_icon">Atividades</string>
     <string name="add_new_public_share">Agiunghe ligòngiu de cumpartzidura pùblica nou</string>
     <string name="add_to_cloud">Agiunghe a %1$s</string>
-    <string name="advanced_settings">Cunfiguratzione avantzada</string>
-    <string name="allow_resharing">Permite sa re-cumpartzidura</string>
-    <string name="app_config_base_url_title">URL de base</string>
-    <string name="app_config_proxy_port_title">Port serbidore intermèdiu</string>
-    <string name="appbar_search_in">Chirca in %s</string>
-    <string name="assistant_screen_delete_task_alert_dialog_title">Cantzella faina</string>
-    <string name="assistant_screen_no_task_available_text">Peruna faina a disponimentu pro sa genia %s. Nde podes creare una noa dae su cugione in bassu a dereta.</string>
     <string name="app_config_base_url_title">URL de base</string>
     <string name="app_config_proxy_port_title">Port serbidore intermèdiu</string>
     <string name="appbar_search_in">Chirca in %s</string>
@@ -305,8 +298,6 @@
     <string name="file_list_empty_headline_server_search">Perunu resurtadu</string>
     <string name="file_list_empty_moving">Non b\'at nudda. Podes agiùnghere una cartella.</string>
     <string name="file_list_empty_on_device">Is cartellas e is archìvios iscarrigados ant a aparèssere inoghe.</string>
-    <string name="file_list_empty_recent_files_description">Is cartellas e is archìvios chi apas modificadu de reghente ant a èssere mustrados inoghe.</string>
-    <string name="file_list_empty_recent_files_headline">Nissunu archìviu modificadu de reghente</string>
     <string name="file_list_empty_recently_modified">Perunu archìviu modificadu in is ùrtimas 7 dies agatadu</string>
     <string name="file_list_empty_search">Forsis est in un\'àtera cartella?</string>
     <string name="file_list_empty_shared">Is cartellas e is archìvios chi cumpartzis ant a aparèssere inoghe.</string>
@@ -485,11 +476,6 @@
     <string name="permission_allow">Permite</string>
     <string name="permission_deny">Nega</string>
     <string name="picture_set_as_no_app">Peruna aplicatzione agatada pro cunfigurare un\'immàgine</string>
-    <string name="placeholder_fileSize">389 KB</string>
-    <string name="placeholder_filename">placeholder.txt</string>
-    <string name="placeholder_media_time">12:23:45</string>
-    <string name="placeholder_sentence">Custu est unu sostitutu temporàneu</string>
-    <string name="placeholder_timestamp">18/05/2012 12:23</string>
     <string name="player_stop">firma</string>
     <string name="player_toggle">parti</string>
     <string name="power_save_check_dialog_message">Disativare su controllu de su rispàrmiu de energia podet fàghere chi si carrighent documentos cun sa bateria bàscia!</string>
@@ -604,7 +590,6 @@
     <string name="share_delete_permission">Cantzella</string>
     <string name="share_dialog_title">Cumpartzende</string>
     <string name="share_edit_permission">Modìfica</string>
-    <string name="share_expiration_date_label">Iscadet %1$s</string>
     <string name="share_file">Cumpartzi %1$s</string>
     <string name="share_group_clarification">%1$s (grupu)</string>
     <string name="share_internal_link">Cumpartzi ligòngiu internu</string>
@@ -833,7 +818,6 @@
     <string name="user_icon">Utente</string>
     <string name="user_info_address">Indiritzu</string>
     <string name="user_info_email">Posta eletrònica</string>
-    <string name="user_info_groups">Grupos</string>
     <string name="user_info_phone">Nùmeru de telèfonu</string>
     <string name="user_info_twitter">Twitter</string>
     <string name="user_info_website">Situ web</string>

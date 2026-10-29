@@ -1,11 +1,6 @@
 /*
  * Nextcloud Android client application
  *
- * @author Andy Scherzinger
- * @author Stefan Niedermann
- * Copyright (C) 2021 Andy Scherzinger
- * Copyright (C) 2021 Stefan Niedermann
- *
  * SPDX-FileCopyrightText: 2021-2026 Nextcloud GmbH and Nextcloud contributors
  * SPDX-License-Identifier: AGPL-3.0-or-later OR GPL-2.0-only
  */
@@ -13,7 +8,6 @@ package com.owncloud.android.ui
 
 import android.content.Context
 import android.content.res.Resources
-import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.widget.ImageView
@@ -22,11 +16,6 @@ import androidx.annotation.Px
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.DrawableCompat
-import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.BitmapImageViewTarget
-import com.nextcloud.android.common.ui.theme.utils.ColorRole
-import com.nextcloud.client.account.User
 import com.nextcloud.android.common.ui.theme.utils.ColorRole
 import com.nextcloud.client.account.User
 import com.nextcloud.utils.GlideHelper.loadCircularBitmapIntoImageView
@@ -103,7 +92,6 @@ class AvatarGroupLayout @JvmOverloads constructor(
                             context
                         )
 
-                    ShareType.FEDERATED -> showFederatedShareAvatar(
                     ShareType.FEDERATED, ShareType.FEDERATED_GROUP -> showFederatedShareAvatar(
                         context,
                         sharee.userId!!,
@@ -123,7 +111,6 @@ class AvatarGroupLayout @JvmOverloads constructor(
                             avatarRadius,
                             resources,
                             avatar,
-                            context
                             context,
                             avatarBorderSize
                         )
@@ -149,24 +136,6 @@ class AvatarGroupLayout @JvmOverloads constructor(
         avatar: ImageView,
         viewThemeUtils: ViewThemeUtils
     ) {
-        // maybe federated share
-        val split = user.split("@".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-        val userId: String? = split[0]
-        val server = split[1]
-
-        val url = "https://" + server + "/index.php/avatar/" + userId + "/" +
-            resources.getInteger(R.integer.file_avatar_px)
-        var placeholder: Drawable?
-        try {
-            placeholder = TextDrawable.createAvatarByUserId(userId, avatarRadius)
-        } catch (e: Exception) {
-            Log_OC.e(TAG, "Error calculating RGB value for active account icon.", e)
-            placeholder = viewThemeUtils.platform.colorDrawable(
-                ResourcesCompat.getDrawable(
-                    resources,
-                    R.drawable.account_circle_white,
-                    null
-                )!!,
         val split = user.split("@")
         val userId = split.getOrNull(0) ?: user
         val server = split.getOrNull(1)
@@ -190,19 +159,6 @@ class AvatarGroupLayout @JvmOverloads constructor(
         }
 
         avatar.tag = null
-        Glide.with(context).load(url)
-            .asBitmap()
-            .placeholder(placeholder)
-            .error(placeholder)
-            .into(object : BitmapImageViewTarget(avatar) {
-                override fun setResource(resource: Bitmap?) {
-                    resource?.let {
-                        val circularBitmapDrawable = RoundedBitmapDrawableFactory.create(resources, it)
-                        circularBitmapDrawable.isCircular = true
-                        avatar.setImageDrawable(circularBitmapDrawable)
-                    }
-                }
-            })
         if (url != null) {
             loadCircularBitmapIntoImageView(context, url, avatar, placeholder)
         } else {

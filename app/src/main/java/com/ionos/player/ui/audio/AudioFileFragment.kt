@@ -45,7 +45,6 @@ class AudioFileFragment : Fragment(), PlaybackModel.Listener {
 
     private lateinit var binding: PlayerAudioFileFragmentBinding
     private lateinit var file: PlaybackFile
-    private lateinit var loadFileThumbnailJob: Job
     private var loadFileThumbnailJob: Job? = null
     private var isFileThumbnailLoaded = false
     private var metadata: PlaybackItemMetadata? = null
@@ -56,14 +55,12 @@ class AudioFileFragment : Fragment(), PlaybackModel.Listener {
         file = arguments?.getSerializable(ARGUMENT_FILE) as PlaybackFile
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = PlayerAudioFileFragmentBinding.inflate(inflater, container, false)
         binding.title.isSelected = true
         binding.title.text = file.getNameWithoutExtension()
         binding.fileDetails.text = file.getDetailsText()
         loadFileThumbnailJob = loadFileThumbnail()
-        return binding.getRoot()
         return binding.root
     }
 
@@ -92,7 +89,6 @@ class AudioFileFragment : Fragment(), PlaybackModel.Listener {
     private fun onMetadataUpdate(metadata: PlaybackItemMetadata) {
         this.metadata = metadata
         if (!isFileThumbnailLoaded && (metadata.artworkData != null || metadata.artworkUri != null)) {
-            loadFileThumbnailJob.takeIf { it.isActive }?.cancel()
             loadFileThumbnailJob?.takeIf { it.isActive }?.cancel()
             loadMetadataArtwork(metadata)
         }
@@ -116,7 +112,6 @@ class AudioFileFragment : Fragment(), PlaybackModel.Listener {
 
     private fun loadMetadataArtwork(metadata: PlaybackItemMetadata) {
         val source = metadata.artworkData ?: metadata.artworkUri ?: return
-        thumbnailLoader.load(binding.albumCover, source, file.id)
         viewLifecycleOwner.lifecycleScope.launch {
             thumbnailLoader.load(binding.albumCover, source, file.id)
         }

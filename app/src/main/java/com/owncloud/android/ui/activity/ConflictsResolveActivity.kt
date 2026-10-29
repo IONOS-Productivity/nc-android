@@ -40,7 +40,6 @@ import com.owncloud.android.lib.resources.files.model.RemoteFile
 import com.owncloud.android.ui.dialog.ConflictsResolveDialog
 import com.owncloud.android.ui.dialog.ConflictsResolveDialog.Decision
 import com.owncloud.android.ui.dialog.ConflictsResolveDialog.OnConflictDecisionMadeListener
-import com.owncloud.android.ui.notifications.NotificationUtils
 import com.owncloud.android.utils.DisplayUtils
 import com.owncloud.android.utils.FileStorageUtils
 import kotlinx.coroutines.Dispatchers
@@ -51,8 +50,6 @@ import javax.inject.Inject
 /**
  * Wrapper activity which will be launched if keep-in-sync file will be modified by external application.
  */
-@Suppress("Detekt.TooManyFunctions")
-class ConflictsResolveActivity : FileActivity(), OnConflictDecisionMadeListener {
 @Suppress("TooManyFunctions")
 class ConflictsResolveActivity :
     FileActivity(),
@@ -128,8 +125,6 @@ class ConflictsResolveActivity :
                 else -> Unit
             }
 
-            updateThumbnailIfNeeded(decision, file)
-            dismissConflictResolveNotification(file)
             upload?.remotePath?.let { oldFilePath ->
                 val oldFile = storageManager.getFileByDecryptedRemotePath(oldFilePath)
                 updateThumbnailIfNeeded(decision, file, oldFile)
@@ -140,8 +135,6 @@ class ConflictsResolveActivity :
         }
     }
 
-    private fun updateThumbnailIfNeeded(decision: Decision?, file: OCFile?) {
-        if (decision == Decision.KEEP_BOTH || decision == Decision.KEEP_LOCAL) {
     private fun updateThumbnailIfNeeded(decision: Decision?, file: OCFile?, oldFile: OCFile?) {
         if (decision == Decision.KEEP_BOTH || decision == Decision.KEEP_LOCAL) {
             // When the user chooses to replace the remote file with the new local file,
@@ -155,10 +148,6 @@ class ConflictsResolveActivity :
         }
     }
 
-    private fun dismissConflictResolveNotification(file: OCFile?) {
-        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        val tag = NotificationUtils.createUploadNotificationTag(file)
-        notificationManager.cancel(tag, FileUploadWorker.NOTIFICATION_ERROR_ID)
     private fun dismissConflictResolveNotification() {
         val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.cancel(conflictUploadId.toInt())

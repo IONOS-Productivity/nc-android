@@ -15,7 +15,6 @@
     <string name="action_switch_list_view">Tampilan lis</string>
     <string name="actionbar_calendar_contacts_restore">Pulihkan kontak dan kalender</string>
     <string name="actionbar_mkdir">Folder baru</string>
-    <string name="actionbar_move_or_copy">Pindah atau salin</string>
     <string name="actionbar_move_or_copy">Pindahkan atau salin</string>
     <string name="actionbar_open_with">Buka dengan</string>
     <string name="actionbar_search">Cari</string>
@@ -32,13 +31,6 @@
     <string name="add_new_public_share">Tambahkan tautan berbagi baru</string>
     <string name="add_new_secure_file_drop">Tambahkan tempat penyimpanan file aman</string>
     <string name="add_to_cloud">Tambahkan ke %1$s</string>
-    <string name="advanced_settings">Pengaturan Lanjutan</string>
-    <string name="allow_resharing">Izinkan pembagian ulang</string>
-    <string name="app_widget_description">Menampilkan satu gawit dari dasbor</string>
-    <string name="appbar_search_in">Cari dalam %s</string>
-    <string name="assistant_screen_create_task_alert_dialog_input_field_placeholder">Tulis beberapa teks</string>
-    <string name="assistant_screen_delete_task_alert_dialog_description">Apakah Anda yakin ingin menghapus tugas ini?</string>
-    <string name="assistant_screen_no_task_available_text">Tidak ada tugas yang tersedia untuk jenis tugas %s, Anda dapat membuat tugas baru dari pojok kanan bawah.</string>
     <string name="app_config_base_url_title">URL Dasar</string>
     <string name="app_config_disable_clipboard_title">Matikan Papan Salin</string>
     <string name="app_config_disable_intro_title">Matikan Intro</string>
@@ -320,7 +312,6 @@ Otomatis unggah hanya bekerja dengan baik apabila Anda mengeluarkan aplikasi ini
     <string name="ecosystem_apps_display_assistant">Asisten</string>
     <string name="ecosystem_apps_display_more">Lainnya</string>
     <string name="ecosystem_apps_more">Aplikasi Nextcloud Lainnya</string>
-    <string name="email_pick_failed">Gagal memilih alamat surel.</string>
     <string name="email_pick_failed">Gagal memilih alamat email.</string>
     <string name="encrypted">Atur sebagai terenkripsi</string>
     <string name="end_to_end_encryption_certificate_unavailable">Tidak dapat menerima sertifikat server</string>
@@ -416,8 +407,6 @@ Otomatis unggah hanya bekerja dengan baik apabila Anda mengeluarkan aplikasi ini
     <string name="file_list_empty_local_search">Tidak ada file atau folder yang cocok dengan pencarian Anda</string>
     <string name="file_list_empty_moving">Kosong. Anda dapat menambahkan folder</string>
     <string name="file_list_empty_on_device">Berkas dan folder yang diunduh akan muncul di sini.</string>
-    <string name="file_list_empty_recent_files_description">File dan folder yang baru-baru ini Anda modifikasi akan muncul di sini.</string>
-    <string name="file_list_empty_recent_files_headline">Tidak ada file yang baru-baru ini dimodifikasi</string>
     <string name="file_list_empty_recently_modified">Tidak ditemukan berkas yang diubah 7 hari terakhir</string>
     <string name="file_list_empty_search">Mungkin ada di folder yang berbeda?</string>
     <string name="file_list_empty_shared">Berkas dan folder yang Anda bagikan akan muncul di sini.</string>
@@ -830,11 +819,6 @@ Otomatis unggah hanya bekerja dengan baik apabila Anda mengeluarkan aplikasi ini
     <string name="set_picture_as">Gunakan gambar sebagai</string>
     <string name="setup_e2e">Selama penyiapan enkripsi end-to-end, Anda akan menerima sebuah mnemonik acak berupa 12 kata, yang akan Anda butuhkan untuk membuka berkas Anda di perangkat lain. Mnemonik tersebut hanya akan disimpan di perangkat ini, dan dapat ditampilkan kembali di layar ini. Harap catat di tempat yang aman!</string>
     <string name="share">Bagikan</string>
-    <string name="share_create_permission">Buat</string>
-    <string name="share_delete_permission">Hapus</string>
-    <string name="share_dialog_title">Berbagi</string>
-    <string name="share_edit_permission">Sunting</string>
-    <string name="share_expiration_date_label">Kadaluarsa %1$s</string>
     <string name="share_allow_download_and_sync_permission">Izinkan unduh dan sinkron</string>
     <string name="share_cannot_update_empty_note">Kami tidak dapat memperbarui. Tolong tambahkan catatan dan coba lagi.</string>
     <string name="share_copy_link">Bagikan dan salin tautan</string>
@@ -1138,9 +1122,7 @@ Berikut ini adalah daftar berkas lokal, dan berkas jarak jauh di %5$s yang terhu
     <string name="user_icon">Pengguna</string>
     <string name="user_info_address">Alamat</string>
     <string name="user_info_email">Email</string>
-    <string name="user_info_groups">Grup</string>
     <string name="user_info_phone">Nomor telepon</string>
-    <string name="user_info_profile">Profil</string>
     <string name="user_info_twitter">Twitter</string>
     <string name="user_info_website">Situs web</string>
     <string name="user_information_retrieval_error">Kesalahan saat mendapatkan informasi pengguna</string>

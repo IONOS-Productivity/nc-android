@@ -86,7 +86,6 @@
     <bool name="show_hidden_files_enabled">true</bool>
     <bool name="davdroid_integration_enabled">true</bool>
     <bool name="help_enabled">true</bool>
-    <string name="url_help">https://help.ionos.de</string>
     <string name="url_help">https://wl.hidrive.com/easy/0118</string>
     <bool name="privacy_enabled">true</bool>
     <string name="privacy_url">https://privacy.ionos.de</string>
@@ -130,7 +129,7 @@
     <string name="login_data_own_scheme" translatable="false">nc</string>
     <!-- url for webview login, with the protocol prefix and with full url (normally /index.php/login/flow)
     If set, will replace all other login methods available -->
-    <string name="webview_login_url" translatable="false">https://storage.ionos.fr/index.php/login/v2</string>
+    <string name="webview_login_url" translatable="false">https://prelive.storage.ionos.de/index.php/login/v2</string>
 
     <!--    [{\"name\":\"name1\",\"url\":\"url\"},{\"name\":\"name2\",\"url\":\"url1\"}]-->
     <string name="enforce_servers" translatable="false"></string>
@@ -156,11 +155,7 @@
     <string name="dev_latest">https://download.nextcloud.com/android/dev/latest</string>
     <string name="dev_changelog">https://github.com/nextcloud/android/raw/dev/CHANGELOG.md</string>
 
-    <string name="buildNumber" translatable="false">30949</string>
-    <string name="buildNumber" translatable="false">31575</string>
-    <string name="buildNumber" translatable="false">34292</string>
-    <string name="buildNumber" translatable="false">36202</string>
-    <string name="buildNumber" translatable="false">39217</string>
+    <string name="buildNumber" translatable="false">42776</string>
 </resources>
 
 

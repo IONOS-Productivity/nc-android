@@ -23,12 +23,6 @@ object AutoRename {
     private const val REPLACEMENT = "_"
 
     @Suppress("NestedBlockDepth")
-    fun rename(filename: String, capability: OCCapability): String {
-        if (!capability.version.isNewerOrEqual(NextcloudVersion.nextcloud_30)) {
-            return filename
-        }
-
-        val isFolder = filename.endsWith(OCFile.PATH_SEPARATOR)
     @JvmOverloads
     fun rename(filename: String, capability: OCCapability, isFolderPath: Boolean? = null): String {
         if (!capability.checkWCFRestrictions()) {
@@ -87,14 +81,6 @@ object AutoRename {
         }
 
         val filenameWithExtension = pathSegments.joinToString(OCFile.PATH_SEPARATOR)
-        val result = if (isFolder) filenameWithExtension else lowercaseFileExtension(filenameWithExtension)
-
-        return if (capability.shouldRemoveNonPrintableUnicodeCharactersAndConvertToUTF8()) {
-            val utf8Result = convertToUTF8(result)
-            removeNonPrintableUnicodeCharacters(utf8Result)
-        } else {
-            result
-        }.trim()
         val updatedFileName = if (isFolder) filenameWithExtension else lowercaseFileExtension(filenameWithExtension)
 
         val result = if (capability.shouldRemoveNonPrintableUnicodeCharactersAndConvertToUTF8()) {

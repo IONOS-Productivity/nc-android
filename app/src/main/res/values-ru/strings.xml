@@ -32,8 +32,6 @@
     <string name="add_new_public_share">Добавить новую общедоступную ссылку</string>
     <string name="add_new_secure_file_drop">Добавить новую защищенную передачу файлов</string>
     <string name="add_to_cloud">Добавить в %1$s</string>
-    <string name="advanced_settings">Расширенные параметры</string>
-    <string name="allow_resharing">Разрешить повторную публикацию</string>
     <string name="app_config_base_url_title">Основной URL</string>
     <string name="app_config_disable_clipboard_title">Отключить буфер обмена</string>
     <string name="app_config_disable_intro_title">Отключить введение</string>
@@ -46,13 +44,6 @@
     <string name="app_config_proxy_port_title">Порт прокси</string>
     <string name="app_widget_description">Показывает один виджет с главного экрана.</string>
     <string name="appbar_search_in">Искать в %s</string>
-    <string name="assistant_screen_add_task_alert_dialog_title">Добавить новую задачу</string>
-    <string name="assistant_screen_create_a_new_task_from_bottom_right_text">Создайте новую задачу в правом нижнем углу</string>
-    <string name="assistant_screen_create_task_alert_dialog_input_field_placeholder">Наберите какой-то текст</string>
-    <string name="assistant_screen_delete_task_alert_dialog_description">Вы уверены, что хотите удалить эту задачу?</string>
-    <string name="assistant_screen_delete_task_alert_dialog_title">Удалить задачу</string>
-    <string name="assistant_screen_loading">Загрузить список задач…</string>
-    <string name="assistant_screen_no_task_available_text">Нет доступной задачи для типа задачи %s, вы можете создать новую задачу в правом нижнем углу.</string>
     <string name="appear_offline">«Не в сети» для остальных</string>
     <string name="assistant_output_generation_warning_text">Выходные данные, показанные здесь, сгенерированы с помощью искусственного интеллекта. Обязательно всегда перепроверяйте.</string>
     <string name="assistant_screen_chat_create_error">Не удалось отправить сообщение</string>
@@ -68,8 +59,6 @@
     <string name="assistant_screen_task_create_fail_message">Произошла ошибка при создании задачи</string>
     <string name="assistant_screen_task_create_success_message">Задача создана</string>
     <string name="assistant_screen_task_delete_fail_message">Произошла ошибка во время удаления задачи</string>
-    <string name="assistant_screen_task_delete_success_message">Задача удалена</string>
-    <string name="assistant_screen_task_list_empty_message">Сптсок задач пуст.</string>
     <string name="assistant_screen_task_delete_success_message">Задача отложена</string>
     <string name="assistant_screen_task_list_empty_warning">Список задач пуст. Проверьте настройки приложения Помощник.</string>
     <string name="assistant_screen_task_list_error_state_message">Не удается получить список задач, проверьте ваше подключение к Интернету.</string>
@@ -124,12 +113,6 @@
     <string name="authenticator_activity_please_complete_login_process">Пожалуйста, завершите процесс входа в вашем браузере</string>
     <string name="auto_upload_battery_saver_mode_warning">Автозагрузка приостановлена из-за включенного режима энергосбережения.</string>
     <string name="auto_upload_file_behaviour_kept_in_folder">оставлен в исходном каталоге, т.к. файл только для чтения</string>
-    <string name="auto_upload_gplay">Поведение автозагрузки изменено</string>
-    <string name="auto_upload_gplay_desc">Из-за новых ограничений, введенных Google, функция автоматической загрузки больше не сможет автоматически удалять загруженные файлы.</string>
-    <string name="auto_upload_gplay_desc2">В связи с новыми ограничениями, введенными Google, мы были вынуждены удалить важное разрешение. В результате функция автоматической загрузки сможет загружать только изображения и видеофайлы.\nКроме того, для доступа к информации о местоположении загруженных изображений требуется новое разрешение.\nУбедитесь, что для параметра доступ к мультимедиа установлено значение \"Всегда разрешать все\".</string>
-    <string name="auto_upload_on_wifi">Только через безлимит или Wi-Fi</string>
-    <string name="auto_upload_path">/Автозагрузка</string>
-    <string name="auto_upload_sub_folder_warning">Эта папка уже включена в синхронизацию родительской папки, что может привести к дублированию загрузок</string>
     <string name="auto_upload_low_battery_warning_info">Батарея разряжена, загрузка может занять больше времени</string>
     <string name="auto_upload_on_wifi">Только через безлимит или Wi-Fi</string>
     <string name="auto_upload_path">/Автозагрузка</string>
@@ -168,9 +151,6 @@
     <string name="choose_widget">Выбрать виджет</string>
     <string name="clear">Очистить</string>
     <string name="clear_notifications_failed">Не удалось удалить уведомления.</string>
-    <string name="clear_status_message">Очистить сообщение о состоянии</string>
-    <string name="clear_status_message_after">Очистить сообщение о состоянии через</string>
-    <string name="click_to_learn_how_to_re_enable_auto_uploads">Повторное включение автоматической загрузки требуется произвести вручную</string>
     <string name="clear_status_after">Очистить статус после</string>
     <string name="clipboard_label">Текст скопирован из %1$s</string>
     <string name="clipboard_no_text_to_copy">Нет принятого текста для копирования в буфер обмена</string>
@@ -453,8 +433,6 @@
     <string name="file_list_empty_local_search">Нет файла или папки, соответствующих вашему запросу</string>
     <string name="file_list_empty_moving">Здесь ничего нет. Вы можете создать каталог!</string>
     <string name="file_list_empty_on_device">Здесь будут показаны загруженные файлы и папки</string>
-    <string name="file_list_empty_recent_files_description">Здесь будут показаны недавно изменённые файлы и папки</string>
-    <string name="file_list_empty_recent_files_headline">Нет недавно измененных файлов</string>
     <string name="file_list_empty_recently_modified">Изменённых за последние 7 дней файлов не найдено</string>
     <string name="file_list_empty_search">Искать в другом каталоге?</string>
     <string name="file_list_empty_shared">Здесь будут показаны опубликованные вами папки и файлы.</string>
@@ -471,8 +449,6 @@
     <string name="file_list_seconds_ago">несколько секунд назад</string>
     <string name="file_management_permission_optional">Права на хранилище</string>
     <string name="file_management_permission_optional_text">%1$s работает лучше всего при наличии доступа к хранилищу. Вы можете выбрать полный доступ к файлам или доступ только для чтения к фото и видео.</string>
-    <string name="file_management_permission_text">%1$s необходимы права на управления файлами, для их загрузки.
-Вы можете выбрать полный доступ к файлам или доступ только для чтения к фото и видео.</string>
     <string name="file_migration_allow_media_indexing">Разрешить доступ из других приложений</string>
     <string name="file_migration_checking_destination">Проверка назначения…</string>
     <string name="file_migration_cleaning">Очистка…</string>
@@ -508,7 +484,6 @@
     <string name="file_not_synced">Не удалось синхронизировать этот файл, показана его последняя доступная версия.</string>
     <string name="file_rename">Переименовать</string>
     <string name="file_upload_worker_error_notification_title">Загрузка не удалась. Нет интернет-соединения</string>
-    <string name="file_upload_worker_same_file_already_exists">Такой же файл уже существует, конфликт не обнаружен</string>
     <string name="file_upload_worker_same_file_already_exists">%s уже существует, конфликтов не обнаружено</string>
     <string name="file_version_restored_error">Ошибка восстановления версии файла!</string>
     <string name="filedetails_details">Свойства</string>
@@ -720,7 +695,6 @@
     <string name="pdf_password_protected">Невозможно открыть защищенный паролем PDF-файл. Воспользуйтесь сторонним просмотрщиком PDF.</string>
     <string name="permission_allow">Разрешить</string>
     <string name="permission_deny">Запретить</string>
-    <string name="permission_storage_access">Для отправки и скачивания файлов требуются дополнительные права доступа.</string>
     <string name="pick_contact_to_share_with">Выберите контакт, которому вы хотите предоставить общий доступ</string>
     <string name="picture_set_as_no_app">Не найдено приложений для обработки изображений</string>
     <string name="pin_home">Закрепить на главном экране</string>
@@ -811,8 +785,6 @@
     <string name="push_notifications_old_login">Нет аккаунтов для уведомлений. Пожалуйста добавьте аккаунт.</string>
     <string name="push_notifications_temp_error">Всплывающие уведомления недоступны</string>
     <string name="qr_could_not_be_read">Не удалось считать QR-код!</string>
-    <string name="re_enable_auto_upload">Изменения в автоматической загрузке</string>
-    <string name="re_enable_auto_upload_desc">В связи с новыми ограничениями, введенными Google, мы были вынуждены удалить важное разрешение. В настоящее время мы работаем с Google над решением этой проблемы и восстановлением полной функциональности.\nЧтобы снова включить автоматическую загрузку для новых фотографий и видео, выберите \"Разрешить все\" в следующем диалоговом окне или в системных настройках.\nПри появлении запроса укажите местоположение носителя, так как это позволяет Nextcloud сохранять данные о местоположении при загрузке изображений.\n\nДиалоговое окно разрешений отображается только при необходимости. Если вы сомневаетесь, проверьте системные настройки.\n\nАвтозагрузка сможет загружать изображения и видеофайлы только при использовании версии приложения Nextcloud для Google Play.\nПожалуйста, проверьте, нет ли файлов, которые, возможно, не загружались с декабря 2024 года.</string>
     <string name="receive_external_files_activity_start_sync_folder_is_not_exists_message">Папка не может быть найдена, операция синхронизации отменена</string>
     <string name="receive_external_files_activity_unable_to_find_file_to_upload">Невозможно найти файл для загрузки</string>
     <string name="recommend_subject">Испытайте %1$s на своём устройстве!</string>
@@ -911,7 +883,6 @@
     <string name="share_not_allowed_when_file_drop">Перенаправление запрещено во время безопасного удаления файлов</string>
     <string name="share_option_required">Пожалуйста, выберите хотя бы один вариант общего доступа перед продолжением.</string>
     <string name="share_permission_can_edit">Разрешено редактировать</string>
-    <string name="share_permission_file_drop">Приём файлов</string>
     <string name="share_permission_file_request">Запрос файла</string>
     <string name="share_permission_secure_file_drop">Защищенный очиститель файлов</string>
     <string name="share_permission_view_only">Только просмотр</string>
@@ -1104,8 +1075,6 @@
     <string name="upload_file_dialog_title">Имя и типа файла для автозагрузки </string>
     <string name="upload_files">Отправить файлы</string>
     <string name="upload_global_pause_title">Все загрузки приостановлены</string>
-    <string name="upload_gplay">Права доступа обновлены</string>
-    <string name="upload_gplay_desc">Для доступа к информации о местоположении загруженных изображений требуется новое разрешение.\nУбедитесь, что для доступа к мультимедиа установлено значение \"Всегда разрешать всё\".</string>
     <string name="upload_item_action_button">Кнопка «выгрузить объект»</string>
     <string name="upload_list_delete">Удалить</string>
     <string name="upload_list_empty_headline">Нет файлов, ожидающих передачу на сервер.</string>
@@ -1187,9 +1156,7 @@
     <string name="user_icon">Пользователь</string>
     <string name="user_info_address">Адрес</string>
     <string name="user_info_email">Эл. почта</string>
-    <string name="user_info_groups">Группы</string>
     <string name="user_info_phone">Номер телефона</string>
-    <string name="user_info_profile">Профиль</string>
     <string name="user_info_twitter">Twitter</string>
     <string name="user_info_website">Сайт</string>
     <string name="user_information_retrieval_error">При получении информации о пользователе произошла ошибка</string>

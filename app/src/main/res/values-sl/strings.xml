@@ -34,7 +34,6 @@
     <string name="app_config_proxy_port_title">Vrata posredniškega strežnika</string>
     <string name="app_widget_description">Pokaži en gradnik iz nadzorne plošče</string>
     <string name="appbar_search_in">Poišči v %s</string>
-    <string name="assistant_screen_delete_task_alert_dialog_title">Izbriši nalogo</string>
     <string name="appear_offline">Pokaže kot brez povezave</string>
     <string name="assistant_screen_delete_task_alert_dialog_title">Izbriši nalogo</string>
     <string name="assistant_screen_task_create_success_message">Naloga je ustvarjena</string>
@@ -337,8 +336,6 @@
     <string name="file_list_empty_headline_server_search">Ni rezultatov</string>
     <string name="file_list_empty_moving">Ni vsebine. Lahko ustvariš na primer mapo.</string>
     <string name="file_list_empty_on_device">Prejete datoteke in mape bodo zbrane na tem mestu.</string>
-    <string name="file_list_empty_recent_files_description">Nedavno spremenjene datoteke ali mape, bodo zbrane na tem mestu.</string>
-    <string name="file_list_empty_recent_files_headline">Ni nedavno spremenjenih datotek</string>
     <string name="file_list_empty_recently_modified">Ni datotek, spremenjenih v zadnjih 7. dneh</string>
     <string name="file_list_empty_search">Mogoče v drugi mapi?</string>
     <string name="file_list_empty_shared">Datoteke in mape v souporabi bodo zbrane na tem mestu.</string>
@@ -908,9 +905,7 @@
     <string name="user_icon">Uporabnik</string>
     <string name="user_info_address">Naslov</string>
     <string name="user_info_email">Elektronski naslov</string>
-    <string name="user_info_groups">Skupine</string>
     <string name="user_info_phone">Telefonska številka</string>
-    <string name="user_info_profile">Profil</string>
     <string name="user_info_twitter">Račun Twitter</string>
     <string name="user_info_website">Spletna stran</string>
     <string name="user_information_retrieval_error">Napaka pridobivanja podatkov uporabnika</string>

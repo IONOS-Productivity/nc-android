@@ -44,13 +44,6 @@
     <string name="app_config_proxy_port_title">Port Seachfhreastalaí</string>
     <string name="app_widget_description">Taispeáin giuirléid amháin ón deais</string>
     <string name="appbar_search_in">Cuardaigh i %s</string>
-    <string name="assistant_screen_add_task_alert_dialog_title">Cuir tasc nua leis</string>
-    <string name="assistant_screen_create_a_new_task_from_bottom_right_text">Cruthaigh tasc nua ón mbun ar dheis</string>
-    <string name="assistant_screen_create_task_alert_dialog_input_field_placeholder">Clóscríobh roinnt téacs</string>
-    <string name="assistant_screen_delete_task_alert_dialog_description">An bhfuil tú cinnte gur mhaith leat an tasc seo a scriosadh?</string>
-    <string name="assistant_screen_delete_task_alert_dialog_title">Scrios tasc</string>
-    <string name="assistant_screen_loading">Liosta tascanna á lódáil…</string>
-    <string name="assistant_screen_no_task_available_text">Níl aon tasc ar fáil do chineál taisc %s, is féidir leat tasc nua a chruthú ón mbun ar dheis.</string>
     <string name="appear_offline">Le feiceáil as líne</string>
     <string name="assistant_output_generation_warning_text">Is í an intleacht shaorga a ghineann an t-aschur a thaispeántar anseo. Déan cinnte go ndéanann tú seiceáil dhúbailte i gcónaí.</string>
     <string name="assistant_screen_chat_create_error">Theip ar theachtaireacht a sheoladh</string>
@@ -68,8 +61,6 @@
     <string name="assistant_screen_task_create_fail_message">Tharla earráid agus an tasc á chruthú</string>
     <string name="assistant_screen_task_create_success_message">Tasc cruthaithe</string>
     <string name="assistant_screen_task_delete_fail_message">Tharla earráid agus an tasc á scriosadh</string>
-    <string name="assistant_screen_task_delete_success_message">D\'éirigh leis an tasc a scriosadh</string>
-    <string name="assistant_screen_task_list_empty_message">Tá liosta tascanna folamh.</string>
     <string name="assistant_screen_task_delete_success_message">Scriosadh an tasc</string>
     <string name="assistant_screen_task_list_empty_warning">Tá an liosta tascanna folamh. Seiceáil cumraíocht aip an chúntóra.</string>
     <string name="assistant_screen_task_list_error_state_message">Ní féidir liosta tascanna a fháil, seiceáil do nasc idirlín le do thoil.</string>
@@ -123,8 +114,6 @@
     <string name="authenticator_activity_no_web_browser_found">Níl aon bhrabhsálaí ar fáil chun an nasc seo a oscailt.</string>
     <string name="authenticator_activity_please_complete_login_process">Críochnaigh an próiseas logáil isteach i do bhrabhsálaí le do thoil</string>
     <string name="auto_upload_battery_saver_mode_warning">Tá an uaslódáil uathoibríoch ar sos mar go bhfuil Coigilteoir Ceallraí ar siúl.</string>
-    <string name="auto_upload_delete_dialog_description">This will remove the folder and auto-upload configuration. Any unfinished uploads will be canceled.</string>
-    <string name="auto_upload_delete_dialog_title">Scrios an fillteán uath-uaslódála?</string>
     <string name="auto_upload_file_behaviour_kept_in_folder">coinnithe sa bhunfhillteán, mar atá sé inléite amháin</string>
     <string name="auto_upload_low_battery_warning_info">Ceallraí íseal, d\'fhéadfadh sé go dtógfadh an uaslódáil níos faide</string>
     <string name="auto_upload_on_wifi">Uaslódáil ar Wi-Fi neamh-mhéadraithe amháin</string>
@@ -256,8 +245,6 @@
     <string name="could_not_retrieve_url">Níorbh fhéidir an URL a aisghabháil</string>
     <string name="create">Cruthaigh</string>
     <string name="create_dir_fail_msg">Níorbh fhéidir fillteán a chruthú</string>
-    <string name="create_end_to_end_encrypted_share">Comhroinnt nasc</string>
-    <string name="create_end_to_end_encrypted_share_title">Comhroinnt nasc criptithe ó cheann ceann go ceann</string>
     <string name="create_link">Cruthaigh nasc</string>
     <string name="create_new">Nua</string>
     <string name="create_new_document">Doiciméad nua</string>
@@ -332,7 +319,6 @@
     <string name="drawer_item_notifications">Fógraí</string>
     <string name="drawer_item_on_device">Ar gléas</string>
     <string name="drawer_item_personal_files">Comhaid phearsanta</string>
-    <string name="drawer_item_recent_files">Comhaid le déanaí</string>
     <string name="drawer_item_recently_modified">Athraithe le déanaí</string>
     <string name="drawer_item_shared">Roinnte</string>
     <string name="drawer_item_trashbin">Comhaid scriosta</string>
@@ -419,7 +405,6 @@
     <string name="etm_transfer_type">Aistriú</string>
     <string name="etm_transfer_type_download">Íoslódáil</string>
     <string name="etm_transfer_type_upload">Uaslódáil</string>
-    <string name="export_in_progress">Ag easpórtáil %1$d de %2$d</string>
     <string name="extension_cannot_be_changed">Ní féidir an síneadh a athrú</string>
     <string name="extented_list_fragment_empty_list_message_no_write_permission">Níl cead agat comhaid a chruthú ná a uaslódáil sa fhillteán seo.</string>
     <string name="external_shares">Scaireanna seachtracha</string>
@@ -452,8 +437,6 @@
     <string name="file_list_empty_local_search">Níl aon chomhad nó fillteán ag teacht le do chuardach</string>
     <string name="file_list_empty_moving">Ní dhéanfaidh aon ní anseo. Is féidir leat fillteán a chur leis.</string>
     <string name="file_list_empty_on_device">Taispeánfar comhaid agus fillteáin íosluchtaithe anseo.</string>
-    <string name="file_list_empty_recent_files_description">Taispeánfar comhaid agus fillteáin a d\'athraigh tú le déanaí anseo.</string>
-    <string name="file_list_empty_recent_files_headline">Níl aon chomhaid athraithe le déanaí</string>
     <string name="file_list_empty_recently_modified">Níor aimsíodh aon chomhad a athraíodh le 7 lá anuas</string>
     <string name="file_list_empty_search">B\'fhéidir go bhfuil sé i bhfillteán eile?</string>
     <string name="file_list_empty_shared">Taispeánfar na comhaid agus na fillteáin a roinneann tú anseo.</string>
@@ -505,7 +488,6 @@
     <string name="file_not_synced">Níorbh fhéidir an comhad a shioncronú. Ag taispeáint an leagan is déanaí atá ar fáil.</string>
     <string name="file_rename">Athainmnigh</string>
     <string name="file_upload_worker_error_notification_title">Theip ar an uaslódáil. Gan nasc idirlín</string>
-    <string name="file_upload_worker_same_file_already_exists">Tá an comhad céanna ann cheana féin, níor aimsíodh aon choimhlint</string>
     <string name="file_upload_worker_same_file_already_exists">Tá %s ann cheana féin, níor braitheadh ​​aon choimhlint</string>
     <string name="file_version_restored_error">Earráid agus leagan an chomhaid á athchóiriú!</string>
     <string name="filedetails_details">Sonraí</string>
@@ -576,8 +558,6 @@
     <string name="instant_upload_existing">Uaslódáil comhaid atá ann cheana féin freisin</string>
     <string name="instant_upload_on_charging">Íoslódáil ach amháin nuair a mhuirearú</string>
     <string name="instant_upload_path">/Uaslódáil Meandaracha</string>
-    <string name="internal_share_description_end_to_end_encrypted">Share recipients always have access to the full encrypted folder. It is only possible to share with accounts that have already setup end-to-end encryption.</string>
-    <string name="internal_share_headline_end_to_end_encrypted">Scaireanna criptithe ó cheann ceann go ceann</string>
     <string name="internal_shares">Scaireanna inmheánacha</string>
     <string name="internal_two_way_sync">Sioncronú inmheánach dhá bhealach</string>
     <string name="internal_two_way_sync_not_yet">Níl go fóill, go luath le synced</string>
@@ -696,11 +676,6 @@
     <string name="offline_mode">Gan nasc idirlín</string>
     <string name="offline_mode_info_description">Fiú gan nasc idirlín, is féidir leat do fhillteáin a eagrú, comhaid a chruthú. Nuair a bheidh tú ar ais ar líne, déanfar do ghníomhartha ar feitheamh a shioncronú go huathoibríoch.</string>
     <string name="offline_mode_info_title">Tá tú as líne, ach leanann an obair ar aghaidh</string>
-    <string name="offline_operations_file_does_not_exists_yet">Níl an comhad ann, fós. Íoslódáil an comhad ar dtús.</string>
-    <string name="offline_operations_worker_notification_conflict_text">Fillteán contrártha: %s</string>
-    <string name="offline_operations_worker_notification_delete_offline_folder">Scrios fillteán as líne</string>
-    <string name="offline_operations_worker_notification_error_text">Ní féidir an oibríocht as líne a chríochnú. %s</string>
-    <string name="offline_operations_worker_notification_manager_ticker">Oibríochtaí As Líne</string>
     <string name="offline_operations_file_does_not_exists_yet">Níl an comhad ann fós. Uaslódáil an comhad ar dtús le do thoil.</string>
     <string name="offline_operations_worker_notification_create_file_conflict_text">Níorbh fhéidir %s a chruthú. Tá comhad leis an ainm céanna ar an bhfreastalaí.</string>
     <string name="offline_operations_worker_notification_create_folder_conflict_text">Níorbh fhéidir %s a chruthú. Tá fillteán leis an ainm céanna ann ar an bhfreastalaí.</string>
@@ -813,7 +788,6 @@
     <string name="preview_image_file_is_not_downloaded">Níl an comhad a íoslódáil</string>
     <string name="preview_media_unhandled_http_code_message">Tá an comhad faoi ghlas faoi láthair ag úsáideoir nó próiseas eile agus mar sin ní féidir é a scriosadh. Bain triail eile as ar ball le do thoil.</string>
     <string name="preview_sorry">Tá brón orm</string>
-    <string name="preview_text_string_fragment_open_rich_text_editor_error_message">Theip ar an eagarthóir téacs a oscailt</string>
     <string name="privacy">Príobháideacht</string>
     <string name="push_notifications_not_implemented">Díchumasaíodh fógraí brú de bharr spleáchais ar sheirbhísí dílseánaigh Google Play.</string>
     <string name="push_notifications_old_login">Níl aon bhrúfhógraí mar gheall ar sheisiún logáil isteach atá as dáta. Smaoinigh ar do chuntas a chur leis arís le do thoil.</string>
@@ -880,7 +854,6 @@
     <string name="server_not_reachable">Níorbh fhéidir an t-ábhar a lódáil</string>
     <string name="server_not_reachable_content">Is dócha nach bhfuil an gléas ceangailte leis an idirlíon</string>
     <string name="set_as">Socraigh Mar</string>
-    <string name="set_note">Socraigh nóta</string>
     <string name="set_download_limit_failed">Ní féidir teorainn íoslódála a shocrú. Seiceáil na cumais le do thoil.</string>
     <string name="set_message">Socraigh teachtaireacht</string>
     <string name="set_note">Socraigh nóta</string>
@@ -890,7 +863,6 @@
     <string name="setup_e2e">Le linn duit criptiú ceann go deireadh a shocrú, gheobhaidh tú cuimhneachán randamach 12 focal, a bheidh ag teastáil uait chun do chuid comhad a oscailt ar ghléasanna eile. Ní stórálfar é seo ach ar an ngléas seo, agus is féidir é a thaispeáint arís sa scáileán seo. Tabhair faoi deara é síos in áit slán le do thoil!</string>
     <string name="share">Comhroinn</string>
     <string name="share_allow_download_and_sync_permission">Ceadaigh íoslódáil agus sioncrónú</string>
-    <string name="share_copy_link">Roinn agus cóipeáil an nasc</string>
     <string name="share_cannot_update_empty_note">Ní raibh muid in ann an comhroinnt a nuashonrú. Cuir nóta leis agus déan iarracht arís.</string>
     <string name="share_copy_link">Roinn agus cóipeáil an nasc</string>
     <string name="share_create_permission">Cruthaigh</string>
@@ -919,7 +891,6 @@
     <string name="share_not_allowed_when_file_drop">Ní cheadaítear é a chomhroinnt le linn scaoileadh slán comhad</string>
     <string name="share_option_required">Roghnaigh rogha comhroinnte amháin ar a laghad sula leanann tú ar aghaidh.</string>
     <string name="share_permission_can_edit">Is féidir eagarthóireacht a dhéanamh</string>
-    <string name="share_permission_file_drop">Titim comhad</string>
     <string name="share_permission_file_request">Iarratas comhad</string>
     <string name="share_permission_secure_file_drop">Titim comhad slán</string>
     <string name="share_permission_view_only">Amharc amháin</string>
@@ -1135,11 +1106,6 @@
     <string name="upload_quota_exceeded">Sáraíodh an cuóta stórála</string>
     <string name="upload_scan_doc_upload">Doiciméad a scanadh ó ceamara</string>
     <string name="upload_sync_conflict">Sioncronaigh coinbhleacht, réitigh de láimh le do thoil</string>
-    <string name="upload_sync_conflict_check">B’fhéidir go bhfuil coimhlint ann idir é agus an uaslódáil dheireanach a rinne tú. Tapáil le seiceáil.</string>
-    <string name="upload_sync_conflict_check_error">Níorbh fhéidir seiceáil le haghaidh coinbhleachtaí uaslódála. Déan iarracht arís.</string>
-    <string name="upload_sync_conflict_checking">Ag seiceáil le haghaidh coinbhleachtaí uaslódála…</string>
-    <string name="upload_sync_conflict_not_exists">Coimhlint réitithe.</string>
-    <string name="upload_sync_conflict_same_file">Níor braitheadh ​​aon choimhlint. An comhad céanna.</string>
     <string name="upload_unknown_error">Earráid anaithnid</string>
     <string name="uploader_btn_alternative_text">Roghnaigh</string>
     <string name="uploader_btn_upload_text">Uaslódáil</string>
@@ -1200,9 +1166,7 @@
     <string name="user_icon">Úsáideoir</string>
     <string name="user_info_address">Seoladh</string>
     <string name="user_info_email">Ríomhphost</string>
-    <string name="user_info_groups">Grúpaí</string>
     <string name="user_info_phone">Uimhir teileafón</string>
-    <string name="user_info_profile">Próifíl</string>
     <string name="user_info_twitter">Twitter</string>
     <string name="user_info_website">Suíomh Gréasáin</string>
     <string name="user_information_retrieval_error">Earráid agus faisnéis úsáideora á fáil</string>

@@ -7,10 +7,6 @@
  */
 package com.owncloud.android.utils
 
-import android.graphics.drawable.Drawable
-import android.graphics.drawable.LayerDrawable
-import android.view.Gravity
-import androidx.core.graphics.drawable.DrawableCompat
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
