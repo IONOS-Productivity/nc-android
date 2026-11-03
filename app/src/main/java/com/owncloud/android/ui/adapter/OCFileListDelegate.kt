@@ -162,7 +162,7 @@ class OCFileListDelegate(
                                 imageView.post {
                                     imageView.scaleType = ImageView.ScaleType.FIT_CENTER
                                     val inset = (imageDimension.first * 0.45f).toInt()
-                                    val icon = OCFileUtils.getMediaPlaceholder(file, imageDimension)
+                                    val icon = OCFileUtils.getMediaPlaceholder(context, file, imageDimension)
                                     val backgroundColor = context.getColor(R.color.ionos_gallery_item_background_color)
                                     val layered = LayerDrawable(arrayOf(backgroundColor.toDrawable(), icon)).apply {
                                         setLayerInset(1, inset, inset, inset, inset)

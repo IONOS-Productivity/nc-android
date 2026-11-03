@@ -106,7 +106,7 @@ class GalleryRowHolder(
             layoutParams = FrameLayout.LayoutParams(width, height)
         }
 
-        val drawable = OCFileUtils.getMediaPlaceholder(file, width to height)
+        val drawable = OCFileUtils.getMediaPlaceholder(context, file, width to height)
         val rowCellImageView = ImageView(context).apply {
             setImageDrawable(drawable)
             adjustViewBounds = true

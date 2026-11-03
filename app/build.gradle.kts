@@ -157,7 +157,7 @@ android {
             register("gplay") {
                 applicationId = "com.ionos.hidrivenext"
                 dimension = "default"
-                versionCode = 20
+                versionCode = 21
                 val releaseNumber = 4
                 versionName = "$versionMajor.$versionMinor.$versionPatch.$releaseNumber"
                 isDefault = true
@@ -287,11 +287,14 @@ spotless.kotlin {
 
 detekt.config.setFrom("detekt.yml")
 
-// Firebase config comes from google-services.json; flavors without the file keep their Firebase strings
+// Firebase config from google-services.json for brand flavors only
 googleServices {
     missingGoogleServicesStrategy =
         com.google.gms.googleservices.GoogleServicesPlugin.MissingGoogleServicesStrategy.WARN
 }
+val brandFlavors = listOf("Gplay", "HidriveNext")
+tasks.named { name -> name.endsWith("GoogleServices") && brandFlavors.none { name.contains(it) } }
+    .configureEach { enabled = false }
 
 if (shotTest) configure<ShotExtension> {
     showOnlyFailingTestsInReports = ciBuild
