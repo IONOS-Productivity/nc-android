@@ -18,6 +18,7 @@ import android.text.TextUtils
 import android.view.View
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.utils.extensions.remainingDownloadLimit
 import com.nextcloud.utils.mdm.MDMConfig
 import com.owncloud.android.R
@@ -121,6 +122,7 @@ internal class LinkShareViewHolder(itemView: View) : RecyclerView.ViewHolder(ite
         binding.subline.visibility = View.GONE
     }
 
+    @IonosCustomization("colorPrimaryTextViewElement")
     private fun setPermissionName(
         binding: FileDetailsShareLinkShareItemBinding?,
         context: Context?,
@@ -139,10 +141,10 @@ internal class LinkShareViewHolder(itemView: View) : RecyclerView.ViewHolder(ite
             binding.permissionName.visibility = View.VISIBLE
             binding.permissionName.text = permissionName
         }
-
-        viewThemeUtils?.androidx?.colorPrimaryTextViewElement(binding.permissionName)
+		//viewThemeUtils?.androidx?.colorPrimaryTextViewElement(binding.permissionName)
     }
 
+    @IonosCustomization("colorImageViewBackgroundAndIcon")
     private fun setOnClickListeners(
         binding: FileDetailsShareLinkShareItemBinding?,
         listener: ShareeListAdapterListener,
@@ -152,7 +154,7 @@ internal class LinkShareViewHolder(itemView: View) : RecyclerView.ViewHolder(ite
             return
         }
 
-        viewThemeUtils?.platform?.colorImageViewBackgroundAndIcon(binding.icon)
+        //viewThemeUtils?.platform?.colorImageViewBackgroundAndIcon(binding.icon)
 
         binding.overflowMenu.setOnClickListener {
             listener.showSharingMenuActionSheet(publicShare)

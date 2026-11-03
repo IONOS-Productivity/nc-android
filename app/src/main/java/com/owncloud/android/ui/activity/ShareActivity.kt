@@ -14,7 +14,9 @@
 package com.owncloud.android.ui.activity
 
 import android.os.Bundle
+import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.lifecycleScope
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.android.common.ui.theme.utils.ColorRole
 import com.nextcloud.client.account.User
 import com.nextcloud.client.di.Injectable
@@ -50,12 +52,18 @@ class ShareActivity :
     @Inject
     lateinit var overlayManager: OverlayManager
 
+    @IonosCustomization("Toolbar instead of dialog if available")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val binding = ShareActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        configureDialogWindow()
+
+        findViewById<Toolbar>(R.id.toolbar)?.let { toolbar ->
+            setSupportActionBar(toolbar)
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            toolbar.setNavigationOnClickListener { finish() }
+        } ?: configureDialogWindow()
 
         val currentUser = user.orElse(null) ?: run {
             finish()

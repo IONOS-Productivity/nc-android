@@ -22,6 +22,7 @@ import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.android.lib.richWorkspace.RichWorkspaceDirectEditingRemoteOperation
 import com.owncloud.android.R
 import com.owncloud.android.ui.activity.FileActivity
@@ -49,6 +50,7 @@ class PreviewTextStringFragment : PreviewTextFragment() {
         super.onSaveInstanceState(outState)
     }
 
+    @IonosCustomization("Removed FAB theming")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = super.onCreateView(inflater, container, savedInstanceState)
             ?: throw RuntimeException("View can not be null")
@@ -58,7 +60,6 @@ class PreviewTextStringFragment : PreviewTextFragment() {
             isEnabled = true
             setOnClickListener { edit() }
             setImageResource(R.drawable.ic_edit)
-            viewThemeUtils.material.themeFAB(this)
         }
 
         addMenuProvider()

@@ -8,6 +8,7 @@
  */
 package com.owncloud.android.ui.adapter
 
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.utils.extensions.saveShares
 import com.owncloud.android.datamodel.FileDataStorageManager
 import com.owncloud.android.datamodel.OCFile
@@ -114,6 +115,7 @@ object OCShareToOCFileConverter {
         it.modificationTimestamp = -1
     }
 
+    @IonosCustomization("Set share fileSource as file localId")
     private fun OCFile.applyShareData(firstShare: OCShare, firstShareTimestamp: Long) = apply {
         ownerId = firstShare.userId
         ownerDisplayName = firstShare.ownerDisplayName
@@ -122,6 +124,7 @@ object OCShareToOCFileConverter {
         note = firstShare.note
         fileId = firstShare.fileSource
         remoteId = firstShare.remoteId.toString()
+        localId = firstShare.fileSource
         this.firstShareTimestamp = firstShareTimestamp
         isFavorite = firstShare.isFavorite
     }
