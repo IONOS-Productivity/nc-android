@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ IONOS HiDrive Next - Android Client
+  ~
+  ~ SPDX-FileCopyrightText: 2025 STRATO GmbH.
+  ~ SPDX-License-Identifier: GPL-2.0
+  -->
+
+<resources>
+    <color name="player_transparent_black">#21000000</color>
+    <color name="player_cod_gray">#111111</color>
+    <color name="player_dusty_gray">#979797</color>
+</resources>

@@ -10,6 +10,8 @@ package com.owncloud.android.ui.adapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.ionos.annotation.IonosCustomization
+import com.ionos.utils.IonosBuildHelper
 import com.nextcloud.client.account.User
 import com.nextcloud.ui.fileInfo.FileInfoFragment
 import com.owncloud.android.datamodel.OCFile
@@ -35,17 +37,30 @@ class FileDetailTabAdapter(
     var fileDetailActivitiesFragment: FileDetailActivitiesFragment? = null
         private set
 
-    override fun createFragment(position: Int): Fragment = when (position) {
-        Tab.Sharing.position -> FileDetailSharingFragment.newInstance(file, user)
-            .also { fileDetailSharingFragment = it }
+    @IonosCustomization("Hide tabs in IONOS")
+    override fun createFragment(position: Int): Fragment {
+        if (IonosBuildHelper.isIonosBuild()) {
+            return FileDetailSharingFragment.newInstance(file, user)
+                .also { fileDetailSharingFragment = it }
+        }
 
-        Tab.Details.position -> FileInfoFragment.newInstance(file, user)
+        return when (position) {
+            Tab.Sharing.position -> FileDetailSharingFragment.newInstance(file, user)
+                .also { fileDetailSharingFragment = it }
 
-        else -> FileDetailActivitiesFragment.newInstance(file, user)
-            .also { fileDetailActivitiesFragment = it }
+            Tab.Details.position -> FileInfoFragment.newInstance(file, user)
+
+            else -> FileDetailActivitiesFragment.newInstance(file, user)
+                .also { fileDetailActivitiesFragment = it }
+        }
     }
 
+    @IonosCustomization("Hide tabs in IONOS")
     override fun getItemCount(): Int {
+        if (IonosBuildHelper.isIonosBuild()) {
+            return if (showSharingTab) 1 else 0
+        }
+
         // always show Activities
         var count = 1
 

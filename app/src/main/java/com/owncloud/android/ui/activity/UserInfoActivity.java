@@ -24,6 +24,7 @@ import android.view.View;
 import android.webkit.URLUtil;
 import android.widget.ImageView;
 
+import com.ionos.annotation.IonosCustomization;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
@@ -245,8 +246,9 @@ public class UserInfoActivity extends DrawerActivity implements Injectable {
         };
     }
 
-
+    @IonosCustomization("Hide account id")
     private void populateUserInfoUi(UserInfo userInfo) {
+        binding.userinfoUsername.setVisibility(View.GONE);
         binding.userinfoUsername.setText(user.getAccountName());
         binding.userinfoIcon.setTag(user.getAccountName());
         DisplayUtils.setAvatar(user,

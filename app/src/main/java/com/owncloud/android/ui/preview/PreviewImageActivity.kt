@@ -25,6 +25,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.account.User
 import com.nextcloud.client.database.entity.SyncedFolderEntity
 import com.nextcloud.client.di.Injectable
@@ -58,6 +59,10 @@ import com.owncloud.android.ui.fragment.GalleryFragment
 import com.owncloud.android.ui.preview.model.PreviewImageActivityState
 import com.owncloud.android.utils.DisplayUtils
 import com.owncloud.android.utils.MimeTypeUtil
+import android.graphics.drawable.ColorDrawable
+import android.view.ViewGroup
+import androidx.activity.enableEdgeToEdge
+import androidx.core.view.updatePadding
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings
 import java.io.Serializable
 import javax.inject.Inject
@@ -98,8 +103,19 @@ class PreviewImageActivity :
     @Inject
     lateinit var localBroadcastManager: LocalBroadcastManager
 
+    @IonosCustomization
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
+
+        val contentContainer = (window.decorView as ViewGroup).getChildAt(0)
+        ViewCompat.setOnApplyWindowInsetsListener(contentContainer) { view, windowInsets ->
+            val insetsType = WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.displayCutout()
+            val insets = windowInsets.getInsets(insetsType)
+            val actionBarView = view.findViewById<View>(androidx.appcompat.R.id.action_bar)
+            actionBarView?.updatePadding(left = insets.left, top = insets.top, right = insets.right)
+            WindowInsetsCompat.CONSUMED
+        }
 
         if (savedInstanceState != null &&
             !savedInstanceState.getBoolean(
@@ -119,11 +135,14 @@ class PreviewImageActivity :
 
         val chosenFile = intent.getParcelableArgument(EXTRA_FILE, OCFile::class.java)
 
+        updateActionBarTitleAndHomeButton(chosenFile)
+
+        viewThemeUtils.platform.themeStatusBar(this, getColor(R.color.preview_image_system_bars_color))
         supportActionBar?.let {
             updateActionBarTitleAndHomeButton(chosenFile)
             viewThemeUtils.files.setWhiteBackButton(this, it)
             it.setDisplayHomeAsUpEnabled(true)
-            it.setBackgroundDrawable(R.color.black.toDrawable())
+            it.setBackgroundDrawable(R.color.preview_image_system_bars_color.toDrawable())
         }
 
         setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
@@ -144,6 +163,9 @@ class PreviewImageActivity :
     override fun downloadFile(file: OCFile, packageName: String, activityName: String) {
         sendShareDownloader.downloadFile(file, packageName, activityName)
     }
+
+    @IonosCustomization("Remove window insets paddings")
+    override fun isDefaultWindowInsetsHandlingEnabled() = false
 
     override fun getMenuItemId(): Int = R.id.nav_gallery
 

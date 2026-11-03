@@ -6,14 +6,15 @@
  */
 package com.nextcloud.utils
 
+import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.graphics.drawable.toDrawable
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.utils.extensions.getBitmapSize
 import com.nextcloud.utils.extensions.getExifSize
-import com.owncloud.android.MainApp
 import com.owncloud.android.R
 import com.owncloud.android.datamodel.OCFile
 import com.owncloud.android.lib.common.utils.Log_OC
@@ -56,9 +57,8 @@ object OCFileUtils {
         return fallbackPair
     }
 
-    fun getMediaPlaceholder(file: OCFile, imageDimension: Pair<Int, Int>): BitmapDrawable {
-        val context = MainApp.getAppContext()
-
+    @IonosCustomization("themed context for day/night placeholder")
+    fun getMediaPlaceholder(context: Context, file: OCFile, imageDimension: Pair<Int, Int>): BitmapDrawable {
         val drawableId = if (MimeTypeUtil.isImage(file)) {
             R.drawable.file_image
         } else if (MimeTypeUtil.isVideo(file)) {
