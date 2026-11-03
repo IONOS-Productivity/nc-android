@@ -14,8 +14,6 @@ import com.nextcloud.client.device.BatteryStatus
 import com.nextcloud.client.device.PowerManagementService
 import com.nextcloud.client.jobs.upload.FileUploadHelper
 import com.nextcloud.client.jobs.upload.FileUploadWorker
-import com.nextcloud.client.network.Connectivity
-import com.nextcloud.client.network.ConnectivityService
 import com.owncloud.android.AbstractOnServerIT
 import com.owncloud.android.datamodel.OCFile
 import com.owncloud.android.datamodel.UploadsStorageManager
@@ -33,16 +31,10 @@ import org.junit.Test
 abstract class FileUploaderIT : AbstractOnServerIT() {
     private var uploadsStorageManager: UploadsStorageManager? = null
 
-    private val connectivityServiceMock: ConnectivityService = object : ConnectivityService {
-        override fun isNetworkAndServerAvailable(callback: ConnectivityService.GenericCallback<Boolean>) = Unit
-
-        override fun isConnected(): Boolean = false
-
-        override fun isInternetWalled(): Boolean = false
-        override fun getConnectivity(): Connectivity = Connectivity.CONNECTED_WIFI
-    }
-
     private val powerManagementServiceMock: PowerManagementService = object : PowerManagementService {
+        override val isIgnoringOptimization: Boolean
+            get() = true
+
         override val isPowerSavingEnabled: Boolean
             get() = false
 
@@ -57,9 +49,9 @@ abstract class FileUploaderIT : AbstractOnServerIT() {
         uploadsStorageManager = UploadsStorageManager(accountManager, contentResolver)
     }
 
-    /**
-     * uploads a file, overwrites it with an empty one, check if overwritten
-     */
+    // /**
+    // * uploads a file, overwrites it with an empty one, check if overwritten
+    // */
     // disabled, flaky test
     // @Test
     // fun testKeepLocalAndOverwriteRemote() {

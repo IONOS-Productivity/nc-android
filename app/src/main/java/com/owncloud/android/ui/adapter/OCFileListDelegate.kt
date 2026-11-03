@@ -24,7 +24,6 @@ import com.nextcloud.client.jobs.gallery.GalleryImageGenerationListener
 import com.nextcloud.client.jobs.upload.FileUploadHelper
 import com.nextcloud.client.preferences.AppPreferences
 import com.nextcloud.utils.OCFileUtils
-import com.nextcloud.utils.extensions.getSubfiles
 import com.nextcloud.utils.extensions.makeRounded
 import com.nextcloud.utils.extensions.setVisibleIf
 import com.nextcloud.utils.mdm.MDMConfig
@@ -41,6 +40,7 @@ import com.owncloud.android.ui.fragment.SearchType
 import com.owncloud.android.ui.interfaces.OCFileListFragmentInterface
 import com.owncloud.android.utils.DisplayUtils
 import com.owncloud.android.utils.EncryptionUtils
+import com.owncloud.android.utils.MimeTypeUtil
 import com.owncloud.android.utils.overlay.OverlayManager
 import com.owncloud.android.utils.theme.ViewThemeUtils
 import kotlinx.coroutines.CoroutineScope
@@ -49,9 +49,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.job
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import androidx.core.graphics.drawable.toDrawable
-import com.owncloud.android.utils.MimeTypeUtil
 
 @Suppress("LongParameterList", "TooManyFunctions")
 class OCFileListDelegate(
@@ -121,11 +119,15 @@ class OCFileListDelegate(
         imageView.tag = file.fileId
 
         // set placeholder before async job
-        val cached = ThumbnailsCacheManager.getBitmapFromDiskCache(
-            ThumbnailsCacheManager.PREFIX_RESIZED_IMAGE + file.remoteId
-        )
-        if (cached != null) {
-            imageView.setImageBitmap(cached)
+        val cacheKey = ThumbnailsCacheManager.PREFIX_RESIZED_IMAGE + file.remoteId
+        val cachedBitmap = ThumbnailsCacheManager.getBitmapFromDiskCache(cacheKey)
+        if (cachedBitmap != null) {
+            val overlay = if (MimeTypeUtil.isVideo(file)) {
+                ThumbnailsCacheManager.addVideoOverlay(cachedBitmap, context)
+            } else {
+                cachedBitmap
+            }
+            imageView.setImageBitmap(overlay)
         } else {
             @IonosCustomization("Custom placeholder for gallery images while loading")
             imageView.setImageDrawable(Color.LTGRAY.toDrawable())
@@ -160,7 +162,7 @@ class OCFileListDelegate(
                                 imageView.post {
                                     imageView.scaleType = ImageView.ScaleType.FIT_CENTER
                                     val inset = (imageDimension.first * 0.45f).toInt()
-                                    val icon = OCFileUtils.getMediaPlaceholder(file, imageDimension)
+                                    val icon = OCFileUtils.getMediaPlaceholder(context, file, imageDimension)
                                     val backgroundColor = context.getColor(R.color.ionos_gallery_item_background_color)
                                     val layered = LayerDrawable(arrayOf(backgroundColor.toDrawable(), icon)).apply {
                                         setLayerInset(1, inset, inset, inset, inset)
@@ -260,14 +262,22 @@ class OCFileListDelegate(
 
         // shares
         val shouldHideShare = (
-            hideItemOptions ||
-                !file.isFolder &&
-                file.isEncrypted ||
-                file.isEncrypted &&
-                !EncryptionUtils.supportsSecureFiledrop(file, user) ||
-                searchType == SearchType.FAVORITE_SEARCH ||
-                file.isFolder &&
-                currentDirectory?.isEncrypted ?: false
+            (
+                hideItemOptions ||
+                    (
+                        !file.isFolder &&
+                            file.isEncrypted
+                        ) ||
+                    (
+                        file.isEncrypted &&
+                            !EncryptionUtils.supportsSecureFiledrop(file, user)
+                        ) ||
+                    (searchType == SearchType.FAVORITE_SEARCH) ||
+                    (
+                        file.isFolder &&
+                            (currentDirectory?.isEncrypted ?: false)
+                        )
+                )
             ) // sharing an encrypted subfolder is not possible
         if (shouldHideShare) {
             viewHolder.shared.visibility = View.GONE
@@ -379,13 +389,6 @@ class OCFileListDelegate(
         }
     }
 
-    private suspend fun isFolderFullyDownloaded(file: OCFile): Boolean = withContext(Dispatchers.IO) {
-        file.isFolder &&
-            storageManager.getSubfiles(file.fileId, user.accountName)
-                .takeIf { it.isNotEmpty() }
-                ?.all { it.isDown } == true
-    }
-
     private fun isSynchronizing(file: OCFile): Boolean {
         val operationsServiceBinder = transferServiceGetter.operationsServiceBinder
         val fileDownloadHelper = FileDownloadHelper.instance()
@@ -395,29 +398,36 @@ class OCFileListDelegate(
             fileUploadHelper.isUploading(file.remotePath, user.accountName)
     }
 
+    private fun OCFile.canCheckFolderDown(): Boolean = mimeType != null &&
+        isFolder &&
+        !isEncrypted &&
+        fileLength != 0L &&
+        !etag.isNullOrBlank()
+
+    @Suppress("ComplexCondition")
     private fun showLocalFileIndicator(file: OCFile, holder: ListViewHolder) {
-        ioScope.launch {
-            val isFullyDownloaded = isFolderFullyDownloaded(file)
-            val isSyncing = isSynchronizing(file)
-            val hasConflict = (file.etagInConflict != null)
-            val isDown = file.isDown
+        var isFolderDown = false
+        if (file.canCheckFolderDown()) {
+            isFolderDown = storageManager.fileDao.areAllFilesHaveMediaPath(file.fileId, user.accountName)
+        }
 
-            val icon = when {
-                isSyncing -> R.drawable.ic_synchronizing
-                hasConflict -> R.drawable.ic_synchronizing_error
-                isDown || isFullyDownloaded -> R.drawable.ic_synced
-                else -> null
-            }
+        val isSyncing = isSynchronizing(file)
+        val hasConflict = (file.etagInConflict != null)
+        val isDown = file.isDown
 
-            withContext(Dispatchers.Main) {
-                holder.localFileIndicator.run {
-                    if (icon != null && showMetadata) {
-                        setImageResource(icon)
-                        visibility = View.VISIBLE
-                    } else {
-                        visibility = View.GONE
-                    }
-                }
+        val icon = when {
+            isSyncing -> R.drawable.ic_synchronizing
+            hasConflict -> R.drawable.ic_synchronizing_error
+            isDown || isFolderDown -> R.drawable.ic_synced
+            else -> null
+        }
+
+        holder.localFileIndicator.run {
+            if (icon != null && showMetadata) {
+                setImageResource(icon)
+                visibility = View.VISIBLE
+            } else {
+                visibility = View.GONE
             }
         }
     }
@@ -453,7 +463,8 @@ class OCFileListDelegate(
                 if (showShareAvatar) null else R.drawable.shared_via_users to R.string.shared_icon_shared
             }
 
-            file.isSharedViaLink -> R.drawable.shared_via_link to R.string.shared_icon_shared_via_link
+            file.isShared || file.isSharedViaLink -> R.drawable.shared_via_link to R.string.shared_icon_shared_via_link
+
             else -> R.drawable.ic_unshared to R.string.shared_icon_share
         }
     }

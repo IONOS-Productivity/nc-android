@@ -27,7 +27,7 @@
         app:itemShapeInsetStart="24dp"
         app:itemShapeInsetEnd="24dp"
         app:itemIconSize = "16dp"
-        app:itemTextColor="@color/ionos_default_text_color"
+        app:itemTextColor="@color/ionos_drawer_text_color"
         app:itemShapeFillColor="@color/drawer_item_shape_color"
         app:drawerLayoutCornerSize="0dp"
         app:menu="@menu/partial_drawer_entries">
@@ -83,7 +83,7 @@
                 android:layout_marginTop="@dimen/standard_half_padding"
                 android:drawablePadding="@dimen/alternate_half_padding"
                 android:text="@string/drawer_quota"
-                android:textColor="@color/ionos_default_text_color" />
+                android:textColor="@color/ionos_drawer_text_color" />
 
         </LinearLayout>
 

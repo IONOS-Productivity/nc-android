@@ -21,6 +21,7 @@ import android.text.TextUtils;
 import android.webkit.MimeTypeMap;
 
 import com.nextcloud.client.preferences.SubFolderRule;
+import com.nextcloud.utils.extensions.RemoteFileExtensionsKt;
 import com.nextcloud.utils.extensions.StringConstants;
 import com.owncloud.android.MainApp;
 import com.owncloud.android.R;
@@ -28,6 +29,8 @@ import com.owncloud.android.datamodel.FileDataStorageManager;
 import com.owncloud.android.datamodel.OCFile;
 import com.owncloud.android.lib.common.utils.Log_OC;
 import com.owncloud.android.lib.resources.files.model.RemoteFile;
+import com.owncloud.android.lib.resources.shares.ShareType;
+import com.owncloud.android.lib.resources.shares.ShareeUser;
 import com.owncloud.android.ui.helpers.FileOperationsHelper;
 
 import org.apache.commons.io.FilenameUtils;
@@ -173,6 +176,8 @@ public final class FileStorageUtils {
      * Get local path where OCFile file is to be stored after upload. That is,
      * corresponding local path (in local owncloud storage) to remote uploaded
      * file.
+     * <p>
+     * e.g. /storage/emulated/0/Android/media/com.nextcloud.client/nextcloud/admin@example.cloud/folder/file.txt
      */
     public static String getDefaultSavePathFor(String accountName, OCFile file) {
         return getSavePath(accountName) + file.getDecryptedRemotePath();
@@ -347,7 +352,11 @@ public final class FileStorageUtils {
         file.setOwnerId(remote.getOwnerId());
         file.setOwnerDisplayName(remote.getOwnerDisplayName());
         file.setNote(remote.getNote());
-        file.setSharees(new ArrayList<>(Arrays.asList(remote.getSharees())));
+
+        file.setSharees(RemoteFileExtensionsKt.getShareeList(remote));
+        file.setSharedWithSharee(RemoteFileExtensionsKt.sharedWithSharee(remote));
+        file.setSharedViaLink(RemoteFileExtensionsKt.sharedViaLink(remote));
+
         file.setRichWorkspace(remote.getRichWorkspace());
         file.setLocked(remote.isLocked());
         file.setLockType(remote.getLockType());
@@ -357,7 +366,7 @@ public final class FileStorageUtils {
         file.setLockTimestamp(remote.getLockTimestamp());
         file.setLockTimeout(remote.getLockTimeout());
         file.setLockToken(remote.getLockToken());
-        file.setTags(new ArrayList<>(Arrays.asList(remote.getTags())));
+        file.setTags(RemoteFileExtensionsKt.tags(remote));
         file.setImageDimension(remote.getImageDimension());
         file.setGeoLocation(remote.getGeoLocation());
         file.setLivePhoto(remote.getLivePhoto());
@@ -791,16 +800,6 @@ public final class FileStorageUtils {
         return checkIfEnoughSpace(availableSpaceOnDevice, file);
     }
     
-    public static boolean isFolderWritable(File folder) {
-        File[] children = folder.listFiles();
-        
-        if (children != null && children.length > 0) {
-            return children[0].canWrite();
-        } else {
-            return folder.canWrite();
-        }
-    }
-
     @VisibleForTesting
     public static boolean checkIfEnoughSpace(long availableSpaceOnDevice, OCFile file) {
         if (file.isFolder()) {

@@ -84,7 +84,7 @@ public class SimpleOCFileListBottomSheetDialog extends BottomSheetDialog impleme
 
     private void setupClickListener() {
         binding.menuMkdir.setOnClickListener(v -> {
-            actions.createFolder();
+            actions.createFolder(false);
             dismiss();
         });
 

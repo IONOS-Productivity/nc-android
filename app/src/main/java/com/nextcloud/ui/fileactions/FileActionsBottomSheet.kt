@@ -17,8 +17,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.IdRes
+import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
-import androidx.core.view.isEmpty
+import androidx.core.view.isNotEmpty
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.setFragmentResult
@@ -102,7 +103,9 @@ class FileActionsBottomSheet :
 
         viewModel.load(requireArguments(), componentsGetter)
 
-        endpoints = arguments?.getParcelableArrayList(FileActionsViewModel.ARG_ENDPOINTS)
+        endpoints = arguments?.let { bundle ->
+            BundleCompat.getParcelableArrayList(bundle, FileActionsViewModel.ARG_ENDPOINTS, Endpoint::class.java)
+        } ?: mutableListOf()
 
         val bottomSheetDialog = dialog as BottomSheetDialog
         bottomSheetDialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
@@ -123,17 +126,18 @@ class FileActionsBottomSheet :
                 if (state.lockInfo != null) {
                     displayLockInfo(state.lockInfo)
                 }
-                displayActions(state.actions)
+                displayActions(state.titleFile, state.actions)
                 displayTitle(state.titleFile)
             }
 
             is FileActionsViewModel.UiState.LoadedForMultipleFiles -> {
                 setMultipleFilesThumbnail()
-                displayActions(state.actions)
+                displayActions(state.firstFile, state.actions)
                 displayTitle(state.fileCount)
             }
 
-            FileActionsViewModel.UiState.Loading -> {}
+            FileActionsViewModel.UiState.Loading -> Unit
+
             FileActionsViewModel.UiState.Error -> {
                 activity?.let {
                     DisplayUtils.showSnackMessage(it, R.string.error_file_actions)
@@ -204,26 +208,32 @@ class FileActionsBottomSheet :
         }
     }
 
-    private fun displayActions(actions: List<FileAction>) {
-        if (binding.fileActionsList.isEmpty()) {
-            actions.forEach { action ->
-                val view = inflateActionView(action)
-                binding.fileActionsList.addView(view)
-            }
+    private fun displayActions(file: OCFile?, actions: List<FileAction>) {
+        if (binding.fileActionsList.isNotEmpty()) {
+            return
+        }
 
-            // add client integration
-            if (endpoints != null) {
-                for (val e in endpoints) {
-                    val ui = clientIntegration.inflateClientIntegrationActionView(
-                        e,
-                        layoutInflater,
-                        binding,
-                        viewModel,
-                        viewThemeUtils
-                    )
-                    binding.fileActionsList.addView(ui)
-                }
-            }
+        actions.forEach { action ->
+            val view = inflateActionView(action)
+            binding.fileActionsList.addView(view)
+        }
+
+        val parentDir = file?.parentId?.let { storageManager.getFileById(it) }
+
+        if (endpoints.isNullOrEmpty() || parentDir?.isEncrypted == true) {
+            return
+        }
+
+        // add client integration
+        endpoints?.forEach {
+            val view = clientIntegration.inflateClientIntegrationActionView(
+                it,
+                layoutInflater,
+                binding,
+                viewModel,
+                viewThemeUtils
+            )
+            binding.fileActionsList.addView(view)
         }
     }
 
@@ -361,7 +371,7 @@ class FileActionsBottomSheet :
                 FileActionsViewModel.ARG_FILES to ArrayList<OCFile>(files),
                 FileActionsViewModel.ARG_IS_OVERFLOW to isOverflow,
                 FileActionsViewModel.ARG_IN_SINGLE_FILE_FRAGMENT to inSingleFileFragment,
-                FileActionsViewModel.ARG_ENDPOINTS to endpoints
+                FileActionsViewModel.ARG_ENDPOINTS to java.util.ArrayList(endpoints)
             )
             additionalToHide?.let {
                 argsBundle.putIntArray(FileActionsViewModel.ARG_ADDITIONAL_FILTER, additionalToHide.toIntArray())

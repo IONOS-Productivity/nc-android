@@ -18,7 +18,7 @@ enum class QuickPermissionType(val iconId: Int, val textId: Int) {
     VIEW_ONLY(R.drawable.ic_eye, R.string.share_permission_view_only),
     CAN_EDIT(R.drawable.ic_edit, R.string.share_permission_can_edit),
     FILE_REQUEST(R.drawable.ic_file_request, R.string.share_permission_file_request),
-    SECURE_FILE_DROP(R.drawable.ic_file_request, R.string.share_permission_secure_file_drop),
+    SECURE_FILE_DROP(R.drawable.ic_file_request, R.string.create_end_to_end_encrypted_share),
     CUSTOM_PERMISSIONS(R.drawable.ic_custom_permissions, R.string.share_custom_permission);
 
     fun getText(context: Context): String = context.getString(textId)
@@ -27,10 +27,15 @@ enum class QuickPermissionType(val iconId: Int, val textId: Int) {
 
     fun getPermissionFlag(isFolder: Boolean): Int = when (this) {
         NONE -> OCShare.NO_PERMISSION
+
         VIEW_ONLY -> OCShare.READ_PERMISSION_FLAG
+
         CAN_EDIT -> if (isFolder) OCShare.MAXIMUM_PERMISSIONS_FOR_FOLDER else OCShare.MAXIMUM_PERMISSIONS_FOR_FILE
+
         FILE_REQUEST -> OCShare.CREATE_PERMISSION_FLAG
+
         SECURE_FILE_DROP -> OCShare.CREATE_PERMISSION_FLAG + OCShare.READ_PERMISSION_FLAG
+
         else -> {
             // Custom permission's flag can't be determined
             OCShare.NO_PERMISSION

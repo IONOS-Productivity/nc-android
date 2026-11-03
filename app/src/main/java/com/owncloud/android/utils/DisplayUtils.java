@@ -305,7 +305,7 @@ public final class DisplayUtils {
         }
         // < 60 seconds -> seconds ago
         long diff = System.currentTimeMillis() - time;
-        if (diff > 0 && diff < 60 * 1000 && minResolution == DateUtils.SECOND_IN_MILLIS) {
+        if (diff > 0 && diff < 60 * 1000 && minResolution == DateUtils.MINUTE_IN_MILLIS) {
             return c.getString(R.string.file_list_seconds_ago);
         } else {
             CharSequence dateString = DateUtils.getRelativeDateTimeString(c, time, minResolution, transitionResolution, flags);
@@ -1020,6 +1020,10 @@ public final class DisplayUtils {
                 @Override
                 public void onError() {
                     stopShimmer(shimmerThumbnail, thumbnailView);
+                    final var icon = MimeTypeUtil.getFileTypeIcon(file.getMimeType(), file.getFileName(), context, viewThemeUtils);
+                    thumbnailView.setImageDrawable(icon);
+                    thumbnailView.invalidate();
+                    Log_OC.w(TAG, "setting thumbnail failed, using icon from mime type");
                 }
             });
 

@@ -21,8 +21,11 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.google.android.material.appbar.MaterialToolbar
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.account.User
 import com.nextcloud.client.di.Injectable
 import com.nextcloud.utils.extensions.getParcelableArgument
@@ -71,6 +74,8 @@ open class FolderPickerActivity :
 
     private var captionText: String? = null
 
+    private var showsBrandCaption = false
+
     private var action: String? = null
     private var targetFilePaths: ArrayList<String>? = null
 
@@ -109,6 +114,7 @@ open class FolderPickerActivity :
         }
 
         updateActionBarTitleAndHomeButtonByString(captionText)
+        updateToolbarBrandLogo()
         handleBackPress()
     }
 
@@ -131,6 +137,7 @@ open class FolderPickerActivity :
             setupUIForChooseButton()
         } else {
             captionText = themeUtils.getDefaultDisplayNameForRootFolder(this)
+            showsBrandCaption = true
         }
     }
 
@@ -323,7 +330,7 @@ open class FolderPickerActivity :
         val itemId = item.itemId
 
         if (itemId == R.id.action_create_dir) {
-            val dialog = CreateFolderDialogFragment.newInstance(currentFolder)
+            val dialog = CreateFolderDialogFragment.newInstance(currentFolder, false)
             dialog.show(supportFragmentManager, CreateFolderDialogFragment.CREATE_FOLDER_FRAGMENT)
         } else if (itemId == android.R.id.home) {
             val currentDir = currentFolder
@@ -376,14 +383,24 @@ open class FolderPickerActivity :
         updateNavigationElementsInActionBar()
     }
 
+    @Suppress("ReturnCount")
     private fun toggleChooseEnabled() {
         if (this is FilePickerActivity) {
             return
         }
 
         val selectedFolderPathTitle = getSelectedFolderPathTitle()
+        val optionalCapabilities = capabilities
+        if (optionalCapabilities.isEmpty) {
+            return
+        }
+
         val isFolderPathValid = if (selectedFolderPathTitle != null) {
-            FileNameValidator.checkFolderPath(selectedFolderPathTitle, capabilities, this)
+            FileNameValidator.checkFolderPath(
+                selectedFolderPathTitle,
+                optionalCapabilities.get(),
+                this
+            )
         } else {
             true
         }
@@ -410,8 +427,11 @@ open class FolderPickerActivity :
     // for copy and move, disable selecting parent folder of target files
     private fun isFolderSelectable(type: String): Boolean = when {
         action != MOVE_OR_COPY -> true
+
         action == MOVE_OR_COPY && type == COPY -> true
+
         targetFilePaths.isNullOrEmpty() -> true
+
         file?.isFolder != true -> true
 
         // all of the target files are already in the selected directory
@@ -419,6 +439,7 @@ open class FolderPickerActivity :
 
         // some of the target files are parents of the selected folder
         targetFilePaths?.any { PathUtils.isAncestor(it, file?.remotePath ?: "") } == true -> false
+
         else -> true
     }
 
@@ -431,6 +452,24 @@ open class FolderPickerActivity :
             getSelectedFolderPathTitle()?.let {
                 viewThemeUtils.files.themeActionBar(this, actionBar, it)
             }
+            updateToolbarBrandLogo()
+        }
+    }
+
+    @IonosCustomization("Brand logo instead of the root folder caption")
+    private fun updateToolbarBrandLogo() {
+        if (!showsBrandCaption || !resources.getBoolean(R.bool.show_brand_logo_in_folder_picker)) {
+            return
+        }
+
+        val folder = currentFolder
+        val atRoot = (folder == null || folder.parentId == 0L)
+
+        supportActionBar?.setDisplayShowTitleEnabled(!atRoot)
+        findViewById<MaterialToolbar>(R.id.toolbar)?.logo = if (atRoot) {
+            AppCompatResources.getDrawable(this, R.drawable.nextcloud_logo)
+        } else {
+            null
         }
     }
 
@@ -654,7 +693,7 @@ open class FolderPickerActivity :
     }
 
     override fun onSortingOrderChosen(selection: FileSortOrder?) {
-        listOfFilesFragment?.sortFiles(selection)
+        listOfFilesFragment?.fileListLayoutManager?.sortFiles(selection)
     }
 
     companion object {

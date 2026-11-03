@@ -189,6 +189,7 @@ public final class ThumbnailsCacheManager {
 
     /**
      * Add thumbnail to cache
+     *
      * @param imageKey: thumb key
      * @param bitmap:   image for extracting thumbnail
      * @param path:     image path
@@ -196,7 +197,7 @@ public final class ThumbnailsCacheManager {
      * @param pxH:      thumbnail height in pixel
      * @return Bitmap
      */
-    private static Bitmap addThumbnailToCache(String imageKey, Bitmap bitmap, String path, int pxW, int pxH){
+    public static Bitmap addThumbnailToCache(String imageKey, Bitmap bitmap, String path, int pxW, int pxH) {
 
         Bitmap thumbnail = ThumbnailUtils.extractThumbnail(bitmap, pxW, pxH);
 
@@ -848,14 +849,7 @@ public final class ThumbnailsCacheManager {
                         thumbnail = addThumbnailToCache(imageKey, bitmap, file.getPath(), px, px);
                     }
                 } else if (Type.VIDEO == type) {
-                    try (MediaMetadataRetriever retriever = new MediaMetadataRetriever()) {
-                        retriever.setDataSource(file.getAbsolutePath());
-                        thumbnail = retriever.getFrameAtTime(-1);
-                    } catch (Exception ex) {
-                        // can't create a bitmap
-                        Log_OC.w(TAG, "Failed to create bitmap from video " + file.getAbsolutePath());
-                    }
-
+                    thumbnail = getThumbnailFromMediaRetriever(file);
                     if (thumbnail != null) {
                         // Scale down bitmap if too large.
                         int px = getThumbnailDimension();
@@ -871,6 +865,28 @@ public final class ThumbnailsCacheManager {
             }
 
             return thumbnail;
+        }
+
+        private Bitmap getThumbnailFromMediaRetriever(File file) {
+            if (file == null || !file.exists()) {
+                Log_OC.w(TAG, "Cannot extract thumbnail: file is null or does not exist");
+                return null;
+            }
+
+            var retriever = new MediaMetadataRetriever();
+            try {
+                retriever.setDataSource(file.getAbsolutePath());
+                return retriever.getFrameAtTime(-1);
+            } catch (Throwable t) {
+                Log_OC.w(TAG, "Failed to create bitmap from video " + file.getAbsolutePath());
+                return null;
+            } finally {
+                try {
+                    retriever.release();
+                } catch (Throwable t) {
+                    Log_OC.w(TAG, "Failed to release retriever");
+                }
+            }
         }
     }
 
@@ -1101,10 +1117,12 @@ public final class ThumbnailsCacheManager {
 
         c.drawBitmap(thumbnail, 0, 0, null);
 
+        float left = (thumbnail.getWidth() - px) / 2f;
+        float top = (thumbnail.getHeight() - px) / 2f;
+
         Paint p = new Paint();
         p.setAlpha(230);
-
-        c.drawBitmap(resizedPlayButton, px, px, p);
+        c.drawBitmap(resizedPlayButton, left, top, p);
 
         return resultBitmap;
     }
@@ -1149,7 +1167,7 @@ public final class ThumbnailsCacheManager {
     /**
      * adapted from <a href="https://stackoverflow.com/a/8113368">...</a>
      */
-    private static Bitmap handlePNG(Bitmap source, int newWidth, int newHeight) {
+    public static Bitmap handlePNG(Bitmap source, int newWidth, int newHeight) {
         Bitmap softwareBitmap = source.copy(Bitmap.Config.ARGB_8888, false);
 
         int sourceWidth = source.getWidth();
@@ -1292,7 +1310,7 @@ public final class ThumbnailsCacheManager {
             GetMethod getMethod = null;
 
             try {
-                String uri = OwnCloudClientExtensionsKt.getPreviewEndpoint(mClient, file.getRemoteId(), pxW, pxH);
+                String uri = OwnCloudClientExtensionsKt.getPreviewEndpoint(mClient, file.getLocalId(), pxW, pxH);
                 Log_OC.d(TAG, "generating resized image: " + file.getFileName() + " URI: " + uri);
 
                 getMethod = new GetMethod(uri);
@@ -1305,7 +1323,7 @@ public final class ThumbnailsCacheManager {
                         Log_OC.d(TAG, "resized image generated");
                     }
                 } else {
-                    Log_OC.e(TAG, "cannot generate thumbnail not supported file type, status: " + status);
+                    Log_OC.e(TAG, "cannot generate thumbnail not supported file type, status: " + status + " file: " + file.getRemotePath());
                     mClient.exhaustResponse(getMethod.getResponseBodyAsStream());
                 }
 

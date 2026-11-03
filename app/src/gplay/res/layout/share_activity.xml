@@ -62,6 +62,13 @@
             android:text="@string/placeholder_fileSize"
             android:textSize="@dimen/share_file_layout_text_size" />
 
+        <ImageButton
+            android:id="@+id/shareCloseButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/common_back"
+            android:visibility="gone" />
+
     </RelativeLayout>
 
     <View

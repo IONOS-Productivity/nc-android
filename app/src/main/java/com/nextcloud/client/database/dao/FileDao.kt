@@ -57,6 +57,15 @@ interface FileDao {
     )
     fun getGalleryItems(startDate: Long, endDate: Long, fileOwner: String): List<FileEntity>
 
+    @Query(
+        "SELECT * FROM filelist WHERE modified >= :startDate" +
+            " AND modified < :endDate" +
+            " AND (content_type LIKE 'image/%' OR content_type LIKE 'video/%')" +
+            " AND file_owner = :fileOwner" +
+            " ORDER BY ${ProviderTableMeta.FILE_DEFAULT_SORT_ORDER}"
+    )
+    suspend fun getGalleryItemsSuspended(startDate: Long, endDate: Long, fileOwner: String): List<FileEntity>
+
     @Query("SELECT * FROM filelist WHERE file_owner = :fileOwner ORDER BY ${ProviderTableMeta.FILE_DEFAULT_SORT_ORDER}")
     fun getAllFiles(fileOwner: String): List<FileEntity>
 
@@ -100,20 +109,19 @@ interface FileDao {
 
     @Query(
         """
-    SELECT * 
-    FROM filelist 
-    WHERE parent = :parentId 
-      AND file_owner = :accountName 
-      AND (content_type != :dirType AND content_type != :webdavType)  
-    ORDER BY ${ProviderTableMeta.FILE_DEFAULT_SORT_ORDER}
-    """
+    SELECT NOT EXISTS (
+        SELECT 1
+        FROM filelist
+        WHERE parent = :parentId
+          AND file_owner = :accountName
+          AND content_type IS NOT NULL
+          AND content_type != '${MimeType.DIRECTORY}'
+          AND content_type != '${MimeType.WEBDAV_FOLDER}'
+          AND (media_path IS NULL OR TRIM(media_path) = '')
     )
-    suspend fun getSubfiles(
-        parentId: Long,
-        accountName: String,
-        dirType: String = MimeType.DIRECTORY,
-        webdavType: String = MimeType.WEBDAV_FOLDER
-    ): List<FileEntity>
+"""
+    )
+    fun areAllFilesHaveMediaPath(parentId: Long, accountName: String): Boolean
 
     @Query(
         """

@@ -21,11 +21,10 @@ import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
-import android.os.Build;
 import android.os.RemoteException;
 import android.provider.MediaStore;
 import android.text.TextUtils;
@@ -36,6 +35,7 @@ import com.ionos.annotation.IonosCustomization;
 import com.nextcloud.android.lib.resources.files.FileDownloadLimit;
 import com.nextcloud.client.account.User;
 import com.nextcloud.client.database.NextcloudDatabase;
+import com.nextcloud.client.database.dao.CapabilityDao;
 import com.nextcloud.client.database.dao.FileDao;
 import com.nextcloud.client.database.dao.OfflineOperationDao;
 import com.nextcloud.client.database.dao.RecommendedFileDao;
@@ -48,8 +48,11 @@ import com.nextcloud.model.OfflineOperationRawType;
 import com.nextcloud.model.OfflineOperationType;
 import com.nextcloud.model.ShareeEntry;
 import com.nextcloud.utils.date.DateFormatPattern;
+import com.nextcloud.utils.e2ee.E2EVersionHelper;
 import com.nextcloud.utils.extensions.DateExtensionsKt;
+import com.nextcloud.utils.extensions.FileExtensionsKt;
 import com.owncloud.android.MainApp;
+import com.owncloud.android.datamodel.e2e.v2.decrypted.DecryptedFolderMetadataFile;
 import com.owncloud.android.db.ProviderMeta.ProviderTableMeta;
 import com.owncloud.android.lib.common.network.WebdavEntry;
 import com.owncloud.android.lib.common.utils.Log_OC;
@@ -112,6 +115,7 @@ public class FileDataStorageManager {
     public final OfflineOperationDao offlineOperationDao = NextcloudDatabase.getInstance(MainApp.getAppContext()).offlineOperationDao();
     public final FileDao fileDao = NextcloudDatabase.getInstance(MainApp.getAppContext()).fileDao();
     public final ShareDao shareDao = NextcloudDatabase.getInstance(MainApp.getAppContext()).shareDao();
+    public final CapabilityDao capabilityDao = NextcloudDatabase.instance().capabilityDao();
 
     private final Gson gson = new Gson();
     public final OfflineOperationsRepositoryType offlineOperationsRepository;
@@ -358,8 +362,12 @@ public class FileDataStorageManager {
         offlineOperationsRepository.updateNextOperations(entity);
     }
 
-    private @Nullable
-    OCFile getFileByPath(String type, String path) {
+    @Nullable
+    private OCFile getFileByPath(String type, String path) {
+        if (path == null) {
+            return null;
+        }
+
         final boolean shouldUseEncryptedPath = ProviderTableMeta.FILE_PATH.equals(type);
         FileEntity fileEntity = shouldUseEncryptedPath ?
             fileDao.getFileByEncryptedRemotePath(path, user.getAccountName()) :
@@ -512,6 +520,22 @@ public class FileDataStorageManager {
         }
 
         return imageList;
+    }
+
+    public List<OCFile> getFolderImagesAndVideos(OCFile folder, boolean onlyOnDevice) {
+        List<OCFile> mediaList = new ArrayList<>();
+
+        if (folder != null) {
+            List<OCFile> folderContent = getFolderContent(folder, onlyOnDevice);
+
+            for (OCFile ocFile : folderContent) {
+                if (MimeTypeUtil.isImageOrVideo(ocFile)) {
+                    mediaList.add(ocFile);
+                }
+            }
+        }
+
+        return mediaList;
     }
 
     public boolean saveFile(OCFile ocFile) {
@@ -914,26 +938,36 @@ public class FileDataStorageManager {
     }
 
     private boolean removeLocalCopyIfNeeded(OCFile ocFile, boolean removeLocalCopy, boolean removeDBData) {
-        String localPath = ocFile.getStoragePath();
-
         if (!removeLocalCopy) {
-            Log_OC.d(TAG, "removeLocalCopyIfNeeded: removeLocalCopy=false");
+            Log_OC.w(TAG, "removeLocalCopyIfNeeded: removeLocalCopy=false");
             return true;
         }
 
-        if (!ocFile.isDown()) {
-            Log_OC.d(TAG, "removeLocalCopyIfNeeded: file not downloaded -> skip");
+        String localPath = ocFile.getStoragePath();
+        final var file = FileExtensionsKt.toFile(localPath);
+        if (file == null) {
+            Log_OC.w(TAG, "removeLocalCopyIfNeeded: file exists -> skip");
             return true;
         }
 
-        if (localPath == null) {
-            Log_OC.d(TAG, "removeLocalCopyIfNeeded: localPath is null -> skip");
+        if (ocFile.isFolder()) {
+            Log_OC.w(TAG, "removeLocalCopyIfNeeded: file is folder -> skip");
             return true;
+        }
+
+        String expectedPath = FileStorageUtils.getDefaultSavePathFor(user.getAccountName(), ocFile);
+        if (!localPath.equalsIgnoreCase(expectedPath)) {
+            Log_OC.w(TAG, "removeLocalCopyIfNeeded: Path mismatch! Expected " + expectedPath
+                + " but found " + localPath + ". Skipping deletion to prevent data loss.");
         }
 
         Log_OC.d(TAG, "removeLocalCopyIfNeeded: deleting local file -> " + localPath);
-
-        boolean success = new File(localPath).delete();
+        boolean success = false;
+        try {
+            success = new File(expectedPath).delete();
+        } catch (Exception e) {
+            Log_OC.e(TAG, "removeLocalCopyIfNeeded: deletion error: ", e);
+        }
         Log_OC.d(TAG, "removeLocalCopyIfNeeded: file deletion result=" + success);
 
         if (!success) {
@@ -2046,37 +2080,28 @@ public class FileDataStorageManager {
     }
 
     public static void triggerMediaScan(String path) {
-        triggerMediaScan(path, null);
+        triggerMediaScan(MainApp.getAppContext(), path, null);
     }
 
     public static void triggerMediaScan(String path, OCFile file) {
+        triggerMediaScan(MainApp.getAppContext(), path, file);
+    }
+
+    public static void triggerMediaScan(Context context, String path, OCFile file) {
         if (path != null && !TextUtils.isEmpty(path)) {
-            ContentValues values = new ContentValues();
-            ContentResolver contentResolver = MainApp.getAppContext().getContentResolver();
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
-                if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
-                    if (file != null) {
-                        values.put(MediaStore.Images.Media.MIME_TYPE, file.getMimeType());
-                        values.put(MediaStore.Images.Media.TITLE, file.getFileName());
-                        values.put(MediaStore.Images.Media.DISPLAY_NAME, file.getFileName());
+            String mimeType = file != null ? file.getMimeType() : null;
+            MediaScannerConnection.scanFile(
+                context,
+                new String[]{path},
+                mimeType != null ? new String[]{mimeType} : null,
+                (scannedPath, scannedUri) -> {
+                    if (scannedUri != null) {
+                        Log_OC.d(TAG, "Media scan completed for " + scannedPath);
+                    } else {
+                        Log_OC.w(TAG, "Media scan failed for " + scannedPath);
                     }
-                    values.put(MediaStore.Images.Media.DATE_ADDED, System.currentTimeMillis() / 1000);
-                    values.put(MediaStore.Images.Media.RELATIVE_PATH, path);
-                    values.put(MediaStore.Images.Media.IS_PENDING, 0);
-                    try {
-                        contentResolver.insert(MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY),
-                                               values);
-                    } catch (IllegalArgumentException e) {
-                        Log_OC.e("MediaScanner", "Adding image to media scanner failed: " + e);
-                    }
-                } else {
-                    Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-                    intent.setData(Uri.fromFile(new File(path)));
-                    MainApp.getAppContext().sendBroadcast(intent);
                 }
-            } else {
-                Log_OC.d(TAG, "SDK > 29, skipping media scan");
-            }
+            );
         }
     }
 
@@ -2418,6 +2443,7 @@ public class FileDataStorageManager {
         contentValues.put(ProviderTableMeta.CAPABILITIES_GROUPFOLDERS, capability.getGroupfolders().getValue());
         contentValues.put(ProviderTableMeta.CAPABILITIES_DROP_ACCOUNT, capability.getDropAccount().getValue());
         contentValues.put(ProviderTableMeta.CAPABILITIES_SECURITY_GUARD, capability.getSecurityGuard().getValue());
+        contentValues.put(ProviderTableMeta.CAPABILITIES_GOVERNANCE, capability.getGovernance().getValue());
 
         contentValues.put(ProviderTableMeta.CAPABILITIES_FORBIDDEN_FILENAME_CHARACTERS, capability.getForbiddenFilenameCharactersJson());
         contentValues.put(ProviderTableMeta.CAPABILITIES_FORBIDDEN_FILENAMES, capability.getForbiddenFilenamesJson());
@@ -2436,6 +2462,8 @@ public class FileDataStorageManager {
         contentValues.put(ProviderTableMeta.CAPABILITIES_HAS_VALID_SUBSCRIPTION, capability.getHasValidSubscription().getValue());
 
         contentValues.put(ProviderTableMeta.CAPABILITIES_CLIENT_INTEGRATION_JSON, capability.getClientIntegrationJson());
+
+        contentValues.put(ProviderTableMeta.CAPABILITIES_MOD_REWRITE_WORKING, capability.getModRewriteWorking().getValue());
 
         return contentValues;
     }
@@ -2473,6 +2501,16 @@ public class FileDataStorageManager {
         }
 
         return cursor;
+    }
+
+    public String getE2EEVersion(@NonNull User user) {
+        return getE2EEVersionObject(user).getValue();
+    }
+
+    public E2EVersion getE2EEVersionObject(@NonNull User user) {
+        final var capabilities = getCapability(user);
+        final var serverE2EEVersion = capabilities.getEndToEndEncryptionApiVersion();
+        return E2EVersionHelper.INSTANCE.getMaxCompatibleE2EEVersion(serverE2EEVersion);
     }
 
     @NonNull
@@ -2607,6 +2645,7 @@ public class FileDataStorageManager {
             capability.setGroupfolders(getBoolean(cursor, ProviderTableMeta.CAPABILITIES_GROUPFOLDERS));
             capability.setDropAccount(getBoolean(cursor, ProviderTableMeta.CAPABILITIES_DROP_ACCOUNT));
             capability.setSecurityGuard(getBoolean(cursor, ProviderTableMeta.CAPABILITIES_SECURITY_GUARD));
+            capability.setGovernance(getBoolean(cursor, ProviderTableMeta.CAPABILITIES_GOVERNANCE));
 
             capability.setForbiddenFilenameCharactersJson(getString(cursor, ProviderTableMeta.CAPABILITIES_FORBIDDEN_FILENAME_CHARACTERS));
             capability.setForbiddenFilenamesJson(getString(cursor, ProviderTableMeta.CAPABILITIES_FORBIDDEN_FILENAMES));
@@ -2624,6 +2663,8 @@ public class FileDataStorageManager {
             capability.setHasValidSubscription(getBoolean(cursor, ProviderTableMeta.CAPABILITIES_HAS_VALID_SUBSCRIPTION));
 
             capability.setClientIntegrationJson(getString(cursor, ProviderTableMeta.CAPABILITIES_CLIENT_INTEGRATION_JSON));
+
+            capability.setModRewriteWorking(getBoolean(cursor, ProviderTableMeta.CAPABILITIES_MOD_REWRITE_WORKING));
         }
 
         return capability;
@@ -2920,5 +2961,15 @@ public class FileDataStorageManager {
 
     public void updateFileEntity(@NonNull FileEntity entity) {
         fileDao.update(entity);
+    }
+
+    public void updateE2EECounter(OCFile file, DecryptedFolderMetadataFile metadata) {
+        updateE2EECounter(file, metadata.getMetadata().getCounter());
+    }
+
+    public void updateE2EECounter(OCFile file, long counter) {
+        Log_OC.d(TAG, "e2ee counter stored: " + counter + " for " + file.getDecryptedRemotePath());
+        file.setE2eCounter(counter);
+        saveFile(file);
     }
 }

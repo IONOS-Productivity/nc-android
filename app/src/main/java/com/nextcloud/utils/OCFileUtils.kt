@@ -6,13 +6,15 @@
  */
 package com.nextcloud.utils
 
+import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.graphics.drawable.toDrawable
-import androidx.exifinterface.media.ExifInterface
-import com.owncloud.android.MainApp
+import com.ionos.annotation.IonosCustomization
+import com.nextcloud.utils.extensions.getBitmapSize
+import com.nextcloud.utils.extensions.getExifSize
 import com.owncloud.android.R
 import com.owncloud.android.datamodel.OCFile
 import com.owncloud.android.lib.common.utils.Log_OC
@@ -41,8 +43,8 @@ object OCFileUtils {
             // Local file
             val path = ocFile.storagePath
             if (!path.isNullOrEmpty() && ocFile.exists()) {
-                getExifSize(path)?.let { return it }
-                getBitmapSize(path)?.let { return it }
+                path.getExifSize()?.let { return it }
+                path.getBitmapSize()?.let { return it }
             }
 
             // 3 Fallback
@@ -55,44 +57,8 @@ object OCFileUtils {
         return fallbackPair
     }
 
-    private fun getExifSize(path: String): Pair<Int, Int>? = try {
-        val exif = ExifInterface(path)
-        var w = exif.getAttributeInt(ExifInterface.TAG_IMAGE_WIDTH, 0)
-        var h = exif.getAttributeInt(ExifInterface.TAG_IMAGE_LENGTH, 0)
-
-        val orientation = exif.getAttributeInt(
-            ExifInterface.TAG_ORIENTATION,
-            ExifInterface.ORIENTATION_NORMAL
-        )
-        if (orientation == ExifInterface.ORIENTATION_ROTATE_90 ||
-            orientation == ExifInterface.ORIENTATION_ROTATE_270
-        ) {
-            val tmp = w
-            w = h
-            h = tmp
-        }
-
-        Log_OC.d(TAG, "Using exif imageDimension: $w x $h")
-        if (w > 0 && h > 0) w to h else null
-    } catch (_: Exception) {
-        null
-    }
-
-    private fun getBitmapSize(path: String): Pair<Int, Int>? = try {
-        val options = android.graphics.BitmapFactory.Options().apply { inJustDecodeBounds = true }
-        android.graphics.BitmapFactory.decodeFile(path, options)
-        val w = options.outWidth
-        val h = options.outHeight
-
-        Log_OC.d(TAG, "Using bitmap factory imageDimension: $w x $h")
-        if (w > 0 && h > 0) w to h else null
-    } catch (_: Exception) {
-        null
-    }
-
-    fun getMediaPlaceholder(file: OCFile, imageDimension: Pair<Int, Int>): BitmapDrawable {
-        val context = MainApp.getAppContext()
-
+    @IonosCustomization("themed context for day/night placeholder")
+    fun getMediaPlaceholder(context: Context, file: OCFile, imageDimension: Pair<Int, Int>): BitmapDrawable {
         val drawableId = if (MimeTypeUtil.isImage(file)) {
             R.drawable.file_image
         } else if (MimeTypeUtil.isVideo(file)) {

@@ -68,6 +68,7 @@ import com.owncloud.android.ui.events.EncryptionEvent;
 import com.owncloud.android.ui.events.FavoriteEvent;
 import com.owncloud.android.ui.events.FileLockEvent;
 import com.owncloud.android.ui.events.SyncEventFinished;
+import com.owncloud.android.ui.fragment.OCFileListFragment;
 import com.owncloud.android.utils.DisplayUtils;
 import com.owncloud.android.utils.EncryptionUtils;
 import com.owncloud.android.utils.FileStorageUtils;
@@ -182,7 +183,7 @@ public class FileOperationsHelper {
 
             // check if file is in conflict (this is known due to latest folder refresh)
             if (file.isInConflict()) {
-                syncFile(file, user, storageManager);
+                syncFileOrFolder(file, user, storageManager);
                 EventBus.getDefault().post(new SyncEventFinished(intent));
 
                 return;
@@ -211,14 +212,14 @@ public class FileOperationsHelper {
 
             // eTag changed, sync file
             if (result.getCode() == RemoteOperationResult.ResultCode.ETAG_CHANGED) {
-                syncFile(file, user, storageManager);
+                syncFileOrFolder(file, user, storageManager);
             }
 
             EventBus.getDefault().post(new SyncEventFinished(intent));
         }).start();
     }
 
-    private void syncFile(OCFile file, User user, FileDataStorageManager storageManager) {
+    private void syncFileOrFolder(OCFile file, User user, FileDataStorageManager storageManager) {
         fileActivity.runOnUiThread(() -> fileActivity.showLoadingDialog(fileActivity.getResources()
                                                                             .getString(R.string.sync_in_progress)));
 
@@ -769,7 +770,6 @@ public class FileOperationsHelper {
         Log_OC.i(TAG, "Label: " + label);
         Log_OC.i(TAG, "Attributes: " + attributes);
 
-
         Intent updateShareIntent = new Intent(fileActivity, OperationsService.class);
         updateShareIntent.setAction(OperationsService.ACTION_UPDATE_SHARE_INFO);
         updateShareIntent.putExtra(OperationsService.EXTRA_ACCOUNT, fileActivity.getAccount());
@@ -777,7 +777,7 @@ public class FileOperationsHelper {
         updateShareIntent.putExtra(OperationsService.EXTRA_SHARE_REMOTE_ID, share.getRemoteId());
         updateShareIntent.putExtra(OperationsService.EXTRA_SHARE_PERMISSIONS, permissions);
         updateShareIntent.putExtra(OperationsService.EXTRA_SHARE_HIDE_FILE_DOWNLOAD, hideFileDownload);
-        updateShareIntent.putExtra(OperationsService.EXTRA_SHARE_PASSWORD, (password == null) ? "" : password);
+        updateShareIntent.putExtra(OperationsService.EXTRA_SHARE_PASSWORD, password);
         updateShareIntent.putExtra(OperationsService.EXTRA_SHARE_EXPIRATION_DATE_IN_MILLIS, expirationTimeInMillis);
         updateShareIntent.putExtra(OperationsService.EXTRA_SHARE_PUBLIC_LABEL, (label == null) ? "" : label);
         updateShareIntent.putExtra(OperationsService.EXTRA_SHARE_ATTRIBUTES, attributes);
@@ -867,49 +867,44 @@ public class FileOperationsHelper {
         }
     }
 
-    /**
-     * Request the synchronization of a file or folder with the OC server, including its contents.
-     *
-     * @param file The file or folder to synchronize
-     */
-    public void syncFile(OCFile file) {
+    // region sync file or folder
+    public void syncFileOrFolder(OCFile file, boolean postDialogEvent, boolean syncAll) {
         if (file.isFolder()) {
-            Intent intent = getSyncFolderIntent(file);
-            fileActivity.startService(intent);
+            startSyncFolderIntent(file, syncAll);
         } else {
-            Intent intent = getSyncFileIntent(file);
-            mWaitingForOpId = fileActivity.getOperationsServiceBinder().queueNewOperation(intent);
+            queueSyncFileIntent(file, postDialogEvent);
         }
     }
 
-    private Intent getSyncFolderIntent(ServerFileInterface file) {
-        Intent intent = new Intent(fileActivity, OperationsService.class);
+    public void syncFileOrFolder(OCFile file) {
+        syncFileOrFolder(file, false, false);
+    }
+
+    public void syncFolderIncludingNestedFiles(OCFile file) {
+        syncFileOrFolder(file, false, true);
+    }
+
+    private void startSyncFolderIntent(ServerFileInterface file, boolean syncAll) {
+        final var intent = new Intent(fileActivity, OperationsService.class);
         intent.setAction(OperationsService.ACTION_SYNC_FOLDER);
         intent.putExtra(OperationsService.EXTRA_ACCOUNT, fileActivity.getAccount());
         intent.putExtra(OperationsService.EXTRA_REMOTE_PATH, file.getRemotePath());
-        return intent;
+        intent.putExtra(OperationsService.EXTRA_SYNC_ALL, syncAll);
+
+        fileActivity.startService(intent);
     }
 
-    private Intent getSyncFileIntent(ServerFileInterface file) {
-        Intent intent = new Intent(fileActivity, OperationsService.class);
+    private void queueSyncFileIntent(ServerFileInterface file, boolean postDialog) {
+        final var intent = new Intent(fileActivity, OperationsService.class);
         intent.setAction(OperationsService.ACTION_SYNC_FILE);
         intent.putExtra(OperationsService.EXTRA_ACCOUNT, fileActivity.getAccount());
         intent.putExtra(OperationsService.EXTRA_REMOTE_PATH, file.getRemotePath());
         intent.putExtra(OperationsService.EXTRA_SYNC_FILE_CONTENTS, true);
-        return intent;
-    }
+        intent.putExtra(OperationsService.EXTRA_POST_DIALOG_EVENT, postDialog);
 
-
-    public void syncFile(OCFile file, boolean postDialogEvent) {
-        if (file.isFolder()) {
-            Intent intent = getSyncFolderIntent(file);
-            fileActivity.startService(intent);
-        } else {
-            Intent intent = getSyncFileIntent(file);
-            intent.putExtra(OperationsService.EXTRA_POST_DIALOG_EVENT, postDialogEvent);
-            mWaitingForOpId = fileActivity.getOperationsServiceBinder().queueNewOperation(intent);
-        }
+        mWaitingForOpId = fileActivity.getOperationsServiceBinder().queueNewOperation(intent);
     }
+    // endregion
 
     public void toggleFavoriteFiles(Collection<OCFile> files, boolean shouldBeFavorite) {
         List<OCFile> toToggle = new ArrayList<>();
@@ -931,12 +926,34 @@ public class FileOperationsHelper {
     }
 
     public void toggleEncryption(OCFile file, boolean shouldBeEncrypted) {
-        if (file.isEncrypted() != shouldBeEncrypted) {
-            EventBus.getDefault().post(new EncryptionEvent(file.getLocalId(),
-                                                           file.getRemoteId(),
-                                                           file.getRemotePath(),
-                                                           shouldBeEncrypted));
+        if (file.isEncrypted() == shouldBeEncrypted) {
+            Log_OC.d(TAG, "file already in wanted encryption state. " +
+                "isEncrypted: " + file.isEncrypted() + " should be encrypted: "+ shouldBeEncrypted);
+            return;
         }
+
+        if (file.isRootDirectory()) {
+            Log_OC.d(TAG, "toggle encryption triggered in root directory, this call is for creating encrypted folder");
+            if (!(fileActivity instanceof FileDisplayActivity fda)) {
+                Log_OC.e(TAG, "file display activity is not active, cannot show create folder dialog");
+                return;
+            }
+
+            OCFileListFragment fragment = fda.getListOfFilesFragment();
+            if (fragment == null) {
+                Log_OC.e(TAG, "file list fragment is null, cannot show create folder dialog");
+                return;
+            }
+
+            fragment.createFolder(true);
+            return;
+        }
+
+        Log_OC.d(TAG, "toggling encryption for: " + file.getRemotePath());
+        EventBus.getDefault().post(new EncryptionEvent(file.getLocalId(),
+                                                       file.getRemoteId(),
+                                                       file.getRemotePath(),
+                                                       shouldBeEncrypted));
     }
 
     public void toggleFileLock(OCFile file, boolean shouldBeLocked) {
@@ -982,12 +999,12 @@ public class FileOperationsHelper {
         mWaitingForOpId = fileActivity.getOperationsServiceBinder().queueNewOperation(service);
     }
 
-    public void createFolder(String remotePath) {
-        // Create Folder
+    public void createFolder(String remotePath, boolean encrypted) {
         Intent service = new Intent(fileActivity, OperationsService.class);
         service.setAction(OperationsService.ACTION_CREATE_FOLDER);
         service.putExtra(OperationsService.EXTRA_ACCOUNT, fileActivity.getAccount());
         service.putExtra(OperationsService.EXTRA_REMOTE_PATH, remotePath);
+        service.putExtra(OperationsService.EXTRA_ENCRYPTED, encrypted);
         mWaitingForOpId = fileActivity.getOperationsServiceBinder().queueNewOperation(service);
 
         fileActivity.showLoadingDialog(fileActivity.getString(R.string.wait_a_moment));
@@ -1020,7 +1037,7 @@ public class FileOperationsHelper {
 
         final var fileUploadHelper = FileUploadHelper.Companion.instance();
         if (fileUploadHelper.isUploading(file.getRemotePath(), currentUser.getAccountName())) {
-            FileUploadWorker.Companion.cancelCurrentUpload(file.getRemotePath(), currentUser.getAccountName(), () -> {
+            FileUploadWorker.Companion.cancelUpload(file.getRemotePath(), currentUser.getAccountName(), () -> {
                 fileUploadHelper.updateUploadStatus(file.getRemotePath(), currentUser.getAccountName(), UploadsStorageManager.UploadStatus.UPLOAD_CANCELLED);
                 return Unit.INSTANCE;
             });

@@ -26,10 +26,9 @@ import com.nextcloud.client.onboarding.WhatsNewActivity;
 import com.nextcloud.client.widget.DashboardWidgetConfigurationActivity;
 import com.nextcloud.client.widget.DashboardWidgetProvider;
 import com.nextcloud.client.widget.DashboardWidgetService;
-import com.nextcloud.receiver.NetworkChangeReceiver;
 import com.nextcloud.ui.ChooseAccountDialogFragment;
 import com.nextcloud.ui.ChooseStorageLocationDialogFragment;
-import com.nextcloud.ui.ImageDetailFragment;
+import com.nextcloud.ui.fileInfo.FileInfoFragment;
 import com.nextcloud.ui.SetOnlineStatusBottomSheet;
 import com.nextcloud.ui.SetStatusMessageBottomSheet;
 import com.nextcloud.ui.composeActivity.ComposeActivity;
@@ -47,9 +46,7 @@ import com.owncloud.android.providers.UsersAndGroupsSearchProvider;
 import com.owncloud.android.services.AccountManagerService;
 import com.owncloud.android.services.OperationsService;
 import com.owncloud.android.syncadapter.FileSyncService;
-import com.owncloud.android.ui.activities.ActivitiesActivity;
 import com.owncloud.android.ui.activity.BaseActivity;
-import com.owncloud.android.ui.activity.CommunityActivity;
 import com.owncloud.android.ui.activity.ConflictsResolveActivity;
 import com.owncloud.android.ui.activity.ContactsPreferenceActivity;
 import com.owncloud.android.ui.activity.CopyToClipboardActivity;
@@ -63,7 +60,6 @@ import com.owncloud.android.ui.activity.FolderPickerActivity;
 import com.owncloud.android.ui.activity.InternalTwoWaySyncActivity;
 import com.owncloud.android.ui.activity.ManageAccountsActivity;
 import com.owncloud.android.ui.activity.ManageSpaceActivity;
-import com.owncloud.android.ui.activity.NotificationsActivity;
 import com.owncloud.android.ui.activity.PassCodeActivity;
 import com.owncloud.android.ui.activity.ReceiveExternalFilesActivity;
 import com.owncloud.android.ui.activity.RequestCredentialsActivity;
@@ -102,6 +98,7 @@ import com.owncloud.android.ui.dialog.SyncedFolderPreferencesDialogFragment;
 import com.owncloud.android.ui.dialog.TermsOfServiceDialog;
 import com.owncloud.android.ui.dialog.ThemeSelectionDialog;
 import com.owncloud.android.ui.dialog.setupEncryption.SetupEncryptionDialogFragment;
+import com.owncloud.android.ui.fragment.ActivitiesFragment;
 import com.owncloud.android.ui.fragment.ExtendedListFragment;
 import com.owncloud.android.ui.fragment.FeatureFragment;
 import com.owncloud.android.ui.fragment.FileDetailActivitiesFragment;
@@ -116,8 +113,11 @@ import com.owncloud.android.ui.fragment.OCFileListBottomSheetDialog;
 import com.owncloud.android.ui.fragment.OCFileListFragment;
 import com.owncloud.android.ui.fragment.SharedListFragment;
 import com.owncloud.android.ui.fragment.UnifiedSearchFragment;
+import com.owncloud.android.ui.fragment.community.CommunityFragment;
 import com.owncloud.android.ui.fragment.contactsbackup.BackupFragment;
 import com.owncloud.android.ui.fragment.contactsbackup.BackupListFragment;
+import com.owncloud.android.ui.fragment.notifications.NotificationsFragment;
+import com.owncloud.android.ui.navigation.NavigatorActivity;
 import com.owncloud.android.ui.preview.FileDownloadFragment;
 import com.owncloud.android.ui.preview.PreviewBitmapActivity;
 import com.owncloud.android.ui.preview.PreviewImageActivity;
@@ -128,7 +128,7 @@ import com.owncloud.android.ui.preview.PreviewTextFileFragment;
 import com.owncloud.android.ui.preview.PreviewTextFragment;
 import com.owncloud.android.ui.preview.PreviewTextStringFragment;
 import com.owncloud.android.ui.preview.pdf.PreviewPdfFragment;
-import com.owncloud.android.ui.trashbin.TrashbinActivity;
+import com.owncloud.android.ui.trashbin.TrashbinFragment;
 
 import androidx.annotation.OptIn;
 import androidx.media3.common.util.UnstableApi;
@@ -141,7 +141,13 @@ import dagger.android.ContributesAndroidInjector;
 @Module
 abstract class ComponentsModule {
     @ContributesAndroidInjector
-    abstract ActivitiesActivity activitiesActivity();
+    abstract TrashbinFragment trashbinFragment();
+
+    @ContributesAndroidInjector
+    abstract ActivitiesFragment activitiesFragment();
+
+    @ContributesAndroidInjector
+    abstract NotificationsFragment notificationFragment();
 
     @ContributesAndroidInjector
     abstract AuthenticatorActivity authenticatorActivity();
@@ -192,12 +198,6 @@ abstract class ComponentsModule {
     abstract ManageSpaceActivity manageSpaceActivity();
 
     @ContributesAndroidInjector
-    abstract NotificationsActivity notificationsActivity();
-
-    @ContributesAndroidInjector
-    abstract CommunityActivity participateActivity();
-
-    @ContributesAndroidInjector
     abstract ComposeActivity composeActivity();
 
     @ContributesAndroidInjector
@@ -226,9 +226,6 @@ abstract class ComponentsModule {
 
     @ContributesAndroidInjector
     abstract SyncedFoldersActivity syncedFoldersActivity();
-
-    @ContributesAndroidInjector
-    abstract TrashbinActivity trashbinActivity();
 
     @ContributesAndroidInjector
     abstract TrashbinFileActionsBottomSheet trashbinFileActionsBottomSheet();
@@ -325,9 +322,6 @@ abstract class ComponentsModule {
 
     @ContributesAndroidInjector
     abstract BootupBroadcastReceiver bootupBroadcastReceiver();
-
-    @ContributesAndroidInjector
-    abstract NetworkChangeReceiver networkChangeReceiver();
 
     @ContributesAndroidInjector
     abstract NotificationWork.NotificationReceiver notificationWorkBroadcastReceiver();
@@ -489,7 +483,7 @@ abstract class ComponentsModule {
     abstract EditImageActivity editImageActivity();
 
     @ContributesAndroidInjector
-    abstract ImageDetailFragment imageDetailFragment();
+    abstract FileInfoFragment fileInfoFragment();
 
     @ContributesAndroidInjector
     abstract EtmBackgroundJobsFragment etmBackgroundJobsFragment();
@@ -503,7 +497,6 @@ abstract class ComponentsModule {
     @ContributesAndroidInjector
     abstract InternalTwoWaySyncActivity internalTwoWaySyncActivity();
 
-
     @OptIn(markerClass = UnstableApi.class)
     @ContributesAndroidInjector
     abstract BackgroundPlayerService backgroundPlayerService();
@@ -513,4 +506,10 @@ abstract class ComponentsModule {
 
     @ContributesAndroidInjector
     abstract SetStatusMessageBottomSheet setStatusMessageBottomSheet();
+
+    @ContributesAndroidInjector
+    abstract NavigatorActivity navigatorActivity();
+
+    @ContributesAndroidInjector
+    abstract CommunityFragment communityFragment();
 }

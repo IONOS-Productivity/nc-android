@@ -57,7 +57,7 @@ public class UserAccountManagerImpl implements UserAccountManager {
     private static final String TAG = UserAccountManagerImpl.class.getSimpleName();
     private static final String PREF_SELECT_OC_ACCOUNT = "select_oc_account";
 
-    private Context context;
+    private final Context context;
     private final AccountManager accountManager;
 
     public static UserAccountManagerImpl fromContext(Context context) {
@@ -305,6 +305,12 @@ public class UserAccountManagerImpl implements UserAccountManager {
     @Override
     public User getAnonymousUser() {
         return AnonymousUser.fromContext(context);
+    }
+
+    @Nullable
+    @Override
+    public Context getContext() {
+        return context;
     }
 
     @Override

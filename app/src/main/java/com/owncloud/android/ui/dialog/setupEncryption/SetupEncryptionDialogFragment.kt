@@ -41,6 +41,7 @@ import com.owncloud.android.utils.theme.ViewThemeUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.apache.commons.httpclient.HttpStatus
 import java.io.IOException
 import java.lang.ref.WeakReference
 import javax.inject.Inject
@@ -115,6 +116,7 @@ class SetupEncryptionDialogFragment :
 
         // Setup layout
         viewThemeUtils.material.colorTextInputLayout(binding.encryptionPasswordInputContainer)
+        viewThemeUtils.material.colorProgressBar(binding.progressBar)
 
         val builder = buildMaterialAlertDialog(binding.root)
         viewThemeUtils.dialog.colorMaterialAlertDialogBackground(requireContext(), builder)
@@ -158,70 +160,79 @@ class SetupEncryptionDialogFragment :
     private fun decryptPrivateKey(dialog: DialogInterface) {
         Log_OC.d(TAG, "Decrypt private key")
         binding.encryptionStatus.setText(R.string.end_to_end_encryption_decrypting)
+        binding.progressBar.visibility = View.VISIBLE
 
-        try {
-            if (downloadKeyResult !is DownloadKeyResult.Success) {
-                Log_OC.d(TAG, "DownloadKeyResult is not success")
-                return
+        lifecycleScope.launch(Dispatchers.IO) {
+            try {
+                if (downloadKeyResult !is DownloadKeyResult.Success) {
+                    Log_OC.d(TAG, "DownloadKeyResult is not success")
+                    return@launch
+                }
+
+                val privateKey = (downloadKeyResult as DownloadKeyResult.Success).privateKey
+                if (privateKey.isNullOrEmpty()) {
+                    Log_OC.e(TAG, "privateKey is null or empty")
+                    return@launch
+                }
+                val mnemonicUnchanged = binding.encryptionPasswordInput.text.toString().trim()
+                val mnemonic =
+                    binding.encryptionPasswordInput.text.toString().replace("\\s".toRegex(), "")
+                        .lowercase()
+                val decryptedPrivateKey = CryptoHelper.decryptPrivateKey(
+                    privateKey,
+                    mnemonic
+                )
+                val accountName = user?.accountName ?: return@launch
+
+                arbitraryDataProvider?.storeOrUpdateKeyValue(
+                    accountName,
+                    EncryptionUtils.PRIVATE_KEY,
+                    decryptedPrivateKey
+                )
+
+                Log_OC.d(TAG, "Private key successfully decrypted and stored")
+
+                arbitraryDataProvider?.storeOrUpdateKeyValue(
+                    accountName,
+                    EncryptionUtils.MNEMONIC,
+                    mnemonicUnchanged
+                )
+
+                // check if private key and public key match
+                val publicKey = arbitraryDataProvider?.getValue(
+                    accountName,
+                    EncryptionUtils.PUBLIC_KEY
+                )
+
+                val firstKey = EncryptionUtils.generateKey()
+                val base64encodedKey = EncryptionUtils.encodeBytesToBase64String(firstKey)
+                val encryptedString = EncryptionUtils.encryptStringAsymmetric(
+                    base64encodedKey,
+                    publicKey
+                )
+                val decryptedString = EncryptionUtils.decryptStringAsymmetric(
+                    encryptedString,
+                    decryptedPrivateKey
+                )
+                val secondKey = EncryptionUtils.decodeStringToBase64Bytes(decryptedString)
+
+                if (!firstKey.contentEquals(secondKey)) {
+                    EncryptionUtils.reportE2eError(arbitraryDataProvider, user)
+                    throw Exception("Keys do not match")
+                }
+
+                withContext(Dispatchers.Main) {
+                    dialog.dismiss()
+                    notifyResult()
+                }
+            } catch (e: Exception) {
+                Log_OC.e(TAG, "Error while decrypting private key: " + e.message)
+
+                withContext(Dispatchers.Main) {
+                    binding.encryptionStatus.setText(R.string.end_to_end_encryption_wrong_password)
+                    binding.progressBar.visibility = View.GONE
+                }
             }
-
-            val privateKey = (downloadKeyResult as DownloadKeyResult.Success).privateKey
-            if (privateKey.isNullOrEmpty()) {
-                Log_OC.e(TAG, "privateKey is null or empty")
-                return
-            }
-            val mnemonicUnchanged = binding.encryptionPasswordInput.text.toString().trim()
-            val mnemonic =
-                binding.encryptionPasswordInput.text.toString().replace("\\s".toRegex(), "")
-                    .lowercase()
-            val decryptedPrivateKey = CryptoHelper.decryptPrivateKey(
-                privateKey,
-                mnemonic
-            )
-            val accountName = user?.accountName ?: return
-
-            arbitraryDataProvider?.storeOrUpdateKeyValue(
-                accountName,
-                EncryptionUtils.PRIVATE_KEY,
-                decryptedPrivateKey
-            )
-            dialog.dismiss()
-
-            Log_OC.d(TAG, "Private key successfully decrypted and stored")
-
-            arbitraryDataProvider?.storeOrUpdateKeyValue(
-                accountName,
-                EncryptionUtils.MNEMONIC,
-                mnemonicUnchanged
-            )
-
-            // check if private key and public key match
-            val publicKey = arbitraryDataProvider?.getValue(
-                accountName,
-                EncryptionUtils.PUBLIC_KEY
-            )
-
-            val firstKey = EncryptionUtils.generateKey()
-            val base64encodedKey = EncryptionUtils.encodeBytesToBase64String(firstKey)
-            val encryptedString = EncryptionUtils.encryptStringAsymmetric(
-                base64encodedKey,
-                publicKey
-            )
-            val decryptedString = EncryptionUtils.decryptStringAsymmetric(
-                encryptedString,
-                decryptedPrivateKey
-            )
-            val secondKey = EncryptionUtils.decodeStringToBase64Bytes(decryptedString)
-
-            if (!firstKey.contentEquals(secondKey)) {
-                EncryptionUtils.reportE2eError(arbitraryDataProvider, user)
-                throw Exception("Keys do not match")
-            }
-
-            notifyResult()
-        } catch (e: Exception) {
-            binding.encryptionStatus.setText(R.string.end_to_end_encryption_wrong_password)
-            Log_OC.e(TAG, "Error while decrypting private key: " + e.message)
         }
     }
 
@@ -299,11 +310,10 @@ class SetupEncryptionDialogFragment :
 
             val certificateOperation = GetPublicKeyRemoteOperation()
             val certificateResult = certificateOperation.executeNextcloudClient(user, weakContext)
-            val savedPrivateKey = dataProvider.getValue(user.accountName, EncryptionUtils.PRIVATE_KEY)
             if (!certificateResult.isSuccess) {
                 // The certificate might not be available on the server yet.
-                // Therefore, the user needs to generate a new passphrase first.
-                return@withContext if (savedPrivateKey.isEmpty()) {
+                // Therefore, the user needs to generate a new passphrase first, send csr.
+                return@withContext if (certificateResult.httpCode == HttpStatus.SC_NOT_FOUND) {
                     DownloadKeyResult.Success(null)
                 } else {
                     DownloadKeyResult.CertificateUnavailable()

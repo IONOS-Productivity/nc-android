@@ -15,6 +15,7 @@ import com.ionos.annotation.IonosCustomization
 import com.nextcloud.client.account.User
 import com.nextcloud.client.account.UserAccountManager
 import com.nextcloud.utils.extensions.isAnonymous
+import com.owncloud.android.lib.common.utils.Log_OC
 import com.owncloud.android.lib.resources.status.OCCapability
 import com.owncloud.android.utils.theme.CapabilityUtils
 import java.util.Optional
@@ -34,10 +35,21 @@ class SessionMixin(
     var currentAccount: Account = accountManager.currentAccount
         private set
 
-    val capabilities: OCCapability?
-        get() = getUser()
-            .map { CapabilityUtils.getCapability(it, activity) }
-            .orElse(null)
+    companion object {
+        private const val TAG = "SessionMixin"
+    }
+
+    fun getCapabilities(): Optional<OCCapability> {
+        val optionalUser = getUser()
+        if (optionalUser.isEmpty) {
+            Log_OC.e(TAG, "user is empty, returning empty capabilities")
+            return Optional.empty()
+        }
+
+        val user = optionalUser.get()
+        val capability = CapabilityUtils.getCapability(user, activity)
+        return Optional.of(capability)
+    }
 
     fun setAccount(account: Account) {
         val validAccount = (accountManager.setCurrentOwnCloudAccount(account.name))

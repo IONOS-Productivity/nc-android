@@ -9,8 +9,13 @@ package com.owncloud.android.ui.fragment
 
 import android.os.Build
 import android.os.Bundle
+import android.view.ContextThemeWrapper
+import android.view.Gravity
 import android.view.View
+import android.widget.LinearLayout
+import androidx.core.content.ContextCompat
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.button.MaterialButton
 import com.google.gson.Gson
 import com.nextcloud.android.common.ui.theme.utils.ColorRole
 import com.nextcloud.client.account.User
@@ -19,9 +24,10 @@ import com.nextcloud.client.di.Injectable
 import com.nextcloud.client.documentscan.AppScanOptionalFeature
 import com.nextcloud.utils.BuildHelper.isFlavourGPlay
 import com.nextcloud.utils.EditorUtils
+import com.nextcloud.utils.extensions.isTemplateAvailable
+import com.nextcloud.utils.extensions.setVisibleIf
 import com.owncloud.android.MainApp
 import com.owncloud.android.R
-import com.owncloud.android.databinding.FileListActionsBottomSheetCreatorBinding
 import com.owncloud.android.databinding.FileListActionsBottomSheetFragmentBinding
 import com.owncloud.android.datamodel.ArbitraryDataProvider
 import com.owncloud.android.datamodel.ArbitraryDataProviderImpl
@@ -70,6 +76,7 @@ class OCFileListBottomSheetDialog(
         createRichWorkspace()
         setupClickListener()
         filterActionsForOfflineOperations()
+        checkCreateEncryptedFolderVisibility()
 
         if (MainApp.isClientBranded() && isFlavourGPlay()) {
             // this way we can have branded clients with that permission
@@ -81,80 +88,130 @@ class OCFileListBottomSheetDialog(
 
             if (!hasPermission) {
                 binding.menuUploadFiles.visibility = View.GONE
-                binding.uploadContentFromOtherApps.text = context.getString(R.string.upload_files)
+                binding.menuUploadFromApp.text = context.getString(R.string.upload_files)
             }
+        }
+    }
+
+    private fun checkCreateEncryptedFolderVisibility() {
+        fileActivity.capabilities.ifPresent { capabilities ->
+            binding.menuEncryptedMkdir.setVisibleIf(!file.isEncrypted && capabilities.endToEndEncryption.isTrue)
         }
     }
 
     private fun applyBranding() {
-        viewThemeUtils.platform.run {
+        viewThemeUtils.material.run {
             binding.run {
-                colorImageView(menuIconUploadFiles, ColorRole.PRIMARY)
-                colorImageView(menuIconUploadFromApp, ColorRole.PRIMARY)
-                colorImageView(menuIconDirectCameraUpload, ColorRole.PRIMARY)
-                colorImageView(menuIconScanDocUpload, ColorRole.PRIMARY)
-                colorImageView(menuIconMkdir, ColorRole.PRIMARY)
-                colorImageView(menuIconAddFolderInfo, ColorRole.PRIMARY)
-
-                colorViewBackground(binding.bottomSheet, ColorRole.SURFACE)
+                colorMaterialButtonContent(menuUploadFiles, ColorRole.PRIMARY)
+                colorMaterialButtonContent(menuUploadFromApp, ColorRole.PRIMARY)
+                colorMaterialButtonContent(menuDirectCameraUpload, ColorRole.PRIMARY)
+                colorMaterialButtonContent(menuScanDocUpload, ColorRole.PRIMARY)
+                colorMaterialButtonContent(menuMkdir, ColorRole.PRIMARY)
+                colorMaterialButtonContent(menuEncryptedMkdir, ColorRole.PRIMARY)
+                colorMaterialButtonContent(menuCreateRichWorkspace, ColorRole.PRIMARY)
             }
         }
-    }
 
-    @Suppress("ComplexCondition")
-    private fun checkTemplateVisibility() {
-        val capability = fileActivity.capabilities
-        if (capability != null &&
-            capability.richDocuments.isTrue &&
-            capability.richDocumentsDirectEditing.isTrue &&
-            capability.richDocumentsTemplatesAvailable.isTrue &&
-            !file.isEncrypted
-        ) {
-            binding.templates.visibility = View.VISIBLE
+        viewThemeUtils.platform.colorViewBackground(binding.bottomSheet, ColorRole.SURFACE)
+
+        val textColor = ContextCompat.getColor(context, R.color.text_color)
+
+        binding.run {
+            menuUploadFiles.setTextColor(textColor)
+            menuUploadFromApp.setTextColor(textColor)
+            menuDirectCameraUpload.setTextColor(textColor)
+            menuScanDocUpload.setTextColor(textColor)
+            menuMkdir.setTextColor(textColor)
+            menuEncryptedMkdir.setTextColor(textColor)
+            menuCreateRichWorkspace.setTextColor(textColor)
         }
     }
 
-    @Suppress("DEPRECATION")
+    private fun checkTemplateVisibility() {
+        val optionalCapability = fileActivity.capabilities
+        if (file.isEncrypted || optionalCapability.isEmpty) {
+            return
+        }
+
+        val capability = optionalCapability.get()
+        if (!capability.isTemplateAvailable()) {
+            return
+        }
+
+        binding.run {
+            menuNewDocument.visibility = View.VISIBLE
+            menuNewSpreadsheet.visibility = View.VISIBLE
+            menuNewPresentation.visibility = View.VISIBLE
+        }
+    }
+
+    @Suppress("DEPRECATION", "LongMethod", "MagicNumber")
     private fun initCreatorContainer() {
         val json = ArbitraryDataProviderImpl(context)
             .getValue(user, ArbitraryDataProvider.DIRECT_EDITING)
 
-        if (!json.isEmpty() && !file.isEncrypted) {
-            val directEditing = Gson().fromJson(json, DirectEditing::class.java)
-            if (directEditing.creators.isEmpty()) {
-                return
-            }
+        if (json.isEmpty() || file.isEncrypted) {
+            return
+        }
 
-            binding.creatorsContainer.visibility = View.VISIBLE
+        val directEditing = Gson().fromJson(json, DirectEditing::class.java)
+        if (directEditing.creators.isEmpty()) {
+            return
+        }
 
-            for (creator in directEditing.creators.values) {
-                val creatorViewBinding =
-                    FileListActionsBottomSheetCreatorBinding.inflate(layoutInflater)
+        binding.creatorsContainer.visibility = View.VISIBLE
+        binding.creators.removeAllViews()
 
-                val creatorView: View = creatorViewBinding.getRoot()
+        val itemHeight = context.resources.getDimensionPixelSize(R.dimen.bottom_sheet_item_height)
+        val standardPadding = context.resources.getDimensionPixelSize(R.dimen.standard_padding)
+        val iconSize = context.resources.getDimensionPixelSize(R.dimen.iconized_single_line_item_icon_size)
 
-                creatorViewBinding.creatorName.text = String.format(
+        for (creator in directEditing.creators.values) {
+            val creatorButton = MaterialButton(
+                ContextThemeWrapper(
+                    context,
+                    R.style.ThemeOverlay_App_Button_BottomSheetItem
+                ),
+                null,
+                com.google.android.material.R.attr.materialButtonStyle
+            ).apply {
+                id = View.generateViewId()
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    itemHeight
+                )
+
+                gravity = Gravity.START or Gravity.CENTER_VERTICAL
+                setPaddingRelative(standardPadding, 0, standardPadding, 0)
+
+                val buttonText = String.format(
                     fileActivity.getString(R.string.editor_placeholder),
                     fileActivity.getString(R.string.create_new),
                     creator.name
                 )
+                text = buttonText
+                setTextColor(ContextCompat.getColor(context, R.color.text_color))
+                textSize = 16f
+                isAllCaps = false
 
-                creatorViewBinding.creatorThumbnail.setImageDrawable(
-                    MimeTypeUtil.getFileTypeIcon(
-                        creator.mimetype,
-                        creator.extension,
-                        creatorViewBinding.creatorThumbnail.context,
-                        viewThemeUtils
-                    )
+                icon = MimeTypeUtil.getFileTypeIcon(
+                    creator.mimetype,
+                    creator.extension,
+                    context,
+                    viewThemeUtils
                 )
+                this.iconSize = iconSize
+                this.iconPadding = standardPadding
+                iconGravity = MaterialButton.ICON_GRAVITY_START
+                iconTint = null
 
-                creatorView.setOnClickListener {
-                    actions.showTemplate(creator, creatorViewBinding.creatorName.text.toString())
+                setOnClickListener {
+                    actions.showTemplate(creator, buttonText)
                     dismiss()
                 }
-
-                binding.creators.addView(creatorView)
             }
+
+            binding.creators.addView(creatorButton)
         }
     }
 
@@ -185,7 +242,12 @@ class OCFileListBottomSheetDialog(
             }
 
             menuMkdir.setOnClickListener {
-                actions.createFolder()
+                actions.createFolder(encrypted = false)
+                dismiss()
+            }
+
+            menuEncryptedMkdir.setOnClickListener {
+                actions.createFolder(encrypted = true)
                 dismiss()
             }
 
@@ -202,6 +264,11 @@ class OCFileListBottomSheetDialog(
             if (appScanOptionalFeature.isAvailable) {
                 menuScanDocUpload.setOnClickListener {
                     actions.scanDocUpload()
+                    dismiss()
+                }
+            } else if (actions.isScanDocUploadFromAppAvailable) {
+                menuScanDocUpload.setOnClickListener {
+                    actions.scanDocUploadFromApp()
                     dismiss()
                 }
             } else {

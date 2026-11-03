@@ -31,4 +31,5 @@
     <string name="ionos_toolbar_sort_button_text">Filter</string>
     <string name="ionos_need_camera_permissions">IONOS HiDrive Next heeft toestemming nodig voor toegang tot camera</string>
     <string name="settings_action">INSTELLINGEN</string>
+    <string name="ionos_auth_trying_to_login">Proberen om in the loggen…</string>
 </resources>

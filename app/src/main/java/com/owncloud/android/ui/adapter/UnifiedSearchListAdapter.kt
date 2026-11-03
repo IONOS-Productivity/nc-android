@@ -62,7 +62,7 @@ class UnifiedSearchListAdapter(
     init {
         setHasStableIds(true)
 
-        // initialise thumbnails cache on background thread
+        // initialize thumbnails cache on background thread
         ThumbnailsCacheManager.initDiskCacheAsync()
     }
 
@@ -113,14 +113,16 @@ class UnifiedSearchListAdapter(
                 )
                 UnifiedSearchHeaderViewHolder(binding, viewThemeUtils, context)
             }
+
             VIEW_TYPE_FOOTER -> {
                 val binding = UnifiedSearchFooterBinding.inflate(
                     layoutInflater,
                     parent,
                     false
                 )
-                UnifiedSearchFooterViewHolder(binding, context, listInterface)
+                UnifiedSearchFooterViewHolder(binding, context, viewThemeUtils, listInterface)
             }
+
             VIEW_TYPE_ITEM -> {
                 val binding = UnifiedSearchItemBinding.inflate(
                     layoutInflater,
@@ -140,6 +142,7 @@ class UnifiedSearchListAdapter(
                     appPreferences
                 )
             }
+
             VIEW_TYPE_CURRENT_DIR -> {
                 val isRTL = DisplayUtils.isRTL()
                 val binding = UnifiedSearchCurrentDirectoryItemBinding.inflate(layoutInflater, parent, false)
@@ -155,10 +158,12 @@ class UnifiedSearchListAdapter(
                     overlayManager
                 )
             }
+
             VIEW_TYPE_EMPTY -> {
                 val binding = UnifiedSearchEmptyBinding.inflate(layoutInflater, parent, false)
                 EmptyViewHolder(binding)
             }
+
             else -> throw IllegalArgumentException("Invalid view type")
         }
     }

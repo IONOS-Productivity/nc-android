@@ -55,6 +55,7 @@ import io.noties.markwon.syntax.Prism4jThemeDefault
 import io.noties.markwon.syntax.SyntaxHighlightPlugin
 import io.noties.prism4j.Prism4j
 import io.noties.prism4j.annotations.PrismBundle
+import third_parties.io.noties.prism4j.languages.MarkwonGrammarLocator
 import javax.inject.Inject
 
 @PrismBundle(
@@ -161,11 +162,9 @@ abstract class PreviewTextFragment :
         }
     }
 
-    /**
-     * Finishes the preview
-     */
     protected fun finish() {
-        requireActivity().runOnUiThread { requireActivity().onBackPressedDispatcher.onBackPressed() }
+        val activity = activity ?: return
+        activity.runOnUiThread { activity.onBackPressedDispatcher.onBackPressed() }
     }
 
     companion object {
@@ -235,8 +234,8 @@ abstract class PreviewTextFragment :
                 return
             }
 
-            if ((ignoreMimetype || file != null && MimeTypeUtil.MIMETYPE_TEXT_MARKDOWN == file.mimeType) &&
-                activity != null
+            if ((ignoreMimetype || ((file != null) && (MimeTypeUtil.MIMETYPE_TEXT_MARKDOWN == file.mimeType))) &&
+                (activity != null)
             ) {
                 if (!preview) {
                     // clickable links prevent to open full view of rich workspace

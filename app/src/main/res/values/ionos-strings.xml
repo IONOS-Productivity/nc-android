@@ -31,4 +31,5 @@
     <string name="ionos_toolbar_sort_button_text">Filter</string>
     <string name="ionos_need_camera_permissions">IONOS HiDrive Next needs permission to access camera</string>
     <string name="settings_action">SETTINGS</string>
+    <string name="ionos_auth_trying_to_login">Trying to log in…</string>
 </resources>

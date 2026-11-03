@@ -6,7 +6,6 @@
  */
 @file:Suppress("UnstableApiUsage", "DEPRECATION")
 
-import com.android.build.gradle.internal.api.ApkVariantOutputImpl
 import com.github.spotbugs.snom.Confidence
 import com.github.spotbugs.snom.Effort
 import com.github.spotbugs.snom.SpotBugsTask
@@ -22,6 +21,7 @@ val perfAnalysis = project.hasProperty("perfAnalysis")
 
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.google.services)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.spotless)
     alias(libs.plugins.kapt)
@@ -62,9 +62,9 @@ configurations.configureEach {
 }
 
 // semantic versioning for version code
-val versionMajor = 3
-val versionMinor = 36
-val versionPatch = 0
+val versionMajor = 34
+val versionMinor = 1
+val versionPatch = 1
 val versionBuild = 90 // 0-50=Alpha / 51-98=RC / 90-99=stable
 
 val ndkEnv = buildMap {
@@ -84,8 +84,14 @@ val ncTestServerPassword = configProps["NC_TEST_SERVER_PASSWORD"]
 val ncTestServerBaseUrl = configProps["NC_TEST_SERVER_BASEURL"]
 
 android {
-    // install this NDK version and Cmake to produce smaller APKs. Build will still work if not installed
+    // install this NDK version and CMake to produce smaller APKs. Build will still work if not installed
     ndkVersion = "${ndkEnv["NDK_VERSION"]}"
+    externalNativeBuild {
+        cmake {
+            version = "${ndkEnv["CMAKE_VERSION"]}"
+            path = file("src/main/cpp/CMakeLists.txt")
+        }
+    }
 
     namespace = "com.owncloud.android"
     testNamespace = "${namespace}.test"
@@ -94,22 +100,22 @@ android {
 
     defaultConfig {
         testInstrumentationRunnerArguments += mapOf(
-            "TEST_SERVER_URL" to "ncTestServerBaseUrl.toString()",
-            "TEST_SERVER_USERNAME" to "ncTestServerUsername.toString()",
-            "TEST_SERVER_PASSWORD" to "ncTestServerPassword.toString()",
+            "TEST_SERVER_URL" to ncTestServerBaseUrl.toString(),
+            "TEST_SERVER_USERNAME" to ncTestServerUsername.toString(),
+            "TEST_SERVER_PASSWORD" to ncTestServerPassword.toString(),
             "disableAnalytics" to "true"
         )
         applicationId = "com.ionos.hidrivenext"
         minSdk = 28
         targetSdk = 36
-        compileSdk = 36
+        compileSdk = 37
+
+        ndk {
+            abiFilters += listOf("arm64-v8a", "x86_64")
+        }
 
         buildConfigField("boolean", "CI", ciBuild.toString())
         buildConfigField("boolean", "RUNTIME_PERF_ANALYSIS", perfAnalysis.toString())
-
-        javaCompileOptions.annotationProcessorOptions {
-            arguments += mapOf("room.schemaLocation" to "$projectDir/schemas")
-        }
 
         // arguments to be passed to functional tests
         testInstrumentationRunner = if (shotTest) "com.karumi.shot.ShotTestRunner"
@@ -134,6 +140,7 @@ android {
 
             debug {
                 enableUnitTestCoverage = project.hasProperty("coverage")
+                enableAndroidTestCoverage = project.hasProperty("coverage")
                 resConfigs("xxxhdpi")
             }
         }
@@ -145,11 +152,26 @@ android {
                 dimension = "default"
             }
 
+            // IONOS HiDrive Next brand. Shared white-label base lives in src/gplay,
+            // Payload in src/brandIonos
             register("gplay") {
                 applicationId = "com.ionos.hidrivenext"
                 dimension = "default"
-                versionCode = 18
+                versionCode = 21
+                val releaseNumber = 4
+                versionName = "$versionMajor.$versionMinor.$versionPatch.$releaseNumber"
                 isDefault = true
+                resConfigs("en", "de", "es", "fr", "it", "en-rUS", "es-rUS", "en-rCA", "fr-rCA", "es-rMX")
+            }
+
+            // HiDrive Next brand
+            // Payload in src/brandStrato
+            register("hidriveNext") {
+                applicationId = "com.strato.hidrivenext"
+                dimension = "default"
+                versionCode = 1
+                val releaseNumber = 1
+                versionName = "$versionMajor.$versionMinor.$versionPatch.$releaseNumber"
                 resConfigs("en", "de", "es", "fr", "it")
             }
 
@@ -174,12 +196,6 @@ android {
         }
     }
 
-    applicationVariants.configureEach {
-        outputs.configureEach {
-            if (this is ApkVariantOutputImpl) this.outputFileName = "${this.baseName}-${this.versionCode}.apk"
-        }
-    }
-
     testOptions {
         unitTests.isReturnDefaultValues = true
         animationsDisabled = true
@@ -198,6 +214,7 @@ android {
         viewBinding = true
         aidl = true
         compose = true
+        prefab = true
     }
 
     compileOptions {
@@ -223,7 +240,9 @@ android {
                 "MissingQuantity",
                 "IconXmlAndPng",
                 "SelectedPhotoAccess",
-                "UnsafeIntentLaunch"
+                "UnsafeIntentLaunch",
+                "OldTargetApi",
+                "AndroidGradlePluginVersion"
             )
         )
         htmlOutput = layout.buildDirectory.file("reports/lint/lint.html").get().asFile
@@ -234,6 +253,22 @@ android {
         // Adds exported schema location as test app assets.
         getByName("androidTest") {
             assets.srcDirs(files("$projectDir/schemas"))
+        }
+
+        // src/gplay holds the shared white-label base
+        getByName("gplay") {
+            res.srcDir("src/brandIonos/res")
+            assets.srcDir("src/brandIonos/assets")
+        }
+        getByName("hidriveNext") {
+            manifest.srcFile("src/gplay/AndroidManifest.xml")
+            java.srcDir("src/gplay/java")
+            res.srcDir("src/gplay/res")
+            res.srcDir("src/brandStrato/res")
+            assets.srcDir("src/brandStrato/assets")
+        }
+        getByName("androidTestHidriveNext") {
+            java.srcDir("src/androidTestGplay/java")
         }
     }
 
@@ -251,6 +286,15 @@ spotless.kotlin {
 }
 
 detekt.config.setFrom("detekt.yml")
+
+// Firebase config from google-services.json for brand flavors only
+googleServices {
+    missingGoogleServicesStrategy =
+        com.google.gms.googleservices.GoogleServicesPlugin.MissingGoogleServicesStrategy.WARN
+}
+val brandFlavors = listOf("Gplay", "HidriveNext")
+tasks.named { name -> name.endsWith("GoogleServices") && brandFlavors.none { name.contains(it) } }
+    .configureEach { enabled = false }
 
 if (shotTest) configure<ShotExtension> {
     showOnlyFailingTestsInReports = ciBuild
@@ -377,6 +421,7 @@ dependencies {
 
     // region UI
     implementation(libs.bundles.ui)
+    implementation(libs.browser)
     // endregion
 
     // region Worker
@@ -395,9 +440,12 @@ dependencies {
     androidTestImplementation(libs.rules)
     androidTestImplementation(libs.runner)
     androidTestUtil(libs.orchestrator)
+    androidTestImplementation(libs.test.core)
     androidTestImplementation(libs.core.ktx)
     androidTestImplementation(libs.core.testing)
     // endregion
+
+    testImplementation(libs.kotlinx.coroutines.test)
 
     // region other libraries
     compileOnly(libs.org.jbundle.util.osgi.wrapped.org.apache.http.client)
@@ -426,6 +474,7 @@ dependencies {
     // endregion
 
     // region AppScan, document scanner not available on FDroid (generic) due to OpenCV binaries
+    // To enable the feature for another variant, add it here.
     "huaweiImplementation"(project(":appscan"))
     "qaImplementation"(project(":appscan"))
     "implementation"(project(":scanbot"))
@@ -446,6 +495,7 @@ dependencies {
 
     // region Crypto
     implementation(libs.conscrypt.android)
+    implementation(libs.android.openssl)
     // endregion
 
     // region Library
@@ -458,7 +508,6 @@ dependencies {
 
     // region Markdown rendering
     implementation(libs.bundles.markdown.rendering)
-    kapt(libs.prism4j.bundler)
     // endregion
 
     // region Image cropping / rotation
@@ -505,6 +554,7 @@ dependencies {
 
     // region Google Play dependencies, upon each update first test: new registration, receive push
     "gplayImplementation"(libs.bundles.gplay)
+    "hidriveNextImplementation"(libs.bundles.gplay)
     // endregion
 
     // region common

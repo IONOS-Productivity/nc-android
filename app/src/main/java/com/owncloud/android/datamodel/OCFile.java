@@ -48,16 +48,16 @@ import third_parties.daveKoeller.AlphanumComparator;
 public class OCFile implements Parcelable, Comparable<OCFile>, ServerFileInterface {
 
     public final static String PERMISSION_CAN_RESHARE = "R";
-    private final static String PERMISSION_SHARED = "S";
-    private final static String PERMISSION_MOUNTED = "M";
-    private final static String PERMISSION_CAN_CREATE_FILE_INSIDE_FOLDER = "C";
-    private final static String PERMISSION_CAN_CREATE_FOLDER_INSIDE_FOLDER = "K";
-    private final static String PERMISSION_CAN_READ = "G";
-    private final static String PERMISSION_CAN_WRITE = "W";
-    private final static String PERMISSION_CAN_DELETE_OR_LEAVE_SHARE = "D";
-    private final static String PERMISSION_CAN_RENAME = "N";
-    private final static String PERMISSION_CAN_MOVE = "V";
-    private final static String PERMISSION_CAN_CREATE_FILE_AND_FOLDER = PERMISSION_CAN_CREATE_FILE_INSIDE_FOLDER + PERMISSION_CAN_CREATE_FOLDER_INSIDE_FOLDER;
+    public final static String PERMISSION_SHARED = "S";
+    public final static String PERMISSION_MOUNTED = "M";
+    public final static String PERMISSION_CAN_CREATE_FILE_INSIDE_FOLDER = "C";
+    public final static String PERMISSION_CAN_CREATE_FOLDER_INSIDE_FOLDER = "K";
+    public final static String PERMISSION_CAN_READ = "G";
+    public final static String PERMISSION_CAN_WRITE = "W";
+    public final static String PERMISSION_CAN_DELETE_OR_LEAVE_SHARE = "D";
+    public final static String PERMISSION_CAN_RENAME = "N";
+    public final static String PERMISSION_CAN_MOVE = "V";
+    public final static String PERMISSION_CAN_CREATE_FILE_AND_FOLDER = PERMISSION_CAN_CREATE_FILE_INSIDE_FOLDER + PERMISSION_CAN_CREATE_FOLDER_INSIDE_FOLDER;
 
     private final static int MAX_FILE_SIZE_FOR_IMMEDIATE_PREVIEW_BYTES = 1024000;
 
@@ -106,7 +106,7 @@ public class OCFile implements Parcelable, Comparable<OCFile>, ServerFileInterfa
     private String ownerId;
     private String ownerDisplayName;
     String note;
-    private List<ShareeUser> sharees;
+    private List<ShareeUser> sharees = new ArrayList<>();
     private String richWorkspace;
     private boolean locked;
     @Nullable
@@ -991,8 +991,10 @@ public class OCFile implements Parcelable, Comparable<OCFile>, ServerFileInterfa
         this.note = note;
     }
 
+    @SuppressFBWarnings(value = "OCP_OVERLY_CONCRETE_COLLECTION_PARAMETER",
+        justification = "List keeps the Kotlin synthetic property in sync with getSharees()")
     public void setSharees(List<ShareeUser> sharees) {
-        this.sharees = sharees;
+        this.sharees = (sharees == null) ? new ArrayList<>() : new ArrayList<>(sharees);
     }
 
     public void setRichWorkspace(String richWorkspace) {

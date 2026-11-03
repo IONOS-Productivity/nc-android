@@ -24,11 +24,14 @@ import com.owncloud.android.databinding.FragmentGalleryBottomSheetBinding
 import com.owncloud.android.utils.theme.ViewThemeUtils
 import javax.inject.Inject
 
-class GalleryFragmentBottomSheetDialog(private val actions: GalleryFragmentBottomSheetActions) :
+class GalleryFragmentBottomSheetDialog :
     BottomSheetDialogFragment(R.layout.fragment_gallery_bottom_sheet),
     Injectable {
     @Inject
     lateinit var viewThemeUtils: ViewThemeUtils
+
+    private val actions: GalleryFragmentBottomSheetActions?
+        get() = parentFragment as? GalleryFragmentBottomSheetActions
 
     private lateinit var binding: FragmentGalleryBottomSheetBinding
     private var currentMediaState: MediaState = MediaState.MEDIA_STATE_DEFAULT
@@ -58,10 +61,12 @@ class GalleryFragmentBottomSheetDialog(private val actions: GalleryFragmentBotto
                 binding.tickMarkShowImages.visibility = View.VISIBLE
                 binding.tickMarkShowVideos.visibility = View.GONE
             }
+
             MediaState.MEDIA_STATE_VIDEOS_ONLY -> {
                 binding.tickMarkShowImages.visibility = View.GONE
                 binding.tickMarkShowVideos.visibility = View.VISIBLE
             }
+
             else -> {
                 binding.tickMarkShowImages.visibility = View.VISIBLE
                 binding.tickMarkShowVideos.visibility = View.VISIBLE
@@ -89,14 +94,14 @@ class GalleryFragmentBottomSheetDialog(private val actions: GalleryFragmentBotto
             dismiss()
         }
         binding.btnSelectMediaFolder.setOnClickListener {
-            actions.selectMediaFolder()
+            actions?.selectMediaFolder()
             dismiss()
         }
     }
 
     private fun notifyStateChange() {
         setupLayout()
-        actions.updateMediaContent(currentMediaState)
+        actions?.updateMediaContent(currentMediaState)
     }
 
     val currMediaState: MediaState

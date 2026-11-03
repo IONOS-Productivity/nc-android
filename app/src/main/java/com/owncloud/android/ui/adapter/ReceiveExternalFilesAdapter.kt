@@ -27,6 +27,7 @@ import com.owncloud.android.datamodel.ThumbnailsCacheManager.ThumbnailGeneration
 import com.owncloud.android.utils.DisplayUtils
 import com.owncloud.android.utils.MimeTypeUtil
 import com.owncloud.android.utils.theme.ViewThemeUtils
+import java.util.Objects
 
 @Suppress("LongParameterList")
 class ReceiveExternalFilesAdapter(
@@ -160,4 +161,6 @@ class ReceiveExternalFilesAdapter(
     }
 
     override fun getItemCount() = filteredFiles.size
+
+    fun getFileNames(): Set<String> = files.map { it.fileName }.toSet()
 }

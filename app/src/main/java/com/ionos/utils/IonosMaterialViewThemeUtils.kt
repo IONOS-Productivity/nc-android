@@ -21,7 +21,6 @@ import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.textfield.TextInputLayout
-import com.google.android.material.textview.MaterialTextView
 import com.nextcloud.android.common.ui.theme.utils.ColorRole
 import com.nextcloud.android.common.ui.theme.utils.MaterialViewThemeUtils
 import com.nextcloud.android.common.ui.util.buildColorStateList
@@ -118,8 +117,13 @@ class IonosMaterialViewThemeUtils(
         delegate.colorMaterialTextButton(btn)
     }
 
-    fun colorProgressBar(progressBar: LinearProgressIndicator, primary: ColorRole) {
+    fun colorProgressBar(progressBar: LinearProgressIndicator, primary: ColorRole = ColorRole.PRIMARY) {
         delegate.colorProgressBar(progressBar, primary)
+    }
+
+    fun colorQuotaProgressBar(progressBar: LinearProgressIndicator) {
+        colorProgressBar(progressBar, ColorRole.PRIMARY)
+        progressBar.trackColor = ContextCompat.getColor(progressBar.context, R.color.ionos_drawer_quota_background)
     }
 
     fun themeChipSuggestion(chip: Chip) {

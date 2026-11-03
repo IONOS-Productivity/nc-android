@@ -21,9 +21,11 @@ import com.nextcloud.client.device.PowerManagementService
 import com.nextcloud.client.jobs.upload.FileUploadEventBroadcaster
 import com.nextcloud.client.jobs.upload.FileUploadHelper
 import com.nextcloud.client.jobs.upload.FileUploadWorker
+import com.nextcloud.client.jobs.upload.UploadDelayPolicy
 import com.nextcloud.client.jobs.utils.UploadErrorNotificationManager
 import com.nextcloud.client.network.ConnectivityService
 import com.nextcloud.utils.extensions.getLog
+import com.nextcloud.utils.extensions.isConflict
 import com.nextcloud.utils.extensions.isNonRetryable
 import com.nextcloud.utils.extensions.updateStatus
 import com.owncloud.android.R
@@ -38,6 +40,7 @@ import com.owncloud.android.files.services.NameCollisionPolicy
 import com.owncloud.android.lib.common.OwnCloudAccount
 import com.owncloud.android.lib.common.OwnCloudClientManagerFactory
 import com.owncloud.android.lib.common.operations.RemoteOperationResult
+import com.owncloud.android.lib.common.operations.RemoteOperationResult.ResultCode
 import com.owncloud.android.lib.common.utils.Log_OC
 import com.owncloud.android.lib.resources.status.OCCapability
 import com.owncloud.android.operations.UploadFileOperation
@@ -45,6 +48,7 @@ import com.owncloud.android.ui.activity.SettingsActivity
 import com.owncloud.android.utils.theme.CapabilityUtils
 import com.owncloud.android.utils.theme.ViewThemeUtils
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.withContext
@@ -78,6 +82,7 @@ class AutoUploadWorker(
     private lateinit var syncedFolder: SyncedFolder
     private val notificationManager = AutoUploadNotificationManager(context, viewThemeUtils, NOTIFICATION_ID)
     private val fileUploadHelper = FileUploadHelper.instance()
+    private val retryPolicy = UploadDelayPolicy()
 
     @Suppress("ReturnCount")
     override suspend fun doWork(): Result {
@@ -114,6 +119,8 @@ class AutoUploadWorker(
         } catch (e: Exception) {
             Log_OC.e(TAG, "❌ failed: ${e.message}")
             Result.failure()
+        } finally {
+            retryPolicy.reset()
         }
     }
 
@@ -268,6 +275,8 @@ class AutoUploadWorker(
             filePathsWithIds.forEachIndexed { batchIndex, (path, id) ->
                 ensureActive()
 
+                delay(retryPolicy.getDelay())
+
                 val file = File(path)
                 val localPath = file.absolutePath
                 val remotePath = syncFolderHelper.getAutoUploadRemotePath(syncedFolder, file)
@@ -292,6 +301,7 @@ class AutoUploadWorker(
                     try {
                         // Insert/update to IN_PROGRESS state before starting upload
                         val generatedId = uploadsStorageManager.uploadDao.insertOrReplace(uploadEntity)
+                        repository.updateRemotePath(upload, syncedFolder)
                         uploadEntity = uploadEntity.copy(id = generatedId.toInt())
                         upload.uploadId = generatedId
 
@@ -306,7 +316,10 @@ class AutoUploadWorker(
                             context,
                             notificationManager,
                             operation,
-                            result
+                            result,
+                            onLocked = {
+                                retryPolicy.increase()
+                            }
                         )
 
                         if (result.isSuccess) {
@@ -318,8 +331,13 @@ class AutoUploadWorker(
                                 "❌ upload failed $localPath (${upload.accountName}): ${result.logMessage}"
                             )
 
+                            if (result.code == ResultCode.UNAUTHORIZED) {
+                                Log_OC.e(TAG, "🔑 credentials are no longer valid, stopping auto upload")
+                                return@withContext
+                            }
+
                             // Mark CONFLICT files as handled to prevent retries
-                            if (result.code == RemoteOperationResult.ResultCode.SYNC_CONFLICT) {
+                            if (result.code.isConflict()) {
                                 repository.markFileAsHandled(localPath, syncedFolder)
                                 Log_OC.w(TAG, "Marked CONFLICT file as handled: $localPath")
                             }
@@ -399,10 +417,9 @@ class AutoUploadWorker(
         }
 
         // only valid for skip collision policy other scenarios will be handled in UploadFileOperation.java
-        if (upload.lastResult == UploadResult.UPLOADED &&
-            syncedFolder.nameCollisionPolicy == NameCollisionPolicy.SKIP
-        ) {
-            Log_OC.d(TAG, "no need to create and process this entity file is already uploaded")
+        val alreadyHandled = upload.lastResult == UploadResult.UPLOADED || upload.lastResult == UploadResult.SKIPPED
+        if (alreadyHandled && syncedFolder.nameCollisionPolicy == NameCollisionPolicy.SKIP) {
+            Log_OC.d(TAG, "no need to create and process this entity file is already uploaded or skipped")
             return AutoUploadEntityResult.Uploaded
         }
 
@@ -413,10 +430,11 @@ class AutoUploadWorker(
             isWhileChargingOnly = needsCharging
             localAction = uploadAction
 
+            isCreateRemoteFolder = true
+
             // Only set these for new uploads
             if (uploadEntity == null) {
                 createdBy = UploadFileOperation.CREATED_AS_INSTANT_PICTURE
-                isCreateRemoteFolder = true
             }
         }
 

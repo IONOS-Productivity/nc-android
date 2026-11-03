@@ -13,6 +13,8 @@ package com.owncloud.android.ui.helpers
 import android.content.ContentResolver
 import android.net.Uri
 import android.os.Parcelable
+import androidx.core.util.Function
+import androidx.lifecycle.lifecycleScope
 import com.nextcloud.client.account.User
 import com.nextcloud.client.jobs.upload.FileUploadHelper
 import com.owncloud.android.R
@@ -42,14 +44,16 @@ import com.owncloud.android.utils.UriUtils.getDisplayNameForUri
     "Detekt.SpreadOperator",
     "Detekt.TooGenericExceptionCaught"
 ) // legacy code
-class UriUploader(
+class UriUploader @JvmOverloads constructor(
     private val mActivity: FileActivity,
     private val mUrisToUpload: List<Parcelable?>,
     private val mUploadPath: String,
     private val user: User,
     private val mBehaviour: Int,
     private val mShowWaitingDialog: Boolean,
-    private val mCopyTmpTaskListener: OnCopyTmpFilesTaskListener?
+    private val mCopyTmpTaskListener: OnCopyTmpFilesTaskListener?,
+    /** If non-null, this function is called to determine the desired display name (i.e. filename) after upload**/
+    private val mFileDisplayNameTransformer: Function<Uri, String?>? = null
 ) {
 
     enum class UriUploaderResultCode {
@@ -59,6 +63,16 @@ class UriUploader(
         ERROR_READ_PERMISSION_NOT_GRANTED,
         ERROR_SENSITIVE_PATH
     }
+
+    /**
+     * True when content:// URIs are being copied to temporary files in the background.
+     *
+     * The temporary read permission for those URIs belongs to the calling Activity and is revoked once that Activity is
+     * destroyed. Callers must therefore stay alive until [OnCopyTmpFilesTaskListener.onTmpFilesCopied] is invoked,
+     * otherwise opening the URIs fails with a SecurityException.
+     */
+    var isTmpCopyInProgress: Boolean = false
+        private set
 
     @Suppress("NestedBlockDepth")
     fun uploadUris(): UriUploaderResultCode {
@@ -72,14 +86,12 @@ class UriUploader(
                 code = UriUploaderResultCode.ERROR_SENSITIVE_PATH
             } else {
                 val uris = mUrisToUpload
-                    .filterNotNull()
-                    .map { it as Uri }
-                    .map { Pair(it, getRemotePathForUri(it)) }
+                    .mapNotNull { (it as? Uri)?.let { sourceUri -> Pair(sourceUri, getRemotePathForUri(sourceUri)) } }
 
                 val fileUris = uris.filter { it.first.scheme == ContentResolver.SCHEME_FILE }
                 if (fileUris.isNotEmpty()) {
-                    val localPaths = Array<String>(fileUris.size) { "" }
-                    val remotePaths = Array<String>(fileUris.size) { "" }
+                    val localPaths = Array(fileUris.size) { "" }
+                    val remotePaths = Array(fileUris.size) { "" }
 
                     for (i in 0..<fileUris.size) {
                         val uri = fileUris[i]
@@ -113,7 +125,8 @@ class UriUploader(
     }
 
     private fun getRemotePathForUri(sourceUri: Uri): String {
-        val displayName = getDisplayNameForUri(sourceUri, mActivity)
+        val displayName = mFileDisplayNameTransformer?.apply(sourceUri)
+            ?: getDisplayNameForUri(sourceUri, mActivity)
         require(displayName != null) { "Display name cannot be null" }
         return mUploadPath + displayName
     }
@@ -155,21 +168,20 @@ class UriUploader(
         if (mShowWaitingDialog) {
             mActivity.showLoadingDialog(mActivity.resources.getString(R.string.wait_for_tmp_copy_from_private_storage))
         }
-        val copyTask = CopyAndUploadContentUrisTask(mCopyTmpTaskListener, mActivity)
+        val copyTask = CopyAndUploadContentUrisTask(mCopyTmpTaskListener, mActivity, mActivity.lifecycleScope)
         val fm = mActivity.supportFragmentManager
 
         // Init Fragment without UI to retain AsyncTask across configuration changes
         val taskRetainerFragment =
             fm.findFragmentByTag(TaskRetainerFragment.FTAG_TASK_RETAINER_FRAGMENT) as TaskRetainerFragment?
         taskRetainerFragment?.setTask(copyTask)
+        isTmpCopyInProgress = true
         copyTask.execute(
-            *CopyAndUploadContentUrisTask.makeParamsToExecute(
-                user,
-                sourceUris,
-                remotePaths,
-                mBehaviour,
-                mActivity.contentResolver
-            )
+            user,
+            sourceUris,
+            remotePaths,
+            mBehaviour,
+            mActivity.contentResolver
         )
     }
 

@@ -13,6 +13,8 @@ import com.nextcloud.utils.extensions.filterFilenames
 import com.nextcloud.utils.extensions.isTempFile
 import com.owncloud.android.MainApp
 import com.owncloud.android.datamodel.OCFile
+import com.owncloud.android.lib.resources.shares.ShareType
+import com.owncloud.android.lib.resources.shares.ShareeUser
 import com.owncloud.android.utils.FileSortOrder
 import com.owncloud.android.utils.MimeTypeUtil
 import kotlinx.coroutines.CoroutineScope
@@ -52,6 +54,19 @@ class OCFileListAdapterHelper {
                 onComplete(sortedList, sortOrder)
             }
         }
+    }
+
+    fun getAvatarSharees(file: OCFile, userId: String?): List<ShareeUser> {
+        val sharees = file.sharees
+        val ownerId = file.ownerId
+
+        val ownerSharee = if (!ownerId.isNullOrEmpty() && ownerId != userId) {
+            ShareeUser(ownerId, file.ownerDisplayName, ShareType.USER).takeIf { it !in sharees }
+        } else {
+            null
+        }
+
+        return listOfNotNull(ownerSharee) + sharees.asReversed()
     }
 
     suspend fun prepareFileList(
@@ -118,28 +133,27 @@ class OCFileListAdapterHelper {
 
     @Suppress("NestedBlockDepth")
     private fun mergeOCFilesForLivePhoto(files: List<OCFile>): List<OCFile> {
+        val localIdMap: Map<String, OCFile> = files
+            .filter { it.localId != 0L && it.localId != -1L }
+            .associateBy { it.localId.toString() }
+
         val filesToRemove = mutableSetOf<OCFile>()
 
-        for (i in files.indices) {
-            val file = files[i]
+        for (file in files) {
+            val linkedId = file.linkedFileIdForLivePhoto ?: continue
 
-            for (j in i + 1 until files.size) {
-                val nextFile = files[j]
-                val fileLocalId = file.localId.toString()
-                val nextFileLinkedLocalId = nextFile.linkedFileIdForLivePhoto
+            // no match, skip
+            val linkedFile = localIdMap[linkedId] ?: continue
 
-                if (fileLocalId == nextFileLinkedLocalId) {
-                    when {
-                        MimeTypeUtil.isVideo(file.mimeType) -> {
-                            nextFile.livePhotoVideo = file
-                            filesToRemove.add(file)
-                        }
+            when {
+                MimeTypeUtil.isVideo(linkedFile.mimeType) -> {
+                    file.livePhotoVideo = linkedFile
+                    filesToRemove.add(linkedFile)
+                }
 
-                        MimeTypeUtil.isVideo(nextFile.mimeType) -> {
-                            file.livePhotoVideo = nextFile
-                            filesToRemove.add(nextFile)
-                        }
-                    }
+                MimeTypeUtil.isVideo(file.mimeType) -> {
+                    linkedFile.livePhotoVideo = file
+                    filesToRemove.add(file)
                 }
             }
         }

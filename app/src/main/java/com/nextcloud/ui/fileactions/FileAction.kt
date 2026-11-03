@@ -42,7 +42,8 @@ enum class FileAction(
     // Uploads and downloads
     DOWNLOAD_FILE(R.id.action_download_file, R.string.filedetails_download, R.drawable.ic_cloud_download),
     SYNC_FILE(R.id.action_sync_file, R.string.filedetails_sync_file, R.drawable.ic_file_action_sync_file),
-    DOWNLOAD_FOLDER(R.id.action_sync_file, R.string.filedetails_sync_file, R.drawable.ic_sync),
+    SYNC_FOLDER(R.id.action_sync_file, R.string.filedetails_sync_file, R.drawable.ic_sync),
+    SYNC_ALL_FOLDERS(R.id.action_sync_all_files, R.string.filedetails_sync_all_files, R.drawable.ic_sync_all),
     CANCEL_SYNC(R.id.action_cancel_sync, R.string.common_cancel_sync, R.drawable.ic_file_action_cancel_sync),
 
     // File sharing
@@ -74,7 +75,7 @@ enum class FileAction(
          * All file actions, in the order they should be displayed
          */
         fun getActions(files: Collection<OCFile>): List<FileAction> {
-            return mutableListOf(
+            val result = mutableListOf(
                 UNLOCK_FILE,
                 EDIT,
                 FAVORITE,
@@ -89,19 +90,31 @@ enum class FileAction(
                 SEND_SHARE_FILE,
                 SEND_FILE,
                 OPEN_FILE_WITH,
-                DOWNLOAD_FOLDER,
-                CANCEL_SYNC,
-                SELECT_ALL,
-                SELECT_NONE,
-                SET_ENCRYPTED,
-                UNSET_ENCRYPTED,
-                SET_AS_WALLPAPER,
-                PIN_TO_HOMESCREEN,
-                RETRY
-            ).apply {
-                val deleteOrLeaveShareAction = getDeleteOrLeaveShareAction(files) ?: return@apply
-                add(deleteOrLeaveShareAction)
+                SYNC_FOLDER
+            )
+
+            if (files.size == 1 && files.first().isFolder && !files.first().isEncrypted) {
+                result.add(SYNC_ALL_FOLDERS)
             }
+
+            result.addAll(
+                listOf(
+                    CANCEL_SYNC,
+                    SELECT_ALL,
+                    SELECT_NONE,
+                    SET_ENCRYPTED,
+                    UNSET_ENCRYPTED,
+                    SET_AS_WALLPAPER,
+                    PIN_TO_HOMESCREEN,
+                    RETRY
+                )
+            )
+
+            getDeleteOrLeaveShareAction(files)?.let {
+                result.add(it)
+            }
+
+            return result
         }
 
         fun getFilePreviewActions(file: OCFile?): List<Int> {
@@ -116,7 +129,7 @@ enum class FileAction(
 
             if (file != null) {
                 val actionsToHide = getActionsToHide(setOf(file))
-                result.removeAll(actionsToHide)
+                result.removeAll(actionsToHide.toSet())
             }
 
             return result.toList()
@@ -127,8 +140,6 @@ enum class FileAction(
                 R.id.action_lock_file,
                 R.id.action_unlock_file,
                 R.id.action_edit,
-                R.id.action_favorite,
-                R.id.action_unset_favorite,
                 R.id.action_see_details,
                 R.id.action_move_or_copy,
                 R.id.action_stream_media,
@@ -139,6 +150,7 @@ enum class FileAction(
             if (file?.isFolder == true) {
                 result.add(R.id.action_send_file)
                 result.add(R.id.action_sync_file)
+                result.add(R.id.action_sync_all_files)
             }
 
             if (file?.isAPKorAAB == true) {
@@ -148,7 +160,7 @@ enum class FileAction(
 
             if (file != null) {
                 val actionsToHide = getActionsToHide(setOf(file))
-                result.removeAll(actionsToHide)
+                result.removeAll(actionsToHide.toSet())
             }
 
             return result.toList()
@@ -163,6 +175,7 @@ enum class FileAction(
                         R.id.action_favorite,
                         R.id.action_move_or_copy,
                         R.id.action_sync_file,
+                        R.id.action_sync_all_files,
                         R.id.action_encrypted,
                         R.id.action_unset_encrypted,
                         R.id.action_edit,
@@ -179,6 +192,7 @@ enum class FileAction(
                         R.id.action_send_share_file,
                         R.id.action_export_file,
                         R.id.action_sync_file,
+                        R.id.action_sync_all_files,
                         R.id.action_download_file
                     )
                 )

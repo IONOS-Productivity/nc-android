@@ -28,6 +28,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.content.res.ResourcesCompat
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.nextcloud.android.common.ui.color.ColorUtil
 import com.nextcloud.android.common.ui.theme.MaterialSchemes
 import com.nextcloud.android.common.ui.theme.ViewThemeUtilsBase
@@ -84,14 +85,17 @@ class FilesSpecificViewThemeUtils @Inject constructor(
                 createAvatarBase(R.drawable.ic_group)
                 androidViewThemeUtils.colorImageViewBackgroundAndIcon(avatar)
             }
+
             ShareType.FEDERATED_GROUP -> {
                 createAvatarBase(R.drawable.ic_group)
                 androidViewThemeUtils.colorImageViewBackgroundAndIcon(avatar)
             }
+
             ShareType.ROOM -> {
                 createAvatarBase(R.drawable.ic_talk, AvatarPadding.LARGE)
                 androidViewThemeUtils.colorImageViewBackgroundAndIcon(avatar)
             }
+
             ShareType.CIRCLE -> {
                 createAvatarBase(R.drawable.ic_circles)
                 avatar.background.setColorFilter(
@@ -103,10 +107,12 @@ class FilesSpecificViewThemeUtils @Inject constructor(
                     PorterDuff.Mode.SRC_IN
                 )
             }
+
             ShareType.EMAIL -> {
                 createAvatarBase(R.drawable.ic_email, AvatarPadding.LARGE)
                 androidViewThemeUtils.colorImageViewBackgroundAndIcon(avatar)
             }
+
             else -> Log_OC.d(TAG, "Unknown share type")
         }
     }
@@ -304,6 +310,16 @@ class FilesSpecificViewThemeUtils @Inject constructor(
                     )
                 }
             }
+        }
+    }
+
+    fun themeAutoCompleteTextView(autoCompleteTextView: MaterialAutoCompleteTextView) {
+        withScheme(autoCompleteTextView) { scheme ->
+            autoCompleteTextView.setTextColor(dynamicColor.onSurface().getArgb(scheme))
+            autoCompleteTextView.setHintTextColor(dynamicColor.onSurfaceVariant().getArgb(scheme))
+            autoCompleteTextView.setDropDownBackgroundTintList(
+                ColorStateList.valueOf(dynamicColor.surfaceContainer().getArgb(scheme))
+            )
         }
     }
 

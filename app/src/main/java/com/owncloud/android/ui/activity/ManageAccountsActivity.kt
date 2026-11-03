@@ -456,9 +456,11 @@ class ManageAccountsActivity :
                     R.id.action_open_account -> {
                         accountClicked(user)
                     }
+
                     R.id.action_delete_account -> {
                         openAccountRemovalDialog(user, supportFragmentManager)
                     }
+
                     else -> {
                         openAccount(user)
                     }

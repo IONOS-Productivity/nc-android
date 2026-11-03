@@ -10,6 +10,11 @@ import com.owncloud.android.BuildConfig
 
 object BuildHelper {
     const val GPLAY: String = "gplay"
+    const val HIDRIVE_NEXT: String = "hidriveNext"
 
-    fun isFlavourGPlay(): Boolean = GPLAY == BuildConfig.FLAVOR
+    private val GPLAY_FLAVOURS = setOf(GPLAY, HIDRIVE_NEXT)
+
+    fun isFlavourGPlay(): Boolean = BuildConfig.FLAVOR in GPLAY_FLAVOURS
+
+    fun isHuaweiFlavor(): Boolean = BuildConfig.FLAVOR == "huawei"
 }

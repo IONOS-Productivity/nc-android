@@ -31,6 +31,7 @@ import com.owncloud.android.MainApp
 import com.owncloud.android.datamodel.ArbitraryDataProvider
 import com.owncloud.android.datamodel.SyncedFolderProvider
 import com.owncloud.android.datamodel.UploadsStorageManager
+import com.owncloud.android.operations.factory.UploadFileOperationFactory
 import com.owncloud.android.utils.theme.ViewThemeUtils
 import io.mockk.every
 import io.mockk.mockk
@@ -120,6 +121,8 @@ class BackgroundJobFactoryTest {
 
     @Mock private lateinit var fileDao: FileDao
 
+    @Mock private lateinit var uploadFileOperationFactory: UploadFileOperationFactory
+
     private lateinit var factory: BackgroundJobFactory
 
     @Before
@@ -153,7 +156,8 @@ class BackgroundJobFactoryTest {
             syncedFolderProvider,
             scanbotLicenseJobFactory,
             privacyPreferences,
-            db
+            db,
+            uploadFileOperationFactory
         )
     }
 

@@ -8,56 +8,40 @@ package com.owncloud.android.authentication;
 
 import android.content.Context;
 
+import com.ionos.branding.BrandConfigProvider;
+import com.ionos.branding.LoginUrls;
+
 import androidx.annotation.NonNull;
 import androidx.core.os.ConfigurationCompat;
 
 import java.util.Locale;
-import java.util.Map;
 
+/**
+ * Resolves the web login URL for the current device locale from the brand configuration
+ * (see {@link com.ionos.branding.BrandConfig}).
+ */
 public final class IonosLoginDomainResolver {
-    private static final String LOGIN_IT = "https://storage.ionos.it/index.php/login/v2";
-    private static final String LOGIN_DE = "https://storage.ionos.de/index.php/login/v2";
-    private static final String LOGIN_FR = "https://storage.ionos.fr/index.php/login/v2";
-    private static final String LOGIN_ES = "https://storage.ionos.es/index.php/login/v2";
-    private static final String LOGIN_UK = "https://storage.ionos.co.uk/index.php/login/v2";
-    private static final String LOGIN_FALLBACK = LOGIN_UK;
-
-    private static final Map<String, String> COUNTRY_TO_LOGIN = Map.of(
-        "IT", LOGIN_IT,
-        "DE", LOGIN_DE,
-        "FR", LOGIN_FR,
-        "ES", LOGIN_ES,
-        "GB", LOGIN_UK
-    );
-
-    private static final Map<String, String> LANGUAGE_TO_LOGIN = Map.of(
-        "it", LOGIN_IT,
-        "de", LOGIN_DE,
-        "fr", LOGIN_FR,
-        "es", LOGIN_ES,
-        "en", LOGIN_UK
-    );
 
     private IonosLoginDomainResolver() {
         // Utility class.
     }
 
     @NonNull
-    public static String resolveLoginV2Url(Context context) {
-        return resolveLoginV2Url(getDeviceLocale(context));
+    public static String resolveLoginV2Url(Context context, @NonNull BrandConfigProvider brandConfigProvider) {
+        return resolveLoginV2Url(getDeviceLocale(context), brandConfigProvider.getConfig().getLoginUrls());
     }
 
     @NonNull
-    public static String resolveLoginV2Url(@NonNull Locale locale) {
+    public static String resolveLoginV2Url(@NonNull Locale locale, @NonNull LoginUrls loginUrls) {
         String country = locale.getCountry().toUpperCase(Locale.ROOT);
-        String byCountry = COUNTRY_TO_LOGIN.get(country);
+        String byCountry = loginUrls.getByCountry().get(country);
         if (byCountry != null) {
             return byCountry;
         }
 
         String language = locale.getLanguage().toLowerCase(Locale.ROOT);
-        String byLanguage = LANGUAGE_TO_LOGIN.get(language);
-        return byLanguage != null ? byLanguage : LOGIN_FALLBACK;
+        String byLanguage = loginUrls.getByLanguage().get(language);
+        return byLanguage != null ? byLanguage : loginUrls.getDefault();
     }
 
     private static Locale getDeviceLocale(Context context) {
@@ -65,4 +49,3 @@ public final class IonosLoginDomainResolver {
         return locale != null ? locale : Locale.getDefault();
     }
 }
-

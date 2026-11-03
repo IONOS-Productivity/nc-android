@@ -171,6 +171,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
+                android:layout_marginHorizontal="@dimen/standard_half_margin"
+                android:layout_marginBottom="@dimen/standard_half_margin"
+                android:background="@drawable/rounded_rect"
+                android:backgroundTint="@color/grid_item_filename_background_color"
                 android:padding="8dp">
 
                 <TextView
@@ -218,6 +222,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginHorizontal="@dimen/standard_half_margin"
+            android:layout_marginBottom="@dimen/standard_half_margin"
+            android:background="@drawable/rounded_rect"
+            android:backgroundTint="@color/grid_item_filename_background_color"
             android:ellipsize="middle"
             android:gravity="center_vertical"
             android:padding="8dp"

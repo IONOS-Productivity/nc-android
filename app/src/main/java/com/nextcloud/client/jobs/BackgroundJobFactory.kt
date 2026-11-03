@@ -39,6 +39,7 @@ import com.nextcloud.client.preferences.AppPreferences
 import com.owncloud.android.datamodel.ArbitraryDataProvider
 import com.owncloud.android.datamodel.SyncedFolderProvider
 import com.owncloud.android.datamodel.UploadsStorageManager
+import com.owncloud.android.operations.factory.UploadFileOperationFactory
 import com.owncloud.android.utils.theme.ViewThemeUtils
 import org.greenrobot.eventbus.EventBus
 import javax.inject.Inject
@@ -71,7 +72,8 @@ class BackgroundJobFactory @Inject constructor(
     private val syncedFolderProvider: SyncedFolderProvider,
     private val scanbotLicenseJobFactory: ScanbotLicenseJobFactory,
     private val privacyPreferences: PrivacyPreferences,
-    private val database: NextcloudDatabase
+    private val database: NextcloudDatabase,
+    private val uploadFileOperationFactory: UploadFileOperationFactory
 ) : WorkerFactory() {
 
     @SuppressLint("NewApi")
@@ -251,7 +253,10 @@ class BackgroundJobFactory @Inject constructor(
             localBroadcastManager.get(),
             backgroundJobManager.get(),
             preferences,
+            FileSystemRepository(dao = database.fileSystemDao(), uploadsStorageManager, context),
+            syncedFolderProvider,
             context,
+            uploadFileOperationFactory,
             params
         )
 

@@ -105,7 +105,7 @@ open class ExtendedListFragment :
     protected var mRefreshListLayout: SwipeRefreshLayout? = null
 
     @JvmField
-    protected var mSortButton: MaterialButton? = null
+    public var mSortButton: MaterialButton? = null
 
     @JvmField
     protected var mSwitchGridViewButton: MaterialButton? = null
@@ -139,7 +139,7 @@ open class ExtendedListFragment :
         mRecyclerView?.setAdapter(recyclerViewAdapter)
     }
 
-    protected val recyclerView: RecyclerView?
+    public val recyclerView: RecyclerView?
         get() = mRecyclerView
 
     open fun setLoading(enabled: Boolean) {
@@ -628,6 +628,7 @@ open class ExtendedListFragment :
                     false
                 )
             }
+
             SearchType.FILE_SEARCH -> {
                 setMessageForEmptyList(
                     R.string.file_list_empty_headline_server_search,
@@ -635,6 +636,7 @@ open class ExtendedListFragment :
                     R.drawable.ic_search
                 )
             }
+
             SearchType.FAVORITE_SEARCH -> {
                 setMessageForEmptyList(
                     R.string.file_list_empty_favorite_headline,
@@ -642,13 +644,15 @@ open class ExtendedListFragment :
                     R.drawable.favorite
                 )
             }
-            SearchType.RECENTLY_MODIFIED_SEARCH -> {
+
+            SearchType.RECENT_FILES_SEARCH -> {
                 setMessageForEmptyList(
-                    R.string.file_list_empty_headline_server_search,
-                    R.string.file_list_empty_recently_modified,
-                    R.drawable.ic_list_empty_recent
+                    R.string.file_list_empty_recent_files_headline,
+                    R.string.file_list_empty_recent_files_description,
+                    R.drawable.nav_recently_outline
                 )
             }
+
             SearchType.REGULAR_FILTER -> {
                 setMessageForEmptyList(
                     R.string.file_list_empty_headline_search,
@@ -656,6 +660,7 @@ open class ExtendedListFragment :
                     R.drawable.ic_search
                 )
             }
+
             SearchType.SHARED_FILTER -> {
                 setMessageForEmptyList(
                     R.string.file_list_empty_shared_headline,
@@ -663,6 +668,7 @@ open class ExtendedListFragment :
                     R.drawable.ic_list_empty_shared
                 )
             }
+
             SearchType.GALLERY_SEARCH -> {
                 setMessageForEmptyList(
                     R.string.file_list_empty_headline_server_search,
@@ -670,6 +676,7 @@ open class ExtendedListFragment :
                     R.drawable.file_image
                 )
             }
+
             SearchType.LOCAL_SEARCH -> {
                 setMessageForEmptyList(
                     R.string.file_list_empty_headline_server_search,
@@ -677,6 +684,7 @@ open class ExtendedListFragment :
                     R.drawable.ic_search
                 )
             }
+
             EmptyListState.OFFLINE_MODE -> {
                 setMessageForEmptyList(
                     R.string.offline_mode_info_title,
@@ -685,6 +693,7 @@ open class ExtendedListFragment :
                     false
                 )
             }
+
             EmptyListState.LOADING -> {
                 setMessageForEmptyList(
                     R.string.file_list_loading,
@@ -692,6 +701,7 @@ open class ExtendedListFragment :
                     null
                 )
             }
+
             EmptyListState.ADD_FOLDER -> {
                 setMessageForEmptyList(
                     R.string.folder_list_empty_headline,
@@ -700,6 +710,7 @@ open class ExtendedListFragment :
                     false
                 )
             }
+
             EmptyListState.ONLY_ON_DEVICE -> {
                 setMessageForEmptyList(
                     R.string.file_list_empty_headline,
@@ -708,6 +719,7 @@ open class ExtendedListFragment :
                     false
                 )
             }
+
             EmptyListState.LOCAL_FILE_LIST_EMPTY_FILE -> {
                 setMessageForEmptyList(
                     R.string.file_list_empty_headline,
@@ -716,6 +728,7 @@ open class ExtendedListFragment :
                     false
                 )
             }
+
             EmptyListState.LOCAL_FILE_LIST_EMPTY_FOLDER -> {
                 setMessageForEmptyList(
                     R.string.folder_list_empty_headline,
@@ -724,6 +737,7 @@ open class ExtendedListFragment :
                     false
                 )
             }
+
             EmptyListState.ERROR -> {
                 setMessageForEmptyList(
                     R.string.file_list_error_headline,
@@ -732,6 +746,7 @@ open class ExtendedListFragment :
                     false
                 )
             }
+
             else -> {
                 setMessageForEmptyList(
                     R.string.file_list_empty_headline,
@@ -747,12 +762,12 @@ open class ExtendedListFragment :
         }
     }
 
+    /**
+     * Get the text of EmptyListMessage TextView.
+     *
+     * @return String empty text view text-value
+     */
     val emptyViewText: String
-        /**
-         * Get the text of EmptyListMessage TextView.
-         *
-         * @return String empty text view text-value
-         */
         get() = if (mEmptyListContainer != null && mEmptyListMessage != null) {
             mEmptyListMessage?.getText()
                 .toString()
@@ -793,7 +808,7 @@ open class ExtendedListFragment :
         setLayoutSwitchButton(isGridEnabled)
     }
 
-    protected fun setLayoutSwitchButton(isGrid: Boolean) {
+    fun setLayoutSwitchButton(isGrid: Boolean) {
         mSwitchGridViewButton?.let {
             if (isGrid) {
                 it.setContentDescription(getString(R.string.action_switch_list_view))

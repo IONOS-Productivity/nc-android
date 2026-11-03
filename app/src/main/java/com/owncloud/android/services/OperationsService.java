@@ -81,10 +81,12 @@ public class OperationsService extends Service {
 
     private static final String TAG = OperationsService.class.getSimpleName();
 
+    public static final String EXTRA_ENCRYPTED = "ENCRYPTED";
     public static final String EXTRA_ACCOUNT = "ACCOUNT";
     public static final String EXTRA_POST_DIALOG_EVENT = "EXTRA_POST_DIALOG_EVENT";
     public static final String EXTRA_SERVER_URL = "SERVER_URL";
     public static final String EXTRA_REMOTE_PATH = "REMOTE_PATH";
+    public static final String EXTRA_SYNC_ALL = "SYNC_ALL";
     public static final String EXTRA_NEWNAME = "NEWNAME";
     public static final String EXTRA_REMOVE_ONLY_LOCAL = "REMOVE_LOCAL_COPY";
     public static final String EXTRA_SYNC_FILE_CONTENTS = "SYNC_FILE_CONTENTS";
@@ -708,10 +710,13 @@ public class OperationsService extends Service {
 
                     case ACTION_CREATE_FOLDER:
                         remotePath = operationIntent.getStringExtra(EXTRA_REMOTE_PATH);
-                        operation = new CreateFolderOperation(remotePath,
-                                                              user,
-                                                              getApplicationContext(),
-                                                              fileDataStorageManager);
+                        boolean encrypt = operationIntent.getBooleanExtra(EXTRA_ENCRYPTED, false);
+                        final var createFolderOperation = new CreateFolderOperation(remotePath,
+                                                                                    user,
+                                                                                    getApplicationContext(),
+                                                                                    fileDataStorageManager);
+                        createFolderOperation.setEncrypt(encrypt);
+                        operation = createFolderOperation;
                         break;
 
                     case ACTION_SYNC_FILE:
@@ -723,18 +728,25 @@ public class OperationsService extends Service {
                                                                  syncFileContents,
                                                                  getApplicationContext(),
                                                                  fileDataStorageManager,
-                                                                 false,
+                                                                 true,
                                                                  postDialogEvent);
                         break;
 
                     case ACTION_SYNC_FOLDER:
                         remotePath = operationIntent.getStringExtra(EXTRA_REMOTE_PATH);
+                        boolean syncAll = operationIntent.getBooleanExtra(EXTRA_SYNC_ALL, false);
+
+                        // since this is triggered from service and can run in background no need to fire
+                        // workers for each sub file
+                        boolean useWorkerWithNotification = !syncAll;
+
                         operation = new SynchronizeFolderOperation(
-                            this,                       // TODO remove this dependency from construction time
+                            this,
                             remotePath,
                             user,
                             fileDataStorageManager,
-                            false
+                            useWorkerWithNotification,
+                            syncAll
                         );
                         break;
 

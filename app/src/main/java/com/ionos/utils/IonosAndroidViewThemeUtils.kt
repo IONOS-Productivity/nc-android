@@ -32,6 +32,7 @@ import com.nextcloud.android.common.ui.theme.utils.ColorRole
 import com.nextcloud.android.common.ui.util.buildColorStateList
 import com.owncloud.android.R
 import com.owncloud.android.ui.activity.DrawerActivity
+import dynamiccolor.DynamicScheme
 
 class IonosAndroidViewThemeUtils(
     private val delegate: AndroidViewThemeUtils,
@@ -214,4 +215,6 @@ class IonosAndroidViewThemeUtils(
     ) {
         delegate.tintToolbarArrowDrawable(context, mDrawerToggle, backArrow)
     }
+
+    fun getScheme(context: Context): DynamicScheme = delegate.getScheme(context)
 }

@@ -21,10 +21,8 @@ import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
-import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -40,8 +38,7 @@ import com.nextcloud.client.jobs.BackgroundJobManager;
 import com.nextcloud.client.jobs.download.FileDownloadWorker;
 import com.nextcloud.client.jobs.upload.FileUploadHelper;
 import com.nextcloud.client.network.ConnectivityService;
-import com.nextcloud.receiver.NetworkChangeListener;
-import com.nextcloud.receiver.NetworkChangeReceiver;
+import com.nextcloud.client.network.NetworkChangeListener;
 import com.nextcloud.utils.EditorUtils;
 import com.nextcloud.utils.extensions.ActivityExtensionsKt;
 import com.nextcloud.utils.extensions.BundleExtensionsKt;
@@ -90,7 +87,6 @@ import com.owncloud.android.ui.dialog.ShareLinkToDialog;
 import com.owncloud.android.ui.dialog.SslUntrustedCertDialog;
 import com.owncloud.android.ui.events.DialogEvent;
 import com.owncloud.android.ui.events.DialogEventType;
-import com.owncloud.android.ui.events.FavoriteEvent;
 import com.owncloud.android.ui.fragment.FileDetailFragment;
 import com.owncloud.android.ui.fragment.FileDetailSharingFragment;
 import com.owncloud.android.ui.fragment.OCFileListFragment;
@@ -178,12 +174,12 @@ public abstract class FileActivity extends DrawerActivity
     protected boolean isFileDisplayActivityResumed = false;
 
     @Inject
-    UserAccountManager accountManager;
+    public UserAccountManager accountManager;
 
     @Inject public ConnectivityService connectivityService;
 
     @Inject
-    BackgroundJobManager backgroundJobManager;
+    protected BackgroundJobManager backgroundJobManager;
 
     @Inject
     EditorUtils editorUtils;
@@ -194,14 +190,7 @@ public abstract class FileActivity extends DrawerActivity
     @Inject
     ArbitraryDataProvider arbitraryDataProvider;
 
-    private NetworkChangeReceiver networkChangeReceiver;
-
     private FilesRepository filesRepository;
-
-    private void registerNetworkChangeReceiver() {
-        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-        registerReceiver(networkChangeReceiver, filter);
-    }
 
     @Override
     public void showFiles(boolean onDeviceOnly, boolean personalFiles) {
@@ -225,7 +214,6 @@ public abstract class FileActivity extends DrawerActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        networkChangeReceiver = new NetworkChangeReceiver(this, connectivityService);
         usersAndGroupsSearchConfig.reset();
         mHandler = new Handler();
         mFileOperationsHelper = new FileOperationsHelper(this, getUserAccountManager(), connectivityService, editorUtils);
@@ -255,8 +243,6 @@ public abstract class FileActivity extends DrawerActivity
         mOperationsServiceConnection = new OperationsServiceConnection();
         bindService(new Intent(this, OperationsService.class), mOperationsServiceConnection,
                     Context.BIND_AUTO_CREATE);
-        registerNetworkChangeReceiver();
-
         filesRepository = new RemoteFilesRepository(getClientRepository(), this);
     }
 
@@ -281,7 +267,14 @@ public abstract class FileActivity extends DrawerActivity
     @Override
     protected void onStart() {
         super.onStart();
+        connectivityService.addListener(this);
         fetchExternalLinks(false);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        connectivityService.removeListener(this);
     }
 
     @Override
@@ -308,8 +301,6 @@ public abstract class FileActivity extends DrawerActivity
             unbindService(mOperationsServiceConnection);
             mOperationsServiceBinder = null;
         }
-
-        unregisterReceiver(networkChangeReceiver);
 
         super.onDestroy();
     }
@@ -551,7 +542,7 @@ public abstract class FileActivity extends DrawerActivity
             }
 
         } else {
-            if (!operation.transferWasRequested()) {
+            if (!operation.getTransferWasRequested()) {
                 DisplayUtils.showSnackMessage(this, ErrorMessageAdapter.getErrorCauseMessage(result,
                                                                                              operation, getResources()));
             }
@@ -896,20 +887,20 @@ public abstract class FileActivity extends DrawerActivity
         } else {
             // Detect Failure (403) --> maybe needs password
             String password = operation.getPassword();
-            if (result.getCode() == RemoteOperationResult.ResultCode.SHARE_FORBIDDEN &&
-                TextUtils.isEmpty(password) &&
-                getCapabilities().getFilesSharingPublicEnabled().isUnknown()) {
-                // Was tried without password, but not sure that it's optional.
+            final var optionalCapabilities = getCapabilities();
 
-                // Try with password before giving up; see also ShareFileFragment#OnShareViaLinkListener
-                if (sharingFragment != null && sharingFragment.isAdded()) {
-                    // only if added to the view hierarchy
-
-                    sharingFragment.requestPasswordForShareViaLink(true,
-                                                                   getCapabilities().getFilesSharingPublicAskForOptionalPassword()
-                                                                       .isTrue());
+            if (result.getCode() == RemoteOperationResult.ResultCode.SHARE_FORBIDDEN && TextUtils.isEmpty(password)) {
+                if (optionalCapabilities.isPresent()) {
+                    final var capabilities = optionalCapabilities.get();
+                    if (capabilities.getFilesSharingPublicEnabled().isUnknown()) {
+                        // Was tried without password, but not sure that it's optional.
+                        // Try with password before giving up; see also ShareFileFragment#OnShareViaLinkListener
+                        if (sharingFragment != null && sharingFragment.isAdded()) {
+                            // only if added to the view hierarchy
+                            sharingFragment.requestPasswordForShareViaLink(true, capabilities.getFilesSharingPublicAskForOptionalPassword().isTrue());
+                        }
+                    }
                 }
-
             } else {
                 if (sharingFragment != null) {
                     sharingFragment.refreshSharesFromDB();

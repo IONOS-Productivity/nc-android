@@ -1,6 +1,7 @@
 /*
  * Nextcloud - Android Client
  *
+ * SPDX-FileCopyrightText: 2026 Alper Ozturk <alper.ozturk@nextcloud.com>
  * SPDX-FileCopyrightText: 2023 Tobias Kaminsky <tobias@kaminsky.me>
  * SPDX-FileCopyrightText: 2023 Nextcloud GmbH
  * SPDX-License-Identifier: AGPL-3.0-or-later OR GPL-2.0-only
@@ -22,6 +23,7 @@ import com.owncloud.android.datamodel.e2e.v2.decrypted.DecryptedUser
 import com.owncloud.android.datamodel.e2e.v2.encrypted.EncryptedFiledrop
 import com.owncloud.android.datamodel.e2e.v2.encrypted.EncryptedFiledropUser
 import com.owncloud.android.datamodel.e2e.v2.encrypted.EncryptedFolderMetadataFile
+import com.owncloud.android.lib.resources.status.E2EVersion
 import com.owncloud.android.operations.RefreshFolderOperation
 import com.owncloud.android.util.EncryptionTestIT
 import junit.framework.TestCase.assertEquals
@@ -299,8 +301,7 @@ class EncryptionUtilsV2IT : EncryptionIT() {
             // random string, not real tag
             EncryptionUtils.generateUid(),
             EncryptionUtils.generateKey(),
-            metadataFile,
-            storageManager
+            metadataFile
         )
 
         assertEquals(3, updatedMetadata.metadata.files.size)
@@ -340,7 +341,6 @@ class EncryptionUtilsV2IT : EncryptionIT() {
 
     @Test
     fun addFolder() {
-        val folder = OCFile("/e/")
         val enc1 = MockUser("enc1", "Nextcloud")
         val metadataFile = generateDecryptedFolderMetadataFile(enc1, enc1Cert)
         assertEquals(2, metadataFile.metadata.files.size)
@@ -349,9 +349,7 @@ class EncryptionUtilsV2IT : EncryptionIT() {
         val updatedMetadata = encryptionUtilsV2.addFolderToMetadata(
             EncryptionUtils.generateUid(),
             "new subfolder",
-            metadataFile,
-            folder,
-            storageManager
+            metadataFile
         )
 
         assertEquals(2, updatedMetadata.metadata.files.size)
@@ -360,7 +358,6 @@ class EncryptionUtilsV2IT : EncryptionIT() {
 
     @Test
     fun removeFolder() {
-        val folder = OCFile("/e/")
         val enc1 = MockUser("enc1", "Nextcloud")
         val metadataFile = generateDecryptedFolderMetadataFile(enc1, enc1Cert)
         assertEquals(2, metadataFile.metadata.files.size)
@@ -370,9 +367,7 @@ class EncryptionUtilsV2IT : EncryptionIT() {
         var updatedMetadata = encryptionUtilsV2.addFolderToMetadata(
             encryptedFileName,
             "new subfolder",
-            metadataFile,
-            folder,
-            storageManager
+            metadataFile
         )
 
         assertEquals(2, updatedMetadata.metadata.files.size)
@@ -469,6 +464,7 @@ class EncryptionUtilsV2IT : EncryptionIT() {
         val v2 = encryptionUtilsV2.migrateV1ToV2(
             v1,
             enc1UserId,
+            storageManager.user,
             enc1Cert,
             folder,
             storageManager
@@ -601,7 +597,7 @@ class EncryptionUtilsV2IT : EncryptionIT() {
 
         metadata.keyChecksums.add(encryptionUtilsV2.hashMetadataKey(metadata.metadataKey))
 
-        return DecryptedFolderMetadataFile(metadata, users, mutableMapOf())
+        return DecryptedFolderMetadataFile(metadata, users, mutableMapOf(), E2EVersion.V2_1.value)
     }
 
     @Test

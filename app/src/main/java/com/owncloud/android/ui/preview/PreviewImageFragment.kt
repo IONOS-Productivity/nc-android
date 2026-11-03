@@ -83,19 +83,14 @@ import kotlin.math.min
  * This fragment shows a preview of a downloaded image.
  * Trying to get an instance with a NULL [OCFile] will produce an [IllegalStateException].
  * If the [OCFile] passed is not downloaded, an [IllegalStateException] is generated on instantiation too.
- */
-
-/**
- * Creates an empty fragment for image previews.
  *
+ * Creates an empty fragment for image previews.
  *
  * MUST BE KEPT: the system uses it when tries to re-instantiate a fragment automatically (for instance, when the
  * device is turned a aside).
  *
- *
  * DO NOT CALL IT: an [OCFile] and [User] must be provided for a successful construction
  */
-
 @Suppress("TooManyFunctions")
 class PreviewImageFragment :
     FileFragment(),
@@ -170,7 +165,7 @@ class PreviewImageFragment :
 
         hideActionBar()
 
-        val mediaFragment: Fragment = newInstance(file, accountManager.user, 0, true, true)
+        val mediaFragment: Fragment = newInstance(file, accountManager.user, autoplay = true, isLivePhoto = true)
         val fragmentManager = requireActivity().supportFragmentManager
         fragmentManager.beginTransaction().run {
             replace(R.id.top, mediaFragment)
@@ -422,7 +417,7 @@ class PreviewImageFragment :
                 val activity = containerActivity as FileActivity
                 activity.showSyncLoadingDialog(file.isFolder)
             }
-            containerActivity.fileOperationsHelper.syncFile(file)
+            containerActivity.fileOperationsHelper.syncFileOrFolder(file)
         } else if (itemId == R.id.action_cancel_sync) {
             containerActivity.fileOperationsHelper.cancelTransference(file)
         } else if (itemId == R.id.action_set_as_wallpaper) {

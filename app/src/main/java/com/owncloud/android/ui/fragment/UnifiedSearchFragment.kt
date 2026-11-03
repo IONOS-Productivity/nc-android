@@ -184,6 +184,7 @@ class UnifiedSearchFragment :
             setupToolbar()
             setMainFabVisible(false)
             updateActionBarTitleAndHomeButtonByString(null)
+            setDrawerIndicatorEnabled(false)
 
             supportActionBar?.let { actionBar ->
                 viewThemeUtils.files.themeActionBar(this, actionBar)
@@ -254,6 +255,7 @@ class UnifiedSearchFragment :
             is UnifiedSearchFragmentScreenState.ShowingContent -> {
                 toggleEmptyListVisible(show = false)
             }
+
             is UnifiedSearchFragmentScreenState.Empty -> {
                 showEmptyView(state)
             }

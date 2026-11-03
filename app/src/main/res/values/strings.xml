@@ -6,6 +6,9 @@
   ~ SPDX-License-Identifier: AGPL-3.0-or-later OR GPL-2.0-only
 -->
 <resources>
+    <string name="backup_list_adapter_local_contacts">Local contacts</string>
+
+    <string name="preview_text_string_fragment_open_rich_text_editor_error_message">Failed to open text editor</string>
     <string name="bottom_navigation_menu_files_label">All files</string>
     <string name="bottom_navigation_menu_favorites_label">Favorites</string>
     <string name="bottom_navigation_menu_assistant_label">Assistant</string>
@@ -91,7 +94,6 @@
     <string name="assistant_task_status_failed">failed</string>
 
     <!-- Translation Screen -->
-    <string name="assistant_screen_select_task">Please select task</string>
     <string name="translation_screen_label_from">Translate from: </string>
     <string name="translation_screen_label_to">Translate to: </string>
     <string name="translation_screen_translating">Translating…</string>
@@ -125,7 +127,8 @@
     <string name="drawer_item_home">Home</string>
     <string name="drawer_item_favorites">Favorites</string>
     <string name="drawer_item_on_device">On device</string>
-    <string name="drawer_item_recently_modified">Recently modified</string>
+    <string name="drawer_item_recent_files">Recent files</string>
+
     <string name="drawer_item_shared">Shared</string>
     <string name="drawer_item_uploads_list">Uploads</string>
     <string name="drawer_item_activities">Activities</string>
@@ -222,6 +225,8 @@
     <string name="file_list_seconds_ago">seconds ago</string>
     <string name="file_list_live">LIVE</string>
     <string name="file_list_empty_headline">No files here</string>
+    <string name="file_list_empty_recent_files_headline">No recently modified files</string>
+    <string name="file_list_empty_recent_files_description">Files and folders you recently modified will show up here.</string>
     <string name="folder_list_empty_headline">No folders here</string>
     <string name="file_list_empty">Upload some content or sync with your devices.</string>
     <string name="file_list_empty_on_device">Downloaded files and folders will show up here.</string>
@@ -236,7 +241,6 @@
     <string name="file_list_empty_shared_headline">Nothing shared yet</string>
     <string name="file_list_empty_shared">Files and folders you share will show up here.</string>
     <string name="file_list_empty_search">Maybe it is in a different folder?</string>
-    <string name="file_list_empty_recently_modified">Found no files modified within the last 7 days</string>
     <string name="trashbin_empty_headline">No deleted files</string>
     <string name="trashbin_empty_message">You will be able to recover deleted files from here.</string>
     <string name="upload_list_empty_headline">No uploads available</string>
@@ -245,6 +249,7 @@
     <string name="file_upload_worker_error_notification_title">Upload failed. No internet connection</string>
     <string name="filedetails_download">Download</string>
     <string name="filedetails_sync_file">Sync</string>
+    <string name="filedetails_sync_all_files">Sync all</string>
     <string name="filedetails_renamed_in_upload_msg">File renamed %1$s during upload</string>
     <string name="list_layout">Listed layout</string>
     <string name="action_send_share">Send/share</string>
@@ -287,7 +292,6 @@
     <string name="folder_download_error_notification_title">An error occurred during synchronization of the %s folder</string>
     <string name="folder_download_counter">%1$d of %2$d &#183; %3$s</string>
     <string name="folder_download_insufficient_disk_space_notification_title">Insufficient disk space, synchronization canceled</string>
-
     <string name="uploader_upload_in_progress_ticker">Uploading…</string>
     <string name="uploader_upload_in_progress_content">%1$d%% Uploading %2$s</string>
     <string name="uploader_upload_succeeded_content_single">%1$s uploaded</string>
@@ -317,7 +321,6 @@
     <string name="uploads_view_upload_status_unknown_fail">Unknown error</string>
     <string name="uploads_view_upload_status_waiting_for_wifi">Waiting for non-metered Wi-Fi</string>
     <string name="uploads_view_upload_status_waiting_exit_power_save_mode">Waiting to exit power save mode</string>
-    <string name="uploads_view_upload_status_fetching_server_version">Fetching server version…</string>
     <string name="uploads_view_later_waiting_to_upload">Waiting to upload</string>
     <string name="uploads_view_group_header" translatable="false">%1$s (%2$d)</string>
 
@@ -335,6 +338,8 @@
     <string name="common_choose_account">Choose account</string>
     <string name="common_switch_account">Switch account</string>
     <string name="common_switch_to_account">Switch to account</string>
+    <string name="sync_all_action_dialog_title">Sync entire folder?</string>
+    <string name="sync_all_action_dialog_description">All contained files and folders will be downloaded. This may require a significant amount of storage and take some time depending on your connection.</string>
     <string name="sync_fail_ticker">Sync failed</string>
     <string name="sync_fail_ticker_unauthorized">Sync failed, log in again</string>
     <string name="sync_fail_content">Could not sync %1$s</string>
@@ -386,6 +391,7 @@
         <item quantity="one">You can upload only %d file at once.</item>
         <item quantity="other">You can upload up to %d files at once.</item>
     </plurals>
+    <string name="export_in_progress">Exporting %1$d of %2$d</string>
     <string name="sync_foreign_files_forgotten_explanation">As of version 1.3.16, files uploaded from this device are copied into the local %1$s folder to prevent data loss when a single file is synced with multiple accounts.\n\nDue to this change, all files uploaded with earlier versions of this app were copied into the %2$s folder. However, an error prevented the completion of this operation during account synchronization. You may either leave the file(s) as is and delete the link to %3$s, or move the file(s) into the %1$s folder and retain the link to %4$s.\n\nListed below are the local file(s), and the remote file(s) in %5$s they were linked to.</string>
     <string name="sync_current_folder_was_removed">The folder %1$s does not exist anymore</string>
     <string name="foreign_files_move">Move all</string>
@@ -418,7 +424,6 @@
     <string name="media_play_pause_description">Play or pause button</string>
     <string name="media_forward_description">Fast forward button</string>
 
-    <string name="auth_trying_to_login">Trying to log in…</string>
     <string name="auth_no_net_conn_title">No network connection</string>
     <string name="auth_nossl_plain_ok_title">Secure connection unavailable.</string>
     <string name="auth_connection_established">Connection established</string>
@@ -537,6 +542,7 @@
     <string name="placeholder_random_link" translatable="false">https://nextcloud.localhost/nextcloud</string>
     <string name="placeholder_random_account" translatable="false">firstname@example.nextcloud.com</string>
     <string name="placeholder_date" translatable="false">12. Dec 2020 - 23:10:20</string>
+    <string name="placeholder_auto_upload_folder" translatable="false">This is a very long folder name as you can see</string>
     <string name="placeholder_date_2" translatable="false">10. Dec 2020 - 10:10:10</string>
     <string name="placeholder_sso" translatable="false">Grant Nextcloud News access to your Nextcloud account incrediblyLong_username_with_123456789_number@Nextcloud_dummy.com?</string>
     <string name="placeholder_example_phone_number" translatable="false">+49 123 456 789 12</string>
@@ -567,7 +573,6 @@
     <string name="placeholder_image_detail_condition" translatable="false">ƒ/1.8 • 1/374 s • 28 mm • ISO 200</string>
     <string name="placeholder_image_detail_location" translatable="false">Mitte, Berlin, Germany</string>
     <string name="placeholder_image_detail_example_copyright" translatable="false">© OpenStreetMap contributors</string>
-    <string name="placeholder_compose_mail" translatable="false">Compose email</string>
     <string name="placeholder_passphrase" translatable="false">passphrase</string>
     <string name="placeholder_show_hidden_folders" translatable="false">Show 3 hidden folders</string>
     <string name="placeholder_template" translatable="false">Template</string>
@@ -854,6 +859,8 @@
     <string name="user_info_address">Address</string>
     <string name="user_info_website">Website</string>
     <string name="user_info_twitter">Twitter</string>
+    <string name="user_info_profile">Profile</string>
+    <string name="user_info_groups">Groups</string>
 
     <string name="user_information_retrieval_error">Error retrieving user information</string>
 
@@ -887,7 +894,7 @@
     <string name="autoupload_configure">Configure</string>
     <string name="synced_folders_configure_folders">Configure folders</string>
 
-    <string name="empty" translatable="false" />
+    <string name="empty" translatable="false"></string>
     <string name="test_server_button">Test server connection</string>
     <string name="info_separator" translatable="false">&#160;&#x2022;</string>
     <string name="resharing_is_not_allowed">Policy or permissions prevent resharing</string>
@@ -1010,7 +1017,6 @@
     <string name="notification_channel_background_operations_name">Background operations</string>
     <string name="notification_channel_background_operations_description">Show notifications to interact result of background operations</string>
     <string name="notification_channel_push_description">Show push notifications sent by the server: Mentions in comments, reception of new remote shares, announcements posted by an admin etc.</string>
-    <string name="sendbutton_description">Send button icon</string>
     <string name="auto_upload_worker_start_text">Uploading files from %1$s to %2$s</string>
     <string name="hidden_character" translatable="false">*</string>
     <string name="hint_name">Name</string>
@@ -1025,6 +1031,7 @@
     <string name="upload_scan_doc_upload">Scan document from camera</string>
     <string name="upload_content_from_other_apps">Upload content from other apps</string>
     <string name="create_new_folder">New folder</string>
+    <string name="create_new_encrypted_folder">New encrypted folder</string>
     <string name="uploads_view_upload_status_virus_detected">Virus detected. Upload cannot be completed!</string>
     <string name="tags">Tags</string>
     <string name="error_fetching_sharees">Unable to fetch sharees.</string>
@@ -1059,7 +1066,6 @@
     <string name="outdated_server">The server has reached end of life, please upgrade!</string>
     <string name="dismiss">Dismiss</string>
     <string name="drawer_item_trashbin">Deleted files</string>
-    <string name="trashbin_activity_title">Deleted files</string>
     <string name="action_empty_trashbin">Empty trash bin</string>
     <string name="trashbin_loading_failed">Loading trash bin failed!</string>
     <string name="trashbin_file_not_deleted">File %1$s could not be deleted!</string>
@@ -1113,7 +1119,11 @@
     <string name="upload_lock_failed">Locking folder failed</string>
     <string name="upload_local_storage_full">Local storage full</string>
     <string name="upload_old_android">Encryption is only possible with &gt;= Android 5.0</string>
-    <string name="upload_sync_conflict">Sync conflict, please resolve manually</string>
+    <string name="upload_sync_conflict_checking">Checking for upload conflicts…</string>
+    <string name="upload_sync_conflict_not_exists">Conflict resolved.</string>
+    <string name="upload_sync_conflict_same_file">No conflict detected. Same file.</string>
+    <string name="upload_sync_conflict_check_error">Could not check for upload conflicts. Please try again.</string>
+    <string name="upload_sync_conflict_check">There might be a conflict from your last upload. Tap to check.</string>
     <string name="upload_cannot_create_file">Cannot create local file</string>
     <string name="upload_local_storage_not_copied">File could not be copied to local storage</string>
     <string name="upload_global_pause_title">All uploads are paused</string>
@@ -1207,8 +1217,6 @@
     <string name="action_edit">Edit</string>
     <string name="failed_to_start_editor">Failed to start editor</string>
     <string name="create_rich_workspace">Add folder description</string>
-    <string name="creates_rich_workspace">Adds folder description</string>
-    <string name="uploader_local_files_uploaded">Retry to upload failed local files</string>
     <string name="uploader_file_not_found_on_server_message">We couldnt locate the file on server. Another user may have deleted the file</string>
     <string name="uploader_file_not_found_message">File not found. Are you sure that this file exists or has a previous conflict not been resolved?</string>
     <string name="uploader_upload_failed_sync_conflict_error">File upload conflict</string>
@@ -1217,12 +1225,15 @@
     <string name="upload_list_delete">Delete</string>
     <string name="create_new">New</string>
     <string name="editor_placeholder" translatable="false">%1$s %2$s</string>
-
+    <string name="upload_locked_title">Upload in progress</string>
+    <string name="upload_locked_message">The server is busy. Retrying…</string>
     <string name="share_permission_file_request">File request</string>
     <string name="share_permission_view_only">View only</string>
     <string name="share_permission_can_edit">Can edit</string>
-    <string name="share_permission_secure_file_drop">Secure file drop</string>
-
+    <string name="create_end_to_end_encrypted_share_title">End-to-end encrypted link shares</string>
+    <string name="create_end_to_end_encrypted_share">Link share</string>
+    <string name="internal_share_headline_end_to_end_encrypted">End-to-end encrypted shares</string>
+    <string name="internal_share_description_end_to_end_encrypted">Share recipients always have access to the full encrypted folder. It is only possible to share with accounts that have already setup end-to-end encryption.</string>
     <string name="sync_not_enough_space_dialog_action_choose">Choose what to sync</string>
     <string name="sync_not_enough_space_dialog_action_free_space">Free up space</string>
     <string name="sync_not_enough_space_dialog_placeholder">%1$s is %2$s, but there is only %3$s available on device.</string>
@@ -1287,6 +1298,8 @@
     <string name="wrong_storage_path_desc">This might be due to a backup restore on another device. Falling back to default. Please check settings to adjust data storage folder.</string>
     <string name="dialog_close">Close</string>
     <string name="direct_login_text">Login with %1$s to %2$s</string>
+    <string name="direct_login_confirm_title">Confirm login</string>
+    <string name="direct_login_confirm_message">Do you want to log in with %1$s to %2$s?</string>
     <string name="direct_login_failed">Login via direct link failed!</string>
 
     <string name="e2e_signature_is_empty">Could not verify metadata, signature is empty.</string>
@@ -1296,27 +1309,21 @@
 
     <string name="login_url_helper_text">The link to your %1$s web interface when you open it in the browser.</string>
 
-    <plurals name="delay_message">
-        <item quantity="one">Delayed %d second due to too many wrong attempts</item>
-        <item quantity="other">Delayed %d seconds due to too many wrong attempts</item>
+    <plurals name="passcode_delay_seconds">
+        <item quantity="one">Try again in %d second due to too many wrong attempts</item>
+        <item quantity="other">Try again in %d seconds due to too many wrong attempts</item>
     </plurals>
 
-    <plurals name="delay_message_minutes">
-        <item quantity="one">Delayed %d minute due to too many wrong attempts</item>
-        <item quantity="other">Delayed %d minutes due to too many wrong attempts</item>
+    <plurals name="passcode_delay_minutes">
+        <item quantity="one">Try again in %d minute due to too many wrong attempts</item>
+        <item quantity="other">Try again in %d minutes due to too many wrong attempts</item>
     </plurals>
 
-    <plurals name="delay_message_minutes_part">
-        <item quantity="one">Delayed %d minute</item>
-        <item quantity="other">Delayed %d minutes</item>
+    <plurals name="passcode_delay_minutes_seconds">
+        <item quantity="one">Try again in %1$d minute and %2$d seconds due to too many wrong attempts</item>
+        <item quantity="other">Try again in %1$d minutes and %2$d seconds due to too many wrong attempts</item>
     </plurals>
 
-    <plurals name="delay_message_seconds_part">
-        <item quantity="one">%d second</item>
-        <item quantity="other">%d seconds</item>
-    </plurals>
-
-    <string name="due_to_too_many_wrong_attempts">%s due to too many wrong attempts</string>
 
     <string name="create">Create</string>
     <string name="select_one_template">Please select one template</string>
@@ -1406,7 +1413,9 @@
     <string name="internet_connection_required_for_encrypted_folder_setup">An internet connection is required to set up the encrypted folder</string>
     <string name="prefs_setup_e2e">Set up end-to-end encryption</string>
     <string name="prefs_e2e_active">End-to-end encryption is set up!</string>
+    <string name="prefs_remove_e2e_keys_and_files">Remove encrypted files and keys</string>
     <string name="prefs_remove_e2e">Remove encryption locally</string>
+    <string name="remove_e2e_keys_and_files_dialog_warning">This operation will remove all encrypted files, private and public keys. Are you sure?</string>
     <string name="remove_e2e">You can remove end-to-end encryption locally on this client</string>
     <string name="confirm_removal">Remove local encryption</string>
     <string name="remove_e2e_message">You can remove end-to-end encryption locally on this client. The encrypted files will remain on server, but will not be synced to this computer any longer.</string>
@@ -1503,7 +1512,12 @@
     <string name="create_link">Create link</string>
     <string name="folder_best_viewed_in">This folder is best viewed in %1$s.</string>
     <string name="open_in_app">Open in %1$s</string>
-    <string name="auto_upload_battery_saver_mode_warning">Auto-upload is paused because Battery Saver is on.</string>
+    <string name="auto_upload_delete_dialog_title">Delete auto-upload folder?</string>
+    <string name="auto_upload_battery_saver_reason">Battery saver is active and may pause uploads.</string>
+    <string name="auto_upload_battery_optimization_reason">Nextcloud\'s background activity is limited by battery optimization.</string>
+    <string name="auto_upload_battery_saver_action">Open battery saver settings</string>
+    <string name="auto_upload_background_activity_action">Allow background activity</string>
+    <string name="auto_upload_delete_dialog_description">This will remove the folder and auto-upload configuration. Any unfinished uploads will be canceled.</string>
     <string name="auto_upload_sub_folder_warning">This folder is already included in the parent folder’s sync, which may cause duplicate uploads</string>
     <string name="sync_anyway">Sync anyway</string>
     <string name="sync_duplication">Sync duplication</string>
@@ -1543,4 +1557,11 @@
     <string name="sync_conflict_notification_description">Upload conflicts detected. Open uploads to resolve.</string>
     <string name="sync_conflict_notification_action_title">Resolve conflicts</string>
     <string name="extension_cannot_be_changed">Extension cannot be changed</string>
+    <string name="governance_sensitivity_label">Sensitivity label</string>
+    <string name="governance_file_retention_label">File retention</string>
+    <string name="governance_legal_hold_label">Legal hold</string>
+    <string name="governance_no_label">None</string>
+    <string name="governance_permission_denied">You do not have permission to change this label</string>
+    <string name="file_info_governance_section_title">Governance</string>
+    <string name="file_info_image_details_section_title">Image details</string>
 </resources>

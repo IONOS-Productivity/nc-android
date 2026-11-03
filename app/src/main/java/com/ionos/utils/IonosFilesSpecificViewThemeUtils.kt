@@ -15,6 +15,7 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.widget.SearchView
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.nextcloud.android.common.ui.theme.MaterialSchemes
 import com.nextcloud.android.common.ui.theme.ViewThemeUtilsBase
 import com.owncloud.android.R
@@ -23,6 +24,7 @@ import com.owncloud.android.utils.theme.FilesSpecificViewThemeUtils
 import me.zhanghai.android.fastscroll.FastScrollerBuilder
 import javax.inject.Inject
 
+@Suppress("TooManyFunctions")
 class IonosFilesSpecificViewThemeUtils @Inject constructor(
     schemes: MaterialSchemes,
     private val delegate: FilesSpecificViewThemeUtils,
@@ -90,6 +92,10 @@ class IonosFilesSpecificViewThemeUtils @Inject constructor(
 
     fun themeContentSearchView(searchView: SearchView) {
         delegate.themeContentSearchView(searchView)
+    }
+
+    fun themeAutoCompleteTextView(autoCompleteTextView: MaterialAutoCompleteTextView) {
+        delegate.themeAutoCompleteTextView(autoCompleteTextView)
     }
 
     fun colorNavigationView(navigationView: NavigationView) {

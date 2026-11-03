@@ -79,7 +79,7 @@ class ShareeListAdapter(
             shareType == ShareType.NEW_PUBLIC_LINK -> {
                 if (encrypted) {
                     val binding = FileDetailsShareSecureFileDropAddNewItemBinding.inflate(inflater, parent, false)
-                    NewSecureFileDropViewHolder(binding)
+                    NewSecureFileDropViewHolder(binding, viewThemeUtils)
                 } else {
                     val binding = FileDetailsSharePublicLinkAddNewItemBinding.inflate(inflater, parent, false)
                     NewLinkShareViewHolder(binding)
@@ -189,4 +189,6 @@ class ShareeListAdapter(
             shares.add(OCShare().apply { shareType = ShareType.INTERNAL })
         }
     }
+
+    fun getExpandOrCollapseActionTextId(): Int = (if (isShowAll) R.string.show_less else R.string.show_all)
 }
