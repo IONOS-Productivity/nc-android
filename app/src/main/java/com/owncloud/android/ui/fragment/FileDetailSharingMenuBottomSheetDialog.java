@@ -12,12 +12,10 @@ package com.owncloud.android.ui.fragment;
 
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
-import androidx.core.content.ContextCompat;
-import com.owncloud.android.R;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.ionos.annotation.IonosCustomization;
 import com.nextcloud.android.common.ui.theme.utils.ColorRole;
 import com.nextcloud.utils.mdm.MDMConfig;
 import com.owncloud.android.databinding.FileDetailsSharingMenuBottomSheetFragmentBinding;
@@ -50,26 +48,13 @@ public class FileDetailSharingMenuBottomSheetDialog extends BottomSheetDialog {
     }
 
     @Override
+    @IonosCustomization("Remove custom window LayoutParams. Disable icon tinting")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = FileDetailsSharingMenuBottomSheetFragmentBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        if (getWindow() != null) {
-            getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        }
-
         viewThemeUtils.platform.themeDialog(binding.getRoot());
-
-        int textColor = ContextCompat.getColor(getContext(), R.color.text_color);
-        viewThemeUtils.material.colorMaterialButtonContent(binding.menuShareAdvancedPermissions, ColorRole.PRIMARY);
-        viewThemeUtils.material.colorMaterialButtonContent(binding.menuShareSendNewEmail, ColorRole.PRIMARY);
-        viewThemeUtils.material.colorMaterialButtonContent(binding.menuShareSendLink, ColorRole.PRIMARY);
-        viewThemeUtils.material.colorMaterialButtonContent(binding.menuShareUnshare, ColorRole.PRIMARY);
-        binding.menuShareAdvancedPermissions.setTextColor(textColor);
-        binding.menuShareSendNewEmail.setTextColor(textColor);
-        binding.menuShareSendLink.setTextColor(textColor);
-        binding.menuShareUnshare.setTextColor(textColor);
 
         updateUI();
 

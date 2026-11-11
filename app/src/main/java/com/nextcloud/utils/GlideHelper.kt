@@ -35,8 +35,10 @@ import com.bumptech.glide.request.target.BitmapImageViewTarget
 import com.bumptech.glide.request.target.CustomViewTarget
 import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
+import com.ionos.annotation.IonosCustomization
 import com.nextcloud.common.NextcloudClient
 import com.nextcloud.utils.LinkHelper.validateAndGetURL
+import com.owncloud.android.MainApp
 import com.owncloud.android.lib.common.OwnCloudAccount
 import com.owncloud.android.lib.common.OwnCloudClientManagerFactory
 import com.owncloud.android.lib.common.utils.Log_OC
@@ -216,11 +218,12 @@ object GlideHelper {
         }
     }
 
+    @IonosCustomization("App user agent for previews")
     fun createGlideUrl(url: String, client: NextcloudClient) = GlideUrl(
         url,
         LazyHeaders.Builder()
             .addHeader("Authorization", client.credentials)
-            .addHeader("User-Agent", "Mozilla/5.0 (Android) Nextcloud-android")
+            .addHeader("User-Agent", MainApp.getUserAgent())
             .build()
     )
 
