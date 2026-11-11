@@ -11,6 +11,7 @@
  * SPDX-FileCopyrightText: 2016 ownCloud Inc.
  * SPDX-FileCopyrightText: 2012-2013 David A. Velasco <dvelasco@solidgear.es>
  * SPDX-FileCopyrightText: 2011 Bartosz Przybylski <bart.p.pl@gmail.com>
+ * SPDX-FileCopyrightText: 2026 STRATO GmbH.
  * SPDX-License-Identifier: GPL-2.0-only AND (AGPL-3.0-or-later OR GPL-2.0-only)
  */
 package com.owncloud.android.ui.activity
@@ -54,6 +55,8 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import com.ionos.annotation.IonosCustomization
+import com.ionos.player.ui.PlayerLauncher
 import com.nextcloud.android.common.core.utils.ecosystem.AccountReceiverCallback
 import com.nextcloud.appReview.InAppReviewHelper
 import com.nextcloud.client.account.User
@@ -253,6 +256,9 @@ class FileDisplayActivity :
 
     @Inject
     lateinit var syncedFolderProvider: SyncedFolderProvider
+
+    @Inject
+    lateinit var playerLauncher: PlayerLauncher
 
     @Inject
     lateinit var passCodeManager: PassCodeManager
@@ -851,6 +857,7 @@ class FileDisplayActivity :
         }
     }
 
+    @IonosCustomization("Video in custom player")
     private fun tryStartWaitingPreview(success: Boolean): Boolean {
         if (!success) return false
 
@@ -858,11 +865,6 @@ class FileDisplayActivity :
         val file = mWaitingToPreview ?: return false
 
         return when {
-            MimeTypeUtil.isVideo(file) -> {
-                startImagePreview(file, true)
-                true
-            }
-
             PreviewMediaActivity.canBePreviewed(file) -> {
                 startMediaPreview(file, 0, true, true, true, true)
                 true
@@ -2021,6 +2023,7 @@ class FileDisplayActivity :
         startImagePreview(file, file.isDown, type)
     }
 
+    @IonosCustomization("Video in custom player")
     fun previewFile(file: OCFile, setFabVisible: CompletionCallback?) {
         if (!file.isDown) {
             Log_OC.d(TAG, "File is not downloaded, cannot be previewed")
@@ -2034,9 +2037,6 @@ class FileDisplayActivity :
         } else if (PreviewTextFileFragment.canBePreviewed(file)) {
             setFabVisible?.onComplete(false)
             startTextPreview(file, false)
-        } else if (MimeTypeUtil.isVideo(file)) {
-            setFabVisible?.onComplete(false)
-            startImagePreview(file, true)
         } else if (PreviewMediaActivity.Companion.canBePreviewed(file)) {
             setFabVisible?.onComplete(false)
             startMediaPreview(file, 0, true, true, false, true)
@@ -2700,18 +2700,10 @@ class FileDisplayActivity :
         }
     }
 
+    @IonosCustomization("Launch of custom player")
     private fun startMediaActivity(file: OCFile?, startPlaybackPosition: Long, autoplay: Boolean, user: User?) {
-        val previewMediaIntent = Intent(this, PreviewMediaActivity::class.java)
-        previewMediaIntent.putExtra(PreviewMediaActivity.EXTRA_FILE, file)
-
-        // Safely handle the absence of a user
-        if (user != null) {
-            previewMediaIntent.putExtra(PreviewMediaActivity.EXTRA_USER, user)
-        }
-
-        previewMediaIntent.putExtra(PreviewMediaActivity.EXTRA_START_POSITION, startPlaybackPosition)
-        previewMediaIntent.putExtra(PreviewMediaActivity.EXTRA_AUTOPLAY, autoplay)
-        startActivity(previewMediaIntent)
+        val searchType = listOfFilesFragment?.currentSearchType
+        playerLauncher.launch(this, file!!, searchType)
     }
 
     fun configureToolbarForPreview(file: OCFile?) {

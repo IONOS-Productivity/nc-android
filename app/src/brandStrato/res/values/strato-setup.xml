@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ HiDrive Next - Android Client
+  ~
+  ~ SPDX-FileCopyrightText: 2026 STRATO GmbH.
+  ~ SPDX-License-Identifier: GPL-2.0
+  -->
+<!--
+  TODO(brand): all URLs below are stubs for the HiDrive Next brand skeleton,
+  replace them with the real STRATO endpoints before any release
+  (see doc/ADR-001-new-brand-variant.md).
+-->
+<resources>
+    <!-- App name and other strings -->
+    <string name="app_name">HiDrive Next</string>
+    <string name="account_type">com.strato.hidrivenext</string>
+    <string name="authority">com.strato.hidrivenext.provider</string>    <!-- better if was the app package with ".provider" appended ; it identifies the provider -->
+    <string name="users_and_groups_search_authority">com.strato.hidrivenext.providers.UsersAndGroupsSearchProvider</string>
+    <string name="users_and_groups_share_with">com.strato.hidrivenext.providers.UsersAndGroupsSearchProvider.action.SHARE_WITH</string>
+    <string name="document_provider_authority">com.strato.hidrivenext.documents</string>
+    <string name="file_provider_authority">com.strato.hidrivenext.files</string>
+    <string name="image_cache_provider_authority">com.strato.hidrivenext.providers.imageCache</string>
+    <string name="db_file">hidrivenext.db</string>
+    <string name="db_name">hidrivenext</string>
+    <string name="data_folder">hidrivenext</string>
+    <string name="default_display_name_for_root_folder">HiDrive Next</string>
+    <string name="nextcloud_user_agent">Mozilla/5.0 (Android) HiDrive Next/%1$s%2$s</string>
+    <bool name="show_hidden_files_enabled">false</bool>
+
+    <!-- URLs and flags related -->
+    <bool name="show_server_url_input">false</bool>
+    <string name="webview_login_url" translatable="false">https://login.hidrive.example/login/v2</string>
+    <string name="provider_registration_server">https://login.hidrive.example/login/v2</string>
+
+    <!-- Determine is participate enabled -->
+    <bool name="participate_enabled">false</bool>
+
+    <!-- Flags to enable/disable some features -->
+    <bool name="is_branded_client">true</bool>
+    <bool name="show_external_links">false</bool>
+    <bool name="logger_enabled">false</bool>
+    <bool name="show_outdated_server_warning">false</bool>
+    <bool name="show_brand_logo_in_folder_picker">true</bool>
+
+    <!-- Help, imprint and feedback, and other things -->
+    <bool name="davdroid_integration_enabled">false</bool>
+    <bool name="help_enabled">true</bool>
+    <bool name="recommend_enabled">true</bool>
+    <bool name="imprint_enabled">true</bool>
+    <bool name="privacy_enabled">true</bool>
+    <bool name="sourcecode_enabled">true</bool>
+    <bool name="license_enabled">true</bool>
+    <string name="url_help">https://help.hidrive.example/help</string>
+    <string name="url_app_download">https://app.hidrive.example/download</string>
+    <string name="fdroid_link"></string>
+    <string name="url_imprint">https://legal.hidrive.example/imprint</string>
+    <string name="privacy_url">https://legal.hidrive.example/privacy</string>
+    <string name="sourcecode_url">https://sources.hidrive.example/android</string>
+
+    <!--
+      TODO(brand): placeholder Firebase/push configuration copied from the gplay (IONOS)
+      brand so that Firebase initialization keeps working. Register a dedicated Firebase
+      project for this brand (package com.strato.hidrivenext) and replace all values below
+      before any release (see doc/ADR-001-new-brand-variant.md).
+    -->
+    <!-- Push server url -->
+    <string name="push_server_url" translatable="false">https://push-notifications.nextcloud.com</string>
+
+    <!-- Firebase -->
+    <string name="default_web_client_id" translatable="false">829118773643-cq33cmhv7mnv7iq8mjv6rt7t15afc70k.apps.googleusercontent.com</string>
+    <string name="firebase_database_url" translatable="false">https://nextcloud-a7dea.firebaseio.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">829118773643</string>
+    <string name="google_api_key" translatable="false">AIzaSyAWIyOcLafaFp8PFL61h64cy1NNZW2cU_s</string>
+    <string name="google_app_id" translatable="false">1:829118773643:android:512449826e931d0e</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyAWIyOcLafaFp8PFL61h64cy1NNZW2cU_s</string>
+    <string name="google_storage_bucket" translatable="false">nextcloud-a7dea.appspot.com</string>
+    <string name="project_id" translatable="false">nextcloud-a7dea</string>
+</resources>

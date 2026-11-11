@@ -68,10 +68,12 @@
             android:textAlignment="textStart"
             android:textAllCaps="false"
             android:textColor="@color/fontAppbar"
-            app:icon="@drawable/chat_bubble"
+            android:visibility="gone"
+            app:icon="@drawable/ic_edit"
             app:iconGravity="start"
-            app:iconPadding="@dimen/standard_half_padding"
-            app:iconTint="@color/fontAppbar" />
+            app:iconPadding="22dp"
+            app:iconTint="@color/fontAppbar"
+            app:ionosCustomization="" />
     </LinearLayout>
 
     <View

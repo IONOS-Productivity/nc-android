@@ -27,6 +27,8 @@ import android.widget.ImageView;
 
 import com.elyeproj.loaderviewlibrary.LoaderImageView;
 import com.google.android.material.chip.Chip;
+import com.ionos.annotation.IonosCustomization;
+import com.ionos.utils.IonosBuildHelper;
 import com.nextcloud.android.common.core.utils.ecosystem.EcosystemApp;
 import com.nextcloud.android.common.ui.theme.utils.ColorRole;
 import com.nextcloud.client.account.User;
@@ -367,6 +369,7 @@ public class OCFileListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     @Override
+    @IonosCustomization
     public int getItemViewType(int position) {
         if (shouldShowHeader() && position == 0) {
             return VIEW_TYPE_HEADER;
@@ -375,6 +378,10 @@ public class OCFileListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         if (shouldShowHeader() && position == mFiles.size() + 1 ||
             (!shouldShowHeader() && position == mFiles.size())) {
             return VIEW_TYPE_FOOTER;
+        }
+
+        if (IonosBuildHelper.isIonosBuild()) {
+            return VIEW_TYPE_ITEM;
         }
 
         OCFile item = getItem(position);
@@ -460,7 +467,8 @@ public class OCFileListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             if (shouldShowOpenInNotes()) {
                 final var listHeaderOpenInBinding = headerBinding.openIn;
 
-                viewThemeUtils.files.themeFilledCardView(listHeaderOpenInBinding.infoCard);
+                //TODO
+                //viewThemeUtils.files.themeFilledCardView(listHeaderOpenInBinding.infoCard);
 
                 listHeaderOpenInBinding.infoText.setText(String.format(activity.getString(R.string.folder_best_viewed_in),
                                                                        activity.getString(R.string.ecosystem_apps_notes)));
@@ -552,8 +560,10 @@ public class OCFileListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         } else {
             handleListMode(holder, pair, isFolder);
         }
+        holder.getPlayerProgressIndicator().setFile(file);
     }
-
+    
+    @IonosCustomization("Custom grid view, Show current playback progress")
     private void handleGridMode(String filename, OCFileListGridItemViewHolder holder, Pair<String, String> filenamePair, OCFile file) {
         boolean containsBidiControlCharacters = FileStorageUtils.containsBidiControlCharacters(filename);
         ViewExtensionsKt.setVisibleIf(holder.getFileName(),!containsBidiControlCharacters);
@@ -591,24 +601,27 @@ public class OCFileListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
     }
 
+    @IonosCustomization("Change share icon")
     private void bindSharedAvatars(ListItemViewHolder holder, OCFile file) {
         final var sharedAvatars = holder.getSharedAvatars();
-
-        if (!(file.isSharedWithMe() || file.isSharedWithSharee()) || isMultiSelect() || gridView || hideItemOptions) {
-            sharedAvatars.setVisibility(View.GONE);
-            if (sharedAvatars.getChildCount() > 0) {
-                sharedAvatars.removeAllViews();
-            }
-            return;
-        }
-
-        sharedAvatars.setVisibility(View.VISIBLE);
+        sharedAvatars.setVisibility(View.GONE);
         if (sharedAvatars.getChildCount() > 0) {
             sharedAvatars.removeAllViews();
         }
+
+        if (!(file.isSharedWithMe() || file.isSharedWithSharee()) || isMultiSelect() || gridView || hideItemOptions) {
+            return;
+        }
+
+        if (file.isSharedViaLink()) {
+            holder.getShared().setImageResource(R.drawable.ic_shared_all_types);
+        } else {
+            holder.getShared().setImageResource(R.drawable.shared_via_users);
+        }
+        holder.getShared().setVisibility(View.VISIBLE);
         final var avatars = helper.getAvatarSharees(file, userId);
         sharedAvatars.setAvatars(user, avatars, viewThemeUtils);
-        sharedAvatars.setOnClickListener(view -> ocFileListFragmentInterface.onShareIconClick(file));
+        holder.getShared().setOnClickListener(view -> ocFileListFragmentInterface.onShareIconClick(file));
     }
 
     private void bindListItemViewHolder(ListItemViewHolder holder, OCFile file) {
@@ -795,6 +808,7 @@ public class OCFileListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         return output;
     }
 
+    @IonosCustomization("Hide header in IONOS")
     public boolean shouldShowHeader() {
         if (currentDirectory == null) {
             return false;
@@ -816,7 +830,7 @@ public class OCFileListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             return false;
         }
 
-        return !TextUtils.isEmpty(currentDirectory.getRichWorkspace().trim());
+        return !IonosBuildHelper.isIonosBuild() && !TextUtils.isEmpty(currentDirectory.getRichWorkspace().trim());
     }
 
     /**
