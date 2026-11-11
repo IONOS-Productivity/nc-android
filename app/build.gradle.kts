@@ -157,7 +157,7 @@ android {
             register("gplay") {
                 applicationId = "com.ionos.hidrivenext"
                 dimension = "default"
-                versionCode = 21
+                versionCode = 22
                 val releaseNumber = 4
                 versionName = "$versionMajor.$versionMinor.$versionPatch.$releaseNumber"
                 isDefault = true

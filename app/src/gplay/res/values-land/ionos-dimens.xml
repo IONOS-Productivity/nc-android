@@ -11,5 +11,7 @@
     <item name="authorization_guideline_top" type="dimen">0.05</item>
     <item name="authorization_guideline_center" type="dimen">0.4</item>
     <item name="authorization_guideline_bottom" type="dimen">0.65</item>
+    <dimen name="authorization_qr_button_bottom_margin">@dimen/standard_half_margin</dimen>
+    <dimen name="authorization_login_button_bottom_margin">@dimen/standard_half_margin</dimen>
 
 </resources>

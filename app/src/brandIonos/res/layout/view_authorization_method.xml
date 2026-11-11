@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?><!--
   ~ IONOS HiDrive Next - Android Client
   ~
-  ~ SPDX-FileCopyrightText: 2025 STRATO GmbH.
+  ~ SPDX-FileCopyrightText: 2026 STRATO GmbH.
   ~ SPDX-License-Identifier: GPL-2.0
   -->
 
@@ -10,6 +10,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:ignore="InconsistentLayout"
     tools:theme="@style/Theme.ownCloud.noActionBar.Login">
 
     <androidx.constraintlayout.widget.Guideline
@@ -23,6 +24,7 @@
         android:id="@+id/ivLogo"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:contentDescription="@null"
         android:src="@drawable/ionos_logo"
         app:layout_constraintDimensionRatio="158:19"
         app:layout_constraintEnd_toEndOf="parent"
@@ -50,43 +52,60 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/glCenterLine" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/glBottomLine"
-        android:layout_width="wrap_content"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/bLoginQr"
+        style="@style/Widget.Material3.Button.OutlinedButton.Icon"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="@dimen/authorization_guideline_bottom" />
+        android:layout_marginBottom="@dimen/authorization_qr_button_bottom_margin"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:minHeight="@dimen/minimum_size_for_touchable_area"
+        android:text="@string/scanQR_description"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:cornerRadius="@dimen/button_corner_radius"
+        app:icon="@drawable/qrcode_scan"
+        app:iconGravity="textStart"
+        app:iconSize="@dimen/standard_icon_size"
+        app:iconTint="@color/white"
+        app:layout_constraintBottom_toTopOf="@id/bLogin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:rippleColor="@color/transparent_ghost_white"
+        app:strokeColor="@color/white"
+        app:strokeWidth="@dimen/outlined_button_stroke_width" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/bLogin"
+        style="@style/Widget.Material3.Button"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="@dimen/standard_double_margin"
-        android:gravity="center"
-        android:paddingVertical="16dp"
+        android:layout_marginBottom="@dimen/authorization_login_button_bottom_margin"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:minHeight="@dimen/minimum_size_for_touchable_area"
         android:text="@string/ionos_authorization_method_login_button"
-        android:textColor="@color/black"
-        android:theme="@style/Widget.Material3.Button.OutlinedButton"
-        app:backgroundTint="@color/white"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:backgroundTint="@color/dodger_blue"
         app:cornerRadius="@dimen/button_corner_radius"
+        app:layout_constraintBottom_toTopOf="@id/tvOr"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/glBottomLine"
-        app:strokeColor="@color/white" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/tvOr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginBottom="@dimen/standard_margin"
         android:gravity="center"
         android:paddingHorizontal="24dp"
         android:text="@string/ionos_authorization_method_description"
         android:textColor="@color/white"
         android:textSize="@dimen/splash_text_size"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/bLogin" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
